@@ -10,8 +10,8 @@ Currently this software is *early-access* and is available at [developers.linode
 ## Setup
 
     brew install yarn
-    git clone https://github.com/Linode/manager.git
-    cd manager/docs
+    git clone https://github.com/linode/linode-api-docs.git
+    cd linode-api-docs
     node --version # should be 8.4.0
     yarn
 
