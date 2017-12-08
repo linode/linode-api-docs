@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
-import { Header } from 'linode-components/navigation';
+import { Header } from 'linode-components';
 
 import { LinodeLogoImgSrc } from '~/assets';
 import { API_VERSION } from '~/constants';

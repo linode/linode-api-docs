@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import { ExternalLink } from 'linode-components/buttons';
-import { Code } from 'linode-components/formats';
-import { Table } from 'linode-components/tables';
+import { ExternalLink } from 'linode-components';
+import { Code } from 'linode-components';
+import { Table } from 'linode-components';
 
 import { API_VERSION } from '~/constants';
 

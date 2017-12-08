@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { API_VERSION } from '~/constants';
 
-import { Code } from 'linode-components/formats';
+import { Code } from 'linode-components';
 
 
 export default function Pagination() {

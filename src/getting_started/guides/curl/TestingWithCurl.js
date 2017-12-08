@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
-import { ExternalLink } from 'linode-components/buttons';
-import { Breadcrumbs } from 'linode-components/breadcrumbs';
-import { Code } from 'linode-components/formats';
+import { ExternalLink } from 'linode-components';
+import { Breadcrumbs } from 'linode-components';
+import { Code } from 'linode-components';
 
 import { API_ROOT,
   API_VERSION,

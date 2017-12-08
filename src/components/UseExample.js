@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Tabs } from 'linode-components/tabs';
-import { Code } from 'linode-components/formats';
+import { Tabs } from 'linode-components';
+import { Code } from 'linode-components';
 
 
 export default function UseExample({ examples }) {

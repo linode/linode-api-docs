@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
-import { Breadcrumbs } from 'linode-components/breadcrumbs';
+import { Breadcrumbs } from 'linode-components';
 
 import { default as Method } from './Method';
 

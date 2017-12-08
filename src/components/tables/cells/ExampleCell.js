@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Code } from 'linode-components/formats';
+import { Code } from 'linode-components';
 
 
 export default function ExampleCell(props) {

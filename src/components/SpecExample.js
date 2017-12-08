@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Code } from 'linode-components/formats';
+import { Code } from 'linode-components';
 
 
 export default class SpecExample extends Component {

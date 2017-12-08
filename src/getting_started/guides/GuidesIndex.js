@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { Breadcrumbs } from 'linode-components/breadcrumbs';
-import { Table } from 'linode-components/tables';
-import { LinkCell } from 'linode-components/tables/cells';
+import { Breadcrumbs } from 'linode-components';
+import { Table } from 'linode-components';
+import { LinkCell } from 'linode-components';
 
 import { API_VERSION } from '~/constants';
 

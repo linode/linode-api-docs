@@ -2,8 +2,8 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import { Table, TableRow } from 'linode-components/tables';
-import { Code } from 'linode-components/formats';
+import { Table, TableRow } from 'linode-components';
+import { Code } from 'linode-components';
 
 import { DescriptionCell, FieldCell, ParamFieldCell, NestedParentCell } from './tables/cells';
 

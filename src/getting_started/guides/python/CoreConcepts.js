@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router';
 
-import { Breadcrumbs } from 'linode-components/breadcrumbs';
-import { Table } from 'linode-components/tables';
-import { Code } from 'linode-components/formats';
+import { Breadcrumbs } from 'linode-components';
+import { Table } from 'linode-components';
+import { Code } from 'linode-components';
 
 import { API_VERSION } from '~/constants';
 

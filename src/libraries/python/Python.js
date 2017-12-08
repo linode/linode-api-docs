@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { ExternalLink } from 'linode-components/buttons';
-import { Table } from 'linode-components/tables';
-import { LinkCell } from 'linode-components/tables/cells';
+import { ExternalLink } from 'linode-components';
+import { Table } from 'linode-components';
+import { LinkCell } from 'linode-components';
 
 
 export default function Python(props) {

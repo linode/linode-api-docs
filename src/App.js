@@ -9,7 +9,7 @@ import { GA_ID } from './constants';
 // eslint-disable-next-line no-unused-vars
 import styles from '../scss/index.scss';
 
-import { NotFound } from 'linode-components/errors';
+import { NotFound } from 'linode-components';
 
 import {
   IndexLayout,
