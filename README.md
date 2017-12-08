@@ -14,8 +14,6 @@ Currently this software is *early-access* and is available at [developers.linode
     cd manager/docs
     node --version # should be 8.4.0
     yarn
-    (../components && yarn link)
-    yarn link linode-components
 
 ## Development
 
