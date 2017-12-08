@@ -67,7 +67,7 @@
     "fontawesome": "^4.5.0",
     "highlight.js": "https://registry.npmjs.org/highlight.js/-/highlight.js-9.12.0.tgz",
     "history": "^2.1.2",
-    "linode-components": "file:../components",
+    "linode-components": "https://github.com/linode/linode-react-components.git#v0.0.5",
     "lodash": "^4.16.4",
     "moment": "^2.17.1",
     "moment-timezone": "^0.5.11",
