@@ -1,140 +1,124 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
-import { ExternalLink } from 'linode-components/buttons';
-import { Error } from 'linode-components/errors';
-import { ModalShell } from 'linode-components/modals';
+import { Header } from 'linode-components/navigation';
 
-import { hideModal } from '~/actions/modal';
-import { hideNotifications } from '~/actions/notifications';
-import { hideSession } from '~/actions/session';
-import api from '~/api';
-import Header from '~/components/Header';
-import Notifications from '~/components/notifications/Notifications';
-import PreloadIndicator from '~/components/PreloadIndicator.js';
-import SessionMenu from '~/components/SessionMenu';
-import { VERSION } from '~/constants';
-import { setStorage } from '~/storage';
+import { LinodeLogoImgSrc } from '~/assets';
+import { API_VERSION } from '~/constants';
+import { VerticalNav, VerticalNavSection } from '~/components';
 
 
-export class Layout extends Component {
-  // This is a special preload that is only called once on page load because
-  // all pages are rendered through here and preloads don't get called again
-  // if they were just called.
-  static async preload({ dispatch, getState }) {
-    if (!Object.keys(getState().api.profile).length) {
-      await dispatch(api.profile.one());
-      // Needed for time display component that is not attached to Redux.
-      const { timezone } = getState().api.profile;
-      setStorage('profile/timezone', timezone);
+export default class Layout extends Component {
+  constructor() {
+    super();
+    document.addEventListener('click', this.toggleVerticalNav.bind(this));
+    this.state = { verticalNav: false };
+  }
+
+  toggleVerticalNav(e) {
+    if (e.target.id === 'ToggleNavButton' || e.target.id === 'ToggleNavButtonIcon') {
+      this.setState({ verticalNav: !this.state.verticalNav });
+    }
+    if (e.target.id.match(/NavLink-.*/)) {
+      this.setState({ verticalNav: false });
     }
   }
 
-  constructor() {
-    super();
-
-    this.state = { title: '', link: '' };
-  }
-
   render() {
-    const {
-      username,
-      email,
-      errors,
-      notifications,
-      session,
-      events,
-      source,
-      dispatch,
-    } = this.props;
-    const { title, link } = this.state;
-    const version = VERSION ? `v${VERSION}` : 'master';
-    const githubRoot = `https://github.com/linode/manager/blob/${version}/`;
+    const { route } = this.props;
+    const { verticalNav } = this.state;
+    const { childParentMap, indices } = route;
+    const path = this.props.location.pathname + this.props.location.hash;
+
+    const verticalNavShow = verticalNav ?
+      'Layout-navigationContainer--show' : 'Layout-navigationContainer--hide';
 
     return (
-      <div
-        className="Layout"
-        onClick={(e) => {
-          const { notifications, session } = this.props;
-          // Gross
-          const isListItem = e.target.className.includes('NotificationList-listItem');
-          const isSessionMenu = e.target.className.includes('SessionMenu');
-          if (notifications.open && !isListItem) {
-            dispatch(hideNotifications());
-          } else if (session.open && !isSessionMenu) {
-            dispatch(hideSession());
-          }
-        }}
-      >
-        <div className="Layout-inner">
-          <PreloadIndicator />
-          <Notifications />
-          <SessionMenu open={session.open} />
-          <ModalShell
-            open={this.props.modal.open}
-            title={this.props.modal.title}
-            close={() => dispatch(hideModal())}
+      <div className="Docs Layout">
+        <Header className="Header-fixed">
+          <div className="MainHeader-brand">
+            <Link to="/">
+              <span className="MainHeader-logo">
+                <img
+                  src={LinodeLogoImgSrc}
+                  alt="Linode Logo"
+                  height={40}
+                  width={35}
+                />
+              </span>
+            </Link>
+          </div>
+          <span className="MainHeader-title">Linode API v4</span>
+          <button
+            className="ToggleNav navbar-toggler navbar-toggler-right collapsed"
+            type="button"
+            id="ToggleNavButton"
           >
-            {this.props.modal.body}
-          </ModalShell>
-          <Header
-            dispatch={dispatch}
-            link={link}
-            title={title}
-            email={email}
-            username={username}
-            notifications={notifications}
-            session={session}
-            events={events}
-          />
-          <div className="Main">
-            {errors.status ?
-              <Error status={errors.status} /> :
-              this.props.children}
+            <i className="fa fa-bars" id="ToggleNavButtonIcon"></i>
+          </button>
+        </Header>
+        <div className="Layout-container container">
+          <div className={`Layout-navigationContainer ${verticalNavShow}`}>
+            <VerticalNav>
+              <VerticalNavSection
+                title="Getting Started"
+                checkActiveItem={function (path, href) {
+                  return (href === path || href === childParentMap[path]);
+                }}
+                path={path}
+                navItems={[
+                  { label: 'Introduction', href: `/${API_VERSION}/introduction` },
+                  { label: 'Access', href: `/${API_VERSION}/access` },
+                  { label: 'Pagination', href: `/${API_VERSION}/pagination` },
+                  { label: 'Filtering & Sorting', href: `/${API_VERSION}/filtering` },
+                  { label: 'Errors', href: `/${API_VERSION}/errors` },
+                  { label: 'Guides', href: `/${API_VERSION}/guides` },
+                  { label: 'Changelogs', href: `/${API_VERSION}/changelogs` },
+                ]}
+              />
+              <VerticalNavSection
+                title="Reference"
+                checkActiveItem={function (path, href) {
+                  let pathWithoutHash = path;
+                  if (href.indexOf('#') === -1 && path.indexOf('#') !== -1) {
+                    pathWithoutHash = path.substring(0, path.indexOf('#'));
+                  }
+                  return (href === pathWithoutHash || href === childParentMap[pathWithoutHash]);
+                }}
+                path={path}
+                navItems={indices.map(endpointIndex => ({
+                  ...endpointIndex, label: endpointIndex.name, href: endpointIndex.routePath,
+                }))}
+              />
+              <VerticalNavSection
+                title="Libraries"
+                checkActiveItem={function (path, href) {
+                  return (href === path || href === childParentMap[path]);
+                }}
+                path={path}
+                navItems={[
+                  { label: 'Python', href: `/${API_VERSION}/libraries/python` },
+                ]}
+              />
+            </VerticalNav>
+          </div>
+          <div className="Layout-contentBox">
+            <div className="Layout-content">
+              {this.props.children}
+            </div>
           </div>
         </div>
-        <footer className="Footer text-center">
-          <div>
-            <span>Version {VERSION}</span>
-          </div>
-          {!source || !source.source ? null : (
-            <ExternalLink
-              to={`${githubRoot}${source.source}`}
-            >Page Source</ExternalLink>
-          )}
-        </footer>
       </div>
     );
   }
 }
 
 Layout.propTypes = {
-  username: PropTypes.string,
-  email: PropTypes.string,
-  children: PropTypes.node.isRequired,
-  errors: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  source: PropTypes.object,
-  linodes: PropTypes.object,
-  modal: PropTypes.object,
-  notifications: PropTypes.object,
-  session: PropTypes.object,
-  events: PropTypes.object,
+  children: PropTypes.node,
+  route: PropTypes.object,
+  location: PropTypes.shape({
+    pathname: PropTypes.string,
+    hash: PropTypes.string,
+  }),
 };
-
-function select(state) {
-  return {
-    username: state.api.profile.username,
-    email: state.api.profile.email,
-    errors: state.errors,
-    source: state.source,
-    linodes: state.api.linodes,
-    modal: state.modal,
-    notifications: state.notifications,
-    session: state.session,
-    events: state.api.events,
-  };
-}
-
-export default connect(select)(Layout);

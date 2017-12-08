@@ -1,10 +1,8 @@
 .DS_Store
+.sass-cache/
+src/api.js
+src/python.js
 node_modules
 npm-debug.log
 dist
-src/secrets.js
-xunit.xml
-coverage
-.sass-cache/
-restart-manager.sh
-secrets*.js
+restart-docs.sh

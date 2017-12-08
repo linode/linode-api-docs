@@ -1,5 +1,5 @@
-export { default as TimeDisplay } from './TimeDisplay';
-export { default as GroupLabel } from './GroupLabel';
-export { default as RegionSelect } from './RegionSelect';
-export { default as TransferPool } from './TransferPool';
-export { default as ChainedDocumentTitle } from './ChainedDocumentTitle';
+export { default as EndpointIndex } from './EndpointIndex';
+export { default as Endpoint } from './Endpoint';
+export { default as Library } from './Library';
+export { default as VerticalNav } from './VerticalNav';
+export { default as VerticalNavSection } from './VerticalNavSection';

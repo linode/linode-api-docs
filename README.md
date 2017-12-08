@@ -1,34 +1,42 @@
 <h1 align="center">
   <img src="https://www.linode.com/media/images/logos/diagonal/light/linode-logo_diagonal_light_medium.png" width="200" />
   <br />
-  The Linode Manager
+  The Linode API Docs
 </h1>
 
-<p align="center">
-  <a href="https://travis-ci.org/linode/manager"><img src="https://travis-ci.org/linode/manager.svg?branch=master" alt="Build status" /></a>
-  <a href="https://coveralls.io/github/linode/manager?branch=master"><img src="https://coveralls.io/repos/github/linode/manager/badge.svg?branch=master" alt="Code coverage" /></a>
-  <a href="https://waffle.io/linode/manager"><img src="https://badge.waffle.io/linode/manager.svg?label=ready&title=Agile%20board" alt="Sprint status" /></a>
-  <img src="https://img.shields.io/badge/badges-many-brightgreen.svg" alt="much badges" />
-</p>
+This is the new Linode developers site. It provides documentation to complement the APIv4.
+Currently this software is *early-access* and is available at [developers.linode.com](https://developers.linode.com).
 
-This is the new Linode Manager. It provides a web interface for managing your Linode account. 
-Currently this software is *early-access* and is available at [cloud.linode.com](https://cloud.linode.com).
+## Setup
 
-## Contributing
+    brew install yarn
+    git clone https://github.com/Linode/manager.git
+    cd manager/docs
+    node --version # should be 8.4.0
+    yarn
+    (../components && yarn link)
+    yarn link linode-components
 
-Read the [contributing guidelines](CONTRIBUTING.md) to get started.
+## Development
 
-Come chat with us in [#linode-next on
-irc.oftc.net](https://webchat.oftc.net/?channels=linode-next&uio=d4) if you're
-interested in helping out with this. We'd love to have community input on how
-the new manager takes shape. This is your chance to help build the features you
-need into it! We'll take pull requests in the usual way. We're still learning
-about the technologies in use here ourselves, so bear with us as we figure out
-the right patterns - some large scale refactorings may be in order.
+Run:
+
+    yarn start
+
+to run the prebuild script and start the development server. Connect to
+[localhost:5000](https://localhost:5000) to try it out. Most of the changes you
+make will be applied on the fly, but you may occasionally find that you have to
+restart it.
+
+## Scripts
+
+The `prebuild.js` script converts yaml into a js file imported by the app. 
+Prebuild builds a json tree of endpoint indices, endpoints, and methods with 
+the associated resource objects.
 
 ## License
 
 The Linode Manager's code is distributed under the terms of the [BSD 3-clause
-license](LICENSE). The assets are
+license](https://github.com/linode/manager/blob/master/LICENSE). The assets are
 not licensed for any purpose without prior written approval from Linode, unless
 otherwise noted.
