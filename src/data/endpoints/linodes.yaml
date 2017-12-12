@@ -20,7 +20,9 @@ endpoints:
             curl -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/linode/instances
           python: |
-            my_linodes = client.linode.get_instances()
+            my_linodes 
+            
+            = client.linode.get_instances()
       POST:
         money: true
         oauth: linodes:create
@@ -201,11 +203,8 @@ endpoints:
               <ul><li>If no distribution is provided, a blank disk
               is created.</li></ul> You may not provide distribution if image is provided.
             type: String
-<<<<<<< HEAD:src/data/endpoints/linodes.yaml
-=======
             deprecated: This parameter is deprecated and will be removed before the end of the Beta Period.
               The same value can be passed to "image" instead.  See the changelog for more information.
->>>>>>> oldman/pending-docs-updates:docs/src/data/endpoints/linodes.yaml
           image:
             optional: true
             description: >
