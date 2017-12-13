@@ -14,16 +14,17 @@ schema:
     type: String
     description: >
       The email address of the contact person.
-  phone1:
-    value: 215-555-3000
-    type: String
-    description: >
-      If we need further information regarding a service, we may call this contact if a phone number is provided.
-  phone2:
-    value: 215-555-3001
-    type: String
-    description: >
-      The secondary phone number of the contact person.
+  phone:
+    primary:
+      value: 215-555-3000
+      type: String
+      description: >
+        If we need further information regarding a service, we may call this contact if a phone number is provided.
+    secondary:
+      value: 215-555-3001
+      type: String
+      description: >
+        The secondary phone number of the contact person.
   group:
     value: Support
     type: String
