@@ -132,10 +132,12 @@ endpoints:
             type: String
             value: Success!
             limit: 0-100 chracters
+            optional: true
           consultation_group:
             description: If we need help along the way, we'll contact someone from this group.
             value: Support
             limit: 0-50 characters
+            optional: true
           region:
             description: Required if address is a private IP, otherwise not used.
             type: String
@@ -145,6 +147,7 @@ endpoints:
             type: String
             value: If the Linode needs to be rebooted, please contact us first.
             limit: 0-1000 characters
+            optional: true
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
