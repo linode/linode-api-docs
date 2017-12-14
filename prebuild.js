@@ -388,6 +388,12 @@ const endpointMap = {
     routePath: `${ROUTE_BASE_PATH}/volumes`,
     groups: {},
   },
+  managed: {
+    name: 'Managed',
+    path: '/managed',
+    routePath: `${ROUTE_BASE_PATH}/managed`,
+    groups: {},
+  },
 };
 
 allEndpoints.forEach(function (endpointContainer) {
