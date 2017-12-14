@@ -606,7 +606,7 @@ endpoints:
                     "usd": "120.00",
                 }' \
                 https://$api_root/$version/account/payments
-  /account/payments/:id:
+  /account/payments/$id:
     group: Payments
     type: Resource
     authenticated: true
