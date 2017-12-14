@@ -60,3 +60,9 @@ schema:
     type: String
     description: The Longview Pro tier you are currently subscribed to.
     value: null
+  vat_number:
+    type: String
+    value: null
+    description: >
+      Your VAT identification number, for tax calculations in some countries.  If
+      you do not live in a country that collects VAT, this should be null.
