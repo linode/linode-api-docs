@@ -54,7 +54,6 @@ schema:
     value: Arch
     description: The upstream distribution vendor. Consistent between releases of a distro.
       None for private images.
-    filterable: true
 enums:
   Type:
     manual: Image was created manually
