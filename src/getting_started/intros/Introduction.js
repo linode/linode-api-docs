@@ -35,8 +35,8 @@ export default function Introduction() {
           We will regularly be making releases, some of which will contain breaking
           changes. <Link to={`/${API_VERSION}/changelogs`}>
             Please review the changelogs
-          </Link> and <Link to="https://welcome.linode.com/api">
-          subscribe to the mailing list</Link> for updates on  changes and releases.
+          </Link> and <ExternalLink to="https://welcome.linode.com/api">
+          subscribe to the mailing list</ExternalLink> for updates on  changes and releases.
         </div>
         <p>
           Occasionally we will add features and improvements to our API -
