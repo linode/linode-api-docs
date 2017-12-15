@@ -65,6 +65,7 @@ endpoints:
             curl -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/managed/contact/$contact_id
       PUT:
+        response: ManagedContact
         description: >
           Edits this contact.
         examples:
