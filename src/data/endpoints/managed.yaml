@@ -79,7 +79,16 @@ endpoints:
                         "secondary": "215-555-4001",
                     "group": "Developers"
                 }' \
-                https://$api_root/$version/account/oauth-clients/$client_id
+                https://$api_root/$version/managed/contact/$contact_id
+      DELETE:
+        description: >
+          Deletes this contact. This action cannot be undone.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://$api_root/$version/managed/contact/$contact_id
+
   #/managed/history:
   # group: History
   #  type: resource
