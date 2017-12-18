@@ -252,12 +252,12 @@ endpoints:
     type: resource
     authenticated: true
     description: >
-      Change the username and password for a credential.
+      Change the username and/or password for a credential.
     methods:
       POST:
         response: ManagedCredential
         description: >
-          Changes the username and password for a credential.
+          Changes the username and/or password for a credential.
         params:
           username:
             optional: True
