@@ -6,6 +6,32 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.16.7] 2017-12-18
+### Fixed
+- Link to API mailing list 404'd
+
+## [0.16.6] 2017-12-14
+### Added
+- /managed/contacts endpoints (linode/linode-api-docs#2)
+
+## [0.16.5] 2017-12-13
+### Removed
+- removed docs for image objects status, last\_used, filesystem properties
+- added properties for images: created_by, size, and type enums
+### Changed
+- renamed images created\_by property to creator
+### Fixed
+- scss names must be case-sensitive (Table/cell)
+
+
+## [0.16.4]
+### Changed
+- Meta version bump to sync with linode/manager repo for repo splitting
+
+## [0.16.3]
+### Changed
+- Meta version bump to sync with linode/manager repo for repo splitting
+
 ## [0.16.2] 2017-12-11
 ### Added
 - Deprecation flags (#2756, #2821)
