@@ -265,22 +265,33 @@ endpoints:
                     "username": "myusername2",
                 }' \
                 https://$api_root/$version/managed/credentials/$credential_id
-  /managed/credentials/$id/password:
+  /managed/credentials/$id/update:
     group: Credentials
     type: resource
     authenticated: true
     description: >
-      Change the password for a credential.
+      Change the username and/or password for a credential.
     methods:
       POST:
         response: ManagedCredential
         description: >
-          Changes the password for a credential.
+          Changes the username and/or password for a credential.
+        params:
+          username:
+            optional: True
+            description: New username to set for this credential.
+            value: myusername
+            type: String
+          password:
+            description: New password to set for this credential.
+            value: mypassword
+            type: String
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
+                    "username": "myusername",
                     "pasword": "mypassword",
                 }' \
                 https://$api_root/$version/managed/credentials/$credential_id/password
