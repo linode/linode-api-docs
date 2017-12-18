@@ -62,7 +62,13 @@ endpoints:
               The Block Storage Volume this ticket is regarding, if relevant.
             type: Integer
             optional: true
-        examples:
+          managed_issue_type:
+            description: >
+              The Managed issue type of this ticket. Do not pass this
+              unless your account has Managed Services activated. One of 'maint',
+              'issue', or 'request'.
+            type: Enum
+            optional: true
           curl: |
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \

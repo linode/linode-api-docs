@@ -73,8 +73,19 @@ schema:
     type: String
     description: The gravatar id of the user who opened this ticket.
     value: "aad889008f120255f1ac47fde3f5338b"
+  managed_issue_type:
+    type: Enum
+    description: The Managed issue type of this ticket. Only present if your
+     account has Managed Services activated.
+    value: issue
+    subtype: ManagedIssueType
 enums:
   Status:
     new: The support ticket has just been opened.
     open: The support ticket is open and can be replied to.
     closed: The support ticket is completed and closed.
+  ManagedIssueType:
+    issue: An issue
+    maint: Maintenance
+    request: Other request
+
