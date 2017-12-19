@@ -60,7 +60,7 @@ export default function Authentication() {
           This allows you to ensure that the OAuth flow was initiated by your application,
           rather than by someone manually navigating to {LOGIN_ROOT} with
           your <code>client_id</code>.
-          The important parameter is the code, this is the <em>access code</em>
+          The important parameter is the code, this is the <em>access code </em>
           you need to continue the OAuth flow.
         </p>
         <p>
