@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.16.8] 2017-12-19
+### Added
+- "Early Access" notice at the top of docs
+### Fixed
+- Added space between words on Access page
+
 ## [0.16.7] 2017-12-18
 ### Fixed
 - Link to API mailing list 404'd
