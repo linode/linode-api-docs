@@ -4,6 +4,10 @@ prefix: managed/issue
 description: >
   Managed Issue objects describe support ticket issues that have occurred while subscribed to your Managed service.
 schema:
+  id:
+    type: Integer
+    value: 1234567
+    description: ID of this Managed Issue.
   created:
     type: Datetime
     value: 2017-10-31T11:12:21

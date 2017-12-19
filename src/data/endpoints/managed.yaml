@@ -98,7 +98,7 @@ endpoints:
       GET:
         response: ManagedIssue
         description: >
-          Returns your managed service issue history list.
+          Returns your managed service issue list.
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
