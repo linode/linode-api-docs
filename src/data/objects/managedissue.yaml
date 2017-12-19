@@ -1,0 +1,53 @@
+# vim: set et ts=2 sw=2 tw=80 :
+name: ManagedIssue
+prefix: managed/issue
+description: >
+  Managed Issue objects describe support ticket issues that have occurred while subscribed to your Managed service.
+schema:
+  created:
+    type: Datetime
+    value: 2017-10-31T11:12:21
+    description: Time at which the issue was reported.
+  entity:
+    description: >
+      Displays information related to the type of issue being monitored by your Service.
+    id:
+      type: Integer
+      value: 1234567
+      description: ID of the created Support Ticket.
+    type:
+      type: String
+      value: ticket
+      description: >
+        The type of service issue being reported.
+    label:
+      type: String
+      value: Could not connect to URL
+      description: >
+        A summary of the issue being reported.
+    url:
+      type: String
+      value: /support/tickets/1234567
+      description: >
+        The endpoint URI related to the Support Ticket that was created.
+  services:
+    type: Array
+    description: >
+      List of impacted service IDs.
+    seeAlso: ["/endpoints/managed/services"]
+    value: [111, 123]
+enums:
+  ManagedServiceStatus:
+    new: A newly-created Service.
+    active: An active Service to monitor.
+    disabled: A disabled Service to monitor.
+  ManagedServiceType:
+    url: Monitor a specific URL.
+    tcp: Monitor a port via TCP.
+  ManagedServiceMethod:
+    get: Monitor a specific URL/port via GET.
+    post: Monitor a specific URL/port via POST.
+  ManagedServiceProtocol:
+    http: HTTP
+    https: HTTPS
+    tcp: TCP
