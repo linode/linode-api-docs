@@ -69,16 +69,14 @@ schema:
     editable: true
     description: >
       If the address is a private IP, you must use the region (as a slug) for the service being monitored. Otherwise, do not use.
-  # TODO - uncomment in ARB-301
-  #credentials:
-  #  type: String
-  #  isArray: true
-  #  subtype: integer
-  #  filterable: true
-  #  value: 12345,23456,34567
-  #  optional: true
-  #  description: >
-  #    An array of credentials associated with this service.
+  credentials:
+    type: Array
+    subtype: Integer
+    value: [12345, 23456, 34567]
+    editable: true
+    optional: true
+    description: >
+      An array of credentials associated with this service.
 enums:
   ManagedServiceStatus:
     new: A newly-created Service.

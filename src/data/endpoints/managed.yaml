@@ -158,6 +158,15 @@ endpoints:
             value: If the Linode needs to be rebooted, please contact us first.
             limit: 0-1000 characters
             optional: true
+          credentials:
+            type: Array
+            subtype: Integer
+            value: [12345, 23456, 34567]
+            editable: true
+            optional: true
+            description: >
+              An array of credentials to associate with this service.
+            seeAlso: ["reference/endpoints/managed/credentials"]
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
