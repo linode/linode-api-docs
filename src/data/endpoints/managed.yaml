@@ -310,3 +310,50 @@ endpoints:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/managed/credentials/$credential_id/revoke
+  /managed/linode_settings:
+    group: Linode Settings
+    type: resource
+    authenticated: true
+    description: >
+      Manage your Linodes' SSH settings.
+    methods:
+      GET:
+        response: ManagedLinodeSetting
+        description: >
+          Returns your Linodes' SSH settings.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/managed/linode_settings
+  /managed/linode_settings/$id:
+    group: Linode Settings
+    type: resource
+    authenticated: true
+    description: >
+      Manage your Linodes' SSH settings.
+    methods:
+      GET:
+        response: ManagedLinodeSetting
+        description: >
+          Returns this Linode's SSH settings.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/managed/linode_settings/$linode_settings_id
+      PUT:
+        response: ManagedLinodeSetting
+        description: >
+          Update this Linode's SSH settings.
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                  "ssh": {
+                    "user": "root",
+                    "port": 8080,
+                    "ip": "any",
+                    "access": true
+                  }
+                }' \
+                https://$api_root/$version/managed/linode_settings/$linode_settings_id
