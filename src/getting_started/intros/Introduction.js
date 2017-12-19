@@ -15,7 +15,7 @@ export default function Introduction() {
       <section>
         <br />
         <div className="alert alert-danger" role="alert">
-          This API is in <b>Early Access</b>, and as such we will regularly be making releases,
+          This API is an <b>Early Access</b> release. As such, we will be making regular revisions,
           some of which will contain <b>breaking changes. </b>
           <Link to={`/${API_VERSION}/changelogs`}>
             Please review the changelogs
@@ -25,7 +25,7 @@ export default function Introduction() {
         <p>
           The Linode APIv4 is an HTTP service that follows (to a large extent)&nbsp;
           <ExternalLink to="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</ExternalLink>
-          &nbsp;style. Resources (like Linodes) have predictable URLs that use standard
+          &nbsp;style. Resources like Linodes have predictable URLs that use standard
           HTTP methods to manipulate and return standard HTTP status codes to tell you how
           it went.
         </p>
@@ -41,8 +41,8 @@ export default function Introduction() {
           <Code example={`${API_ROOT}/${API_VERSION}/*`} name="bash" noclipboard />
         </section>
         <p>
-          Occasionally we will add features and improvements to our API -
-          only certain changes will trigger a version bump, including:
+          Occasionally we will add features and improvements to our API.
+          Only certain changes will trigger a version bump, including:
         </p>
         <ul>
           <li>Endpoint path changes</li>
