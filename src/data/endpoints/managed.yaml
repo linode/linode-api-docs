@@ -165,7 +165,7 @@ endpoints:
             editable: true
             optional: true
             description: >
-              An array of credentials to associate with this service.
+              An array of credential IDs to associate with this service.
             seeAlso: ["reference/endpoints/managed/credentials"]
         examples:
           curl: |

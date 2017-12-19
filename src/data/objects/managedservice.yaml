@@ -76,7 +76,7 @@ schema:
     editable: true
     optional: true
     description: >
-      An array of credentials associated with this service.
+      An array of credentials IDs associated with this service.
 enums:
   ManagedServiceStatus:
     new: A newly-created Service.
