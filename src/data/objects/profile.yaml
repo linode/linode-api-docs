@@ -50,7 +50,7 @@ schema:
       value: 2
       description: Total number of referrals attributed to user that have not yet converted to full accounts.
     credit:
-      type: Integer
+      type: Float
       value: 160
       description: US Dollar amount of credit based on completed referrals.
   ip_whitelist_enabled:

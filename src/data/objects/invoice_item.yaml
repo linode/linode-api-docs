@@ -17,11 +17,11 @@ schema:
     value: prepay
     description: The type of service, either 'prepay' or 'misc'
   amount:
-    type: integer
+    type: Float
     value: 20
     description: The price, in U.S. Dollars, of unitprice multiplied by quantity.
   unitprice:
-    type: integer
+    type: Float
     value: 10
     description: The monthly service fee (in US Dollars) for this item.
   label:
