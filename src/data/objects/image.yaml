@@ -39,7 +39,6 @@ schema:
   is_public:
     type: Boolean
     value: false
-    filterable: true
     description: True if the image is public.
   size:
     type: Integer
@@ -54,6 +53,11 @@ schema:
     value: Arch
     description: The upstream distribution vendor. Consistent between releases of a distro.
       None for private images.
+  deprecated:
+    type: Boolean
+    value: false
+    description: Whether or not this image is deprecated. Will only be true for deprecated
+      public images.
 enums:
   Type:
     manual: Image was created manually

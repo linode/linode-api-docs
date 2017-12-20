@@ -16,7 +16,7 @@ schema:
     limit: 1-255 characters
   status:
     type: Enum
-    subtype: Status
+    subtype: BackupStatus
     value: successful
     description: Status of the backup.
     filterable: false
@@ -57,7 +57,7 @@ schema:
     value: daily
     description: If this backup is available, which backup slot it is in.  Otherwise, unavailable.
 enums:
-  Status:
+  BackupStatus:
     paused: Backup job is currently suspended.
     pending: Backup job has not started yet.
     running: Backup job is currently running.

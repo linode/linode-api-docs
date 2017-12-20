@@ -27,7 +27,7 @@ schema:
       description: Cost (in cents) per hour.
       filterable: true
     monthly:
-      type: Integer
+      type: Float
       value: 1000
       description: Cost (in US dollars) per month.
       filterable: true
@@ -51,7 +51,7 @@ schema:
           description: Cost (in US dollars) per hour.
           filterable: true
         monthly:
-          type: Integer
+          type: Float
           value: 2.5
           description: Cost (in US dollars) per month.
           filterable: true
