@@ -89,21 +89,34 @@ endpoints:
             curl -H "Authorization: Bearer $TOKEN" \
                 -X DELETE \
                 https://$api_root/$version/managed/contact/$contact_id
-
-  #/managed/history:
-  # group: History
-  #  type: resource
-  #  description: >
-  #    A list of the issues created from monitoring your Services.
-  #  methods:
-  #    GET:
-  #      response: ManagedHistory
-  #      description: >
-  #        Returns your managed service issue history list.
-  #      examples:
-  #        curl: |
-  #          curl -H "Authorization: Bearer $TOKEN" \
-  #              https://$api_root/$version/managed/history
+  /managed/issues:
+    group: Issues
+    authenticated: true
+    description: >
+      A list of the issues created from monitoring your Services.
+    methods:
+      GET:
+        response: ManagedIssue
+        description: >
+          Returns your managed service issue list.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/managed/issues
+  /managed/issues/$id:
+    group: Issues
+    authenticated: true
+    description: >
+      Retrieve a particular issue.
+    methods:
+      GET:
+        response: ManagedIssue
+        description: >
+          Returns information about this issue.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/managed/issues/$issue_id
   /managed/services:
     group: Services
     type: resource
