@@ -111,12 +111,12 @@ schema:
     type: Object
     description: >
       Information about the rendered zone file.  This shows what is live right
-      now, and recent changes may take a minute to be reflected in this value.
+      now, and recent changes may take a few minutes to be reflected in this value.
     rendered:
       type: String
       description: >
         The rendered zone file as it is right now.  This value is refreshed
-        periodically, and may take a minute to reflect changes.
+        periodically, and may take a few minutes to reflect changes.
       editable: false
       value: ""
     status:
