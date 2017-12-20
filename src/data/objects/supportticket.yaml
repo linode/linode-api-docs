@@ -86,6 +86,6 @@ enums:
     closed: The support ticket is completed and closed.
   ManagedIssueType:
     issue: An issue
-    maint: Maintenance
+    maintenance: Maintenance
     request: Other request
 

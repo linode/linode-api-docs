@@ -65,7 +65,7 @@ endpoints:
           managed_issue_type:
             description: >
               The Managed issue type of this ticket. Do not pass this
-              unless your account has Managed Services activated. One of 'maint',
+              unless your account has Managed Services activated. One of 'maintenance',
               'issue', or 'request'.
             type: Enum
             optional: true
