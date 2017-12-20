@@ -39,6 +39,7 @@ schema:
   is_public:
     type: Boolean
     value: false
+    fitlerable: true
     description: True if the image is public.
   size:
     type: Integer
