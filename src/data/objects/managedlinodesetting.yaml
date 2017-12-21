@@ -1,0 +1,51 @@
+# vim: set et ts=2 sw=2 tw=80 :
+name: ManagedLinodeSetting
+prefix: managed/linode_settings
+description: >
+  Managed Linode Setting objects describe SSH information for your managed Linodes.
+schema:
+  id:
+    type: Integer
+    value: 123
+    description: The ID of the Linode's settings.
+  label:
+    type: String
+    editable: false
+    value: LinodeSettingsLabel
+    description: >
+      Unique label of your Linode.
+  group:
+    type: String
+    editable: false
+    value: ManagedLinodeGroup
+    description: >
+      This Linode's display group.
+  ssh:
+    type: Object
+    description: >
+      The SSH settings for your Linode.
+    user:
+      type: String
+      editable: true
+      value: root
+      description: >
+        The SSH username used to log into your Linode.
+    ip:
+      type: String
+      editable: true
+      value: 204.23.61.122
+      description: >
+        Either "any" or an IP address associated with this Linode. Both IPv4 and IPv6 are supported.
+    access:
+      type: Boolean
+      editable: true
+      value: true
+      description: >
+        Whether or not SSH is enabled on the Linode.
+    port:
+      type: Integer
+      editable: true
+      value: 22
+      description: >
+        The SSH port used to access the Linode.
+
