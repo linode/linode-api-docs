@@ -89,7 +89,6 @@ function formatSchemaExample(schema, paginationKey) {
   const schemaExample = {};
 
   if (!Array.isArray(schema)) {
-    // TODO: Account for objects / clean this method up
     return schemaExample;
   }
 
@@ -101,15 +100,7 @@ function formatSchemaExample(schema, paginationKey) {
         schemaExample[obj.name] = [schemaExample[obj.name]];
       }
     } else {
-      let value = obj.value;
-      if (Array.isArray(value)) {
-        value = value.map(function (obj) {
-          if (typeof obj === 'object' && obj !== null) {
-            return formatSchemaExample(obj);
-          }
-          return obj;
-        });
-      }
+      const value = obj.value;
 
       schemaExample[obj.name] = value;
     }
