@@ -211,6 +211,25 @@ endpoints:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/managed/services/$service_id
+      PUT:
+        description: >
+          Edits this Managed service.
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                    "label": "NewerMonitor",
+                    "service_type": "url",
+                    "address": "http://monitor2.example.org",
+                    "timeout": 60,
+                    "consultation_group": "DevOps",
+                    "region": null,
+                    "body": "It is working.",
+                    "notes": "Please contact us if the Linode must be rebooted",
+                    "credentials": 23456,34567,45678
+                }' \
+                https://$api_root/$version/managed/credentials/$credential_id
       DELETE:
         description: >
           Deletes this service.
