@@ -379,3 +379,18 @@ endpoints:
                   }
                 }' \
                 https://$api_root/$version/managed/linode_settings/$linode_settings_id
+  /managed/stats:
+    group: Stats
+    type: Action
+    authenticated: true
+    description: >
+      Returns CPU, disk, swap, and network in/out stats for the last 24 hours.
+    methods:
+      GET:
+        response: ManagedStat
+        description: >
+           Returns statistics for the last 24 hours.
+        examples:
+          curl: |
+            curl -H "Authorization: token $TOKEN" \
+                https://$api_root/$version/managed/stats
