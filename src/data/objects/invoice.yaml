@@ -23,8 +23,8 @@ schema:
     value: 123
     description: The invoice's ID.
   total:
-    type: integer
-    value: 120
+    type: Float
+    value: 120.0
     filterable: true
     description: The amount of the invoice in U.S. Dollars.
   label:
