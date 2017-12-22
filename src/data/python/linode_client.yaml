@@ -63,7 +63,7 @@ groups:
         methods:
             get_distributions:
                 desc: >
-                    Retrieves a list of Distribution objects.  This function is filterable - include fitlers
+                    Retrieves a list of Distribution objects.  This function is filterable - include filters
                     in the parameters list to retrieve only specific objects.
                 parameters:
                     '*filters':
