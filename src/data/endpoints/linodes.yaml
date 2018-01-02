@@ -81,7 +81,7 @@ endpoints:
             description: >
               UDF (user-defined fields) for this stackscript. Defaults to "{}".
               <ul><li>Must match UDFs required by stackscript.</li></ul>
-            type: String
+            type: Object
           backup_id:
             optional: true
             description: >
@@ -253,7 +253,7 @@ endpoints:
             description: >
               UDF (user-defined fields) for this stackscript. Defaults to "{}".
               <ul><li>Must match UDFs required by stackscript.</li></ul>
-            type: String
+            type: Object
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
@@ -1058,7 +1058,7 @@ endpoints:
             description: >
               UDF (user-defined fields) for this stackscript. Defaults to "{}".
               <ul><li>Must match UDFs required by stackscript.</li></ul>
-            type: String
+            type: Object
           booted:
             optional: true
             description: >
