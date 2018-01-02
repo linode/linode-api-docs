@@ -218,3 +218,26 @@ endpoints:
           python: |
             v = linode.Volume(client, 123)
             v.detach()
+  /volumes/$id/resize:
+    authenticated: true
+    description: >
+      Increase the size of a volume.
+    methods:
+      POST:
+        oauth: volumes:modify
+        description: >
+          Increase the size of a volume.  You may not decrease the size of a volume
+          with this endpoint.
+        params:
+          size:
+            type: Integer
+            description: The new size of this volume.
+            value: 2000
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: token $TOKEN" \
+                -X POST -d '{
+                    "size": 2000
+                }'
+                https://$api_root/$version/volumes/$volume_id/resize
