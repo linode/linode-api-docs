@@ -139,7 +139,7 @@ export default function Filtering() {
             },
             { operator: '+neq', type: 'string', description: 'Does not equal the value' },
             {
-              operator: '+order-by',
+              operator: '+order_by',
               type: 'string',
               description: 'Attribute to order the results by - must be filterable',
             },
@@ -147,7 +147,7 @@ export default function Filtering() {
               operator: '+order',
               type: 'string',
               description: 'Either "asc" or "desc". ' +
-                'Defaults to "asc". Requires an "+order-by" be given.',
+                'Defaults to "asc". Requires an "+order_by" be given.',
             },
           ]}
         />
