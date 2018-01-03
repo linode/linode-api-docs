@@ -655,7 +655,8 @@ endpoints:
     type: Action
     authenticated: true
     description: >
-      Changes a Linode's hypervisor from Xen to KVM.
+      Changes a Linode's hypervisor from Xen to KVM. This endpoint can only be
+      used if your Linode is currently Xen and you wish to move to KVM.
     methods:
       POST:
         oauth: linodes:modify
