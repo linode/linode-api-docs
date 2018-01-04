@@ -238,6 +238,40 @@ endpoints:
             curl -H "Authorization: Bearer $TOKEN" \
                 -X DELETE
                 https://$api_root/$version/managed/services/$service_id
+  /managed/services/$id/enable:
+    group: Services
+    type: Action
+    authenticated: true
+    description: >
+      Enables a Managed service your account may access.
+    methods:
+      POST:
+        description: >
+          Enables this Managed service. Will only enable if it is currently
+          disabled. An enabled service is actively monitored.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X POST
+                https://$api_root/$version/managed/services/$service_id/enable
+  /managed/services/$id/disable:
+    group: Services
+    type: Action
+    authenticated: true
+    description: >
+      Disables a Managed service your account may access.
+    methods:
+      POST:
+        description: >
+          Disables this Managed service. Will only disable if it is currently
+          enabled. Linode Managed will not resume monitoring this service until
+          you reenable monitoring. For more information, see
+          https://www.linode.com/docs/platform/linode-managed/#temporarily-disabling-service-monitoring
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X POST
+                https://$api_root/$version/managed/services/$service_id/disable
   /managed/credentials:
     group: Credentials
     type: resource
