@@ -53,6 +53,23 @@ endpoints:
             my_settings.country = 'US'
             my_settings.email = 'jsmith@company.com'
             my_settings.save()
+  /account/settings/managed-enable:
+    group: Settings
+    authenticated: true
+    description: >
+      Enable Linode Managed on youy account.
+    methods:
+      POST:
+        money: true
+        scopes: account:modify
+        description: >
+          Enable Linode Managed on youy account. Only unrestricted users can do this.
+          See https://linode.com/managed for details and pricing information.
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/account/settings/managed-enable
   /account/oauth-clients:
     group: OAuth Clients
     authenticated: true
