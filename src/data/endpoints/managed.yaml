@@ -247,7 +247,8 @@ endpoints:
     methods:
       POST:
         description: >
-          Enables this Managed service.
+          Enables this Managed service. Will only enable if it is currently
+          disabled. An enabled service is actively monitored.
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
@@ -262,7 +263,10 @@ endpoints:
     methods:
       POST:
         description: >
-          Disables this Managed service.
+          Disables this Managed service. Will only disable if it is currently
+          enabled. Linode Managed will not resume monitoring this service until
+          you reenable monitoring. For more information, see
+          https://www.linode.com/docs/platform/linode-managed/#temporarily-disabling-service-monitoring
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
