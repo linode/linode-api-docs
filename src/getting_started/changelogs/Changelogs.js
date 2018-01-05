@@ -39,7 +39,7 @@ export default function Authentication() {
             </ul>
           </li>
           <li>Added GET /managed/stats endpoint</li>
-          <li>Added PUT for /managed/linode_settings</li>
+          <li>Added PUT /managed/linode_settings</li>
           <li>Added PUT endpoints to managed service</li>
           <li>Add managed_issue_type to support/tickets/
             <ul>
@@ -75,10 +75,10 @@ export default function Authentication() {
         <ul>
           <li>Reworked UserGrant system
             <ul>
-              <li>Three Grant levels are now enforced: No grants, read_only, and read_write</li>
-              <li>read_only allows access to GET endpoints</li>
-              <li>read_write is equivalent to legacy "all" grant</li>
-              <li>Legacy "all" or "access" grants are treated as read_write</li>
+              <li>Three Grant levels are now enforced: No grants, "read_only", and "read_write"</li>
+              <li>"read_only" allows access to GET endpoints</li>
+              <li>"read_write" is equivalent to legacy "all" grant</li>
+              <li>Legacy "all" or "access" grants are treated as "read_write"</li>
             </ul>
           </li>
           <li>Changed GET /account/users/:username/grants
