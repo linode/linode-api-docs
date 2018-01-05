@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.16.9] 2018-01-05
+### Added
+- Docs for 2018-01-08 release
+### Fixed
+- Assorted incorrect information
+
 ## [0.16.8] 2017-12-19
 ### Added
 - "Early Access" notice at the top of docs
