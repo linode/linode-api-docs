@@ -15,6 +15,100 @@ export default function Authentication() {
         </p>
       </section>
       <section>
+        <h2>2018-01-08</h2>
+        <hr /><br />
+        <b>Breaking:</b><br />
+        <ul>
+          <li>Update /linode/distributions and /image responses
+            <ul>
+              <li>remove status key</li>
+              <li>remove filesystem key</li>
+              <li>remove last_used key</li>
+              <li>rename creator -> created_by (string)</li>
+              <li>rename min_deploy_size -> size (int)</li>
+            </ul>
+          </li>
+        </ul>
+        <b>Features:</b><br />
+        <ul>
+          <li>Added enable, disable managed service endpoints
+            <ul>
+              <li>Added POST /managed/services/:id/enable</li>
+              <li>Added POST /managed/services/:id/disable</li>
+              <li>Added status to managed service JSON response object</li>
+            </ul>
+          </li>
+          <li>Added GET /managed/stats endpoint</li>
+          <li>Added PUT /managed/linode_settings</li>
+          <li>Added PUT endpoints to managed service</li>
+          <li>Add managed_issue_type to support/tickets/
+            <ul>
+              <li>GET /support/tickets returns new managed_issue_type key</li>
+              <li>POST /support/tickets now accepts this key if the account has
+              Managed Services enabled</li>
+            </ul>
+          </li>
+          <li>Added GET /managed/issues and GET /managed/issues/:id
+            <ul>
+              <li>GET /managed/issues returns all issues, including relevant history</li>
+              <li>GET /managed/issues/:id returns a single issue</li>
+              <li>Since managed issues are backed by support tickets, uses the ticket ID</li>
+            </ul>
+          </li>
+          <li> Added vat_number to  /account/settings
+            <ul>
+              <li>Can be viewed and updated</li>
+            </ul>
+          </li>
+          <li>Sends emails when enabling/disabling TFA</li>
+          <li>Rendered zone file returned in Domain object</li>
+          <li>Added DELETE /managed/services/:id endpoint</li>
+          <li>Added DELETE /managed/contacts/:id</li>
+        </ul>
+        <b>Bugfixes:</b><br />
+        <ul>
+          <li>Allow filtering of GET /images</li>
+        </ul>
+        <h2>2017-11-20</h2>
+        <hr /><br />
+        <b>Breaking Changes:</b><br />
+        <ul>
+          <li>Reworked UserGrant system
+            <ul>
+              <li>Three Grant levels are now enforced: No grants, "read_only", and "read_write"</li>
+              <li>"read_only" allows access to GET endpoints</li>
+              <li>"read_write" is equivalent to legacy "all" grant</li>
+              <li>Legacy "all" or "access" grants are treated as "read_write"</li>
+            </ul>
+          </li>
+          <li>Changed GET /account/users/:username/grants
+            <ul>
+              <li>Grants response objects now always include "id", "label" and "permissions"</li>
+              <li>"permissions" can be null or an enum of either "read_only" or "read_write"</li>
+            </ul>
+          </li>
+          <li>Changed PUT /account/users/:username/grants
+            <ul>
+              <li>Grants now accepted in the new format detailed above</li>
+            </ul>
+          </li>
+          <li>Changed GET /profile/grants
+            <ul>
+              <li>Grants returned in new format detailed above</li>
+            </ul>
+          </li>
+        </ul>
+        <b>Changes:</b>
+        <ul>
+          <li>Added support for CAA Domain records</li>
+          <li>Changed POST /linode/instances/:id/disks
+            <ul>
+              <li>Now accepts "image" - an image ID to deploy from</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <section>
         <h2>2017-12-11</h2>
         <hr /><br />
         <b>Breaking:</b><br />
