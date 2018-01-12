@@ -4,6 +4,12 @@ prefix: account/profile
 description: >
   Your User profile information.
 schema:
+  uuid:
+    type: Integer
+    value: 123
+    description: >
+      A unique id for the user. This will never change even if the user changes
+      their email or username.
   username:
     type: String
     value: example_user
