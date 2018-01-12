@@ -26,6 +26,40 @@ to run the prebuild script and start the development server. Connect to
 make will be applied on the fly, but you may occasionally find that you have to
 restart it.
 
+### Making Commits
+
+We use [gitchangelog](https://github.com/vaab/gitchangelog) to generate our
+changelogs for this repository.  Please begin commit messages with one of these
+prefixes to have them included in the changelog:
+
+| Tag | Meaning |
+| new | Features |
+| bug | Bug Fixes |
+| ref | Refactors |
+| brk | Breaking Changes |
+
+If you have more information to include in the changelog, include them as bullet
+points below, starting the line with an asterisk.
+
+Example:
+
+```bash
+new: Added docs for /some/thing
+
+This text is ignored
+
+* More information in the changelog
+```
+
+This will produce the following output:
+
+```
+Features:
+
+ * Added docs for /some/thing
+   * More information in the changelog
+```
+
 ## Scripts
 
 The `prebuild.js` script converts yaml into a js file imported by the app. 
