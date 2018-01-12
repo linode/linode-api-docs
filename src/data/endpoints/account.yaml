@@ -5,11 +5,10 @@ description: >
   Account endpoints provide a means of manipulating your account, including users,
   OAuth Clients and Tokens, and Events.
 endpoints:
-  /account/settings:
-    group: Settings
+  /account:
     type: resource
     description: >
-      Manage your account settings.
+        Managed account contact and billing information.
     methods:
       GET:
         response: account
@@ -17,16 +16,15 @@ endpoints:
           Returns your account settings.
         examples:
           curl: |
-            curl https://$api_root/$version/account/settings
-          python: |
-            my_settings = client.account.get_settings()
+            curl -h "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/account
       PUT:
         description: >
           Edits your account settings.
         examples:
           curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
+            curl -h "content-type: application/json" \
+                -h "authorization: bearer $token" \
                 -X PUT -d '{
                   "address_1": "123 Main St.",
                   "address_2": "Suite 101",
@@ -36,23 +34,39 @@ endpoints:
                   "email": "jsmith@mycompany.com",
                   "first_name": "John",
                   "last_name": "Smith",
-                  "network_helper": true,
                   "phone": "555-555-1212",
                   "state": "PA",
                   "zip": 19102,
+                  }
+                }' \
+                https://$api_root/$version/account
+  /account/settings:
+    group: Settings
+    type: resource
+    description: >
+      Manage default settings for your account.
+    methods:
+      GET:
+        response: account_settings
+        description: >
+          Returns your current defaults.
+        examples:
+          curl: |
+            curl -h "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/account/settings
+      PUT:
+        description: >
+          Edits your account's defaults.
+        examples:
+          curl: |
+            curl -h "Content-Type: application/json" \
+                -h "Authorization: Bearer $TOKEn" \
+                -X PUT -d '{
+                  "network_helper": true,
                   "longview_subscription": "longview-10"
                   }
                 }' \
                 https://$api_root/$version/account/settings
-          python: |
-            my_settings = client.account.get_settings()
-            my_settings.address_1 = '123 Main St.'
-            my_settings.address_2 = 'Suite 101'
-            my_settings.city = 'Philadelphia'
-            my_settings.company = 'My Company, LLC'
-            my_settings.country = 'US'
-            my_settings.email = 'jsmith@company.com'
-            my_settings.save()
   /account/settings/managed-enable:
     group: Settings
     authenticated: true
