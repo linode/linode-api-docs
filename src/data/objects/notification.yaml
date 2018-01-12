@@ -46,11 +46,11 @@ schema:
     value: null
 enums:
   NotificatonType:
-    important_ticket: There is a ticket open on your account that requires your attention.
-    abuse_ticket: There is an abuse-related ticket on your account that requires your attention.
+    ticket_important: There is a ticket open on your account that requires your attention.
+    ticket_abuse: There is an abuse-related ticket on your account that requires your attention.
     outage: There is a known outage impacting one or more of your services.
-    pending_migration: There is a migration queued for one of your Linodes that you must initiate.
-    scheduled_migration: There is a migration queued for one of your Linodes.
-    outstanding_balance: You have a balance on your account that must be paid.
+    migration_pending: There is a migration queued for one of your Linodes that you must initiate.
+    migration_scheduled: There is a migration queued for one of your Linodes.
+    balance_outstanding: You have a balance on your account that must be paid.
     xsa: You have a Linode impacted by a Xen Security Advisory which will require migration.
-    scheduled_reboot: There is a reboot queued for one of your Linodes.
+    reboot_scheduled: There is a reboot queued for one of your Linodes.
