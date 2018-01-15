@@ -1019,7 +1019,7 @@ endpoints:
     description: >
       Deletes all Disks and Configs on this Linode, then deploys a new
       Distribution or Image to this Linode with the given attributes. Returns
-      information about this Linode.
+      a JSON object representation of the Linode's disks and configs.
     methods:
       POST:
         oauth: linodes:modify
