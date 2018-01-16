@@ -2,11 +2,8 @@ name: Linode Backups Response
 description: >
     Information on a Linode's available Backups.
 schema:
-  daily:
-    description: The current Daily backup for this Linode.
-    type: Backup
-  weekly:
-    description: This Linode's current weekly backups.  Between 0 and 2 items.
+  automatic:
+    description: This Linode's automatic backups.
     type: backup
     isArray: true
   snapshot:
@@ -15,12 +12,3 @@ schema:
       type: Backup
     in_progress:
       type: Backup
-  service:
-    description: >
-      Status and information about the backup service.
-    enabled:
-      type: Boolean
-      value: true
-    updated:
-      type: String
-      value: 2017-03-27T10:30:00

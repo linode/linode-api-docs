@@ -818,7 +818,6 @@ endpoints:
     methods:
       GET:
         response: backupsresponse
-        paginationKey: backups
         description: >
           Returns a Backups Response with information on this Linode's available backups.
         oauth: linodes:view
