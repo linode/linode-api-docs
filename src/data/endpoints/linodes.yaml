@@ -371,36 +371,6 @@ endpoints:
                 https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id/password
           python: |
             disk.reset_root_password('hunter2')
-  /linode/instances/$id/disks/$id/imagize:
-    group: Disks
-    type: Strange
-    authenticated: true
-    description: Creates a gold-master image for future deployments.
-    methods:
-      POST:
-        oauth: linodes:modify
-        response: image
-        params:
-          label:
-            optional: true
-            description: >
-              Sets the name of the image shown in the base image list, defaults
-              to the source disk label.
-            type: String
-            value: My gold master image
-          description:
-            optional: true
-            description: An optional description of the created image
-            type: String
-            value: This is the image description, it's more descriptive than a label.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{
-                    "label": "My gold master image"
-                }' \
-                https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id/imagize
   /linode/instances/$id/configs:
     group: Configs
     authenticated: true
