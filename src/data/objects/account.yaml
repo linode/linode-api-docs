@@ -25,15 +25,17 @@ schema:
     value: Suite 101
   city:
     type: String
-    description: City portion of this account's billing address.
+    description: The city for this account's billing address.
     value: Philadelphia
   state:
     type: String
-    description: State (or province) portion of this account's billing address.
+    description: >
+      State portion of this account's billing address, or province if you
+      are outside of the United States.
     value: PA
   zip:
     type: String
-    description: Zip Code portion of this account's billing address.
+    description: The zip code for this account's billing address.
     value: 19102
   country:
     type: String

@@ -16,15 +16,15 @@ endpoints:
           Returns your account settings.
         examples:
           curl: |
-            curl -h "Authorization: Bearer $TOKEN" \
+            curl -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/account
       PUT:
         description: >
           Edits your account settings.
         examples:
           curl: |
-            curl -h "content-type: application/json" \
-                -h "authorization: bearer $token" \
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "address_1": "123 Main St.",
                   "address_2": "Suite 101",
@@ -52,15 +52,15 @@ endpoints:
           Returns your current defaults.
         examples:
           curl: |
-            curl -h "Authorization: Bearer $TOKEN" \
+            curl -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/account/settings
       PUT:
         description: >
           Edits your account's defaults.
         examples:
           curl: |
-            curl -h "Content-Type: application/json" \
-                -h "Authorization: Bearer $TOKEn" \
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "network_helper": true,
                   "longview_subscription": "longview-10"
