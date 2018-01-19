@@ -6,7 +6,7 @@ schema:
   billable:
     type: Integer
     value: 0
-    description: Amount of billable pool.
+    description: The amount of your transfer pool that is billable this billing cycl.
   quota:
     type: Integer
     value: 2000
@@ -15,7 +15,3 @@ schema:
     type: Integer
     value: 0
     description: The amount of network usage you have used this billing cycle.
-  max:
-    type: Integer
-    value: 2000
-    description: Help me!
