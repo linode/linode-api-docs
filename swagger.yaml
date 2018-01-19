@@ -1,0 +1,90 @@
+openapi: 3.0.1
+info:
+  version: 4.0.0
+  title: Linode API V4
+  description: Linode API Description goes here
+  contact:
+    name: Linode
+    email: support@linode.com
+    url: 'https://linode.com'
+servers:
+  - url: 'https://api.linode.com/v4'
+paths:
+  /regions:
+    get:
+      description: |
+        List the regions available for Linode services.  Not all services are
+        guaranteed to be available in all regions.
+      operationId: getRegions
+      responses:
+        '200':
+          description: Returns a list of Regions
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationEnvelope'
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Region'
+  '/regions/{regionId}':
+    parameters:
+      - name: regionId
+        in: path
+        description: ID of the Region to look at
+        required: true
+        schema:
+          type: string
+    get:
+      description: |
+        Get information about a single Region.
+      operationId: getRegion
+      security:
+        - personalAccessToken: []
+      responses:
+        '200':
+          description: A single Region object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
+components:
+  securitySchemes:
+    personalAccessToken:
+      type: apiKey
+      name: Authorization
+      in: header
+    oauth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'https://login.linode.com/oauth/authoirze'
+          scopes:
+            'linodes:view': GET endpoints for Linodes
+  schemas:
+    PaginationEnvelope:
+      required:
+        - pages
+        - page
+        - results
+        - data
+      properties:
+        data:
+          type: array
+        pages:
+          type: integer
+        page:
+          type: integer
+        results:
+          type: integer
+    Region:
+      required:
+        - id
+        - country
+      properties:
+        id:
+          type: string
+        country:
+          type: string
