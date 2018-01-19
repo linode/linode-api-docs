@@ -41,8 +41,6 @@ paths:
       description: |
         Get information about a single Region.
       operationId: getRegion
-      security:
-        - personalAccessToken: []
       responses:
         '200':
           description: A single Region object
