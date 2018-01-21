@@ -48,6 +48,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Region'
+  /linode/instances:
+    get:
+      description: |
+        Manage Linodes on your account.
+      operationId: getLinodeInstaces
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - 'linodes:view'
+      responses:
+        '200':
+          description: Return a list of all Linodes on your account.
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/PaginationEnvelope'
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Linode'
 components:
   securitySchemes:
     personalAccessToken:
@@ -57,8 +79,9 @@ components:
     oauth:
       type: oauth2
       flows:
-        implicit:
-          authorizationUrl: 'https://login.linode.com/oauth/authoirze'
+        authorizationCode:
+          authorizationUrl: 'https://login.linode.com/oauth/authorize'
+          tokenUrl: 'https://login.linode.com/oauth/token'
           scopes:
             'linodes:view': GET endpoints for Linodes
   schemas:
@@ -86,3 +109,26 @@ components:
           type: string
         country:
           type: string
+    Linode:
+      required:
+        - id
+        - label
+        - group
+      properties:
+        id:
+          type: integer
+          description: This Linode's ID.
+        label:
+          type: string
+          description: This Linode's unique label.
+        group:
+          type: string
+          description: |
+            The group thie Linode is in.  This is for display purposes only.
+        status:
+          type: string
+          description: |
+            A breif description of this Linode's current state.
+          enum:
+            - running
+            - offline
