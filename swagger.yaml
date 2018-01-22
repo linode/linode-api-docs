@@ -70,6 +70,28 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Linode'
+  '/linode/instances/{linodeId}':
+    parameters:
+      - name: linodeId
+        in: path
+        description: ID of the Linode to look up
+        required: true
+        schema:
+          type: integer
+    get:
+      description: Get a Linode
+      operationId: getLinodeInstance
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - 'linodes:view'
+      responses:
+        '200':
+          description: Returns a single Linode
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Linode'
 components:
   securitySchemes:
     personalAccessToken:
@@ -128,7 +150,13 @@ components:
         status:
           type: string
           description: |
-            A breif description of this Linode's current state.
+            A brief description of this Linode's current state.
           enum:
             - running
             - offline
+        hypervisor:
+          type: string
+          description: The hypervisor this Linode is running under.
+          enum:
+            - kvm
+            - xen
