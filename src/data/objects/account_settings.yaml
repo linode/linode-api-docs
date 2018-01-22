@@ -7,7 +7,14 @@ schema:
     type: Boolean
     description: Enables network helper by default across all users.
     value: true
+    editable: true
   longview_subscription:
     type: String
     description: The Longview Pro tier you are currently subscribed to.
     value: null
+    editable: true
+  managed:
+    type: Boolean
+    description: |
+      If this account subscribes to Linode Managed.  To subscribe to managed,
+      POST to /account/settings/managed-enable
