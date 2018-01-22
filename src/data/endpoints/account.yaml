@@ -673,3 +673,19 @@ endpoints:
               The PayerID returned by PayPal during the transaction authorization
               process.
             value: ABCDEFGHIJKLM
+  /account/transfer:
+    group: Transfer
+    type: resource
+    authenticated: true
+    description: >
+      View your network utilization for the current month, in gigabytes.
+    methods:
+      GET:
+        response: transfer
+        oauth: account:view
+        description: >
+          Returns transfer pool statistics based on active Linodes and
+          NodeBalancers on your account.
+        examples:
+          curl: |
+            curl https://$api_root/$version/account/transfer

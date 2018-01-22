@@ -1,0 +1,17 @@
+name: Transfer
+prefix: transfer
+description: >
+    Transfer pool statistics
+schema:
+  billable:
+    type: Integer
+    value: 0
+    description: The amount of your transfer pool that is billable this billing cycl.
+  quota:
+    type: Integer
+    value: 2000
+    description: The amount of network usage allowed each billing cycle.
+  used:
+    type: Integer
+    value: 0
+    description: The amount of network usage you have used this billing cycle.
