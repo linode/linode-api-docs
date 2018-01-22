@@ -57,14 +57,14 @@ endpoints:
     group: Settings
     authenticated: true
     description: >
-      Enable Linode Managed, our 24/7 monitoring service, on you account.
+      Enable Linode Managed, our 24/7 monitoring service, on your account.
     methods:
       POST:
         money: true
         scopes: account:modify
         type: Action
         description: >
-          Enable Linode Managed, our 24/7 monitoring service, on you account.
+          Enable Linode Managed, our 24/7 monitoring service, on your account.
           Only unrestricted users can do this.  See https://linode.com/managed
           for details and pricing information.
         examples:
