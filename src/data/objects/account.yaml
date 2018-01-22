@@ -1,9 +1,20 @@
-# vim: set et ts=2 sw=2 tw=80 :
 name: Account
-prefix: account/settings
+prefix: account
 description: >
-    A representation of account settings.
+    Your account contact and billing information.
 schema:
+  first_name:
+    type: String
+    description: This account holder's first name.
+    value: John
+  last_name:
+    type: String
+    description: This account holder's last name.
+    value: Smith
+  company:
+    type: String
+    description: This account's company name.
+    value: My Company LLC
   address_1:
     type: String
     description: First line of this account's billing address.
@@ -14,12 +25,18 @@ schema:
     value: Suite 101
   city:
     type: String
-    description: City portion of this account's billing address.
+    description: The city for this account's billing address.
     value: Philadelphia
-  company:
+  state:
     type: String
-    description: This account's company name.
-    value: My Company LLC
+    description: >
+      State portion of this account's billing address, or province if you
+      are outside of the United States.
+    value: PA
+  zip:
+    type: String
+    description: The zip code for this account's billing address.
+    value: 19102
   country:
     type: String
     description: Country portion of this account's billing address.
@@ -28,41 +45,17 @@ schema:
     type: String
     description: Email address associated with the account.
     value: jsmith@mycompany.com
-  first_name:
-    type: String
-    description: This account holder's first name.
-    value: John
-  last_name:
-    type: String
-    description: This account holder's last name.
-    value: Smith
-  network_helper:
-    type: Boolean
-    description: Enables network helper by default across all users.
-    value: true
   phone:
     type: String
     description: Phone number associated with the account. Required format is 123-456-7890.
     value: 555-555-1212
-  state:
-    type: String
-    description: State (or province) portion of this account's billing address.
-    value: PA
-  zip:
-    type: String
-    description: Zip Code portion of this account's billing address.
-    value: 19102
-  balance:
-    type: Float
-    description: This account's balance (in US Dollars).
-    value: 0.00
-  longview_subscription:
-    type: String
-    description: The Longview Pro tier you are currently subscribed to.
-    value: null
   vat_number:
     type: String
     value: null
     description: >
       Your VAT identification number, for tax calculations in some countries.  If
       you do not live in a country that collects VAT, this should be null.
+  balance:
+    type: Float
+    description: This account's balance (in US Dollars).
+    value: 0.00
