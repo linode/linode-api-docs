@@ -212,10 +212,14 @@ endpoints:
             type: Boolean
             optional: true
             value: true
-          # ssl_cert:
-          #  description: SSL certificate served by the NodeBalancer when the protocol is "https".
-          # ssl_key:
-          #  description: Unpassphrased private key for the SSL certificate when the protocol is "https".
+          ssl_cert:
+            description: SSL certificate served by the NodeBalancer when the protocol is "https".
+            type: String
+            optional: true
+          ssl_key:
+            description: Unpassphrased private key for the SSL certificate when the protocol is "https".
+            type: String
+            optional: true
           cipher_suite:
             description: SSL cipher suite to enforce.
             type: Enum
