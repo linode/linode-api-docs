@@ -282,27 +282,6 @@ endpoints:
           python: |
             nb_config = linode.NodeBalancerConfig(client, 456, 123) # linode_client, nodebalancer_config_id, nodebalancer_id
             nb_config.delete()
-  /nodebalancers/$id/configs/$id/ssl:
-    group: Configs
-    type: resource
-    authenticated: true
-    description: >
-      Add or update SSL certificate and https protocol to an existing config profile.
-    methods:
-      POST:
-        oauth: nodebalancers:modify
-        description: Adds/updates SSL certificates
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{
-                  "ssl_cert": "----- BEGIN CERTIFICATE ----- < etc...> ----- END CERTIFICATE -----",
-                  "ssl_key": "----- BEGIN PRIVATE KEY ----- < etc...> ----- END PRIVATE KEY -----"
-                }' \
-                https://$api_root/$version/nodebalancers/$nodebalancer_id/configs/$config_id/ssl
-          python: |
-            # currently unimplemented
   /nodebalancers/$id/configs/$id/nodes:
     group: Configs
     authenticated: true
