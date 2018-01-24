@@ -15,6 +15,83 @@ export default function Authentication() {
         </p>
       </section>
       <section>
+        <h2>2018-01-24</h2>
+        <hr /><br />
+        <b>Breaking:</b><br />
+        <ul>
+          <li>Removed "token" Authorization scheme
+            <ul>
+              <li>The same value is accepted as "Bearer"</li>
+              <li>No longer accepted: "Authorization: token $TOKEN"</li>
+              <li>Please send as: "Authorization: Bearer $TOKEN"</li>
+            </ul>
+          </li>
+          <li>Changed POST support/tickets
+            <ul>
+              <li>Now accepts "managed_issue" (boolean) instead of "managed_issue_type"</li>
+            </ul>
+          </li>
+          <li>Reworked backups response
+            <ul>
+              <li>Removed "daily" and "weekly"</li>
+              <li>Added "automatic"</li>
+              <li>Removed "availability" from Backup object</li>
+              <li>Removed "service" object</li>
+            </ul>
+          </li>
+          <li>Removed /linode/instance/:id/disk/:id/imagize
+            <ul>
+              <li>Functionality moved to POST /images</li>
+            </ul>
+          </li>
+          <li>Reworked /account/settings into two endpoints
+            <ul>
+              <li>Changed /account/settings endpoint to /account</li>
+              <li>network_helper and longview_subscription remain in /account/settings</li>
+            </ul>
+          </li>
+          <li>Removed 'max' from /account/transfer</li>
+          <li>Removed /nodebalancers/$id/configs/$id/ssl</li>
+          <li>Removed zonefile object from Domain</li>
+          <li>Changed Notification types
+            <ul>
+              <li>scheduled_migration -> migration_scheduled</li>
+              <li>pending_migration -> migration_pending</li>
+              <li>scheduled_reboot -> reboot_scheduled</li>
+              <li>outstanding_balance -> balance_outstanding</li>
+              <li>important_ticket -> ticket_important</li>
+              <li>abuse_ticket -> ticket_abuse</li>
+            </ul>
+          </li>
+        </ul>
+        <b>Features:</b><br />
+        <ul>
+          <li>Added POST /images to create an image from a disk</li>
+          <li>Added "message" to Notification object
+            <ul>
+              <li>Described the notification in a human-readable manner</li>
+            </ul>
+          </li>
+          <li>Added ability to enroll in Managed
+            <ul>
+              <li>POST /account/settings/managed-enable</li>
+            </ul>
+          </li>
+          <li>Added "uid" to Profile response</li>
+          <li>Added ssl to PUT /nodebalancers/$id/configs/$id</li>
+        </ul>
+        <b>Bugfixes:</b><br />
+        <ul>
+          <li>Fix Transfer Pool return values</li>
+          <li>Stopped returning default backups window for Linodes
+            <ul>
+              <li>This impacted Linodes that were still scheduling backups only</li>
+            </ul>
+          </li>
+          <li>Don't set cancel_account grant when it's not requested</li>
+          <li>Suppresses shutdown event notification for rebuild</li>
+          <li>Send emails for TFA to the acting user</li>
+        </ul>
         <h2>2018-01-08</h2>
         <hr /><br />
         <b>Breaking:</b><br />
