@@ -12,6 +12,8 @@ servers:
 paths:
   /regions:
     get:
+      tags:
+        - regions
       description: |
         List the regions available for Linode services.  Not all services are
         guaranteed to be available in all regions.
@@ -38,6 +40,8 @@ paths:
         schema:
           type: string
     get:
+      tags:
+        - regions
       description: |
         Get information about a single Region.
       operationId: getRegion
@@ -50,6 +54,8 @@ paths:
                 $ref: '#/components/schemas/Region'
   /linode/instances:
     get:
+      tags:
+        - linode/instances
       description: |
         Manage Linodes on your account.
       operationId: getLinodeInstaces
@@ -79,6 +85,8 @@ paths:
         schema:
           type: integer
     get:
+      tags:
+        - 'linode/instances/{linodeId}'
       description: Get a Linode
       operationId: getLinodeInstance
       security:
@@ -92,6 +100,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Linode'
+    put:
+      tags:
+        - 'linode/instances/{linodeId}'
+      description: Update information about a Linode
+      operationId: putLinodeInstance
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - 'linodes:modify'
+      requestBody:
+        description: The fields to modify
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LinodeEditable'
+      responses:
+        '200':
+          description: The updated Linode
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Linode'
 components:
   securitySchemes:
     personalAccessToken:
@@ -106,6 +139,7 @@ components:
           tokenUrl: 'https://login.linode.com/oauth/token'
           scopes:
             'linodes:view': GET endpoints for Linodes
+            'linodes:modify': PUT and action endpoints for Linodes
   schemas:
     PaginationEnvelope:
       required:
@@ -123,30 +157,53 @@ components:
         results:
           type: integer
     Region:
-      required:
-        - id
-        - country
       properties:
         id:
           type: string
         country:
           type: string
-    Linode:
-      required:
-        - id
-        - label
-        - group
+    LinodeEditable:
       properties:
-        id:
-          type: integer
-          description: This Linode's ID.
         label:
           type: string
           description: This Linode's unique label.
         group:
           type: string
           description: |
-            The group thie Linode is in.  This is for display purposes only.
+            The group this Linode is in.  This is for display purposes only.
+        alerts:
+          type: object
+          properties:
+            cpu:
+              type: integer
+              description: >
+                The thershold of cpu usage at which we will alert you.  If set
+                to 0, this check
+
+                is disabled.
+            network_in:
+              type: integer
+              description: |
+                TODO
+            network_out:
+              type: integer
+              description: |
+                TODO
+            transfer_quota:
+              type: integer
+              description: |
+                TODO
+            io:
+              type: integer
+              description: |
+                TODO
+    Linode:
+      allOf:
+        - $ref: '#/components/schemas/LinodeEditable'
+      properties:
+        id:
+          type: integer
+          description: This Linode's ID.
         status:
           type: string
           description: |
@@ -160,3 +217,62 @@ components:
           enum:
             - kvm
             - xen
+        created:
+          type: string
+          format: date-time
+          description: When this Linode was created.
+        updated:
+          type: string
+          format: date-time
+          description: When this Linode was last updated.
+        type:
+          type: string
+          description: The type of Linode this is.
+        ipv4:
+          type: array
+          format: string
+          description: This Lindoe's IPv4 Addresses.
+        ipv6:
+          type: array
+          format: string
+          description: This Linode's IPv6 Addresses.
+        image:
+          type: string
+          description: 'The Image that was deployed to this Linode, or null.'
+        region:
+          type: string
+          description: The region this Linode is in.
+        specs:
+          type: object
+          properties:
+            disk:
+              type: integer
+              description: 'The amount of storage space this Linode has access to, in GB.'
+            memory:
+              type: integer
+              description: 'The amount of RAM this Linode has access to, in MB.'
+            vcpus:
+              type: integer
+              description: The number of vcpus this Linode has access to.
+            transfer:
+              type: integer
+              description: The amount of transfer this Linode is allotted.
+        backups:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+              description: >
+                If this Linode has our backup service enabled.  To enable
+                backups, see
+
+                /linode/instances/{linodeId}/backups/enable
+            schedule:
+              type: object
+              properties:
+                day:
+                  type: string
+                  description: TODO
+                window:
+                  type: string
+                  description: TODO
