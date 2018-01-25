@@ -4,7 +4,7 @@ prefix: account/profile
 description: >
   Your User profile information.
 schema:
-  uuid:
+  uid:
     type: Integer
     value: 123
     description: >
