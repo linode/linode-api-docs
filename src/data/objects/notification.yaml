@@ -57,5 +57,5 @@ enums:
     outage: There is a known outage impacting one or more of your services.
     migration_pending: There is a migration queued for one of your Linodes that you must initiate.
     migration_scheduled: There is a migration queued for one of your Linodes.
-    balance_outstanding: You have a balance on your account that must be paid.
+    payment_due: You have a balance on your account that must be paid.
     reboot_scheduled: There is a reboot queued for one of your Linodes.
