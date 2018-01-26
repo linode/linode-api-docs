@@ -73,10 +73,6 @@ schema:
     type: String
     description: The gravatar id of the user who opened this ticket.
     value: "aad889008f120255f1ac47fde3f5338b"
-  managed_issue:
-    type: Boolean
-    description: Set to True if your account has Managed Services activated.
-    value: true
 enums:
   Status:
     new: The support ticket has just been opened.
