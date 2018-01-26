@@ -174,3 +174,32 @@ endpoints:
             ip2 = linode_2.ips.ipv4.public[0]
 
             client.networking.assign_ips(linode_1.region, ip1.to(linode_2), ip2.to(linode_1))
+  /networking/ip-sharing:
+    group: IPv4
+    type: Strange
+    authenticated: true
+    description: >
+      Set IP sharing for a Linode.
+    methods:
+      POST:
+        description: >
+            Sets IP Sharing for this Linode.
+        params:
+          linode_id:
+            type: Integer
+            description: >
+              The ID of the Linode to set up IP sharing for.
+          ips:
+            type: String
+            description: >
+              A list of IP Addresses this Linode will share.
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "linode_id": 12345,
+                  "ips": [ "97.107.143.29", "97.107.143.112" ]
+                }' \
+                https://$api_root/$version/networking/ip-sharing
+
