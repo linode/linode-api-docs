@@ -105,7 +105,7 @@ export default function Introduction(props) {
           requests on the reference page include this header in the curl examples. For example:
         </p>
         <Code
-          example={`curl -H "Authorization: token $token" \\
+          example={`curl -H "Authorization: Bearer $token" \\
   ${API_ROOT}/${API_VERSION}/linode/instances`}
           name="bash"
         />
