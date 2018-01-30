@@ -49,12 +49,12 @@ schema:
     type: String
     description: Phone number associated with the account. Required format is 123-456-7890.
     value: 555-555-1212
-  vat_number:
+  tax_id:
     type: String
     value: null
     description: >
-      Your VAT identification number, for tax calculations in some countries.  If
-      you do not live in a country that collects VAT, this should be null.
+      Your tax identification, for tax calculations in some countries.  If
+      you do not live in a country that collects tax, this should be null.
   balance:
     type: Float
     description: This account's balance (in US Dollars).
