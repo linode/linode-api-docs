@@ -25,18 +25,24 @@ endpoints:
             description: The contact's full name.
             type: String
             limit: 1-64 characters
+            value: "John Q. Public"
           email:
             description: The email address for the contact.
             type: String
-          phone_primary:
-            description: A primary phone number for the contact.
-            type: String
-          phone_secondary:
-            description: A secondary phone number for the contact.
-            type: String
+            value: "johnqpublic@linode.com"
+          phone:
+            primary:
+              description: A primary phone number for the contact.
+              type: String
+              value: 215-555-3000
+            secondary:
+              description: A secondary phone number for the contact.
+              type: String
+              value: 215-555-3001
           group:
             description: Contacts can be associated with a monitored service by the group they belong to.
             type: String
+            value: Support
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
@@ -44,8 +50,10 @@ endpoints:
                 -X POST -d '{
                     "name": "John Q. Public",
                     "email": "johnqpublic@linode.com",
-                    "phone_primary": "215-555-3000",
-                    "phone_secondary": "215-555-3001",
+                    "phone": {
+                      "primary": "215-555-3000",
+                      "secondary": "215-555-3001",
+                    },
                     "group": "Support",
                 }' \
                 https://$api_root/$version/managed/contacts
@@ -78,6 +86,7 @@ endpoints:
                     "phone": {
                         "primary": "215-555-4000",
                         "secondary": "215-555-4001",
+                    },
                     "group": "Developers"
                 }' \
                 https://$api_root/$version/managed/contact/$contact_id
