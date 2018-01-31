@@ -58,5 +58,4 @@ enums:
     migration_pending: There is a migration queued for one of your Linodes that you must initiate.
     migration_scheduled: There is a migration queued for one of your Linodes.
     balance_outstanding: You have a balance on your account that must be paid.
-    xsa: You have a Linode impacted by a Xen Security Advisory which will require migration.
     reboot_scheduled: There is a reboot queued for one of your Linodes.
