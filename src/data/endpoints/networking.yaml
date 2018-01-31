@@ -190,7 +190,8 @@ endpoints:
             description: >
               The ID of the Linode to set up IP sharing for.
           ips:
-            type: String
+            type: Array
+            subtype: string
             description: >
               A list of IP Addresses this Linode will share.
         examples:
