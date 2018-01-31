@@ -926,25 +926,6 @@ endpoints:
                     "type": "private"
                 }' \
                 https://$api_root/$version/linode/instances/$linode_id/ips
-  /linode/instances/$id/ips/sharing:
-    group: IPs
-    methods:
-      POST:
-        description: >
-            Sets IP Sharing for this Linode.
-        params:
-          ips:
-            type: String
-            description: >
-              A list of IP Addresses this Linode will share.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{
-                  "ips": [ "97.107.143.29", "97.107.143.112" ]
-                }' \
-                https://$api_root/$version/linode/instances/$linode_id/ips/sharing
   /linode/instances/$id/ips/$ip_address:
     group: IPs
     type: Action
