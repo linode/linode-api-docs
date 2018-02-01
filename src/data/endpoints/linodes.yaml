@@ -49,31 +49,23 @@ endpoints:
             description: The group to assign this Linode. Defaults to "empty".
             type: String
             limit: 0-50 characters
-          distribution:
-            optional: true
-            description: >
-              The ID of a Distribution to deploy this Linode with.  May not be included
-              if 'backup_id' or 'image' is sent.
-            type: String
-            deprecated: This parameter is deprecated and will be removed before the end of the Beta Period.
-              You can provide the same inputs to "image" instead.  See the changelog for more information.
           root_pass:
             optional: unless source == "distro"
             description: >
-              The root password to use when sourcing this Linode from a distribution.
-              <ul><li>root_pass is required if the source provided is a distribution.</li></ul>
+              The root password to use when sourcing this Linode from an image.
+              <ul><li>root_pass is required if the source provided is an image.</li></ul>
             type: String
           authorized_keys:
             optional: true
             description: >
-              An array of public SSH keys to be installed into the distribution's
+              An array of public SSH keys to be installed into the image's
               default user's `authorized_keys` file when creating a Linode.
             type: Array
           stackscript_id:
             optional: true
             description: >
               The stackscript ID to deploy with this disk.
-              <ul><li>Must provide a distribution. Distribution must be
+              <ul><li>Must provide an Image.  Images must be
               one that the stackscript can be deployed to.</li></ul>
             type: Integer
           stackscript_data:
@@ -86,13 +78,13 @@ endpoints:
             optional: true
             description: >
               The Backup to restore to the newly created
-              Linode. May not be included if 'distribution' or 'image' is sent.
+              Linode. May not be included if 'image' is sent.
             type: Integer
           image:
             optional: true
             description: >
               The gold-master image to use for the newly created Linode. May
-               not be included if 'distribution' or 'backup_id' is sent.  Official
+               not be included if 'backup_id' is sent.  Official
                images start with "linode/", while your own images start with 
                "private/"
             type: String
@@ -107,7 +99,7 @@ endpoints:
             optional: true
             description: >
               Whether the instance should be booted upon completion of creation.
-              This defaults to true if created with a distribution.
+              This defaults to true if created with an image.
             type: Boolean
         examples:
           curl: |
@@ -119,7 +111,7 @@ endpoints:
             my_linode = client.linode.create_instance(client.get_regions().first(), 'g5-nanode-1')
 
             distro = client.linode.get_distributons(linode.Distribution.vendor == 'debian').first()
-            ( my_linode_2, password ) = client.linode.create_instance('us-east-1a', 'g5-standard-1', distribution=distro)
+            ( my_linode_2, password ) = client.linode.create_instance('us-east-1a', 'g5-standard-1', image=image)
   /linode/instances/$id:
     type: resource
     authenticated: true
@@ -196,35 +188,25 @@ endpoints:
               Size in MB for this disk.
             type: Integer
             limit: between 0 and the available space on the Linode
-          distribution:
-            optional: true
-            description: >
-              Optional ID of a distribution to deploy with this disk.
-              <ul><li>If no distribution is provided, a blank disk
-              is created.</li></ul> You may not provide distribution if image is provided.
-            type: String
-            deprecated: This parameter is deprecated and will be removed before the end of the Beta Period.
-              The same value can be passed to "image" instead.  See the changelog for more information.
           image:
             optional: true
             description: >
-              Optional image id to deploy the disk from. You may not provide image
-              if distribution is provided.  Official images start with "linode/",
-              while your images start with "private/"
+              Optional image id to deploy the disk from. Official images start
+              with "linode/", while your images start with "private/"
             seeAlso: ["/reference/endpoints/images"]
             type: String
           root_pass:
-            optional: unless distribution or image is specified
+            optional: unless image is specified
             description: >
-              Root password to deploy distribution with.
-              <ul><li>root_pass is required if a distribution is provided.</li></ul>
+              Root password to deploy image with.
+              <ul><li>root_pass is required if a image is provided.</li></ul>
             type: String
           authorized_keys:
-            optional: unless distribution is not specified
+            optional: unless image is not specified
             description: >
-              An array of public SSH keys to be installed into the distribution's
+              An array of public SSH keys to be installed into the image's
               default user's `authorized_keys` file when creating a new disk from
-              a Linode provided distribution.
+              a Linode provided image.
             type: Array
           label:
             description: >
@@ -245,7 +227,7 @@ endpoints:
             optional: true
             description: >
               The stackscript ID to deploy with this disk.
-              <ul><li>Must provide a distribution. Distribution must be
+              <ul><li>Must provide a image. Images must be
               one that the stackscript can be deployed to.</li></ul>
             type: Integer
           stackscript_data:
@@ -975,18 +957,11 @@ endpoints:
         oauth: linodes:modify
         dangerous: true
         params:
-          distribution:
-            optional: true
-            description: >
-                An ID of a Distribution to deploy to this Linode.
-            type: String
-            deprecated: This parameter is deprecated and will be removed before the end of the Beta Period.
-              See the changelog for more information.
           image:
             optional: true
             description: >
               The gold-master image to use for this Linode. May
-               not be included if 'distribution' is sent.  Official images start
+               not be included if 'image' is sent.  Official images start
                with "linode/", while your own images start with "private/"
             type: String
             value: "linode/debian9"
@@ -997,14 +972,14 @@ endpoints:
           authorized_keys:
             optional: true
             description: >
-              An array of public SSH keys to be installed into the distribution's
+              An array of public SSH keys to be installed into the image's
               default user's `authorized_keys` file when rebuilding a Linode.
             type: Array
           stackscript_id:
             optional: true
             description: >
               The stackscript ID to deploy with this disk.
-              <ul><li>Must provide a distribution. Distribution must be
+              <ul><li>Must provide an image. Images must be
               one that the stackscript can be deployed to.</li></ul>
             type: Integer
           stackscript_data:
@@ -1025,7 +1000,7 @@ endpoints:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST \
                 https://$api_root/$version/linode/instances/$linode_id/rebuild \
-                -d '{"distribution":"linode/debian8","root_pass":"hunter7"}'
+                -d '{"image":"linode/debian8","root_pass":"hunter7"}'
           python: |
             my_linode.rebuild('linode/ubuntu16.04LTS', root_pass='hunter7')
   /linode/stackscripts:
@@ -1091,7 +1066,7 @@ endpoints:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "label": "Initial Label",
-                "distributions": ["linode/ubuntu15.4", "linode/ubuntu15.10"],
+                "images": ["linode/ubuntu15.4", "linode/ubuntu15.10"],
                 "script": "#!..."
               }' \
               https://$api_root/$version/linode/stackscripts
@@ -1145,38 +1120,6 @@ endpoints:
           python: |
             import stackscript
             TODO
-  /linode/distributions:
-    group: Distributions
-    description: >
-      THIS ENDPOINT IS DEPRECATED. USE /images INSTEAD. Returns information about this distribution.
-    methods:
-      GET:
-        response: image
-        paginationKey: distributions
-        description: >
-          THIS ENDPOINT IS DEPRECATED. USE /images INSTEAD. Returns information about this distribution.
-        seeAlso: ["/reference/endpoints/images"]
-        examples:
-          curl: |
-            curl https://$api_root/$version/linode/distributions
-          python: |
-            client.linode.get_distributions()
-  /linode/distributions/$id:
-    group: Distributions
-    type: resource
-    description: >
-      THIS ENDPOINT IS DEPRECATED. USE /images INSTEAD. Returns information about this distribution.
-    methods:
-      GET:
-        response: image
-        description: >
-          THIS ENDPOINT IS DEPRECATED. USE /images INSTEAD. Returns information about this distribution.
-        seeAlso: ["/reference/endpoints/images"]
-        examples:
-          curl: |
-            curl https://$api_root/$version/linode/distributions/$distribution_id
-          python: |
-            distro = linode.Distribution(client, 'linode/debian8')
   /linode/kernels:
     group: Kernels
     description: >
