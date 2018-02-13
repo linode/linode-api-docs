@@ -107,7 +107,7 @@ endpoints:
       can be as compressed as you want.
     methods:
       GET:
-        response: ipv6pool
+        response: ipv6-address
         oauth: ips:view
         description: >
           Return a single IPv6 Address.

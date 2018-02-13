@@ -10,18 +10,22 @@ schema:
     type: String
     value: "fe80::1"
     description: The default gateway.
-  range:
-    type: String
-    value: "2600:3c01::2:5000"
-    description: The IPv6 range.
-  rdns:
-    type: String
-    value: "example.org"
-    description: Optional reverse DNS address for this IPv6 Address.
+  linode_id:
+    type: Integer
+    value: 42
+    description: The Linode this IP is associated with.
   prefix:
     type: Integer
     value: 116
     description: The network prefix.
+  rdns:
+    type: String
+    value: "example.org"
+    description: Optional reverse DNS address for this IPv6 Address.
+  region:
+    type: String
+    value: us-east-1a
+    description: The region this IP is in.
   subnet_mask:
     type: String
     value: "ffff:ffff:ffff:ffff:ffff:ffff:ffff:f000"
