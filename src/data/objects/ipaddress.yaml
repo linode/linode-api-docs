@@ -1,6 +1,6 @@
-name: IPv4 Address
+name: IP Address
 description: >
-    An IPv4 Address
+    An IP Address
 schema:
   address:
     type: String
@@ -21,11 +21,11 @@ schema:
   rdns:
     editable: true
     type: String
-    value: null
+    value: "example.org"
     description: Reverse DNS address for this IP Address. Null to reset.
   region:
     type: String
-    value: us-east-1a
+    value: us-east
     description: The region this IP is in.
   subnet_mask:
     type: String
@@ -40,3 +40,6 @@ enums:
   IPAddressType:
     public: Public IP Address.
     private: Internal IP Addresses (192.168 range).
+    slaac: A Linode's slaac address.  These may not be transferred between Linodes.
+    link-local: A Linode's link local address.  These may not be transferred
+                between linodes.

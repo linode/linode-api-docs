@@ -19,10 +19,10 @@ schema:
   ipv6:
     description: The Linode's IPv6 networking data.
     addresses:
-      type: ipv6-address
+      type: ipaddress
       isArray: true
     slaac:
-      type: ipv6-address
+      type: ipaddress
       description: >
         This Linode's SLAAC range.
     link_local:
