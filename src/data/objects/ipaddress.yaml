@@ -10,32 +10,32 @@ schema:
     type: String
     value: 97.107.143.1
     description: The default gateway. Gateways for private IP's are always null.
-  subnet_mask:
-    type: String
-    value: 255.255.255.0
-    description: The subnet mask.
+  linode_id:
+    type: Integer
+    value: 42
+    description: The Linode this IP is associated with.
   prefix:
     type: String
     value: 24
     description: The network prefix.
-  type:
-    type: Enum
-    subtype: IPAddressType
-    value: public
-    description: The type of IP Address, either public or private.
   rdns:
     editable: true
     type: String
     value: null
     description: Reverse DNS address for this IP Address. Null to reset.
-  linode_id:
-    type: Integer
-    description: The Linode this IP is associated with.
-    value: 42
   region:
     type: String
     value: us-east-1a
     description: The region this IP is in.
+  subnet_mask:
+    type: String
+    value: 255.255.255.0
+    description: The subnet mask.
+  type:
+    type: Enum
+    subtype: IPAddressType
+    value: public
+    description: The type of IP Address, either public or private.
 enums:
   IPAddressType:
     public: Public IP Address.
