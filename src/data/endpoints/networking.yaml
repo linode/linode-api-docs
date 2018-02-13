@@ -80,7 +80,7 @@ endpoints:
             curl -H "Authorization: Bearer $TOKEN" \
                 -X DELETE \
                 https://$api_root/$version/networking/ips/97.107.143.37
-  /networking/ipv6:
+  /networking/ipv6/pools:
     group: IPv6
     authenticated: true
     description: >
@@ -95,9 +95,27 @@ endpoints:
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
-                https://$api_root/$version/networking/ipv6
+                https://$api_root/$version/networking/ipv6/pools
           python: |
-            my_ipv6s = client.networking.get_ipv6()
+            my_ipv6s = client.networking.get_ipv6_pools()
+  /networking/ipv6/ranges:
+    group: IPv6
+    authenticated: true
+    description: >
+      Manage IPv6 Ranges.
+    methods:
+      GET:
+        response: ipv6pool
+        paginationKey: ipv6s
+        oauth: ips:view
+        description: >
+          Returns a list of IPv6 Ranges.
+        examples:
+          curl: |
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://$api_root/$version/networking/ipv6/ranges
+          python: |
+            my_ipv6s = client.networking.get_ipv6_ranges()
   /networking/ipv6/$address:
     group: IPv6
     type: resource
