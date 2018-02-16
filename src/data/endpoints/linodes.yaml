@@ -958,10 +958,9 @@ endpoints:
         dangerous: true
         params:
           image:
-            optional: true
+            required: true
             description: >
-              The gold-master image to use for this Linode. May
-               not be included if 'image' is sent.  Official images start
+              The gold-master image to use for this Linode. Official images start
                with "linode/", while your own images start with "private/"
             type: String
             value: "linode/debian9"
