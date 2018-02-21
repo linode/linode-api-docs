@@ -28,8 +28,8 @@ export default function Authentication() {
           </li>
           <li>Separated /networking/ipv6 into /pools and /ranges
             <ul>
-              <li>Added /networking/ipv6/pools</li>
-              <li>Added /networking/ipv6/ranges</li>
+              <li>Added GET /networking/ipv6/pools</li>
+              <li>Added GET /networking/ipv6/ranges</li>
               <li>Removed GET /networking/ipv6</li>
             </ul>
           </li>
@@ -38,7 +38,7 @@ export default function Authentication() {
               <li>ipv6.link_local is now a full IPAddress object</li>
             </ul>
           </li>
-          <li>Improved response unrestricted user's grants
+          <li>Improved response for unrestricted user's grants
             <ul>
               <li>Changed GET /profile/grants and GET /account/users/:username/grants</li>
               <li>Now returns a 204 with no content when getting grants for unrestricted users</li>
@@ -46,7 +46,6 @@ export default function Authentication() {
           </li>
           <li>Moved /linode/instances/:id/ips/sharing to /networking/ip-sharing
             <ul>
-              <li>Endpoint changed to /networking/ip-sharing</li>
               <li>linode_id must now be passed in, along with existing ips list</li>
             </ul>
           </li>
@@ -67,7 +66,7 @@ export default function Authentication() {
           <li>Changed account/notifications
             <ul>
               <li>Removed xsa notification type</li>
-              <li>Rename balance_outstanding to payment_due</li>
+              <li>Renamed balance_outstanding to payment_due</li>
             </ul>
           </li>
           <li>Changed error response
