@@ -15,6 +15,89 @@ export default function Authentication() {
         </p>
       </section>
       <section>
+        <h2>2018-02-21</h2>
+        <hr /><br />
+        <b>Breaking:</b><br />
+        <ul>
+          <li>Unified IPv4 and IPv6 Objects
+            <ul>
+              <li>Removed "range" from IPv6 object</li>
+              <li>Added "linode_id" to IPv6 object</li>
+              <li>Added "region" to IPv6 object</li>
+            </ul>
+          </li>
+          <li>Separated /networking/ipv6 into /pools and /ranges
+            <ul>
+              <li>Added GET /networking/ipv6/pools</li>
+              <li>Added GET /networking/ipv6/ranges</li>
+              <li>Removed GET /networking/ipv6</li>
+            </ul>
+          </li>
+          <li>Changed GET /linode/instances/:id/ips response
+            <ul>
+              <li>ipv6.link_local is now a full IPAddress object</li>
+            </ul>
+          </li>
+          <li>Improved response for unrestricted user's grants
+            <ul>
+              <li>Changed GET /profile/grants and GET /account/users/:username/grants</li>
+              <li>Now returns a 204 with no content when getting grants for unrestricted users</li>
+            </ul>
+          </li>
+          <li>Moved /linode/instances/:id/ips/sharing to /networking/ip-sharing
+            <ul>
+              <li>linode_id must now be passed in, along with existing ips list</li>
+            </ul>
+          </li>
+          <li>Removed deprecated "distribution" fields and endpoints
+            <ul>
+              <li>Removed GET /linode/distributions</li>
+              <li>Removed GET /linode/distributions/:id</li>
+              <li>These fields or endpoints had been deprecated since 2017-12-11</li>
+            </ul>
+          </li>
+          <li>Changed POST /managed/contacts
+            <ul>
+              <li>"phone" is an object containing primary and secondary numbers</li>
+              <li>phone_primary -> phone.primary</li>
+              <li>phone_secondary -> phone.secondary</li>
+            </ul>
+          </li>
+          <li>Changed account/notifications
+            <ul>
+              <li>Removed xsa notification type</li>
+              <li>Renamed balance_outstanding to payment_due</li>
+            </ul>
+          </li>
+          <li>Changed error response
+            <ul>
+              <li>"field" changed to represent nesting with x.x</li>
+            </ul>
+          </li>
+          <li>Changed GET/PUT /account
+            <ul>
+              <li>Renamed "vat_number" to "tax_id"</li>
+            </ul>
+          </li>
+          <li>Removed managed_issue from POST /support/tickets</li>
+        </ul>
+        <b>Features:</b><br />
+        <ul>
+          <li>Added support for short region slugs
+            <ul>
+              <li>Omitting the suffix of a region slug picks a default</li>
+              <li>For example, "us-east" is treated as "us-east-1a"</li>
+            </ul>
+          </li>
+          <li>Support tickets ordered by status, update date</li>
+        </ul>
+        <b>Bugfixes:</b><br />
+        <ul>
+          <li>Cloned linodes now copy original Linode's image</li>
+          <li>Fixed bug parsing OAuth Scopes when creating token</li>
+        </ul>
+      </section>
+      <section>
         <h2>2018-01-24</h2>
         <hr /><br />
         <b>Breaking:</b><br />
