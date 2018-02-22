@@ -42,25 +42,6 @@ endpoints:
             my_profile.email_notifications = True
             my_profile.lish_auth_method = 'password_keys'
             my_profile.save()
-  /profile/password:
-    group: Profile
-    description: >
-      Change your password.
-    methods:
-      POST:
-        description: >
-          Change your password.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                  "password":"hunter7"
-              }' \
-              https://$api_root/$version/profile/password
-          python: |
-            my_profile = client.get_profile()
-            my_profile.reset_password('hunter7')
   /profile/tfa-enable:
     group: Two-Factor Authentication
     description: >

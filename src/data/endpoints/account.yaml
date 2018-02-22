@@ -330,28 +330,6 @@ endpoints:
           python: |
             my_user = linode.User(client, 'username')
             my_user.delete()
-  /account/users/$username/password:
-    group: Users
-    type: Action
-    description: >
-      Update a user's password
-    methods:
-      POST:
-        params:
-          password:
-            type: String
-            description: The user's new password.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{
-                    "password": "hunter7",
-                }' \
-                https://$api_root/$version/account/users/testguy/password
-          python: |
-            my_user = linode.User(client, 'username')
-            my_user.change_password('hunter7')
   /account/users/$username/grants:
     group: Users
     type: resource
