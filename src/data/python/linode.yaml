@@ -74,7 +74,7 @@ methods:
             Deletes this Linode from your account.  This is not reversable.
         example:
             l.delete()
-        returns: True if the delete succueeded.
+        returns: True if the delete succeeded.
     create_config:
         desc: >
             Creates a new <code>Config</code> object for this Linode.  These do not need to be created manually - deploy
@@ -202,7 +202,7 @@ methods:
                 default: False
         example:
             l.allocate_ip()
-        returns: True if the delete succueeded.
+        returns: A new IPAddress object
     rebuild:
         desc: >
             Deletes all Disks and Configs for this Linode, then deploys a Distribution to it.
