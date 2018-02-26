@@ -15,7 +15,7 @@ export default function Authentication() {
         </p>
       </section>
       <section>
-        <h2>2018-02-21</h2>
+        <h2>2018-02-26</h2>
         <hr /><br />
         <b>Breaking:</b><br />
         <ul>
@@ -26,6 +26,7 @@ export default function Authentication() {
               <li>Added "region" to IPv6 object</li>
             </ul>
           </li>
+          <li>Removed GET /networking/ipv4</li>
           <li>Separated /networking/ipv6 into /pools and /ranges
             <ul>
               <li>Added GET /networking/ipv6/pools</li>
@@ -83,6 +84,11 @@ export default function Authentication() {
         </ul>
         <b>Features:</b><br />
         <ul>
+          <li>Added GET /networking/ips
+            <ul>
+              <li>Returns all ipv4 and ipv6 addresses on your account</li>
+            </ul>
+          </li>
           <li>Added support for short region slugs
             <ul>
               <li>Omitting the suffix of a region slug picks a default</li>
