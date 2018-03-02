@@ -48,7 +48,7 @@ schema:
     subtype: EventStatus
     value: finished
     description: >
-      The current status of this event.  
+      The current status of this event.
   percent_complete:
     type: Integer
     value: 20
@@ -95,7 +95,6 @@ enums:
     linode_migrate: Linode migrate
     linode_rebuild: Linode rebuild
     linode_clone: Linode clone
-    linode_kvmify: Linode kvmify
     disk_create: Disk create
     disk_delete: Disk delete
     disk_duplicate: Disk duplicate

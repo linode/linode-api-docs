@@ -603,27 +603,6 @@ endpoints:
                 https://$api_root/$version/linode/instances/$linode_id/reboot
           python: |
             my_linode.reboot()
-  /linode/instances/$id/kvmify:
-    type: Action
-    authenticated: true
-    description: >
-      Changes a Linode's hypervisor from Xen (legacy) to KVM (modern). Doing this
-      restarts and migrates your Linode, and can take several minutes depending on
-      the size of the Linode. Upgrading to KVM has significant performance
-      improvements. This endpoint will only work for Linodes currently running
-      on the Xen hypervisor.
-    methods:
-      POST:
-        oauth: linodes:modify
-        dangerous: true
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST \
-                https://$api_root/$version/linode/instances/$linode_id/kvmify
-          python: |
-            my_linode.kvmify()
   /linode/instances/$id/rescue:
     type: Action
     authenticated: true
