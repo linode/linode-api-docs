@@ -29,4 +29,4 @@ methods:
             Deletes this DomainRecord.  This is not reversable.
         example:
             record.delete()
-        returns: True if the delete succueeded.
+        returns: True if the delete succeeded.

@@ -31,4 +31,4 @@ methods:
             Deletes this Config.  This is not reversable.
         example:
             config.delete()
-        returns: True if the delete succueeded.
+        returns: True if the delete succeeded.
