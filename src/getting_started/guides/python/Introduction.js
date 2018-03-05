@@ -73,8 +73,8 @@ us-east-1a
 eu-west-1a
 ap-south-1a
 eu-central-1a
-ap-northeast-1a
-ap-northeast-1b`}
+ap-northeast-1b
+ap-northeast-1a`}
           name="bash"
           noclipboard
         />
