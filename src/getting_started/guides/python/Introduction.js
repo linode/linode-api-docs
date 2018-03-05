@@ -64,17 +64,17 @@ export default function Introduction(props) {
         </p>
         <Code
           example={`>>> for r in client.get_regions():
-...   print(r.country)
+...   print(r.id)
 ...
-US
-US
-US
-US
-UK
-SG
-DE
-JP
-JP`}
+us-south-1a
+us-west-1a
+us-southeast-1a
+us-east-1a
+eu-west-1a
+ap-south-1a
+eu-central-1a
+ap-northeast-1a
+ap-northeast-1b`}
           name="bash"
           noclipboard
         />
