@@ -20,7 +20,6 @@ export default function Introduction(props) {
       </div>
       <header>
         <h1>Getting started with Linode Python</h1>
-        <h5>by William Smith; last updated October 22nd, 2017</h5>
       </header>
       <section>
         <p>
@@ -65,17 +64,17 @@ export default function Introduction(props) {
         </p>
         <Code
           example={`>>> for r in client.get_regions():
-...   print(r.label)
+...   print(r.id)
 ...
-Dallas, TX
-Fremont, CA
-Atlanta, GA
-Newark, NJ
-London, UK
-Singapore, SG
-Frankfurt, DE
-Tokyo 2, JP
-Tokyo, JP`}
+us-south-1a
+us-west-1a
+us-southeast-1a
+us-east-1a
+eu-west-1a
+ap-south-1a
+eu-central-1a
+ap-northeast-1b
+ap-northeast-1a`}
           name="bash"
           noclipboard
         />
