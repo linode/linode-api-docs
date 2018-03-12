@@ -33,6 +33,9 @@ export default function Introduction() {
           <Link to={`/${API_VERSION}/guides/curl/testing-with-curl`}>
             Check out the Testing with cURL guide
           </Link> to get started making API calls using a Personal Access Token (PAT).
+          <br /><br />
+          If you want to access our API through a command line, check out the
+          new <ExternalLink to="https://github.com/linode/linode-cli">Linode CLI</ExternalLink>.
         </div>
         <p>
           All APIv4 endpoints are located at:
