@@ -31,7 +31,7 @@ export default function Authentication() {
         <ul>
           <li>Added support for refresh tokens
             <ul>
-              <li>Apps with an activce refresh token are returned in GET /profile/apps</li>
+              <li>Apps with an active refresh token are returned in GET /profile/apps</li>
               <li>Revoking an app's access to your account expires any refresh tokens it has</li>
             </ul>
           </li>
@@ -42,7 +42,7 @@ export default function Authentication() {
             <ul>
               <li>PUT /networking/ips/:address now returns the modified v6 address</li>
               <li>PUT /linode/instances/:id/ips/:address now returns the modified v6 address</li>
-              <li>Nothing has changed for these endpoints when :address is a v4 addressa</li>
+              <li>Nothing has changed for these endpoints when :address is a v4 address</li>
             </ul>
           </li>
           <li>Fixed bug setting RDNS for v6 addresses</li>
