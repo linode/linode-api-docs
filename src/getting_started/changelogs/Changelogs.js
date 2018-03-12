@@ -23,16 +23,16 @@ export default function Authentication() {
             <ul>
               <li>Removed POST /profile/password</li>
               <li>Removed POST /account/users/:username/password</li>
-              <li>To change your password, use the provided password reset features</li>
+              <li>To reset your password, use manager.linode.com</li>
             </ul>
           </li>
         </ul>
         <b>Features:</b><br />
         <ul>
-          <li>Add support for refresh tokens
+          <li>Added support for refresh tokens
             <ul>
               <li>Apps with an activce refresh token are returned in GET /profile/apps</li>
-              <li>Revoking an apps access to your account expires any refresh tokens it has</li>
+              <li>Revoking an app's access to your account expires any refresh tokens it has</li>
             </ul>
           </li>
         </ul>
