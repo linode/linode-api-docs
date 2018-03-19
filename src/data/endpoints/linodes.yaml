@@ -929,8 +929,7 @@ endpoints:
     authenticated: true
     description: >
       Deletes all Disks and Configs on this Linode, then deploys a new
-      Distribution or Image to this Linode with the given attributes. Returns
-      a JSON object representation of the Linode's disks and configs.
+      Distribution or Image to this Linode with the given attributes.
     methods:
       POST:
         oauth: linodes:modify
