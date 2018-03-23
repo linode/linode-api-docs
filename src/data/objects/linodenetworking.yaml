@@ -18,9 +18,6 @@ schema:
       isArray: true
   ipv6:
     description: The Linode's IPv6 networking data.
-    addresses:
-      type: ipaddress
-      isArray: true
     slaac:
       type: ipaddress
       description: >
