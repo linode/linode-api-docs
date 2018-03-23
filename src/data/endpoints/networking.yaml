@@ -15,7 +15,8 @@ endpoints:
         paginationKey: data
         oauth: ips:view
         description: >
-          Returns a list of IP Addresses, including v4 and slaac addresses.
+          Returns a list of IP Addresses, including v4, slaac, and public v6
+          addresses.
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
@@ -116,38 +117,6 @@ endpoints:
                 https://$api_root/$version/networking/ipv6/ranges
           python: |
             my_ipv6s = client.networking.get_ipv6_ranges()
-  /networking/ipv6/$address:
-    group: IPv6
-    type: resource
-    authenticated: true
-    description: >
-      Manage a single IPv6 Address.  Address in URL
-      can be as compressed as you want.
-    methods:
-      GET:
-        response: ipv6-address
-        oauth: ips:view
-        description: >
-          Return a single IPv6 Address.
-        examples:
-          curl: |
-            curl -H "Authorization: Bearer $TOKEN" \
-                https://$api_root/$version/networking/ipv6/2600:3c01::2:5001
-          python: |
-            my_ipv6 = linode.IPv6Address(client, '2600:3c01::2:5001')
-      PUT:
-        oauth: ips:modify
-        description: >
-          Set RDNS on a single IPv6 Address.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X PUT -d '{"rdns":"example.org"}' \
-                https://$api_root/$version/networking/ipv6/2600:3c01::2:5001
-          python: |
-            my_ipv6.rdns = 'example.org'
-            my_ipv6.save()
   /networking/ip-assign:
     group: IPv4
     type: Strange
