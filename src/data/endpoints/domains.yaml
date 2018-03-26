@@ -264,7 +264,7 @@ endpoints:
               The tag attribute for a CAA record. One of "issue", "issuewild",
               or "iodef". Ignored on other record types.
             type: Enum
-          ttl:
+          ttl_sec:
             optional: true
             description: >
               Time interval that the resource record may be cached before
