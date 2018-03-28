@@ -19,7 +19,7 @@ export default function Authentication() {
         <hr /><br />
         <b>Breaking:</b><br />
         <ul>
-          <li> Unify IPv4, IPv6 GET/POST use "type" "public"</li>
+          <li> Unify IPv4, IPv6 GET/POST; use "type": "public"</li>
           <li> Moved /managed/linode_settings to /managed/linode-settings
             <ul>
               <li> /managed/linode_settings/:id moved to /managed/linode-settings/:id</li>
@@ -30,7 +30,7 @@ export default function Authentication() {
           <li> Password no longer accepted in POST /account/users
             <ul>
               <li> You may no longer provide a password when creating a new user</li>
-              <li> New users will immediately receive password reset email to
+              <li> New users will immediately receive a password reset email to
               set their password</li>
             </ul>
           </li>
@@ -41,8 +41,8 @@ export default function Authentication() {
           </li>
           <li> Moved GET/PUT for range/pool v6 addresses to /networking/ips
             <ul>
-              <li> GET /networking/ipv6/:address move to GET /networking/ips/:address</li>
-              <li> PUT /networking/ipv6/:address move to GET /networking/ips/:address</li>
+              <li> GET /networking/ipv6/:address moved to GET /networking/ips/:address</li>
+              <li> PUT /networking/ipv6/:address moved to GET /networking/ips/:address</li>
             </ul>
           </li>
           <li> /linode/instances/$id/rebuild returns a Linode</li>
@@ -50,7 +50,6 @@ export default function Authentication() {
             <ul>
               <li> POST /linode/instances/:id/backups-enable now returns {} on success</li>
               <li> POST /linode/instances/:id/backups-disable now returns {} on success</li>
-              <li> POST /networking/ip-assign now returns {} on success</li>
             </ul>
           </li>
           <li> Creating a payment now returns the new payment
@@ -69,6 +68,7 @@ export default function Authentication() {
             <ul>
               <li> POST /networking/ip-assign moved to POST /networking/ipv4/assign</li>
               <li> POST /networking/ip-sharing moved to POST /networking/ipv4/share</li>
+              <li> POT /networking/ipv4/assign now returns {} on success</li>
             </ul>
           </li>
         </ul>
