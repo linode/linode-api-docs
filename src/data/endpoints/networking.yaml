@@ -22,24 +22,36 @@ endpoints:
             curl -H "Authorization: Bearer $TOKEN" \
               https://$api_root/$version/networking/ips
       POST:
+        response: ipaddress
         money: true
         oauth: ips:create
         description: >
-          Create a new Public IPv4 Address.
+          Create a new IPv4 Address.
         params:
           type:
             type: String
             description: >
-              The type of IP to allocate.  Currently only "ipv4" is supported.
+              The type of IP to allocate. Currently only "ipv4" is supported.
+            value: ipv4
+          public:
+            type: Boolean
+            description: >
+              Whether this is a public or private IP address.
+              Public IP Addresses, over and above the one included with each
+              Linode, incur an additional monthly charge. If you need an
+              additional Public IP Address you must request one - please
+              open a ticket.
+            value: true
           linode_id:
+            type: Integer
             description: >
               The Linode ID to assign this IP to.
-            type: Integer
+            value: 123
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{"type":"ipv4","linode":123}' \
+                -X POST -d '{"type":"ipv4", "public":true, "linode":123}' \
                 https://$api_root/$version/networking/ips
   /networking/ips/$address:
     group: IPs

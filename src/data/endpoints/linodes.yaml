@@ -869,23 +869,27 @@ endpoints:
         money: true
         oauth: linodes:modify
         description: >
-          Allocates a new IP Address for this Linode.
+          Allocates a new IPv4 Address for this Linode.
         params:
           type:
-            description: >
-                The type of IP Address this is, can be one of "public" or "private".
-                Public IP Addresses, over and above the one included with each Linode,
-                incur an additional monthly charge. If you need an additional Public IP Address
-                you must request one - please open a ticket.
             type: String
-            value: private
+            description: >
+              The type of IP to allocate.  Currently only "ipv4" is supported.
+            value: ipv4
+          public:
+            type: Boolean
+            description: >
+              Whether this is a public or private IP address.
+              Public IP Addresses, over and above the one included with each
+              Linode, incur an additional monthly charge. If you need an
+              additional Public IP Address you must request one - please
+              open a ticket.
+            value: true
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{
-                    "type": "private"
-                }' \
+                -X POST -d '{"type": "ipv4", "public":true}' \
                 https://$api_root/$version/linode/instances/$linode_id/ips
   /linode/instances/$id/ips/$ip_address:
     group: IPs
