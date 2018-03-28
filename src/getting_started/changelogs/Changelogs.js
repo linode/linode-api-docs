@@ -15,6 +15,81 @@ export default function Authentication() {
         </p>
       </section>
       <section>
+        <h2>2018-04-02</h2>
+        <hr /><br />
+        <b>Breaking:</b><br />
+        <ul>
+          <li> Unify IPv4, IPv6 GET/POST; use "type": "public"</li>
+          <li> Moved /managed/linode_settings to /managed/linode-settings
+            <ul>
+              <li> /managed/linode_settings/:id moved to /managed/linode-settings/:id</li>
+              <li> This was to keep our convention of using dashes in URLs
+              instead of underscores</li>
+            </ul>
+          </li>
+          <li> Password no longer accepted in POST /account/users
+            <ul>
+              <li> You may no longer provide a password when creating a new user</li>
+              <li> New users will immediately receive a password reset email to
+              set their password</li>
+            </ul>
+          </li>
+          <li> Removed "addresses" from GET /linode/instances/:id/ips response
+            <ul>
+              <li> These addresses are now returned in GET /networking/ips</li>
+            </ul>
+          </li>
+          <li> Moved GET/PUT for range/pool v6 addresses to /networking/ips
+            <ul>
+              <li> GET /networking/ipv6/:address moved to GET /networking/ips/:address</li>
+              <li> PUT /networking/ipv6/:address moved to GET /networking/ips/:address</li>
+            </ul>
+          </li>
+          <li> /linode/instances/$id/rebuild returns a Linode</li>
+          <li> Fixed inconsistent responses for action endpoints
+            <ul>
+              <li> POST /linode/instances/:id/backups-enable now returns {} on success</li>
+              <li> POST /linode/instances/:id/backups-disable now returns {} on success</li>
+            </ul>
+          </li>
+          <li> Creating a payment now returns the new payment
+            <ul>
+              <li> POST /account/payments now returns a Payment object</li>
+              <li> POST /account/payments/paypal-execute now returns a Payment object</li>
+            </ul>
+          </li>
+          <li> Removed the ability to change another user's email address
+            <ul>
+              <li> PUT /account/users/:username no longer accepts "email"</li>
+              <li> PUT /profile can still be used to change your own email address</li>
+            </ul>
+          </li>
+          <li> Moved ipv4-specific networking endpoints
+            <ul>
+              <li> POST /networking/ip-assign moved to POST /networking/ipv4/assign</li>
+              <li> POST /networking/ip-sharing moved to POST /networking/ipv4/share</li>
+              <li> POT /networking/ipv4/assign now returns {} on success</li>
+            </ul>
+          </li>
+        </ul>
+        <b>Features:</b><br />
+        <ul>
+          <li> Added fields to Notification object
+            <ul>
+              <li> Added "label" - a brief description of the notification</li>
+              <li> Added "severity" - one of "minor", "major", or "critical"</li>
+              <li> Added "until" - a datetime or null</li>
+              <li> Added "notice" to possible values for "type"</li>
+            </ul>
+          </li>
+          <li> Added POST /linode/instances/:id/disks/:id/clone
+            <ul>
+              <li> This used to be at POST /linode/instances/:id/disks/:id</li>
+            </ul>
+          </li>
+          <li> GET /linode/instances is now filterable on "id"</li>
+          <li> GET /account/events is now filterable on "id"</li>
+        </ul>
         <h2>2018-03-14</h2>
         <hr /><br />
         <b>Breaking:</b><br />
