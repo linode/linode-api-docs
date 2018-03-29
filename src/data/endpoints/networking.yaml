@@ -129,7 +129,7 @@ endpoints:
                 https://$api_root/$version/networking/ipv6/ranges
           python: |
             my_ipv6s = client.networking.get_ipv6_ranges()
-  /networking/ip-assign:
+  /networking/ipv4/assign:
     group: IPv4
     type: Strange
     authenticated: true
@@ -164,7 +164,7 @@ endpoints:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '$SUB_SPEC_EXAMPLE' \
-            https://$api_root/$version/networking/ip-assign
+            https://$api_root/$version/networking/ipv4/assign
           python: |
             linode_1 = linode.Linode(client, 134504)
             ip1 = linode_1.ips.ipv4.public[0]
@@ -173,7 +173,7 @@ endpoints:
             ip2 = linode_2.ips.ipv4.public[0]
 
             client.networking.assign_ips(linode_1.region, ip1.to(linode_2), ip2.to(linode_1))
-  /networking/ip-sharing:
+  /networking/ipv4/share:
     group: IPv4
     type: Strange
     authenticated: true
@@ -201,5 +201,5 @@ endpoints:
                   "linode_id": 12345,
                   "ips": [ "97.107.143.29", "97.107.143.112" ]
                 }' \
-                https://$api_root/$version/networking/ip-sharing
+                https://$api_root/$version/networking/ipv4/share
 
