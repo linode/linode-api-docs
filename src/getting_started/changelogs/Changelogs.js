@@ -55,7 +55,7 @@ export default function Authentication() {
           <li> Creating a payment now returns the new payment
             <ul>
               <li> POST /account/payments now returns a Payment object</li>
-              <li> POST /account/payments/paypal-execute now returns a Payment object</li>
+              <li> POST /account/payments/paypal/execute now returns a Payment object</li>
             </ul>
           </li>
           <li> Removed the ability to change another user's email address
@@ -68,7 +68,7 @@ export default function Authentication() {
             <ul>
               <li> POST /networking/ip-assign moved to POST /networking/ipv4/assign</li>
               <li> POST /networking/ip-sharing moved to POST /networking/ipv4/share</li>
-              <li> POT /networking/ipv4/assign now returns {} on success</li>
+              <li> POST /networking/ipv4/assign now returns {} on success</li>
             </ul>
           </li>
         </ul>
