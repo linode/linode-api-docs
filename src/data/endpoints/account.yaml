@@ -269,10 +269,6 @@ endpoints:
             type: String
             description: The user's email.
             value: person@place.com
-          password:
-            type: String
-            description: The user's password.
-            value: hunter2
           restricted:
             optional: true
             type: Boolean
@@ -284,7 +280,6 @@ endpoints:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                     "username": "testguy",
-                    "password": "hunter7",
                     "email": "testguy@linode.com"
                 }' \
                 https://$api_root/$version/account/users
