@@ -34,6 +34,14 @@ export default function Authentication() {
               set their password</li>
             </ul>
           </li>
+          <li>Changed returned Region IDs
+            <ul>
+              <li>Slugs such as "us-east-1a" are now returned as "us-east"</li>
+              <li>These values had previosuly been accepted as input.</li>
+              <li>"us-south" was renamed "us-central"</li>
+              <li>Old values are still accepted (and translated) in requests</li>
+            </ul>
+          </li>
           <li> Removed "addresses" from GET /linode/instances/:id/ips response
             <ul>
               <li> These addresses are now returned in GET /networking/ips</li>
