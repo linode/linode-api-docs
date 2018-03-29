@@ -281,18 +281,6 @@ endpoints:
           python: |
             disk.label = 'New Disk Label'
             disk.save()
-      POST:
-        oauth: linodes:create
-        description: >
-          Duplicates this disk.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST \
-                https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id
-          python: |
-            new_disk = disk.duplicate()
       DELETE:
         oauth: linodes:delete
         dangerous: true
@@ -305,6 +293,25 @@ endpoints:
                 https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id
           python: |
             disk.delete()
+  /linode/instances/$id/disks/$id/clone:
+    group: Disks
+    type: resource
+    authenticated: true
+    description: >
+      Duplicates a disk.
+    methods:
+      POST:
+        oauth: linodes:create
+        description: >
+          Duplicates this disk.
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id/clone
+          python: |
+            new_disk = disk.duplicate()
   /linode/instances/$id/disks/$id/resize:
     group: Disks
     type: Strange
