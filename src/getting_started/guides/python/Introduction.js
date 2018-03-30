@@ -66,7 +66,7 @@ export default function Introduction(props) {
           example={`>>> for r in client.get_regions():
 ...   print(r.id)
 ...
-us-south-1a
+us-central-1a
 us-west-1a
 us-southeast-1a
 us-east-1a
