@@ -8,11 +8,7 @@ export default function Authentication() {
     <section className="Article">
       <h1>Changelogs</h1>
       <section>
-        <p>
-        The API V4 is currently in beta.  There will be regular releases that may
-        introduce breaking changes.  The Developers site contains all changes to
-        API V4 since 2017-09-18.  Please check here regularly for updates.
-        </p>
+        <p>As releases are made Changelogs will be published here.</p>
       </section>
       <section>
         <h2>2018-04-02</h2>

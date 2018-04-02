@@ -23,7 +23,7 @@ export default function Introduction(props) {
       </header>
       <section>
         <p>
-          With the release of API V4, Linode has also released an official Python library.
+          With the release of API, Linode has also released an official Python library.
           This guide is a simple introduction to working with the Python library.
           The official Linode Python library is open source on&nbsp;
           <ExternalLink to="http://github.com/Linode/python-linode-api">
@@ -43,7 +43,7 @@ export default function Introduction(props) {
       <section>
         <h2>Connecting to the API</h2>
         <p>
-          The Python library connects to the Linode API V4 using the LinodeClient class,
+          The Python library connects to the Linode API using the LinodeClient class,
           which expects an OAuth Token in his constructor.
         </p>
         <i>All example code in this guide is executed in a Python shell.</i>
