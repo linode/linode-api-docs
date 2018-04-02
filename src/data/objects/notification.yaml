@@ -50,6 +50,23 @@ schema:
            shut down, migrated, and returned to its last state.
     description: >
       A human-readable description of the notification.
+  severity:
+    type: String
+    value: Importance level
+    description: >
+      One of "minor", "major", or "critical".
+  label:
+    type: String
+    value: Important label
+    description: >
+      A brief description of the notification.
+  until:
+    description: >
+      If this notification is of an event that will happen at a fixed, future time,
+      this is when the named action will be end.  For example, if there is a
+      time window, this is when the window will end.
+    type: Datetime
+    value: null
 enums:
   NotificatonType:
     ticket_important: There is a ticket open on your account that requires your attention.
@@ -59,3 +76,4 @@ enums:
     migration_scheduled: There is a migration queued for one of your Linodes.
     payment_due: You have a balance on your account that must be paid.
     reboot_scheduled: There is a reboot queued for one of your Linodes.
+    notice: There is a notice that requires your attention.

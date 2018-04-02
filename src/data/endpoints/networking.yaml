@@ -15,30 +15,43 @@ endpoints:
         paginationKey: data
         oauth: ips:view
         description: >
-          Returns a list of IP Addresses, including v4 and slaac addresses.
+          Returns a list of IP Addresses, including v4, slaac, and public v6
+          addresses.
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
               https://$api_root/$version/networking/ips
       POST:
+        response: ipaddress
         money: true
         oauth: ips:create
         description: >
-          Create a new Public IPv4 Address.
+          Create a new IPv4 Address.
         params:
           type:
             type: String
             description: >
-              The type of IP to allocate.  Currently only "ipv4" is supported.
+              The type of IP to allocate. Currently only "ipv4" is supported.
+            value: ipv4
+          public:
+            type: Boolean
+            description: >
+              Whether this is a public or private IP address.
+              Public IP Addresses, over and above the one included with each
+              Linode, incur an additional monthly charge. If you need an
+              additional Public IP Address you must request one - please
+              open a ticket.
+            value: true
           linode_id:
+            type: Integer
             description: >
               The Linode ID to assign this IP to.
-            type: Integer
+            value: 123
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{"type":"ipv4","linode":123}' \
+                -X POST -d '{"type":"ipv4", "public":true, "linode":123}' \
                 https://$api_root/$version/networking/ips
   /networking/ips/$address:
     group: IPs
@@ -116,39 +129,7 @@ endpoints:
                 https://$api_root/$version/networking/ipv6/ranges
           python: |
             my_ipv6s = client.networking.get_ipv6_ranges()
-  /networking/ipv6/$address:
-    group: IPv6
-    type: resource
-    authenticated: true
-    description: >
-      Manage a single IPv6 Address.  Address in URL
-      can be as compressed as you want.
-    methods:
-      GET:
-        response: ipv6-address
-        oauth: ips:view
-        description: >
-          Return a single IPv6 Address.
-        examples:
-          curl: |
-            curl -H "Authorization: Bearer $TOKEN" \
-                https://$api_root/$version/networking/ipv6/2600:3c01::2:5001
-          python: |
-            my_ipv6 = linode.IPv6Address(client, '2600:3c01::2:5001')
-      PUT:
-        oauth: ips:modify
-        description: >
-          Set RDNS on a single IPv6 Address.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X PUT -d '{"rdns":"example.org"}' \
-                https://$api_root/$version/networking/ipv6/2600:3c01::2:5001
-          python: |
-            my_ipv6.rdns = 'example.org'
-            my_ipv6.save()
-  /networking/ip-assign:
+  /networking/ipv4/assign:
     group: IPv4
     type: Strange
     authenticated: true
@@ -183,7 +164,7 @@ endpoints:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '$SUB_SPEC_EXAMPLE' \
-            https://$api_root/$version/networking/ip-assign
+            https://$api_root/$version/networking/ipv4/assign
           python: |
             linode_1 = linode.Linode(client, 134504)
             ip1 = linode_1.ips.ipv4.public[0]
@@ -192,7 +173,7 @@ endpoints:
             ip2 = linode_2.ips.ipv4.public[0]
 
             client.networking.assign_ips(linode_1.region, ip1.to(linode_2), ip2.to(linode_1))
-  /networking/ip-sharing:
+  /networking/ipv4/share:
     group: IPv4
     type: Strange
     authenticated: true
@@ -220,5 +201,5 @@ endpoints:
                   "linode_id": 12345,
                   "ips": [ "97.107.143.29", "97.107.143.112" ]
                 }' \
-                https://$api_root/$version/networking/ip-sharing
+                https://$api_root/$version/networking/ipv4/share
 

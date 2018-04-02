@@ -18,16 +18,12 @@ schema:
       isArray: true
   ipv6:
     description: The Linode's IPv6 networking data.
-    addresses:
-      type: ipaddress
-      isArray: true
     slaac:
-      type: ipaddress
+      type: ipaddressv6slaac
       description: >
         This Linode's SLAAC range.
     link_local:
-      type: String
-      value: f300::f03c:91ff:fe96:46da
+      type: ipaddressv6linklocal
       description: >
         This Linode's link-local range.
     global:

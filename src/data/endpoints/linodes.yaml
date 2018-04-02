@@ -281,18 +281,6 @@ endpoints:
           python: |
             disk.label = 'New Disk Label'
             disk.save()
-      POST:
-        oauth: linodes:create
-        description: >
-          Duplicates this disk.
-        examples:
-          curl: |
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X POST \
-                https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id
-          python: |
-            new_disk = disk.duplicate()
       DELETE:
         oauth: linodes:delete
         dangerous: true
@@ -305,6 +293,25 @@ endpoints:
                 https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id
           python: |
             disk.delete()
+  /linode/instances/$id/disks/$id/clone:
+    group: Disks
+    type: resource
+    authenticated: true
+    description: >
+      Duplicates a disk.
+    methods:
+      POST:
+        oauth: linodes:create
+        description: >
+          Duplicates this disk.
+        examples:
+          curl: |
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://$api_root/$version/linode/instances/$linode_id/disks/$disk_id/clone
+          python: |
+            new_disk = disk.duplicate()
   /linode/instances/$id/disks/$id/resize:
     group: Disks
     type: Strange
@@ -869,23 +876,27 @@ endpoints:
         money: true
         oauth: linodes:modify
         description: >
-          Allocates a new IP Address for this Linode.
+          Allocates a new IPv4 Address for this Linode.
         params:
           type:
-            description: >
-                The type of IP Address this is, can be one of "public" or "private".
-                Public IP Addresses, over and above the one included with each Linode,
-                incur an additional monthly charge. If you need an additional Public IP Address
-                you must request one - please open a ticket.
             type: String
-            value: private
+            description: >
+              The type of IP to allocate.  Currently only "ipv4" is supported.
+            value: ipv4
+          public:
+            type: Boolean
+            description: >
+              Whether this is a public or private IP address.
+              Public IP Addresses, over and above the one included with each
+              Linode, incur an additional monthly charge. If you need an
+              additional Public IP Address you must request one - please
+              open a ticket.
+            value: true
         examples:
           curl: |
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{
-                    "type": "private"
-                }' \
+                -X POST -d '{"type": "ipv4", "public":true}' \
                 https://$api_root/$version/linode/instances/$linode_id/ips
   /linode/instances/$id/ips/$ip_address:
     group: IPs
@@ -929,8 +940,7 @@ endpoints:
     authenticated: true
     description: >
       Deletes all Disks and Configs on this Linode, then deploys a new
-      Distribution or Image to this Linode with the given attributes. Returns
-      a JSON object representation of the Linode's disks and configs.
+      Distribution or Image to this Linode with the given attributes.
     methods:
       POST:
         oauth: linodes:modify

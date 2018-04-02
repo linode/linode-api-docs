@@ -394,7 +394,7 @@ endpoints:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 https://$api_root/$version/managed/credentials/$credential_id/revoke
-  /managed/linode_settings:
+  /managed/linode-settings:
     group: Linode Settings
     type: resource
     authenticated: true
@@ -408,8 +408,8 @@ endpoints:
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
-                https://$api_root/$version/managed/linode_settings
-  /managed/linode_settings/$id:
+                https://$api_root/$version/managed/linode-settings
+  /managed/linode-settings/$id:
     group: Linode Settings
     type: resource
     authenticated: true
@@ -423,7 +423,7 @@ endpoints:
         examples:
           curl: |
             curl -H "Authorization: Bearer $TOKEN" \
-                https://$api_root/$version/managed/linode_settings/$linode_settings_id
+                https://$api_root/$version/managed/linode-settings/$linode_settings_id
       PUT:
         response: ManagedLinodeSetting
         description: >
@@ -440,7 +440,7 @@ endpoints:
                     "access": true
                   }
                 }' \
-                https://$api_root/$version/managed/linode_settings/$linode_settings_id
+                https://$api_root/$version/managed/linode-settings/$linode_settings_id
   /managed/stats:
     group: Stats
     type: Action

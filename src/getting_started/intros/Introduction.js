@@ -14,16 +14,8 @@ export default function Introduction() {
       <h1>Introduction</h1>
       <section>
         <br />
-        <div className="alert alert-danger" role="alert">
-          This API is an <b>Early Access</b> release. As such, we will be making regular revisions,
-          some of which will contain <b>breaking changes. </b>
-          <Link to={`/${API_VERSION}/changelogs`}>
-            Please review the changelogs
-          </Link> and <ExternalLink to="https://welcome.linode.com/api">
-          subscribe to the mailing list</ExternalLink> for updates on changes and releases.
-        </div>
         <p>
-          The Linode APIv4 is an HTTP service that follows (to a large extent)&nbsp;
+          The Linode API is an HTTP service that follows (to a large extent)&nbsp;
           <ExternalLink to="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</ExternalLink>
           &nbsp;style. Resources like Linodes have predictable URLs that use standard
           HTTP methods to manipulate and return standard HTTP status codes to tell you how
@@ -35,7 +27,7 @@ export default function Introduction() {
           </Link> to get started making API calls using a Personal Access Token (PAT).
         </div>
         <p>
-          All APIv4 endpoints are located at:
+          All API endpoints are located at:
         </p>
         <section>
           <Code example={`${API_ROOT}/${API_VERSION}/*`} name="bash" noclipboard />
