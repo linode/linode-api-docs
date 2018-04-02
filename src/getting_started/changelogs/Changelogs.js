@@ -8,8 +8,7 @@ export default function Authentication() {
     <section className="Article">
       <h1>Changelogs</h1>
       <section>
-        <p>The API is a living system, and as releases are made Changelogs will
-        be published here.</p>
+        <p>As releases are made Changelogs will be published here.</p>
       </section>
       <section>
         <h2>2018-04-02</h2>
