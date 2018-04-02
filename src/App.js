@@ -148,7 +148,7 @@ browserHistory.listen(function (location) {
 
 window.setTitle = function (newTitle) {
   const title = document.querySelector('title');
-  title.textContent = 'API v4 Documentation | Linode Developers';
+  title.textContent = 'API Documentation | Linode Developers';
 
   if (newTitle) {
     title.textContent = `${newTitle} | ${title.textContent}`;
