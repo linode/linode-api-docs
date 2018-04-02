@@ -14,14 +14,6 @@ export default function Introduction() {
       <h1>Introduction</h1>
       <section>
         <br />
-        <div className="alert alert-danger" role="alert">
-          This API is an <b>Early Access</b> release. As such, we will be making regular revisions,
-          some of which will contain <b>breaking changes. </b>
-          <Link to={`/${API_VERSION}/changelogs`}>
-            Please review the changelogs
-          </Link> and <ExternalLink to="https://welcome.linode.com/api">
-          subscribe to the mailing list</ExternalLink> for updates on changes and releases.
-        </div>
         <p>
           The Linode APIv4 is an HTTP service that follows (to a large extent)&nbsp;
           <ExternalLink to="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</ExternalLink>

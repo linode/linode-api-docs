@@ -49,7 +49,7 @@ export default class Layout extends Component {
               </span>
             </Link>
           </div>
-          <span className="MainHeader-title">Linode API v4 Documentation (Early Access)</span>
+          <span className="MainHeader-title">Linode API v4 Documentation</span>
           <button
             className="ToggleNav navbar-toggler navbar-toggler-right collapsed"
             type="button"
