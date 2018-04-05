@@ -3146,7 +3146,7 @@ paths:
     get:
       tags:
       - linode/instances
-      summary: List Statistics
+      summary: View Current Month Statistics
       description: >
         This endpoint returns CPU, IO, IPv4, and IPv6 statistics for your Linode
         for the past 24 hours.
@@ -5734,7 +5734,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - support
-      summary: Create File Attachment
+      summary: Create Ticket Attachment
       description: >
         This endpoint allows you to add a file attachment to an existing Support
         Ticket on your account. File attachments are used to assist our
