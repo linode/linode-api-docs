@@ -32,9 +32,13 @@ npm install redoc --save
 
 ## Development
 
-_TODO:_ - We need to finalize the local development portion of this
-repository, so developers can see more than just the OpenAPI spec
-itself.
+Any http server serving this directory will work - simply reload the page to
+see changes.  We're working on a nicer way to do this, but for now this should
+get you started:
+
+```shell
+python -m SimpleHTTPServer
+```
 
 ## Deploy
 
