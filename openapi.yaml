@@ -1592,7 +1592,7 @@ paths:
 
         - Using a Linode Linux Distribution image or an image you created based on another Linode
           - The Linode will be `running` after it completes `provisioning`
-          - A default a config with two disks, one being a 512 swap disk, is created
+          - A default config with two disks, one being a 512 swap disk, is created
             - `swap_size` can be used to customize the swap disk size
           - Requires a `password` be supplied to use for the root user's account
           - It is recommended to supply ssh keys for the root user using the `authorized_keys` field
@@ -2753,7 +2753,7 @@ paths:
                 public:
                   type: boolean
                   description: >
-                    Whether to create a public of private IPv4 address.
+                    Whether to create a public or private IPv4 address.
                   example: true
       responses:
         '200':
@@ -4402,7 +4402,7 @@ paths:
                 public:
                   type: boolean
                   description: >
-                    Whether to create a public of private IPv4 address.
+                    Whether to create a public or private IPv4 address.
                   example: true
                 linode_id:
                   type: integer
@@ -6861,7 +6861,7 @@ components:
           description: This Domain's unique ID
           example: 1234
           readOnly: true
-          x-linode-cli-display: true
+          x-linode-cli-display: 1
         type:
           type: string
           enum:
@@ -6872,7 +6872,7 @@ components:
             the domain it describes, or if it is a read-only copy of a master
             (also called a slave).
           example: master
-          x-linode-cli-display: true
+          x-linode-cli-display: 3
         domain:
           type: string
           pattern: ([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|XN--[a-zA-Z0-9]+)
@@ -6881,7 +6881,7 @@ components:
             system, you cannot have two Domains representing the same domain.
           example: example.org
           x-linode-filterable: true
-          x-linode-cli-display: true
+          x-linode-cli-display: 2
         group:
           type: string
           description: >
@@ -6900,7 +6900,7 @@ components:
           description: >
             Used to control whether this domain is currently being rendered.
           example: active
-          x-linode-cli-display: true
+          x-linode-cli-display: 4
         description:
           type: string
           minLength: 1
@@ -6915,7 +6915,7 @@ components:
             Start of Authority email address.  This is required for master
             domains.
           example: admin@example.org
-          x-linode-cli-display: true
+          x-linode-cli-display: 5
         retry_sec:
           type: integer
           format: int32
@@ -7599,7 +7599,7 @@ components:
         public:
           type: boolean
           description: >
-            Whether this is a public of private IP address.
+            Whether this is a public or private IP address.
           example: true
           readOnly: true
         rdns:
@@ -7861,21 +7861,21 @@ components:
           description: The unique ID of this kernel.
           example: linode/latest-64bit
           readOnly: true
-          x-linode-cli-display: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
           description: The friendly name of this kernel.
           example: Latest 64 bit (4.15.7-x86_64-linode102)
           readOnly: true
-          x-linode-cli-display: true
+          x-linode-cli-display: 2
         version:
           x-linode-filterable: true
           type: string
           description: Linux kernel version.
           example: 4.15.7
           readOnly: true
-          x-linode-cli-display: true
+          x-linode-cli-display: 3
         kvm:
           x-linode-filterable: true
           type: boolean
@@ -7897,7 +7897,7 @@ components:
           - i386
           example: x86_64
           readOnly: true
-          x-linode-cli-display: true
+          x-linode-cli-display: 4
         pvops:
           x-linode-filterable: true
           type: boolean
