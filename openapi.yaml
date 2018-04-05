@@ -7076,7 +7076,7 @@ components:
             changing the data you sent in the request, but in some cases you will be instructed to
             open a support ticket or perform some other action before you can complete the request
             successfully.
-          example: `fieldname` must be a valid value
+          example: fieldname must be a valid value
         field:
           type: string
           description: >
