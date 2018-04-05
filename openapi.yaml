@@ -6291,10 +6291,6 @@ components:
             'volumes:read_write': Allows access to all endpoints related to your Volumes.
   responses:
     ErrorResponse:
-      description: >
-        An error occurred during your request. In most cases, this is something you can fix by
-        changing the request parameters and submitting another request. Look to the content of the
-        request to see what needs to be done.
       content:
         application/json:
           schema:
