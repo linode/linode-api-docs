@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   version: 4.0.0
-  title: Linode API V4
+  title: Linode API
   description: |
     This is Linode's next generation API. The API was designed around the concepts of REST and does
     its best to conform to a RESTful model whenever possible. When not possible the goal was to be
@@ -34,7 +34,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View your Account information.
+      summary: View Account
       description: >
         This endpoint returns the contact and billing information related to
         your Account.
@@ -56,7 +56,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Update your Account
+      summary: Update Account
       description: >
         This endpoint allows you to update contact and billing information
         related to your Account.
@@ -86,7 +86,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Add/edit the credit card information for your Account.
+      summary: Add/Edit Credit Card
       description: >
         This endpoint allows you to add/edit credit card information to your Account.
 
@@ -122,7 +122,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - account
-      summary: View Events on your Account.
+      summary: List Events
       description: >
          This endpoint returns a collection of Event objects representing
          actions taken on your Account. The events returned depends on your
@@ -161,7 +161,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View a single Event.
+      summary: View Event
       description: Returns a single Event object.
       operationId: getEvent
       security:
@@ -190,7 +190,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Update a specific Event to designate that it has been read.
+      summary: Mark Event as Read
       description: Marks Event as read.
       operationId: eventRead
       security:
@@ -219,7 +219,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Updates Events to designate that they have been seen.
+      summary: Mark Event as Seen
       description: >
         Marks all Events up to and including this Event by ID as seen.
       operationId: eventSeen
@@ -244,7 +244,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - account
-      summary: View your Account invoices.
+      summary: List Invoices
       description: >
         This endpoint returns a paginated list of invoices against your Account.
       operationId: getInvoices
@@ -281,7 +281,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View a single Invoice.
+      summary: View Invoice
       description: Returns a single Invoice object.
       operationId: getInvoice
       security:
@@ -313,7 +313,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - account
-      summary: Returns a paginated list of InvoiceItem objects identified by `invoiceId`.
+      summary: List Invoice Items
       description: Returns a paginated list of Invoice items.
       operationId: getInvoiceItems
       security:
@@ -341,7 +341,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View Notifications on your Account.
+      summary: List Notifications
       description: >
         This endpoint returns a collection of Notification objects representing
         important, often time-sensitive items related to your account.
@@ -378,7 +378,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - account
-      summary: View OAuth Clients on your account.
+      summary: List OAuth Clients
       description: >
         Returns a paginated list of OAuth Clients registered to your account.  OAuth
         Clients allow users to log into applications you write or host using their
@@ -408,7 +408,7 @@ paths:
     post:
       tags:
       - account
-      summary: Register a new OAuth Client with Linode.
+      summary: Create OAuth Client
       description: >
         Create a new OAuth Client, which can be used to allow users to login to
         your own applications using their Linode account, and optionally grant
@@ -454,7 +454,7 @@ paths:
     get:
       tags:
       - account
-      summary: View a single OAuth Client.
+      summary: View OAuth Client
       description: >
         Returns information about a single OAuth client.
       operationId: getClient
@@ -474,7 +474,7 @@ paths:
     put:
       tags:
       - account
-      summary: Update information about an OAuth Client.
+      summary: Update OAuth Client
       description: >
         Update information about an OAuth Client on your account.  This can be
         especially useful to update the redirect_uri of your client in the event
@@ -502,7 +502,7 @@ paths:
     delete:
       tags:
       - account
-      summary: Delete an OAuth Client registered with Linode.
+      summary: Delete OAuth Client
       description: >
         Deletes an OAuth Client registered with Linode.  The Client ID and
         Client Secret will no longer be accepted by https://login.linode.com,
@@ -533,7 +533,7 @@ paths:
     post:
       tags:
       - account
-      summary: Reset the OAuth Client Secret for a client.
+      summary: Reset OAuth Client Secret
       description: >
         Resets the OAuth Client Secret for a client you own, and returns the
         OAuth Client with the plaintext secret.  This secret is not supposed to
@@ -566,7 +566,7 @@ paths:
     get:
       tags:
       - account
-      summary: Returns the thumbnail for this OAuth Client.
+      summary: View OAuth Client Thumbnail
       description: >
         Returns the thumbnail for this OAuth Client.  This is a
         publicly-viewable endpoint, and can be accessed without authentication.
@@ -584,7 +584,7 @@ paths:
     put:
       tags:
       - account
-      summary: Set a OAuth Client's thumbnail.
+      summary: Update OAuth Client Thumbnail
       description: >
         Upload a thumbnail for a client you own.  You must upload an image file
         that will be returned when the thumbnail is retrieved.  This image will
@@ -619,7 +619,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View Payments made to your Account.
+      summary: List Payments
       description: >
         This endpoint returns a paginated list of Payments made on this Account.
       operationId: getPayments
@@ -647,7 +647,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Make a payment.
+      summary: Make Payment
       description: >
         This endpoint allows you to make a payment to your Account
         via credit card. This will charge your credit card the requested amount.
@@ -685,7 +685,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: Returns information about a specific Payment.
+      summary: View Payment
       description: >
         Returns information about a specific Payment.
       operationId: getPayment
@@ -707,7 +707,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: Stage a PayPal payment.
+      summary: Stage PayPal Payment
       description: >
         This begins the process of submitting a payment via PayPal. After calling
          this endpoint, you must take the resulting `payment_id` along with
@@ -740,7 +740,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Execute a staged and approved PayPal payment.
+      summary: Execute Staged/Approved PayPal Payment
       description: >
         Given a PaymentID and PayerID - as generated by PayPal during the
         transaction authorization process - this endpoint executes the payment
@@ -772,7 +772,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View your Account settings information.
+      summary: View Account Settings
       description: >
         This endpoint returns information related to
         your Account settings: Managed service subscription, Longview
@@ -795,7 +795,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - account
-      summary: Update your Account Settings
+      summary: Update Account Settings
       description: >
         This endpoint allows you to update your Account settings.
       operationId: updateAccountSettings
@@ -824,9 +824,10 @@ paths:
       x-linode-grant: read_only
       tags:
       - account
-      summary: View your network utilization for the current month, in Gigabytes.
+      summary: View Network Utilization
       description: >
-        This endpoint returns a Transfer object.
+        This endpoint returns a Transfer object showing your network utilization,
+        in GB, for the current month.
       operationId: getTransfer
       security:
       - personalAccessToken: []
@@ -849,7 +850,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - account
-      summary: View users on your account.
+      summary: List Users
       description: >
         Returns a paginated list of Users on your account.  Users may access all
         or part of your account based on their restricted status and grants.  An
@@ -881,7 +882,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: Create a new User on your account.
+      summary: Create User
       description: >
         Creates a new User on your account.  Once created, the user will be
         able to log in and access portions of your account.  Access is
@@ -937,7 +938,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: View a single user.
+      summary: View User
       description: >
         Returns information about a single user on your account.
       operationId: getUser
@@ -958,7 +959,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: Update a user's information.
+      summary: Update User
       description: >
         Update information about a user on your account.  This can be used to
         change the restricted status of a user.  When making a user restricted,
@@ -988,7 +989,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: Deletes a user from your account.
+      summary: Delete User
       description: >
         Deletes a user.  The deleted user will be immediately logged out and
         may no longer log in or perform any actions.  All grants that user had
@@ -1019,7 +1020,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: View grants for a user.
+      summary: View User's Grants
       description: >
         Returns the full grants structure for this user.  This includes all
         entities on the account alongside what level of access this user has
@@ -1048,7 +1049,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: Update a user's grants.
+      summary: Update User's Grants
       description: >
         Update the grants a user has.  This can be used to give a user access
         to new entities or actions, or take access away.  You do not need to
@@ -1083,7 +1084,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - domains
-      summary: View your domains in Linode's DNS Manager.
+      summary: View Domains
       description: >
         This is a collection of domains that you have registered in Linode's DNS
         Manager.  Linode is not a registrar, and in order for these to work you
@@ -1114,7 +1115,7 @@ paths:
       x-linode-grant: add_domains
       tags:
       - domains
-      summary: Manage a new domain with Linode's DNS Manager.
+      summary: Create Domain
       description: >
         Adds a new domain to Linode's DNS Manager.  Linode is not a registrar, and
         you must own the domain before adding it here.  Be sure to point your
@@ -1155,7 +1156,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - domains
-      summary: View a single domain in Linode's DNS Manager.
+      summary: View Domain
       description: >
         This is a single domain that you have registered in Linode's DNS Manager.
         Linode is not a registrar, and in order for this domain record to work you
@@ -1179,7 +1180,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - domains
-      summary: Update a Domain zone
+      summary: Update Domain
       description: |
         Update information about a domain in Linode's DNS Manager.
       operationId: updateDomain
@@ -1207,7 +1208,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - domains
-      summary: Delete a domain from Linode's DNS Manager.
+      summary: Delete Domain
       description: >
         Deletes a domain from Linode's DNS Manager.  The domain will be removed
         from Linode's nameservers shortly after this operation completes.  This
@@ -1245,7 +1246,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - domains:read_only
-      summary: View domain records configured on a domain.
+      summary: List Domain Records
       description: |
         Returns a paginated list of records configured on a domain in Linode's
         DNS Manager.
@@ -1272,7 +1273,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - domains:read_write
-      summary: Add a new record to this domain.
+      summary: Create Domain Record
       description: >
         Adds a new domain record to the zonefile this domain represents.
       requestBody:
@@ -1314,7 +1315,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - domains:read_only
-      summary: View a single domain record.
+      summary: View Domain Record
       description: |
         View a single record on this domain.
       responses:
@@ -1334,7 +1335,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - domains:read_write
-      summary: Update a domain record.
+      summary: Update Domain Record
       description: |
         Update a single record on this domain.
       requestBody:
@@ -1361,7 +1362,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - domains:read_write
-      summary: Delete a domain record.
+      summary: Delete Domain Record
       description: |
         Deletes a record on this domain.
       responses:
@@ -1381,7 +1382,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - images
-      summary: Returns a paginated list of public and private Images.
+      summary: List Images
       description: >
         Returns a paginated list of Images. This list includes public Images and
         your private Images. You can call this enpoint without authentication
@@ -1411,8 +1412,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - images
-      summary: >
-        Creates a private gold-master Image from a Disk.
+      summary: Create Image
       description: >
         Creates a new private gold-master Image from a Linode Disk. There is no
         additional charge to store Images for Linode users, with a limit of 2GB
@@ -1469,7 +1469,7 @@ paths:
     get:
       tags:
       - images
-      summary: Information about a specific gold-master Image.
+      summary: View Image
       description: >
         Get information about a single image.
       operationId: getImage
@@ -1486,7 +1486,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - images
-      summary: Update a private Image.
+      summary: Update Image
       description: >
         This allows you to update an private Image that you have permission to
         `read_write`.
@@ -1517,7 +1517,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - images
-      summary: Delete a private Image.
+      summary: Delete Image
       description: |
         Deletes an Image you have permission to `read_write`. Deleting an image is a destructive
         process and cannot be undone. Only private Images are deletable.
@@ -1536,16 +1536,12 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
   /linode/instances:
-    summary: A collection of your Linodes.
-    description: >
-      A collection of Linodes you have access to. Through this collection you can create servers and
-      view servers active on your account.
     get:
       x-linode-grant: read_only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
-      summary: Lists your Linodes.
+      summary: List Linodes
       description: >
         Returns a paginated list of Linodes you have permission to view.
       tags:
@@ -1574,7 +1570,7 @@ paths:
     post:
       x-linode-charge: true
       x-linode-grant: add_linodes
-      summary: Create a new Linode.
+      summary: Create Linode
       description: |
         This endpoint allows you to create a new Linode server on your account. In order for this
         request to complete successfully, your user must have the `add_linodes` grant. Creating a
@@ -1683,7 +1679,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - linode/instances
-      summary: Get a specific Linode
+      summary: View Linode
       description: Get a specific Linode by ID.
       operationId: getLinodeInstance
       security:
@@ -1724,7 +1720,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Update a Linode
+      summary: Update Linode
       description: >
         This allows you to update a Linode that you have permission to `read_write`.
       operationId: updateLinodeInstance
@@ -1755,7 +1751,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Delete a Linode.
+      summary: Delete Linode
       description: |
         Deletes a Linode you have permission to `read_write`. Deleting a Linode is a destructive
         process and cannot be undone. Additionally, deleting a Linode:
@@ -1788,7 +1784,7 @@ paths:
         type: integer
     get:
       x-linode-grant: read_only
-      summary: Returns information about this Linode's available backups.
+      summary: List Backups
       description: >
         Returns information about this Linode's available backups.
       tags:
@@ -1827,7 +1823,7 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
     post:
       x-linode-grant: read_write
-      summary: Takes a manual snapshot of the specified Linode.
+      summary: Create Snapshot
       description: >
         Creates a snapshot backup of a Linode. WARNING: If you already have a
         snapshot this is a destructive operation. The previous snapshot will be
@@ -1873,7 +1869,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Cancel backup service for a Linode.
+      summary: Cancel Backups
       description: >
         Cancels the backup service on the given Linode.
       tags:
@@ -1902,7 +1898,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Enables backups for the specified Linode.
+      summary: Enable Backups
       description: >
         Enables backups for the specified Linode.
       tags:
@@ -1937,7 +1933,7 @@ paths:
         type: integer
     get:
       x-linode-grant: read_only
-      summary: Return information about a backup.
+      summary: View Backup
       description: >
         Return information about a backup.
       tags:
@@ -1972,7 +1968,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Restores a Linode's backup to the specified Linode.
+      summary: Restore Backup
       description: >
         Restores a Linode's backup to the specified Linode.
       tags:
@@ -2023,7 +2019,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Boot a Linode.
+      summary: Boot Linode
       description: |
         Boots a Linode you have permission to modify.  If no parameters are given, a config profile
         will be chosen for this boot based on the following criteria:
@@ -2075,7 +2071,7 @@ paths:
     post:
       x-linode-charge: true
       x-linode-grant: add_linodes
-      summary: Clones a Linode to a new or existing Linode.
+      summary: Clone Linode
       description: >
         You can clone your Linode's existing disks or configuration profiles to
         another Linode on your account. In order for this request to complete
@@ -2190,7 +2186,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - linode/instances
-      summary: Lists configuration profiles associated with a Linode.
+      summary: List Configuration Profiles
       description: |
         Lists configuration profiles associated with a Linode.
       operationId: getLinodeConfigs
@@ -2216,7 +2212,7 @@ paths:
     post:
       tags:
       - linode/instances
-      summary: Adds a new configuration profile to a Linode.
+      summary: Create Configuration Profile
       description: >
         Adds a new configuration profile to a Linode.
       operationId: addLinodeConfig
@@ -2264,7 +2260,7 @@ paths:
       tags:
       - linode/instances
       x-linode-grant: read_only
-      summary: Returns information about a specific configuration profile.
+      summary: View Configuration Profile
       description: >
         Returns information about a specific configuration profile.
       operationId: getLinodeConfig
@@ -2283,7 +2279,7 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
     put:
       x-linode-grant: read_write
-      summary: Update a configuration profile.
+      summary: Update Configuration Profile
       description: >
         Updates the parameters of a single configuration profile.
       tags:
@@ -2310,7 +2306,7 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
     delete:
-      summary: Delete a configuration profile.
+      summary: Delete Configuration Profile
       description: >
         Deletes the specified configuration profile from the specified Linode.
       x-linode-grant: read_write
@@ -2346,7 +2342,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - linode/instances
-      summary: Information about Disks associated with this Linode.
+      summary: List Disks
       description: >
         View Disk information for disks associated with this Linode.
       operationId: getLinodeDisks
@@ -2373,7 +2369,7 @@ paths:
     post:
       tags:
       - linode/instances
-      summary: Adds a new disk to a Linode.
+      summary: Create Disk
       description: >
         Adds a new disk to a Linode. You can optionally create a disk
         from an image (see `GET /images` for a list of available public images,
@@ -2421,7 +2417,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - linode/instances
-      summary: Information about a single Disk associated with this Linode.
+      summary: View Disk
       description: >
         View Disk information for a disk associated with this Linode.
       operationId: getLinodeDisk
@@ -2442,7 +2438,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Update a Disk
+      summary: Update Disk
       description: >
         This allows you to update a Disk that you have permission to `read_write`.
       operationId: updateDisk
@@ -2471,7 +2467,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Delete a Disk.
+      summary: Delete Disk
       description: |
         Deletes a Disk you have permission to `read_write`. Deleting a Disk is a
         destructive process and cannot be undone.
@@ -2509,7 +2505,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Reset the root password of a disk.
+      summary: Reset Disk Root Password
       description: >
         This endpoint allows you to reset the password of a disk you have
         permission to `read_write`.
@@ -2572,7 +2568,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Resizes the disk.
+      summary: Resize Disk
       description: >
         This endpoint allows you to resize a disk you have
         permission to `read_write`.
@@ -2628,7 +2624,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - linode/instances
-      summary: Returns networking information for a Linode.
+      summary: List Networking Information
       description: >
         Returns networking information for a single Linode.
       operationId: getLinodeIPs
@@ -2694,7 +2690,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Allocate a public or private IPv4 address to a Linode.
+      summary: Allocate IPv4 Address
       description: >
         Allocate a public or private IPv4 address to a Linode.
         Public IP Addresses, over and above the one included with each Linode,
@@ -2758,7 +2754,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - linode/instances
-      summary: View information about the specified IP address.
+      summary: View IP Address
       description: >
         View information about the specified IP address associated
         with the specified Linode.
@@ -2780,7 +2776,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Manage a particular IP Address associated with this Linode.
+      summary: Update IP Address
       description: >
         Manage a particular IP Address associated with this Linode.
         Currently only allows setting/resetting reverse DNS.
@@ -2814,7 +2810,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/instances
-      summary: Remove a particular public IPv4 address from this Linode.
+      summary: Delete IPv4 Address
       description: >
         Delete a public IPv4 address associated with this Linode. This will
         fail if it is the Linode's last remaining IP address. Private
@@ -2840,7 +2836,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - linode/kernels
-      summary: Lists available kernels.
+      summary: List Kernels
       description: |
         Lists available kernels.
       operationId: getKernels
@@ -2871,7 +2867,7 @@ paths:
     get:
       tags:
       - linode/kernels
-      summary: Returns information about a specific kernel.
+      summary: View Kernel
       description: >
         Get information about a single kernel.
       operationId: getKernel
@@ -2895,7 +2891,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Upgrades a Linode to its next generation.
+      summary: Upgrade Linode
       description: >
         Linodes created with now-deprecated types are entitled to a free
         upgrade to the next generation. A mutating Linode will be allocated any new
@@ -2931,7 +2927,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Reboot a Linode.
+      summary: Reboot Linode
       description: >
         Reboots a Linode you have permission to modify. If any actions are currently running or
         queued, those actions must be completed first before you can initiate a reboot.
@@ -2962,7 +2958,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Rebuilds a Linode.
+      summary: Rebuild Linode
       description: >
         This endpoint allows you to rebuild a Linode if you have the `read_write`
         permission for it. If any actions are currently running or queued,
@@ -3020,7 +3016,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Boots a Linode into Rescue Mode.
+      summary: Boot Linode into Rescue Mode
       description: >
         Rescue Mode is a safe environment for performing many system recovery
         and disk management tasks. Rescue Mode is based on the Finnix recovery
@@ -3067,7 +3063,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Resizes a Linode.
+      summary: Resize Linode
       description: >
         Resizes a Linode you have the `read_write` permission to a different
         type. If any actions are currently running or queued, those actions must
@@ -3119,7 +3115,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Shuts down a Linode.
+      summary: Shut Down Linode
       description: >
         Shuts down a Linode you have permission to modify. If any actions are currently running or
         queued, those actions must be completed first before you can initiate a shutdown.
@@ -3150,7 +3146,7 @@ paths:
     get:
       tags:
       - linode/instances
-      summary: Returns statistics for your Linode.
+      summary: View Current Month Statistics
       description: >
         This endpoint returns CPU, IO, IPv4, and IPv6 statistics for your Linode
         for the past 24 hours.
@@ -3196,7 +3192,7 @@ paths:
     get:
       tags:
       - linode/instances
-      summary: Returns statistics for a specific year/month period.
+      summary: View Statistics (year/month)
       description: >
         This endpoint returns statistics for a specific month. The year/month
         values must be either a date in the past, or the current month. If the
@@ -3229,7 +3225,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - linode/instances
-      summary: Information about Volumes attached to this Linode.
+      summary: List Linode's Volumes
       description: >
         View Block Storage Volumes attached to this Linode.
       operationId: getLinodeVolumes
@@ -3262,10 +3258,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - linode/stackscripts
-      summary: >
-        Returns a list of publicly available StackScripts. If the request is
-        authenticated, the list also includes private StackScripts the user has
-        permissions to view.
+      summary: List StackScripts
       description: >
         Returns a list of publicly available StackScripts. If the request is
         authenticated, the list also includes private StackScripts the user has
@@ -3297,7 +3290,7 @@ paths:
       x-linode-grant: add_stackscripts
       tags:
       - linode/stackscripts
-      summary: Add a new StackScript to your account.
+      summary: Create StackScript
       description: >
         This endpoint allows you to add a new StackScript to your account.
       operationId: addStackScript
@@ -3333,7 +3326,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - linode/stackscripts
-      summary: Returns information about a specific StackScript.
+      summary: View StackScript
       description: >
         This endpoint returns all of the information about a specified
         StackScript, including the contents of the script.
@@ -3355,7 +3348,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/stackscripts
-      summary: Modifies the properties of a specific StackScript.
+      summary: Update StackScript
       description: >
         This endpoint allows you to modify a StackScript. Setting a
         StackScript to public is a permanent change.
@@ -3377,7 +3370,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - linode/stackscripts
-      summary: Deletes a StackScript.
+      summary: Delete StackScript
       description: >
         This endpoint allows you to permanently delete a specific StackScript.
         You cannot delete a public StackScript.
@@ -3399,7 +3392,7 @@ paths:
     get:
       tags:
       - linode/types
-      summary: Returns collection of Linode types.
+      summary: List Types
       description: >
         Returns collection of Linode types, including pricing and
         specifications for each type. These are used when creating or resizing
@@ -3432,7 +3425,7 @@ paths:
     get:
       tags:
       - linode/types
-      summary: Returns information about the specified Linode type.
+      summary: View Type
       description: >
         Returns information about a specific Linode type, including pricing and
         specifications. This is used when creating or resizing a Linode.
@@ -3454,7 +3447,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - longview
-      summary: Returns information about your Longview Clients.
+      summary: List Longview Clients
       description: >
         Returns a paginated list of Longview Clients you have access
         to.  Longview Clients are used to monitor stats on your servers
@@ -3484,7 +3477,7 @@ paths:
       x-linode-grant: add_longview
       tags:
       - longview
-      summary: Create a new Longview Client.
+      summary: Create Longview Client
       description: >
         Create a new Longview Client.  This client will not begin monitoring
         the status of one of your servers until you configure the Longview
@@ -3524,7 +3517,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - longview
-      summary: View a single Longview Client.
+      summary: View Longview Client
       description: >
         Returns a single Longview Client you can access.
       operationId: getLongviewClient
@@ -3545,7 +3538,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - longview
-      summary: Update information about a Longview Client.
+      summary: Update Longview Client
       description: >
         Updates a Longview Client.  This cannot update how it monitors your
         server - use the Longview Client application on your server for
@@ -3575,7 +3568,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - longview
-      summary: Delete a Longview Client.
+      summary: Delete Longview Client
       description: >
         Deletes a Longview Client from your account.  All information stored
         for this client will be lost.  This _does not_ uninstall the Longview
@@ -3601,9 +3594,9 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - longview
-      summary: Returns a list of available Longview Subscriptions.
+      summary: List Longview Subscriptions
       description: >
-        Returns a paginated list of available Longview Subscriptions.  This is
+        Returns a paginated list of available Longview Subscriptions. This is
         a public endpoint, and requires no authentication.
       operationId: getLongviewSubscriptions
       responses:
@@ -3633,7 +3626,7 @@ paths:
     get:
       tags:
       - longview
-      summary: View a single Longview Subscription.
+      summary: View Longview Subscription
       description: >
         Returns a single LongviewSubscription object.  This is a public
         endpoint and requires no authentication.
@@ -3655,7 +3648,7 @@ paths:
         - $ref: '#/components/parameters/pageSize'
       tags:
       - managed
-      summary: View your Managed Contacts.
+      summary: List Managed Contacts
       description: >
         Returns a paginated list of Managed Contacts on your account.
       operationId: getManagedContacts
@@ -3683,7 +3676,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Create a new Managed Contact.
+      summary: Create Managed Contact
       description: >
         Creates a new Managed Contact.  A Managed Contact is someone Linode
         special forces can contact in the course of attempting to resolve an issue
@@ -3721,7 +3714,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View a single Managed Contact
+      summary: View Managed Contact
       description: >
         Returns a single Managed Contact.
       operationId: getManagedContact
@@ -3742,7 +3735,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Update a Managed Contact
+      summary: Update Managed Contact
       description: >
         Updates information about a Managed Contact.
       operationId: updateManagedContact
@@ -3770,7 +3763,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Delete a Managed Contact
+      summary: Delete Managed Contact
       description: >
         Deletes a Managed Contact.
       operationId: deleteManagedContact
@@ -3793,7 +3786,7 @@ paths:
         - $ref: '#/components/parameters/pageSize'
       tags:
       - managed
-      summary: View your Managed Credentials.
+      summary: List Managed Credentials
       description: >
         Returns a paginated list of Managed Credentials on your account.
       operationId: getManagedCredentials
@@ -3821,7 +3814,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Create a new Managed Credential.
+      summary: Create Managed Credential
       description: >
         Creates a new Managed Credential.  A Managed Credential is stored securely
         to allow Linode special forces to access your Managed Services and resolve
@@ -3878,7 +3871,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View a single Managed Credential
+      summary: View Managed Credential
       description: >
         Returns a single Managed Credential.
       operationId: getManagedCredential
@@ -3899,7 +3892,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Update a Managed Credential
+      summary: Update Managed Credential
       description: >
         Updates information about a Managed Credential.
       operationId: updateManagedCredential
@@ -3927,7 +3920,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Delete a Managed Credential
+      summary: Delete Managed Credential
       description: >
         Deletes a Managed Credential.  Linode special forces will no longer
         have access to this credential when attempting to resolve issues.
@@ -3951,9 +3944,9 @@ paths:
         - $ref: '#/components/parameters/pageSize'
       tags:
       - managed
-      summary: View recent and open issues related to your Managed Services.
+      summary: List Managed Issues
       description: >
-        Returns a paginated  list of recent and ongoing issues detected on your
+        Returns a paginated list of recent and ongoing issues detected on your
         Managed Services.
       operationId: getManagedIssues
       security:
@@ -3990,7 +3983,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View a single issue related to one of your Managed Services.
+      summary: View Managed Issue
       description: >
         Returns a single issue that is impacting or did impact one of your
         Managed Services.
@@ -4016,7 +4009,7 @@ paths:
         - $ref: '#/components/parameters/pageSize'
       tags:
       - managed
-      summary: View Managed settings for your Linodes.
+      summary: List Managed Linode Settings
       description: >
         Returns a paginated list of Managed settings for your Linodes.  There will
         be one entry per Linode on your account.
@@ -4055,7 +4048,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View a single Linode's Managed settings.
+      summary: View Linode's Managed Settings
       description: >
         Returns a single Linode's Managed settings.
       operationId: getManagedLinodeSetting
@@ -4076,7 +4069,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Update a single Linode's Managed settings.
+      summary: Update Linode's Managed Settings
       description: >
         Updates a single Linode's Managed settings.
       operationId: updateManagedLinodeSetting
@@ -4105,7 +4098,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View your Managed Services.
+      summary: List Managed Services
       description: >
         Returns a paginated list of Managed Services on your account.  These
         are the services Linode Managed is monitoring and will report and attempt
@@ -4135,7 +4128,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Create a new Managed Service.
+      summary: Create Managed Service
       description: >
         Creates a new Managed Service.  Linode Managed will being monitoring this
         service and reporting and attempting to resolve any issues.
@@ -4175,7 +4168,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View a single Managed Service
+      summary: View Managed Service
       description: >
         Returns information about a single Managed Service on your account.
       operationId: getManagedService
@@ -4196,7 +4189,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Update a Managed Service
+      summary: Update Managed Service
       description: >
         Updates information about a Managed Service.
       operationId: updateManagedService
@@ -4224,7 +4217,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Delete a Managed Service
+      summary: Delete Managed Service
       description: >
         Deletes a Managed Service.  This service will no longer be monitored by
         Linode Managed.
@@ -4253,7 +4246,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Disables a Managed Service
+      summary: Disable Managed Service
       description: >
         Temporarily disables monitoring of a Managed Service.
       operationId: disableManagedService
@@ -4283,7 +4276,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: Enables a Managed Service
+      summary: Enable Managed Service
       description: >
         Re-enables monitoring of a Managed Service.
       operationId: enableManagedService
@@ -4307,7 +4300,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - networking
-      summary: Returns a list of your IP Addresses.
+      summary: List IP Addresses
       description: >
         Returns a paginated list of IP Addresses on your account, excluding
         private addresses.
@@ -4336,7 +4329,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - networking
-      summary: Allocate a new IP Address.
+      summary: Allocate IP Address
       description: >
         Allocates a new IP Address on your account.  Currently, only IPv4
         addresses may be allocated this way.  The Linode you are allocating
@@ -4402,7 +4395,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - networking
-      summary: View a single IP Address
+      summary: View IP Address
       description: >
         Returns information about a single IP Address on your account.
       operationId: getIP
@@ -4423,7 +4416,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - networking
-      summary: Set RDNS on an IP Address
+      summary: Update IP Address RDNS
       description: >
         Sets RDNS on an IP Address.  Forward DNS must already be set up for
         reverse DNS to be applied.  If you set the RDNS to `null` for public
@@ -4533,7 +4526,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - networking
-      summary: Set up IP sharing.
+      summary: Configure IP Sharing
       description: >
         Configure shared IPs.  A shared IP may be brought up on a Linode other
         than the one it lists in its response.  This can be used to allow one
@@ -4589,7 +4582,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - networking
-      summary: Returns the IPv6 pools on your account.
+      summary: List IPv6 Pools
       description: >
         Displays the IPv6 pools on your account.
       operationId: getIPv6Pools
@@ -4620,7 +4613,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - networking
-      summary: Returns the IPv6 ranges on your account.
+      summary: List IPv6 Ranges
       description: >
         Displays the IPv6 ranges on your account.
       operationId: getIPv6Ranges
@@ -4652,7 +4645,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
-      summary: List your NodeBalancers.
+      summary: List NodeBalancers
       description: >
         Returns a paginated list of NodeBalancers you have access to.
       operationId: getNodeBalancers
@@ -4680,7 +4673,7 @@ paths:
       x-linode-grant: add_nodebalancers
       tags:
       - nodebalancers
-      summary: Create a new NodeBalancer.
+      summary: Create NodeBalancer
       description: >
         Creates a new NodeBalancer in the requested region.  This NodeBalancer
         will not start serving requests until it is configured.
@@ -4729,7 +4722,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - nodebalancers
-      summary: View a single NodeBalancer.
+      summary: View NodeBalancer
       description: >
         Returns a single NodeBalancer you can access.
       operationId: getNodeBalancer
@@ -4750,7 +4743,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Update information about a NodeBalancer
+      summary: Update NodeBalancer
       description: >
         Update information about a NodeBalancer you can access.
       operationId: updateNodeBalancer
@@ -4778,7 +4771,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Delete a NodeBalancer.
+      summary: Delete NodeBalancer
       description: >
         Deletes a NodeBalancer.  This cannot be undone.  Deleting a
         NodeBalancer will also delete all associated configs and nodes,
@@ -4816,7 +4809,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
-      summary: List configs for this NodeBalancer.
+      summary: List Configs
       description: >
         Returns a paginated list of NodeBalancerConfigs associated
         with this NodeBalancer.  NodeBalancer configs represent
@@ -4849,7 +4842,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Configure a new port on this NodeBalancer.
+      summary: Create Config
       description: >
         Creates a new NodeBalancerConfig, which allows the NodeBalancer to
         accept traffic on a new port.  You will need to add NodeBalancerNodes
@@ -4894,7 +4887,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - nodebalancers
-      summary: View a single NodeBalancer config.
+      summary: View Config
       description: >
         Returns configuration information for a single port of this
         NodeBalancer.
@@ -4916,7 +4909,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Update a NodeBalancer config.
+      summary: Update Config
       description: >
         Update the configuration for a single port on a NodeBalancer.
       operationId: updateNodeBalancerConfig
@@ -4944,7 +4937,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Delete a NodeBalancer config.
+      summary: Delete Config
       description: >
         Deletes the configuration for a port of this NodeBalancer.  This
         cannot be undone.  Once completed, this NodeBalancer will no longer
@@ -4988,7 +4981,7 @@ paths:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
-      summary: List nodes for this config.
+      summary: List Nodes
       description: >
         Returns a paginated list of NodeBalancer nodes associated with
         this config.  These are the backends that will be sent traffic
@@ -5018,7 +5011,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Create a new node on this config.
+      summary: Create Node
       description: >
         Creates a new NodeBalancer node, a backend that can accept
         traffic, for this NodeBalancer config.  Nodes are routed
@@ -5075,7 +5068,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - nodebalancers
-      summary: View a single NodeBalancer node.
+      summary: View Node
       description: >
         Returns information about a single node, a backend for this
         NodeBalancer's configured port.
@@ -5097,7 +5090,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Update a NodeBalancer node
+      summary: Update Node
       description: >
         Updates information about a node, a backend for this NodeBalancer's
         configured port.
@@ -5126,7 +5119,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - nodebalancers
-      summary: Delete a NodeBalancer node
+      summary: Delete Node
       description: >
         Deletes a node from this config.  Is backend will no longer
         receive traffic for the configured port of this NodeBalancer.
@@ -5150,7 +5143,7 @@ paths:
     get:
       tags:
       - profile
-      summary: Access your profile.
+      summary: View Profile
       description: >
         Returns information about the current user.  This can be used to see
         who is acting in applications where more than one token is managed, for
@@ -5170,7 +5163,7 @@ paths:
     put:
       tags:
       - profile
-      summary: Update your profile.
+      summary: Update Profile
       description: >
         Update information in your profile.  This option is _not_ available to
         all third-party clients.
@@ -5204,7 +5197,7 @@ paths:
         - $ref: '#/components/parameters/pageSize'
       tags:
         - profile
-      summary: View apps that you've authorized to access your account.
+      summary: List Authorized Apps
       description: >
         This is a collection of OAuth apps that you've given access to your account, and
         includes the level of access granted.
@@ -5242,7 +5235,7 @@ paths:
     get:
       tags:
       - profile
-      summary: View information about a single authorized app.
+      summary: View Authorized App
       description: >
         Returns information about a single app you've authorized to access your
         account.
@@ -5263,7 +5256,7 @@ paths:
     delete:
       tags:
       - profile
-      summary: Revoke the access previously given to an app.
+      summary: Revoke App Access
       description: >
         Expires all tokens and refresh tokens possessed by this app.  This app is no
         longer authorized to access your account.
@@ -5285,7 +5278,7 @@ paths:
     get:
       tags:
       - profile
-      summary: See what you have access to.
+      summary: List Grants
       description: >
         This returns a GrantsResponse describing what the acting user has been
         granted access to.  For unrestricted users, this will return a  204 and
@@ -5317,7 +5310,7 @@ paths:
     post:
       tags:
       - profile
-      summary: Disabled Two Factor Authentication for your user.
+      summary: Disable Two Factor Authentication
       description: >
         Disabled Two Factor Authentication for your user.  Once successful,
         login attempts from untrusted computers will only require a password
@@ -5340,9 +5333,9 @@ paths:
     post:
       tags:
       - profile
-      summary: Generate a Two Factor secret, used to enable Two Factor Authentication.
+      summary: Create Two Factor Secret
       description: >
-        Generates a Two Factor secret for your user..  TFA will
+        Generates a Two Factor secret for your user.  TFA will
         not be enabled until you have successfully confirmed the code you
         were given with the `tfa-enable-confirm` endpoint (see below).  Once
         enabled, login from untrusted computers will be required to provide
@@ -5378,7 +5371,7 @@ paths:
     post:
       tags:
       - profile
-      summary: Confirm and enable Two Factor Authentication for your user.
+      summary: Confirm/Enable Two Factor Authentication
       description: >
         Confirms that you can successfully generate Two Factor codes and
         enables TFA on your account.  Once this is complete, login attempts
@@ -5424,7 +5417,7 @@ paths:
     get:
       tags:
       - profile
-      summary: Lists active Personal Access Tokens.
+      summary: List Personal Access Tokens
       description: >
         Returns a paginated list of Personal Access Tokens currently active for
         your user.
@@ -5452,7 +5445,7 @@ paths:
     post:
       tags:
       - profile
-      summary: Create a new Personal Access Token
+      summary: Create Personal Access Token
       description: >
         Creates a new Personal Access Token for your user.  The raw token will
         be returned in the response, but will never be returned again afterward
@@ -5513,7 +5506,7 @@ paths:
     get:
       tags:
       - profile
-      summary: View a single token
+      summary: View Personal Access Token
       description: >
         Returns a single Personal Access Token.
       operationId: getPersonalAccessToken
@@ -5533,7 +5526,7 @@ paths:
     put:
       tags:
       - profile
-      summary: Update information about a token.
+      summary: Update Personal Access Token
       description: >
         Updates a Personal Access Token's label.
       operationId: updatePersonalAccessToken
@@ -5560,7 +5553,7 @@ paths:
     delete:
       tags:
       - profile
-      summary: Revoke a Personal Access Token.
+      summary: Revoke Personal Access Token
       description: >
         Immediately revokes a Personal Access Token.  The token will be invalidated
         immediately, and requests using that token will fail with a 401.  It _is_
@@ -5585,7 +5578,7 @@ paths:
     get:
       tags:
       - regions
-      summary: List available regions for Linode services
+      summary: List Regions
       description: |
         Lists the regions available for Linode services. Not all services are guaranteed to be
         available in all regions.
@@ -5617,7 +5610,7 @@ paths:
     get:
       tags:
       - regions
-      summary: Information about a specific Region.
+      summary: View Region
       description: >
         Get information about a single Region.
       operationId: getRegion
@@ -5638,7 +5631,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - support
-      summary: Lists your Support Tickets.
+      summary: List Support Tickets
       description: >
         This endpoint returns a collection of Support Tickets on your
         account. Support Tickets can be both tickets you open with Linode
@@ -5672,7 +5665,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - support
-      summary: Create a Support Ticket.
+      summary: Create Support Ticket
       description: >
         Create a Support Ticket.
 
@@ -5711,7 +5704,7 @@ paths:
       x-linode-grant: read_only
       tags:
       - support
-      summary: View a specific Support Ticket under your account.
+      summary: View Support Ticket
       description: >
         This endpoint returns a Support Ticket under your account.
       operationId: getTicket
@@ -5741,7 +5734,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - support
-      summary: Add a file attachment to a Support Ticket.
+      summary: Create Ticket Attachment
       description: >
         This endpoint allows you to add a file attachment to an existing Support
         Ticket on your account. File attachments are used to assist our
@@ -5792,7 +5785,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - support
-      summary: Lists the replies to a specific Support Ticket.
+      summary: List Replies
       description: >
         This endpoint returns a collection of replies to a singular Support
         Ticket on your account.
@@ -5821,7 +5814,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - support
-      summary: Reply to a Support Ticket.
+      summary: Create Reply
       description: >
         This endpoint allows you to add a reply to an existing Support Ticket.
       operationId: createTicketReply
@@ -5858,18 +5851,12 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
   /volumes:
-    summary: A collection of your Volumes.
-    description: >
-      A collection of Volumes you have access to. Through this collection you
-      can view Volumes active on your account, create new Volumes, resize an
-      existing Volume to a higher capacity, attach and detach a Volume to/from
-      a Linode, and clone an existing Volume.
     get:
       x-linode-grant: read_only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
-      summary: Lists your Volumes.
+      summary: List Volumes
       description: >
         Returns a paginated list of Volumes you have permission to view.
       tags:
@@ -5898,7 +5885,7 @@ paths:
     post:
       x-linode-charge: true
       x-linode-grant: add_volumes
-      summary: Create a new Volume.
+      summary: Create Volume
       description: >
         This endpoint allows you to create a new Volume on your account. In order
         for this to complete successfully, your user must have the `add_volumes`
@@ -5949,7 +5936,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - volumes
-      summary: Information about a specific Volume.
+      summary: View Volume
       description: >
         Get information about a single Volume.
       operationId: getVolume
@@ -5979,7 +5966,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - volumes
-      summary: Update a Volume
+      summary: Update Volume
       description: >
         This allows you to update a Volume that you have permission to `read_write`.
       operationId: updateVolume
@@ -6024,7 +6011,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - volumes
-      summary: Delete a Volume.
+      summary: Delete Volume
       description: |
         Deletes a Volume you have permission to `read_write`. Deleting a Volume
         is a destructive process and cannot be undone. Additionally, deleting
@@ -6054,7 +6041,7 @@ paths:
         type: integer
         format: int32
     post:
-      summary: Attaches a Volume to a Linode.
+      summary: Attach Volume
       description: >
         This endpoint allows you to attach a Volume on your account
         to an existing Linode on your account. In order for this request to
@@ -6106,7 +6093,7 @@ paths:
     post:
       x-linode-charge: true
       x-linode-grant: add_volumes
-      summary: Clones a Volume to a new Volume.
+      summary: Clone Volume
       description: >
         This endpoint allows you to create a new Volume on your account. In
         order for this request to complete successfully, your user must have the
@@ -6151,7 +6138,7 @@ paths:
         type: integer
         format: int32
     post:
-      summary: Detaches a Volume from a Linode.
+      summary: Detach Volume
       description: >
         This endpoint allows you to detach a Volume on your account
         from a Linode on your account. In order for this request to
@@ -6185,7 +6172,7 @@ paths:
         format: int32
     post:
       x-linode-charge: true
-      summary: Clones a Volume to a new Volume.
+      summary: Clone Volume
       description: >
         This endpoint allows you to resize an existing Volume on your account. In
         order for this request to complete successfully, your user must have the
@@ -7039,14 +7026,14 @@ components:
             changing the data you sent in the request, but in some cases you will be instructed to
             open a support ticket or perform some other action before you can complete the request
             successfully.
-          example: Helpful error message goes here.
+          example: `fieldname` must be a valid value
         field:
           type: string
           description: >
             The field in the request that caused this error. This may be a path, separated by
             periods in the case of nested fields. In some cases this may come back as "null" if the
             error is not specific to any single element of the request.
-          example: null
+          example: fieldname
     Event:
       type: object
       description: >
