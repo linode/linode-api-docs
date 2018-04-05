@@ -28,7 +28,7 @@ if not os.path.isfile(target):
     sys.exit(2)
 
 with open(target) as f:
-    spec = yaml.load(f.read())
+    spec = yaml.safe_load(f.read())
 
 has_errors=False
 errors = openapi_v3_spec_validator.iter_errors(spec)
