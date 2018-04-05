@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   version: 4.0.0
-  title: Linode API V4
+  title: Linode API
   description: |
     This is Linode's next generation API. The API was designed around the concepts of REST and does
     its best to conform to a RESTful model whenever possible. When not possible the goal was to be
@@ -313,7 +313,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - account
-      summary: Returns a paginated list of InvoiceItem objects identified by `invoiceId`.
+      summary: List Invoice Items
       description: Returns a paginated list of Invoice items.
       operationId: getInvoiceItems
       security:
@@ -1115,7 +1115,7 @@ paths:
       x-linode-grant: add_domains
       tags:
       - domains
-      summary: Manage Domain
+      summary: Create Domain
       description: >
         Adds a new domain to Linode's DNS Manager.  Linode is not a registrar, and
         you must own the domain before adding it here.  Be sure to point your
@@ -1180,7 +1180,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - domains
-      summary: Update Domain Zone
+      summary: Update Domain
       description: |
         Update information about a domain in Linode's DNS Manager.
       operationId: updateDomain
@@ -1536,10 +1536,6 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
   /linode/instances:
-    summary: A collection of your Linodes.
-    description: >
-      A collection of Linodes you have access to. Through this collection you can create servers and
-      view servers active on your account.
     get:
       x-linode-grant: read_only
       parameters:
@@ -1788,7 +1784,7 @@ paths:
         type: integer
     get:
       x-linode-grant: read_only
-      summary: View Linode's Backups
+      summary: List Backups
       description: >
         Returns information about this Linode's available backups.
       tags:
@@ -1873,7 +1869,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Cancel Linode's Backups
+      summary: Cancel Backups
       description: >
         Cancels the backup service on the given Linode.
       tags:
@@ -1902,7 +1898,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Enable Linode's Backups
+      summary: Enable Backups
       description: >
         Enables backups for the specified Linode.
       tags:
@@ -1972,7 +1968,7 @@ paths:
         type: integer
     post:
       x-linode-grant: read_write
-      summary: Restore Linode's Backup
+      summary: Restore Backup
       description: >
         Restores a Linode's backup to the specified Linode.
       tags:
@@ -2346,7 +2342,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - linode/instances
-      summary: View Linode's Disks
+      summary: List Disks
       description: >
         View Disk information for disks associated with this Linode.
       operationId: getLinodeDisks
@@ -2871,7 +2867,7 @@ paths:
     get:
       tags:
       - linode/kernels
-      summary: View kernel
+      summary: View Kernel
       description: >
         Get information about a single kernel.
       operationId: getKernel
@@ -2895,7 +2891,7 @@ paths:
         format: int32
     post:
       x-linode-grant: read_write
-      summary: Upgrade Linode Generation
+      summary: Upgrade Linode
       description: >
         Linodes created with now-deprecated types are entitled to a free
         upgrade to the next generation. A mutating Linode will be allocated any new
@@ -3396,7 +3392,7 @@ paths:
     get:
       tags:
       - linode/types
-      summary: List Linode Types
+      summary: List Types
       description: >
         Returns collection of Linode types, including pricing and
         specifications for each type. These are used when creating or resizing
@@ -3429,7 +3425,7 @@ paths:
     get:
       tags:
       - linode/types
-      summary: View Linode Type
+      summary: View Type
       description: >
         Returns information about a specific Linode type, including pricing and
         specifications. This is used when creating or resizing a Linode.
@@ -3948,7 +3944,7 @@ paths:
         - $ref: '#/components/parameters/pageSize'
       tags:
       - managed
-      summary: List Managed Service Issues
+      summary: List Managed Issues
       description: >
         Returns a paginated list of recent and ongoing issues detected on your
         Managed Services.
@@ -3987,7 +3983,7 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - managed
-      summary: View Managed Service Issue
+      summary: View Managed Issue
       description: >
         Returns a single issue that is impacting or did impact one of your
         Managed Services.
@@ -5855,12 +5851,6 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
   /volumes:
-    summary: List Volumes
-    description: >
-      A collection of Volumes you have access to. Through this collection you
-      can view Volumes active on your account, create new Volumes, resize an
-      existing Volume to a higher capacity, attach and detach a Volume to/from
-      a Linode, and clone an existing Volume.
     get:
       x-linode-grant: read_only
       parameters:
@@ -6051,7 +6041,7 @@ paths:
         type: integer
         format: int32
     post:
-      summary: Attach Volume to Linode
+      summary: Attach Volume
       description: >
         This endpoint allows you to attach a Volume on your account
         to an existing Linode on your account. In order for this request to
@@ -7036,14 +7026,14 @@ components:
             changing the data you sent in the request, but in some cases you will be instructed to
             open a support ticket or perform some other action before you can complete the request
             successfully.
-          example: Helpful error message goes here.
+          example: `fieldname` must be a valid value
         field:
           type: string
           description: >
             The field in the request that caused this error. This may be a path, separated by
             periods in the case of nested fields. In some cases this may come back as "null" if the
             error is not specific to any single element of the request.
-          example: null
+          example: fieldname
     Event:
       type: object
       description: >
