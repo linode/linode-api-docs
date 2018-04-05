@@ -1690,7 +1690,7 @@ paths:
       summary: View Linode
       description: Get a specific Linode by ID.
       operationId: getLinodeInstance
-      x-linode-cli-action: show
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -2904,7 +2904,7 @@ paths:
       description: >
         Get information about a single kernel.
       operationId: getKernel
-      x-linode-cli-action: show
+      x-linode-cli-action: view
       responses:
         '200':
           description: A single Kernel object.
@@ -5189,7 +5189,7 @@ paths:
         example in third-party OAuth applications.  This endpoint is always
         accessible, no matter what OAuth scopes the acting token has.
       operationId: getProfile
-      x-linode-cli-action: show
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth: []
@@ -5658,7 +5658,7 @@ paths:
       description: >
         Get information about a single Region.
       operationId: getRegion
-      x-linode-cli-action: show
+      x-linode-cli-action: view
       responses:
         '200':
           description: A single Region object.
