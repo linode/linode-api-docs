@@ -52,5 +52,5 @@ node {
         } else {
             echo "Branch '${env.BRANCH_NAME}' is not 'master', 'development', or a release branch.  Skipping package upload."
         }
-    } // #END withEnv
+    }
 }
