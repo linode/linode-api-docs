@@ -34,13 +34,11 @@ node {
     }
 
     stage('Package Docs') {
-        steps {
-            sh """
-            ./build-docs.sh
-            """
-            dir('linode-api-docs') {
-                archive '*.deb,*.changes'
-            }
+        sh """
+        ./build-docs.sh
+        """
+        dir('linode-api-docs') {
+            archive '*.deb,*.changes'
         }
     }
 
