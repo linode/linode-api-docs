@@ -35,7 +35,7 @@ node {
 
     stage('Package Docs') {
         image.inside() { c ->
-            sh ./build-docs.sh
+            sh "./build-docs.sh"
             archive '*.deb,*.changes'
         }
     }
