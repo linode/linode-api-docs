@@ -34,10 +34,8 @@ node {
     }
 
     stage('Package Docs') {
-        sh """
-        ./build-docs.sh
-        """
-        dir('linode-api-docs') {
+        image.inside() { c ->
+            sh ./build-docs.sh
             archive '*.deb,*.changes'
         }
     }
