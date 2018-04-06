@@ -29,7 +29,7 @@ if [ -v BUILD_ENV -a -n "${BUILD_ENV}" ]; then
 fi
 
 fpm -s dir -t deb -n "${pkg_name}" -v "${package_version}" --iteration "${iteration}" \
-  -x Vagrantfile -x Dockerfile -x build.sh -x \*.deb -x \*.changes -x .git -x .vagrant \ # TODO - maybe dont need all these?
+  -x Vagrantfile -x Dockerfile -x build.sh -x \*.deb -x \*.changes -x .git -x .vagrant \
   --vendor Linode --url https://github.com/linode/linode-api-docs \
   --description "${description}" -m ops@linode.com \
   -a all --prefix /usr/share/linode-docs/templates/ \
