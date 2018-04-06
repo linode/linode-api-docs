@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+# Usage:
+#   ./bin/version
+#       Prints the current version
+#   ./bin/version minor
+#       Tags a minor version bump
+#   ./bin/version major
+#       Tags a major version bump
+#   ./bin/version changelog [-d distribution]
+#       Prints a Debian changelog
+
+import subprocess
+import sys
+import os
+import re
+
+def get_version(ref="HEAD"):
+    describe = call('git describe {}'.format(ref))
+    branch = call('git rev-parse --abbrev-ref HEAD')
+
+    describe = describe.replace("-", ".").split(".")
+    parts = [0, 0, 0, branch]
+
+    l = len(describe)
+    for i in range(3):
+        if l > i:
+            parts[i] = int(describe[i])
+
+    return tuple(parts)
+
+
+template = """{} ({}-1) {}; urgency=low
+
+  * {}
+
+ -- {} <{}>  {}
+"""
+
+
+def call(cmd):
+    _, output = subprocess.getstatusoutput(cmd)
+    return output
+
+
+def gen_deb_changelog(distribution="", branchname=None):
+    project = "apinext"
+
+    git_cmd="git log -5 --pretty=format:%{}"
+
+    commits = call(git_cmd.format("H")).split("\n")
+    authors = call(git_cmd.format("aN")).split("\n")
+    author_emails = call(git_cmd.format("aE")).split("\n")
+    subjects = call(git_cmd.format("s")).split("\n")
+    dates = call(git_cmd.format("aD")).split("\n")
+    for commit, author, email, subject, date in zip(commits, authors, author_emails, subjects, dates):
+        major, minor, patch, branch = get_version(commit)
+        if not (major or minor or patch):
+            version = "{}.{}.{}+git{}".format(major, minor, patch, commit)
+        else:
+            version = "{}.{}.{}{}".format(major, minor, patch,
+                    '' if branchname == 'master'
+                        else "~dev" if branchname == 'development'
+                        else "~testing" if re.findall('^release\/\d+\.\d+$', branchname)
+                        else '~PR' if branchname
+                        else '')
+        if not len(distribution):
+            distribution = "stable" if major >= 1 else "unstable"
+        print(template.format(project, version, distribution, subject, author, email, date))
+
+
+major, minor, patch, branch = get_version()
+
+if len(sys.argv) == 1:
+    print("{}.{}.{}".format(major, minor, patch))
+else:
+    if sys.argv[1] == "branch":
+        if len(sys.argv) == 2 or sys.argv[2] == "master":
+            print("{}.{}.{}".format(major, minor, patch))
+        elif sys.argv[2] == "development":
+            print("{}.{}.{}~dev".format(major, minor, patch))
+        elif re.findall('^release\/\d+\.\d+$', sys.argv[2]):
+            print("{}.{}.{}~testing".format(major, minor, patch))
+    elif sys.argv[1] == "minor":
+        ver = "{}.{}".format(major, minor + 1)
+        call("git tag -a {} -m {}".format(ver, ver))
+        print("Created tag {}".format(ver))
+    elif sys.argv[1] == "major":
+        ver = "{}.{}".format(major + 1, 0)
+        call("git tag -a {} -m {}".format(ver, ver))
+        print("Created tag {}".format(ver))
+    elif sys.argv[1] == "changelog":
+        if len(sys.argv)>3 and sys.argv[2] == "-d":
+            distribution=sys.argv[3]
+        else:
+            distribution=""
+        gen_deb_changelog(distribution, sys.argv[4] if len(sys.argv) > 4 else None)
