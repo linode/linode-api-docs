@@ -40,19 +40,19 @@ node {
         }
     }
 
-    stage('Apt-Repo') {
-        when {
-            expression {
-                repos = [master: 'linode-internal-apt-jessie-stg', develop: 'linode-internal-apt-jessie-dev', release: 'linode-internal-apt-jessie-testing']
-                return repos.find{ it.key == env.BRANCH_NAME }?.value
-            }
+    if (env.BRANCH_NAME == 'master') {
+        stage ('Apt-Repo') {
+            sh "dupload --to linode-internal-apt-jessie-stg --nomail *.changes"
         }
-
-        steps {
-            milestone 200 // This Milestone prevent uploading debs from older concurrent builds
-            sshagent (credentials: ['deploy-prod']) {
-                sh "LOGNAME=jenkins dupload --to ${repos[env.BRANCH_NAME]} -c linode-api-docs"
-            }
+    } else if (env.BRANCH_NAME == 'development') {
+        stage('Apt-Repo') {
+            sh "dupload --to linode-internal-apt-jessie-dev --nomail *.changes"
         }
+    } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) {
+        stage ('Apt-Repo') {
+            sh "dupload --to linode-internal-apt-jessie-testing --nomail *.changes"
+        }
+    } else {
+        echo "Branch '${env.BRANCH_NAME}' is not 'master', 'development', or a release branch.  Skipping package upload."
     }
 }
