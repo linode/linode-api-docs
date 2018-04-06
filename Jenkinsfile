@@ -28,7 +28,7 @@ node {
 
     stage ('OpenAPI Lint') {
         echo "Linting openapi.yaml"
-        image.insider() { c =>
+        image.inside() { c ->
             sh "python3 openapi-linter.py openapi.yaml"
         }
     }
