@@ -14,6 +14,12 @@ environment {
 }
 
 node {
+    def image;
+
+    stage('Build Docker') {
+        image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
+    }
+
     stage('Checkout') {
         deleteDir()
         checkout scm
@@ -22,7 +28,9 @@ node {
 
     stage ('OpenAPI Lint') {
         echo "Linting openapi.yaml"
-        sh "python3 openapi-linter.py openapi.yaml"
+        image.insider() { c =>
+            sh "python3 openapi-linter.py openapi.yaml"
+        }
     }
 
     stage('Package Docs') {
