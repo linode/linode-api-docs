@@ -14,45 +14,47 @@ environment {
 }
 
 node {
-    def image;
+    withEnv() {
+        def image;
 
-    stage('Checkout') {
-        deleteDir()
-        checkout scm
-        sh "git fetch"
-    }
+        stage('Checkout') {
+            deleteDir()
+            checkout scm
+            sh "git fetch"
+        }
 
-    stage('Build Docker') {
-        image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
-    }
+        stage('Build Docker') {
+            image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
+        }
 
-    stage ('OpenAPI Lint') {
-        echo "Linting openapi.yaml"
-        image.inside() { c ->
-            sh "python3 openapi-linter.py openapi.yaml"
+        stage ('OpenAPI Lint') {
+            echo "Linting openapi.yaml"
+            image.inside() { c ->
+                sh "python3 openapi-linter.py openapi.yaml"
+            }
         }
-    }
 
-    stage('Package Docs') {
-        image.inside() { c ->
-            sh ./build-docs.sh
-            archive '*.deb,*.changes'
+        stage('Package Docs') {
+            image.inside() { c ->
+                sh ./build-docs.sh
+                archive '*.deb,*.changes'
+            }
         }
-    }
 
-    if (env.BRANCH_NAME == 'master') {
-        stage ('Apt-Repo') {
-            sh "dupload --to linode-internal-apt-jessie-stg --nomail *.changes"
+        if (env.BRANCH_NAME == 'master') {
+            stage ('Apt-Repo') {
+                sh "dupload --to linode-internal-apt-jessie-stg --nomail *.changes"
+            }
+        } else if (env.BRANCH_NAME == 'development') {
+            stage('Apt-Repo') {
+                sh "dupload --to linode-internal-apt-jessie-dev --nomail *.changes"
+            }
+        } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) {
+            stage ('Apt-Repo') {
+                sh "dupload --to linode-internal-apt-jessie-testing --nomail *.changes"
+            }
+        } else {
+            echo "Branch '${env.BRANCH_NAME}' is not 'master', 'development', or a release branch.  Skipping package upload."
         }
-    } else if (env.BRANCH_NAME == 'development') {
-        stage('Apt-Repo') {
-            sh "dupload --to linode-internal-apt-jessie-dev --nomail *.changes"
-        }
-    } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) {
-        stage ('Apt-Repo') {
-            sh "dupload --to linode-internal-apt-jessie-testing --nomail *.changes"
-        }
-    } else {
-        echo "Branch '${env.BRANCH_NAME}' is not 'master', 'development', or a release branch.  Skipping package upload."
-    }
+    } // #END withEnv
 }
