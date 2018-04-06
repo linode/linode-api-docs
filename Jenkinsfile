@@ -49,11 +49,6 @@ node {
             stage('Apt-Repo') {
                 sh "dupload --to linode-internal-apt-jessie-dev --nomail *.changes"
             }
-        // TODO - figure this out later
-        //} else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) {
-        //    stage ('Apt-Repo') {
-        //        sh "dupload --to linode-internal-apt-jessie-testing --nomail *.changes"
-        //    }
         } else {
             echo "Branch '${env.BRANCH_NAME}' is not 'master', 'development', or a release branch.  Skipping package upload."
         }
