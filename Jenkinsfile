@@ -14,15 +14,15 @@ environment {
 }
 
 node {
-    stage ('OpenAPI Lint') {
-        echo "Linting openapi.yaml"
-        sh "python3 openapi-linter.py openapi.yaml"
-    }
-
     stage('Checkout') {
         deleteDir()
         checkout scm
         sh "git fetch"
+    }
+
+    stage ('OpenAPI Lint') {
+        echo "Linting openapi.yaml"
+        sh "python3 openapi-linter.py openapi.yaml"
     }
 
     stage('Package Docs') {
