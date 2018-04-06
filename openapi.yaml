@@ -4299,8 +4299,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/stackscripts
+          curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST '{
                 "label": "a-stackscript",
@@ -4380,8 +4379,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/stackscripts
+          curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT '{
                 "label": "a-stackscript",
@@ -4524,6 +4522,11 @@ paths:
                           $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/clients
     post:
       x-linode-grant: add_longview
       tags:
@@ -4555,6 +4558,15 @@ paths:
                 $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST '{
+                "label": "client789"
+              }' \
+              https://api.linode.com/v4/longview/clients
   /longview/clients/{clientId}:
     parameters:
     - name: clientId
@@ -4585,6 +4597,11 @@ paths:
                 $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/clients/789
     put:
       x-linode-grant: read_write
       tags:
@@ -4615,6 +4632,15 @@ paths:
                 $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST '{
+                "label": "client789"
+              }' \
+              https://api.linode.com/v4/longview/clients/789
     delete:
       x-linode-grant: read_write
       tags:
@@ -4638,6 +4664,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/longview/clients/789
   /longview/subscriptions:
     get:
       parameters:
@@ -4666,6 +4698,11 @@ paths:
                           $ref: '#/components/schemas/LongviewSubscription'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/subscriptions
   /longview/subscriptions/{subscriptionId}:
     parameters:
     - name: subscriptionId
@@ -4691,6 +4728,11 @@ paths:
                 $ref: '#/components/schemas/LongviewSubscription'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/subscriptions/longview-10
   /managed/contacts:
     get:
       x-linode-grant: unrestricted only
