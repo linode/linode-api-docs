@@ -16,14 +16,14 @@ environment {
 node {
     def image;
 
-    stage('Build Docker') {
-        image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
-    }
-
     stage('Checkout') {
         deleteDir()
         checkout scm
         sh "git fetch"
+    }
+
+    stage('Build Docker') {
+        image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
     }
 
     stage ('OpenAPI Lint') {
