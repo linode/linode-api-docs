@@ -9,5 +9,6 @@ COPY openapi-linter.py .
 COPY openapi.yaml .
 COPY style.css .
 COPY build-docs.sh .
+COPY linode-docs.postinst .
 
 CMD ["python", "openapi-linter.py", "openapi.yaml"]

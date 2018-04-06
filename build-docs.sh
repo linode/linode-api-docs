@@ -33,6 +33,7 @@ fpm -s dir -t deb -n "${pkg_name}" -v "${package_version}" --iteration "${iterat
   --vendor Linode --url https://github.com/linode/linode-api-docs \
   --description "${description}" -m ops@linode.com \
   -a all --prefix /usr/share/linode-docs/templates/ \
+  --after-install linode-docs.postinst \
   --replaces "${replaces}" -- \
   index.html openapi.yaml style.css
 
