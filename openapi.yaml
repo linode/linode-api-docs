@@ -10555,6 +10555,13 @@ components:
           maxLength: 32
           pattern: '^[a-zA-Z]((?!--|__)[a-zA-Z0-9-_])+$'
           x-linode-cli-display: 2
+        filesystem_path:
+          type: string
+          title: The full filesystem path for the Volume.
+          description: >
+            The full filesystem path for the Volume based on the Volume's label.
+            Path is /dev/disk/by-id/scsi-0Linode_Volume_ + Volume label.
+          example: /dev/disk/by-id/scsi-0Linode_Volume_my-volume
         status:
           type: string
           title: The status of the Volume.
