@@ -232,7 +232,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/account/events/123
   /account/events/{eventId}/read:
-    x-linode-cli-command: evets
+    x-linode-cli-command: events
     parameters:
       - name: eventId
         in: path
@@ -309,7 +309,7 @@ paths:
                 -X POST \
                 https://api.linode.com/v4/account/events/123/seen
   /account/invoices:
-    x-linode-cli-command: invoices
+    x-linode-cli-command: account
     get:
       x-linode-grant: read_only
       parameters:
@@ -321,7 +321,7 @@ paths:
       description: >
         This endpoint returns a paginated list of invoices against your Account.
       operationId: getInvoices
-      x-linode-cli-action: list
+      x-linode-cli-action: invoices-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -348,7 +348,7 @@ paths:
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/invoices
   /account/invoices/{invoiceId}:
-    x-linode-cli-command: invoices
+    x-linode-cli-command: account
     parameters:
       - name: invoiceId
         in: path
@@ -364,7 +364,7 @@ paths:
       summary: View Invoice
       description: Returns a single Invoice object.
       operationId: getInvoice
-      x-linode-cli-action: view
+      x-linode-cli-action: invoice-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -384,7 +384,7 @@ paths:
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/invoices/123
   /account/invoices/{invoiceId}/items:
-    x-linode-cli-command: invoices
+    x-linode-cli-command: account
     parameters:
       - name: invoiceId
         in: path
@@ -403,7 +403,7 @@ paths:
       summary: List Invoice Items
       description: Returns a paginated list of Invoice items.
       operationId: getInvoiceItems
-      x-linode-cli-action: items
+      x-linode-cli-action: invoice-items
       security:
       - personalAccessToken: []
       - oauth:
@@ -563,7 +563,6 @@ paths:
                 }' \
                 https://api.linode.com/v4/account/oauth-clients
   /account/oauth-clients/{clientId}:
-    x-linode-cli-command:
     parameters:
       - name: clientId
         in: path
@@ -571,6 +570,7 @@ paths:
         required: true
         schema:
           type: string
+    x-linode-cli-command: account
     get:
       tags:
       - account
@@ -783,7 +783,7 @@ paths:
               https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
 
   /account/payments:
-    x-linode-cli-command: payments
+    x-linode-cli-command: account
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -795,7 +795,7 @@ paths:
       description: >
         This endpoint returns a paginated list of Payments made on this Account.
       operationId: getPayments
-      x-linode-cli-action: list
+      x-linode-cli-action: payments-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -830,7 +830,7 @@ paths:
         This endpoint allows you to make a payment to your Account
         via credit card. This will charge your credit card the requested amount.
       operationId: createPayment
-      x-linode-cli-action: create
+      x-linode-cli-action: payment-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -862,7 +862,7 @@ paths:
                 }' \
                 https://api.linode.com/v4/account/payments
   /account/payments/{paymentId}:
-    x-linode-cli-command: payments
+    x-linode-cli-command: account
     parameters:
     - name: paymentId
       in: path
@@ -879,7 +879,7 @@ paths:
       description: >
         Returns information about a specific Payment.
       operationId: getPayment
-      x-linode-cli-action: view
+      x-linode-cli-action: payment-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -899,7 +899,7 @@ paths:
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/payments/123
   /account/payments/paypal:
-    x-linode-cli-command: payments
+    x-linode-cli-command: account
     post:
       x-linode-grant: read_only
       tags:
@@ -945,7 +945,7 @@ paths:
                 }' \
                 https://api.linode.com/v4/account/payments/paypal
   /account/payment/paypal/execute:
-    x-linode-cli-command: payments
+    x-linode-cli-command: account
     post:
       x-linode-grant: read_write
       tags:
@@ -2089,7 +2089,7 @@ paths:
               -X DELETE \
               https://api.linode.com/v4/images/private/67848373
   /linode/instances:
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       parameters:
@@ -2257,7 +2257,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       tags:
@@ -2404,7 +2404,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       summary: List Backups
@@ -2506,7 +2506,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Cancel Backups
@@ -2544,7 +2544,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Enable Backups
@@ -2588,7 +2588,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       summary: View Backup
@@ -2630,7 +2630,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Restore Backup
@@ -2693,7 +2693,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Boot Linode
@@ -2753,7 +2753,7 @@ paths:
       schema:
         type: integer
         format: int32
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-charge: true
       x-linode-grant: add_linodes
@@ -2883,7 +2883,7 @@ paths:
       required: true
       schema:
         type: integer
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -2999,6 +2999,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     get:
       tags:
       - Linode Instances
@@ -3007,6 +3008,7 @@ paths:
       description: >
         Returns information about a specific configuration profile.
       operationId: getLinodeConfig
+      x-linode-cli-action: config-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -3033,6 +3035,7 @@ paths:
       tags:
       - Linode Instances
       operationId: updateLinodeConfig
+      x-linode-cli-action: config-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -3093,6 +3096,7 @@ paths:
       tags:
       - Linode Instances
       operationId: deleteLinodeConfig
+      x-linode-cli-action: config-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -3122,6 +3126,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       parameters:
@@ -3133,6 +3138,7 @@ paths:
       description: >
         View Disk information for disks associated with this Linode.
       operationId: getLinodeDisks
+      x-linode-cli-action: disk-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -3168,6 +3174,7 @@ paths:
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
       operationId: addLinodeDisk
+      x-linode-cli-action: disk-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -3219,6 +3226,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       tags:
@@ -3227,6 +3235,7 @@ paths:
       description: >
         View Disk information for a disk associated with this Linode.
       operationId: getLinodeDisk
+      x-linode-cli-action: disk-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -3253,6 +3262,7 @@ paths:
       description: >
         This allows you to update a Disk that you have permission to `read_write`.
       operationId: updateDisk
+      x-linode-cli-action: disk-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -3292,6 +3302,7 @@ paths:
         Deletes a Disk you have permission to `read_write`. Deleting a Disk is a
         destructive process and cannot be undone.
       operationId: deleteDisk
+      x-linode-cli-action: disk-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -3327,6 +3338,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       tags:
@@ -3336,6 +3348,7 @@ paths:
         This endpoint allows you to reset the password of a disk you have
         permission to `read_write`.
       operationId: resetDiskPassword
+      x-linode-cli-action: disk-reset-password
       security:
       - personalAccessToken: []
       - oauth:
@@ -3399,6 +3412,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       tags:
@@ -3414,6 +3428,7 @@ paths:
         If you are resizing the Disk to a smaller size, it cannot be made smaller
         than what is required by the total size of the files current on the Disk.
       operationId: resizeDisk
+      x-linode-cli-action: disk-resize
       security:
       - personalAccessToken: []
       - oauth:
@@ -3464,6 +3479,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       tags:
@@ -3472,6 +3488,7 @@ paths:
       description: >
         Returns networking information for a single Linode.
       operationId: getLinodeIPs
+      x-linode-cli-action: ips
       security:
       - personalAccessToken: []
       - oauth:
@@ -3547,6 +3564,7 @@ paths:
         IP Address you must request one - please open a ticket.
         One may not add more than one private IPv4 address to a single Linode.
       operationId: addLinodeIP
+      x-linode-cli-action: ip-add
       security:
       - personalAccessToken: []
       - oauth:
@@ -3609,6 +3627,7 @@ paths:
       schema:
         type: string
         format: ip
+    x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
       tags:
@@ -3618,6 +3637,7 @@ paths:
         View information about the specified IP address associated
         with the specified Linode.
       operationId: getLinodeIP
+      x-linode-cli-action: ip-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -3645,6 +3665,7 @@ paths:
         Manage a particular IP Address associated with this Linode.
         Currently only allows setting/resetting reverse DNS.
       operationId: updateLinodeIP
+      x-linode-cli-action: ip-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -3689,6 +3710,7 @@ paths:
         fail if it is the Linode's last remaining IP address. Private
         IPv4 addresses cannot be removed via this endpoint.
       operationId: removeLinodeIP
+      x-linode-cli-action: ip-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -3783,6 +3805,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Upgrade Linode
@@ -3797,6 +3820,7 @@ paths:
       tags:
       - Linode Instances
       operationId: mutateLinodeInstance
+      x-linode-cli-action: upgrade
       security:
       - personalAccessToken: []
       - oauth:
@@ -3826,7 +3850,7 @@ paths:
       schema:
         type: integer
         format: int32
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Reboot Linode
@@ -3866,6 +3890,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Rebuild Linode
@@ -3885,6 +3910,7 @@ paths:
       tags:
       - Linode Instances
       operationId: rebuildLinodeInstance
+      x-linode-cli-action: rebuild
       security:
       - personalAccessToken: []
       - oauth:
@@ -3938,6 +3964,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Boot Linode into Rescue Mode
@@ -3953,6 +3980,7 @@ paths:
       tags:
       - Linode Instances
       operationId: rescueLinodeInstance
+      x-linode-cli-action: rescue
       security:
       - personalAccessToken: []
       - oauth:
@@ -4003,6 +4031,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Resize Linode
@@ -4021,6 +4050,7 @@ paths:
       tags:
       - Linode Instances
       operationId: resizeLinodeInstance
+      x-linode-cli-action: resize
       security:
       - personalAccessToken: []
       - oauth:
@@ -4064,7 +4094,7 @@ paths:
       schema:
         type: integer
         format: int32
-    x-linode-cli-command: linode
+    x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
       summary: Shut Down Linode
@@ -4103,6 +4133,7 @@ paths:
       required: true
       schema:
         type: integer
+    x-linode-cli-command: linodes
     get:
       tags:
       - Linode Instances
@@ -4111,6 +4142,7 @@ paths:
         This endpoint returns CPU, IO, IPv4, and IPv6 statistics for your Linode
         for the past 24 hours.
       operationId: getLinodeStats
+      x-linode-cli-action: stats
       security:
       - personalAccessToken: []
       - oauth:
@@ -4154,6 +4186,7 @@ paths:
         format: int32
         minimum: 1
         maximum: 12
+    x-linode-cli-command: linodes
     get:
       tags:
       - Linode Instances
@@ -4163,6 +4196,7 @@ paths:
         values must be either a date in the past, or the current month. If the
         current month, statistics will be retrieved for the past 30 days.
       operationId: getLinodeStatsByYearMonth
+      x-linode-cli-action: stats-month
       security:
       - personalAccessToken: []
       - oauth:
@@ -4189,6 +4223,7 @@ paths:
       required: true
       schema:
         type: integer
+    x-linode-cli-command: linodes
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -4199,6 +4234,7 @@ paths:
       description: >
         View Block Storage Volumes attached to this Linode.
       operationId: getLinodeVolumes
+      x-linode-cli-action: volumes
       security:
       - personalAccessToken: []
       - oauth:
@@ -4226,6 +4262,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/volumes
   /linode/stackscripts:
+    x-linode-cli-command: stackscripts
     get:
       x-linode-grant: read_only
       parameters:
@@ -4239,6 +4276,7 @@ paths:
         authenticated, the list also includes private StackScripts the user has
         permissions to view.
       operationId: getStackScripts
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -4274,6 +4312,7 @@ paths:
       description: >
         This endpoint allows you to add a new StackScript to your account.
       operationId: addStackScript
+      x-linode-cli-action: create
       security:
       - personalAccessToken: []
       - oauth:
@@ -4319,6 +4358,7 @@ paths:
       required: true
       schema:
         type: string
+    x-linode-cli-command: stackscripts
     get:
       x-linode-grant: read_only
       tags:
@@ -4328,6 +4368,7 @@ paths:
         This endpoint returns all of the information about a specified
         StackScript, including the contents of the script.
       operationId: getStackScript
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -4355,6 +4396,7 @@ paths:
         This endpoint allows you to modify a StackScript. Setting a
         StackScript to public is a permanent change.
       operationId: updateStackScript
+      x-linode-cli-action: update
       security:
       - personalAccessToken: []
       - oauth:
@@ -4394,6 +4436,7 @@ paths:
         This endpoint allows you to permanently delete a specific StackScript.
         You cannot delete a public StackScript.
       operationId: deleteStackScript
+      x-linode-cli-action: delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -4414,6 +4457,7 @@ paths:
               -X DELETE \
               https://api.linode.com/v4/linode/stackscripts/1337
   /linode/types:
+    x-linode-cli-command: linodes
     get:
       tags:
       - Linode Types
@@ -4423,6 +4467,7 @@ paths:
         specifications for each type. These are used when creating or resizing
         Linodes.
       operationId: getLinodeTypes
+      x-linode-cli-action: types
       responses:
         '200':
           description: A collection of Linode types.
@@ -4452,6 +4497,7 @@ paths:
       required: true
       schema:
         type: string
+    x-linode-cli-command: linodes
     get:
       tags:
       - Linode Types
@@ -4460,6 +4506,7 @@ paths:
         Returns information about a specific Linode type, including pricing and
         specifications. This is used when creating or resizing a Linode.
       operationId: getLinodeType
+      x-linode-cli-action: view
       responses:
         '200':
           description: A single Linode type.
@@ -4475,6 +4522,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/types/g5-standard-2
   /longview/clients:
+    x-linode-cli-command: longview
     get:
       x-linode-grant: read_only
       parameters:
@@ -4488,6 +4536,7 @@ paths:
         to.  Longview Clients are used to monitor stats on your servers
         with the help of the Longview Client application.
       operationId: getLongviewClients
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -4524,6 +4573,7 @@ paths:
         Client application on your server using the returning `install_code`
         and `api_key`.
       operationId: createLongviewClient
+      x-linode-cli-action: create
       security:
       - personalAccessToken: []
       - oauth:
@@ -4562,6 +4612,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: longview
     get:
       x-linode-grant: read_only
       tags:
@@ -4570,6 +4621,7 @@ paths:
       description: >
         Returns a single Longview Client you can access.
       operationId: getLongviewClient
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -4598,6 +4650,7 @@ paths:
         server - use the Longview Client application on your server for
         monitoring configuration.
       operationId: updateLongviewClient
+      x-linode-cli-action: update
       security:
       - personalAccessToken: []
       - oauth:
@@ -4637,6 +4690,7 @@ paths:
         for this client will be lost.  This _does not_ uninstall the Longview
         Client application for your server - you must do that manually.
       operationId: deleteLongviewClient
+      x-linode-cli-action: delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -4657,6 +4711,7 @@ paths:
               -X DELETE \
               https://api.linode.com/v4/longview/clients/789
   /longview/subscriptions:
+    x-linode-cli-command: longview
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -4668,6 +4723,7 @@ paths:
         Returns a paginated list of available Longview Subscriptions. This is
         a public endpoint, and requires no authentication.
       operationId: getLongviewSubscriptions
+      x-linode-cli-action: subscriptions
       responses:
         '200':
           description: A paginated list of Longview Subscriptions.
@@ -4697,6 +4753,7 @@ paths:
       description: The Longview Subscription to look up.
       schema:
         type: string
+    x-linode-cli-command: longview
     get:
       tags:
       - longview
@@ -4705,6 +4762,7 @@ paths:
         Returns a single LongviewSubscription object.  This is a public
         endpoint and requires no authentication.
       operationId: getLongviewSubscription
+      x-linode-cli-action: subscription
       responses:
         '200':
           description: The requested Longview Subscription.
@@ -4720,6 +4778,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/longview/subscriptions/longview-10
   /managed/contacts:
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       parameters:
@@ -4731,6 +4790,7 @@ paths:
       description: >
         Returns a paginated list of Managed Contacts on your account.
       operationId: getManagedContacts
+      x-linode-cli-action: contacts-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -4766,6 +4826,7 @@ paths:
         special forces can contact in the course of attempting to resolve an issue
         with a Managed Service.
       operationId: createManagedContact
+      x-linode-cli-action: contact-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -4809,6 +4870,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -4817,6 +4879,7 @@ paths:
       description: >
         Returns a single Managed Contact.
       operationId: getManagedContact
+      x-linode-cli-action: contact-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -4843,6 +4906,7 @@ paths:
       description: >
         Updates information about a Managed Contact.
       operationId: updateManagedContact
+      x-linode-cli-action: contact-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -4886,6 +4950,7 @@ paths:
       description: >
         Deletes a Managed Contact.
       operationId: deleteManagedContact
+      x-linode-cli-action: contact-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -4906,6 +4971,7 @@ paths:
               -X DELETE \
               https://api.linode.com/v4/managed/contacts/567
   /managed/credentials:
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       parameters:
@@ -4917,6 +4983,7 @@ paths:
       description: >
         Returns a paginated list of Managed Credentials on your account.
       operationId: getManagedCredentials
+      x-linode-cli-action: credentials-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -4952,6 +5019,7 @@ paths:
         to allow Linode special forces to access your Managed Services and resolve
         issues.
       operationId: createManagedCredential
+      x-linode-cli-action: credential-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -5010,6 +5078,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5018,6 +5087,7 @@ paths:
       description: >
         Returns a single Managed Credential.
       operationId: getManagedCredential
+      x-linode-cli-action: credential-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -5044,6 +5114,7 @@ paths:
       description: >
         Updates information about a Managed Credential.
       operationId: updateManagedCredential
+      x-linode-cli-action: credential-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -5082,6 +5153,7 @@ paths:
         Deletes a Managed Credential.  Linode special forces will no longer
         have access to this credential when attempting to resolve issues.
       operationId: deleteManagedCredential
+      x-linode-cli-action: credential-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -5102,6 +5174,7 @@ paths:
               -X DELETE \
               https://api.linode.com/v4/managed/credentials/9991
   /managed/issues:
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       parameters:
@@ -5114,6 +5187,7 @@ paths:
         Returns a paginated list of recent and ongoing issues detected on your
         Managed Services.
       operationId: getManagedIssues
+      x-linode-cli-action: issues
       security:
         - personalAccessToken: []
         - oauth:
@@ -5149,6 +5223,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5158,6 +5233,7 @@ paths:
         Returns a single issue that is impacting or did impact one of your
         Managed Services.
       operationId: getManagedIssue
+      x-linode-cli-action: issue
       security:
       - personalAccessToken: []
       - oauth:
@@ -5177,6 +5253,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/managed/issues/823
   /managed/linode-settings:
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       parameters:
@@ -5189,6 +5266,7 @@ paths:
         Returns a paginated list of Managed settings for your Linodes.  There will
         be one entry per Linode on your account.
       operationId: getManagedLinodeSettings
+      x-linode-cli-action: linode-settings
       security:
         - personalAccessToken: []
         - oauth:
@@ -5224,6 +5302,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5232,6 +5311,7 @@ paths:
       description: >
         Returns a single Linode's Managed settings.
       operationId: getManagedLinodeSetting
+      x-linode-cli-action: linode-setting
       security:
       - personalAccessToken: []
       - oauth:
@@ -5258,6 +5338,7 @@ paths:
       description: >
         Updates a single Linode's Managed settings.
       operationId: updateManagedLinodeSetting
+      x-linode-cli-action: linode-setting-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -5293,6 +5374,7 @@ paths:
               }' \
               https://api.linode.com/v4/managed/linode-settings/123
   /managed/services:
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5303,6 +5385,7 @@ paths:
         are the services Linode Managed is monitoring and will report and attempt
         to resolve issues with.
       operationId: getManagedServices
+      x-linode-cli-action: services-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -5337,6 +5420,7 @@ paths:
         Creates a new Managed Service.  Linode Managed will being monitoring this
         service and reporting and attempting to resolve any issues.
       operationId: createManagedService
+      x-linode-cli-action: service-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -5386,6 +5470,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5394,6 +5479,7 @@ paths:
       description: >
         Returns information about a single Managed Service on your account.
       operationId: getManagedService
+      x-linode-cli-action: service-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -5420,6 +5506,7 @@ paths:
       description: >
         Updates information about a Managed Service.
       operationId: updateManagedService
+      x-linode-cli-action: service-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -5467,6 +5554,7 @@ paths:
         Deletes a Managed Service.  This service will no longer be monitored by
         Linode Managed.
       operationId: deleteManagedService
+      x-linode-cli-action: service-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -5495,6 +5583,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5503,6 +5592,7 @@ paths:
       description: >
         Temporarily disables monitoring of a Managed Service.
       operationId: disableManagedService
+      x-linode-cli-action: service-disable
       security:
       - personalAccessToken: []
       - oauth:
@@ -5532,6 +5622,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
       tags:
@@ -5540,6 +5631,7 @@ paths:
       description: >
         Re-enables monitoring of a Managed Service.
       operationId: enableManagedService
+      x-linode-cli-action: service-enable
       security:
       - personalAccessToken: []
       - oauth:
@@ -5563,6 +5655,7 @@ paths:
   /networking/ips:
     description: >
       A collection of IP Addresses on your account.  Excludes private addresses.
+    x-linode-cli-command: ips
     get:
       x-linode-grant: read_only
       tags:
@@ -5572,6 +5665,7 @@ paths:
         Returns a paginated list of IP Addresses on your account, excluding
         private addresses.
       operationId: getIPs
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -5609,6 +5703,7 @@ paths:
         please open a support ticket requesting additional addresses before
         attempting allocation.
       operationId: allocateIP
+      x-linode-cli-action: add
       security:
       - personalAccessToken: []
       - oauth:
@@ -5674,6 +5769,7 @@ paths:
       schema:
         type: string
         format: ip
+    x-linode-cli-command: ips
     get:
       x-linode-grant: read_only
       tags:
@@ -5682,6 +5778,7 @@ paths:
       description: >
         Returns information about a single IP Address on your account.
       operationId: getIP
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -5711,6 +5808,7 @@ paths:
         ipv4 addresses, it will be reset to the default members.linode.com
         RDNS value.
       operationId: updateIP
+      x-linode-cli-action: update
       security:
       - personalAccessToken: []
       - oauth:
@@ -5746,6 +5844,7 @@ paths:
       of IPs may be assigned in one request, as long as all Linodes end up
       with at least one public and no more than one private IP Address at the
       end of the assignment.
+    x-linode-cli-command: ips
     post:
       x-linode-grant: read_write
       tags:
@@ -5757,6 +5856,7 @@ paths:
         Linodes.  When the assignment is finished, all Linodes must end up with
         at least one public ipv4 and no more than one private ipv4.
       operationId: assignIPs
+      x-linode-cli-action: assign
       security:
       - personalAccessToken: []
       - oauth:
@@ -5838,6 +5938,7 @@ paths:
       Configure shared IPs.  A shared IP may be brought up on a Linode other
       than the one it lists in its response.  This can be used to allow one
       Linode to begin serving requests should another become unresponsive.
+    x-linode-cli-command: ips
     post:
       x-linode-grant: read_write
       tags:
@@ -5848,6 +5949,7 @@ paths:
         than the one it lists in its response.  This can be used to allow one
         Linode to begin serving requests should another become unresponsive.
       operationId: shareIPs
+      x-linode-cli-action: share
       security:
       - personalAccessToken: []
       - oauth:
@@ -5904,6 +6006,7 @@ paths:
               }' \
               https://api.linode.com/v4/networking/ipv4/share
   /networking/ipv6/pools:
+    x-linode-cli-command: ips
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -5914,6 +6017,7 @@ paths:
       description: >
         Displays the IPv6 pools on your account.
       operationId: getIPv6Pools
+      x-linode-cli-action: v6-pools
       security:
       - personalAccessToken: []
       - oauth:
@@ -5940,6 +6044,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ipv6/pools
   /networking/ipv6/ranges:
+    x-linode-cli-command: ips
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -5950,6 +6055,7 @@ paths:
       description: >
         Displays the IPv6 ranges on your account.
       operationId: getIPv6Ranges
+      x-linode-cli-action: v6-ranges
       security:
       - personalAccessToken: []
       - oauth:
@@ -5976,6 +6082,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ipv6/ranges
   /nodebalancers:
+    x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
       tags:
@@ -5987,6 +6094,7 @@ paths:
       description: >
         Returns a paginated list of NodeBalancers you have access to.
       operationId: getNodeBalancers
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -6021,6 +6129,7 @@ paths:
         Creates a new NodeBalancer in the requested region.  This NodeBalancer
         will not start serving requests until it is configured.
       operationId: createNodeBalancer
+      x-linode-cli-action: create
       security:
       - personalAccessToken: []
       - oauth:
@@ -6072,6 +6181,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
       tags:
@@ -6080,6 +6190,7 @@ paths:
       description: >
         Returns a single NodeBalancer you can access.
       operationId: getNodeBalancer
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -6106,6 +6217,7 @@ paths:
       description: >
         Update information about a NodeBalancer you can access.
       operationId: updateNodeBalancer
+      x-linode-cli-action: update
       security:
       - personalAccessToken: []
       - oauth:
@@ -6149,6 +6261,7 @@ paths:
         to lose access to the IP Addresses that NodeBalancer was
         assigned.
       operationId: deleteNodeBalancer
+      x-linode-cli-action: delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -6177,6 +6290,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
       tags:
@@ -6193,6 +6307,7 @@ paths:
         accept standard http traffic, you would need a config listening
         on port 80.
       operationId: getNodeBalancerConfigs
+      x-linode-cli-action: configs-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -6228,6 +6343,7 @@ paths:
         accept traffic on a new port.  You will need to add NodeBalancerNodes
         to the new config before it can actually serve requests.
       operationId: createaNodeBalancerConfig
+      x-linode-cli-action: config-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -6283,6 +6399,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
       tags:
@@ -6292,6 +6409,7 @@ paths:
         Returns configuration information for a single port of this
         NodeBalancer.
       operationId: getNodeBalancerConfig
+      x-linode-cli-action: config-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -6318,6 +6436,7 @@ paths:
       description: >
         Update the configuration for a single port on a NodeBalancer.
       operationId: updateNodeBalancerConfig
+      x-linode-cli-action: config-update
       security:
       - personlAccessToken: []
       - oauth:
@@ -6370,6 +6489,7 @@ paths:
         associated NodeBalancerNodes, but the Linodes they were routing
         traffic to are unchanged and not removed.
       operationId: deleteNodeBalancerConfig
+      x-linode-cli-action: config-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -6405,6 +6525,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
       tags:
@@ -6418,6 +6539,7 @@ paths:
         this config.  These are the backends that will be sent traffic
         for this port.
       operationId: getNodeBalancerConfigNodes
+      x-linode-cli-action: node-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -6453,6 +6575,7 @@ paths:
         traffic, for this NodeBalancer config.  Nodes are routed
         requests on the configured port based on their status.
       operationId: createNodeBalancerNode
+      x-linode-cli-action: node-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -6512,6 +6635,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
       tags:
@@ -6521,6 +6645,7 @@ paths:
         Returns information about a single node, a backend for this
         NodeBalancer's configured port.
       operationId: getNodeBalancerNode
+      x-linode-cli-action: node-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -6548,6 +6673,7 @@ paths:
         Updates information about a node, a backend for this NodeBalancer's
         configured port.
       operationId: updateNodeBalancerNode
+      x-linode-cli-action: node-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -6591,6 +6717,7 @@ paths:
         This does not change or remove the server whose address was
         used in the creation of this node.
       operationId: deleteNodeBalancerConfigNode
+      x-linode-cli-action: node-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -6688,6 +6815,7 @@ paths:
   /profile/apps:
     description: >
       Returns information about OAuth Apps you have authorized to access your account.
+    x-linode-cli-command: profile
     get:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
@@ -6699,6 +6827,7 @@ paths:
         This is a collection of OAuth apps that you've given access to your account, and
         includes the level of access granted.
       operationId: getProfileApps
+      x-linode-cli-action: apps-list
       security:
         - personalAccessToken: []
         - oauth:
@@ -6734,6 +6863,7 @@ paths:
         schema:
           type: integer
           format: int32
+    x-linode-cli-command: profile
     get:
       tags:
       - profile
@@ -6742,6 +6872,7 @@ paths:
         Returns information about a single app you've authorized to access your
         account.
       operationId: getProfileApp
+      x-linode-cli-action: app-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -6768,6 +6899,7 @@ paths:
         Expires all tokens and refresh tokens possessed by this app.  This app is no
         longer authorized to access your account.
       operationId: deleteProfileApp
+      x-linode-cli-action: app-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -6788,6 +6920,7 @@ paths:
               -X DELETE \
               https://api.linode.com/v4/profile/apps/123
   /profile/grants:
+    x-linode-cli-command: profile
     get:
       tags:
       - profile
@@ -6803,6 +6936,7 @@ paths:
         display a button to deploy a new Linode).  Any client may access this
         endpoint, as no OAuth scopes are required.
       operationId: getProfileGrants
+      x-linode-cli-action: grants
       security:
       - personalAccessToken: []
       - oauth: []
@@ -6825,6 +6959,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile/grants
   /profile/tfa-disable:
+    x-linode-cli-command: profile
     post:
       tags:
       - profile
@@ -6834,6 +6969,7 @@ paths:
         login attempts from untrusted computers will only require a password
         before being successful.  This is less secure, and is discouraged.
       operationId: tfaDisable
+      x-linode-cli-action: tfa-disable
       security:
       - personalAccessToken: []
       - oauth:
@@ -6855,6 +6991,7 @@ paths:
               -X POST \
               https://api.linode.com/v4/profile/tfa-disable
   /profile/tfa-enable:
+    x-linode-cli-command: profile
     post:
       tags:
       - profile
@@ -6866,6 +7003,7 @@ paths:
         enabled, login from untrusted computers will be required to provide
         a TFA code before they are successful.
       operationId: tfaEnable
+      x-linode-cli-action: tfa-enable
       security:
       - personalAccessToken: []
       - oauth:
@@ -6900,6 +7038,7 @@ paths:
               -X POST \
               https://api.linode.com/v4/profile/tfa-enable
   /profile/tfa-enable-confirm:
+    x-linode-cli-command: profile
     post:
       tags:
       - profile
@@ -6910,6 +7049,7 @@ paths:
         from untrusted computers will be required to provide a Two Factor code
         before they are successful.
       operationId: tfaConfirm
+      x-linode-cli-action: tfa-confirm
       security:
       - personalAccessToken: []
       - oauth:
@@ -6953,6 +7093,7 @@ paths:
               }' \
               https://api.linode.com/v4/profile/tfa-enable-confirm
   /profile/tokens:
+    x-linode-cli-command: profile
     description: >
       A collection of Personal Access Tokens you've created.
     get:
@@ -6963,6 +7104,7 @@ paths:
         Returns a paginated list of Personal Access Tokens currently active for
         your user.
       operationId: getPersonalAccessTokens
+      x-linode-cli-action: tokens-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -6999,6 +7141,7 @@ paths:
         the scopes of your current token.  The created token will be able to
         access your account until the given expiry, or until it is revoked.
       operationId: createPersonalAccessToken
+      x-linode-cli-action: token-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -7060,6 +7203,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: profile
     get:
       tags:
       - profile
@@ -7067,6 +7211,7 @@ paths:
       description: >
         Returns a single Personal Access Token.
       operationId: getPersonalAccessToken
+      x-linode-cli-action: token-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -7092,6 +7237,7 @@ paths:
       description: >
         Updates a Personal Access Token's label.
       operationId: updatePersonalAccessToken
+      x-linode-cli-action: token-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -7132,6 +7278,7 @@ paths:
         but keep in mind that doing so could lose you access to the api and require
         you to create a new token through some other means.
       operationId: deletePersonalAccessToken
+      x-linode-cli-action: token-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -7215,6 +7362,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/regions/us-east
   /support/tickets:
+    x-linode-cli-command: tickets
     get:
       x-linode-grant: read_only
       parameters:
@@ -7232,6 +7380,7 @@ paths:
         This collection includes all Support Tickets generated on your account,
         with open tickets returned first.
       operationId: getTickets
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -7268,6 +7417,7 @@ paths:
         Only one of the ID attributes (`linode_id`, `domain_id`, etc) can be set
         on a single Support Ticket.
       operationId: createTicket
+      x-linode-cli-action: open
       security:
       - personalAccessToken: []
       - oauth:
@@ -7307,6 +7457,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: tickets
     get:
       x-linode-grant: read_only
       tags:
@@ -7315,6 +7466,7 @@ paths:
       description: >
         This endpoint returns a Support Ticket under your account.
       operationId: getTicket
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -7342,6 +7494,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: tickets
     post:
       x-linode-grant: read_write
       tags:
@@ -7353,6 +7506,7 @@ paths:
         Support team in resolving your Support Ticket. Examples of attachments
         are screen shots and text files that provide additional information.
       operationId: createTicketAttachment
+      x-linode-cli-action: upload-attachment
       security:
       - personalAccessToken: []
       - oauth:
@@ -7398,6 +7552,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: tickets
     get:
       x-linode-grant: read_only
       parameters:
@@ -7410,6 +7565,7 @@ paths:
         This endpoint returns a collection of replies to a singular Support
         Ticket on your account.
       operationId: getTicketReplies
+      x-linode-cli-action: replies
       security:
       - personalAccessToken: []
       - oauth:
@@ -7443,6 +7599,7 @@ paths:
       description: >
         This endpoint allows you to add a reply to an existing Support Ticket.
       operationId: createTicketReply
+      x-linode-cli-action: reply
       security:
       - personalAccessToken: []
       - oauth:
@@ -7485,6 +7642,7 @@ paths:
               }' \
               https://api.linode.com/v4/support/tickets/11223344/replies
   /volumes:
+    x-linode-cli-command: volumes
     get:
       x-linode-grant: read_only
       parameters:
@@ -7496,6 +7654,7 @@ paths:
       tags:
       - volumes
       operationId: getVolumes
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -7536,6 +7695,7 @@ paths:
       tags:
       - volumes
       operationId: createVolume
+      x-linode-cli-action: create
       security:
       - personalAccessToken: []
       - oauth:
@@ -7582,6 +7742,7 @@ paths:
       required: true
       schema:
         type: integer
+    x-linode-cli-command: volumes
     get:
       x-linode-grant: read_only
       parameters:
@@ -7593,6 +7754,7 @@ paths:
       description: >
         Get information about a single Volume.
       operationId: getVolume
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth:
@@ -7628,6 +7790,7 @@ paths:
       description: >
         This allows you to update a Volume that you have permission to `read_write`.
       operationId: updateVolume
+      x-linode-cli-action: update
       security:
       - personalAccessToken: []
       - oauth:
@@ -7688,6 +7851,7 @@ paths:
         stops billing for the Volume. You will be billed for time used within
         the billing period the Volume was active.
       operationId: deleteVolume
+      x-linode-cli-action: delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -7717,6 +7881,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: volumes
     post:
       summary: Attach Volume
       description: >
@@ -7728,6 +7893,7 @@ paths:
       tags:
       - volumes
       operationId: attachVolume
+      x-linode-cli-action: attach
       security:
       - personalAccessToken: []
       - oauth:
@@ -7776,6 +7942,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: volumes
     post:
       x-linode-charge: true
       x-linode-grant: add_volumes
@@ -7789,6 +7956,7 @@ paths:
       tags:
       - volumes
       operationId: cloneVolume
+      x-linode-cli-action: clone
       security:
       - personalAccessToken: []
       - oauth:
@@ -7832,6 +8000,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: volumes
     post:
       summary: Detach Volume
       description: >
@@ -7842,6 +8011,7 @@ paths:
       tags:
       - volumes
       operationId: detachVolume
+      x-linode-cli-action: detach
       security:
       - personalAccessToken: []
       - oauth:
@@ -7872,6 +8042,7 @@ paths:
       schema:
         type: integer
         format: int32
+    x-linode-cli-command: volumes
     post:
       x-linode-charge: true
       summary: Resize Volume
@@ -7884,6 +8055,7 @@ paths:
       tags:
       - volumes
       operationId: resizeVolume
+      x-linode-cli-action: resize
       security:
       - personalAccessToken: []
       - oauth:
