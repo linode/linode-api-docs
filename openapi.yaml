@@ -222,7 +222,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/account/event/123
+              https://api.linode.com/v4/account/events/123
   /account/events/{eventId}/read:
     parameters:
       - name: eventId
@@ -257,7 +257,7 @@ paths:
           source: >
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{}' \
+                -X POST \
                 https://api.linode.com/v4/account/events/123/read
   /account/events/{eventId}/seen:
     parameters:
@@ -294,7 +294,7 @@ paths:
           source: >
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{}' \
+                -X POST \
                 https://api.linode.com/v4/account/events/123/seen
   /account/invoices:
     get:
@@ -638,7 +638,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              DELETE \
+              -X DELETE \
               https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
   /account/oauth-clients/{clientId}/reset-secret:
     parameters:
@@ -678,7 +678,7 @@ paths:
           source: >
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
-                -X POST -d '{}' \
+                -X POST \
                 https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/reset-secret
   /account/oauth-clients/{clientId}/thumbnail:
     parameters:
@@ -710,7 +710,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
+                https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail > thumbnail.png
     put:
       tags:
       - account
@@ -1689,8 +1689,7 @@ paths:
                 "port": 80,
                 "service": null,
                 "protocol": null,
-                "ttl_sec": 604800,
-                "tag": null
+                "ttl_sec": 604800
               }' \
               https://api.linode.com/v4/domains/123/records
   /domains/{domainId}/records/{recordId}:
@@ -1934,7 +1933,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/images/123
+              https://api.linode.com/v4/images/linode/debian9
     put:
       x-linode-grant: read_write
       tags:
@@ -2163,9 +2162,9 @@ paths:
                 "swap_size": 512,
                 "image": "linode/debian9",
                 "root_pass": "aComplexP@ssword",
-                "authorized_keys": {
+                "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-                },
+                ],
                 "booted": true,
                 "label": "linode123",
                 "type": "g5-standard-2",
@@ -2458,7 +2457,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/linode/instances/123/backups/cancel
   /linode/instances/{linodeId}/backups/enable:
     parameters:
@@ -2496,7 +2495,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/linode/instances/123/backups/enable
   /linode/instances/{linodeId}/backups/{backupId}:
     parameters:
@@ -2666,7 +2665,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/linode/instances/123/boot
   /linode/instances/{linodeId}/clone:
     parameters:
@@ -2903,32 +2902,7 @@ paths:
                   "sdb": {
                     "disk_id": 123457,
                     "volume_id": null
-                  },
-                  "sdc": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdd": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sde": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdf": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdg": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdh": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-
+                  }
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123/configs
@@ -3021,32 +2995,7 @@ paths:
                   "sdb": {
                     "disk_id": 123457,
                     "volume_id": null
-                  },
-                  "sdc": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdd": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sde": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdf": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdg": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdh": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-
+                  }
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123/configs/23456
@@ -3170,7 +3119,6 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "label": "Debian 9 Disk",
-                "read_only": false,
                 "image": "linode/debian9",
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
@@ -3651,7 +3599,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "rdns": "li740-141.members.linode.com"
+                "rdns": "test.example.org"
               }' \
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
     delete:
@@ -3684,6 +3632,71 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
+  /linode/kernels:
+    x-linode-cli-command: kernels
+    get:
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - linode/kernels
+      summary: List Kernels
+      description: |
+        Lists available kernels.
+      operationId: getKernels
+      x-linode-cli-action: list
+      responses:
+        '200':
+          description: Returns a list of kernels.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Kernel'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/kernels
+  /linode/kernels/{kernelId}:
+    parameters:
+    - name: kernelId
+      in: path
+      description: ID of the kernel to look up.
+      required: true
+      schema:
+        type: string
+    x-linode-cli-command: kernels
+    get:
+      tags:
+      - linode/kernels
+      summary: View Kernel
+      description: >
+        Get information about a single kernel.
+      operationId: getKernel
+      x-linode-cli-action: view
+      responses:
+        '200':
+          description: A single Kernel object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Kernel'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/kernels/linode/latest-64bit
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
@@ -3725,7 +3738,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/linode/instances/123/mutate
   /linode/instances/{linodeId}/reboot:
     parameters:
@@ -3765,7 +3778,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/linode/instances/123/reboot
   /linode/instances/{linodeId}/rebuild:
     parameters:
@@ -3833,9 +3846,9 @@ paths:
               -X POST -d '{
                 "image": "linode/debian9",
                 "root_pass": "aComplexP@ssword",
-                "authorized_keys": {
+                "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-                },
+                ],
                 "booted": true
               }' \
               https://api.linode.com/v4/linode/instances/123/rebuild
@@ -3898,26 +3911,6 @@ paths:
                     "volume_id": null
                   },
                   "sdb": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdc": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdd": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sde": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdf": {
-                    "disk_id": null,
-                    "volume_id": null
-                  },
-                  "sdg": {
                     "disk_id": null,
                     "volume_id": null
                   }
@@ -4023,7 +4016,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/linode/instances/123/shutdown
   /linode/instances/{linodeId}/stats:
     parameters:
@@ -4155,71 +4148,6 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/volumes
-  /linode/kernels:
-    x-linode-cli-command: kernels
-    get:
-      parameters:
-      - $ref: '#/components/parameters/pageOffset'
-      - $ref: '#/components/parameters/pageSize'
-      tags:
-      - linode/kernels
-      summary: List Kernels
-      description: |
-        Lists available kernels.
-      operationId: getKernels
-      x-linode-cli-action: list
-      responses:
-        '200':
-          description: Returns a list of kernels.
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Kernel'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/kernels
-  /linode/kernels/{kernelId}:
-    parameters:
-    - name: kernelId
-      in: path
-      description: ID of the kernel to look up.
-      required: true
-      schema:
-        type: string
-    x-linode-cli-command: kernels
-    get:
-      tags:
-      - linode/kernels
-      summary: View Kernel
-      description: >
-        Get information about a single kernel.
-      operationId: getKernel
-      x-linode-cli-action: view
-      responses:
-        '200':
-          description: A single Kernel object.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Kernel'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/instances/123/kernels/linode/latest-64bit
   /linode/stackscripts:
     get:
       x-linode-grant: read_only
@@ -4303,13 +4231,7 @@ paths:
                 ],
                 "is_public": true,
                 "rev_note": "Set up MySQL",
-                "script": "#!/bin/bash
-                  # <UDF name='db_password' Label='MySQL Password' />
-                  #import the base function ss
-                  source <ssinclude StackScriptID='1'>
-                  system_update
-                  #apache
-                  apache_install && apache_tune 50 && apache_virtualhost_from_rdns"
+                "script": "#!/bin/bash"
               }' \
               https://api.linode.com/v4/linode/stackscripts
   /linode/stackscripts/{stackscriptId}:
@@ -4383,13 +4305,7 @@ paths:
                 ],
                 "is_public": true,
                 "rev_note": "Set up MySQL",
-                "script": "#!/bin/bash
-                  # <UDF name='db_password' Label='MySQL Password' />
-                  #import the base function ss
-                  source <ssinclude StackScriptID='1'>
-                  system_update
-                  #apache
-                  apache_install && apache_tune 50 && apache_virtualhost_from_rdns"
+                "script": "#!/bin/bash"
               }' \
               https://api.linode.com/v4/linode/stackscripts/1337
     delete:
@@ -5076,7 +4992,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
+              -X PUT -d '{
                 "label": "prod-password-1"
               }' \
               https://api.linode.com/v4/managed/credentials/9991
@@ -5379,7 +5295,6 @@ paths:
                 "body": "it worked",
                 "consultation_group": "on-call",
                 "notes": "The service name is my-cool-application",
-                "region": null,
                 "credentials": [
                   9991
                 ]
@@ -5461,7 +5376,6 @@ paths:
                 "body": "it worked",
                 "consultation_group": "on-call",
                 "notes": "The service name is my-cool-application",
-                "region": null,
                 "credentials": [
                   9991
                 ]
@@ -5530,7 +5444,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/managed/services/9994/disable
   /managed/services/{serviceId}/enable:
     parameters:
@@ -5567,7 +5481,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/managed/services/9994/enable
   /networking/ips:
     description: >
@@ -5746,7 +5660,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "rdns": "li740-141.members.linode.com"
+                "rdns": "test.example.org"
               }' \
               https://api.linode.com/v4/networking/ips/97.107.143.141
   /networking/ipv4/assign:
@@ -5832,8 +5746,12 @@ paths:
                 "region": "us-east",
                 "assignments": [
                   {
-                    "address": "12.34.56.789",
+                    "address": "12.34.56.100",
                     "linode_id": 123
+                  },
+                  {
+                    "address": "23.45.67.200",
+                    "linode_id": 234
                   }
                 ]
               }' \
@@ -5907,7 +5825,7 @@ paths:
                   "12.34.56.789"
                 ]
               }' \
-              https://api.linode.com/v4/networking/ipv4/assign
+              https://api.linode.com/v4/networking/ipv4/share
   /networking/ipv6/pools:
     get:
       parameters:
@@ -6269,9 +6187,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
-                "cipher_suite": "recommended",
-                "ssl_cert": null,
-                "ssl_key": null
+                "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
@@ -6362,9 +6278,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
-                "cipher_suite": "recommended",
-                "ssl_cert": null,
-                "ssl_key": null
+                "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
     delete:
@@ -6492,7 +6406,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "address": "192.168.210.120",
+                "address": "192.168.210.120:80",
                 "label": "node54321",
                 "weight": 50,
                 "mode": "accept"
@@ -6583,7 +6497,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "address": "192.168.210.120",
+                "address": "192.168.210.120:80",
                 "label": "node54321",
                 "weight": 50,
                 "mode": "accept"
@@ -6861,7 +6775,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/profile/tfa-disable
   /profile/tfa-enable:
     post:
@@ -6906,10 +6820,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "secret": "5FXX6KLACOC33GTC",
-                "expiry": "2018-03-01T00:01:01.000Z"
-              }' \
+              -X POST \
               https://api.linode.com/v4/profile/tfa-enable
   /profile/tfa-enable-confirm:
     post:
@@ -7058,7 +6969,7 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "scopes": "*",
-                "expiry": null,
+                "expiry": "2018-01-01T13:46:32",
                 "label": "linode-cli"
               }' \
               https://api.linode.com/v4/profile/tokens
@@ -7129,9 +7040,8 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "label": "linode-cli",
-                "expiry": "2018-04-09T12:38:19Z"
+              -X PUT -d '{
+                "label": "linode-cli"
               }' \
               https://api.linode.com/v4/profile/tokens/123
     delete:
@@ -7306,15 +7216,9 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "description": "I'm having trouble setting the root password on my Linode. I tried following the instructions but something is not working and I'm not sure what I'm doing wrong. Can you please help me figure out how I can reset it?
-                ",
-                "domain_id": null,
+                "description": "I'm having trouble setting the root password on my Linode. I tried following the instructions but something is not working and I'm not sure what I'm doing wrong. Can you please help me figure out how I can reset it?",
                 "linode_id": 123,
-                "longviewclient_id": null,
-                "nodebalancer_id": null,
-                "summary": "Having trouble resetting root password on my Linode
-                ",
-                "volume_id": null
+                "summary": "Having trouble resetting root password on my Linode"
               }' \
               https://api.linode.com/v4/support/tickets
   /support/tickets/{ticketId}:
@@ -7880,7 +7784,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{}' \
+              -X POST \
               https://api.linode.com/v4/volumes/12345/detach
   /volumes/{volumeId}/resize:
     parameters:
@@ -7934,7 +7838,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "size": 20
+                "size": 30
               }' \
               https://api.linode.com/v4/volumes/12345/resize
 components:
@@ -8949,6 +8853,7 @@ components:
           description: >
             The level of access this user has to this entity.  If null, this
             user has no access.
+          example: read_only
         label:
           type: string
           description: >
@@ -9389,8 +9294,8 @@ components:
             The reverse-dns assigned to this address.  For public v4 addresses,
             this will be set to a default value provided by Linode if not
             explicitly set.
-          example: li740-141.members.linode.com
           x-linode-cli-display: 4
+          example: test.example.org
         linode_id:
           type: integer
           format: int32
@@ -11561,6 +11466,7 @@ components:
             need to be generated.  Tokens may be created with "null" as their expiry
             and will never expire unless revoked.
           x-linode-cli-display: 5
+          example: '2018-01-01T13:46:32'
     Profile:
       description: >
         A Profile represents your user in our system.  This is where you can change
@@ -11847,13 +11753,7 @@ components:
           description: >
             This field is for inputting the contents of the StackScript.
           example: >
-            "#!/bin/bash
-              # <UDF name='db_password' Label='MySQL Password' />
-              # import the base function ss
-              source <ssinclude StackScriptID='1'>
-              system_update
-              # apache
-              apache_install && apache_tune 50 && apache_virtualhost_from_rdns"
+            "#!/bin/bash"
         user_defined_fields:
           type: array
           title: A list of custom fields defined by the user using special tags within the StackScript.
@@ -12282,8 +12182,8 @@ components:
             The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB.
           minimum: 10
           maximum: 10240
-          example: 20
           x-linode-cli-display: 4
+          example: 30
         region:
           $ref: '#/components/schemas/Region/properties/id'
           x-linode-cli-display: 5
