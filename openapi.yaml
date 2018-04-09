@@ -52,6 +52,11 @@ paths:
                 $ref: '#/components/schemas/Account'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/account
     put:
       x-linode-grant: read_write
       tags:
@@ -81,6 +86,26 @@ paths:
                 $ref: '#/components/schemas/Account'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "address_1": "123 Main St.",
+                "address_2": "Suite 101",
+                "city": "Philadelphia",
+                "company": "My Company, LLC",
+                "country": "US",
+                "email": "jsmith@mycompany.com",
+                "first_name": "John",
+                "last_name": "Smith",
+                "phone": "555-555-1212",
+                "state": "PA",
+                "zip": 19102,
+                }
+              }' \
+              https://api.linode.com/v4/account
   /account/credit-card:
     post:
       x-linode-grant: read_write
@@ -114,6 +139,17 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "credit_card": 4111111111111111,
+                  "expiry_month": 11,
+                  "expiry_year": 2020
+                }' \
+                https://api.linode.com/v4/account/credit-card
   /account/events:
     get:
       x-linode-grant: read_only
@@ -148,6 +184,11 @@ paths:
                           $ref: '#/components/schemas/Event'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/account/events
   /account/events/{eventId}:
     parameters:
       - name: eventId
@@ -177,6 +218,11 @@ paths:
                 $ref: '#/components/schemas/Event'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/account/events/123
   /account/events/{eventId}/read:
     parameters:
       - name: eventId
@@ -206,6 +252,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://api.linode.com/v4/account/events/123/read
   /account/events/{eventId}/seen:
     parameters:
       - name: eventId
@@ -236,6 +289,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://api.linode.com/v4/account/events/123/seen
   /account/invoices:
     get:
       x-linode-grant: read_only
@@ -268,6 +328,11 @@ paths:
                           $ref: '#/components/schemas/Invoice'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/invoices
   /account/invoices/{invoiceId}:
     parameters:
       - name: invoiceId
@@ -297,6 +362,11 @@ paths:
                 $ref: '#/components/schemas/Invoice'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/invoices/123
   /account/invoices/{invoiceId}/items:
     parameters:
       - name: invoiceId
@@ -336,6 +406,11 @@ paths:
                         $ref: '#/components/schemas/InvoiceItem'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/invoices/123/items
   /account/notifications:
     get:
       x-linode-grant: read_only
@@ -371,6 +446,11 @@ paths:
                         $ref: '#/components/schemas/Notification'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/notifications
   /account/oauth-clients:
     get:
       parameters:
@@ -405,6 +485,11 @@ paths:
                           $ref: '#/components/schemas/OAuthClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/oauth-clients
     post:
       tags:
       - account
@@ -443,6 +528,17 @@ paths:
                 $ref: '#/components/schemas/OAuthClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                    "redirect_uri": "https://example.org/oauth/callback",
+                    "label": "Example App",
+                    "public": false
+                }' \
+                https://api.linode.com/v4/account/oauth-clients
   /account/oauth-clients/{clientId}:
     parameters:
       - name: clientId
@@ -471,6 +567,11 @@ paths:
                 $ref: '#/components/schemas/OAuthClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
     put:
       tags:
       - account
@@ -499,6 +600,17 @@ paths:
                 $ref: '#/components/schemas/OAuthClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "redirect_uri": "https://example.org/oauth/callback",
+                "label": "Example App"
+                }
+              }' \
+              https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
     delete:
       tags:
       - account
@@ -522,6 +634,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
   /account/oauth-clients/{clientId}/reset-secret:
     parameters:
       - name: clientId
@@ -555,6 +673,13 @@ paths:
                 $ref: '#/components/schemas/OAuthClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/reset-secret
   /account/oauth-clients/{clientId}/thumbnail:
     parameters:
       - name: clientId
@@ -581,6 +706,11 @@ paths:
                 format: binary
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail > thumbnail.png
     put:
       tags:
       - account
@@ -611,6 +741,15 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: image/png" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT \
+              --data-binary "/path/to/image"
+              https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
+
   /account/payments:
     get:
       parameters:
@@ -643,6 +782,11 @@ paths:
                         $ref: '#/components/schemas/Payment'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/payments
     post:
       x-linode-grant: read_write
       tags:
@@ -672,6 +816,16 @@ paths:
                   $ref: '#/components/schemas/Payment'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                    "cvv": "123",
+                    "usd": "120.50"
+                }' \
+                https://api.linode.com/v4/account/payments
   /account/payments/{paymentId}:
     parameters:
     - name: paymentId
@@ -702,6 +856,11 @@ paths:
                 $ref: '#/components/schemas/Payment'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/payments/123
   /account/payments/paypal:
     post:
       x-linode-grant: read_only
@@ -735,6 +894,17 @@ paths:
                 $ref: '#/components/schemas/PayPalExecute'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                    "usd": "120.50",
+                    "redirect_url": "https://example.org",
+                    "cancel_url": "https://example.org"
+                }' \
+                https://api.linode.com/v4/account/payments/paypal
   /account/payment/paypal/execute:
     post:
       x-linode-grant: read_write
@@ -767,6 +937,16 @@ paths:
                type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                    "payment_id": "PAY-1234567890ABCDEFGHIJKLMN",
+                    "payer_id": "ABCDEFGHIJKLM"
+                }' \
+                https://api.linode.com/v4/account/payments/paypal
   /account/settings:
     get:
       x-linode-grant: read_only
@@ -791,6 +971,11 @@ paths:
                 $ref: '#/components/schemas/AccountSettings'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/settings
     put:
       x-linode-grant: read_write
       tags:
@@ -819,6 +1004,16 @@ paths:
                 $ref: '#/components/schemas/AccountSettings'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                    "network_helper": true,
+                    "longview_subscription": "longview-10"
+                }' \
+                https://api.linode.com/v4/account/settings
   /account/transfer:
     get:
       x-linode-grant: read_only
@@ -842,6 +1037,11 @@ paths:
                 $ref: '#/components/schemas/Transfer'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/transfer
   /account/users:
     get:
       x-linode-grant: unrestricted only
@@ -878,6 +1078,11 @@ paths:
                         $ref: '#/components/schemas/User'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/users
     post:
       x-linode-grant: unrestricted only
       tags:
@@ -926,6 +1131,17 @@ paths:
                 $ref: '#/components/schemas/User'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                    "username": "example_user",
+                    "email": "person@place.com",
+                    "restricted": true
+                }' \
+                https://api.linode.com/v4/account/users
   /account/users/{username}:
     parameters:
       - name: username
@@ -955,6 +1171,11 @@ paths:
                 $ref: '#/components/schemas/User'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/users/example_user
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -985,6 +1206,16 @@ paths:
                 $ref: '#/components/schemas/User'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                    "email": "person@place.com",
+                    "restricted": true
+                }' \
+                https://api.linode.com/v4/account/users/example_user
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -1008,6 +1239,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/account/users/example_user
   /account/users/{username}/grants:
     parameters:
       - name: username
@@ -1045,6 +1282,11 @@ paths:
             This user may access everything on the account and perform all actions.
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/users/example_user/grants
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -1076,6 +1318,84 @@ paths:
                 $ref: '#/components/schemas/GrantsResponse'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                    "global": {
+                      "add_linodes": true,
+                      "add_nodebalancers": false,
+                      "add_domains": true,
+                      "add_longview": false,
+                      "add_stackscripts": true,
+                      "longview_subscription": true,
+                      "add_images": true,
+                      "add_volumes": true,
+                      "account_access": "read_only",
+                      "cancel_account": false
+                    },
+                    "domain": [
+                      {
+                        "id": 123,
+                        "permissions": "read_only"
+                      }
+                    ],
+                    "image": [
+                      {
+                        "id": 123,
+                        "permissions": "read_only"
+                      }
+                    ],
+                    "linode": [
+                      {
+                        "id": 123,
+                        "permissions": "read_only"
+                      },
+                      {
+                        "id": 234,
+                        "permissions": "read_write"
+                      },
+                      {
+                        "id": 345,
+                        "permissions": "read_only"
+                      },
+                    ],
+                    "longview": [
+                      {
+                        "id": 123,
+                        "permissions": "read_only"
+                      },
+                      {
+                        "id": 234,
+                        "permissions": "read_write"
+                      }
+                    ],
+                    "nodebalancer": [
+                      {
+                        "id": 123,
+                        "permissions": "read_write"
+                      }
+                    ],
+                    "stackscript": [
+                      {
+                        "id": 123,
+                        "permissions": "read_only"
+                      },
+                      {
+                        "id": 124,
+                        "permissions": "read_write"
+                      }
+                    ],
+                    "volume": [
+                      {
+                        "id": 123,
+                        "permissions": "read_only"
+                      }
+                    ]
+                }' \
+                https://api.linode.com/v4/account/users/example_user/grants
   /domains:
     get:
       x-linode-grant: read_only
@@ -1111,6 +1431,11 @@ paths:
                         $ref: '#/components/schemas/Domain'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/domains
     post:
       x-linode-grant: add_domains
       tags:
@@ -1143,6 +1468,26 @@ paths:
                 $ref: '#/components/schemas/Domain'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "domain": "example.com",
+                  "type": "master",
+                  "soa_email": "admin@example.com",
+                  "description": "Example Description",
+                  "refresh_sec": 14400,
+                  "retry_sec": 3600,
+                  "expire_sec": 604800,
+                  "ttl_sec": 3600,
+                  "status": "active",
+                  "master_ips": ["127.0.0.1","255.255.255.1","123.123.123.7"],
+                  "axfr_ips": ["44.55.66.77"],
+                  "display_group": "Example Display Group"
+              }' \
+              https://api.linode.com/v4/domains
   /domains/{domainId}:
     parameters:
       - name: domainId
@@ -1176,6 +1521,11 @@ paths:
                 $ref: '#/components/schemas/Domain'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/domains/123
     put:
       x-linode-grant: read_write
       tags:
@@ -1204,6 +1554,26 @@ paths:
                 $ref: '#/components/schemas/Domain'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                  "domain": "example.com",
+                  "type": "master",
+                  "soa_email": "admin@example.com",
+                  "description": "Example Description",
+                  "refresh_sec": 14400,
+                  "retry_sec": 3600,
+                  "expire_sec": 604800,
+                  "ttl_sec": 3600,
+                  "status": "active",
+                  "master_ips": ["127.0.0.1","255.255.255.1","123.123.123.7"],
+                  "axfr_ips": ["44.55.66.77"],
+                  "display_group": "Example Display Group"
+              }' \
+              https://api.linode.com/v4/domains/123
     delete:
       x-linode-grant: read_write
       tags:
@@ -1227,6 +1597,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/domains/123
   /domains/{domainId}/records:
     parameters:
     - name: domainId
@@ -1265,6 +1641,11 @@ paths:
                       type: array
                       items:
                         $ref: '#/components/schemas/DomainRecord'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/domains/123/records
     post:
       x-linode-grant: read_write
       tags:
@@ -1294,6 +1675,23 @@ paths:
                 $ref: '#/components/schemas/DomainRecord'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "type": "A",
+                "name": "test",
+                "target": "12.34.56.78",
+                "priority": 50,
+                "weight": 50,
+                "port": 80,
+                "service": null,
+                "protocol": null,
+                "ttl_sec": 604800
+              }' \
+              https://api.linode.com/v4/domains/123/records
   /domains/{domainId}/records/{recordId}:
     parameters:
     - name: domainId
@@ -1329,6 +1727,11 @@ paths:
                 $ref: '#/components/schemas/DomainRecord'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/domains/123/records/234
     put:
       x-linode-grant: read_write
       tags:
@@ -1357,6 +1760,24 @@ paths:
                 $ref: '#/components/schemas/DomainRecord'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "type": "A",
+                "name": "test",
+                "target": "12.34.56.78",
+                "priority": 50,
+                "weight": 50,
+                "port": 80,
+                "service": null,
+                "protocol": null,
+                "ttl_sec": 604800,
+                "tag": null
+              }' \
+              https://api.linode.com/v4/domains/123/records/234
     delete:
       x-linode-grant: read_write
       tags:
@@ -1378,6 +1799,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/domains/123/records/234
   /images:
     get:
       x-linode-grant: read_only
@@ -1412,6 +1839,11 @@ paths:
                         $ref: '#/components/schemas/ImagePublic'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/images
     post:
       x-linode-grant: read_write
       tags:
@@ -1462,6 +1894,17 @@ paths:
                 $ref: '#/components/schemas/ImagePrivate'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "disk_id": 123,
+                "label": "this_is_a_label",
+                "description": "A longer description of the image"
+              }' \
+              https://api.linode.com/v4/images
   /images/{imageId}:
     parameters:
     - name: imageId
@@ -1486,6 +1929,11 @@ paths:
                 $ref: '#/components/schemas/ImagePrivate'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/images/linode/debian9
     put:
       x-linode-grant: read_write
       tags:
@@ -1517,6 +1965,24 @@ paths:
                 $ref: '#/components/schemas/ImagePrivate'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "id": "private/67848373",
+                "label": "My gold-master image",
+                "created": "2018-01-01T00:01:01",
+                "created_by": "somename",
+                "deprecated": false,
+                "description": "The detailed description of my Image.",
+                "is_public": false,
+                "size": 2500,
+                "type": "manual",
+                "vendor": null
+              }' \
+              https://api.linode.com/v4/images/private/67848373
     delete:
       x-linode-grant: read_write
       tags:
@@ -1539,6 +2005,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/images/private/67848373
   /linode/instances:
     x-linode-cli-command: linode
     get:
@@ -1573,6 +2045,11 @@ paths:
                         $ref: '#/components/schemas/Linode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances
     post:
       x-linode-charge: true
       x-linode-grant: add_linodes
@@ -1674,6 +2151,27 @@ paths:
                 $ref: '#/components/schemas/Linode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "backup_id": 1234,
+                "backups_enabled": true,
+                "swap_size": 512,
+                "image": "linode/debian9",
+                "root_pass": "aComplexP@ssword",
+                "authorized_keys": [
+                  "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+                ],
+                "booted": true,
+                "label": "linode123",
+                "type": "g5-standard-2",
+                "region": "us-east",
+                "group": "Linode-Group"
+              }' \
+              https://api.linode.com/v4/linode/instances
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
@@ -1725,6 +2223,11 @@ paths:
               $ref: '#/components/links/cloneLinode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123
     put:
       x-linode-grant: read_write
       tags:
@@ -1757,6 +2260,31 @@ paths:
                 $ref: '#/components/schemas/Linode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "linode123",
+                "group": "Linode-Group",
+                "alerts": {
+                  "cpu": 90,
+                  "network_in": 10,
+                  "network_out": 10,
+                  "transfer_quota": 80,
+                  "io": 10000
+                },
+                "backups": {
+                  "schedule": {
+                    "day": "Saturday",
+                    "window": "W22"
+                  }
+                },
+                "type": "g5-standard-2",
+                "region": "us-east"
+              }' \
+              https://api.linode.com/v4/linode/instances/123
     delete:
       x-linode-grant: read_write
       tags:
@@ -1785,6 +2313,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/linode/instances/123
   /linode/instances/{linodeId}/backups:
     parameters:
     - name: linodeId
@@ -1834,6 +2368,11 @@ paths:
                         $ref: '#/components/schemas/Backup'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/backups
     post:
       x-linode-grant: read_write
       summary: Create Snapshot
@@ -1873,6 +2412,15 @@ paths:
                 $ref: '#/components/schemas/Backup'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "MyNewSnapshot"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/backups
   /linode/instances/{linodeId}/backups/cancel:
     parameters:
     - name: linodeId
@@ -1904,6 +2452,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/linode/instances/123/backups/cancel
   /linode/instances/{linodeId}/backups/enable:
     parameters:
     - name: linodeId
@@ -1935,6 +2490,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/linode/instances/123/backups/enable
   /linode/instances/{linodeId}/backups/{backupId}:
     parameters:
     - name: linodeId
@@ -1972,6 +2534,11 @@ paths:
                 $ref: '#/components/schemas/Backup'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/backups/123456
   /linode/instances/{linodeId}/backups/{backupId}/restore:
     parameters:
     - name: linodeId
@@ -2019,7 +2586,7 @@ paths:
                 overwrite:
                   type: boolean
                   description: >
-                    If true, deletes all disks and configs on the target linode
+                    If true, deletes all disks and configs on the target Linode
                     before restoring.
                   example: true
       responses:
@@ -2031,6 +2598,16 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "linode_id": 123456,
+                "overwrite": true
+              }' \
+              https://api.linode.com/v4/linode/instances/123/backups/123456/restore
   /linode/instances/{linodeId}/boot:
     parameters:
     - name: linodeId
@@ -2083,6 +2660,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/linode/instances/123/boot
   /linode/instances/{linodeId}/clone:
     parameters:
     - name: linodeId
@@ -2198,6 +2782,22 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "region": "string",
+                "type": "string",
+                "linode_id": 0,
+                "label": "string",
+                "group": "string",
+                "backups_enabled": true,
+                "disks": [],
+                "configs": []
+              }' \
+              https://api.linode.com/v4/linode/instances/123/clone
   /linode/instances/{linodeId}/configs:
     parameters:
     - name: linodeId
@@ -2237,6 +2837,11 @@ paths:
                       type: array
                       items:
                         $ref: '#/components/schemas/LinodeConfig'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/configs
     post:
       tags:
       - linode/instances
@@ -2269,6 +2874,38 @@ paths:
                 $ref: '#/components/schemas/LinodeConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "kernel": "linode/latest-64bit",
+                "comments": "This is my main Config",
+                "memory_limit": 2048,
+                "root_device_ro": false,
+                "run_level": "default",
+                "virt_mode": "paravirt",
+                "helpers": {
+                  "updatedb_disabled": true,
+                  "distro": true,
+                  "modules_dep": true,
+                  "network": true,
+                  "devtmpfs_automount": false
+                },
+                "label": "My Config",
+                "devices": {
+                  "sda": {
+                    "disk_id": 123456,
+                    "volume_id": null
+                  },
+                  "sdb": {
+                    "disk_id": 123457,
+                    "volume_id": null
+                  }
+                }
+              }' \
+              https://api.linode.com/v4/linode/instances/123/configs
   /linode/instances/{linodeId}/configs/{configId}:
     parameters:
     - name: linodeId
@@ -2306,6 +2943,11 @@ paths:
                 $ref: '#/components/schemas/LinodeConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/configs/23456
     put:
       x-linode-grant: read_write
       summary: Update Configuration Profile
@@ -2325,6 +2967,38 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LinodeConfig'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "kernel": "linode/latest-64bit",
+                "comments": "This is my main Config",
+                "memory_limit": 2048,
+                "root_device_ro": false,
+                "run_level": "default",
+                "virt_mode": "paravirt",
+                "helpers": {
+                  "updatedb_disabled": true,
+                  "distro": true,
+                  "modules_dep": true,
+                  "network": true,
+                  "devtmpfs_automount": false
+                },
+                "label": "My Config",
+                "devices": {
+                  "sda": {
+                    "disk_id": 123456,
+                    "volume_id": null
+                  },
+                  "sdb": {
+                    "disk_id": 123457,
+                    "volume_id": null
+                  }
+                }
+              }' \
+              https://api.linode.com/v4/linode/instances/123/configs/23456
       responses:
         '200':
           description: Configuration profile successfully updated.
@@ -2356,6 +3030,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/linode/instances/123/configs/23456
   /linode/instances/{linodeId}/disks:
     parameters:
     - name: linodeId
@@ -2396,6 +3076,11 @@ paths:
                         $ref: '#/components/schemas/Disk'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/disks
     post:
       tags:
       - linode/instances
@@ -2427,6 +3112,20 @@ paths:
                 $ref: '#/components/schemas/Disk'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "Debian 9 Disk",
+                "image": "linode/debian9",
+                "authorized_keys": [
+                  "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+                ],
+                "root_pass": "aComplexP@ssword",
+              }' \
+              https://api.linode.com/v4/linode/instances/123/disks
   /linode/instances/{linodeId}/disks/{diskId}:
     parameters:
     - name: linodeId
@@ -2464,6 +3163,11 @@ paths:
                 $ref: '#/components/schemas/Disk'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/disks/25674
     put:
       x-linode-grant: read_write
       tags:
@@ -2493,6 +3197,15 @@ paths:
                 $ref: '#/components/schemas/Disk'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "Debian 9 Disk"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/disks/25674
     delete:
       x-linode-grant: read_write
       tags:
@@ -2515,6 +3228,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/linode/instances/123/disks/25674
   /linode/instances/{linodeId}/disks/{diskId}/password:
     parameters:
     - name: linodeId
@@ -2578,6 +3297,15 @@ paths:
                type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "password": "another@complex^Password123"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/disks/25674/password
   /linode/instances/{linodeId}/disks/{diskId}/resize:
     parameters:
     - name: linodeId
@@ -2641,6 +3369,15 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "size": 2048
+              }' \
+              https://api.linode.com/v4/linode/instances/123/disks/25674/resize
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
@@ -2716,6 +3453,11 @@ paths:
                         readOnly: true
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              https://api.linode.com/v4/linode/instances/123/ips
     post:
       x-linode-grant: read_write
       tags:
@@ -2764,6 +3506,16 @@ paths:
                 $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "type": "ipv4",
+                "public": true
+              }' \
+              https://api.linode.com/v4/linode/instances/123/ips
   /linode/instances/{linodeId}/ips/{address}:
     parameters:
     - name: linodeId
@@ -2802,6 +3554,11 @@ paths:
                 $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
     put:
       x-linode-grant: read_write
       tags:
@@ -2836,6 +3593,15 @@ paths:
                 $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "rdns": "test.example.org"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
     delete:
       x-linode-grant: read_write
       tags:
@@ -2859,6 +3625,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
   /linode/kernels:
     x-linode-cli-command: kernels
     get:
@@ -2888,6 +3661,11 @@ paths:
                         $ref: '#/components/schemas/Kernel'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/kernels
   /linode/kernels/{kernelId}:
     parameters:
     - name: kernelId
@@ -2914,6 +3692,11 @@ paths:
                 $ref: '#/components/schemas/Kernel'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/kernels/linode/latest-64bit
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
@@ -2950,6 +3733,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/linode/instances/123/mutate
   /linode/instances/{linodeId}/reboot:
     parameters:
     - name: linodeId
@@ -2983,6 +3773,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/linode/instances/123/reboot
   /linode/instances/{linodeId}/rebuild:
     parameters:
     - name: linodeId
@@ -3041,6 +3838,20 @@ paths:
                   $ref: '#/components/schemas/Linode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "image": "linode/debian9",
+                "root_pass": "aComplexP@ssword",
+                "authorized_keys": [
+                  "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+                ],
+                "booted": true
+              }' \
+              https://api.linode.com/v4/linode/instances/123/rebuild
   /linode/instances/{linodeId}/rescue:
     parameters:
     - name: linodeId
@@ -3088,6 +3899,24 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "devices": {
+                  "sda": {
+                    "disk_id": 124458,
+                    "volume_id": null
+                  },
+                  "sdb": {
+                    "disk_id": null,
+                    "volume_id": null
+                  }
+                }
+              }' \
+              https://api.linode.com/v4/linode/instances/123/rescue
   /linode/instances/{linodeId}/resize:
     parameters:
     - name: linodeId
@@ -3140,6 +3969,15 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "type": "g5-standard-2"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/resize
   /linode/instances/{linodeId}/shutdown:
     parameters:
     - name: linodeId
@@ -3173,6 +4011,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/linode/instances/123/shutdown
   /linode/instances/{linodeId}/stats:
     parameters:
     - name: linodeId
@@ -3202,6 +4047,11 @@ paths:
                 $ref: '#/components/schemas/LinodeStats'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/stats
   /linode/instances/{linodeId}/stats/{year}/{month}:
     parameters:
     - name: linodeId
@@ -3249,6 +4099,11 @@ paths:
                 $ref: '#/components/schemas/LinodeStats'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/stats/2018/01
   /linode/instances/{linodeId}/volumes:
     parameters:
     - name: linodeId
@@ -3288,6 +4143,11 @@ paths:
                         $ref: '#/components/schemas/Volume'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/volumes
   /linode/stackscripts:
     get:
       x-linode-grant: read_only
@@ -3324,6 +4184,11 @@ paths:
                         $ref: '#/components/schemas/StackScript'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/stackscripts
     post:
       x-linode-grant: add_stackscripts
       tags:
@@ -3352,6 +4217,23 @@ paths:
                 $ref: '#/components/schemas/StackScript'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "a-stackscript",
+                "description": "This StackScript installs and configures MySQL",
+                "images": [
+                  "linode/debian9",
+                  "linode/debian8"
+                ],
+                "is_public": true,
+                "rev_note": "Set up MySQL",
+                "script": "#!/bin/bash"
+              }' \
+              https://api.linode.com/v4/linode/stackscripts
   /linode/stackscripts/{stackscriptId}:
     parameters:
     - name: stackscriptId
@@ -3382,6 +4264,11 @@ paths:
                 $ref: '#/components/schemas/StackScript'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/stackscripts/1337
     put:
       x-linode-grant: read_write
       tags:
@@ -3404,6 +4291,23 @@ paths:
                 $ref: '#/components/schemas/StackScript'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "a-stackscript",
+                "description": "This StackScript installs and configures MySQL",
+                "images": [
+                  "linode/debian9",
+                  "linode/debian8"
+                ],
+                "is_public": true,
+                "rev_note": "Set up MySQL",
+                "script": "#!/bin/bash"
+              }' \
+              https://api.linode.com/v4/linode/stackscripts/1337
     delete:
       x-linode-grant: read_write
       tags:
@@ -3426,6 +4330,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/linode/stackscripts/1337
   /linode/types:
     get:
       tags:
@@ -3452,6 +4362,11 @@ paths:
                         $ref: '#/components/schemas/LinodeType'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/types
   /linode/types/{typeId}:
     parameters:
     - name: typeId
@@ -3477,6 +4392,11 @@ paths:
                 $ref: '#/components/schemas/LinodeType'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/types/g5-standard-2
   /longview/clients:
     get:
       x-linode-grant: read_only
@@ -3511,6 +4431,11 @@ paths:
                           $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/clients
     post:
       x-linode-grant: add_longview
       tags:
@@ -3542,6 +4467,15 @@ paths:
                 $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "client789"
+              }' \
+              https://api.linode.com/v4/longview/clients
   /longview/clients/{clientId}:
     parameters:
     - name: clientId
@@ -3572,6 +4506,11 @@ paths:
                 $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/clients/789
     put:
       x-linode-grant: read_write
       tags:
@@ -3602,6 +4541,15 @@ paths:
                 $ref: '#/components/schemas/LongviewClient'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "client789"
+              }' \
+              https://api.linode.com/v4/longview/clients/789
     delete:
       x-linode-grant: read_write
       tags:
@@ -3625,6 +4573,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/longview/clients/789
   /longview/subscriptions:
     get:
       parameters:
@@ -3653,6 +4607,11 @@ paths:
                           $ref: '#/components/schemas/LongviewSubscription'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/subscriptions
   /longview/subscriptions/{subscriptionId}:
     parameters:
     - name: subscriptionId
@@ -3678,6 +4637,11 @@ paths:
                 $ref: '#/components/schemas/LongviewSubscription'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/longview/subscriptions/longview-10
   /managed/contacts:
     get:
       x-linode-grant: unrestricted only
@@ -3710,6 +4674,11 @@ paths:
                           $ref: '#/components/schemas/ManagedContact'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/contacts
     post:
       x-linode-grant: unrestricted only
       tags:
@@ -3739,6 +4708,21 @@ paths:
                 $ref: '#/components/schemas/ManagedContact'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "name": "John Doe",
+                "email": "john.doe@example.org",
+                "phone": {
+                  "primary": "123-456-7890",
+                  "secondary": null
+                },
+                "group": "on-call"
+              }' \
+              https://api.linode.com/v4/managed/contacts
   /managed/contacts/{contactId}:
     parameters:
     - name: contactId
@@ -3769,6 +4753,11 @@ paths:
                 $ref: '#/components/schemas/ManagedContact'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/contacts/567
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -3797,6 +4786,21 @@ paths:
                 $ref: '#/components/schemas/ManagedContact'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "name": "John Doe",
+                "email": "john.doe@example.org",
+                "phone": {
+                  "primary": "123-456-7890",
+                  "secondary": null
+                },
+                "group": "on-call"
+              }' \
+              https://api.linode.com/v4/managed/contacts/567
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -3816,6 +4820,14 @@ paths:
             application/json:
               schema:
                 type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/managed/contacts/567
   /managed/credentials:
     get:
       x-linode-grant: unrestricted only
@@ -3848,6 +4860,11 @@ paths:
                           $ref: '#/components/schemas/ManagedCredential'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/credentials
     post:
       x-linode-grant: unrestricted only
       tags:
@@ -3896,6 +4913,17 @@ paths:
                 $ref: '#/components/schemas/ManagedCredential'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "prod-password-1",
+                "username": "johndoe",
+                "password": "s3cur3P@ssw0rd"
+              }' \
+              https://api.linode.com/v4/managed/credentials
   /managed/credentials/{credentialId}:
     parameters:
     - name: credentialId
@@ -3926,6 +4954,11 @@ paths:
                 $ref: '#/components/schemas/ManagedCredential'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/credentials/9991
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -3954,6 +4987,15 @@ paths:
                 $ref: '#/components/schemas/ManagedCredential'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "prod-password-1"
+              }' \
+              https://api.linode.com/v4/managed/credentials/9991
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -3974,6 +5016,14 @@ paths:
             application/json:
               schema:
                 type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/managed/credentials/9991
   /managed/issues:
     get:
       x-linode-grant: unrestricted only
@@ -4008,6 +5058,11 @@ paths:
                           $ref: '#/components/schemas/ManagedIssue'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/issues
   /managed/issues/{issueId}:
     parameters:
     - name: issueId
@@ -4039,6 +5094,11 @@ paths:
                 $ref: '#/components/schemas/ManagedIssue'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/issues/823
   /managed/linode-settings:
     get:
       x-linode-grant: unrestricted only
@@ -4073,6 +5133,11 @@ paths:
                           $ref: '#/components/schemas/ManagedLinodeSettings'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/linode-settings
   /managed/linode-settings/{linodeId}:
     parameters:
     - name: linodeId
@@ -4103,6 +5168,11 @@ paths:
                 $ref: '#/components/schemas/ManagedLinodeSettings'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/linode-settings/123
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -4131,6 +5201,20 @@ paths:
                 $ref: '#/components/schemas/ManagedLinodeSettings'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "ssh": {
+                  "access": true,
+                  "user": "linode",
+                  "ip": "12.34.56.789",
+                  "port": 22
+                }
+              }' \
+              https://api.linode.com/v4/managed/linode-settings/123
   /managed/services:
     get:
       x-linode-grant: unrestricted only
@@ -4162,6 +5246,11 @@ paths:
                           $ref: '#/components/schemas/ManagedService'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/services
     post:
       x-linode-grant: unrestricted only
       tags:
@@ -4193,6 +5282,24 @@ paths:
                 $ref: '#/components/schemas/ManagedService'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "service_type": "URL",
+                "label": "prod-1",
+                "address": "https://example.org",
+                "timeout": 30,
+                "body": "it worked",
+                "consultation_group": "on-call",
+                "notes": "The service name is my-cool-application",
+                "credentials": [
+                  9991
+                ]
+              }' \
+              https://api.linode.com/v4/managed/services
   /managed/services/{serviceId}:
     parameters:
     - name: serviceId
@@ -4223,6 +5330,11 @@ paths:
                 $ref: '#/components/schemas/ManagedService'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/services/9994
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -4251,6 +5363,24 @@ paths:
                 $ref: '#/components/schemas/ManagedService'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "service_type": "URL",
+                "label": "prod-1",
+                "address": "https://example.org",
+                "timeout": 30,
+                "body": "it worked",
+                "consultation_group": "on-call",
+                "notes": "The service name is my-cool-application",
+                "credentials": [
+                  9991
+                ]
+              }' \
+              https://api.linode.com/v4/managed/services/9994
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -4271,6 +5401,14 @@ paths:
             application/json:
               schema:
                 type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/managed/services/9994
   /managed/services/{serviceId}/disable:
     parameters:
     - name: serviceId
@@ -4301,6 +5439,13 @@ paths:
                 $ref: '#/components/schemas/ManagedService'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/managed/services/9994/disable
   /managed/services/{serviceId}/enable:
     parameters:
     - name: serviceId
@@ -4331,6 +5476,13 @@ paths:
                 $ref: '#/components/schemas/ManagedService'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/managed/services/9994/enable
   /networking/ips:
     description: >
       A collection of IP Addresses on your account.  Excludes private addresses.
@@ -4363,6 +5515,11 @@ paths:
                           $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/networking/ips
     post:
       x-linode-grant: read_write
       tags:
@@ -4420,6 +5577,17 @@ paths:
                 $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "type": "ipv4",
+                "public": true,
+                "linode_id": 123
+              }' \
+              https://api.linode.com/v4/networking/ips
   /networking/ips/{address}:
     parameters:
     - name: address
@@ -4450,6 +5618,11 @@ paths:
                 $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/networking/ips/97.107.143.141
     put:
       x-linode-grant: read_write
       tags:
@@ -4481,6 +5654,15 @@ paths:
                 $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "rdns": "test.example.org"
+              }' \
+              https://api.linode.com/v4/networking/ips/97.107.143.141
   /networking/ipv4/assign:
     description: >
       Allows redistribution of v4 IP Addresses within a region.  Any number
@@ -4555,6 +5737,25 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "region": "us-east",
+                "assignments": [
+                  {
+                    "address": "12.34.56.100",
+                    "linode_id": 123
+                  },
+                  {
+                    "address": "23.45.67.200",
+                    "linode_id": 234
+                  }
+                ]
+              }' \
+              https://api.linode.com/v4/networking/ipv4/assign
   /networking/ipv4/share:
     description: >
       Configure shared IPs.  A shared IP may be brought up on a Linode other
@@ -4613,6 +5814,18 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "linode_id": 123,
+                "ips": [
+                  "12.34.56.789"
+                ]
+              }' \
+              https://api.linode.com/v4/networking/ipv4/share
   /networking/ipv6/pools:
     get:
       parameters:
@@ -4644,6 +5857,11 @@ paths:
                           $ref: '#/components/schemas/IPv6Pool'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/networking/ipv6/pools
   /networking/ipv6/ranges:
     get:
       parameters:
@@ -4675,6 +5893,11 @@ paths:
                           $ref: '#/components/schemas/IPv6Range'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/networking/ipv6/ranges
   /nodebalancers:
     get:
       x-linode-grant: read_only
@@ -4707,6 +5930,11 @@ paths:
                           $ref: '#/components/schemas/NodeBalancer'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers
     post:
       x-linode-grant: add_nodebalancers
       tags:
@@ -4747,6 +5975,17 @@ paths:
                 $ref: '#/components/schemas/NodeBalancer'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "region": "us-east",
+                "label": "balancer12345",
+                "client_conn_throttle": 0
+              }' \
+              https://api.linode.com/v4/nodebalancers
   /nodebalancers/{nodeBalancerId}:
     parameters:
     - name: nodeBalancerId
@@ -4777,6 +6016,11 @@ paths:
                 $ref: '#/components/schemas/NodeBalancer'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers/12345
     put:
       x-linode-grant: read_write
       tags:
@@ -4805,6 +6049,16 @@ paths:
                 $ref: '#/components/schemas/NodeBalancer'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "balancer12345",
+                "client_conn_throttle": 0
+              }' \
+              https://api.linode.com/v4/nodebalancers/12345
     delete:
       x-linode-grant: read_write
       tags:
@@ -4831,6 +6085,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/nodebalancers/12345
   /nodebalancers/{nodeBalancerId}/configs:
     parameters:
     - name: nodeBalancerId
@@ -4876,6 +6136,11 @@ paths:
                           $ref: '#/components/schemas/NodeBalancerConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers/12345/configs
     post:
       x-linode-grant: read_write
       tags:
@@ -4905,6 +6170,26 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "port": 80,
+                "protocol": "http",
+                "algorithm": "roundrobin",
+                "stickiness": "http_cookie",
+                "check": "http_body",
+                "check_interval": 90,
+                "check_timeout": 10,
+                "check_attempts": 3,
+                "check_path": "/test",
+                "check_body": "it works",
+                "check_passive": true,
+                "cipher_suite": "recommended"
+              }' \
+              https://api.linode.com/v4/nodebalancers/12345/configs
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
     - name: nodeBalancerId
@@ -4943,6 +6228,11 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567
     put:
       x-linode-grant: read_write
       tags:
@@ -4971,6 +6261,26 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "port": 80,
+                "protocol": "http",
+                "algorithm": "roundrobin",
+                "stickiness": "http_cookie",
+                "check": "http_body",
+                "check_interval": 90,
+                "check_timeout": 10,
+                "check_attempts": 3,
+                "check_path": "/test",
+                "check_body": "it works",
+                "check_passive": true,
+                "cipher_suite": "recommended"
+              }' \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567
     delete:
       x-linode-grant: read_write
       tags:
@@ -4996,6 +6306,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
     - name: nodeBalancerId
@@ -5045,6 +6361,11 @@ paths:
                         $ref: '#/components/schemas/NodeBalancerNode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes
     post:
       x-linode-grant: read_write
       tags:
@@ -5079,6 +6400,18 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerNode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "address": "192.168.210.120:80",
+                "label": "node54321",
+                "weight": 50,
+                "mode": "accept"
+              }' \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes/{nodeId}:
     parameters:
     - name: nodeBalancerId
@@ -5124,6 +6457,11 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerNode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
     put:
       x-linode-grant: read_write
       tags:
@@ -5153,6 +6491,18 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerNode'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "address": "192.168.210.120:80",
+                "label": "node54321",
+                "weight": 50,
+                "mode": "accept"
+              }' \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
     delete:
       x-linode-grant: read_write
       tags:
@@ -5177,6 +6527,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
   /profile:
     x-linode-cli-command: profile
     get:
@@ -5200,6 +6556,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Profile'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile
     put:
       tags:
       - profile
@@ -5229,6 +6592,22 @@ paths:
                 $ref: '#/components/schemas/Profile'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "email": "example-user@gmail.com",
+                "timezone": null,
+                "email_notifications": true,
+                "ip_whitelist_enabled": false,
+                "lish_auth_method": "keys_only",
+                "authorized_keys": null,
+                "two_factor_auth": true,
+                "restricted": false
+              }' \
+              https://api.linode.com/v4/profile
   /profile/apps:
     description: >
       Returns information about OAuth Apps you have authorized to access your account.
@@ -5264,6 +6643,11 @@ paths:
                           $ref: '#/components/schemas/AuthorizedApp'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/apps
   /profile/apps/{appId}:
     parameters:
       - name: appId
@@ -5294,6 +6678,11 @@ paths:
                 $ref: '#/components/schemas/AuthorizedApp'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/apps/123
     delete:
       tags:
       - profile
@@ -5315,6 +6704,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/profile/apps/123
   /profile/grants:
     get:
       tags:
@@ -5347,6 +6742,11 @@ paths:
             everything on the account.
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/grants
   /profile/tfa-disable:
     post:
       tags:
@@ -5370,6 +6770,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/profile/tfa-disable
   /profile/tfa-enable:
     post:
       tags:
@@ -5408,6 +6815,13 @@ paths:
                     example: 2018-03-01T00:01:01
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/profile/tfa-enable
   /profile/tfa-enable-confirm:
     post:
       tags:
@@ -5452,6 +6866,15 @@ paths:
                     example: sample two factor scratch
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "tfa_code": "213456"
+              }' \
+              https://api.linode.com/v4/profile/tfa-enable-confirm
   /profile/tokens:
     description: >
       A collection of Personal Access Tokens you've created.
@@ -5483,6 +6906,11 @@ paths:
                         $ref: '#/components/schemas/PersonalAccessToken'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/tokens
     post:
       tags:
       - profile
@@ -5534,6 +6962,17 @@ paths:
                 $ref: '#/components/schemas/PersonalAccessToken'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "scopes": "*",
+                "expiry": "2018-01-01T13:46:32",
+                "label": "linode-cli"
+              }' \
+              https://api.linode.com/v4/profile/tokens
   /profile/tokens/{tokenId}:
     description: View or revoke a single token.
     parameters:
@@ -5564,6 +7003,11 @@ paths:
                 $ref: '#/components/schemas/PersonalAccessToken'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/tokens/123
     put:
       tags:
       - profile
@@ -5591,6 +7035,15 @@ paths:
                 $ref: '#/components/schemas/PersonalAccessToken'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "linode-cli"
+              }' \
+              https://api.linode.com/v4/profile/tokens/123
     delete:
       tags:
       - profile
@@ -5615,6 +7068,12 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/profile/tokens/123
   /regions:
     x-linode-cli-command: regions
     get:
@@ -5642,6 +7101,11 @@ paths:
                         $ref: '#/components/schemas/Region'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/regions
   /regions/{regionId}:
     x-linode-cli-command: regions
     parameters:
@@ -5668,6 +7132,11 @@ paths:
                 $ref: '#/components/schemas/Region'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/regions/us-east
   /support/tickets:
     get:
       x-linode-grant: read_only
@@ -5706,6 +7175,11 @@ paths:
                           $ref: '#/components/schemas/SupportTicket'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/support/tickets
     post:
       x-linode-grant: read_write
       tags:
@@ -5736,6 +7210,17 @@ paths:
                 $ref: '#/components/schemas/SupportTicket'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "I'm having trouble setting the root password on my Linode. I tried following the instructions but something is not working and I'm not sure what I'm doing wrong. Can you please help me figure out how I can reset it?",
+                "linode_id": 123,
+                "summary": "Having trouble resetting root password on my Linode"
+              }' \
+              https://api.linode.com/v4/support/tickets
   /support/tickets/{ticketId}:
     parameters:
     - name: ticketId
@@ -5766,6 +7251,11 @@ paths:
                 $ref: '#/components/schemas/SupportTicket'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/support/tickets/11223344
   /support/tickets/{ticketId}/attachments:
     parameters:
     - name: ticketId
@@ -5814,6 +7304,14 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST ' \
+              -F file=/Users/LinodeGuy/pictures/screen_shot.jpg \
+              https://api.linode.com/v4/support/tickets/11223344/attachments
   /support/tickets/{ticketId}/replies:
     parameters:
     - name: ticketId
@@ -5855,6 +7353,11 @@ paths:
                           $ref: '#/components/schemas/SupportTicketReply'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/support/tickets/11223344/replies
     post:
       x-linode-grant: read_write
       tags:
@@ -5895,6 +7398,15 @@ paths:
                 $ref: '#/components/schemas/SupportTicketReply'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "Thank you for your help. I was able to figure out what the problem was and I successfully reset my password. You guys are the best!"
+              }' \
+              https://api.linode.com/v4/support/tickets/11223344/replies
   /volumes:
     get:
       x-linode-grant: read_only
@@ -5927,6 +7439,11 @@ paths:
                         $ref: '#/components/schemas/Volume'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/volumes
     post:
       x-linode-charge: true
       x-linode-grant: add_volumes
@@ -5966,6 +7483,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Volume'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "my-volume",
+                "size": 20,
+                "region": "us-east",
+                "linode_id": 12346
+              }' \
+              https://api.linode.com/v4/volumes
   /volumes/{volumeId}:
     parameters:
     - name: volumeId
@@ -6007,6 +7538,11 @@ paths:
               $ref: '#/components/links/resizeVolume'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/volumes/12345
     put:
       x-linode-grant: read_write
       tags:
@@ -6052,6 +7588,18 @@ paths:
                 $ref: '#/components/schemas/Volume'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "my-volume",
+                "size": 20,
+                "region": "us-east",
+                "linode_id": 12346
+              }' \
+              https://api.linode.com/v4/volumes/12345
     delete:
       x-linode-grant: read_write
       tags:
@@ -6076,6 +7624,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/volumes/12345
   /volumes/{volumeId}/attach:
     parameters:
     - name: volumeId
@@ -6126,6 +7681,15 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "linode_id": 12346
+              }' \
+              https://api.linode.com/v4/volumes/12345/attach
   /volumes/{volumeId}/clone:
     parameters:
     - name: volumeId
@@ -6173,6 +7737,15 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "my-volume"
+              }' \
+              https://api.linode.com/v4/volumes/12345/clone
   /volumes/{volumeId}/detach:
     parameters:
     - name: volumeId
@@ -6206,6 +7779,13 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/volumes/12345/detach
   /volumes/{volumeId}/resize:
     parameters:
     - name: volumeId
@@ -6217,7 +7797,7 @@ paths:
         format: int32
     post:
       x-linode-charge: true
-      summary: Clone Volume
+      summary: Resize Volume
       description: >
         This endpoint allows you to resize an existing Volume on your account. In
         order for this request to complete successfully, your user must have the
@@ -6252,6 +7832,15 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "size": 30
+              }' \
+              https://api.linode.com/v4/volumes/12345/resize
 components:
   securitySchemes:
     personalAccessToken:
@@ -7255,7 +8844,6 @@ components:
           description: >
             The ID of the entity this grant applies to.
           example: 123
-          readOnly: true
         permissions:
           type: string
           enum:
@@ -7706,8 +9294,8 @@ components:
             The reverse-dns assigned to this address.  For public v4 addresses,
             this will be set to a default value provided by Linode if not
             explicitly set.
-          example: li740-141.members.linode.com
           x-linode-cli-display: 4
+          example: test.example.org
         linode_id:
           type: integer
           format: int32
@@ -8322,6 +9910,7 @@ components:
           format: int32
           title: The ID of this Config.
           example: 23456
+          readOnly: true
         kernel:
           type: string
           title: A kernel ID to boot a Linode with. Defaults to 'linode/latest-64bit'
@@ -9877,6 +11466,7 @@ components:
             need to be generated.  Tokens may be created with "null" as their expiry
             and will never expire unless revoked.
           x-linode-cli-display: 5
+          example: '2018-01-01T13:46:32'
     Profile:
       description: >
         A Profile represents your user in our system.  This is where you can change
@@ -10093,8 +11683,7 @@ components:
           description: >
             A description for the StackScript.
           example: >
-            This StackScript installs and configures a
-            LEMP stack.
+            This StackScript installs and configures MySQL
         images:
           type: array
           x-linode-filterable: true
@@ -10157,13 +11746,14 @@ components:
           title: A note regarding the last revision of this StackScript.
           description: >
             This field allows you to leave notes when making revisions to StackScripts.
-          example: Added Debian 9 to supported images
+          example: Set up MySQL
         script:
           type: string
           title: The StackScript.
           description: >
             This field is for inputting the contents of the StackScript.
-          example: #!/bin/sh
+          example: >
+            "#!/bin/bash"
         user_defined_fields:
           type: array
           title: A list of custom fields defined by the user using special tags within the StackScript.
@@ -10173,10 +11763,10 @@ components:
           items:
             $ref: '#/components/schemas/UserDefinedField'
           readOnly: true
-      example:
-        label: Enter the DB password
-        name: DB_PASSWORD
-        example: hunter2
+          example:
+            label: Enter the DB password
+            name: DB_PASSWORD
+            example: hunter2
     SupportTicket:
       type: object
       description: >
@@ -10600,8 +12190,8 @@ components:
             The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB.
           minimum: 10
           maximum: 10240
-          example: 20
           x-linode-cli-display: 4
+          example: 30
         region:
           $ref: '#/components/schemas/Region/properties/id'
           x-linode-cli-display: 5
