@@ -40,6 +40,16 @@ get you started:
 python -m SimpleHTTPServer
 ```
 
-## Deploy
+## Spec Extensions
 
-_TODO:_
+The OpenAPI specification supports vendor-specific extensions prefixed with an
+`x-` in the attribute name.  The following extensions are created by Linode for
+use in our spec:
+
+Attribute | Location | Type | Supported By | Explanation
+---|---|---|---|---
+`x-linode-filterable` | schema properties | boolean | | If `true`, indicates that this property may be included in an X-Filter header
+`x-linode-cli-display` | schema properties | integer | linode-cli | If truthy, this property will be displayed in the Linode CLI.  The numeric value determines the ordering of the displayed columns, left to right.
+`x-linode-cli-color` | schema properties | object | linode-cli | A mapping of possible property values to color codes understood by python's [colorclass module](https://pypi.python.org/pypi/colorclass).  Must include a `default_`, used for any value that doesn't match one of the keys.
+`x-linode-cli-command` | path | string | linode-cli | The command group the methods of this path fall into when generating commands in the `linode-cli <command> <action>` format.
+`x-linode-cli-action` | method | string | linode-cli | The action this method will be mapped to when generating commands in the `linode-cli <command> <action>` format.

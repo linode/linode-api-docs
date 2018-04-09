@@ -6399,6 +6399,7 @@ components:
           readOnly: true
           description: This Account's balance, in US dollars.
           example: 200
+          x-linode-cli-display: 4
         city:
           type: string
           description: The city for this Account's billing address.
@@ -6421,16 +6422,19 @@ components:
           description: The email address of the person associated with this Account.
           maxLength: 128
           example: john.smith@linode.com
+          x-linode-cli-display: 3
         first_name:
           type: string
           description: The first name of the person associated with this Account.
           maxLength: 50
           example: John
+          x-linode-cli-display: 1
         last_name:
           type: string
           description: The last name of the person associated with this Account.
           maxLength: 50
           example: Smith
+          x-linode-cli-display: 2
         phone:
           type: string
           description: The phone number associated with this Account.
@@ -6473,18 +6477,21 @@ components:
             connectivity, response, and total request time. This guide shows
             you how to start monitoring your services with Linode Managed.
           example: true
+          x-linode-cli-display: 3
         longview_subscription:
           type: string
           description: >
             The Longview Pro tier you are currently subscribed to. The value must
             be null or an id from `GET /longview/subscriptions`.
           example: longview-30
+          x-linode-cli-display: 2
         network_helper:
           type: boolean
           description: >
             Enables network helper by default across all users by default for
             new Linodes or Linode Configs.
           example: false
+          x-linode-cli-display: 1
     AuthorizedApp:
       description: >
         An application you have authorized access to your account through OAuth.
@@ -6496,12 +6503,14 @@ components:
             This authorization's ID, used for revoking access.
           example: 123
           readOnly: true
+          x-linode-cli-display: 1
         label:
           type: string
           description: >
             The name of the application you've authorized.
           example: example-app
           readOnly: true
+          x-linode-cli-display: 2
         thumbnail_url:
           type: string
           format: url
@@ -6517,6 +6526,7 @@ components:
             account the app is allowed to access.
           example: linodes:read_only
           readOnly: true
+          x-linode-cli-display: 3
         created:
           type: string
           format: date-time
@@ -6524,6 +6534,7 @@ components:
           example: '2018-01-01T00:01:01'
           readOnly: true
           x-linode-filterable: true
+          x-linode-cli-display: 5
         expiry:
           type: string
           format: date-time
@@ -6532,6 +6543,7 @@ components:
             refresh tokens after this time passes.
           example: '2018-01-15T00:01:01'
           readOnly: true
+          x-linode-cli-display: 6
         website:
           type: string
           format: url
@@ -6539,6 +6551,7 @@ components:
             The website where you can get more information about this app.
           example: example.org
           readOnly: true
+          x-linode-cli-display: 4
     Backup:
       type: object
       description: >
@@ -6551,6 +6564,7 @@ components:
           readOnly: true
           description: The unique ID of this Backup.
           example: 123456
+          x-linode-cli-display: 1
         type:
           type: string
           enum:
@@ -6561,6 +6575,7 @@ components:
             This indicates whether the Backup is an automatic Backup, or a
             manual snapshot taken by the user at a specific point in time.
           example: snapshot
+          x-linode-cli-display: 3
         status:
           type: string
           enum:
@@ -6574,12 +6589,19 @@ components:
           readOnly: true
           description: The current state of a specific Backup.
           example: successful
+          x-linode-cli-display: 2
+          x-linode-cli-color:
+            successful: green
+            failed: red
+            userAborted: f
+            default_: yellow
         created:
           type: string
           format: date-time
           readOnly: true
           description: The date the Backup was taken.
           example: '2018-01-15T00:01:01'
+          x-linode-cli-display: 4
         updated:
           type: string
           format: date-time
@@ -6596,6 +6618,7 @@ components:
           type: string
           description: A label for Backups that are of type snapshot
           example: Webserver-Backup-2018
+          x-linode-cli-display: 5
         configs:
           type: array
           items:
@@ -6699,6 +6722,7 @@ components:
             operations impacting this Disk.
           example: 25674
           readOnly: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
@@ -6708,6 +6732,7 @@ components:
           example: Debian 9 Disk
           minLength: 1
           maxLength: 48
+          x-linode-cli-display: 2
         status:
           type: string
           description: >
@@ -6722,6 +6747,11 @@ components:
           - ready
           - not ready
           - deleting
+          x-linode-cli-display: 3
+          x-linode-cli-color:
+            ready: green
+            not ready: red
+            default_: yellow
         size:
           x-linode-filterable: true
           type: integer
@@ -6729,6 +6759,7 @@ components:
           readOnly: true
           title: The size of the Disk in MB.
           example: 48640
+          x-linode-cli-display: 4
         filesystem:
           type: string
           title: The filesystem on the Disk.
@@ -6748,6 +6779,7 @@ components:
           - ext3
           - ext4
           - initrd
+          x-linode-cli-display: 5
         created:
           type: string
           format: date-time
@@ -6894,10 +6926,16 @@ components:
           - disabled
           - active
           - edit_mode
+          - has_errors
           description: >
             Used to control whether this domain is currently being rendered.
           example: active
           x-linode-cli-display: 4
+          x-linode-cli-color:
+            active: green
+            disabled: yellow
+            edit_mode: yellow
+            default_: red
         description:
           type: string
           minLength: 1
@@ -6981,6 +7019,7 @@ components:
           description: This record's unique ID.
           example: 123456
           readOnly: true
+          x-linode-cli-display: 1
         type:
           type: string
           enum:
@@ -6998,6 +7037,7 @@ components:
             records associate a domain name with an ipv4 address, and AAAA
             records associate a domain name with an ipv6 address.
           example: A
+          x-linode-cli-display: 2
         name:
           type: string
           description: >
@@ -7007,6 +7047,7 @@ components:
           minLength: 1
           maxLength: 100
           example: test
+          x-linode-cli-display: 3
         target:
           type: string
           description: >
@@ -7014,6 +7055,7 @@ components:
             the type of record this represents.  For A and AAAA records, this
             is the address the named domain should resolve to.
           example: 12.34.56.78
+          x-linode-cli-display: 4
         priority:
           type: integer
           format: int32
@@ -7022,12 +7064,14 @@ components:
           description: >
             The priority of the target host.  Lower values are preferred.
           example: 50
+          x-linode-cli-display: 6
         weight:
           type: integer
           format: int32
           description: >
             The relative weight of this record.  Higher values are preferred.
           example: 50
+          x-linode-cli-display: 7
         port:
           type: integer
           format: int32
@@ -7055,6 +7099,7 @@ components:
             345600, 604800, 1209600, and 2419200 - any other value will be
             rounded to the nearest valid value.
           example: 604800
+          x-linode-cli-display: 5
         tag:
           type: string
           description: >
@@ -7096,23 +7141,27 @@ components:
           readOnly: true
           description: The unique ID of this Event.
           example: 123456
+          x-linode-cli-display: 1
         action:
           type: string
           readOnly: true
           description: The action that caused this Event.
           example: ticket_create
+          x-linode-cli-display: 3
         created:
           type: string
           readOnly: true
           format: date-time
           description: When this Event was created.
           example: '2018-01-01T00:01:01'
+          x-linode-cli-display: 5
         entity:
           type: object
           readOnly: true
           description: >
             Detailed information about the event's entity, including ID, type,
             label, and URL used to access it.
+          x-linode-cli-display: 4
           properties:
             id:
               type: integer
@@ -7157,11 +7206,13 @@ components:
           readOnly: true
           description: If this Event has been read.
           example: true
+          x-linode-cli-display: 8
         seen:
           type: boolean
           readOnly: true
           description: If this Event has been seen.
           example: true
+          x-linode-cli-display: 7
         status:
           type: string
           readOnly: true
@@ -7172,6 +7223,12 @@ components:
           - notification
           - scheduled
           - started
+          x-linode-cli-display: 6
+          x-linode-cli-color:
+            failed: red
+            finished: green
+            started: yellow
+            default_: white
         time_remaining:
           type: integer
           format: int32
@@ -7186,6 +7243,7 @@ components:
           description: >
             The username of the User who caused the Event.
           example: exampleUser
+          x-linode-cli-display: 2
     Grant:
       description: >
         Represents the level of access a restricted user has to a specific
@@ -7333,6 +7391,7 @@ components:
           description: The unique ID of this Image.
           example: private/67848373
           readOnly: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
@@ -7340,6 +7399,7 @@ components:
             A short description of the Image. Labels cannot contain
             special characters.
           example: My gold-master image
+          x-linode-cli-display: 2
         created:
           type: string
           format: date-time
@@ -7364,12 +7424,17 @@ components:
           type: string
           description: An optional detailed description of this Image.
           example: The detailed description of my Image.
+          x-linode-cli-display: 4
+          x-linode-cli-color:
+            None: black
+            default_: white
         is_public:
           x-linode-filterable: true
           description: True if the Image is public.
           type: boolean
           example: false
           readOnly: true
+          x-linode-cli-display: 5
         size:
           x-linode-filterable: true
           type: integer
@@ -7378,6 +7443,7 @@ components:
             The minimum size this Image needs to deploy. Size is in MB.
           example: 2500
           readOnly: true
+          x-linode-cli-display: 6
         type:
           type: string
           description: >
@@ -7396,6 +7462,10 @@ components:
             distro. `None` for private images.
           example: null
           readOnly: true
+          x-linode-cli-display: 3
+          x-linode-cli-color:
+            None: black
+            default_: white
     ImagePublic:
       type: object
       description: Public Image object
@@ -7405,12 +7475,14 @@ components:
           description: The unique ID of this Image.
           example: linode/ubuntu17.10
           readOnly: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
           description: >
             A short description of the Image.
           example: Ubuntu 17.10
+          x-linode-cli-display: 2
         created:
           type: string
           format: date-time
@@ -7436,12 +7508,17 @@ components:
           type: string
           description: An optional detailed description of this Image.
           example: null
+          x-linode-cli-display: 4
+          x-linode-cli-color:
+            None: black
+            default_: white
         is_public:
           x-linode-filterable: true
           description: True if the Image is public.
           type: boolean
           example: true
           readOnly: true
+          x-linode-cli-display: 5
         size:
           x-linode-filterable: true
           type: integer
@@ -7450,6 +7527,7 @@ components:
             The minimum size this Image needs to deploy. Size is in MB.
           example: 2500
           readOnly: true
+          x-linode-cli-display: 6
         type:
           type: string
           description: >
@@ -7468,6 +7546,10 @@ components:
             distro. `None` for private Images.
           example: Ubuntu
           readOnly: true
+          x-linode-cli-display: 3
+          x-linode-cli-color:
+            None: black
+            default_: white
     Invoice:
       type: object
       description: Account Invoice object
@@ -7478,32 +7560,44 @@ components:
           readOnly: true
           description: The Invoice's unique ID.
           example: 123
+          x-linode-cli-display: 1
         date:
           type: string
           readOnly: true
           format: date-time
           description: When this Invoice was generated.
           example: '2018-01-01T00:01:01'
+          x-linode-cli-display: 2
         label:
           type: string
           readOnly: true
           description: The Invoice's display label.
           example: Invoice
+          x-linode-cli-display: 3
         overdue:
           type: boolean
           readOnly: true
           description: Whether or not the Invoice is overdue for payment.
           example: false
+          x-linode-cli-display: 5
+          x-linode-cli-color:
+            true: red
+            default_: white
         paid:
           type: boolean
           readOnly: true
           description: Whether or not the Invoice has been paid.
           example: true
+          x-linode-cli-display: 6
+          x-linode-cli-color:
+            true: green
+            default_: yellow
         total:
           type: integer
           readOnly: true
           description: The amount of the Invoice in US Dollars.
           example: 120
+          x-linode-cli-display: 4
     InvoiceItem:
       type: object
       description: An InvoiceItem object.
@@ -7513,17 +7607,20 @@ components:
           readOnly: true
           description: The price, in US dollars, of unitprice multiplied by quantity.
           example: 20
+          x-linode-cli-display: 4
         from:
           type: string
           readOnly: true
           format: date-time
           description: The date the Invoice Item started, based on month.
           example: '2018-01-01T00:01:01'
+          x-linode-cli-display: 2
         label:
           type: string
           readOnly: true
           description: The invoice item's display label.
           example: Linode 123
+          x-linode-cli-display: 1
         quantity:
           type: integer
           format: int32
@@ -7536,6 +7633,7 @@ components:
           format: date-time
           description: The date the Invoice Item ended, based on month.
           example: '2018-01-31T11:59:59'
+          x-linode-cli-display: 3
         type:
           type: string
           readOnly: true
@@ -7561,6 +7659,7 @@ components:
             The address.
           example: 97.107.143.141
           readOnly: true
+          x-linode-cli-display: 1
         gateway:
           type: string
           format: ip
@@ -7593,12 +7692,14 @@ components:
             The type of address this is.
           example: ipv4
           readOnly: true
+          x-linode-cli-display: 2
         public:
           type: boolean
           description: >
             Whether this is a public or private IP address.
           example: true
           readOnly: true
+          x-linode-cli-display: 3
         rdns:
           type: string
           description: >
@@ -7606,6 +7707,7 @@ components:
             this will be set to a default value provided by Linode if not
             explicitly set.
           example: li740-141.members.linode.com
+          x-linode-cli-display: 4
         linode_id:
           type: integer
           format: int32
@@ -7617,6 +7719,7 @@ components:
             addresses, this value may not be changed.
           example: 123
           readOnly: true
+          x-linode-cli-display: 6
         region:
           type: string
           description: >
@@ -7624,6 +7727,7 @@ components:
           example: us-east
           readOnly: true
           x-linode-filterable: true
+          x-linode-cli-display: 5
     IPAddressPrivate:
       description: >
         A Private IPv4 address that exists in Linode's system,.
@@ -7635,6 +7739,7 @@ components:
             The address.
           example: 192.168.133.234
           readOnly: true
+          x-linode-cli-display: 1
         gateway:
           type: string
           format: ip
@@ -7662,17 +7767,20 @@ components:
             The type of address this is.
           example: ipv4
           readOnly: true
+          x-linode-cli-display: 2
         public:
           type: boolean
           description: >
             Whether this is a public or private IP address.
           example: false
           readOnly: true
+          x-linode-cli-display: 3
         rdns:
           type: string
           description: >
             The reverse-dns assigned to this address.
           example: null
+          x-linode-cli-display: 4
         linode_id:
           type: integer
           format: int32
@@ -7680,6 +7788,7 @@ components:
             The ID of the Linode this address currently belongs to.
           example: 123
           readOnly: true
+          x-linode-cli-display: 6
         region:
           type: string
           description: >
@@ -7687,6 +7796,7 @@ components:
           example: us-east
           readOnly: true
           x-linode-filterable: true
+          x-linode-cli-display: 5
     IPAddressV6LinkLocal:
       description: >
         A Link_Local IPv6 address that exists in Linode's system,.
@@ -7698,6 +7808,7 @@ components:
             The address.
           example: fe80::f03c:91ff:fe24:3a2f
           readOnly: true
+          x-linode-cli-display: 1
         gateway:
           type: string
           description: >
@@ -7724,17 +7835,20 @@ components:
             The type of address this is.
           example: ipv6
           readOnly: true
+          x-linode-cli-display: 2
         public:
           type: boolean
           description: >
             Whether this is a public or private IP address.
           example: false
           readOnly: true
+          x-linode-cli-display: 3
         rdns:
           type: string
           description: >
             The reverse-dns assigned to this address.
           example: null
+          x-linode-cli-display: 4
         linode_id:
           type: integer
           format: int32
@@ -7742,6 +7856,7 @@ components:
             The ID of the Linode this address currently belongs to.
           example: 123
           readOnly: true
+          x-linode-cli-display: 6
         region:
           type: string
           description: >
@@ -7749,6 +7864,7 @@ components:
           example: us-east
           readOnly: true
           x-linode-filterable: true
+          x-linode-cli-display: 5
     IPAddressV6Slaac:
       description: >
         A Slaac IPv6 address that exists in Linode's system,.
@@ -7760,6 +7876,7 @@ components:
             The address.
           example: 2600:3c03::f03c:91ff:fe24:3a2f
           readOnly: true
+          x-linode-cli-display: 1
         gateway:
           type: string
           description: >
@@ -7786,17 +7903,20 @@ components:
             The type of address this is.
           example: ipv6
           readOnly: true
+          x-linode-cli-display: 2
         public:
           type: boolean
           description: >
             Whether this is a public or private IP address.
           example: true
           readOnly: true
+          x-linode-cli-display: 3
         rdns:
           type: string
           description: >
             The reverse-dns assigned to this address.
           example: null
+          x-linode-cli-display: 4
         linode_id:
           type: integer
           format: int32
@@ -7804,6 +7924,7 @@ components:
             The ID of the Linode this address currently belongs to.
           example: 123
           readOnly: true
+          x-linode-cli-display: 6
         region:
           type: string
           description: >
@@ -7811,6 +7932,7 @@ components:
           example: us-east
           readOnly: true
           x-linode-filterable: true
+          x-linode-cli-display: 5
     IPv6Pool:
       description: >
         An object representing an IPv6 pool.
@@ -7821,6 +7943,7 @@ components:
             The IPv6 pool
           example: '2600:3c01::02:5000::'
           readOnly: true
+          x-linode-cli-display: 1
         region:
           type: string
           description: >
@@ -7830,6 +7953,7 @@ components:
             required.
           example: us-east
           readOnly: true
+          x-linode-cli-display: 2
     IPv6Range:
       description: >
         An object representing an IPv6 range.
@@ -7840,6 +7964,7 @@ components:
             The IPv6 range.
           example: '2600:3c01::02:5000::'
           readOnly: true
+          x-linode-cli-display: 1
         region:
           type: string
           description: >
@@ -7849,6 +7974,7 @@ components:
             range.
           example: us-east
           readOnly: true
+          x-linode-cli-display: 2
     Kernel:
       type: object
       description: Linux kernel object
@@ -8443,6 +8569,7 @@ components:
           type: string
           title: The ID representing the Linode type.
           example: g5-standard-2
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
@@ -8451,6 +8578,7 @@ components:
           description: >
             The Linode Type's label is for display purposes only.
           example: Linode 4096
+          x-linode-cli-display: 2
         disk:
           x-linode-filterable: true
           type: integer
@@ -8460,6 +8588,7 @@ components:
           description: >
             The Disk size of the Linode type, in MB.
           example: 49152
+          x-linode-cli-display: 4
         class:
           x-linode-filterable: true
           type: string
@@ -8476,12 +8605,14 @@ components:
           - standard
           - himem
           example: standard
+          x-linode-cli-display: 3
         price:
           type: object
           readOnly: true
           title: Cost (in US dollars) for this type.
           description: >
             Cost in US dollars, broken down into hourly and monthly charges.
+          x-linode-cli-display: 9
           properties:
             hourly:
               type: integer
@@ -8531,6 +8662,7 @@ components:
           description: >
             The Mbits outbound bandwidth allocation.
           example: 1000
+          x-linode-cli-display: 7
         memory:
           x-linode-filterable: true
           type: integer
@@ -8540,6 +8672,7 @@ components:
           description: >
             Amount of RAM included in this Linode type.
           example: 4096
+          x-linode-cli-display: 5
         transfer:
           x-linode-filterable: true
           type: integer
@@ -8549,6 +8682,7 @@ components:
           description: >
             The monthly outbound transfer amount, in MB.
           example: 3000
+          x-linode-cli-display: 8
         vcpus:
           x-linode-filterable: true
           type: integer
@@ -8558,6 +8692,7 @@ components:
           description: >
             The number of VCPU cores this Linode type offers.
           example: 2
+          x-linode-cli-display: 6
     LongviewClient:
       description: >
         A LongviewClient is a single monitor set up to track statistics about
@@ -8570,6 +8705,7 @@ components:
             This Client's unique ID.
           example: 789
           readOnly: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
@@ -8579,6 +8715,7 @@ components:
           description: >
             This Client's unique label.  This is for display purposes only.
           example: client789
+          x-linode-cli-display: 2
         api_key:
           type: string
           description: >
@@ -8629,6 +8766,7 @@ components:
             When this Longview Client was created.
           example: 2018-01-01T00:01:01
           readOnly: true
+          x-linode-cli-display: 3
         updated:
           type: string
           format: date-time
@@ -8647,11 +8785,13 @@ components:
             The unique ID of this subscription tier.
           example: longview-10
           readOnly: true
+          x-linode-cli-display: 1
         price:
           type: object
           description: >
             Pricing information about this Longview Subscription tier.
           readOnly: true
+          x-linode-cli-display: 4
           properties:
             hourly:
               type: number
@@ -8673,6 +8813,7 @@ components:
             A display name for this subscription tier.
           example: Longivew Pro 10 pack
           readOnly: true
+          x-linode-cli-display: 2
         clients_included:
           type: integer
           format: int32
@@ -8680,6 +8821,7 @@ components:
             The number of Longview Clients that may be created with this tier.
           example: 10
           readOnly: true
+          x-linode-cli-display: 3
     ManagedContact:
       description: >
         Information about someone Linode's special forces may contact
@@ -8692,6 +8834,7 @@ components:
             This contact's unique ID.
           example: 567
           readOnly: true
+          x-linode-cli-display: 1
         name:
           type: string
           minLength: 2
@@ -8700,16 +8843,19 @@ components:
           description: >
             The name of this contact
           example: John Doe
+          x-linode-cli-display: 2
         email:
           type: string
           format: email
           description: >
             The address to email this contact to alert them of issues.
           example: john.doe@example.org
+          x-linode-cli-display: 3
         phone:
           type: object
           description: >
             Information about how to reach this contact by phone.
+          x-linode-cli-display: 4
           properties:
             primary:
               type: string
@@ -8731,6 +8877,7 @@ components:
           description: >
             A grouping for this contact.  This is for display purposes only.
           example: on-call
+          x-linode-cli-display: 5
         updated:
           type: string
           format: date-time
@@ -8750,6 +8897,7 @@ components:
             This credential's unique ID.
           example: 9991
           readOnly: true
+          x-linode-cli-display: 1
         label:
           type: string
           minLength: 2
@@ -8759,6 +8907,7 @@ components:
             The unique label for this credential.  This is for display purposes
             only.
           example: prod-password-1
+          x-linode-cli-display: 2
     ManagedIssue:
       description: >
         An issue that was detected with a service Linode is managing.
@@ -8770,6 +8919,7 @@ components:
             This issue's unique ID.
           example: 823
           readOnly: true
+          x-linode-cli-display: 1
         created:
           type: string
           format: date-time
@@ -8779,6 +8929,7 @@ components:
             detected.
           example: '2018-01-01T00:01:01'
           readOnly: true
+          x-linode-cli-display: 2
         services:
           type: array
           items:
@@ -8788,11 +8939,13 @@ components:
           description: >
             An array of Managed Service IDs that were affected by this issue.
           readOnly: true
+          x-linode-cli-display: 3
         entity:
           type: object
           description: >
             The ticket this Managed Issue opened.
           readOnly: true
+          x-linode-cli-display: 4
           properties:
             id:
               type: integer
@@ -8834,12 +8987,14 @@ components:
             The ID of the Linode these settings are for.
           example: 123
           readOnly: true
+          x-linode-cli-display: 1
         label:
           type: string
           description: >
             The label of the Linode these settings are for.
           example: linode123
           readOnly: true
+          x-linode-cli-display: 2
         group:
           type: string
           description: >
@@ -8847,10 +9002,12 @@ components:
             purposes only.
           example: linodes
           readOnly: true
+          x-linode-cli-display: 3
         ssh:
           type: object
           description: >
             The SSH settings for this Linode.
+          x-linode-cli-display: 4
           properties:
             access:
               type: boolean
@@ -8895,6 +9052,7 @@ components:
             This service's unique ID.
           example: 9944
           readOnly: true
+          x-linode-cli-display: 1
         status:
           type: string
           enum:
@@ -8906,6 +9064,11 @@ components:
             The current status of this service.
           example: ok
           readOnly: true
+          x-linode-cli-display: 2
+          x-linode-cli-color:
+            ok: green
+            disabled: red
+            default_: yellow
         service_type:
           type: string
           enum:
@@ -8914,6 +9077,7 @@ components:
           description: >
             How this service is monitored.
           example: URL
+          x-linode-cli-display: 3
         label:
           type: string
           minLength: 3
@@ -8922,6 +9086,7 @@ components:
           description: >
             The label for this service.  This is for display purposes only.
           example: prod-1
+          x-linode-cli-display: 4
         address:
           type: string
           format: url
@@ -8929,6 +9094,7 @@ components:
           description: >
             The URL at which this service is monitored.
           example: https://example.org
+          x-linode-cli-display: 5
         timeout:
           type: integer
           format: int32
@@ -8954,6 +9120,7 @@ components:
             The group of ManagedContacts who should be notified or consulted
             with when an issue is detected.
           example: on-call
+          x-linode-cli-display: 6
         notes:
           type: string
           description: >
@@ -9002,6 +9169,7 @@ components:
             This NodeBalancer's unique ID.
           example: 12345
           readOnly: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
@@ -9011,6 +9179,7 @@ components:
           description: >
             This NodeBalancer's label.  These must be unique on your account.
           example: balancer12345
+          x-linode-cli-display: 2
         region:
           x-linode-filterable: true
           type: string
@@ -9019,12 +9188,14 @@ components:
             support backends in the same region as they are.
           example: us-east
           readOnly: true
+          x-linode-cli-display: 3
         hostname:
           type: string
           description: >
             This NodeBalancer's hostname, ending with .nodebalancer.linode.com
           example: nb-207-192-68-16.newark.nodebalancer.linode.com
           readOnly: true
+          x-linode-cli-display: 4
         ipv4:
           type: string
           format: ip
@@ -9032,6 +9203,7 @@ components:
             This NodeBalancer's public IPv4 address.
           example: 12.34.56.78
           readOnly: true
+          x-linode-cli-display: 5
         ipv6:
           type: string
           format: ip
@@ -9039,6 +9211,7 @@ components:
             This NodeBalancer's public IPv6 address.
           example: null
           readOnly: true
+          x-linode-cli-display: 6
         created:
           type: string
           format: date-time
@@ -9061,6 +9234,7 @@ components:
           description: >
             Throttle connections per second.  Set to 0 to disable throttling.
           example: 0
+          x-linode-cli-display: 6
     NodeBalancerConfig:
       description: >
         A NodeBalancer config represents the configuration of this NodeBalancer
@@ -9075,6 +9249,7 @@ components:
           description: This config's unique ID
           example: 4567
           readOnly: true
+          x-linode-cli-display: 1
         port:
           type: integer
           format: int32
@@ -9088,6 +9263,7 @@ components:
             example, while port 443 is generally used for https, you do not need
             ssl configured to have a NodeBalancer listening on port 443).
           example: 80
+          x-linode-cli-display: 2
         protocol:
           type: string
           enum:
@@ -9098,6 +9274,7 @@ components:
             The protocol this port is configured to serve.  If this is set to "https,"
             you must include an ssl_cert and an ssl_key.
           example: http
+          x-linode-cli-display: 3
         algorithm:
           type: string
           enum:
@@ -9107,6 +9284,7 @@ components:
           description: >
             What algorithm this NodeBalancer should use for routing traffic to backends.
           example: roundrobin
+          x-linode-cli-display: 4
         stickiness:
           type: string
           enum:
@@ -9120,6 +9298,7 @@ components:
             backend.  For http or https clients, `http_cookie` allows sessions to be
             routed to the same backend based on a cookie set by the NodeBalancer.
           example: http_cookie
+          x-linode-cli-display: 5
         check:
           type: string
           enum:
@@ -9175,6 +9354,7 @@ components:
             If true, any response from this backend with a 5xx status code will be
             enough for it to be considered unhealthy and taken out of rotation.
           example: true
+          x-linode-cli-display: 6
         cipher_suite:
           type: string
           enum:
@@ -9184,6 +9364,10 @@ components:
             What ciphers to use for ssl connections served by this NodeBalancer.
             `legacy` is considered insecure and should only be used if necessary.
           example: recommended
+          x-linode-cli-display: 7
+          x-linode-cli-color:
+            legacy: red
+            default_: white
         nodebalancer_id:
           type: integer
           format: int32
@@ -9198,6 +9382,7 @@ components:
             if this port is not configured to use ssl.
           example: null
           readOnly: true
+          x-linode-cli-display: 8
         ssl_fingerprint:
           type: string
           description: >
@@ -9205,6 +9390,7 @@ components:
             if this port is not configured to use ssl.
           example: null
           readOnly: true
+          x-linode-cli-display: 9
         ssl_cert:
           type: string
           description: >
@@ -9219,13 +9405,14 @@ components:
             returned, and will come back as "<REDACTED>" if set.  Please use the
             ssl_commonname and ssl_fingerprint to identify the certificate.
           example: null
-        node_status:
+        nodes_status:
           type: object
           description: >
             A structure containing information about the health of the backends
             for this port.  This information is updated periodically as checks
             are performed against backends.
           readOnly: true
+          x-linode-cli-display: 10
           properties:
             up:
               type: integer
@@ -9260,6 +9447,7 @@ components:
           description: This node's unique ID.
           example: 54321
           readOnly: true
+          x-linode-cli-display: 1
         address:
           type: string
           format: ip
@@ -9267,6 +9455,7 @@ components:
             The private IP Address this backend can be reached at. This _must_
             be a private IP address.
           example: 192.168.210.120
+          x-linode-cli-display: 3
         label:
           type: string
           minLength: 3
@@ -9274,6 +9463,7 @@ components:
           description: >
             The label for this node.  This is for display purposes only.
           example: node54321
+          x-linode-cli-display: 2
         status:
           type: string
           enum:
@@ -9285,6 +9475,12 @@ components:
             of its NodeBalancer Config.
           example: UP
           readOnly: true
+          x-linode-cli-display: 4
+          x-linode-cli-color:
+            UP: green
+            unknown: yellow
+            DOWN: red
+            default_: white
         weight:
           type: integer
           minimum: 1
@@ -9294,6 +9490,7 @@ components:
             a single backend yet.  Nodes with a higher weight will receive more
             traffic.
           example: 50
+          x-linode-cli-display: 5
         mode:
           type: string
           enum:
@@ -9306,6 +9503,7 @@ components:
             this backend will not receive _new_ traffic, but connections already
             pinned to it will continue to be routed to it.
           example: accept
+          x-linode-cli-display: 6
         config_id:
           type: integer
           format: int32
@@ -9359,11 +9557,13 @@ components:
             A short description of this notification.
           example: You have an important ticket open!
           readOnly: true
+          x-linode-cli-display: 1
         message:
           type: string
           readOnly: true
           description: A human-readable description of the Notification.
           example: You have an important ticket open!
+          x-linode-cli-display: 2
         type:
           type: string
           enum:
@@ -9390,6 +9590,11 @@ components:
             to make the display text, etc.
           example: major
           readOnly: true
+          x-linode-cli-display: 3
+          x-linode-cli-color:
+            critical: b
+            minor: blue
+            default_: white
         when:
           type: string
           readOnly: true
@@ -9401,6 +9606,10 @@ components:
             Security Advisory, this field will contain around the time the
             Linode will be taken offline for migration.
           example: null
+          x-linode-cli-display: 4
+          x-linode-cli-color:
+            None: black
+            default_: white
         until:
           type: string
           format: date-time
@@ -9411,6 +9620,10 @@ components:
             of the maintenance window.
           example: null
           readOnly: true
+          x-linode-cli-display: 5
+          x-linode-cli-color:
+            None: black
+            default_: white
     OAuthClient:
       description: >
         A third-party application registered to Linode that users may log into
@@ -9426,6 +9639,7 @@ components:
             publicly-known value (it is not a secret).
           example: 2737bf16b39ab5d7b4a1
           readOnly: true
+          x-linode-cli-display: 1
         redirect_uri:
           type: string
           format: url
@@ -9434,6 +9648,7 @@ components:
             redirected for this client.  The receiver of this redirect should be
             ready to accept an OAuth exchange code and finish the OAuth exchange.
           example: https://example.org/oauth/callback
+          x-linode-cli-display: 5
         label:
           x-linode-filterable: true
           type: string
@@ -9443,6 +9658,7 @@ components:
             The name of this application.  This will be presented to users when they
             are asked to grant it access to their account.
           example: Example App
+          x-linode-cli-display: 2
         status:
           type: string
           enum:
@@ -9453,6 +9669,10 @@ components:
             The status of this application.  `active` by default.
           example: active
           readOnly: true
+          x-linode-cli-display: 3
+          x-linode-cli-color:
+            suspended: red
+            default_: white
         secret:
           type: string
           description: >
@@ -9479,6 +9699,7 @@ components:
             for more details.
           example: false
           readOnly: true
+          x-linode-cli-display: 4
     PaginationEnvelope:
       type: object
       description: >
@@ -9520,17 +9741,20 @@ components:
           readOnly: true
           description: The unique ID of the payment.
           example: 6291750
+          x-linode-cli-display: 1
         date:
           type: string
           readOnly: true
           format: date-time
           description: When the payment was made.
           example: '2018-01-15T00:01:01'
+          x-linode-cli-display: 2
         usd:
           type: integer
           readOnly: true
           description: The amount, in US dollars, of the payment.
           example: '120.50'
+          x-linode-cli-display: 3
     PaymentRequest:
       type: object
       description: Payment object request.
@@ -9606,6 +9830,7 @@ components:
             This token's unique ID, which can be used to revoke it.
           example: 123
           readOnly: true
+          x-linode-cli-display: 1
         scopes:
           type: string
           format: oauth-scopes
@@ -9616,6 +9841,7 @@ components:
             more restrictive scopes are generally more secure.
           example: '*'
           readOnly: true
+          x-linode-cli-display: 3
         created:
           type: string
           format: date-time
@@ -9624,6 +9850,7 @@ components:
           x-linode-filterable: true
           example: 2018-01-01T00:01:01
           readOnly: true
+          x-linode-cli-display: 4
         label:
           type: string
           minLength: 1
@@ -9633,6 +9860,7 @@ components:
             more easily track what you're using each token for.
           x-linode-filterable: true
           example: linode-cli
+          x-linode-cli-display: 2
         token:
           type: string
           description: >
@@ -9648,6 +9876,7 @@ components:
             after this time the token will be completely unusable and a new token will
             need to be generated.  Tokens may be created with "null" as their expiry
             and will never expire unless revoked.
+          x-linode-cli-display: 5
     Profile:
       description: >
         A Profile represents your user in our system.  This is where you can change
@@ -9831,6 +10060,7 @@ components:
           description: The unique ID of this StackScript.
           example: 1337
           readOnly: true
+          x-linode-cli-display: 1
         username:
           type: string
           title: The user who created the StackScript.
@@ -9838,6 +10068,7 @@ components:
             The user who created the StackScript.
           example: rmcintosh
           readOnly: true
+          x-linode-cli-display: 2
         user_gravatar_id:
           type: string
           title: The author's Gravatar ID
@@ -9855,6 +10086,7 @@ components:
           example: a-stackscript
           minLength: 3
           maxLength: 128
+          x-linode-cli-display: 3
         description:
           x-linode-filterable: true
           type: string
@@ -9874,6 +10106,7 @@ components:
           example:
           - linode/debian9
           - linode/debian8
+          x-linode-cli-display: 4
         deployments_total:
           type: integer
           format: int32
@@ -9899,6 +10132,7 @@ components:
             This determines whether other users can use your StackScript.
             Once a StackScript is made public, it cannot be made private.
           example: true
+          x-linode-cli-display: 5
         created:
           type: string
           format: date-time
@@ -9907,6 +10141,7 @@ components:
             The date the StackScript was created.
           readOnly: true
           example: "2018-01-01T00:01:01"
+          x-linode-cli-display: 6
         updated:
           type: string
           format: date-time
@@ -9915,6 +10150,7 @@ components:
             The date the StackScript was last updated.
           readOnly: true
           example: "2018-01-01T00:01:01"
+          x-linode-cli-display: 7
         rev_note:
           x-linode-filterable: true
           type: string
@@ -9953,6 +10189,7 @@ components:
           description: >
             The ID of the Support Ticket.
           example: 11223344
+          x-linode-cli-display: 1
         attachments:
           type: array
           description: >
@@ -9983,11 +10220,13 @@ components:
             I tried following the instructions but something is not
             working and I'm not sure what I'm doing wrong. Can you please
             help me figure out how I can reset it?
+          x-linode-cli-display: 5
         entity:
           type: object
           readOnly: true
           description: >
             The entity this Support Ticket was opened for.
+          x-linode-cli-display: 6
           properties:
             id:
               type: integer
@@ -10030,12 +10269,14 @@ components:
           description: >
             The date and time this ticket was created.
           example: '2015-06-04T14:16:44'
+          x-linode-cli-display: 4
         opened_by:
           type: string
           readOnly: true
           description: >
             The user who opened this ticket.
           example: some_user
+          x-linode-cli-display: 3
         status:
           type: string
           readOnly: true
@@ -10054,6 +10295,7 @@ components:
             The summary or title for this SupportTicket.
           example: >
             Having trouble resetting root password on my Linode
+          x-linode-cli-display: 2
         updated:
           x-linode-filterable: true
           type: string
@@ -10080,12 +10322,14 @@ components:
           description: >
             The date and time this ticket reply was created.
           example: '2015-06-02T14:31:41'
+          x-linode-cli-display: 3
         created_by:
           type: string
           readOnly: true
           description: >
             The user who submitted this reply.
           example: John Q. Linode
+          x-linode-cli-display: 2
         description:
           type: string
           readOnly: true
@@ -10117,6 +10361,7 @@ components:
           description: >
             The unique ID of this Support Ticket reply.
           example: 11223345
+          x-linode-cli-display: 1
     SupportTicketRequest:
       type: object
       required:
@@ -10190,6 +10435,7 @@ components:
           description: >
             The amount of your transfer pool that is billable this billing cycle.
           example: 0
+          x-linode-cli-display: 3
         quota:
           type: integer
           format: int32
@@ -10197,6 +10443,7 @@ components:
           description: >
             The amount of network usage allowed this billing cycle.
           example: 9141
+          x-linode-cli-display: 1
         used:
           type: integer
           format: int32
@@ -10204,6 +10451,7 @@ components:
           description: >
             The amount of network usage you have used this billing cycle.
           example: 2
+          x-linode-cli-display: 2
     User:
       description: >
         A User on your account.  Users can log in and access information about
@@ -10222,6 +10470,7 @@ components:
             or public StackScripts).
           x-linode-filterable: true
           example: example_user
+          x-linode-cli-display: 1
         email:
           type: string
           format: email
@@ -10230,6 +10479,7 @@ components:
             communications, and may be used for other communications as configured.
           example: example_user@linode.com
           readOnly: true
+          x-linode-cli-display: 2
         restricted:
           type: boolean
           description: >
@@ -10237,6 +10487,7 @@ components:
             entities on this account.  See `/account/users/{username}/grants` for
             details on how to configure grants for a restricted user.
           example: true
+          x-linode-cli-display: 3
     UserDefinedField:
       type: object
       required:
@@ -10292,6 +10543,7 @@ components:
           description: The unique ID of this Volume.
           example: 12345
           readOnly: true
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
@@ -10302,6 +10554,7 @@ components:
           minLength: 1
           maxLength: 32
           pattern: '^[a-zA-Z]((?!--|__)[a-zA-Z0-9-_])+$'
+          x-linode-cli-display: 2
         status:
           type: string
           title: The status of the Volume.
@@ -10327,6 +10580,11 @@ components:
           - contact_support
           example: active
           readOnly: true
+          x-linode-cli-display: 3
+          x-linode-cli-color:
+            active: green
+            contact_support: red
+            default_: yellow
         size:
           type: integer
           title: The Volume's size, in GiB.
@@ -10335,8 +10593,10 @@ components:
           minimum: 10
           maximum: 10240
           example: 20
+          x-linode-cli-display: 4
         region:
           $ref: '#/components/schemas/Region/properties/id'
+          x-linode-cli-display: 5
         linode_id:
           type: integer
           title: The ID of the Linode this Volume is attached to, if applicable.
@@ -10344,6 +10604,7 @@ components:
             If a Volume is attached to a specific Linode, the ID of that Linode
             will be displayed here.
           example: 12346
+          x-linode-cli-display: 6
         created:
           type: string
           format: date-time
