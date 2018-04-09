@@ -10562,6 +10562,7 @@ components:
             The full filesystem path for the Volume based on the Volume's label.
             Path is /dev/disk/by-id/scsi-0Linode_Volume_ + Volume label.
           example: /dev/disk/by-id/scsi-0Linode_Volume_my-volume
+          readOnly: true
         status:
           type: string
           title: The status of the Volume.
