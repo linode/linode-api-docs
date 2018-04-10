@@ -24,7 +24,6 @@ info:
     world-class infrastructure.
   contact:
     name: Linode
-    email: support@linode.com
     url: https://www.linode.com
 servers:
 - url: https://api.linode.com/v4
@@ -2022,7 +2021,7 @@ paths:
       description: >
         Returns a paginated list of Linodes you have permission to view.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: getLinodeInstances
       x-linode-cli-action: list
       security:
@@ -2092,7 +2091,7 @@ paths:
           - Disks and Configs must be created manually
           - This is only recommended for advanced use-cases
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: createLinodeInstance
       x-linode-cli-action: create
       security:
@@ -2184,7 +2183,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - linode/instances
+      - Linode Instances
       summary: View Linode
       description: Get a specific Linode by ID.
       operationId: getLinodeInstance
@@ -2231,7 +2230,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Update Linode
       description: >
         This allows you to update a Linode that you have permission to `read_write`.
@@ -2288,7 +2287,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Delete Linode
       description: |
         Deletes a Linode you have permission to `read_write`. Deleting a Linode is a destructive
@@ -2334,7 +2333,7 @@ paths:
       description: >
         Returns information about this Linode's available backups.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: getBackups
       x-linode-cli-action: backups
       security:
@@ -2381,7 +2380,7 @@ paths:
         snapshot this is a destructive operation. The previous snapshot will be
         deleted.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: createSnapshot
       x-linode-cli-action: snapshot
       security:
@@ -2436,7 +2435,7 @@ paths:
       description: >
         Cancels the backup service on the given Linode.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: cancelBackups
       x-linode-cli-action: backups-cancel
       security:
@@ -2474,7 +2473,7 @@ paths:
       description: >
         Enables backups for the specified Linode.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: enableBackups
       x-linode-cli-action: backups-enable
       security:
@@ -2518,7 +2517,7 @@ paths:
       description: >
         Return information about a backup.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: getBackup
       x-linode-cli-action: backup-show
       security:
@@ -2560,7 +2559,7 @@ paths:
       description: >
         Restores a Linode's backup to the specified Linode.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: restoreBackup
       x-linode-cli-action: backup-restore
       security:
@@ -2629,7 +2628,7 @@ paths:
         * If there is more than one config profile and none were the last to be booted, because the
           Linode was never booted or the last booted config was deleted, an error will be returned.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: bootLinodeInstance
       x-linode-cli-action: boot
       security:
@@ -2690,7 +2689,7 @@ paths:
         If cloning to an existing Linode, any actions currently running or
         queued must be completed first before you can clone to it.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: cloneLinodeInstance
       x-linode-cli-action: clone
       security:
@@ -2812,7 +2811,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - linode/instances
+      - Linode Instances
       summary: List Configuration Profiles
       description: |
         Lists configuration profiles associated with a Linode.
@@ -2844,7 +2843,7 @@ paths:
               https://api.linode.com/v4/linode/instances/123/configs
     post:
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Create Configuration Profile
       description: >
         Adds a new configuration profile to a Linode.
@@ -2924,7 +2923,7 @@ paths:
         format: int32
     get:
       tags:
-      - linode/instances
+      - Linode Instances
       x-linode-grant: read_only
       summary: View Configuration Profile
       description: >
@@ -2954,7 +2953,7 @@ paths:
       description: >
         Updates the parameters of a single configuration profile.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: updateLinodeConfig
       security:
       - personalAccessToken: []
@@ -3014,7 +3013,7 @@ paths:
         Deletes the specified configuration profile from the specified Linode.
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: deleteLinodeConfig
       security:
       - personalAccessToken: []
@@ -3051,7 +3050,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - linode/instances
+      - Linode Instances
       summary: List Disks
       description: >
         View Disk information for disks associated with this Linode.
@@ -3083,7 +3082,7 @@ paths:
               https://api.linode.com/v4/linode/instances/123/disks
     post:
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Create Disk
       description: >
         Adds a new disk to a Linode. You can optionally create a disk
@@ -3145,7 +3144,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - linode/instances
+      - Linode Instances
       summary: View Disk
       description: >
         View Disk information for a disk associated with this Linode.
@@ -3171,7 +3170,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Update Disk
       description: >
         This allows you to update a Disk that you have permission to `read_write`.
@@ -3209,7 +3208,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Delete Disk
       description: |
         Deletes a Disk you have permission to `read_write`. Deleting a Disk is a
@@ -3253,7 +3252,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Reset Disk Root Password
       description: >
         This endpoint allows you to reset the password of a disk you have
@@ -3325,7 +3324,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Resize Disk
       description: >
         This endpoint allows you to resize a disk you have
@@ -3390,7 +3389,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - linode/instances
+      - Linode Instances
       summary: List Networking Information
       description: >
         Returns networking information for a single Linode.
@@ -3461,7 +3460,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Allocate IPv4 Address
       description: >
         Allocate a public or private IPv4 address to a Linode.
@@ -3535,7 +3534,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - linode/instances
+      - Linode Instances
       summary: View IP Address
       description: >
         View information about the specified IP address associated
@@ -3562,7 +3561,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Update IP Address
       description: >
         Manage a particular IP Address associated with this Linode.
@@ -3605,7 +3604,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - linode/instances
+      - Linode Instances
       summary: Delete IPv4 Address
       description: >
         Delete a public IPv4 address associated with this Linode. This will
@@ -3639,7 +3638,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - linode/kernels
+      - Linode Instances
       summary: List Kernels
       description: |
         Lists available kernels.
@@ -3677,7 +3676,7 @@ paths:
     x-linode-cli-command: kernels
     get:
       tags:
-      - linode/kernels
+      - Linode Instances
       summary: View Kernel
       description: >
         Get information about a single kernel.
@@ -3718,7 +3717,7 @@ paths:
         If any actions are currently running or queued, those actions must be
         completed first before you can initiate a mutate.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: mutateLinodeInstance
       security:
       - personalAccessToken: []
@@ -3757,7 +3756,7 @@ paths:
         Reboots a Linode you have permission to modify. If any actions are currently running or
         queued, those actions must be completed first before you can initiate a reboot.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: rebootLinodeInstance
       x-linode-cli-action: reboot
       security:
@@ -3806,7 +3805,7 @@ paths:
           * It is recommended to supply ssh keys for the root user using the
             `authorized_keys` field.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: rebuildLinodeInstance
       security:
       - personalAccessToken: []
@@ -3874,7 +3873,7 @@ paths:
 
         * Note that "sdh" is reserved and unavailable during rescue.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: rescueLinodeInstance
       security:
       - personalAccessToken: []
@@ -3942,7 +3941,7 @@ paths:
           * The Linode must not have more disk allocation than the new type allows.
             * In that situation, you must first delete or resize the disk to be smaller.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: resizeLinodeInstance
       security:
       - personalAccessToken: []
@@ -3995,7 +3994,7 @@ paths:
         Shuts down a Linode you have permission to modify. If any actions are currently running or
         queued, those actions must be completed first before you can initiate a shutdown.
       tags:
-      - linode/instances
+      - Linode Instances
       operationId: shutdownLinodeInstance
       x-linode-cli-action: shutdown
       security:
@@ -4028,7 +4027,7 @@ paths:
         type: integer
     get:
       tags:
-      - linode/instances
+      - Linode Instances
       summary: View Current Month Statistics
       description: >
         This endpoint returns CPU, IO, IPv4, and IPv6 statistics for your Linode
@@ -4079,7 +4078,7 @@ paths:
         maximum: 12
     get:
       tags:
-      - linode/instances
+      - Linode Instances
       summary: View Statistics (year/month)
       description: >
         This endpoint returns statistics for a specific month. The year/month
@@ -4117,7 +4116,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - linode/instances
+      - Linode Instances
       summary: List Linode's Volumes
       description: >
         View Block Storage Volumes attached to this Linode.
@@ -4155,7 +4154,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - linode/stackscripts
+      - Linode Stackscripts
       summary: List StackScripts
       description: >
         Returns a list of publicly available StackScripts. If the request is
@@ -4192,7 +4191,7 @@ paths:
     post:
       x-linode-grant: add_stackscripts
       tags:
-      - linode/stackscripts
+      - Linode Stackscripts
       summary: Create StackScript
       description: >
         This endpoint allows you to add a new StackScript to your account.
@@ -4245,7 +4244,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - linode/stackscripts
+      - Linode Stackscripts
       summary: View StackScript
       description: >
         This endpoint returns all of the information about a specified
@@ -4272,7 +4271,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - linode/stackscripts
+      - Linode Stackscripts
       summary: Update StackScript
       description: >
         This endpoint allows you to modify a StackScript. Setting a
@@ -4311,7 +4310,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - linode/stackscripts
+      - Linode Stackscripts
       summary: Delete StackScript
       description: >
         This endpoint allows you to permanently delete a specific StackScript.
@@ -4339,7 +4338,7 @@ paths:
   /linode/types:
     get:
       tags:
-      - linode/types
+      - Linode Types
       summary: List Types
       description: >
         Returns collection of Linode types, including pricing and
@@ -4377,7 +4376,7 @@ paths:
         type: string
     get:
       tags:
-      - linode/types
+      - Linode Types
       summary: View Type
       description: >
         Returns information about a specific Linode type, including pricing and
