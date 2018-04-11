@@ -132,7 +132,7 @@ export default function Introduction(props) {
           Just like selecting a type and a region, issue a call to the API, this time
           for a list of available distributions:
         </p>
-        <Code example={`curl ${API_ROOT}/${API_VERSION}/linode/distributions`} name="bash" />
+        <Code example={`curl ${API_ROOT}/${API_VERSION}/images`} name="bash" />
         <p>
           This will provide you with a list of distributions like the following:
         </p>
@@ -159,7 +159,7 @@ export default function Introduction(props) {
         />
         <p>
           For detailed information about each field, see the complete&nbsp;
-          <Link to={`/${API_VERSION}/reference/endpoints/linode/distributions`}>
+          <Link to={`/${API_VERSION}/reference/endpoints/images`}>
             distribution reference
           </Link>
           . For this example, we’ll go with Debian 8.

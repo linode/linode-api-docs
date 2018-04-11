@@ -21,7 +21,7 @@ export default function Filtering() {
           all distributions whose vendor is "Debian":
         </p>
         <Code
-          example={`curl "${API_ROOT}/${API_VERSION}/linode/distributions" \\
+          example={`curl "${API_ROOT}/${API_VERSION}/images" \\
   -H 'X-Filter: {
     "vendor": "Debian"
   }'`}
@@ -33,7 +33,7 @@ export default function Filtering() {
           including more than one key (in this case, all recommended Debians):
         </p>
         <Code
-          example={`curl "${API_ROOT}/${API_VERSION}/linode/distributions" \\
+          example={`curl "${API_ROOT}/${API_VERSION}/images" \\
   -H 'X-Filter: {
     "vendor": "Debian",
     "recommended": true
@@ -46,7 +46,7 @@ export default function Filtering() {
           you can add an operator:
         </p>
         <Code
-          example={`curl "${API_ROOT}/${API_VERSION}/linode/distributions" \\
+          example={`curl "${API_ROOT}/${API_VERSION}/images" \\
   -H 'X-Filter: {
     "+or": [
       { "vendor": "Debian" },
@@ -61,7 +61,7 @@ export default function Filtering() {
           operator as they were in the first example. Other operators are available:
         </p>
         <Code
-          example={`curl "${API_ROOT}/${API_VERSION}/linode/distributions" \\
+          example={`curl "${API_ROOT}/${API_VERSION}/images" \\
   -H 'X-Filter: {
     "disk_minimum": {
       "+lte": 500
@@ -75,7 +75,7 @@ export default function Filtering() {
           or who have a disk_minimum between 100 and 500 (inclusive).
         </p>
         <Code
-          example={`curl "${API_ROOT}/${API_VERSION}/linode/distributions" \\
+          example={`curl "${API_ROOT}/${API_VERSION}/images" \\
   -H 'X-Filter: {
     "+or": [
       {

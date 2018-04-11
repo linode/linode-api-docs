@@ -44,11 +44,11 @@ export default function Introduction(props) {
           indicator in the reference documentation. For API endpoints where this indicator is
           missing, you're able to use curl to test them without any additional steps.
           For example, we could&nbsp;
-          <Link to={`/${API_VERSION}/reference/endpoints/linode/distributions`}>
+          <Link to={`/${API_VERSION}/reference/endpoints/images`}>
             list supported distributions
           </Link>:
         </p>
-        <Code example={`curl ${API_ROOT}/${API_VERSION}/linode/distributions`} name="bash" />
+        <Code example={`curl ${API_ROOT}/${API_VERSION}/images`} name="bash" />
         <p>
           This will give you a response like this:
         </p>
