@@ -40,6 +40,23 @@ get you started:
 python -m SimpleHTTPServer
 ```
 
+### Updating Dependencies
+
+The ReDoc version we are using in this repo is from a fork of the mainline ReDoc
+repo, found [here](https://github.com/dnknapp/ReDoc).  This fork has custom
+modifications for Linode.  In order to update the ReDoc we are using, clone that
+repo, rebase it's HEAD onto the latest upstream ReDoc (if desired), and run the
+following commands to generate a `redoc.standalone.js`:
+
+```bash
+yarn
+yarn bundle
+cp bundles/redoc.standalone.js /path/to/linode-api-docs/
+```
+
+This file _is_ committed to this repository, _is_ packaged with this repo's deb,
+and _is_ referenced with a relative link on the server.
+
 ## Spec Extensions
 
 The OpenAPI specification supports vendor-specific extensions prefixed with an

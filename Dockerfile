@@ -10,5 +10,7 @@ COPY openapi.yaml .
 COPY style.css .
 COPY build-docs.sh .
 COPY linode-docs.postinst .
+COPY linode-logo.svg .
+COPY redoc.standalone.js .
 
 CMD ["python", "openapi-linter.py", "openapi.yaml"]
