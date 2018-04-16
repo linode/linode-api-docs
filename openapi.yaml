@@ -2,6 +2,10 @@ openapi: 3.0.1
 info:
   version: 4.0.0
   title: Linode API
+  x-logo: {
+    url: 'linode-logo.svg',
+    backgroundColor: '#fafafa'
+  }
   description: |
     This is Linode's next generation API. The API was designed around the concepts of REST and does
     its best to conform to a RESTful model whenever possible. When not possible the goal was to be
