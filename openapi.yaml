@@ -28,7 +28,7 @@ info:
     world-class infrastructure.
   contact:
     name: Linode
-    url: https://www.linode.com
+    url: /
 servers:
 - url: https://api.linode.com/v4
 paths:
