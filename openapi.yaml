@@ -3801,7 +3801,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/instances/123/kernels/linode/latest-64bit
+              https://api.linode.com/v4/linode/kernels/linode/latest-64bit
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
