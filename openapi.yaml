@@ -8138,7 +8138,7 @@ components:
             'volumes:read_write': Allows access to all endpoints related to your Volumes.
   responses:
     ErrorResponse:
-      description: TODO
+      description: Error
       content:
         application/json:
           schema:
@@ -8252,6 +8252,21 @@ components:
           description: The city for this Account's billing address.
           maxLength: 24
           example: Philadelphia
+        credit_card:
+          type: object
+          readOnly: true
+          description: Credit Card information associated with this Account.
+          properties:
+            last_four:
+              type: string
+              description: >
+                The last four digits of the credit card associated with this
+                Account.
+              example: 1111
+            expiry:
+              type: string
+              description: The expiration month and year of the credit card.
+              example: 11/2022
         company:
           type: string
           description: The company name associated with this Account.
@@ -11139,6 +11154,24 @@ components:
             Throttle connections per second.  Set to 0 to disable throttling.
           example: 0
           x-linode-cli-display: 6
+        transfer:
+          type: object
+          description: >
+            Transfer statistics for this NodeBalancer for the current month.
+          readOnly: true
+          properties:
+            in:
+              type: float
+              description: Inbound transfer.
+              example: 3821.6655349731445
+            out:
+              type: float
+              description: Outbound transfer.
+              example: 241188.2196378708
+            total:
+              type: float
+              description: Total transfer (in + out).
+              example: 245009.88517284393
     NodeBalancerConfig:
       description: >
         A NodeBalancer config represents the configuration of this NodeBalancer
