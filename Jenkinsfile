@@ -39,7 +39,7 @@ node {
         if (replace_to != '') {
             echo "Applying environment-specific changes"
             image.inside() { c ->
-                sh "sed -i -- \'s|https://api.linode.com/v4|${replace_to}\' openapi.yaml"
+                sh "sed -i -- 's|https://api.linode.com/v4|${replace_to}|' openapi.yaml"
             }
         }
     }
