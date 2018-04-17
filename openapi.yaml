@@ -8252,6 +8252,21 @@ components:
           description: The city for this Account's billing address.
           maxLength: 24
           example: Philadelphia
+        credit_card:
+          type: object
+          readOnly: true
+          description: Credit Card information associated with this Account.
+          properties:
+            last_four:
+              type: string
+              description: >
+                The last four digits of the credit card associated with this
+                Account.
+              example: 1111
+            expiry:
+              type: string
+              description: The expiration month and year of the credit card.
+              example: 11/2022
         company:
           type: string
           description: The company name associated with this Account.
