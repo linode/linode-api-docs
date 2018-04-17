@@ -11,6 +11,7 @@ environment {
     API_VERSION = 'v4' // used by docs - TODO can remove?
     BUILD_ENV = "${(env.BRANCH_NAME != 'master') ? env.BRANCH_NAME : '' }"
     // POST_TAG_COMMITS = "$post_tag_commits" - TODO can remove?
+    BUILD_TAG = URLDecoder.decode(env.BUILD_TAG, "UTF-8").replaceAll("[^a-zA-Z0-9_.-]", "_")
 }
 
 node {
