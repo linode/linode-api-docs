@@ -11650,8 +11650,6 @@ components:
       properties:
         data:
           type: array
-          items:
-            type: object
           readOnly: true
         pages:
           type: integer
