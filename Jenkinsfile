@@ -26,6 +26,24 @@ node {
         image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
     }
 
+    stage ('Apply Environment') {
+        replace_to = ''
+        if (env.BRANCH_NAME == 'development') {
+            replace_to = 'https://api.dev.linode.com/v4'
+        } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) { 
+            replace_to = 'https://api.testing.linode.com/v4'
+        } else {
+            echo "Skipping environment-specific changes"
+        }
+
+        if (replace_to != '') {
+            echo "Applying environment-specific changes"
+            image.inside() { c ->
+                sh "sed -i -- 's|https://api.linode.com/v4|${replace_to}' openapi.yaml"
+            }
+        }
+    }
+
     stage ('OpenAPI Lint') {
         echo "Linting openapi.yaml"
         image.inside() { c ->
@@ -47,6 +65,10 @@ node {
     } else if (env.BRANCH_NAME == 'development') {
         stage('Apt-Repo') {
             sh "dupload --to linode-internal-apt-jessie-dev --nomail *.changes"
+        }
+    } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) { 
+        stage('Apt-Repo') {
+            sh "dupload --to linode-internal-apt-jessie-testing --nomail *.changes"
         }
     } else {
         echo "Branch '${env.BRANCH_NAME}' is not 'master', 'development', or a release branch.  Skipping package upload."
