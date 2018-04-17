@@ -28,7 +28,7 @@ info:
     world-class infrastructure.
   contact:
     name: Linode
-    url: https://www.linode.com
+    url: /
 servers:
 - url: https://api.linode.com/v4
 paths:
@@ -3801,7 +3801,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/instances/123/kernels/linode/latest-64bit
+              https://api.linode.com/v4/linode/kernels/linode/latest-64bit
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
@@ -8138,7 +8138,7 @@ components:
             'volumes:read_write': Allows access to all endpoints related to your Volumes.
   responses:
     ErrorResponse:
-      description: TODO
+      description: Error
       content:
         application/json:
           schema:
