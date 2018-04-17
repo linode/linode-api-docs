@@ -11,7 +11,6 @@ environment {
     API_VERSION = 'v4' // used by docs - TODO can remove?
     BUILD_ENV = "${(env.BRANCH_NAME != 'master') ? env.BRANCH_NAME : '' }"
     // POST_TAG_COMMITS = "$post_tag_commits" - TODO can remove?
-    BUILD_TAG = URLDecoder.decode(env.BUILD_TAG, "UTF-8").replaceAll("[^a-zA-Z0-9_.-]", "_")
 }
 
 node {
@@ -24,7 +23,8 @@ node {
     }
 
     stage('Build Docker') {
-        image = docker.build(env.BUILD_TAG.toLowerCase(), '.')
+        BUILD_NAME = URLDecoder.decode(env.BUILD_TAG, "UTF-8").replaceAll("[^a-zA-Z0-9_.-]", "_")
+        image = docker.build(BUILD_NAME.toLowerCase(), '.')
     }
 
     stage ('Apply Environment') {
