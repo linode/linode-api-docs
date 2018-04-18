@@ -4514,7 +4514,7 @@ paths:
         Returns information about a specific Linode type, including pricing and
         specifications. This is used when creating or resizing a Linode.
       operationId: getLinodeType
-      x-linode-cli-action: view
+      x-linode-cli-action: type-view
       responses:
         '200':
           description: A single Linode type.
