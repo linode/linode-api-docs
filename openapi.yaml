@@ -10649,6 +10649,7 @@ components:
             CLient application on your server.
           example: BD1B5605-BF5E-D385-BA07AD518BE7F321
           readOnly: true
+          x-linode-cli-display: 4
         apps:
           type: object
           description: >
