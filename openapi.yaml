@@ -4240,7 +4240,8 @@ paths:
       - Linode Instances
       summary: List Linode's Volumes
       description: >
-        View Block Storage Volumes attached to this Linode.
+        View Block Storage Volumes attached to this Linode or present in one of
+        this Linode's configs.
       operationId: getLinodeVolumes
       x-linode-cli-action: volumes
       security:
@@ -4250,7 +4251,8 @@ paths:
       responses:
         '200':
           description: >
-            Returns an array of Block Storage Volumes attached to this Linode.
+            Returns an array of Block Storage Volumes attached to this Linode or
+            present in one of this Linode's configs.
           content:
             application/json:
               schema:
