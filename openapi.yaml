@@ -9882,7 +9882,6 @@ components:
           deprecated: true
           type: string
           x-linode-filterable: true
-          x-linode-cli-display: 2
           description: >
             A deprecated property denoting a group label for this Linode.
           example: "Linode-Group"
