@@ -4278,7 +4278,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - Linode Stackscripts
+      - StackScripts
       summary: List StackScripts
       description: >
         Returns a list of publicly available StackScripts. If the request is
@@ -4316,7 +4316,7 @@ paths:
     post:
       x-linode-grant: add_stackscripts
       tags:
-      - Linode Stackscripts
+      - StackScripts
       summary: Create StackScript
       description: >
         This endpoint allows you to add a new StackScript to your account.
@@ -4371,7 +4371,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - Linode Stackscripts
+      - StackScripts
       summary: View StackScript
       description: >
         This endpoint returns all of the information about a specified
@@ -4399,7 +4399,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - Linode Stackscripts
+      - StackScripts
       summary: Update StackScript
       description: >
         This endpoint allows you to modify a StackScript. Setting a
@@ -4439,7 +4439,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - Linode Stackscripts
+      - StackScripts
       summary: Delete StackScript
       description: >
         This endpoint allows you to permanently delete a specific StackScript.
@@ -6093,7 +6093,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - nodebalancers
+      - NodeBalancers
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -6130,7 +6130,7 @@ paths:
     post:
       x-linode-grant: add_nodebalancers
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Create NodeBalancer
       description: >
         Creates a new NodeBalancer in the requested region.  This NodeBalancer
@@ -6192,7 +6192,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: View NodeBalancer
       description: >
         Returns a single NodeBalancer you can access.
@@ -6219,7 +6219,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Update NodeBalancer
       description: >
         Update information about a NodeBalancer you can access.
@@ -6258,7 +6258,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Delete NodeBalancer
       description: >
         Deletes a NodeBalancer.  This cannot be undone.  Deleting a
@@ -6301,7 +6301,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - nodebalancers
+      - NodeBalancers
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -6343,7 +6343,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Create Config
       description: >
         Creates a new NodeBalancerConfig, which allows the NodeBalancer to
@@ -6410,7 +6410,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: View Config
       description: >
         Returns configuration information for a single port of this
@@ -6438,7 +6438,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Update Config
       description: >
         Update the configuration for a single port on a NodeBalancer.
@@ -6487,7 +6487,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Delete Config
       description: >
         Deletes the configuration for a port of this NodeBalancer.  This
@@ -6536,7 +6536,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - nodebalancers
+      - NodeBalancers
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -6575,7 +6575,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Create Node
       description: >
         Creates a new NodeBalancer node, a backend that can accept
@@ -6646,7 +6646,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: View Node
       description: >
         Returns information about a single node, a backend for this
@@ -6674,7 +6674,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Update Node
       description: >
         Updates information about a node, a backend for this NodeBalancer's
@@ -6716,7 +6716,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - nodebalancers
+      - NodeBalancers
       summary: Delete Node
       description: >
         Deletes a node from this config.  Is backend will no longer
