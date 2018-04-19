@@ -3669,7 +3669,7 @@ paths:
       summary: Update IP Address
       description: >
         Manage a particular IP Address associated with this Linode.
-        Currently only allows setting/resetting reverse DNS.
+        Only allows setting/resetting reverse DNS.
       operationId: updateLinodeIP
       x-linode-cli-action: ip-update
       security:
@@ -5705,11 +5705,9 @@ paths:
       - networking
       summary: Allocate IP Address
       description: >
-        Allocates a new IP Address on your account.  Currently, only IPv4
-        addresses may be allocated this way.  The Linode you are allocating
-        this address for must be allowed to allocate additional addresses -
-        please open a support ticket requesting additional addresses before
-        attempting allocation.
+        Allocates a new IPv4 Address on your account. The Linode must be
+        configured to support additional addresses - please open a support
+        ticket requesting additional addresses before attempting allocation.
       operationId: allocateIP
       x-linode-cli-action: add
       security:
@@ -9154,7 +9152,7 @@ components:
           readOnly: true
           description: >
             The estimated time remaining until the completion of this Event.
-            Currently, this value is only returned for in-progress events.
+            This value is only returned for in-progress events.
           example: null
         username:
           type: string
