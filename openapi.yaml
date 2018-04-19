@@ -10121,6 +10121,13 @@ components:
           minLength: 3
           maxLength: 32
           pattern: '^[a-zA-Z]((?!--|__)[a-zA-Z0-9-_])+$'
+        group:
+          deprecated: true
+          type: string
+          x-linode-filterable: true
+          description: >
+            A deprecated property denoting a group label for this Linode.
+          example: "Linode-Group"
         type:
           $ref: '#/components/schemas/LinodeType/properties/id'
         region:
