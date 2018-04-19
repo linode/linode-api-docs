@@ -37,6 +37,12 @@ schema:
     type: Integer
     description: The ID of the linode this volume is attached to.
     value: 456
+  filesystem_path:
+    type: String
+    value: /dev/disk/by-id/scsi-0Linode_Volume_my-volume
+    description: >
+      The full filesystem path for the Volume based on the Volume's label. Path
+      is /dev/disk/by-id/scsi-0Linode_Volume_ + Volume label.
 enums:
   VolumeStatus:
     creating: creating
