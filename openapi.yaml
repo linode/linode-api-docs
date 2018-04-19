@@ -184,14 +184,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Event'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -333,14 +337,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Invoice'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Invoice'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -413,14 +421,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/InvoiceItem'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InvoiceItem'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -455,14 +467,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Notification'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notification'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -473,6 +489,7 @@ paths:
   /account/oauth-clients:
     x-linode-cli-command: account
     get:
+      x-linode-grant: read_only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -496,14 +513,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/OAuthClient'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OAuthClient'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -807,14 +828,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Payment'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -1116,14 +1141,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -1461,7 +1490,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       tags:
       - domains
-      summary: View Domains
+      summary: List Domains
       description: >
         This is a collection of domains that you have registered in Linode's DNS
         Manager.  Linode is not a registrar, and in order for these to work you
@@ -1474,19 +1503,22 @@ paths:
         - domains:read_only
       responses:
         '200':
-          description: |
-            A paginated list of Domains you have registered.
+          description: A paginated list of Domains you have registered.
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Domain'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Domain'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -1697,14 +1729,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/DomainRecord'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DomainRecord'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
       x-code-samples:
       - lang: Shell
         source: >
@@ -1900,14 +1936,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/ImagePublic'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ImagePublic'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -2110,14 +2150,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Linode'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Linode'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -2902,14 +2946,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/LinodeConfig'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinodeConfig'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
       x-code-samples:
       - lang: Shell
         source: >
@@ -3142,14 +3190,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Disk'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Disk'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -3735,14 +3787,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Kernel'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Kernel'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4224,14 +4280,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Volume'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Volume'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4267,14 +4327,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/StackScript'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StackScript'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4452,14 +4516,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/LinodeType'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LinodeType'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4525,14 +4593,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/LongviewClient'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LongviewClient'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4707,14 +4779,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/LongviewSubscription'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LongviewSubscription'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4778,14 +4854,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/ManagedContact'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ManagedContact'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4970,14 +5050,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/ManagedCredential'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ManagedCredential'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -5174,14 +5258,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/ManagedIssue'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ManagedIssue'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -5252,14 +5340,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/ManagedLinodeSettings'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ManagedLinodeSettings'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -5369,14 +5461,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/ManagedService'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ManagedService'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -5646,14 +5742,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/IPAddress'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IPAddress'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -5993,14 +6093,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/IPv6Pool'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IPv6Pool'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6031,14 +6135,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/IPv6Range'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IPv6Range'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6070,14 +6178,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/NodeBalancer'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NodeBalancer'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6281,14 +6393,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/NodeBalancerConfig'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NodeBalancerConfig'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6509,14 +6625,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/NodeBalancerNode'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/NodeBalancerNode'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6795,14 +6915,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/AuthorizedApp'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AuthorizedApp'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7070,14 +7194,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/PersonalAccessToken'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PersonalAccessToken'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7269,14 +7397,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Region'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Region'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7345,14 +7477,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/SupportTicket'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SupportTicket'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7528,14 +7664,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/PaginationEnvelope'
-                  - type: object
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/SupportTicketReply'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SupportTicketReply'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7617,14 +7757,18 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/PaginationEnvelope'
-                - type: object
-                  properties:
-                    data:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/Volume'
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Volume'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -8292,6 +8436,7 @@ components:
           example: false
           x-linode-cli-display: 1
     AuthorizedApp:
+      type: object
       description: >
         An application you have authorized access to your account through OAuth.
       properties:
@@ -8500,6 +8645,7 @@ components:
           description: Null if a disk is assigned to this slot.
           example: null
     Devices:
+      type: object
       allOf:
       - $ref: '#/components/schemas/RescueDevices'
       properties:
@@ -9082,6 +9228,7 @@ components:
           example: exampleUser
           x-linode-cli-display: 2
     Grant:
+      type: object
       description: >
         Represents the level of access a restricted user has to a specific
         resource on the account.
@@ -9109,6 +9256,7 @@ components:
           example: example-entity
           readOnly: true
     GrantsResponse:
+      type: object
       description: >
         A structure representing all grants a restricted user has on the
         account.  Not available for unrestricted users, as they have access to
@@ -9479,6 +9627,7 @@ components:
           description: The monthly service fee, in US Dollars, for this item.
           example: 10
     IPAddress:
+      type: object
       description: >
         An IP address that exists in Linode's system, either v4 or v6.
       properties:
@@ -9557,6 +9706,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-display: 5
     IPAddressPrivate:
+      type: object
       description: >
         A Private IPv4 address that exists in Linode's system,.
       properties:
@@ -9624,6 +9774,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-display: 5
     IPAddressV6LinkLocal:
+      type: object
       description: >
         A Link_Local IPv6 address that exists in Linode's system,.
       properties:
@@ -9690,6 +9841,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-display: 5
     IPAddressV6Slaac:
+      type: object
       description: >
         A Slaac IPv6 address that exists in Linode's system,.
       properties:
@@ -9756,6 +9908,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-display: 5
     IPv6Pool:
+      type: object
       description: >
         An object representing an IPv6 pool.
       properties:
@@ -9777,6 +9930,7 @@ components:
           readOnly: true
           x-linode-cli-display: 2
     IPv6Range:
+      type: object
       description: >
         An object representing an IPv6 range.
       properties:
@@ -9850,6 +10004,7 @@ components:
           example: false
           readOnly: true
     Linode:
+      type: object
       allOf:
       - $ref: '#/components/schemas/LinodeBase'
       properties:
@@ -10510,6 +10665,7 @@ components:
           example: 2
           x-linode-cli-display: 6
     LongviewClient:
+      type: object
       description: >
         A LongviewClient is a single monitor set up to track statistics about
         one of your servers.
@@ -10591,6 +10747,7 @@ components:
           example: 2018-01-01T00:01:01
           readOnly: true
     LongviewSubscription:
+      type: object
       description: >
         A Longview Subscriptions represents a tier of Longview service you
         can subscribe to.
@@ -10638,6 +10795,7 @@ components:
           readOnly: true
           x-linode-cli-display: 3
     ManagedContact:
+      type: object
       description: >
         Information about someone Linode's special forces may contact
         in case an issue is detected with a manager service.
@@ -10701,6 +10859,7 @@ components:
           example: '2018-01-01T00:01:01'
           readOnly: true
     ManagedCredential:
+      type: object
       description: >
         A credential, stored securely, that allows Linode's special forces
         to access a managed server to respond to issues.
@@ -10723,6 +10882,7 @@ components:
           example: prod-password-1
           x-linode-cli-display: 2
     ManagedIssue:
+      type: object
       description: >
         An issue that was detected with a service Linode is managing.
       properties:
@@ -10787,6 +10947,7 @@ components:
               example: /support/tickets/98765
               readOnly: true
     ManagedLinodeSettings:
+      type: object
       description: >
         Settings for a specific Linode related to Managed Services.  There is
         one ManagedLinodeSettings object for each Linode on your account.
@@ -10850,6 +11011,7 @@ components:
                 over ssh to respond to an issue.
               example: 22
     ManagedService:
+      type: object
       description: >
         A service that Linode is monitoring as part of your managed services.
         If issues are detected with this service, a ManagedIssue will be opened
@@ -10963,6 +11125,7 @@ components:
           example: '2018-03-01T00:01:01'
           readOnly: true
     NodeBalancer:
+      type: object
       description: >
         Linode's load balancing solution.  Can handle multiple ports, ssl termination,
         and any number of backends.  NodeBalancer ports are configured with
@@ -11048,18 +11211,19 @@ components:
           readOnly: true
           properties:
             in:
-              type: float
+              type: number
               description: Inbound transfer.
               example: 3821.6655349731445
             out:
-              type: float
+              type: number
               description: Outbound transfer.
               example: 241188.2196378708
             total:
-              type: float
+              type: number
               description: Total transfer (in + out).
               example: 245009.88517284393
     NodeBalancerConfig:
+      type: object
       description: >
         A NodeBalancer config represents the configuration of this NodeBalancer
         on a single port.  For example, a NodeBalancer config on port 80 would
@@ -11247,6 +11411,7 @@ components:
               example: 0
               readOnly: true
     NodeBalancerNode:
+      type: object
       description: >
         A NodeBalancerNode represents a single backend serving requests for a single
         port of a NodeBalancer.  Nodes are specific to NodeBalancerConfigs, and serve
@@ -11437,6 +11602,7 @@ components:
             None: black
             default_: white
     OAuthClient:
+      type: object
       description: >
         A third-party application registered to Linode that users may log into
         with their Linode account through our authentication server at
@@ -11622,6 +11788,7 @@ components:
             been approved with PayPal.
           example: PAY-1234567890ABCDEFGHIJKLMN
     PersonalAccessToken:
+      type: object
       description: >
         A Personal Access Token is a token generated manually to access the API
         without going through an OAuth login.  Personal Access Tokens can have
@@ -11684,6 +11851,7 @@ components:
           x-linode-cli-display: 5
           example: '2018-01-01T13:46:32'
     Profile:
+      type: object
       description: >
         A Profile represents your user in our system.  This is where you can change
         information about your user.  This information is available to any OAuth Client
@@ -11851,6 +12019,7 @@ components:
         sdg:
           $ref: '#/components/schemas/Device'
     StackScript:
+      type: object
       description: >
         A StackScript enables you to quickly deploy a
         fully-configured application in an automated manner.
@@ -12214,6 +12383,7 @@ components:
             The ID of the Volume this ticket is regarding, if relevant.
           example: null
     Transfer:
+      type: object
       description: >
         An object representing your network utilization for the current month,
         in Gigabytes.
@@ -12240,6 +12410,7 @@ components:
           example: 2
           x-linode-cli-display: 2
     User:
+      type: object
       description: >
         A User on your account.  Users can log in and access information about
         your account.  Unrestricted users have full access to everything on the
