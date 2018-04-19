@@ -5705,10 +5705,9 @@ paths:
       - networking
       summary: Allocate IP Address
       description: >
-        Allocates a new IPv4 Address on your account. The Linode you are
-        allocating this address for must be allowed to allocate additional
-        addresses - please open a support ticket requesting additional addresses
-        before attempting allocation.
+        Allocates a new IPv4 Address on your account. The Linode must be
+        configured to support additional addresses - please open a support
+        ticket requesting additional addresses before attempting allocation.
       operationId: allocateIP
       x-linode-cli-action: add
       security:
