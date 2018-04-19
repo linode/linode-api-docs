@@ -11,30 +11,30 @@ export default function Authentication() {
         <p>As releases are made Changelogs will be published here.</p>
       </section>
       <section>
-      <h2>2018-04-19</h2>
-      <hr /><br />
-      <b>Features:</b>
-      <ul>
-        <li>Adds transfer to NodeBalancer GET endpoints
-          <ul>
-            <li>added a `transfer` envelope to NodeBalancer JSON response</li>
-            <li>contains, `in`, `out`, and `total`</li>
-          </ul>
-        </li>
-        <li>Return on-file credit card details
-          <ul>
-            <li>adds credit card envelope for `last_four` and `expiry` to GET /account</li>
-          </ul>
-        </li>
-        <li>Added filesystem_path to Volume responses</li>
-      </ul>
-      <b>Bugfixes:</b>
-      <ul>
-        <li>Fix filtering GET /account/events - filtering on created/id</li>
-        <li>Fixed 500 on networking endpoints for linodes without ipv6</li>
-      </ul>
+        <h2>2018-04-19</h2>
+        <hr /><br />
+        <b>Features:</b>
+        <ul>
+          <li>Adds transfer to NodeBalancer GET endpoints
+            <ul>
+              <li>added a `transfer` envelope to NodeBalancer JSON response</li>
+              <li>contains, `in`, `out`, and `total`</li>
+            </ul>
+          </li>
+          <li>Return on-file credit card details
+            <ul>
+              <li>adds credit card envelope for `last_four` and `expiry` to GET /account</li>
+            </ul>
+          </li>
+          <li>Added filesystem_path to Volume responses</li>
+        </ul>
+        <b>Bugfixes:</b>
+        <ul>
+          <li>Fix filtering GET /account/events - filtering on created/id</li>
+          <li>Fixed 500 on networking endpoints for linodes without ipv6</li>
+        </ul>
       </section>
-        <section>
+      <section>
         <h2>2018-04-02</h2>
         <hr /><br />
         <b>Breaking:</b><br />
