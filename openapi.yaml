@@ -208,7 +208,6 @@ paths:
         required: true
         schema:
           type: integer
-          format: int32
     get:
       x-linode-grant: read_only
       tags:
@@ -244,7 +243,6 @@ paths:
         required: true
         schema:
           type: integer
-          format: int32
     post:
       x-linode-grant: read_write
       tags:
@@ -282,7 +280,6 @@ paths:
         required: true
         schema:
           type: integer
-          format: int32
     post:
       x-linode-grant: read_write
       tags:
@@ -360,7 +357,6 @@ paths:
         required: true
         schema:
           type: integer
-          format: int32
     get:
       x-linode-grant: read_only
       tags:
@@ -396,7 +392,6 @@ paths:
         required: true
         schema:
           type: integer
-          format: int32
     get:
       x-linode-grant: read_only
       parameters:
@@ -876,7 +871,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     get:
       x-linode-grant: read_only
       tags:
@@ -1562,7 +1556,6 @@ paths:
         required: true
         schema:
           type: integer
-          format: int32
     get:
       x-linode-grant: read_only
       tags:
@@ -1950,7 +1943,6 @@ paths:
               properties:
                 disk_id:
                   type: integer
-                  format: int32
                   description: >
                      The ID of the Linode Disk that this Image will be
                      created from.
@@ -2662,7 +2654,6 @@ paths:
               properties:
                 linode_id:
                   type: integer
-                  format: int32
                   description: >
                     The ID of the Linode to restore a backup to.
                   example: 123456
@@ -2729,7 +2720,6 @@ paths:
               properties:
                 config_id:
                   type: integer
-                  format: int32
                   description: >
                     The Linode Config ID to boot into.  If omitted, we will attempt to select a
                     config to use (this will do the right thing in most cases).
@@ -2758,7 +2748,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-charge: true
@@ -2998,14 +2987,12 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: configId
       in: path
       description: The ID of the configuration profile to look up.
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     get:
       tags:
@@ -3132,7 +3119,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
@@ -3225,14 +3211,12 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: diskId
       in: path
       description: ID of the Disk to look up.
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
@@ -3337,14 +3321,12 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: diskId
       in: path
       description: ID of the Disk to look up.
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -3411,14 +3393,12 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: diskId
       in: path
       description: ID of the Disk to look up.
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -3485,7 +3465,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     get:
       x-linode-grant: read_only
@@ -3626,7 +3605,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: address
       in: path
       description: The IP address to look up.
@@ -3811,7 +3789,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -3856,7 +3833,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -3896,7 +3872,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -3970,7 +3945,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -4037,7 +4011,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -4100,7 +4073,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
@@ -4177,21 +4149,18 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: year
       in: path
       description: Numeric value representing the year to look up.
       required: true
       schema:
         type: integer
-        format: int32
     - name: month
       in: path
       description: Numeric value representing the month to look up.
       required: true
       schema:
         type: integer
-        format: int32
         minimum: 1
         maximum: 12
     x-linode-cli-command: linodes
@@ -4620,7 +4589,6 @@ paths:
       description: The Longview Client ID to access.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: longview
     get:
       x-linode-grant: read_only
@@ -4878,7 +4846,6 @@ paths:
       description: The ID of the contact to access.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5086,7 +5053,6 @@ paths:
       description: The ID of the credential to access.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5231,7 +5197,6 @@ paths:
       description: The issue to look up.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5310,7 +5275,6 @@ paths:
       description: The Linode ID whose settings we are accessing.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5478,7 +5442,6 @@ paths:
       description: The ID of the Managed Service to access.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5591,7 +5554,6 @@ paths:
       description: The ID of the Managed Service to disable.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5630,7 +5592,6 @@ paths:
       description: The ID of the Managed Service to enable.
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -5742,7 +5703,6 @@ paths:
                   example: true
                 linode_id:
                   type: integer
-                  format: int32
                   description: >
                     The ID of a Linode you you have access to that this address
                     will be allocated to.
@@ -5905,7 +5865,6 @@ paths:
                         example: 12.34.56.789
                       linode_id:
                         type: integer
-                        format: int32
                         description: >
                           The ID of the Linode to assign this address to.  The IP's
                           previous Linode will lose this address, and must end up
@@ -5974,7 +5933,6 @@ paths:
               properties:
                 linode_id:
                   type: integer
-                  format: int32
                   description: >
                     The ID of the Linode that the addresses will be shared with.
                   example: 123
@@ -6187,7 +6145,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
@@ -6296,7 +6253,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
@@ -6398,14 +6354,12 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: configId
       in: path
       description: The ID of the config to access.
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
@@ -6524,14 +6478,12 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: configId
       in: path
       description: The ID of the NodeBalancer config to access.
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
@@ -6627,21 +6579,18 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     - name: configId
       in: path
       description: The ID of the Config to access
       required: true
       schema:
         type: integer
-        format: int32
     - name: nodeId
       in: path
       description: The ID of the Node to access
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: nodebalancers
     get:
       x-linode-grant: read_only
@@ -6869,7 +6818,6 @@ paths:
         description: The authorized app ID to manage.
         schema:
           type: integer
-          format: int32
     x-linode-cli-command: profile
     get:
       tags:
@@ -7209,7 +7157,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: profile
     get:
       tags:
@@ -7463,7 +7410,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: tickets
     get:
       x-linode-grant: read_only
@@ -7500,7 +7446,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: tickets
     post:
       x-linode-grant: read_write
@@ -7559,7 +7504,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: tickets
     get:
       x-linode-grant: read_only
@@ -7888,7 +7832,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: volumes
     post:
       summary: Attach Volume
@@ -7949,7 +7892,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: volumes
     post:
       x-linode-charge: true
@@ -8007,7 +7949,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: volumes
     post:
       summary: Detach Volume
@@ -8049,7 +7990,6 @@ paths:
       required: true
       schema:
         type: integer
-        format: int32
     x-linode-cli-command: volumes
     post:
       x-linode-charge: true
@@ -8155,7 +8095,6 @@ components:
       required: false
       schema:
         type: integer
-        format: int32
         minimum: 1
         default: 1
     pageSize:
@@ -8164,7 +8103,6 @@ components:
       description: The number of items to return per page.
       schema:
         type: integer
-        format: int32
         minimum: 25
         maximum: 100
         default: 100
@@ -8359,7 +8297,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This authorization's ID, used for revoking access.
           example: 123
@@ -8421,7 +8358,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           readOnly: true
           description: The unique ID of this Backup.
           example: 123456
@@ -8496,7 +8432,6 @@ components:
             properties:
               size:
                 type: integer
-                format: int32
                 example: 9001
               filesystem:
                 $ref: '#/components/schemas/Disk/properties/filesystem'
@@ -8524,7 +8459,6 @@ components:
           example: 4111111111111111
         expiry_month:
           type: integer
-          format: int32
           description: >
             A value from 1-12 representing the expiration month of your credit card.
 
@@ -8532,7 +8466,6 @@ components:
           example: 12
         expiry_year:
           type: integer
-          format: int32
           description: >
             A four-digit integer representing the expiration month of
             your credit card.
@@ -8616,7 +8549,6 @@ components:
         size:
           x-linode-filterable: true
           type: integer
-          format: int32
           readOnly: true
           title: The size of the Disk in MB.
           example: 48640
@@ -8747,7 +8679,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: This Domain's unique ID
           example: 1234
           readOnly: true
@@ -8815,7 +8746,6 @@ components:
           x-linode-cli-display: 5
         retry_sec:
           type: integer
-          format: int32
           description: >
             The interval at which a failed refresh should be retried, in
             seconds.  Valid values are 300, 3600, 7200, 14400, 28800, 57600,
@@ -8842,7 +8772,6 @@ components:
           example: []
         expire_sec:
           type: integer
-          format: int32
           description: >
             The amount of time that may pass before this domain is no longer
             authoritative, in seconds.  Valid values are
@@ -8852,7 +8781,6 @@ components:
           example: 300
         refresh_sec:
           type: integer
-          format: int32
           description: >
             The amount of time before this domain should be refreshed, in
             seconds.  Valid values are
@@ -8862,7 +8790,6 @@ components:
           example: 300
         ttl_sec:
           type: integer
-          format: int32
           description: >
             "Time to Live" - the amount of time, in seconds, that this domain's
             records may be cached by resolvers or other domain servers.  Valid
@@ -8877,7 +8804,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: This record's unique ID.
           example: 123456
           readOnly: true
@@ -8920,7 +8846,6 @@ components:
           x-linode-cli-display: 4
         priority:
           type: integer
-          format: int32
           minimum: 0
           maximum: 255
           description: >
@@ -8929,14 +8854,12 @@ components:
           x-linode-cli-display: 6
         weight:
           type: integer
-          format: int32
           description: >
             The relative weight of this record.  Higher values are preferred.
           example: 50
           x-linode-cli-display: 7
         port:
           type: integer
-          format: int32
           description: >
             The port this record points to.
           example: 80
@@ -8953,7 +8876,6 @@ components:
           example: null
         ttl_sec:
           type: integer
-          format: int32
           description: >
             "Time to Live" - the amount of time, in seconds, that this domain's
             records may be cached by resolvers or other domain servers.  Valid
@@ -8999,7 +8921,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           readOnly: true
           description: The unique ID of this Event.
           example: 123456
@@ -9084,7 +9005,6 @@ components:
           properties:
             id:
               type: integer
-              format: int32
               description: The unique ID for this event's entity.
               example: 11111
             label:
@@ -9107,7 +9027,6 @@ components:
               example: /v4/support/tickets/11111
         percent_complete:
           type: integer
-          format: int32
           readOnly: true
           description: >
             A percentage estimating the amount of time remaining for an Event.
@@ -9150,7 +9069,6 @@ components:
             default_: white
         time_remaining:
           type: integer
-          format: int32
           readOnly: true
           description: >
             The estimated time remaining until the completion of this Event.
@@ -9170,7 +9088,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             The ID of the entity this grant applies to.
           example: 123
@@ -9356,7 +9273,6 @@ components:
         size:
           x-linode-filterable: true
           type: integer
-          format: int32
           description: >
             The minimum size this Image needs to deploy. Size is in MB.
           example: 2500
@@ -9440,7 +9356,6 @@ components:
         size:
           x-linode-filterable: true
           type: integer
-          format: int32
           description: >
             The minimum size this Image needs to deploy. Size is in MB.
           example: 2500
@@ -9474,7 +9389,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           readOnly: true
           description: The Invoice's unique ID.
           example: 123
@@ -9541,7 +9455,6 @@ components:
           x-linode-cli-display: 1
         quantity:
           type: integer
-          format: int32
           readOnly: true
           description: The quantity of this item for the specified Invoice.
           example: 1
@@ -9562,7 +9475,6 @@ components:
           - misc
         unitprice:
           type: integer
-          format: int32
           readOnly: true
           description: The monthly service fee, in US Dollars, for this item.
           example: 10
@@ -9594,7 +9506,6 @@ components:
           readOnly: true
         prefix:
           type: integer
-          format: int32
           description: >
             The number of bits set in the subnet mask.
           example: 24
@@ -9628,7 +9539,6 @@ components:
           example: test.example.org
         linode_id:
           type: integer
-          format: int32
           description: >
             The ID of the Linode this address currently belongs to.  For v4
             addresses, this is by default the Linode that this address was
@@ -9674,7 +9584,6 @@ components:
           readOnly: true
         prefix:
           type: integer
-          format: int32
           description: >
             The number of bits set in the subnet mask.
           example: 17
@@ -9701,7 +9610,6 @@ components:
           x-linode-cli-display: 4
         linode_id:
           type: integer
-          format: int32
           description: >
             The ID of the Linode this address currently belongs to.
           example: 123
@@ -9742,7 +9650,6 @@ components:
           readOnly: true
         prefix:
           type: integer
-          format: int32
           description: >
             The network prefix.
           example: 64
@@ -9769,7 +9676,6 @@ components:
           x-linode-cli-display: 4
         linode_id:
           type: integer
-          format: int32
           description: >
             The ID of the Linode this address currently belongs to.
           example: 123
@@ -9810,7 +9716,6 @@ components:
           readOnly: true
         prefix:
           type: integer
-          format: int32
           description: >
             The network prefix.
           example: 64
@@ -9837,7 +9742,6 @@ components:
           x-linode-cli-display: 4
         linode_id:
           type: integer
-          format: int32
           description: >
             The ID of the Linode this address currently belongs to.
           example: 123
@@ -10068,7 +9972,6 @@ components:
           properties:
             disk:
               type: integer
-              format: int32
               description: >
                 The amount of storage space this Linode has access to, in GB. A typical Linode
                 will divide this space between a primary disk with an `image` deployed to it, and
@@ -10080,7 +9983,6 @@ components:
               readOnly: true
             memory:
               type: integer
-              format: int32
               description: >
                 The amount of RAM this Linode has access to, in MB.  Typically a Linode will
                 choose to boot with all of its available RAM, but this can be configured in a
@@ -10090,7 +9992,6 @@ components:
               readOnly: true
             vcpus:
               type: integer
-              format: int32
               description: >
                 The number of vcpus this Linode has access to.  Typically a Linode will choose to
                 boot with all of its available vcpus, but this can be configured in a Config
@@ -10100,7 +10001,6 @@ components:
               readOnly: true
             transfer:
               type: integer
-              format: int32
               description: The amount of network transfer this Linode is allotted each month.
               example: 2000
               readOnly: true
@@ -10234,7 +10134,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           title: The ID of this Config.
           example: 23456
           readOnly: true
@@ -10498,7 +10397,6 @@ components:
         disk:
           x-linode-filterable: true
           type: integer
-          format: int32
           readOnly: true
           title: Disk space in MB.
           description: >
@@ -10572,7 +10470,6 @@ components:
         network_out:
           x-linode-filterable: true
           type: integer
-          format: int32
           readOnly: true
           title: Outbound bandwidth allocation.
           description: >
@@ -10582,7 +10479,6 @@ components:
         memory:
           x-linode-filterable: true
           type: integer
-          format: int32
           readOnly: true
           title: RAM
           description: >
@@ -10592,7 +10488,6 @@ components:
         transfer:
           x-linode-filterable: true
           type: integer
-          format: int32
           readOnly: true
           title: Outbound transfer.
           description: >
@@ -10602,7 +10497,6 @@ components:
         vcpus:
           x-linode-filterable: true
           type: integer
-          format: int32
           readOnly: true
           title: Number of CPU cores.
           description: >
@@ -10616,7 +10510,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This Client's unique ID.
           example: 789
@@ -10733,7 +10626,6 @@ components:
           x-linode-cli-display: 2
         clients_included:
           type: integer
-          format: int32
           description: >
             The number of Longview Clients that may be created with this tier.
           example: 10
@@ -10746,7 +10638,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This contact's unique ID.
           example: 567
@@ -10810,7 +10701,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This credential's unique ID.
           example: 9991
@@ -10832,7 +10722,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This issue's unique ID.
           example: 823
@@ -10852,7 +10741,6 @@ components:
           type: array
           items:
             type: integer
-            format: int32
             example: 654
           description: >
             An array of Managed Service IDs that were affected by this issue.
@@ -10867,7 +10755,6 @@ components:
           properties:
             id:
               type: integer
-              format: int32
               description: >
                 This ticket's ID
               example: 98765
@@ -10900,7 +10787,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             The ID of the Linode these settings are for.
           example: 123
@@ -10951,7 +10837,6 @@ components:
               example: 12.34.56.789
             port:
               type: integer
-              format: int32
               minimum: 1
               maximum: 65535
               description: >
@@ -10966,7 +10851,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This service's unique ID.
           example: 9944
@@ -11016,7 +10900,6 @@ components:
           x-linode-cli-display: 5
         timeout:
           type: integer
-          format: int32
           minimum: 1
           maximum: 255
           description: >
@@ -11057,7 +10940,6 @@ components:
           type: array
           items:
             type: integer
-            format: int32
             example: 9991
           description: >
             An array of ManagedCredential ids that should be used when attempting to
@@ -11084,7 +10966,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This NodeBalancer's unique ID.
           example: 12345
@@ -11148,7 +11029,6 @@ components:
           readOnly: true
         client_conn_throttle:
           type: integer
-          format: int32
           minimum: 0
           maximum: 20
           description: >
@@ -11183,14 +11063,12 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: This config's unique ID
           example: 4567
           readOnly: true
           x-linode-cli-display: 1
         port:
           type: integer
-          format: int32
           minimum: 1
           maximum: 65535
           description: >
@@ -11253,13 +11131,11 @@ components:
           example: http_body
         check_interval:
           type: integer
-          format: int32
           description: >
             How often to check that backends are up and serving requests, in seconds.
           example: 90
         check_timeout:
           type: integer
-          format: int32
           minimum: 1
           maximum: 30
           description: >
@@ -11267,7 +11143,6 @@ components:
           example: 10
         check_attempts:
           type: integer
-          format: int32
           minimum: 1
           maximum: 30
           description: >
@@ -11308,7 +11183,6 @@ components:
             default_: white
         nodebalancer_id:
           type: integer
-          format: int32
           description: >
             The ID for the NodeBalancer this config belongs to.
           example: 12345
@@ -11354,7 +11228,6 @@ components:
           properties:
             up:
               type: integer
-              format: int32
               description: >
                 The number of backends considered to be "UP" and healthy, and that
                 are serving requests.
@@ -11362,7 +11235,6 @@ components:
               readOnly: true
             down:
               type: integer
-              format: int32
               description: >
                 The number of backends considered to be "DOWN" and unhealthy.  These
                 are not in rotation, and not serving requests.
@@ -11381,7 +11253,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: This node's unique ID.
           example: 54321
           readOnly: true
@@ -11444,14 +11315,12 @@ components:
           x-linode-cli-display: 6
         config_id:
           type: integer
-          format: int32
           description: >
             The NodeBalancerConfig ID that this node belongs to.
           example: 4567
           readOnly: true
         nodebalancer_id:
           type: integer
-          format: int32
           description: >
             The NodeBalancer ID that this node belongs to.
           example: 12345
@@ -11468,7 +11337,6 @@ components:
           properties:
             id:
               type: integer
-              format: int32
               description: >
                 The unique ID of the notification's entity, based on the entity
                 type.
@@ -11654,17 +11522,14 @@ components:
           readOnly: true
         pages:
           type: integer
-          format: int32
           readOnly: true
           example: 1
         page:
           type: integer
-          format: int32
           readOnly: true
           example: 1
         results:
           type: integer
-          format: int32
           readOnly: true
           example: 1
     Payment:
@@ -11673,7 +11538,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           readOnly: true
           description: The unique ID of the payment.
           example: 6291750
@@ -11761,7 +11625,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: >
             This token's unique ID, which can be used to revoke it.
           example: 123
@@ -11823,7 +11686,6 @@ components:
       properties:
         uid:
           type: integer
-          format: int32
           description: >
             Your unique ID in our system.  This value will never change, and can
             safely be used to identify your user.
@@ -11879,21 +11741,18 @@ components:
               readOnly: true
             total:
               type: integer
-              format: int32
               description: >
                 The number of users who have signed up with your referral code.
               example: 0
               readOnly: true
             completed:
               type: integer
-              format: int32
               description: >
                 The number of completed signups with your referral code.
               example: 0
               readOnly: true
             pending:
               type: integer
-              format: int32
               description: >
                 The number of pending signups with your referral code.  You will not receive
                 credit for these signups until they are completed.
@@ -11901,7 +11760,6 @@ components:
               readOnly: true
             credit:
               type: integer
-              format: int32
               description: >
                 The amount of account credit issued to you through the referral
                 program, in US Dollars.
@@ -11993,7 +11851,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: The unique ID of this StackScript.
           example: 1337
           readOnly: true
@@ -12045,7 +11902,6 @@ components:
           x-linode-cli-display: 4
         deployments_total:
           type: integer
-          format: int32
           title: The number of times the StackScript has been deployed.
           description: >
             The total number of times this StackScript has been deployed.
@@ -12053,7 +11909,6 @@ components:
           readOnly: true
         deployments_active:
           type: integer
-          format: int32
           title: The number of currently active deployments of this StackScript.
           description: >
             The count of only the still actively deployed Linodes created from
@@ -12121,7 +11976,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           readOnly: true
           description: >
             The ID of the Support Ticket.
@@ -12167,7 +12021,6 @@ components:
           properties:
             id:
               type: integer
-              format: int32
               readOnly: true
               description: >
                 The unique ID for this ticket's entity.
@@ -12293,7 +12146,6 @@ components:
           example: 474a1b7373ae0be4132649e69c36ce30
         id:
           type: integer
-          format: int32
           readOnly: true
           description: >
             The unique ID of this Support Ticket reply.
@@ -12324,25 +12176,21 @@ components:
             help me figure out how I can reset it?
         domain_id:
           type: integer
-          format: int32
           description: >
             The ID of the Domain this ticket is regarding, if relevant.
           example: null
         linode_id:
           type: integer
-          format: int32
           description: >
             The ID of the Linode this ticket is regarding, if relevant.
           example: 123
         longviewclient_id:
           type: integer
-          format: int32
           description: >
             The ID of the Longview client this ticket is regarding, if relevant.
           example: null
         nodebalancer_id:
           type: integer
-          format: int32
           description: >
             The ID of the NodeBalancer this ticket is regarding, if relevant.
           example: null
@@ -12356,7 +12204,6 @@ components:
             Having trouble resetting root password on my Linode
         volume_id:
           type: integer
-          format: int32
           description: >
             The ID of the Volume this ticket is regarding, if relevant.
           example: null
@@ -12367,7 +12214,6 @@ components:
       properties:
         billable:
           type: integer
-          format: int32
           readOnly: true
           description: >
             The amount of your transfer pool that is billable this billing cycle.
@@ -12375,7 +12221,6 @@ components:
           x-linode-cli-display: 3
         quota:
           type: integer
-          format: int32
           readOnly: true
           description: >
             The amount of network usage allowed this billing cycle.
@@ -12383,7 +12228,6 @@ components:
           x-linode-cli-display: 1
         used:
           type: integer
-          format: int32
           readOnly: true
           description: >
             The amount of network usage you have used this billing cycle.
@@ -12476,7 +12320,6 @@ components:
       properties:
         id:
           type: integer
-          format: int32
           description: The unique ID of this Volume.
           example: 12345
           readOnly: true
