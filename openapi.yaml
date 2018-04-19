@@ -2826,6 +2826,7 @@ paths:
                     * Can only be provided when cloning to a new Linode.
                     * Defaults to "linode".
                 group:
+                  deprecated: true
                   type: string
                   title: The group this Linode is in.
                   description: >
@@ -8772,6 +8773,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-display: 2
         group:
+          deprecated: true
           type: string
           description: >
             The group this Domain belongs to.  This is for display purposes
@@ -9973,8 +9975,13 @@ components:
             `POST /linode/instances/{linodeId}/resize`.
           x-linode-cli-display: 5
         group:
+          deprecated: true
+          type: string
           x-linode-filterable: true
           x-linode-cli-display: 2
+          description: >
+            A deprecated property denoting a group label for this Linode.
+          example: "Linode-Group"
         id:
           type: integer
           title: The ID of this Linode.
@@ -10219,14 +10226,6 @@ components:
           $ref: '#/components/schemas/LinodeType/properties/id'
         region:
           $ref: '#/components/schemas/Region/properties/id'
-        group:
-          type: string
-          title: The group this Linode is in.
-          description: >
-            Some tools will use this property to group Linodes for display. Linodes are not required
-            to have a group.
-          example: Linode-Group
-          maxLength: 50
     LinodeConfig:
       type: object
       required:
@@ -10789,6 +10788,7 @@ components:
               example: null
         group:
           x-linode-filterable: true
+          deprecated: true
           type: string
           minLength: 2
           maxLength: 50
@@ -10914,6 +10914,7 @@ components:
           readOnly: true
           x-linode-cli-display: 2
         group:
+          deprecated: true
           type: string
           description: >
             The group of the Linode these settings are for.  This is for display
@@ -11031,6 +11032,7 @@ components:
             considered up.
           example: it worked
         consultation_group:
+          deprecated: true
           type: string
           minLength: 0
           maxLength: 50
