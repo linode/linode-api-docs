@@ -10271,7 +10271,7 @@ components:
 
             * Must start with an alpha character.
             * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
-            * Cannot not have two dash (`-`) or underscores (`_`) in a row.
+            * Cannot not have two dashes (`--`) or underscores (`__`) in a row.
           example: linode123
           minLength: 3
           maxLength: 32
