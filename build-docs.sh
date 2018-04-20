@@ -11,10 +11,10 @@ set -x -e
 export HOME='/target'
 echo $HOME
 
-version=$(python3 version)
+version_number=$(git describe --tags --abbrev=0 | tr -d '[:space:]')
+version_extention=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[:space:]')
 
-# TODO - Maybe include docs version in docs somewhere? 
-
+version=${version_number}-${version_extention}
 
 echo 'Building Debian Package'
 # index.html, openapi.yaml, style.css

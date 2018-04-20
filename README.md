@@ -40,6 +40,15 @@ get you started:
 python -m SimpleHTTPServer
 ```
 
+### Versioning
+
+This specification is automatically versioned on build by Jenkins.  The version
+presented in the spec is taken directly from the most recent annotated `git tag`
+to the build's `HEAD`.  The package version appends the number of commits since
+the last tag to this number, separated by a hyphen.  When making a new release
+you **must** tag the release with the correct semantic versioning-compliant
+version string so that all versions are populated appropriately.
+
 ### Updating Dependencies
 
 The ReDoc version we are using in this repo is from a fork of the mainline ReDoc
