@@ -12,9 +12,9 @@ export HOME='/target'
 echo $HOME
 
 version_number=$(git describe --tags --abbrev=0 | tr -d '[:space:]')
-version_extention=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[:space:]')
+version_extension=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[:space:]')
 
-version=${version_number}-${version_extention}
+version=${version_number}-${version_extension}
 
 echo 'Building Debian Package'
 # index.html, openapi.yaml, style.css
@@ -28,7 +28,7 @@ if [ -v BUILD_ENV -a -n "${BUILD_ENV}" ]; then
   package_version="${version}~${BUILD_ENV}${commit_num:-0}"
 fi
 
-fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extention}" \
+fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extension}" \
   -x Vagrantfile -x Dockerfile -x build.sh -x \*.deb -x \*.changes -x .git -x .vagrant \
   --vendor Linode --url https://github.com/linode/linode-api-docs \
   --description "${description}" -m ops@linode.com \
