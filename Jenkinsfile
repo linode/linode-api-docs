@@ -28,7 +28,7 @@ node {
     }
 
     stage ('Apply Substitutions') {
-        version = sh "git describe --tags --abbrev=0"
+        version = sh(script: "git describe --tags --abbrev=0", returnStdout: true)
         sh "sed -i -- 's|version: DEVELOPMENT|version: ${version}|' openapi.yaml"
 
         replace_to = ''
