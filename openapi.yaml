@@ -26,6 +26,184 @@ info:
     service endpoints allow four levels of access: __view__, __create__, __modify__, __delete__.
     Developers now have the capability to create their own exciting new services on top of Linode's
     world-class infrastructure.
+
+
+
+    Download our OpenAPI specification: [Download](/openapi.yaml)
+
+
+
+    # Pagination
+
+    Resource lists are always paginated. The response will look similar to this:
+
+    ```json
+    {
+        "data": [ ... ],
+        "page": 1,
+        "pages": 3,
+        "results": 300
+    }
+    ```
+
+    Pages start at 1. You may retrieve a specific page of results by adding
+    `?page=x` to your URL (for example, `?page=4`). Page sizes default to 100,
+    and can be set to return between 25 and 100. Page size can be set using
+    `?page_size=x`.
+
+    # Filtering and Sorting
+
+    Collections are searchable by fields they include, marked in the spec as
+    `x-linode-filterable: true`. Filters are passed
+    in the `X-Filter` header and are formatted as JSON objects. Here is a request
+    call for Linode Types in our "standard" class:
+
+    ```Shell
+    curl "https://api.linode.com/v4/linode/types" \
+      -H 'X-Filter: { \
+        "class": "standard"
+      }'
+    ```
+
+    The filter object's keys are the keys of the object you're filtering,
+    and the values are accepted values. You can add multiple filters by
+    including more than one key. For example, filtering for "standard" Linode
+    Types that offer one vcpu:
+
+    ```Shell
+     curl "https://api.linode.com/v4/linode/types" \
+      -H 'X-Filter: { \
+        "class": "standard",
+        "vcpus": 1
+      }'
+    ```
+
+    In the above example, both filters are combined with an "and" operation.
+    However, if you wanted either Types with one vcpu or Types in our "standard"
+    class, you can add an operator:
+
+    ```Shell
+    curl "https://api.linode.com/v4/linode/types" \
+      -H 'X-Filter: {
+        "+or": [
+          { "vcpus": 1 },
+          { "class": "standard" }
+        ]
+      }'
+    ```
+
+    Each filter in the `+or` array is its own filter object, and all condintions
+    in it are combined with an "and" operation as they were in the previous example.
+
+    Other operators are also available. Operators are keys of a Filter JSON
+    object. Their value must be of the appropriate type, and they are evaluated
+    as described below:
+
+    | OPERATOR | TYPE   | DESCRIPTION                       |
+    |----------|--------|-----------------------------------|
+    | +and     | array  | All conditions must be true       |
+    | +or      | array  | One condition must be true        |
+    | +gt      | number | Value must be greater than number |
+    | +gte     | number | Value must be greater than or equal to number |
+    | +lt      | number | Value must be less than number |
+    | +lte     | number | Value must be less than or equal to number |
+    | +contains | string | Given string must be in the value |
+    | +neq      | string | Does not equal the value          |
+    | +order_by | string | Attribute to order the results by - must be filterable |
+    | +order    | string | Either "asc" or "desc". Defaults to "asc". Requires an `+order_by` be given. |
+
+    For example, filtering for Linode Types that offer memory equal to or higher
+    than 61440:
+
+    ```Shell
+    curl "https://api.linode.com/v4/linode/types" \
+      -H 'X-Filter: {
+        "memory": {
+          "+gte": 61440
+        }
+      }'
+    ```
+
+    You can combine and nest operators to construct arbitrarily-complex queries.
+    For example, give me all Linode Types which are either `standard` or
+    `highmem` class, and have between 12 and 20 vcpus:
+
+    ```Shell
+    curl "https://api.linode.com/v4/linode/types" \
+      -H 'X-Filter: {
+        "+or": [
+          {
+            "+or": [
+              {
+                "class": "standard"
+              },
+              {
+                "class": "highmem"
+              }
+            ]
+          },
+          {
+            "+and": [
+              {
+                "vcpus": {
+                  "+gte": 12
+                }
+              },
+              {
+                "vcpus": {
+                  "+lte": 20
+                }
+              }
+            ]
+          }
+        ]
+      }'
+    ```
+
+    # Errors
+
+    Success is indicated via [Standard HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
+    `2xx` codes indicate success, `4xx` codes indicate an
+    error on your side, and `5xx` errors indicate an error on our side. An error
+    on your side might be an invalid input, a required parameter being omitted,
+    etc. Errors on our side shouldn't happen often. If an error does occur, please
+    let us know.
+
+    Requests that return errors will look like this:
+
+    ```Shell
+    {
+      "errors": [
+        {
+          "reason": "Invalid JSON"
+        }
+      ]
+    }
+    ```
+
+    The `errors` field is an array of the things that went wrong with your request.
+    We will try to include as many of the problems in the response as possible,
+    but it's conceivable that fixing these errors and resubmitting may result in
+    new errors coming back once we are able to get further along in the process
+    of handling your request.
+
+
+    Within each error object, the `field` parameter will be included if the error
+    pertains to a specific field in the JSON you've submitted. This will be
+    omitted if there is no relevant field. The reason is a human-readable
+    explanation of the error, and will always be included.
+
+    # HTTP Status Codes
+
+    | STATUS  | DESCRIPTION |
+    |---------|-------------|
+    | 200 OK  | The request was successful |
+    | 400 Bad Request | You submitted an invalid request (missing parameters, etc.) |
+    | 401 Unauthorized | You failed to authenticate for this resource |
+    | 403 Forbidden | You are authenticated, but don't have permission to do this |
+    | 404 Not Found | The resource you're requesting does not exist |
+    | 429 Too Many Requests | You've hit a rate limit |
+    | 500 Internal Server Error | Please [open a Support Ticket](/#operation/createTicket) |
   contact:
     name: Linode
     url: /
@@ -10271,7 +10449,7 @@ components:
 
             * Must start with an alpha character.
             * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
-            * Cannot not have two dashes (`--`) or underscores (`__`) in a row.
+            * Cannot have two dashes (`--`) or underscores (`__`) in a row.
           example: linode123
           minLength: 3
           maxLength: 32
@@ -11204,24 +11382,6 @@ components:
             Throttle connections per second.  Set to 0 to disable throttling.
           example: 0
           x-linode-cli-display: 6
-        transfer:
-          type: object
-          description: >
-            Transfer statistics for this NodeBalancer for the current month.
-          readOnly: true
-          properties:
-            in:
-              type: number
-              description: Inbound transfer.
-              example: 3821.6655349731445
-            out:
-              type: number
-              description: Outbound transfer.
-              example: 241188.2196378708
-            total:
-              type: number
-              description: Total transfer (in + out).
-              example: 245009.88517284393
     NodeBalancerConfig:
       type: object
       description: >
