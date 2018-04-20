@@ -11,10 +11,10 @@ set -x -e
 export HOME='/target'
 echo $HOME
 
-version=$(python3 version)
+version_number=$(git describe --tags --abbrev=0 | tr -d '[:space:]')
+version_extension=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[:space:]')
 
-# TODO - Maybe include docs version in docs somewhere? 
-
+version=${version_number}-${version_extension}
 
 echo 'Building Debian Package'
 # index.html, openapi.yaml, style.css
@@ -28,7 +28,7 @@ if [ -v BUILD_ENV -a -n "${BUILD_ENV}" ]; then
   package_version="${version}~${BUILD_ENV}${commit_num:-0}"
 fi
 
-fpm -s dir -t deb -n "${pkg_name}" -v "${package_version}" --iteration "${iteration}" \
+fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extension}" \
   -x Vagrantfile -x Dockerfile -x build.sh -x \*.deb -x \*.changes -x .git -x .vagrant \
   --vendor Linode --url https://github.com/linode/linode-api-docs \
   --description "${description}" -m ops@linode.com \
