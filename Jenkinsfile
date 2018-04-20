@@ -29,7 +29,7 @@ node {
 
     stage ('Apply Substitutions') {
         version = sh "git describe --tags --abbrev=0"
-        sh "sed -i -- 's|version: DEVELOPMENT|version: ${version}' openapi.yaml"
+        sh "sed -i -- 's|version: DEVELOPMENT|version: ${version}|' openapi.yaml"
 
         replace_to = ''
         if (env.BRANCH_NAME == 'development') {
