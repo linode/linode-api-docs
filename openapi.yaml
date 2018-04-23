@@ -3182,7 +3182,6 @@ paths:
                 "kernel": "linode/latest-64bit",
                 "comments": "This is my main Config",
                 "memory_limit": 2048,
-                "root_device_ro": false,
                 "run_level": "default",
                 "virt_mode": "paravirt",
                 "helpers": {
@@ -3276,7 +3275,6 @@ paths:
                 "kernel": "linode/latest-64bit",
                 "comments": "This is my main Config",
                 "memory_limit": 2048,
-                "root_device_ro": false,
                 "run_level": "default",
                 "virt_mode": "paravirt",
                 "helpers": {
@@ -10476,10 +10474,12 @@ components:
           title: The ID of this Config.
           example: 23456
           readOnly: true
+          x-linode-cli-display: 1
         kernel:
           type: string
           title: A kernel ID to boot a Linode with. Defaults to 'linode/latest-64bit'
           example: linode/latest-64bit
+          x-linode-cli-display: 3
         comments:
           type: string
           title: Optional field for arbitrary user comments on this Config.
@@ -10490,11 +10490,6 @@ components:
           description: >
             Defaults to the total RAM of the Linode.
           example: 2048
-        root_device_ro:
-          type: boolean
-          title: Controls whether or not to mount the root Disk as read-only.
-          description: Defaults to false.
-          example: false
         run_level:
           type: string
           title: Stes the run level for the Linode boot.
@@ -10552,6 +10547,7 @@ components:
           example: My Config
           minLength: 1
           maxLength: 48
+          x-linode-cli-display: 2
         devices:
           $ref: '#/components/schemas/Devices'
     LinodeRequest:
