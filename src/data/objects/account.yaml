@@ -59,3 +59,14 @@ schema:
     type: Float
     description: This account's balance (in US Dollars).
     value: 0.00
+  credit_card:
+    type: object
+    description: Information about your on-file credit card (used for payments)
+    last_four:
+      type: String
+      value: 1111
+      description: The last four digits of your on-file credit card.
+    expiry:
+      type: String
+      value: 11/2022
+      description: The expiration month and year of your on-file credit card.

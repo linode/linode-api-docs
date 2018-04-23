@@ -47,3 +47,18 @@ schema:
     type: Datetime
     value: "2017-09-30T11:21:01"
     description: When this NodeBalancer was last updated.
+  transfer:
+    type: object
+    description: Transfer statistics for this NodeBalancer for the current month.
+    in:
+      type: Float
+      value: 3821.6655349731445
+      description: Inbound transfer
+    out:
+      type: Float
+      value: 241188.2196378708
+      description: Output transfer
+    total:
+      type: Float
+      value: 245009.8851728439445
+      description: Total transfer (in + out)
