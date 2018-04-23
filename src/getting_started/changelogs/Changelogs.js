@@ -11,7 +11,7 @@ export default function Authentication() {
         <p>As releases are made Changelogs will be published here.</p>
       </section>
       <section>
-        <h2>2018-04-19</h2>
+        <h2>2018-04-23</h2>
         <hr /><br />
         <b>Features:</b>
         <ul>
