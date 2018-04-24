@@ -50,7 +50,7 @@ Date: $(date -R)
 Source: ${pkg_name}
 Binary: ${pkg_name}
 Architecture: all
-Version: ${package_version}-${iteration}
+Version: ${version}
 Distribution: linode-jessie-dev
 Urgency: low
 Maintainer: Linode Operations <ops@linode.com>
