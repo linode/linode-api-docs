@@ -1113,9 +1113,10 @@ paths:
       summary: Stage PayPal Payment
       description: >
         This begins the process of submitting a payment via PayPal. After calling
-         this endpoint, you must take the resulting `payment_id` along with
-         the `payer_id` from your PayPal account, and POST to
-        `/account/payments/paypal-execute` to complete the payment.
+        this endpoint, you must take the resulting `payment_id` along with
+        the `payer_id` from your PayPal account and
+        [POST /account/payments/paypal-execute](/#operation/executePayPalPayment)
+        to complete the payment.
       operationId: createPayPalPayment
       x-linode-cli-action: paypal-start
       security:
@@ -1526,8 +1527,8 @@ paths:
         Returns the full grants structure for this user.  This includes all
         entities on the account alongside what level of access this user has
         to each of them.  Individual users may view their own grants at the
-        `/profile/grants` endpoint, but will not see entities that they have
-        no access to.
+        [/profile/grants](/#operation/getProfileGrants)
+        endpoint, but will not see entities that they have no access to.
       operationId: getUserGrants
       x-linode-cli-action: grants
       security:
@@ -2359,10 +2360,12 @@ paths:
         request to complete successfully, your user must have the `add_linodes` grant. Creating a
         new Linode will incur a charge on your account.
 
-        Linodes can be created using one of the available types. See `GET /linode/types` to get more
+        Linodes can be created using one of the available types. See
+        [GET /linode/types](/#operation/getLinodeTypes) to get more
         information about each type's specs and cost.
 
-        Linodes can be created in any one of our available regions, see `GET /regions` for a list
+        Linodes can be created in any one of our available regions, see
+        [GET /regions](/#operation/getRegions) for a list
         of available regions you deploy your Linode in.
 
         Linodes can be created in a number of ways:
@@ -2377,7 +2380,7 @@ paths:
         - Using one of your own StackScripts or a public StackScript
           - The Linode will be `running` after it completes `provisioning`
           - Requires a compatible Linode Linux Distribution `image` to be supplied
-            - see `GET /linode/stackscript/{stackscriptId}` for compatible images
+            - see [GET /linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible images
           - Requires a `root_pass` be supplied to use for the root user's account
           - It is recommended to supply ssh keys for the root user using the `authorized_keys` field
 
@@ -2388,7 +2391,7 @@ paths:
 
         - Create an empty Linode
           - The Linode will remain `offline` and must be manually started
-            - see `POST /linode/instances/{linodeId}/boot`
+            - see [POST /linode/instances/{linodeId}/boot](/#operation/bootLinodeInstance)
           - Disks and Configs must be created manually
           - This is only recommended for advanced use-cases
       tags:
@@ -2421,7 +2424,8 @@ paths:
                     A Backup ID from another Linode's available backups. Your user must have
                     `read_write` access to that Linode, the backup must have a `status` of
                     `successful`, and the Linode must be deployed to the same `region` as the backup.
-                    See `GET /linode/instances/{linodeId}/backups` for a Linode's available backups.
+                    See [GET /linode/instances/{linodeId}/backups](/#operation/getBackups)
+                    for a Linode's available backups.
 
                     This field and the `image` field are mutually exclusive.
                 backups_enabled:
@@ -2432,7 +2436,7 @@ paths:
                     enrolled in the Linode Backup service. This will incur an additional charge.
                     The cost for the Backup service is dependent on the type of Linode deployed.
 
-                    Backup pricing is included in the response from `GET /linodes/types`
+                    Backup pricing is included in the response from [GET /linodes/types](/#operation/getLinodeTypes)
                 swap_size:
                   type: integer
                   title: Swap Disk size in MB
@@ -3009,7 +3013,7 @@ paths:
                     This is the location where the Linode will be deployed.
 
                     To view all available regions you can deploy with see
-                    `GET /regions`.
+                    [GET /regions](/#operation/getRegions).
 
                     * Region can only be provided when cloning to a new Linode.
                 type:
@@ -3022,7 +3026,7 @@ paths:
                     `specs` on the Linode object.
 
                     To view all available Linode `types` you can deploy with
-                    see `GET /linode/types`.
+                    see [GET /linode/types](/#operation/getLinodeTypes).
 
                     * Type can only be provided wen cloning to a new Linode.
                 linode_id:
@@ -3056,7 +3060,7 @@ paths:
                     service is dependent on the type of Linode deployed.
 
                     Backup pricing is included in the response from
-                    `GET /linodes/types`.
+                    [GET /linodes/types](/#operation/getLinodeTypes).
 
                     * Can only be included when cloning to a new Linode.
                 disks:
@@ -3394,7 +3398,7 @@ paths:
       summary: Create Disk
       description: >
         Adds a new disk to a Linode. You can optionally create a disk
-        from an image (see `GET /images` for a list of available public images,
+        from an image (see [GET /images](/#operation/getImages) for a list of available public images,
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
       operationId: addLinodeDisk
@@ -7257,7 +7261,7 @@ paths:
       description: >
         Generates a Two Factor secret for your user.  TFA will
         not be enabled until you have successfully confirmed the code you
-        were given with the `tfa-enable-confirm` endpoint (see below).  Once
+        were given with [tfa-enable-confirm](/#operation/tfaConfirm) (see below).  Once
         enabled, login from untrusted computers will be required to provide
         a TFA code before they are successful.
       operationId: tfaEnable
@@ -7965,7 +7969,8 @@ paths:
         grant. Creating a new Volume will start accruing additional charges
         on your account.
 
-        Volume service may not be available in all regions. See `GET /regions`
+        Volume service may not be available in all regions. See
+        [GET /regions](/#operation/getRegions)
         for a list of available regions you deploy your Volume in.
       tags:
       - volumes
@@ -8604,7 +8609,7 @@ components:
           type: string
           description: >
             The Longview Pro tier you are currently subscribed to. The value must
-            be null or an id from `GET /longview/subscriptions`.
+            be null or an id from [GET /longview/subscriptions](/#operation/getLongviewSubscriptions).
           example: longview-30
           x-linode-cli-display: 2
         network_helper:
@@ -8935,7 +8940,7 @@ components:
             An image id to deploy the disk from. Official Linode images start with
             `linode/ `, while your images start with `private`.
 
-            See `/images` for more information on the images available for you to use.
+            See [/images](/#operation/getImages) for more information on the images available for you to use.
           example: linode/debian9
         authorized_keys:
           type: array
@@ -8976,7 +8981,7 @@ components:
             A StackScript ID that will cause the referenced StackScript to be run during
             deployment of this Linode. A compatible `image` is required to use a
             StackScript. To get a list of available StackScript and their permitted images
-            see `GET /stackscripts`.
+            see [GET /stackscripts](/#operation/getStackScripts).
 
             You may only deploy from a StackScript that you own or that is listed as
             `public`.
@@ -8990,7 +8995,8 @@ components:
           description: |
             This field is required only if the StackScript being deployed requires input
             data from the user for successful completion.
-            See `GET /linode/stackscript/{stackScriptId}` for more details.
+            See [GET /linode/stackscript/{stackScriptId}](/#operation/getStackScript)
+            for more details.
 
             This field is required to be valid JSON.
     Domain:
@@ -10210,7 +10216,7 @@ components:
             with.
 
             To change a Linode's type, use
-            `POST /linode/instances/{linodeId}/resize`.
+            [POST /linode/instances/{linodeId}/resize](/#operation/resizeLinodeInstance).
           x-linode-cli-display: 5
         group:
           deprecated: true
@@ -10289,7 +10295,7 @@ components:
             open a support ticket to get additional IPv4 addresses.
 
             IPv4 addresses may be reassigned between your Linodes, or shared with other Linodes.
-            See the `/networking` endpoints for details.
+            See the [/networking](/#tag/networking) endpoints for details.
           x-linode-cli-display: 10
         ipv6:
           type: string
@@ -10379,7 +10385,7 @@ components:
           type: object
           description: >
             Information about this Linode's backups status. For information about available
-            backups, see `GET /linode/instances/{linodeId}/backups`.
+            backups, see [GET /linode/instances/{linodeId}/backups](/#operation/getBackups).
           properties:
             enabled:
               type: boolean
@@ -10513,8 +10519,8 @@ components:
           description: >
             One of:
 
-            * paravirt (default)
-            * fullvirt
+              * paravirt (default)
+              * fullvirt
           example: paravirt
         helpers:
           type: object
@@ -12099,6 +12105,7 @@ components:
               example: 0
               readOnly: true
         ip_whitelist_enabled:
+          deprecated: true
           type: boolean
           description: >
             If true, logins for your user will only be allowed from whitelisted IPs.  See
@@ -12131,7 +12138,7 @@ components:
           type: boolean
           description: >
             If true, logins from untrusted computers will require two-factor
-            authentication.  See `/profile/tfa-enable` to enable two-factor
+            authentication.  See [/profile/tfa-enable](/#operation/tfaEnable) to enable two-factor
             authentication.
           example: true
           x-linode-cli-display: 4
@@ -12140,7 +12147,7 @@ components:
           description: >
             If true, your user has restrictions on what can be accessed on your
             account.  To get details on what entities/actions you can
-            access/perform, see `/profile/grants`.
+            access/perform, see [/profile/grants](/#operation/getProfileGrants).
           example: false
           x-linode-cli-display: 3
     Region:
@@ -12601,8 +12608,9 @@ components:
           type: boolean
           description: >
             If true, this user must be granted access to perform actions or access
-            entities on this account.  See `/account/users/{username}/grants` for
-            details on how to configure grants for a restricted user.
+            entities on this account. See
+            [/account/users/{username}/grants](/#operation/getUserGrants)
+            for details on how to configure grants for a restricted user.
           example: true
           x-linode-cli-display: 3
     UserDefinedField:
