@@ -1,0 +1,82 @@
+html {
+    box-sizing: border-box;
+}
+
+body {
+    flex-direction: column;
+    flex-grow: 1;
+    color: #000;
+    background: #fff;
+    font-family: 'Lato',sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    padding-left: 2em;
+}
+
+header {
+    background: #323232;
+}
+
+.release-header {
+    display: block;
+    color: #ffffff;
+    font-weight: normal;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    background: #3bb878;
+    padding: 0.6em;
+    height: 32px;
+}
+
+.release_header:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.release-header .release-date {
+    font-size: 1.4em;
+    float: left;
+    vertical-align: middle;
+}
+
+.release-header .release-version {
+    font-size: 1.2em;
+    float: right;
+    vertical-align: middle;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+.content-wrap {
+    width: 100%;
+    max-width: 970px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    height: 57px;
+}
+
+.navbar-logo {
+    height: 46px;
+    padding: 6px 0;
+    vertical-align: middle;
+}
+
+.navbar-wrap {
+    display: flex;
+    justify-content: space-between;
+}
