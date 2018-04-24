@@ -29,22 +29,12 @@ header {
     height: 32px;
 }
 
-.release_header:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.release-header .release-date {
-    font-size: 1.4em;
-    float: left;
-    vertical-align: middle;
-}
-
 .release-header .release-version {
-    font-size: 1.2em;
+    font-size: 0.8em;
     float: right;
     vertical-align: middle;
+    position: relative;
+    top: 3px;
 }
 
 h3 {
