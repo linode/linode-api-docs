@@ -1603,6 +1603,7 @@ paths:
         endpoint, but will not see entities that they have no access to.
       operationId: getUserGrants
       x-linode-cli-action: grants
+      x-linode-cli-skip: true
       security:
       - personalAccessToken: []
       - oauth:
@@ -1637,6 +1638,7 @@ paths:
         that are not included will remain unchanged.
       operationId: updateUserGrants
       x-linode-cli-action: update-grants
+      x-linode-cli-skip: true
       security:
       - personalAccessToken: []
       - oauth:
@@ -2267,22 +2269,22 @@ paths:
               allOf:
               - $ref: '#/components/schemas/ImagePrivate'
               - type: object
-              properties:
-                disk_id:
-                  type: integer
-                  description: >
-                     The ID of the Linode Disk that this Image will be
-                     created from.
-                  example: 42
-                label:
-                  type: string
-                  description: >
-                    A short title of the Image. Defaults to the label of the
-                    Disk it is being created from if not provided.
-                description:
-                  type: string
-                  description: >
-                    A detailed description of the Image.
+                properties:
+                  disk_id:
+                    type: integer
+                    description: >
+                       The ID of the Linode Disk that this Image will be
+                       created from.
+                    example: 42
+                  label:
+                    type: string
+                    description: >
+                      A short title of the Image. Defaults to the label of the
+                      Disk it is being created from if not provided.
+                  description:
+                    type: string
+                    description: >
+                      A detailed description of the Image.
       responses:
         '200':
           description: New private Image created successfully.
@@ -3807,7 +3809,7 @@ paths:
               - password
               properties:
                 size:
-                  type: string
+                  type: integer
                   title: The requested size of the Disk.
                   description: >
                     The desired size of the disk, in MB.
@@ -4799,6 +4801,12 @@ paths:
       - personalAccessToken: []
       - oauth:
         - stackscripts:read_write
+      requestBody:
+          description: The fields to update.
+          content:
+              application/json:
+                  schema:
+                      $ref: '#/components/schemas/StackScript'
       responses:
         '200':
           description: StackScript was successfully modified.
@@ -6076,7 +6084,7 @@ paths:
       schema:
         type: integer
     x-linode-cli-command: managed
-    get:
+    post:
       x-linode-grant: unrestricted only
       tags:
       - managed
@@ -6114,7 +6122,7 @@ paths:
       schema:
         type: integer
     x-linode-cli-command: managed
-    get:
+    post:
       x-linode-grant: unrestricted only
       tags:
       - managed
@@ -9165,7 +9173,10 @@ components:
       - label
       properties:
         size:
-          $ref: '#/components/schemas/Disk/properties/size'
+          x-linode-filterable: true
+          type: integer
+          title: The size of the Disk in MB.
+          example: 48640
         label:
           $ref: '#/components/schemas/Disk/properties/label'
         filesystem:
@@ -9981,24 +9992,6 @@ components:
           description: The Invoice's display label.
           example: Invoice
           x-linode-cli-display: 3
-        overdue:
-          type: boolean
-          readOnly: true
-          description: Whether or not the Invoice is overdue for payment.
-          example: false
-          x-linode-cli-display: 5
-          x-linode-cli-color:
-            true: red
-            default_: white
-        paid:
-          type: boolean
-          readOnly: true
-          description: Whether or not the Invoice has been paid.
-          example: true
-          x-linode-cli-display: 6
-          x-linode-cli-color:
-            true: green
-            default_: yellow
         total:
           type: integer
           readOnly: true
@@ -10438,6 +10431,15 @@ components:
         label:
           x-linode-filterable: true
           x-linode-cli-display: 2
+          description: >
+            The Linode's label is for display purposes only. If no label is provided for a Linode,
+            a default will be assigned.
+
+            Linode labels have the following constraints:
+
+            * Must start with an alpha character.
+            * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
+            * Cannot have two dashes (`--`) or underscores (`__`) in a row.
         region:
           x-linode-filterable: true
           readOnly: true
@@ -10587,6 +10589,7 @@ components:
               readOnly: true
         alerts:
           type: object
+          readOnly: true
           properties:
             cpu:
               type: integer
@@ -10722,28 +10725,26 @@ components:
       properties:
         id:
           type: integer
-          title: The ID of this Config.
+          description: The ID of this Config.
           example: 23456
           readOnly: true
           x-linode-cli-display: 1
         kernel:
           type: string
-          title: A kernel ID to boot a Linode with. Defaults to 'linode/latest-64bit'
+          description: A kernel ID to boot a Linode with. Defaults to 'linode/latest-64bit'
           example: linode/latest-64bit
           x-linode-cli-display: 3
         comments:
           type: string
-          title: Optional field for arbitrary user comments on this Config.
+          description: Optional field for arbitrary user comments on this Config.
           example: This is my main Config
         memory_limit:
           type: integer
-          title: The maximum RAM the Linode will be given when booting this Config.
           description: >
             Defaults to the total RAM of the Linode.
           example: 2048
         run_level:
           type: string
-          title: Stes the run level for the Linode boot.
           description: >
             One of:
 
@@ -10757,8 +10758,8 @@ components:
           example: default
         virt_mode:
           type: string
-          title: Controls the virtualization mode.
           description: >
+            Controls the virtualization mode.
             One of:
 
               * paravirt (default)
@@ -10766,28 +10767,28 @@ components:
           example: paravirt
         helpers:
           type: object
-          title: Helpers enabled when booting to this Linode Config.
+          description: Helpers enabled when booting to this Linode Config.
           properties:
             updatedb_disabled:
               type: boolean
-              title: Disables updatedb cron job to avoid disk thrashing.
+              description: Disables updatedb cron job to avoid disk thrashing.
               example: true
             distro:
               type: boolean
-              title: Helps maintain correct inittab/upstart console device.
+              description: Helps maintain correct inittab/upstart console device.
               example: true
             modules_dep:
               type: boolean
-              title: Creates a modules dependency file for the kernel you run.
+              description: Creates a modules dependency file for the kernel you run.
               example: true
             network:
               type: boolean
-              title: Automatically configure static networking.
+              description: Automatically configure static networking.
               example: true
             devtmpfs_automount:
               type: boolean
-              title: Populates the /dev directory early during boot without udev.
-              description: Defaults to false
+              description: >
+                Populates the /dev directory early during boot without udev.  Defaults to false.
               example: false
         label:
           x-linode-filterable: true
@@ -11239,7 +11240,7 @@ components:
           maxLength: 64
           pattern: '[a-zA-Z0-9-_ ]{2,64}'
           description: >
-            The name of this contact
+            The name of this contact.
           example: John Doe
           x-linode-cli-display: 2
         email:
