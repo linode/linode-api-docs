@@ -10546,7 +10546,7 @@ components:
             devtmpfs_automount:
               type: boolean
               description: >
-                Populates the /dev directory early during boot without udev.  Defaults to false
+                Populates the /dev directory early during boot without udev.  Defaults to false.
               example: false
         label:
           x-linode-filterable: true
