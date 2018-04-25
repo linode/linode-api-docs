@@ -5152,7 +5152,7 @@ paths:
         Returns a paginated list of available Longview Subscriptions. This is
         a public endpoint, and requires no authentication.
       operationId: getLongviewSubscriptions
-      x-linode-cli-action: subscriptions
+      x-linode-cli-action: subscriptions-list
       responses:
         '200':
           description: A paginated list of Longview Subscriptions.
@@ -5195,7 +5195,7 @@ paths:
         Returns a single LongviewSubscription object.  This is a public
         endpoint and requires no authentication.
       operationId: getLongviewSubscription
-      x-linode-cli-action: subscription
+      x-linode-cli-action: subscription-view
       responses:
         '200':
           description: The requested Longview Subscription.
@@ -5662,7 +5662,7 @@ paths:
         Returns a paginated list of recent and ongoing issues detected on your
         Managed Services.
       operationId: getManagedIssues
-      x-linode-cli-action: issues
+      x-linode-cli-action: issues-list
       security:
         - personalAccessToken: []
         - oauth:
@@ -5711,7 +5711,7 @@ paths:
         Returns a single issue that is impacting or did impact one of your
         Managed Services.
       operationId: getManagedIssue
-      x-linode-cli-action: issue
+      x-linode-cli-action: issue-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -5744,7 +5744,7 @@ paths:
         Returns a paginated list of Managed settings for your Linodes.  There will
         be one entry per Linode on your account.
       operationId: getManagedLinodeSettings
-      x-linode-cli-action: linode-settings
+      x-linode-cli-action: linode-settings-list
       security:
         - personalAccessToken: []
         - oauth:
@@ -5792,7 +5792,7 @@ paths:
       description: >
         Returns a single Linode's Managed settings.
       operationId: getManagedLinodeSetting
-      x-linode-cli-action: linode-setting
+      x-linode-cli-action: linode-setting-view
       security:
       - personalAccessToken: []
       - oauth:
