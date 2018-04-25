@@ -11,6 +11,7 @@ COPY style.css .
 COPY build-docs.sh .
 COPY linode-docs.postinst .
 COPY linode-logo.svg .
+COPY linode-logo-white.svg .
 COPY redoc.standalone.js .
 COPY favicon.ico .
 COPY changelog/ .
