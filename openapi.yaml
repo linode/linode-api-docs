@@ -347,8 +347,7 @@ paths:
                 https://api.linode.com/v4/account/credit-card
         - lang: CLI
           source: >
-            linode-cli account update-card --card_number 4111111111111111
-            --expiry_month 11 --expiry_year 2025
+            linode-cli account update-card --card_number 4111111111111111 --expiry_month 11 --expiry_year 2025
   /account/events:
     x-linode-cli-command: events
     get:
@@ -790,8 +789,7 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients
         - lang: CLI
           source: >
-            linode-cli account client-create --label Test_Client_1
-            --redirect_uri https://example.org/callback
+            linode-cli account client-create --label Test_Client_1 --redirect_uri https://example.org/callback
   /account/oauth-clients/{clientId}:
     parameters:
       - name: clientId
@@ -1203,8 +1201,7 @@ paths:
                 https://api.linode.com/v4/account/payments/paypal
         - lang: CLI
           source: >
-            linode-cli account paypal-start --cancel_url https://example.org
-            --redirect_url https://example.org --usd 120.50
+            linode-cli account paypal-start --cancel_url https://example.org --redirect_url https://example.org --usd 120.50
   /account/payment/paypal/execute:
     x-linode-cli-command: account
     post:
@@ -1324,8 +1321,7 @@ paths:
                 https://api.linode.com/v4/account/settings
         - lang: CLI
           source: >
-            linode-cli account settings-update --longview_subscription longview-30
-            --network_helper false
+            linode-cli account settings-update --longview_subscription longview-30 --network_helper false
   /account/transfer:
     x-linode-cli-command: account
     get:
@@ -1471,8 +1467,7 @@ paths:
                 https://api.linode.com/v4/account/users
         - lang: CLI
           source: >
-            linode-cli users create --username example_user
-            --email example_user@linode.com
+            linode-cli users create --username example_user --email example_user@linode.com
   /account/users/{username}:
     x-linode-cli-command: users
     parameters:
@@ -1843,8 +1838,7 @@ paths:
                 https://api.linode.com/v4/domains
         - lang: CLI
           source: >
-            linode-cli domains create --type master --domain example.org
-            --soa_email admin@example.org
+            linode-cli domains create --type master --domain example.org --soa_email admin@example.org
   /domains/{domainId}:
     x-linode-cli-command: domains
     parameters:
@@ -2073,8 +2067,7 @@ paths:
               https://api.linode.com/v4/domains/123/records
       - lang: CLI
         source: >
-          linode-cli domains records-create 123 --type A --name test
-          --target 12.34.56.78 --priority 50 --weight 50 --port 80 --ttl_sec 604800
+          linode-cli domains records-create 123 --type A --name test --target 12.34.56.78 --priority 50 --weight 50 --port 80 --ttl_sec 604800
   /domains/{domainId}/records/{recordId}:
     x-linode-cli-command: domains
     parameters:
@@ -2169,9 +2162,7 @@ paths:
               https://api.linode.com/v4/domains/123/records/234
       - lang: CLI
         source: >
-          linode-cli domains records-update 123 234 --type A --name test
-          --target 12.34.56.78 --priority 50 --weight 50 --port 80
-          --ttl_sec 604800
+          linode-cli domains records-update 123 234 --type A --name test --target 12.34.56.78 --priority 50 --weight 50 --port 80 --ttl_sec 604800
     delete:
       x-linode-grant: read_write
       tags:
@@ -4670,7 +4661,8 @@ paths:
         permissions to view.
 
 
-        You can also apply the filter `"mine": true` to see only your StackScripts.
+        In addition to filterable attributes, you may apply the filter
+        `"mine": true` to see only your StackScripts.
       operationId: getStackScripts
       x-linode-cli-action: list
       security:
@@ -5534,8 +5526,7 @@ paths:
               https://api.linode.com/v4/managed/credentials
       - lang: CLI
         source: >
-          linode-cli managed credential-create --label prod-password-1
-          --username johndoe --password s3cur3P@ssw0rd
+          linode-cli managed credential-create --label prod-password-1 --username johndoe --password s3cur3P@ssw0rd
   /managed/credentials/{credentialId}:
     parameters:
     - name: credentialId
@@ -5625,7 +5616,7 @@ paths:
       schema:
         type: integer
     x-linode-cli-command: managed
-    delete:
+    post:
       x-linode-grant: unrestricted only
       tags:
       - managed
@@ -5634,7 +5625,7 @@ paths:
         Deletes a Managed Credential.  Linode special forces will no longer
         have access to this credential when attempting to resolve issues.
       operationId: deleteManagedCredential
-      x-linode-cli-action: credential-delete
+      x-linode-cli-action: credential-revoke
       security:
       - personalAccessToken: []
       - oauth:
@@ -12361,9 +12352,10 @@ components:
           type: boolean
           description: >
             If true, logins for your user will only be allowed from whitelisted IPs.
-            This setting is currently deprecated,
-            and cannot be enabled.  If you disable this setting, you will not be able to
-            re-enable it.
+            This setting is currently deprecated, and cannot be enabled.
+
+
+            If you disable this setting, you will not be able to re-enable it.
           example: false
         lish_auth_method:
           type: string
