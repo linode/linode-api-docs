@@ -36,7 +36,7 @@ fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version
   --after-install linode-docs.postinst \
   --replaces "${replaces}" -- \
   index.html openapi.yaml style.css linode-logo.svg redoc.standalone.js \
-  favicon.ico changelog/index.html changelog/changelog-style.css
+  favicon.ico changelog/index.html changelog/changelog-style.css linode-logo-white.svg
 
 outfile="$(ls -t ${pkg_name}*_all.deb | head -1)"
 sha1=$(sha1sum ${outfile})
