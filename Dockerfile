@@ -13,5 +13,6 @@ COPY linode-docs.postinst .
 COPY linode-logo.svg .
 COPY redoc.standalone.js .
 COPY favicon.ico .
+COPY changelog/ .
 
 CMD ["python", "openapi-linter.py", "openapi.yaml"]
