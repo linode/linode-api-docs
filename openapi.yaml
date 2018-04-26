@@ -652,7 +652,7 @@ paths:
           source: >
             linode-cli account invoice-items 123
   /account/notifications:
-    x-linode-cli-command: notifications-list
+    x-linode-cli-command: account
     get:
       x-linode-grant: read_only
       tags:
@@ -667,7 +667,7 @@ paths:
         example, if you have an important ticket open, you must respond to the
         ticket to dismiss the Notification.
       operationId: getNotifications
-      x-linode-cli-action: list
+      x-linode-cli-action: notifications-list
       security:
       - personalAccessToken: []
       - oauth:
