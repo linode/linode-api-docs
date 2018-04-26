@@ -558,6 +558,9 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/invoices
+        - lang: CLI
+          source: >
+            linode-cli account invoices-list
   /account/invoices/{invoiceId}:
     x-linode-cli-command: account
     parameters:
@@ -593,6 +596,9 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/invoices/123
+        - lang: CLI
+          source: >
+            linode-cli account invoice-view 123
   /account/invoices/{invoiceId}/items:
     x-linode-cli-command: account
     parameters:
@@ -642,8 +648,11 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/invoices/123/items
+        - lang: CLI
+          source: >
+            linode-cli account invoice-items 123
   /account/notifications:
-    x-linode-cli-command: notifications
+    x-linode-cli-command: account
     get:
       x-linode-grant: read_only
       tags:
@@ -658,7 +667,7 @@ paths:
         example, if you have an important ticket open, you must respond to the
         ticket to dismiss the Notification.
       operationId: getNotifications
-      x-linode-cli-action: list
+      x-linode-cli-action: notifications-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -1023,7 +1032,6 @@ paths:
               -X PUT \
               --data-binary "/path/to/image"
               https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
-
   /account/payments:
     x-linode-cli-command: account
     get:
@@ -2305,6 +2313,9 @@ paths:
                 "description": "A longer description of the image"
               }' \
               https://api.linode.com/v4/images
+      - lang: CLI
+        source: >
+          linode-cli images create --label this_is_a_label --description "A longer description of the image" --disk_id 123
   /images/{imageId}:
     x-linode-cli-command: images
     parameters:
@@ -2336,6 +2347,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/images/linode/debian9
+      - lang: CLI
+        source: >
+          linode-cli images view linode/debian9
     put:
       x-linode-grant: read_write
       tags:
@@ -2374,18 +2388,13 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "id": "private/67848373",
                 "label": "My gold-master image",
-                "created": "2018-01-01T00:01:01",
-                "created_by": "somename",
-                "deprecated": false,
-                "description": "The detailed description of my Image.",
-                "is_public": false,
-                "size": 2500,
-                "type": "manual",
-                "vendor": null
+                "description": "The detailed description of my Image."
               }' \
               https://api.linode.com/v4/images/private/67848373
+      - lang: CLI
+        source: >
+          linode-cli images update private/67848373 --label "My gold-master image" --description "The detailed description of my Image."
     delete:
       x-linode-grant: read_write
       tags:
@@ -2415,6 +2424,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/images/private/67848373
+      - lang: CLI
+        source: >
+          linode-cli images delete 67848373
   /linode/instances:
     x-linode-cli-command: linodes
     get:
@@ -2754,7 +2766,7 @@ paths:
       tags:
       - Linode Instances
       operationId: getBackups
-      x-linode-cli-action: backups
+      x-linode-cli-action: backups-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -2947,7 +2959,7 @@ paths:
       tags:
       - Linode Instances
       operationId: getBackup
-      x-linode-cli-action: backup-show
+      x-linode-cli-action: backup-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -2966,6 +2978,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/backups/123456
+      - lang: CLI
+        source: >
+          linode-cli linodes backup-view 123 123456
   /linode/instances/{linodeId}/backups/{backupId}/restore:
     parameters:
     - name: linodeId
@@ -3008,7 +3023,7 @@ paths:
                   type: integer
                   description: >
                     The ID of the Linode to restore a backup to.
-                  example: 123456
+                  example: 234
                 overwrite:
                   type: boolean
                   description: >
@@ -3030,10 +3045,13 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "linode_id": 123456,
+                "linode_id": 234,
                 "overwrite": true
               }' \
               https://api.linode.com/v4/linode/instances/123/backups/123456/restore
+      - lang: CLI
+        source: >
+          linode-cli linodes backup-restore 123 123456 --linode_id 234 --overwrite true
   /linode/instances/{linodeId}/boot:
     parameters:
     - name: linodeId
@@ -3524,6 +3542,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/disks
+      - lang: CLI
+        source: >
+          linode-cli linodes disks-list 123
     post:
       tags:
       - Linode Instances
@@ -3853,7 +3874,7 @@ paths:
       description: >
         Returns networking information for a single Linode.
       operationId: getLinodeIPs
-      x-linode-cli-action: ips
+      x-linode-cli-action: ips-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -3917,6 +3938,9 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               https://api.linode.com/v4/linode/instances/123/ips
+      - lang: CLI
+        source: >
+          linode-cli linodes 123 ips-list
     post:
       x-linode-grant: read_write
       tags:
@@ -3976,6 +4000,9 @@ paths:
                 "public": true
               }' \
               https://api.linode.com/v4/linode/instances/123/ips
+      - lang: CLI
+        source: >
+          linode-cli linodes ip-add 123 --type ipv4 --public true
   /linode/instances/{linodeId}/ips/{address}:
     parameters:
     - name: linodeId
@@ -4020,6 +4047,9 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
+      - lang: CLI
+        source: >
+          linode-cli linodes ip-view 123 97.107.143.141
     put:
       x-linode-grant: read_write
       tags:
@@ -4064,6 +4094,9 @@ paths:
                 "rdns": "test.example.org"
               }' \
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
+      - lang: CLI
+        source: >
+          linode-cli linodes ip-update 123 97.107.143.141 --rdns test.example.org
     delete:
       x-linode-grant: read_write
       tags:
@@ -4095,6 +4128,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
+      - lang: CLI
+        source: >
+          linode-cli linodes ip-delete 97.107.143.141
   /linode/kernels:
     x-linode-cli-command: kernels
     get:
@@ -5186,6 +5222,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/longview/subscriptions
+      - lang: CLI
+        source: >
+          linode-cli longview subscriptions-list
   /longview/subscriptions/{subscriptionId}:
     parameters:
     - name: subscriptionId
@@ -5218,6 +5257,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/longview/subscriptions/longview-10
+      - lang: CLI
+        source: >
+          linode-cli longview subscription-view longview-10
   /managed/contacts:
     x-linode-cli-command: managed
     get:
@@ -5392,9 +5434,6 @@ paths:
                 "group": "on-call"
               }' \
               https://api.linode.com/v4/managed/contacts/567
-      - lang: CLI
-        source: >
-          linode-cli managed contact-update 567 --name "John Doe"
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -5655,7 +5694,7 @@ paths:
               https://api.linode.com/v4/managed/credentials/9991
       - lang: CLI
         source: >
-          linode-cli managed credential-delete 9991
+          linode-cli managed credential-revoke 9991
   /managed/issues:
     x-linode-cli-command: managed
     get:
@@ -5701,6 +5740,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/managed/issues
+      - lang: CLI
+        source: >
+          linode-cli managed issues-list
   /managed/issues/{issueId}:
     parameters:
     - name: issueId
@@ -5738,6 +5780,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/managed/issues/823
+      - lang: CLI
+        source: >
+          linode-cli managed issue-view 823
   /managed/linode-settings:
     x-linode-cli-command: managed
     get:
@@ -5783,6 +5828,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/managed/linode-settings
+      - lang: CLI
+        source: >
+          linode-cli managed linode-settings-list
   /managed/linode-settings/{linodeId}:
     parameters:
     - name: linodeId
@@ -5819,6 +5867,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/managed/linode-settings/123
+      - lang: CLI
+        source: >
+          linode-cli managed linode-setting-view 123
     put:
       x-linode-grant: unrestricted only
       tags:
@@ -6113,6 +6164,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST \
               https://api.linode.com/v4/managed/services/9994/disable
+      - lang: CLI
+        source: >
+          linode-cli managed service-disable 9994
   /managed/services/{serviceId}/enable:
     parameters:
     - name: serviceId
@@ -6151,10 +6205,13 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST \
               https://api.linode.com/v4/managed/services/9994/enable
+      - lang: CLI
+        source: >
+          linode-cli managed service-enable 9994
   /networking/ips:
     description: >
       A collection of IP Addresses on your account.  Excludes private addresses.
-    x-linode-cli-command: ips
+    x-linode-cli-command: networking
     get:
       x-linode-grant: read_only
       tags:
@@ -6164,7 +6221,7 @@ paths:
         Returns a paginated list of IP Addresses on your account, excluding
         private addresses.
       operationId: getIPs
-      x-linode-cli-action: list
+      x-linode-cli-action: ips-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -6204,7 +6261,7 @@ paths:
         configured to support additional addresses - please open a support
         ticket requesting additional addresses before attempting allocation.
       operationId: allocateIP
-      x-linode-cli-action: add
+      x-linode-cli-action: ip-add
       security:
       - personalAccessToken: []
       - oauth:
@@ -6269,7 +6326,7 @@ paths:
       schema:
         type: string
         format: ip
-    x-linode-cli-command: ips
+    x-linode-cli-command: networking
     get:
       x-linode-grant: read_only
       tags:
@@ -6278,7 +6335,7 @@ paths:
       description: >
         Returns information about a single IP Address on your account.
       operationId: getIP
-      x-linode-cli-action: view
+      x-linode-cli-action: ip-view
       security:
       - personalAccessToken: []
       - oauth:
@@ -6308,7 +6365,7 @@ paths:
         ipv4 addresses, it will be reset to the default members.linode.com
         RDNS value.
       operationId: updateIP
-      x-linode-cli-action: update
+      x-linode-cli-action: ip-update
       security:
       - personalAccessToken: []
       - oauth:
@@ -6344,7 +6401,7 @@ paths:
       of IPs may be assigned in one request, as long as all Linodes end up
       with at least one public and no more than one private IP Address at the
       end of the assignment.
-    x-linode-cli-command: ips
+    x-linode-cli-command: networking
     post:
       x-linode-grant: read_write
       tags:
@@ -6356,7 +6413,7 @@ paths:
         Linodes.  When the assignment is finished, all Linodes must end up with
         at least one public ipv4 and no more than one private ipv4.
       operationId: assignIPs
-      x-linode-cli-action: assign
+      x-linode-cli-action: ip-assign
       security:
       - personalAccessToken: []
       - oauth:
@@ -6437,7 +6494,7 @@ paths:
       Configure shared IPs.  A shared IP may be brought up on a Linode other
       than the one it lists in its response.  This can be used to allow one
       Linode to begin serving requests should another become unresponsive.
-    x-linode-cli-command: ips
+    x-linode-cli-command: networking
     post:
       x-linode-grant: read_write
       tags:
@@ -6448,7 +6505,7 @@ paths:
         than the one it lists in its response.  This can be used to allow one
         Linode to begin serving requests should another become unresponsive.
       operationId: shareIPs
-      x-linode-cli-action: share
+      x-linode-cli-action: ip-share
       security:
       - personalAccessToken: []
       - oauth:
@@ -6504,7 +6561,7 @@ paths:
               }' \
               https://api.linode.com/v4/networking/ipv4/share
   /networking/ipv6/pools:
-    x-linode-cli-command: ips
+    x-linode-cli-command: networking
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -6546,7 +6603,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ipv6/pools
   /networking/ipv6/ranges:
-    x-linode-cli-command: ips
+    x-linode-cli-command: networking
     get:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -6630,6 +6687,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/nodebalancers
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers list
     post:
       x-linode-grant: add_nodebalancers
       tags:
@@ -6682,6 +6742,9 @@ paths:
                 "client_conn_throttle": 0
               }' \
               https://api.linode.com/v4/nodebalancers
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers create --region us-east --label balancer12345 --client_conn_throttle 0
   /nodebalancers/{nodeBalancerId}:
     parameters:
     - name: nodeBalancerId
@@ -6718,6 +6781,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/nodebalancers/12345
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers view 12345
     put:
       x-linode-grant: read_write
       tags:
@@ -6757,6 +6823,9 @@ paths:
                 "client_conn_throttle": 0
               }' \
               https://api.linode.com/v4/nodebalancers/12345
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers updarte 12345 --label balancer12345 --client_conn_throttle 0
     delete:
       x-linode-grant: read_write
       tags:
@@ -6790,6 +6859,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/nodebalancers/12345
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers delete 12345
   /nodebalancers/{nodeBalancerId}/configs:
     parameters:
     - name: nodeBalancerId
@@ -6845,6 +6917,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/nodebalancers/12345/configs
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers configs-list 12345
     post:
       x-linode-grant: read_write
       tags:
@@ -6895,6 +6970,9 @@ paths:
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers config-create 12345 --port 80 --protocol http --algorithm roundrobin --stickiness http_cookie --check http_body --check_interval 90 --check_timeout 10 --check_attempts 3 --check_path "/test" --check_body "it works" --check_passive true --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
     - name: nodeBalancerId
@@ -6938,6 +7016,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers config-view 12345 4567
     put:
       x-linode-grant: read_write
       tags:
@@ -6987,6 +7068,9 @@ paths:
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers config-update 12345 4567 --port 80 --protocol http --algorithm roundrobin --stickiness http_cookie --check http_body --check_interval 90 --check_timeout 10 --check_attempts 3 --check_path "/test" --check_body "it works" --check_passive true --cipher_suite recommended
     delete:
       x-linode-grant: read_write
       tags:
@@ -7019,6 +7103,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers config-delete 12345 4567
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
     - name: nodeBalancerId
@@ -7047,7 +7134,7 @@ paths:
         this config.  These are the backends that will be sent traffic
         for this port.
       operationId: getNodeBalancerConfigNodes
-      x-linode-cli-action: node-list
+      x-linode-cli-action: nodes-list
       security:
       - personalAccessToken: []
       - oauth:
@@ -7077,6 +7164,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers nodes-list 12345 4567
     post:
       x-linode-grant: read_write
       tags:
@@ -7124,6 +7214,9 @@ paths:
                 "mode": "accept"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers node-create 12345 4567 --address 192.168.210.120:80 --label node54321 --weight 50 --mode accept
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes/{nodeId}:
     parameters:
     - name: nodeBalancerId
@@ -7173,6 +7266,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers node-view 12345 4567 54321
     put:
       x-linode-grant: read_write
       tags:
@@ -7215,6 +7311,9 @@ paths:
                 "mode": "accept"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers node-create 12345 4567 54321 --address 192.168.210.120:80 --label node54321 --weight 50 --mode accept
     delete:
       x-linode-grant: read_write
       tags:
@@ -7246,6 +7345,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers node-delete 12345 4567 54321
   /profile:
     x-linode-cli-command: profile
     get:
@@ -7276,6 +7378,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile
+      - lang: CLI
+        source: >
+          linode-cli profile view
     put:
       tags:
       - profile
@@ -7312,15 +7417,17 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
                 "email": "example-user@gmail.com",
-                "timezone": null,
+                "timezone": "US/Eastern",
                 "email_notifications": true,
-                "ip_whitelist_enabled": false,
                 "lish_auth_method": "keys_only",
                 "authorized_keys": null,
                 "two_factor_auth": true,
                 "restricted": false
               }' \
               https://api.linode.com/v4/profile
+      - lang: CLI
+        source: >
+          linode-cli profile update --email example-user@gmail.com --timezone US/Eastern --email_notifications true --list_auth_method keys_only --two_factor_auth true --restricted false
   /profile/apps:
     description: >
       Returns information about OAuth Apps you have authorized to access your account.
@@ -7367,6 +7474,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile/apps
+      - lang: CLI
+        source: >
+          linode-cli profile apps-list
   /profile/apps/{appId}:
     parameters:
       - name: appId
@@ -7403,6 +7513,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile/apps/123
+      - lang: CLI
+        source: >
+          linode-cli profile app-view 1234
     delete:
       tags:
       - profile
@@ -7431,6 +7544,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/profile/apps/123
+      - lang: CLI
+        source: >
+          linode-cli profile app-delete 123
   /profile/grants:
     x-linode-cli-command: profile
     get:
@@ -7502,6 +7618,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST \
               https://api.linode.com/v4/profile/tfa-disable
+      - lang: CLI
+        source: >
+          linode-cli profile tfa-disable
   /profile/tfa-enable:
     x-linode-cli-command: profile
     post:
@@ -7549,6 +7668,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST \
               https://api.linode.com/v4/profile/tfa-enable
+      - lang: CLI
+        source: >
+          linode-cli profile tfa-enable
   /profile/tfa-enable-confirm:
     x-linode-cli-command: profile
     post:
@@ -7646,6 +7768,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile/tokens
+      - lang: CLI
+        source: >
+          linode-cli profile tokens-list
     post:
       tags:
       - profile
@@ -7709,6 +7834,9 @@ paths:
                 "label": "linode-cli"
               }' \
               https://api.linode.com/v4/profile/tokens
+      - lang: CLI
+        source: >
+          linode-cli profile token-create --scopes '*' --expiry '2018-01-01T13:46:32' --label linode-cli
   /profile/tokens/{tokenId}:
     description: View or revoke a single token.
     parameters:
@@ -7745,6 +7873,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile/tokens/123
+      - lang: CLI
+        source: >
+          linode-cli profile token-view 123
     put:
       tags:
       - profile
@@ -7782,6 +7913,9 @@ paths:
                 "label": "linode-cli"
               }' \
               https://api.linode.com/v4/profile/tokens/123
+      - lang: CLI
+        source: >
+          linode-cli profile token-update 123 --label linode-cli
     delete:
       tags:
       - profile
@@ -7813,6 +7947,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/profile/tokens/123
+      - lang: CLI
+        source: >
+          linode-cli profile token-delete 123
   /regions:
     x-linode-cli-command: regions
     get:
@@ -7849,6 +7986,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/regions
+      - lang: CLI
+        source: >
+          linode-cli regions list
   /regions/{regionId}:
     x-linode-cli-command: regions
     parameters:
@@ -7880,6 +8020,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/regions/us-east
+      - lang: CLI
+        source: >
+          linode-cli regions view us-east
   /support/tickets:
     x-linode-cli-command: tickets
     get:
@@ -7929,6 +8072,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/support/tickets
+      - lang: CLI
+        source: >
+          linode-cli tickets list
     post:
       x-linode-grant: read_write
       tags:
@@ -7940,7 +8086,7 @@ paths:
         Only one of the ID attributes (`linode_id`, `domain_id`, etc) can be set
         on a single Support Ticket.
       operationId: createTicket
-      x-linode-cli-action: open
+      x-linode-cli-action: create
       security:
       - personalAccessToken: []
       - oauth:
@@ -8007,6 +8153,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/support/tickets/11223344
+      - lang: CLI
+        source: >
+          linode-cli tickets view 11223344
   /support/tickets/{ticketId}/attachments:
     parameters:
     - name: ticketId
@@ -8116,6 +8265,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/support/tickets/11223344/replies
+      - lang: CLI
+        source: >
+          linode-cli tickets replies 11223344
     post:
       x-linode-grant: read_write
       tags:
@@ -8166,6 +8318,9 @@ paths:
                 "description": "Thank you for your help. I was able to figure out what the problem was and I successfully reset my password. You guys are the best!"
               }' \
               https://api.linode.com/v4/support/tickets/11223344/replies
+      - lang: CLI
+        source: >
+          linode-cli tickets reply 11223344 --description "Thank you for your help. I was able to figure out what the problem was and I successfully reset my password. You guys are the best!"
   /volumes:
     x-linode-cli-command: volumes
     get:
@@ -8209,6 +8364,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/volumes
+      - lang: CLI
+        source: >
+          linode-cli volumes list
     post:
       x-linode-charge: true
       x-linode-grant: add_volumes
@@ -8312,6 +8470,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/volumes/12345
+      - lang: CLI
+        source: >
+          linode-cli volumes view 12345
     put:
       x-linode-grant: read_write
       tags:
@@ -8364,12 +8525,12 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "label": "my-volume",
-                "size": 20,
-                "region": "us-east",
-                "linode_id": 12346
+                "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345
+      - lang: CLI
+        source: >
+          linode-cli volumes update 12345 --label my_volume
     delete:
       x-linode-grant: read_write
       tags:
@@ -8519,6 +8680,9 @@ paths:
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345/clone
+      - lang: CLI
+        source: >
+          linode-cli volumes clone 12345 --label my-volume
   /volumes/{volumeId}/detach:
     parameters:
     - name: volumeId
@@ -8560,6 +8724,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST \
               https://api.linode.com/v4/volumes/12345/detach
+      - lang: CLI
+        source: >
+          linode-cli volumes detach 12345
   /volumes/{volumeId}/resize:
     parameters:
     - name: volumeId
@@ -8616,6 +8783,9 @@ paths:
                 "size": 30
               }' \
               https://api.linode.com/v4/volumes/12345/resize
+      - lang: CLI
+        source: >
+          linode-cli volumes resize 12345 --size 30
 components:
   securitySchemes:
     personalAccessToken:
@@ -11843,7 +12013,7 @@ components:
           description: >
             The private IP Address this backend can be reached at. This _must_
             be a private IP address.
-          example: 192.168.210.120
+          example: 192.168.210.120:80
           x-linode-cli-display: 3
         label:
           type: string
@@ -12294,7 +12464,7 @@ components:
           description: >
             The timezone you prefer to see times in.  This is not used by the API, and is
             for the benefit of clients only.  All times the API returns are in UTC.
-          example: null
+          example: US/Eastern
         email_notifications:
           type: boolean
           description: >
