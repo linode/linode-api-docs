@@ -27,32 +27,29 @@ info:
 
     ## Personal Access Token
 
-    You must request an access code that can then be exchanged for an
-    authorization token. A Personal Access Token (PAT) is an
-    [OAuth 2.0](https://oauth.net/2/) Access Token that you can generate via the
+    The easiest way to access the API is with a Personal Access Token (PAT)
+    generated from the
     [Linode Cloud Manager](https://cloud.linode.com/profile/tokens). You must
-    create a Personal Access Token to use the API. If you are consuming the API
-    for yourself only and do not intend on creating an application, a Personal
-    Access Token is all you need.
+    create a Personal Access Token to use the API. In most cases, a Personal
+    Access Token is all you need to consume the API.
 
-    The authorization token can then be used to make requests against our API.
-
-    All scopes for the `oauth` security model (defined below), apply to this
+    All scopes for the `oauth` security model (defined below) apply to this
     security model as well.
 
     ## OAuth
 
-    The OAuth workflow is a two-step process to authenticate a user before the
-    user (or an application on the user's behalf) can start making API calls.
+    The OAuth workflow is a three-step process to authenticate a user before an
+    application can start making API calls on the user's behalf.
 
-    The user logs in to Linode and is presented the scope levels your
-    application is requesting. Once the user accepts your request for access,
-    we redirect them back to you with an access code. You may then exchange the
-    access code for an authorization token.
+    First, the user visits the application's website and is directed to log with
+    Linode. The user is then redirected to Linode's authentication server and
+    presented the scope levels the application is requesting. Once the user
+    accepts the request for access, we redirect them back to the application's
+    specified redirect URI with an access code.
 
     Once the user has logged in to Linode and you have received an access code,
     you will need to exchange that access code for an Authorization token. You
-    do this by making the following HTTP POST request:
+    do this by making an HTTP POST request to the following address:
 
     ```
     https://login.linode.com/oauth/token
@@ -97,9 +94,9 @@ info:
     | METHOD | USAGE |
     |--------|-------|
     | GET    | Retrieves data about collections and individual resources. |
-    | POST   | Creates a new resource, such as a Linode Instance, NodeBalancer, Volume, etc. |
+    | POST   | For collections, creates a new resource of that type. Also used to perform actions on action endpoints. |
     | PUT    | Updates an existing resource. |
-    | DELETE | Deletes a resource. In virtually all cases this is a destructive action. |
+    | DELETE | Deletes a resource. This is a destructive action. |
 
 
     # Responses
@@ -109,6 +106,7 @@ info:
     | STATUS  | DESCRIPTION |
     |---------|-------------|
     | 200 OK  | The request was successful |
+    | 204 No Content | The server successfully fulfilled the request and there is no additional content to send. |
     | 400 Bad Request | You submitted an invalid request (missing parameters, etc.). |
     | 401 Unauthorized | You failed to authenticate for this resource. |
     | 403 Forbidden | You are authenticated, but don't have permission to do this. |
@@ -119,23 +117,12 @@ info:
     # Errors
 
     Success is indicated via [Standard HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
-    `2xx` codes indicate success, `4xx` codes indicate an
-    error on your side, and `5xx` errors indicate an error on our side. An error
-    on your side might be an invalid input, a required parameter being omitted,
-    etc. Errors on our side shouldn't happen often. If an error does occur, please
-    let us know.
-
-    Requests that return errors will look like this:
-
-    ```Shell
-    {
-      "errors": [
-        {
-          "reason": "Invalid JSON"
-        }
-      ]
-    }
-    ```
+    `2xx` codes indicate success, `4xx` codes indicate a request error, and
+    `5xx` errors indicate a server error. A
+    request error might be an invalid input, a required parameter being omitted,
+    or a malformed request. A server error means something went wrong processing
+    your request, and we'll fix it shortly. If this occurs, please
+    [open a Support Ticket](/#operation/createTicket) and let us know.
 
     The `errors` field is an array of the things that went wrong with your request.
     We will try to include as many of the problems in the response as possible,
@@ -8853,7 +8840,7 @@ paths:
               https://api.linode.com/v4/volumes/12345/resize
       - lang: CLI
         source: >
-          linode-cli volumes resize 12345 --size 301
+          linode-cli volumes resize 12345 --size 30
 
 components:
   securitySchemes:
