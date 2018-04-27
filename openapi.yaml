@@ -8399,7 +8399,11 @@ paths:
               - type: object
                 properties:
                   region:
-                    $ref: '#/components/schemas/Region/properties/id'
+                    type: string
+                    description: >
+                      The region to deploy this volume in.  This is only required
+                      if a linode_id is not given.
+                    example: null
       responses:
         '200':
           description: >
