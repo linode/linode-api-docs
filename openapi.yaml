@@ -12342,7 +12342,7 @@ components:
           description: The URL to have PayPal redirect to when payment is approved.
           example: https://example.org
         usd:
-          type: integer
+          type: string
           description: The amount, in US dollars, of the payment.
           example: '120.50'
     PayPalExecute:
@@ -12419,6 +12419,7 @@ components:
             is returned here.  Otherwise, only the first 16 characters are returned.
           example: abcdefghijklmnop
           readOnly: true
+          x-linode-cli-display: 5
         expiry:
           type: string
           format: date-time
@@ -12427,7 +12428,7 @@ components:
             after this time the token will be completely unusable and a new token will
             need to be generated.  Tokens may be created with "null" as their expiry
             and will never expire unless revoked.
-          x-linode-cli-display: 5
+          x-linode-cli-display: 6
           example: '2018-01-01T13:46:32'
     Profile:
       type: object
