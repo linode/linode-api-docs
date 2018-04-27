@@ -7,34 +7,147 @@ info:
     backgroundColor: '#fafafa'
   }
   description: |
-    This is Linode's next generation API. The API was designed around the concepts of REST and does
-    its best to conform to a RESTful model whenever possible. When not possible the goal was to be
-    as intuitive as possible.
+    The Linode API provides the ability to programmatically manage the full
+    range of Linode products and services.
 
-    Another design goal of the Linode API was to give developers the power to manipulate all Linode
-    services through code as easily as they can through the Linode Manager UI.
-
-    With this API, it is now not only possible to create a new Linode, but also enable backups,
-    add it to a Nodebalancer, attach Block Storage Volumes, create backup snapshots, imagize its
-    disk for mass deployment of more Linodes, and so much more.
-
-    Additionally, as an administrator on an account, you can now use the API to create new users and
-    control the level of access they have to the services on your account.
-
-    Finally, one of the most powerful features of this version of Linode's API is the ability to
-    allow third-party applications control of your account through the OAuth 2 protocol. All Linode
-    service endpoints allow four levels of access: __view__, __create__, __modify__, __delete__.
-    Developers now have the capability to create their own exciting new services on top of Linode's
-    world-class infrastructure.
-
+    This reference is designed to assist application developers and users.
+    Each action (endpoint) includes descriptions, request syntax, and examples
+    using standard HTTP requests. Response data is returned in JSON format.
 
 
     [Download the Linode OpenAPI Specification](/openapi.yaml)
 
+
     # Changelog
 
-    You can [view our Changelog](/changelog)
-    to keep up to date on all changes made to our API.
+    [View our Changelog](/changelog) to keep up to date on all changes made to
+    our API.
+
+    # Access
+
+    ## Personal Access Token
+
+    You must request an access code that can then be exchanged for an
+    authorization token. A Personal Access Token (PAT) is an
+    [OAuth 2.0](https://oauth.net/2/) Access Token that you can generate via the
+    [Linode Cloud Manager](https://cloud.linode.com/profile/tokens). You must
+    create a Personal Access Token to use the API. If you are consuming the API
+    for yourself only and do not intend on creating an application, a Personal
+    Access Token is all you need.
+
+    The authorization token can then be used to make requests against our API.
+
+    All scopes for the `oauth` security model (defined below), apply to this
+    security model as well.
+
+    ## OAuth
+
+    The OAuth workflow is a two-step process to authenticate a user before the
+    user (or an application on the user's behalf) can start making API calls.
+
+    The user logs in to Linode and is presented the scope levels your
+    application is requesting. Once the user accepts your request for access,
+    we redirect them back to you with an access code. You may then exchange the
+    access code for an authorization token.
+
+    Once the user has logged in to Linode and you have received an access code,
+    you will need to exchange that access code for an Authorization token. You
+    do this by making the following HTTP POST request:
+
+    ```
+    https://login.linode.com/oauth/token
+    ```
+
+    Make this request as `application/x-www-form-urlencoded` or as
+    `multipart/form-data` and include the following parameters in the POST body:
+
+    | PARAMETER | DESCRIPTION |
+    |-----------|-------------|
+    | client_id | Your app's client ID |
+    | client_secret | Your app's client secret |
+    | code | The code you just received from the redirect |
+
+    You'll get a reponse like this:
+
+    ```json
+    {
+      "scope": "linodes:create",
+      "access_token": "03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c"
+      "token_type": "bearer",
+      "expires_in": 7200,
+    }
+    ```
+
+    Included is the actual access_token. With this token, you can proceed to make
+    authenticated HTTP requests with the API by adding this header to each request:
+
+    ```
+    Authorization: Bearer 03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c
+    ```
+
+    ## Authentication Schema
+
+    See our [Authentication Schema](/#section/Authentication) for
+    information on scopes and authorization/token URLs.
+
+    # Requests
+
+    Requests should be made over HTTPS to ensure transactions are encrypted.
+
+    | METHOD | USAGE |
+    |--------|-------|
+    | GET    | Retrieves data about collections and individual resources. |
+    | POST   | Creates a new resource, such as a Linode Instance, NodeBalancer, Volume, etc. |
+    | PUT    | Updates an existing resource. |
+    | DELETE | Deletes a resource. In virtually all cases this is a destructive action. |
+
+
+    # Responses
+
+    Actions will return one following HTTP response status codes:
+
+    | STATUS  | DESCRIPTION |
+    |---------|-------------|
+    | 200 OK  | The request was successful |
+    | 400 Bad Request | You submitted an invalid request (missing parameters, etc.). |
+    | 401 Unauthorized | You failed to authenticate for this resource. |
+    | 403 Forbidden | You are authenticated, but don't have permission to do this. |
+    | 404 Not Found | The resource you're requesting does not exist. |
+    | 429 Too Many Requests | You've hit a rate limit. |
+    | 500 Internal Server Error | Please [open a Support Ticket](/#operation/createTicket). |
+
+    # Errors
+
+    Success is indicated via [Standard HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
+    `2xx` codes indicate success, `4xx` codes indicate an
+    error on your side, and `5xx` errors indicate an error on our side. An error
+    on your side might be an invalid input, a required parameter being omitted,
+    etc. Errors on our side shouldn't happen often. If an error does occur, please
+    let us know.
+
+    Requests that return errors will look like this:
+
+    ```Shell
+    {
+      "errors": [
+        {
+          "reason": "Invalid JSON"
+        }
+      ]
+    }
+    ```
+
+    The `errors` field is an array of the things that went wrong with your request.
+    We will try to include as many of the problems in the response as possible,
+    but it's conceivable that fixing these errors and resubmitting may result in
+    new errors coming back once we are able to get further along in the process
+    of handling your request.
+
+
+    Within each error object, the `field` parameter will be included if the error
+    pertains to a specific field in the JSON you've submitted. This will be
+    omitted if there is no relevant field. The reason is a human-readable
+    explanation of the error, and will always be included.
 
     # Pagination
 
@@ -162,51 +275,6 @@ info:
         ]
       }'
     ```
-
-    # Errors
-
-    Success is indicated via [Standard HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
-    `2xx` codes indicate success, `4xx` codes indicate an
-    error on your side, and `5xx` errors indicate an error on our side. An error
-    on your side might be an invalid input, a required parameter being omitted,
-    etc. Errors on our side shouldn't happen often. If an error does occur, please
-    let us know.
-
-    Requests that return errors will look like this:
-
-    ```Shell
-    {
-      "errors": [
-        {
-          "reason": "Invalid JSON"
-        }
-      ]
-    }
-    ```
-
-    The `errors` field is an array of the things that went wrong with your request.
-    We will try to include as many of the problems in the response as possible,
-    but it's conceivable that fixing these errors and resubmitting may result in
-    new errors coming back once we are able to get further along in the process
-    of handling your request.
-
-
-    Within each error object, the `field` parameter will be included if the error
-    pertains to a specific field in the JSON you've submitted. This will be
-    omitted if there is no relevant field. The reason is a human-readable
-    explanation of the error, and will always be included.
-
-    # HTTP Status Codes
-
-    | STATUS  | DESCRIPTION |
-    |---------|-------------|
-    | 200 OK  | The request was successful |
-    | 400 Bad Request | You submitted an invalid request (missing parameters, etc.) |
-    | 401 Unauthorized | You failed to authenticate for this resource |
-    | 403 Forbidden | You are authenticated, but don't have permission to do this |
-    | 404 Not Found | The resource you're requesting does not exist |
-    | 429 Too Many Requests | You've hit a rate limit |
-    | 500 Internal Server Error | Please [open a Support Ticket](/#operation/createTicket) |
   contact:
     name: Linode
     url: /
@@ -8079,9 +8147,9 @@ paths:
       x-linode-grant: read_write
       tags:
       - support
-      summary: Create Support Ticket
+      summary: Open Support Ticket
       description: >
-        Create a Support Ticket.
+        Open a Support Ticket.
 
         Only one of the ID attributes (`linode_id`, `domain_id`, etc) can be set
         on a single Support Ticket.
@@ -8092,14 +8160,14 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: Create a Support Ticket.
+        description: Open a Support Ticket.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/SupportTicketRequest'
       responses:
         '200':
-          description: Support Ticket created.
+          description: Support Ticket opened.
           content:
             application/json:
               schema:
@@ -8785,16 +8853,12 @@ paths:
               https://api.linode.com/v4/volumes/12345/resize
       - lang: CLI
         source: >
-          linode-cli volumes resize 12345 --size 30
+          linode-cli volumes resize 12345 --size 301
+
 components:
   securitySchemes:
     personalAccessToken:
       type: http
-      description: |
-        A Personal Access Token is an OAuth 2.0 Access Token that you can generate for your own
-        personal use through the [Linode Cloud Manager](https://cloud.linode.com/profile/tokens).
-
-        All scopes defined for the `oauth` security model, apply to this security model as well.
       scheme: bearer
     oauth:
       type: oauth2
