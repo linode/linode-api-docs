@@ -7565,6 +7565,7 @@ paths:
         endpoint, as no OAuth scopes are required.
       operationId: getProfileGrants
       x-linode-cli-action: grants
+      x-linode-cli-skip: true
       security:
       - personalAccessToken: []
       - oauth: []
