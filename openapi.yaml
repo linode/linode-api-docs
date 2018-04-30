@@ -1251,7 +1251,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayPalExecute'
+                type: object
+                properties:
+                  payment_id:
+                      type: string
+                      description: >
+                        The paypal-generated ID for this payment.  Used when
+                        authorizing the payment in PayPal's interface.
+                      example: PAY-1234567890ABCDEFGHIJKLMN
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -2601,36 +2608,36 @@ paths:
               allOf:
               - $ref: '#/components/schemas/LinodeRequest'
               - $ref: '#/components/schemas/LinodeBase'
-              properties:
-                backup_id:
-                  type: integer
-                  title: The ID of a Linode Backup
-                  example: 1234
-                  description: |
-                    A Backup ID from another Linode's available backups. Your user must have
-                    `read_write` access to that Linode, the backup must have a `status` of
-                    `successful`, and the Linode must be deployed to the same `region` as the backup.
-                    See [GET /linode/instances/{linodeId}/backups](/#operation/getBackups)
-                    for a Linode's available backups.
+              - properties:
+                  backup_id:
+                    type: integer
+                    title: The ID of a Linode Backup
+                    example: 1234
+                    description: |
+                      A Backup ID from another Linode's available backups. Your user must have
+                      `read_write` access to that Linode, the backup must have a `status` of
+                      `successful`, and the Linode must be deployed to the same `region` as the backup.
+                      See [GET /linode/instances/{linodeId}/backups](/#operation/getBackups)
+                      for a Linode's available backups.
 
-                    This field and the `image` field are mutually exclusive.
-                backups_enabled:
-                  type: boolean
-                  title: If Backups should be enabled.
-                  description: |
-                    If this field is set to `true`, the created Linode will automatically be
-                    enrolled in the Linode Backup service. This will incur an additional charge.
-                    The cost for the Backup service is dependent on the type of Linode deployed.
+                      This field and the `image` field are mutually exclusive.
+                  backups_enabled:
+                    type: boolean
+                    title: If Backups should be enabled.
+                    description: |
+                      If this field is set to `true`, the created Linode will automatically be
+                      enrolled in the Linode Backup service. This will incur an additional charge.
+                      The cost for the Backup service is dependent on the type of Linode deployed.
 
-                    Backup pricing is included in the response from [GET /linodes/types](/#operation/getLinodeTypes)
-                swap_size:
-                  type: integer
-                  title: Swap Disk size in MB
-                  example: 512
-                  description: >
-                    When deploying from an Image, this field is optional, otherwise it is ignored.
-                    This is used to set the Swap Disk size for the newly created Linode.
-                  default: 512
+                      Backup pricing is included in the response from [GET /linodes/types](/#operation/getLinodeTypes)
+                  swap_size:
+                    type: integer
+                    title: Swap Disk size in MB
+                    example: 512
+                    description: >
+                      When deploying from an Image, this field is optional, otherwise it is ignored.
+                      This is used to set the Swap Disk size for the newly created Linode.
+                    default: 512
       responses:
         '200':
           description: >
@@ -3280,6 +3287,8 @@ paths:
                   description: >
                     All disks attached to configs will be cloned from the
                     source Linode if not provided.
+                  items:
+                    type: integer
                 configs:
                   type: array
                   title: List of config IDs to include.
