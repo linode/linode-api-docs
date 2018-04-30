@@ -3295,6 +3295,8 @@ paths:
                   description: >
                     All configs attached to will be cloned from the source
                     Linode if not provided.
+                  items:
+                    type: integer
       responses:
         '200':
           description: Clone started.
