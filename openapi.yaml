@@ -3268,6 +3268,8 @@ paths:
                   description: >
                     All disks attached to configs will be cloned from the
                     source Linode if not provided.
+                  items:
+                    type: integer
                 configs:
                   type: array
                   title: List of config IDs to include.
