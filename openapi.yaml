@@ -752,6 +752,9 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                 https://api.linode.com/v4/account/notifications
+        - lang: CLI
+          source: >
+            linode-cli account notifications-list
   /account/oauth-clients:
     x-linode-cli-command: account
     get:
@@ -1309,6 +1312,9 @@ paths:
                     "payer_id": "ABCDEFGHIJKLM"
                 }' \
                 https://api.linode.com/v4/account/payments/paypal
+        - lang: CLI
+          source: >
+            linode-cli account paypal-execute
   /account/settings:
     x-linode-cli-command: account
     get:
@@ -1607,10 +1613,13 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
-                    "email": "person@place.com",
+                    "username": example_user
                     "restricted": true
                 }' \
                 https://api.linode.com/v4/account/users/example_user
+        - lang: CLI
+          source: >
+            linode-cli users update example_user --username example_user --restricted true
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -2858,6 +2867,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/backups
+      - lang: CLI
+        source: >
+          linode-cli linodes backups-list 123
     post:
       x-linode-grant: read_write
       summary: Create Snapshot
@@ -3547,6 +3559,9 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/linode/instances/123/configs/23456
+      - lang: CLI
+        source: >
+          linode-cli linodes config-delete 123 23456
   /linode/instances/{linodeId}/disks:
     parameters:
     - name: linodeId
@@ -3912,6 +3927,9 @@ paths:
                 "size": 2048
               }' \
               https://api.linode.com/v4/linode/instances/123/disks/25674/resize
+      - lang: CLI
+        source: >
+          linode-cli linodes disk-resize 123 25674 --size 2048
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
@@ -4838,6 +4856,9 @@ paths:
                 "script": "#!/bin/bash"
               }' \
               https://api.linode.com/v4/linode/stackscripts
+      - lang: CLI
+        source: >
+          linode-cli stackscripts create --label a-stackscript --description "This StackScript install and configures MySQL" --images "linode/debian9" --images "linode/debian8" --is_public true --rev_note "Set up MySQL" --script '#!/bin/bash'
   /linode/stackscripts/{stackscriptId}:
     parameters:
     - name: stackscriptId
@@ -4924,6 +4945,9 @@ paths:
                 "script": "#!/bin/bash"
               }' \
               https://api.linode.com/v4/linode/stackscripts/1337
+      - lang: CLI
+        source: >
+          linode-cli stackscripts update 1337 --label a-stackscript --description "This StackScript install and configures MySQL" --images "linode/debian9" --images "linode/debian8" --is_public true --rev_note "Set up MySQL" --script '#!/bin/bash'
     delete:
       x-linode-grant: read_write
       tags:
@@ -5963,7 +5987,7 @@ paths:
                 "ssh": {
                   "access": true,
                   "user": "linode",
-                  "ip": "12.34.56.789",
+                  "ip": "12.34.56.78",
                   "port": 22
                 }
               }' \
@@ -6063,6 +6087,9 @@ paths:
                 ]
               }' \
               https://api.linode.com/v4/managed/services
+      - lang: CLI
+        source: >
+          linode-cli managed service-create --service_type url --label prod-1 --address "https://example.org" --timeout 30 --body "it worked" --consultation_group on-call --notes "The service name is my-cool-application" --credentials 9991
   /managed/services/{serviceId}:
     parameters:
     - name: serviceId
@@ -6149,6 +6176,9 @@ paths:
                 ]
               }' \
               https://api.linode.com/v4/managed/services/9994
+      - lang: CLI
+        source: >
+          linode-cli managed service-update 9994 --service_type url --label prod-1 --address "https://example.org" --timeout 30 --body "it worked" --consultation_group on-call --notes "The service name is my-cool-application" --credentials 9991
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -6306,6 +6336,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ips
+      - lang: CLI
+        source: >
+          linode-cli networking ips-list
     post:
       x-linode-grant: read_write
       tags:
@@ -6372,6 +6405,9 @@ paths:
                 "linode_id": 123
               }' \
               https://api.linode.com/v4/networking/ips
+      - lang: CLI
+        source: >
+          linode-cli networking ip-add --type ipv4 --public true --linode_id 123
   /networking/ips/{address}:
     parameters:
     - name: address
@@ -6409,6 +6445,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ips/97.107.143.141
+      - lang: CLI
+        source: >
+          linode-cli networking ip-view 97.107.143.141
     put:
       x-linode-grant: read_write
       tags:
@@ -6450,6 +6489,9 @@ paths:
                 "rdns": "test.example.org"
               }' \
               https://api.linode.com/v4/networking/ips/97.107.143.141
+      - lang: CLI
+        source: >
+          linode-cli networking ip-update 97.107.143.141 --rdns "test.example.org"
   /networking/ipv4/assign:
     description: >
       Allows redistribution of v4 IP Addresses within a region.  Any number
@@ -6507,7 +6549,7 @@ paths:
                           Ths IP Address for this assignment.  Must be a v4
                           address you can access in the region specified.  May
                           be a public or private address.
-                        example: 12.34.56.789
+                        example: 12.34.56.78
                       linode_id:
                         type: integer
                         description: >
@@ -6586,7 +6628,7 @@ paths:
                   items:
                     type: string
                     format: ip
-                    example: 12.34.56.789
+                    example: 12.34.56.78
                   description: >
                     A list of IPs that will be shared with this Linode.  When
                     this is finished, the given Linode will be able to bring up
@@ -6611,10 +6653,13 @@ paths:
               -X POST -d '{
                 "linode_id": 123,
                 "ips": [
-                  "12.34.56.789"
+                  "12.34.56.78"
                 ]
               }' \
               https://api.linode.com/v4/networking/ipv4/share
+      - lang: CLI
+        source: >
+          linode-cli networking ip-share --linode_id 123 --ips 12.34.56.78
   /networking/ipv6/pools:
     x-linode-cli-command: networking
     get:
@@ -6657,6 +6702,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ipv6/pools
+      - lang: CLI
+        source: >
+          linode-cli networking v6-pools
   /networking/ipv6/ranges:
     x-linode-cli-command: networking
     get:
@@ -6699,6 +6747,9 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/networking/ipv6/ranges
+      - lang: CLI
+        source: >
+          linode-cli networking v6-ranges
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -7782,6 +7833,9 @@ paths:
                 "tfa_code": "213456"
               }' \
               https://api.linode.com/v4/profile/tfa-enable-confirm
+      - lang: CLI
+        source: >
+          linode-cli profile tfa-confirm --tfa_code 213456
   /profile/tokens:
     x-linode-cli-command: profile
     description: >
@@ -8173,6 +8227,9 @@ paths:
                 "summary": "Having trouble resetting root password on my Linode"
               }' \
               https://api.linode.com/v4/support/tickets
+      - lang: CLI
+        source: >
+          linode-cli tickets create --description "I'm having trouble setting the root password on my Linode. I tried following the instructions but something is not working and I'm not sure what I'm doing wrong. Can you please help me figure out how I can reset it?" --linode_id 123 --summary "Having trouble resetting root password on my Linode"
   /support/tickets/{ticketId}:
     parameters:
     - name: ticketId
@@ -8482,6 +8539,9 @@ paths:
                 "linode_id": 12346
               }' \
               https://api.linode.com/v4/volumes
+      - lang: CLI
+        source: >
+          linode-cli volumes create --label my-volume --size 20 --region us-east --linode_id 12346
   /volumes/{volumeId}:
     parameters:
     - name: volumeId
@@ -8623,6 +8683,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/volumes/12345
+      - lang: CLI
+        source: >
+          linode-cli volumes delete 12345
   /volumes/{volumeId}/attach:
     parameters:
     - name: volumeId
@@ -8683,6 +8746,9 @@ paths:
                 "linode_id": 12346
               }' \
               https://api.linode.com/v4/volumes/12345/attach
+      - lang: CLI
+        source: >
+          linode-cli volumes attach 12345 --linode_id 12346
   /volumes/{volumeId}/clone:
     parameters:
     - name: volumeId
@@ -11654,7 +11720,7 @@ components:
               description: >
                 The IP Linode special forces should use to access this Linode
                 when responding to an issue.
-              example: 12.34.56.789
+              example: 12.34.56.78
             port:
               type: integer
               minimum: 1
