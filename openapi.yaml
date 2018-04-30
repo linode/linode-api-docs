@@ -1248,7 +1248,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PayPalExecute'
+                type: object
+                properties:
+                  payment_id:
+                      type: string
+                      description: >
+                        The paypal-generated ID for this payment.  Used when
+                        authorizing the payment in PayPal's interface.
+                      example: PAY-1234567890ABCDEFGHIJKLMN
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
