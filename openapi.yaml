@@ -4002,12 +4002,36 @@ paths:
                         readOnly: true
                       shared:
                         type: array
-                        items:
-                          type: object
-                        description: >
-                          A list of IP Address objects that are shared with this Linode
-                          (this Linode may bring up the address, but does not own it).
                         readOnly: true
+                        items:
+                          properties:
+                            subnet_mask:
+                              type: string
+                              example: 255.255.255.0
+                            linode_id:
+                              type: string
+                              example: 123
+                            public:
+                              type: boolean
+                              example: true
+                            gateway:
+                               type: string
+                               example: 45.79.148.1
+                            prefix:
+                              type: integer
+                              example: 24
+                            region:
+                              type: string
+                              example: us-east
+                            type:
+                              type: string
+                              example: ipv4
+                            rdns:
+                             type: string
+                             example: li1247-191.members.linode.com
+                            address:
+                              type: string
+                              example: 45.79.148.191
                   ipv6:
                     type: object
                     description: >
@@ -4020,11 +4044,15 @@ paths:
                         $ref: '#/components/schemas/IPAddressV6Slaac'
                       global:
                         type: array
-                        items:
-                          type: string
-                        description: >
-                          A list of global pools or ranges this Linode may bring up.
                         readOnly: true
+                        items:
+                          properties:
+                            range:
+                              type: string
+                              example: '2600:3c03:e000:0201::'
+                            region:
+                              type: string
+                              example: us-east
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
