@@ -9385,9 +9385,21 @@ components:
           example: null
     Devices:
       type: object
-      allOf:
-      - $ref: '#/components/schemas/RescueDevices'
       properties:
+        sda:
+          $ref: '#/components/schemas/Device'
+        sdb:
+          $ref: '#/components/schemas/Device'
+        sdc:
+          $ref: '#/components/schemas/Device'
+        sdd:
+          $ref: '#/components/schemas/Device'
+        sde:
+          $ref: '#/components/schemas/Device'
+        sdf:
+          $ref: '#/components/schemas/Device'
+        sdg:
+          $ref: '#/components/schemas/Device'
         sdh:
           $ref: '#/components/schemas/Device'
     Disk:
@@ -9565,6 +9577,8 @@ components:
         in our system to be treated as authoritative.
       required:
       - id
+      - domain
+      - type
       properties:
         id:
           type: integer
