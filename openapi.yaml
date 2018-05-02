@@ -4002,12 +4002,9 @@ paths:
                         readOnly: true
                       shared:
                         type: array
-                        items:
-                          type: object
-                        description: >
-                          A list of IP Address objects that are shared with this Linode
-                          (this Linode may bring up the address, but does not own it).
                         readOnly: true
+                        items:
+                          $ref: '#/components/schemas/IPAddress'
                   ipv6:
                     type: object
                     description: >
@@ -4019,12 +4016,7 @@ paths:
                       slaac:
                         $ref: '#/components/schemas/IPAddressV6Slaac'
                       global:
-                        type: array
-                        items:
-                          type: string
-                        description: >
-                          A list of global pools or ranges this Linode may bring up.
-                        readOnly: true
+                        $ref: '#/components/schemas/IPv6Pool'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
