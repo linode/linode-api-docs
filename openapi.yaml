@@ -9585,6 +9585,8 @@ components:
         in our system to be treated as authoritative.
       required:
       - id
+      - domain
+      - type
       properties:
         id:
           type: integer
