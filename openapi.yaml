@@ -3566,6 +3566,9 @@ paths:
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123/configs/23456
+      - lang: CLI
+        source: >
+          linode-cli linodes config-update 123 23456 --kernel "linode/latest-64bit" --comments "This is my main Config" --memory_limit 2048 --run_level default --virt_mode paravirt --helpers.updatedb_disabled true --helpers.distro true --helpers.modules_dep true --helpers.network true --helpers.devtmpfs_automount false --label "My Config" --devices.sda.disk_id 123456 --devices.sdb.disk_id 123457
       responses:
         '200':
           description: Configuration profile successfully updated.
@@ -3700,12 +3703,20 @@ paths:
               -X POST -d '{
                 "label": "Debian 9 Disk",
                 "image": "linode/debian9",
+                "size": 1300,
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
                 "root_pass": "aComplexP@ssword",
+                "stackscript_id": 10079,
+                "stackscript_data": {
+                  "gh_username": "linode"
+                }
               }' \
               https://api.linode.com/v4/linode/instances/123/disks
+      - lang: CLI
+        source: >
+          linode-cli linodes disk-create 123 --size 1300 --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" --root_pass aComplex@Password --image "linode/debian9" --stackscript_id 10079 --stackscript_data '{"gh_username": "linode"}'
   /linode/instances/{linodeId}/disks/{diskId}:
     parameters:
     - name: linodeId
@@ -4475,9 +4486,16 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
-                "booted": true
+                "booted": true,
+                "stackscript_id": 10079,
+                "stackscript_data": {
+                  "gh_username": "linode"
+                }
               }' \
               https://api.linode.com/v4/linode/instances/123/rebuild
+      - lang: CLI
+        source: >
+          linode-cli linodes rebuild 123 --image "linode/debian9" --root_pass aComplex@Password --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" --booted true --stackscript_id 10079 --stackscript_data '{"gh_username": "linode"}'
   /linode/instances/{linodeId}/rescue:
     parameters:
     - name: linodeId
@@ -4544,6 +4562,9 @@ paths:
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123/rescue
+      - lang: CLI
+        source: >
+          linode-cli linodes rescue 123 --devices.sda.disk_id 124458
   /linode/instances/{linodeId}/resize:
     parameters:
     - name: linodeId
