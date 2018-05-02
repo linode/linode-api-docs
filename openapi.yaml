@@ -2669,6 +2669,10 @@ paths:
                 "swap_size": 512,
                 "image": "linode/debian9",
                 "root_pass": "aComplexP@ssword",
+                "stackscript_id": 10079,
+                "stackscript_data": {
+                  "gh_username": "linode"
+                },
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
@@ -2679,6 +2683,9 @@ paths:
                 "group": "Linode-Group"
               }' \
               https://api.linode.com/v4/linode/instances
+      - lang: CLI
+        source: >
+          linode-cli linodes create --label linode123 --root_pass aComplex@Password --booted true --stackscript_id 10079 --stackscript_data '{"gh_username": "linode"}' --region us-east --type g5-standard-2 --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
@@ -2793,6 +2800,9 @@ paths:
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123
+      - lang: CLI
+        source: >
+          linode-cli linodes update 7833080 --label linode123 --backups.schedule.day "Saturday" --backups.schedule.window "W22" --alerts.cpu 90 --alerts.network_in 10 --alerts.network_out 10 --alerts.transfer_quota 80 --alerts.io 10000
     delete:
       x-linode-grant: read_write
       tags:
@@ -3244,6 +3254,7 @@ paths:
                     [GET /regions](/#operation/getRegions).
 
                     * Region can only be provided when cloning to a new Linode.
+                  example: us-east
                 type:
                   type: string
                   title: The Linode service plan type.
@@ -3256,13 +3267,15 @@ paths:
                     To view all available Linode `types` you can deploy with
                     see [GET /linode/types](/#operation/getLinodeTypes).
 
-                    * Type can only be provided wen cloning to a new Linode.
+                    * Type can only be provided when cloning to a new Linode.
+                  example: g5-standard-2
                 linode_id:
                   type: integer
                   title: Target clone's Linode ID.
                   description: >
                     If an existing Linode is to be the target for the clone,
                     the ID of that Linode.
+                  example: 124
                 label:
                   type: string
                   title: Label for the target Linode.
@@ -3271,6 +3284,7 @@ paths:
 
                     * Can only be provided when cloning to a new Linode.
                     * Defaults to "linode".
+                  example: cloned-linode
                 group:
                   deprecated: true
                   type: string
@@ -3278,6 +3292,7 @@ paths:
                   description: >
                     A label used to group Linodes for display. Linodes are not
                     required to have a group.
+                  example: Linode-Group
                 backups_enabled:
                   type: boolean
                   title: If Backups should be enabled.
@@ -3291,6 +3306,7 @@ paths:
                     [GET /linodes/types](/#operation/getLinodeTypes).
 
                     * Can only be included when cloning to a new Linode.
+                  example: true
                 disks:
                   type: array
                   title: List of disk IDs to include.
@@ -3299,6 +3315,7 @@ paths:
                     source Linode if not provided.
                   items:
                     type: integer
+                    example: 25674
                 configs:
                   type: array
                   title: List of config IDs to include.
@@ -3307,6 +3324,7 @@ paths:
                     Linode if not provided.
                   items:
                     type: integer
+                    example: 23456
       responses:
         '200':
           description: Clone started.
@@ -3322,16 +3340,19 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "region": "string",
-                "type": "string",
-                "linode_id": 0,
-                "label": "string",
-                "group": "string",
+                "region": "us-east",
+                "type": "g5-standard-2",
+                "linode_id": 124,
+                "label": "cloned-linode",
+                "group": "Linode-Group",
                 "backups_enabled": true,
-                "disks": [],
-                "configs": []
+                "disks": [25674],
+                "configs": [23456]
               }' \
               https://api.linode.com/v4/linode/instances/123/clone
+      - lang: CLI
+        source: >
+          linode-cli linodes clone 123 --linode_id 124 --region us-east --type g5-standard-2 --label cloned-linode --backups_enabled true --disks 25674 --configs 23456
   /linode/instances/{linodeId}/configs:
     parameters:
     - name: linodeId
@@ -3446,6 +3467,9 @@ paths:
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123/configs
+      - lang: CLI
+        source: >
+          linode-cli linodes config-create 7590910 --label "My Config" --devices.sda.disk_id 123456 --devices.sdb.disk_id 123457
   /linode/instances/{linodeId}/configs/{configId}:
     parameters:
     - name: linodeId
@@ -5443,6 +5467,9 @@ paths:
                 "group": "on-call"
               }' \
               https://api.linode.com/v4/managed/contacts
+      - lang: CLI
+        source: >
+          linode-cli managed contact-create --name "John Doe" --email "john.doe@example.org" --phone.primary "123-456-7890"
   /managed/contacts/{contactId}:
     parameters:
     - name: contactId
@@ -5526,6 +5553,9 @@ paths:
                 "group": "on-call"
               }' \
               https://api.linode.com/v4/managed/contacts/567
+      - lang: CLI
+        source: >
+          linode-cli managed contact-update 567 --name "John Doe" --email "john.doe@example.org" --phone.primary "123-456-7890"
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -6005,6 +6035,9 @@ paths:
                 }
               }' \
               https://api.linode.com/v4/managed/linode-settings/123
+      - lang: CLI
+        source: >
+          linode-cli managed linode-setting-update 7833234 --ssh.access true --ssh.user linode --ssh.port 22 --ssh.ip 12.34.56.78
   /managed/services:
     x-linode-cli-command: managed
     get:
@@ -6599,6 +6632,9 @@ paths:
                 ]
               }' \
               https://api.linode.com/v4/networking/ipv4/assign
+      - lang: CLI
+        source: >
+          linode-cli networking ip-assign --region us-east --assignments '{"address": "12.34.56.100", "linode_id": 123}' --assignments '{"23.45.67.200", "linode_id": 234}'
   /networking/ipv4/share:
     description: >
       Configure shared IPs.  A shared IP may be brought up on a Linode other
@@ -10908,7 +10944,6 @@ components:
               readOnly: true
         alerts:
           type: object
-          readOnly: true
           properties:
             cpu:
               type: integer
