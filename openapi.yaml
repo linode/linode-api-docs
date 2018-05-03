@@ -13210,8 +13210,8 @@ components:
     User:
       type: object
       description: >
-        A User on your Account. Users can log in and access information about
-        Account, while restricted users may only access entities or perform
+        A User on your Account. Unrestricted users can log in and access information about
+        your Account, while restricted users may only access entities or perform
         actions they've been granted access to.
       properties:
         username:
