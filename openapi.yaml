@@ -416,7 +416,7 @@ paths:
       description: >
          This endpoint returns a collection of Event objects representing
          actions taken on your Account. The events returned depends on your
-         grants.
+         Grants.
       operationId: getEvents
       x-linode-cli-action: list
       security:
@@ -1443,10 +1443,10 @@ paths:
       summary: List Users
       description: >
         Returns a paginated list of Users on your account.  Users may access all
-        or part of your account based on their restricted status and grants.  An
+        or part of your account based on their restricted status and Grants.  An
         unrestricted user may access everything on the account, whereas restricted
         user may only access entities or perform actions they've been given specific
-        grants to.
+        Grants to.
       operationId: getUsers
       x-linode-cli-action: list
       security:
@@ -1489,7 +1489,7 @@ paths:
       description: >
         Creates a new User on your account.  Once created, the user will be
         able to log in and access portions of your account.  Access is
-        determined by whether or not they are restricted, and what grants they
+        determined by whether or not they are restricted, and what Grants they
         have been given.
       operationId: createUser
       x-linode-cli-action: create
@@ -1591,7 +1591,7 @@ paths:
       description: >
         Update information about a user on your account.  This can be used to
         change the restricted status of a user.  When making a user restricted,
-        no grants will be configured by default and you must then set up grants
+        no Grants will be configured by default and you must then set up Grants
         in order for the user to access anything on the account.
       operationId: updateUser
       x-linode-cli-action: update
@@ -1633,8 +1633,8 @@ paths:
       - account
       summary: Delete User
       description: >
-        Deletes a user.  The deleted user will be immediately logged out and
-        may no longer log in or perform any actions.  All grants that user had
+        Deletes a user. The deleted user will be immediately logged out and
+        may no longer log in or perform any actions. All Grants that user had
         will be lost.
       operationId: deleteUser
       x-linode-cli-action: delete
@@ -1675,9 +1675,9 @@ paths:
       - account
       summary: View User's Grants
       description: >
-        Returns the full grants structure for this user.  This includes all
+        Returns the full grants structure for this user. This includes all
         entities on the account alongside what level of access this user has
-        to each of them.  Individual users may view their own grants at the
+        to each of them.  Individual users may view their own Grants at the
         [/profile/grants](/#operation/getProfileGrants)
         endpoint, but will not see entities that they have no access to.
       operationId: getUserGrants
@@ -1689,14 +1689,14 @@ paths:
         - account:read_only
       responses:
         '200':
-          description: The user's grants.
+          description: The user's Grants.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GrantsResponse'
         '204':
           description: >
-            This is an unrestricted user, and therefore has no grants to return.
+            This is an unrestricted user, and therefore has no Grants to return.
             This user may access everything on the account and perform all actions.
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -1711,9 +1711,9 @@ paths:
       - account
       summary: Update User's Grants
       description: >
-        Update the grants a user has.  This can be used to give a user access
-        to new entities or actions, or take access away.  You do not need to
-        include the grant for every entity on the account in this request; any
+        Update the Grants a user has. This can be used to give a user access
+        to new entities or actions, or take access away. You do not need to
+        include the Grant for every entity on the account in this request; any
         that are not included will remain unchanged.
       operationId: updateUserGrants
       x-linode-cli-action: update-grants
@@ -1723,7 +1723,7 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: The grants to update.  Omitted grants will be left unchanged.
+        description: The Grants to update. Omitted Grants will be left unchanged.
         required: true
         content:
           application/json:
@@ -2550,7 +2550,7 @@ paths:
       summary: Create Linode
       description: |
         This endpoint allows you to create a new Linode server on your account. In order for this
-        request to complete successfully, your user must have the `add_linodes` grant. Creating a
+        request to complete successfully, your user must have the `add_linodes` Grant. Creating a
         new Linode will incur a charge on your account.
 
         Linodes can be created using one of the available types. See
@@ -3223,7 +3223,7 @@ paths:
       description: >
         You can clone your Linode's existing disks or configuration profiles to
         another Linode on your account. In order for this request to complete
-        successfully, your user must have the `add_linodes` grant. Cloning to a
+        successfully, your user must have the `add_linodes` Grant. Cloning to a
         new Linode will incur a charge on your account.
 
         If cloning to an existing Linode, any actions currently running or
@@ -7731,13 +7731,13 @@ paths:
       summary: List Grants
       description: >
         This returns a GrantsResponse describing what the acting user has been
-        granted access to.  For unrestricted users, this will return a  204 and
+        granted access to. For unrestricted users, this will return a  204 and
         no body because unrestricted users have access to everything without
-        grants.  This will not return information about entities you do not have
-        access to.  This endpoint is useful when writing third-party OAuth
+        Grants. This will not return information about entities you do not have
+        access to. This endpoint is useful when writing third-party OAuth
         applications to see what options you should present to the acting user
         (for example, if they do not have `global.add_linodes`, you might not
-        display a button to deploy a new Linode).  Any client may access this
+        display a button to deploy a new Linode). Any client may access this
         endpoint, as no OAuth scopes are required.
       operationId: getProfileGrants
       x-linode-cli-action: grants
@@ -7754,7 +7754,7 @@ paths:
                 $ref: '#/components/schemas/GrantsResponse'
         '204':
           description: >
-            This is an unrestricted user, who has no grants.  This user can access
+            This is an unrestricted user, who has no Grants. This user can access
             everything on the account.
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -8137,8 +8137,8 @@ paths:
       - regions
       summary: List Regions
       description: |
-        Lists the regions available for Linode services. Not all services are guaranteed to be
-        available in all regions.
+        Lists the Regions available for Linode services. Not all services are guaranteed to be
+        available in all Regions.
       operationId: getRegions
       x-linode-cli-action: list
       responses:
@@ -8557,7 +8557,7 @@ paths:
       description: >
         This endpoint allows you to create a new Volume on your account. In order
         for this to complete successfully, your user must have the `add_volumes`
-        grant. Creating a new Volume will start accruing additional charges
+        Grant. Creating a new Volume will start accruing additional charges
         on your account.
 
         Volume service may not be available in all regions. See
@@ -8835,7 +8835,7 @@ paths:
       description: >
         This endpoint allows you to create a new Volume on your account. In
         order for this request to complete successfully, your user must have the
-        `add_volumes` grant. The new Volume will have the same size and data as
+        `add_volumes` Grant. The new Volume will have the same size and data as
         the source Volume. Creating a new Volume will incur a charge on your
         account.
       tags:
@@ -9877,7 +9877,7 @@ components:
         entity related to your Account. For example, booting a Linode would
         create an Event.
 
-        The events returned depends on your grants.
+        The events returned depends on your Grants.
       properties:
         id:
           type: integer
@@ -10050,7 +10050,7 @@ components:
         id:
           type: integer
           description: >
-            The ID of the entity this grant applies to.
+            The ID of the entity this Grant applies to.
           example: 123
         permissions:
           type: string
@@ -10065,22 +10065,22 @@ components:
         label:
           type: string
           description: >
-            The current label of the entity this grant applies to, for display
+            The current label of the entity this Grant applies to, for display
             purposes.
           example: example-entity
           readOnly: true
     GrantsResponse:
       type: object
       description: >
-        A structure representing all grants a restricted user has on the
+        A structure representing all Grants a restricted user has on the
         account.  Not available for unrestricted users, as they have access to
-        everything without grants.  If retrieved from the `/profile/grants`
+        everything without Grants. If retrieved from the `/profile/grants`
         endpoint, entities to which a user has no access will be omitted.
       properties:
         global:
           type: object
           description: >
-            A structure containing the account-level grants a user has.
+            A structure containing the account-level Gs a user has.
           properties:
             add_linodes:
               type: boolean
@@ -10134,35 +10134,35 @@ components:
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to Linodes on this account.
+            The Grants this user has pertaining to Linodes on this account.
             There will be one entry per Linode on the account.
         domain:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to Domains on this account.
+            The Grants this user has pertaining to Domains on this account.
             There will be one entry per Domain on the account.
         nodebalancer:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to NodeBalancers on this
+            The Grants this user has pertaining to NodeBalancers on this
             account.  There will be one entry per NodeBalancer on the account.
         image:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to Images on this account.
+            The Grants this user has pertaining to Images on this account.
             There will be one entry per Image on the account.
         longview:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to Longview Clients on this
+            The Grants this user has pertaining to Longview Clients on this
             account.  There will be one entry per Longview Client on the
             account.
         stackscript:
@@ -10170,14 +10170,14 @@ components:
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to StackScripts on this
+            The Grants this user has pertaining to StackScripts on this
             account.  There will be one entry per StackScript on the account.
         volume:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            The grants this user has pertaining to Volumes on this account.
+            The Grants this user has pertaining to Volumes on this account.
             There will be one entry per Volume on the account.
     ImagePrivate:
       type: object
@@ -12778,14 +12778,14 @@ components:
         id:
           readOnly: true
           type: string
-          title: The unique ID of this region.
-          description: The unique ID of this region.
+          title: The unique ID of this Region.
+          description: The unique ID of this Region.
           example: us-east
           x-linode-cli-display: 1
         country:
           type: string
-          title: The country where this region resides.
-          description: The country where this region resides.
+          title: The country where this Region resides.
+          description: The country where this Region resides.
           example: us
           readOnly: true
           x-linode-cli-display: 2
