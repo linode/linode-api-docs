@@ -2560,9 +2560,9 @@ paths:
         request to complete successfully, your User must have the `add_linodes` grant. Creating a
         new Linode will incur a charge on your account.
 
-        Linodes can be created using one of the available types. See
+        Linodes can be created using one of the available Types. See
         [GET /linode/types](/#operation/getLinodeTypes) to get more
-        information about each type's specs and cost.
+        information about each Type's specs and cost.
 
         Linodes can be created in any one of our available regions, see
         [GET /regions](/#operation/getRegions) for a list
@@ -2634,7 +2634,7 @@ paths:
                     description: |
                       If this field is set to `true`, the created Linode will automatically be
                       enrolled in the Linode Backup service. This will incur an additional charge.
-                      The cost for the Backup service is dependent on the type of Linode deployed.
+                      The cost for the Backup service is dependent on the Type of Linode deployed.
 
                       Backup pricing is included in the response from [GET /linodes/types](/#operation/getLinodeTypes)
                   swap_size:
@@ -3264,14 +3264,14 @@ paths:
                   example: us-east
                 type:
                   type: string
-                  title: The Linode service plan type.
+                  title: The Linode Type.
                   description: |
-                    A Linode's type determines what resources are available to
+                    A Linode's Type determines what resources are available to
                     it, including disk space, memory, and virtual cpus. The
                     amounts available to a specific Linode are returned as
                     `specs` on the Linode object.
 
-                    To view all available Linode `types` you can deploy with
+                    To view all available Linode Types you can deploy with
                     see [GET /linode/types](/#operation/getLinodeTypes).
 
                     * Type can only be provided when cloning to a new Linode.
@@ -3307,7 +3307,7 @@ paths:
                     If this field is set to `true`, the created Linode will
                     automatically be enrolled in the Linode Backup service. This
                     will incur an additional charge. The cost for the Backup
-                    service is dependent on the type of Linode deployed.
+                    service is dependent on the Type of Linode deployed.
 
                     Backup pricing is included in the response from
                     [GET /linodes/types](/#operation/getLinodeTypes).
@@ -4345,9 +4345,9 @@ paths:
       x-linode-grant: read_write
       summary: Upgrade Linode
       description: >
-        Linodes created with now-deprecated types are entitled to a free
+        Linodes created with now-deprecated Types are entitled to a free
         upgrade to the next generation. A mutating Linode will be allocated any new
-        resources the upgraded type provides, and will be subsequently restarted
+        resources the upgraded Type provides, and will be subsequently restarted
         if it was currently running.
 
         If any actions are currently running or queued, those actions must be
@@ -4584,15 +4584,15 @@ paths:
       summary: Resize Linode
       description: >
         Resizes a Linode you have the `read_write` permission to a different
-        type. If any actions are currently running or queued, those actions must
+        Type. If any actions are currently running or queued, those actions must
         be completed first before you can initiate a resize. Additionally, the
         following criteria must be met in order to resize a Linode:
 
-          * Any pending free upgrades to the Linode's current type must be performed
+          * Any pending free upgrades to the Linode's current Type must be performed
           before a resize can occur.
           * The Linode must not have a pending migration.
           * Your account cannot have an outstanding balance.
-          * The Linode must not have more disk allocation than the new type allows.
+          * The Linode must not have more disk allocation than the new Type allows.
             * In that situation, you must first delete or resize the disk to be smaller.
       tags:
       - Linode Instances
@@ -4603,7 +4603,7 @@ paths:
       - oauth:
         - linodes:read_write
       requestBody:
-        description: The type your current Linode will resize to.
+        description: The Type your current Linode will resize to.
         required: true
         content:
           application/json:
@@ -5052,14 +5052,14 @@ paths:
       - Linode Types
       summary: List Types
       description: >
-        Returns collection of Linode types, including pricing and
-        specifications for each type. These are used when creating or resizing
+        Returns collection of Linode Types, including pricing and
+        specifications for each Type. These are used when creating or resizing
         Linodes.
       operationId: getLinodeTypes
       x-linode-cli-action: types
       responses:
         '200':
-          description: A collection of Linode types.
+          description: A collection of Linode Types.
           content:
             application/json:
               schema:
@@ -5088,7 +5088,7 @@ paths:
     parameters:
     - name: typeId
       in: path
-      description: The ID of the Linode type to look up.
+      description: The ID of the Linode Type to look up.
       required: true
       schema:
         type: string
@@ -5098,13 +5098,13 @@ paths:
       - Linode Types
       summary: View Type
       description: >
-        Returns information about a specific Linode type, including pricing and
+        Returns information about a specific Linode Type, including pricing and
         specifications. This is used when creating or resizing a Linode.
       operationId: getLinodeType
       x-linode-cli-action: type-view
       responses:
         '200':
-          description: A single Linode type.
+          description: A single Linode Type.
           content:
             application/json:
               schema:
@@ -9372,7 +9372,7 @@ components:
           example: '2018-01-15T00:01:01'
         label:
           type: string
-          description: A label for Backups that are of type snapshot
+          description: A label for Backups that are of type `snapshot`.
           example: Webserver-Backup-2018
           x-linode-cli-display: 5
         configs:
@@ -10850,10 +10850,10 @@ components:
         type:
           readOnly: true
           description: >
-            This is the Linode service plan type that this Linode was deployed
+            This is the Linode Type that this Linode was deployed
             with.
 
-            To change a Linode's type, use
+            To change a Linode's Type, use
             [POST /linode/instances/{linodeId}/resize](/#operation/resizeLinodeInstance).
           x-linode-cli-display: 5
         group:
@@ -11368,14 +11368,13 @@ components:
         id:
           readOnly: true
           type: string
-          title: The ID representing the Linode type.
+          description: The ID representing the Linode Type.
           example: g5-standard-2
           x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
           readOnly: true
-          title: This Linode Type's label.
           description: >
             The Linode Type's label is for display purposes only.
           example: Linode 4096
@@ -11384,22 +11383,20 @@ components:
           x-linode-filterable: true
           type: integer
           readOnly: true
-          title: Disk space in MB.
           description: >
-            The Disk size of the Linode type, in MB.
+            The Disk size of the Linode Type, in MB.
           example: 49152
           x-linode-cli-display: 4
         class:
           x-linode-filterable: true
           type: string
           readOnly: true
-          title: The class of the Linode type.
           description: >
-            We currently offer three classes of Linodes:
+            The class of the Linode Type. We currently offer three classes of Linodes:
 
-              * nanode - Our entry-level Linode type.
-              * standard - Our flagship Linode type.
-              * highmem - A Linode type featuring high memory availability.
+              * nanode - Our entry-level Linode Type.
+              * standard - Our flagship Linode Type.
+              * highmem - A Linode Type featuring high memory availability.
           enum:
           - nanode
           - standard
@@ -11409,47 +11406,42 @@ components:
         price:
           type: object
           readOnly: true
-          title: Cost (in US dollars) for this type.
           description: >
             Cost in US dollars, broken down into hourly and monthly charges.
           x-linode-cli-display: 9
           properties:
             hourly:
               type: integer
-              title: Cost (in US dollars) per hour.
+              description: Cost (in US dollars) per hour.
               example: 0.03
             monthly:
               type: integer
-              title: Cost (in US dollars) per month.
+              description: Cost (in US dollars) per month.
               example: 20
         addons:
           type: object
           readOnly: true
-          title: Addon services that are available for this Linode type.
           description: >
-            A list of optional addon services for Linodes and their associated
+            A list of optional add-on services for Linodes and their associated
             costs.
           properties:
             backups:
               type: object
               readOnly: true
-              title: Optional Backups service.
               description: >
                 Information about the optional Backup service offered for Linodes.
               properties:
                 price:
                   type: object
-                  title: Cost of enabling Backups for this Linode type.
+                  description: Cost of enabling Backups for this Linode Type.
                   properties:
                     hourly:
                       type: integer
-                      title: Cost per hour.
                       description: >
                         The cost (in US dollars) per hour to add Backups service.
                       example: 0.008
                     monthly:
                       type: integer
-                      title: Cost per month.
                       description: >
                         The cost (in US dollars) per month to add Backups service.
                       example: 5
@@ -11457,7 +11449,6 @@ components:
           x-linode-filterable: true
           type: integer
           readOnly: true
-          title: Outbound bandwidth allocation.
           description: >
             The Mbits outbound bandwidth allocation.
           example: 1000
@@ -11466,16 +11457,14 @@ components:
           x-linode-filterable: true
           type: integer
           readOnly: true
-          title: RAM
           description: >
-            Amount of RAM included in this Linode type.
+            Amount of RAM included in this Linode Type.
           example: 4096
           x-linode-cli-display: 5
         transfer:
           x-linode-filterable: true
           type: integer
           readOnly: true
-          title: Outbound transfer.
           description: >
             The monthly outbound transfer amount, in MB.
           example: 3000
@@ -11484,9 +11473,8 @@ components:
           x-linode-filterable: true
           type: integer
           readOnly: true
-          title: Number of CPU cores.
           description: >
-            The number of VCPU cores this Linode type offers.
+            The number of VCPU cores this Linode Type offers.
           example: 2
           x-linode-cli-display: 6
     LongviewClient:
