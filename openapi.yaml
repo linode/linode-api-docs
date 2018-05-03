@@ -900,7 +900,7 @@ paths:
       - account
       summary: Update OAuth Client
       description: >
-        Update information about an OAuth Client on your account.  This can be
+        Update information about an OAuth Client on your Account. This can be
         especially useful to update the redirect_uri of your client in the event
         that the callback url changed in your application.
       operationId: updateClient
@@ -1442,7 +1442,7 @@ paths:
       - account
       summary: List Users
       description: >
-        Returns a paginated list of Users on your account.  Users may access all
+        Returns a paginated list of Users on your Account. Users may access all
         or part of your account based on their restricted status and grants.  An
         unrestricted user may access everything on the account, whereas restricted
         user may only access entities or perform actions they've been given specific
@@ -1487,8 +1487,8 @@ paths:
       - account
       summary: Create User
       description: >
-        Creates a new User on your account.  Once created, the user will be
-        able to log in and access portions of your account.  Access is
+        Creates a new User on your Account. Once created, the user will be
+        able to log in and access portions of your account. Access is
         determined by whether or not they are restricted, and what grants they
         have been given.
       operationId: createUser
@@ -1559,7 +1559,7 @@ paths:
       - account
       summary: View User
       description: >
-        Returns information about a single user on your account.
+        Returns information about a single user on your Account.
       operationId: getUser
       x-linode-cli-action: view
       security:
@@ -1589,8 +1589,8 @@ paths:
       - account
       summary: Update User
       description: >
-        Update information about a user on your account.  This can be used to
-        change the restricted status of a user.  When making a user restricted,
+        Update information about a user on your Account. This can be used to
+        change the restricted status of a user. When making a user restricted,
         no grants will be configured by default and you must then set up grants
         in order for the user to access anything on the account.
       operationId: updateUser
@@ -2518,7 +2518,7 @@ paths:
         - linodes:read_only
       responses:
         '200':
-          description: Returns a list of all Linodes on your account.
+          description: Returns a list of all Linodes on your Account.
           content:
             application/json:
               schema:
@@ -2549,9 +2549,9 @@ paths:
       x-linode-grant: add_linodes
       summary: Create Linode
       description: |
-        This endpoint allows you to create a new Linode server on your account. In order for this
+        This endpoint allows you to create a new Linode server on your Account. In order for this
         request to complete successfully, your user must have the `add_linodes` grant. Creating a
-        new Linode will incur a charge on your account.
+        new Linode will incur a charge on your Account.
 
         Linodes can be created using one of the available types. See
         [GET /linode/types](/#operation/getLinodeTypes) to get more
@@ -3222,9 +3222,9 @@ paths:
       summary: Clone Linode
       description: >
         You can clone your Linode's existing disks or configuration profiles to
-        another Linode on your account. In order for this request to complete
-        successfully, your user must have the `add_linodes` grant. Cloning to a
-        new Linode will incur a charge on your account.
+        another Linode on your Account. In order for this request to complete
+        successfully, your user must have the `add_linodes` Grant. Cloning to a
+        new Linode will incur a charge on your Account.
 
         If cloning to an existing Linode, any actions currently running or
         queued must be completed first before you can clone to it.
@@ -5412,7 +5412,7 @@ paths:
       - managed
       summary: List Managed Contacts
       description: >
-        Returns a paginated list of Managed Contacts on your account.
+        Returns a paginated list of Managed Contacts on your Account.
       operationId: getManagedContacts
       x-linode-cli-action: contacts-list
       security:
@@ -5623,7 +5623,7 @@ paths:
       - managed
       summary: List Managed Credentials
       description: >
-        Returns a paginated list of Managed Credentials on your account.
+        Returns a paginated list of Managed Credentials on your Account.
       operationId: getManagedCredentials
       x-linode-cli-action: credentials-list
       security:
@@ -5674,7 +5674,7 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: Information about the credential to create.
+        description: Information about the Credential to create.
         content:
           application/json:
             schema:
@@ -5726,7 +5726,7 @@ paths:
     - name: credentialId
       in: path
       required: true
-      description: The ID of the credential to access.
+      description: The ID of the Credential to access.
       schema:
         type: integer
     x-linode-cli-command: managed
@@ -5806,7 +5806,7 @@ paths:
     - name: credentialId
       in: path
       required: true
-      description: The ID of the credential to access.
+      description: The ID of the Credential to access.
       schema:
         type: integer
     x-linode-cli-command: managed
@@ -5817,7 +5817,7 @@ paths:
       summary: Delete Managed Credential
       description: >
         Deletes a Managed Credential.  Linode special forces will no longer
-        have access to this credential when attempting to resolve issues.
+        have access to this Credential when attempting to resolve issues.
       operationId: deleteManagedCredential
       x-linode-cli-action: credential-revoke
       security:
@@ -5895,7 +5895,7 @@ paths:
     - name: issueId
       in: path
       required: true
-      description: The issue to look up.
+      description: The Issue to look up.
       schema:
         type: integer
     x-linode-cli-command: managed
@@ -5905,7 +5905,7 @@ paths:
       - managed
       summary: View Managed Issue
       description: >
-        Returns a single issue that is impacting or did impact one of your
+        Returns a single Issue that is impacting or did impact one of your
         Managed Services.
       operationId: getManagedIssue
       x-linode-cli-action: issue-view
@@ -5941,8 +5941,8 @@ paths:
       - managed
       summary: List Managed Linode Settings
       description: >
-        Returns a paginated list of Managed settings for your Linodes.  There will
-        be one entry per Linode on your account.
+        Returns a paginated list of Managed Settings for your Linodes. There will
+        be one entry per Linode on your Account.
       operationId: getManagedLinodeSettings
       x-linode-cli-action: linode-settings-list
       security:
@@ -6071,7 +6071,7 @@ paths:
       - managed
       summary: List Managed Services
       description: >
-        Returns a paginated list of Managed Services on your account.  These
+        Returns a paginated list of Managed Services on your Account. These
         are the services Linode Managed is monitoring and will report and attempt
         to resolve issues with.
       operationId: getManagedServices
@@ -6115,7 +6115,7 @@ paths:
       summary: Create Managed Service
       description: >
         Creates a new Managed Service.  Linode Managed will being monitoring this
-        service and reporting and attempting to resolve any issues.
+        service and reporting and attempting to resolve any Issues.
       operationId: createManagedService
       x-linode-cli-action: service-create
       security:
@@ -6176,7 +6176,7 @@ paths:
       - managed
       summary: View Managed Service
       description: >
-        Returns information about a single Managed Service on your account.
+        Returns information about a single Managed Service on your Account.
       operationId: getManagedService
       x-linode-cli-action: service-view
       security:
@@ -6366,7 +6366,7 @@ paths:
           linode-cli managed service-enable 9994
   /networking/ips:
     description: >
-      A collection of IP Addresses on your account.  Excludes private addresses.
+      A collection of IP Addresses on your Account. Excludes private addresses.
     x-linode-cli-command: networking
     get:
       x-linode-grant: read_only
@@ -6416,7 +6416,7 @@ paths:
       - networking
       summary: Allocate IP Address
       description: >
-        Allocates a new IPv4 Address on your account. The Linode must be
+        Allocates a new IPv4 Address on your Account. The Linode must be
         configured to support additional addresses - please open a support
         ticket requesting additional addresses before attempting allocation.
       operationId: allocateIP
@@ -6495,7 +6495,7 @@ paths:
       - networking
       summary: View IP Address
       description: >
-        Returns information about a single IP Address on your account.
+        Returns information about a single IP Address on your Account.
       operationId: getIP
       x-linode-cli-action: ip-view
       security:
@@ -6744,7 +6744,7 @@ paths:
       - networking
       summary: List IPv6 Pools
       description: >
-        Displays the IPv6 pools on your account.
+        Displays the IPv6 pools on your Account.
       operationId: getIPv6Pools
       x-linode-cli-action: v6-pools
       security:
@@ -6753,7 +6753,7 @@ paths:
         - ips:read_only
       responses:
         '200':
-          description: The IPv6 pools on your account.
+          description: The IPv6 pools on your Account.
           content:
             application/json:
               schema:
@@ -6789,7 +6789,7 @@ paths:
       - networking
       summary: List IPv6 Ranges
       description: >
-        Displays the IPv6 ranges on your account.
+        Displays the IPv6 ranges on your Account.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
       security:
@@ -6798,7 +6798,7 @@ paths:
         - ips:read_only
       responses:
         '200':
-          description: The IPv6 ranges on your account.
+          description: The IPv6 ranges on your Account.
           content:
             application/json:
               schema:
@@ -7860,7 +7860,7 @@ paths:
       summary: Confirm/Enable Two Factor Authentication
       description: >
         Confirms that you can successfully generate Two Factor codes and
-        enables TFA on your account.  Once this is complete, login attempts
+        enables TFA on your Account. Once this is complete, login attempts
         from untrusted computers will be required to provide a Two Factor code
         before they are successful.
       operationId: tfaConfirm
@@ -8359,7 +8359,7 @@ paths:
       summary: Create Ticket Attachment
       description: >
         This endpoint allows you to add a file attachment to an existing Support
-        Ticket on your account. File attachments are used to assist our
+        Ticket on your Account. File attachments are used to assist our
         Support team in resolving your Support Ticket. Examples of attachments
         are screen shots and text files that provide additional information.
       operationId: createTicketAttachment
@@ -8420,7 +8420,7 @@ paths:
       summary: List Replies
       description: >
         This endpoint returns a collection of replies to a singular Support
-        Ticket on your account.
+        Ticket on your Account.
       operationId: getTicketReplies
       x-linode-cli-action: replies
       security:
@@ -8528,7 +8528,7 @@ paths:
         - volumes:read_only
       responses:
         '200':
-          description: Returns a list of all Volumes on your account.
+          description: Returns a list of all Volumes on your Account.
           content:
             application/json:
               schema:
@@ -8559,10 +8559,10 @@ paths:
       x-linode-grant: add_volumes
       summary: Create Volume
       description: >
-        This endpoint allows you to create a new Volume on your account. In order
+        This endpoint allows you to create a new Volume on your Account. In order
         for this to complete successfully, your user must have the `add_volumes`
         grant. Creating a new Volume will start accruing additional charges
-        on your account.
+        on your Account.
 
         Volume service may not be available in all regions. See
         [GET /regions](/#operation/getRegions)
@@ -8773,7 +8773,7 @@ paths:
       summary: Attach Volume
       description: >
         This endpoint allows you to attach a Volume on your account
-        to an existing Linode on your account. In order for this request to
+        to an existing Linode on your Account. In order for this request to
         complete successfully, your user must have `read_only` or `read_write`
         permission to the Volume and `read_write` permission to the Linode.
         Additionally, the Volume and Linode must be located in the same region.
@@ -8837,7 +8837,8 @@ paths:
       x-linode-grant: add_volumes
       summary: Clone Volume
       description: >
-        This endpoint allows you to create a new Volume on your account. In
+        This endpoint allows you to create a new Volume cloned from an existing
+        Volume on your Account. In
         order for this request to complete successfully, your user must have the
         `add_volumes` grant. The new Volume will have the same size and data as
         the source Volume. Creating a new Volume will incur a charge on your
@@ -8896,7 +8897,7 @@ paths:
       summary: Detach Volume
       description: >
         This endpoint allows you to detach a Volume on your account
-        from a Linode on your account. In order for this request to
+        from a Linode on your Account. In order for this request to
         complete successfully, your user must have `read_write` access to the
         Volume and `read_write` access to the Linode.
       tags:
@@ -8940,7 +8941,7 @@ paths:
       x-linode-charge: true
       summary: Resize Volume
       description: >
-        This endpoint allows you to resize an existing Volume on your account. In
+        This endpoint allows you to resize an existing Volume on your Account. In
         order for this request to complete successfully, your user must have the
         `read_write` permissions to the Volume.
 
@@ -8999,24 +9000,24 @@ components:
           authorizationUrl: 'https://login.linode.com/oauth/authorize'
           tokenUrl: 'https://login.linode.com/oauth/token'
           scopes:
-            'account:read_only': Allows access to GET information about your account.
-            'account:read_write': Allows access to all endpoints related to your account.
-            'domains:read_only': Allows access to GET Domains on your account.
+            'account:read_only': Allows access to GET information about your Account.
+            'account:read_write': Allows access to all endpoints related to your Account.
+            'domains:read_only': Allows access to GET Domains on your Account.
             'domains:read_write': Allows access to all Domain endpoints.
             'events:read_only': Allows access to GET your Events.
             'events:read_write': Allows access to all endpoints related to your Events.
-            'images:read_only': Allows access to GET your images.
-            'images:read_write': Allows access to all endpoints related to your images.
+            'images:read_only': Allows access to GET your Images.
+            'images:read_write': Allows access to all endpoints related to your Images.
             'ips:read_only': Allows access to GET your ips.
             'ips:read_write': Allows access to all endpoints related to your ips.
-            'linodes:read_only': Allow access to GET Linodes on your account
+            'linodes:read_only': Allow access to GET Linodes on your Account
             'linodes:read_write': Allow access to all endpoints related to your Linodes.
-            'longview:read_only': Allows access to GET your Longview clients.
-            'longview:read_write': Allows access to all endpoints related to your Longview clients.
-            'nodebalancers:read_only': Allows access to GET NodeBalancers on your account.
+            'longview:read_only': Allows access to GET your Longview Clients.
+            'longview:read_write': Allows access to all endpoints related to your Longview Clients.
+            'nodebalancers:read_only': Allows access to GET NodeBalancers on your Account.
             'nodebalancers:read_write': Allows access to all NodeBalancer endpoints.
             'stackscripts:read_only': Allows access to GET your StackScripts.
-            'stackscripts:read_write': Allows access to all endpoints related to you StackScripts.
+            'stackscripts:read_write': Allows access to all endpoints related to your StackScripts.
             'volumes:read_only': Allows access to GET your Volumes.
             'volumes:read_write': Allows access to all endpoints related to your Volumes.
   responses:
@@ -11609,7 +11610,7 @@ components:
         id:
           type: integer
           description: >
-            This contact's unique ID.
+            This Contact's unique ID.
           example: 567
           readOnly: true
           x-linode-cli-display: 1
@@ -11619,33 +11620,33 @@ components:
           maxLength: 64
           pattern: '[a-zA-Z0-9-_ ]{2,64}'
           description: >
-            The name of this contact.
+            The name of this Contact.
           example: John Doe
           x-linode-cli-display: 2
         email:
           type: string
           format: email
           description: >
-            The address to email this contact to alert them of issues.
+            The address to email this Contact to alert them of issues.
           example: john.doe@example.org
           x-linode-cli-display: 3
         phone:
           type: object
           description: >
-            Information about how to reach this contact by phone.
+            Information about how to reach this Contact by phone.
           x-linode-cli-display: 4
           properties:
             primary:
               type: string
               format: phone
               description: >
-                This contact's primary phone number.
+                This Contact's primary phone number.
               example: 123-456-7890
             secondary:
               type: string
               format: phone
               description: >
-                This contact's secondary phone number.
+                This Contact's secondary phone number.
               example: null
         group:
           x-linode-filterable: true
@@ -11654,26 +11655,26 @@ components:
           minLength: 2
           maxLength: 50
           description: >
-            A grouping for this contact.  This is for display purposes only.
+            A grouping for this Contact. This is for display purposes only.
           example: on-call
           x-linode-cli-display: 5
         updated:
           type: string
           format: date-time
           description: >
-            When this contact was last updated.
+            When this Contact was last updated.
           example: '2018-01-01T00:01:01'
           readOnly: true
     ManagedCredential:
       type: object
       description: >
-        A credential, stored securely, that allows Linode's special forces
-        to access a managed server to respond to issues.
+        A securely-stored Credential that allows Linode's special forces
+        to access a Managed server to respond to Issues.
       properties:
         id:
           type: integer
           description: >
-            This credential's unique ID.
+            This Credential's unique ID.
           example: 9991
           readOnly: true
           x-linode-cli-display: 1
@@ -11683,19 +11684,19 @@ components:
           maxLength: 75
           pattern: '[a-zA-Z0-9-_ \.]{2,75}'
           description: >
-            The unique label for this credential.  This is for display purposes
+            The unique label for this Credential. This is for display purposes
             only.
           example: prod-password-1
           x-linode-cli-display: 2
     ManagedIssue:
       type: object
       description: >
-        An issue that was detected with a service Linode is managing.
+        An Issue that was detected with a service Linode is managing.
       properties:
         id:
           type: integer
           description: >
-            This issue's unique ID.
+            This Issue's unique ID.
           example: 823
           readOnly: true
           x-linode-cli-display: 1
@@ -11703,8 +11704,8 @@ components:
           type: string
           format: date-time
           description: >
-            When this issue was created.  Issues are created in response to issues
-            detected with managed services, so this is also when the issue was
+            When this Issue was created. Issues are created in response to issues
+            detected with Managed Services, so this is also when the Issue was
             detected.
           example: '2018-01-01T00:01:01'
           readOnly: true
@@ -11715,7 +11716,7 @@ components:
             type: integer
             example: 654
           description: >
-            An array of Managed Service IDs that were affected by this issue.
+            An array of Managed Service IDs that were affected by this Issue.
           readOnly: true
           x-linode-cli-display: 3
         entity:
@@ -11736,39 +11737,39 @@ components:
               enum:
               - ticket
               description: >
-                The type of entity this is.  In this case, it is always a ticket.
+                The type of entity this is. In this case, it is always a Ticket.
               example: ticket
               readOnly: true
             label:
               type: string
               description: >
-                The summary for this ticket.
-              example: Managed issue opened!
+                The summary for this Ticket.
+              example: Managed Issue opened!
               readOnly: true
             url:
               type: string
               format: url
               description: >
-                The relative URL where you can access this ticket.
+                The relative URL where you can access this Ticket.
               example: /support/tickets/98765
               readOnly: true
     ManagedLinodeSettings:
       type: object
       description: >
-        Settings for a specific Linode related to Managed Services.  There is
-        one ManagedLinodeSettings object for each Linode on your account.
+        Settings for a specific Linode related to Managed Services. There is
+        one ManagedLinodeSettings object for each Linode on your Account.
       properties:
         id:
           type: integer
           description: >
-            The ID of the Linode these settings are for.
+            The ID of the Linode these Settings are for.
           example: 123
           readOnly: true
           x-linode-cli-display: 1
         label:
           type: string
           description: >
-            The label of the Linode these settings are for.
+            The label of the Linode these Settings are for.
           example: linode123
           readOnly: true
           x-linode-cli-display: 2
@@ -11776,7 +11777,7 @@ components:
           deprecated: true
           type: string
           description: >
-            The group of the Linode these settings are for.  This is for display
+            The group of the Linode these Settings are for. This is for display
             purposes only.
           example: linodes
           readOnly: true
@@ -11791,7 +11792,7 @@ components:
               type: boolean
               description: >
                 If true, Linode special forces may access this Linode over
-                ssh to respond to issues.
+                ssh to respond to Issues.
               example: true
             user:
               type: string
@@ -11799,14 +11800,14 @@ components:
               maxLength: 32
               description: >
                 The user Linode's special forces should use when accessing this
-                Linode to respond to an issue.
+                Linode to respond to an Issue.
               example: linode
             ip:
               type: string
               format: ip
               description: >
                 The IP Linode special forces should use to access this Linode
-                when responding to an issue.
+                when responding to an Issue.
               example: 12.34.56.78
             port:
               type: integer
@@ -11814,19 +11815,19 @@ components:
               maximum: 65535
               description: >
                 The port Linode special forces should use to access this Linode
-                over ssh to respond to an issue.
+                over ssh to respond to an Issue.
               example: 22
     ManagedService:
       type: object
       description: >
-        A service that Linode is monitoring as part of your managed services.
+        A service that Linode is monitoring as part of your Managed services.
         If issues are detected with this service, a ManagedIssue will be opened
-        and, optionally, Linode special forces will attempt to resolve the issue.
+        and, optionally, Linode special forces will attempt to resolve the Issue.
       properties:
         id:
           type: integer
           description: >
-            This service's unique ID.
+            This Service's unique ID.
           example: 9944
           readOnly: true
           x-linode-cli-display: 1
@@ -11838,7 +11839,7 @@ components:
           - ok
           - problem
           description: >
-            The current status of this service.
+            The current status of this Service.
           example: ok
           readOnly: true
           x-linode-cli-display: 2
@@ -11852,7 +11853,7 @@ components:
           - URL
           - TCP
           description: >
-            How this service is monitored.
+            How this Service is monitored.
           example: URL
           x-linode-cli-display: 3
         label:
@@ -11861,7 +11862,7 @@ components:
           maxLength: 64
           pattern: '[a-zA-Z0-9-_ \.]{3,64}'
           description: >
-            The label for this service.  This is for display purposes only.
+            The label for this Service. This is for display purposes only.
           example: prod-1
           x-linode-cli-display: 4
         address:
@@ -11869,7 +11870,7 @@ components:
           format: url
           minLength: 3
           description: >
-            The URL at which this service is monitored.
+            The URL at which this Service is monitored.
           example: https://example.org
           x-linode-cli-display: 5
         timeout:
@@ -11878,14 +11879,14 @@ components:
           maximum: 255
           description: >
             How long to wait, in seconds, for a response before considering the
-            service to be down.
+            Service to be down.
           example: 30
         body:
           type: string
           minLength: 0
           maxLength: 100
           description: >
-            What to expect to find in the response body for the service to be
+            What to expect to find in the response body for the Service to be
             considered up.
           example: it worked
         consultation_group:
@@ -11895,19 +11896,19 @@ components:
           maxLength: 50
           description: >
             The group of ManagedContacts who should be notified or consulted
-            with when an issue is detected.
+            with when an Issue is detected.
           example: on-call
           x-linode-cli-display: 6
         notes:
           type: string
           description: >
-            Any information relevant to the service that Linode special forces
-            should know when attempting to resolve issues.
+            Any information relevant to the Service that Linode special forces
+            should know when attempting to resolve Issues.
           example: The service name is my-cool-application
         region:
           type: string
           description: >
-            The region in which this service is located.  This is required if
+            The Region in which this Service is located. This is required if
             address is a private IP, and may not be set otherwise.
           example: null
         credentials:
@@ -11916,8 +11917,8 @@ components:
             type: integer
             example: 9991
           description: >
-            An array of ManagedCredential ids that should be used when attempting to
-            resolve issues with this service.
+            An array of ManagedCredential IDs that should be used when attempting to
+            resolve issues with this Service.
         created:
           type: string
           format: date-time
@@ -11953,7 +11954,7 @@ components:
           maxLength: 32
           pattern: '[a-zA-Z0-9-_]{3,32}'
           description: >
-            This NodeBalancer's label.  These must be unique on your account.
+            This NodeBalancer's label.  These must be unique on your Account.
           example: balancer12345
           x-linode-cli-display: 2
         region:
@@ -13204,8 +13205,8 @@ components:
     User:
       type: object
       description: >
-        A User on your account.  Users can log in and access information about
-        your account.  Unrestricted users have full access to everything on the
+        A User on your Account. Users can log in and access information about
+        your account. Unrestricted users have full access to everything on the
         account, while restricted users may only access entities or perform
         actions they've been granted access to.
       properties:
