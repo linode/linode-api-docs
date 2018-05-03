@@ -4608,7 +4608,10 @@ paths:
               - type
               properties:
                 type:
-                  $ref: '#/components/schemas/LinodeBase/properties/type'
+                  type: string
+                  title: The ID representing the Linode type.
+                  example: g5-standard-2
+                  x-linode-cli-display: 1
       responses:
         '200':
           description: Resize started.
