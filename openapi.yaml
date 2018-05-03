@@ -203,7 +203,7 @@ info:
     in it are combined with an "and" operation as they were in the previous example.
 
     Other operators are also available. Operators are keys of a Filter JSON
-    object. Their value must be of the appropriate Type, and they are evaluated
+    object. Their value must be of the appropriate type, and they are evaluated
     as described below:
 
     | OPERATOR | TYPE   | DESCRIPTION                       |
@@ -3264,7 +3264,7 @@ paths:
                   example: us-east
                 type:
                   type: string
-                  title: The Linode service plan Type.
+                  title: The Linode Type.
                   description: |
                     A Linode's Type determines what resources are available to
                     it, including disk space, memory, and virtual cpus. The
@@ -10850,7 +10850,7 @@ components:
         type:
           readOnly: true
           description: >
-            This is the Linode service plan Type that this Linode was deployed
+            This is the Linode Type that this Linode was deployed
             with.
 
             To change a Linode's Type, use
