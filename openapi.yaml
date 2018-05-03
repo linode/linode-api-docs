@@ -1633,8 +1633,8 @@ paths:
       - account
       summary: Delete User
       description: >
-        Deletes a user.  The deleted user will be immediately logged out and
-        may no longer log in or perform any actions.  All grants that user had
+        Deletes a user. The deleted user will be immediately logged out and
+        may no longer log in or perform any actions. All grants that user had
         will be lost.
       operationId: deleteUser
       x-linode-cli-action: delete
@@ -1673,9 +1673,9 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: View User's Grants
+      summary: View User's grants
       description: >
-        Returns the full grants structure for this user.  This includes all
+        Returns the full grants structure for this user. This includes all
         entities on the account alongside what level of access this user has
         to each of them.  Individual users may view their own grants at the
         [/profile/grants](/#operation/getProfileGrants)
@@ -1709,10 +1709,10 @@ paths:
       x-linode-grant: unrestricted only
       tags:
       - account
-      summary: Update User's Grants
+      summary: Update User's grants
       description: >
-        Update the grants a user has.  This can be used to give a user access
-        to new entities or actions, or take access away.  You do not need to
+        Update the grants a user has. This can be used to give a user access
+        to new entities or actions, or take access away. You do not need to
         include the grant for every entity on the account in this request; any
         that are not included will remain unchanged.
       operationId: updateUserGrants
@@ -1723,7 +1723,7 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: The grants to update.  Omitted grants will be left unchanged.
+        description: The grants to update. Omitted grants will be left unchanged.
         required: true
         content:
           application/json:
@@ -7735,13 +7735,13 @@ paths:
       summary: List Grants
       description: >
         This returns a GrantsResponse describing what the acting user has been
-        granted access to.  For unrestricted users, this will return a  204 and
+        granted access to. For unrestricted users, this will return a  204 and
         no body because unrestricted users have access to everything without
-        grants.  This will not return information about entities you do not have
-        access to.  This endpoint is useful when writing third-party OAuth
+        grants. This will not return information about entities you do not have
+        access to. This endpoint is useful when writing third-party OAuth
         applications to see what options you should present to the acting user
         (for example, if they do not have `global.add_linodes`, you might not
-        display a button to deploy a new Linode).  Any client may access this
+        display a button to deploy a new Linode). Any client may access this
         endpoint, as no OAuth scopes are required.
       operationId: getProfileGrants
       x-linode-cli-action: grants
@@ -7758,7 +7758,7 @@ paths:
                 $ref: '#/components/schemas/GrantsResponse'
         '204':
           description: >
-            This is an unrestricted user, who has no grants.  This user can access
+            This is an unrestricted user, who has no grants. This user can access
             everything on the account.
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -8141,8 +8141,8 @@ paths:
       - regions
       summary: List Regions
       description: |
-        Lists the regions available for Linode services. Not all services are guaranteed to be
-        available in all regions.
+        Lists the Regions available for Linode services. Not all services are guaranteed to be
+        available in all Regions.
       operationId: getRegions
       x-linode-cli-action: list
       responses:
@@ -10078,13 +10078,13 @@ components:
       description: >
         A structure representing all grants a restricted user has on the
         account.  Not available for unrestricted users, as they have access to
-        everything without grants.  If retrieved from the `/profile/grants`
+        everything without grants. If retrieved from the `/profile/grants`
         endpoint, entities to which a user has no access will be omitted.
       properties:
         global:
           type: object
           description: >
-            A structure containing the account-level grants a user has.
+            A structure containing the account-level Gs a user has.
           properties:
             add_linodes:
               type: boolean
@@ -10153,7 +10153,7 @@ components:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this user has pertaining to NodeBalancers on this
-            account.  There will be one entry per NodeBalancer on the account.
+            account. There will be one entry per NodeBalancer on the account.
         image:
           type: array
           items:
@@ -10167,7 +10167,7 @@ components:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this user has pertaining to Longview Clients on this
-            account.  There will be one entry per Longview Client on the
+            account. There will be one entry per Longview Client on the
             account.
         stackscript:
           type: array
@@ -10175,7 +10175,7 @@ components:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this user has pertaining to StackScripts on this
-            account.  There will be one entry per StackScript on the account.
+            account. There will be one entry per StackScript on the account.
         volume:
           type: array
           items:
@@ -12782,14 +12782,14 @@ components:
         id:
           readOnly: true
           type: string
-          title: The unique ID of this region.
-          description: The unique ID of this region.
+          title: The unique ID of this Region.
+          description: The unique ID of this Region.
           example: us-east
           x-linode-cli-display: 1
         country:
           type: string
-          title: The country where this region resides.
-          description: The country where this region resides.
+          title: The country where this Region resides.
+          description: The country where this Region resides.
           example: us
           readOnly: true
           x-linode-cli-display: 2
