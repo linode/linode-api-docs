@@ -20,8 +20,8 @@ info:
 
     # Changelog
 
-    [View our Changelog](/changelog) to see release notes on all changes made to
-    our API.
+    [View our Changelog](https://developers.linode.com/changelog) to see release
+    notes on all changes made to our API.
 
     # Access
 
@@ -42,7 +42,8 @@ info:
     ## OAuth
 
     The OAuth workflow is a three-step process to authenticate a User before an
-    application can start making API calls on the User's behalf.
+    application can start making API calls on the User's behalf. If all you need
+    is a Personal Access Token, feel free to skip ahead to the next section.
 
     First, the User visits the application's website and is directed to log with
     Linode. The User is then redirected to Linode's authentication server and
@@ -50,7 +51,7 @@ info:
     accepts the request for access, we redirect them back to the application's
     specified redirect URI with an access code.
 
-    Once the User has logged in to Linode and you have received an access code,
+    Once the User has logged in to Linode and you have received an exchange code,
     you will need to exchange that access code for an Authorization token. You
     do this by making an HTTP POST request to the following address:
 
@@ -265,6 +266,16 @@ info:
         ]
       }'
     ```
+
+    # CLI (Command Line Interface)
+
+    An _early access_ version of the [Linode CLI](https://bits.linode.com/LinodeAPI/linode-cli)
+    is now available to use. It requires a [Personal Access Token](/#section/Personal-Access-Token)
+    for authentication, and gives you access to all of the features and functionality
+    of the Linode API that are documented here with CLI examples.
+
+    Endpoints that do not have CLI examples are currently unavailable through the CLI, but
+    can be access via other methods such as Shell commands and other third-party applications.
   contact:
     name: Linode
     url: /
@@ -368,7 +379,7 @@ paths:
         This endpoint allows you to add/edit credit card information to your Account.
 
         Only one credit card can be associated with your Account, so using this
-        endpoint will overwrite any existing card information with the
+        endpoint will overwrite your currently active card information with the
         new credit card.
       operationId: createCreditCard
       x-linode-cli-action: update-card
@@ -1519,11 +1530,6 @@ paths:
                     description: >
                       The new User's email address.
                     example: example_user@linode.com
-                  password:
-                    type: string
-                    description: >
-                      The password this User will use to log in.
-                    example: hunter7
       responses:
         '200':
           description: New User created successfully.
@@ -1700,7 +1706,7 @@ paths:
         '204':
           description: >
             This is an unrestricted User, and therefore has no grants to return.
-            this User may access everything on the account and perform all actions.
+            This User may access everything on the account and perform all actions.
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -2564,30 +2570,30 @@ paths:
 
         Linodes can be created in a number of ways:
 
-        - Using a Linode Linux Distribution image or an image you created based on another Linode
-          - The Linode will be `running` after it completes `provisioning`
-          - A default config with two disks, one being a 512 swap disk, is created
-            - `swap_size` can be used to customize the swap disk size
-          - Requires a `password` be supplied to use for the root User's account
-          - It is recommended to supply ssh keys for the root User using the `authorized_keys` field
+        * Using a Linode Linux Distribution image or an image you created based on another Linode
+          * The Linode will be `running` after it completes `provisioning`
+          * A default config with two disks, one being a 512 swap disk, is created
+            * `swap_size` can be used to customize the swap disk size
+          * Requires a `root_pass` be supplied to use for the root User's account
+          * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
 
-        - Using one of your own StackScripts or a public StackScript
-          - The Linode will be `running` after it completes `provisioning`
-          - Requires a compatible Linode Linux Distribution `image` to be supplied
-            - see [GET /linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible images
-          - Requires a `root_pass` be supplied to use for the root User's account
-          - It is recommended to supply ssh keys for the root User using the `authorized_keys` field
+        * Using one of your own StackScripts or a public StackScript
+          * The Linode will be `running` after it completes `provisioning`
+          * Requires a compatible Linode Linux Distribution `image` to be supplied
+            * See [GET /linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible images
+          * Requires a `root_pass` be supplied to use for the root User's account
+          * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
 
-        - Using one of your other Linode's backups
-          - The Linode will be `running` after it completes `provisioning`
-          - The disks and config will match that of the Linode that was backed up
-          - The `root_pass` will match that of the Linode that was backed up
+        * Using one of your other Linode's backups
+          * The Linode will be `running` after it completes `provisioning`
+          * The disks and config will match that of the Linode that was backed up
+          * The `root_pass` will match that of the Linode that was backed up
 
-        - Create an empty Linode
-          - The Linode will remain `offline` and must be manually started
-            - see [POST /linode/instances/{linodeId}/boot](/#operation/bootLinodeInstance)
-          - Disks and Configs must be created manually
-          - This is only recommended for advanced use-cases
+        * Create an empty Linode
+          * The Linode will remain `offline` and must be manually started
+            * See [POST /linode/instances/{linodeId}/boot](/#operation/bootLinodeInstance)
+          * Disks and Configs must be created manually
+          * This is only recommended for advanced use-cases
       tags:
       - Linode Instances
       operationId: createLinodeInstance
@@ -4954,10 +4960,10 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/linode/stackscripts/1337
+          curl https://api.linode.com/v4/linode/stackscripts/10079
       - lang: CLI
         source: >
-          linode-cli stackscripts view 1337
+          linode-cli stackscripts view 10079
     put:
       x-linode-grant: read_write
       tags:
@@ -5003,10 +5009,10 @@ paths:
                 "rev_note": "Set up MySQL",
                 "script": "#!/bin/bash"
               }' \
-              https://api.linode.com/v4/linode/stackscripts/1337
+              https://api.linode.com/v4/linode/stackscripts/10079
       - lang: CLI
         source: >
-          linode-cli stackscripts update 1337 --label a-stackscript --description "This StackScript install and configures MySQL" --images "linode/debian9" --images "linode/debian8" --is_public true --rev_note "Set up MySQL" --script '#!/bin/bash'
+          linode-cli stackscripts update 10079 --label a-stackscript --description "This StackScript install and configures MySQL" --images "linode/debian9" --images "linode/debian8" --is_public true --rev_note "Set up MySQL" --script '#!/bin/bash'
     delete:
       x-linode-grant: read_write
       tags:
@@ -5035,10 +5041,10 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4/linode/stackscripts/1337
+              https://api.linode.com/v4/linode/stackscripts/10079
       - lang: CLI
         source: >
-          linode-cli stackscripts delete 1337
+          linode-cli stackscripts delete 10079
   /linode/types:
     x-linode-cli-command: linodes
     get:
@@ -5108,8 +5114,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/types/g5-standard-2
+          curl https://api.linode.com/v4/linode/types/g5-standard-2
       - lang: CLI
         source: >
           linode-cli linodes type-view g5-standard-2
@@ -8587,7 +8592,11 @@ paths:
                     example: null
                   config_id:
                     type: integer
-                    description: The ID of the Config used for the Volume.
+                    description: >
+                      When creating a volume attached to a Linode, the ID of the
+                      Linode Config to include the new Volume in. This Config
+                      must belong to the Linode referenced by linode_id. Must
+                      not be provided if linode_id is not sent.
                     example: 23456
       responses:
         '200':
@@ -8607,14 +8616,12 @@ paths:
               -X POST -d '{
                 "label": "my-volume",
                 "size": 20,
-                "region": "us-east",
-                "linode_id": 12346,
-                "config_id": 23456
+                "linode_id": 12346
               }' \
               https://api.linode.com/v4/volumes
       - lang: CLI
         source: >
-          linode-cli volumes create --label my-volume --size 20 --region us-east --linode_id 12346 --config_id 23456
+          linode-cli volumes create --label my-volume --size 20 --linode_id 12346 --no-defaults
   /volumes/{volumeId}:
     parameters:
     - name: volumeId
@@ -8801,7 +8808,10 @@ paths:
                   readOnly: false
                 config_id:
                   type: integer
-                  description: The ID of the Config used for the Volume.
+                  description: >
+                    The ID of the Linode Config to include this volume in. Must
+                    belong to the Linode referenced by `linode_id`. If not given,
+                    the last booted Config will be chosen.
                   example: 23456
       responses:
         '200':
@@ -9620,7 +9630,7 @@ components:
             You may only deploy from a StackScript that you own or that is listed as
             `public`.
 
-            This field cannot be used when deploying from a backup or a User made image.
+            This field cannot be used when deploying from a backup or a private image.
         stackscript_data:
           type: object
           title: Optional User-defined field data for this StackScript.
@@ -11807,7 +11817,7 @@ components:
               minLength: 0
               maxLength: 32
               description: >
-                The User Linode's special forces should use when accessing this
+                The user Linode's special forces should use when accessing this
                 Linode to respond to an issue.
               example: linode
             ip:
@@ -12829,7 +12839,7 @@ components:
         id:
           type: integer
           description: The unique ID of this StackScript.
-          example: 1337
+          example: 10079
           readOnly: true
           x-linode-cli-display: 1
         username:
@@ -13225,7 +13235,7 @@ components:
           minLength: 3
           maxLength: 32
           description: >
-            this User's username. This is used for logging in, and may also be
+            This User's username. This is used for logging in, and may also be
             displayed alongside actions the User performs (for example, in Events
             or public StackScripts).
           x-linode-filterable: true
