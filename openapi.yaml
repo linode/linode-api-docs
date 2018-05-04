@@ -823,7 +823,7 @@ paths:
       - account
       summary: Create OAuth Client
       description: >
-        Create a new OAuth Client, which can be used to allow users to login to
+        Creates a new OAuth Client, which can be used to allow users to login to
         your own applications using their Linode account, and optionally grant
         your application some amount of access to their Linodes or other entities.
       operationId: createClient
@@ -1430,7 +1430,7 @@ paths:
         - account:read_only
       responses:
         '200':
-          description: Returns a Transfer object.
+          description: Returns a single Transfer object.
           content:
             application/json:
               schema:
@@ -2213,7 +2213,7 @@ paths:
         - domains:read_write
       summary: Update Domain Record
       description: >
-        Update a single Record on this Domain.
+        Updates a single Record on this Domain.
       operationId: updateDomainRecord
       x-linode-cli-action: records-update
       requestBody:
@@ -4231,7 +4231,7 @@ paths:
       - Linode Instances
       summary: Delete IPv4 Address
       description: >
-        Delete a public IPv4 address associated with this Linode. This will
+        Deletes a public IPv4 address associated with this Linode. This will
         fail if it is the Linode's last remaining IP address. Private
         IPv4 addresses cannot be removed via this endpoint.
       operationId: removeLinodeIP
@@ -5172,8 +5172,8 @@ paths:
       - longview
       summary: Create Longview Client
       description: >
-        Create a new Longview Client.  This client will not begin monitoring
-        the status of one of your servers until you configure the Longview
+        Creates a new Longview Client.  This Client will not begin monitoring
+        the status of your server until you configure the Longview
         Client application on your server using the returning `install_code`
         and `api_key`.
       operationId: createLongviewClient
@@ -5256,7 +5256,7 @@ paths:
       summary: Update Longview Client
       description: >
         Updates a Longview Client.  This cannot update how it monitors your
-        server - use the Longview Client application on your server for
+        server; use the Longview Client application on your server for
         monitoring configuration.
       operationId: updateLongviewClient
       x-linode-cli-action: update
@@ -5298,9 +5298,14 @@ paths:
       - longview
       summary: Delete Longview Client
       description: >
-        Deletes a Longview Client from your Account. All information stored
-        for this client will be lost. This _does not_ uninstall the Longview
-        Client application for your server - you must do that manually.
+        Deletes a Longview Client from your Account.
+
+
+        **All information stored for this client will be lost.**
+
+
+        This _does not_ uninstall the Longview Client application for your
+        server - you must do that manually.
       operationId: deleteLongviewClient
       x-linode-cli-action: delete
       security:
@@ -5336,7 +5341,7 @@ paths:
       summary: List Longview Subscriptions
       description: >
         Returns a paginated list of available Longview Subscriptions. This is
-        a public endpoint, and requires no authentication.
+        a public endpoint and requires no authentication.
       operationId: getLongviewSubscriptions
       x-linode-cli-action: subscriptions-list
       responses:
@@ -8328,7 +8333,7 @@ paths:
         - account:read_only
       responses:
         '200':
-          description: Returns a SupportTicket object.
+          description: Returns a single SupportTicket object.
           content:
             application/json:
               schema:
@@ -10438,7 +10443,7 @@ components:
         unitprice:
           type: integer
           readOnly: true
-          description: The monthly service fee, in US Dollars, for this Item.
+          description: The monthly service fee in US Dollars for this Item.
           example: 10
     IPAddress:
       type: object
@@ -11520,27 +11525,27 @@ components:
           description: >
             The apps this Client is monitoring on your server.  This is configured
             when you install the Longview Client application, and is present here
-            only for your information.
+            for information purposes only.
           readOnly: true
           properties:
             apache:
               type: boolean
               description: >
-                If true, the Apache Longview Client module is monitoring Apache on
+                If True, the Apache Longview Client module is monitoring Apache on
                 your server.
               example: true
               readOnly: true
             nginx:
               type: boolean
               description: >
-                If true, the nginx Longview Client module is monitoring nginx on
+                If True, the Nginx Longview Client module is monitoring Nginx on
                 your server.
               example: false
               readOnly: true
             mysql:
               type: boolean
               description: >
-                If true, the MySQL Longview Client modules is monitoring MySQL on
+                If True, the MySQL Longview Client modules is monitoring MySQL on
                 your server.
               example: true
               readOnly: true
@@ -11568,42 +11573,42 @@ components:
         id:
           type: string
           description: >
-            The unique ID of this subscription tier.
+            The unique ID of this Subscription tier.
           example: longview-10
           readOnly: true
           x-linode-cli-display: 1
         price:
           type: object
           description: >
-            Pricing information about this Longview Subscription tier.
+            Pricing information about this Subscription tier.
           readOnly: true
           x-linode-cli-display: 4
           properties:
             hourly:
               type: number
               description: >
-                The hourly price for this subscription tier, in US Dollars.
+                The hourly price in US dollars for this Subscription tier.
               example: 0.06
               readOnly: true
             monthly:
               type: number
               description: >
-                The maximum monthly price for this subscription tier, in US
-                Dollars.  You will never be charged more than this amount per
+                The maximum monthly price in US Dollars for this Subscription tier.
+                You will never be charged more than this amount per
                 month for this subscription.
               example: 40
               readOnly: true
         label:
           type: string
           description: >
-            A display name for this subscription tier.
+            A display name for this Subscription tier.
           example: Longivew Pro 10 pack
           readOnly: true
           x-linode-cli-display: 2
         clients_included:
           type: integer
           description: >
-            The number of Longview Clients that may be created with this tier.
+            The number of Longview Clients that may be created with this Subscription tier.
           example: 10
           readOnly: true
           x-linode-cli-display: 3
@@ -12538,7 +12543,7 @@ components:
         usd:
           type: string
           description: >
-            The amount, in US Dollars, of the payment.
+            The amount in US Dollars of the Payment.
           example: '120.50'
     PayPal:
       type: object
@@ -12547,19 +12552,19 @@ components:
       - redirect_url
       - usd
       description: >
-        An object representing the staging of a payment via PayPal.
+        An object representing the staging of a Payment via PayPal.
       properties:
         cancel_url:
           type: string
-          description: The URL to have PayPal redirect to when payment is cancelled.
+          description: The URL to have PayPal redirect to when Payment is cancelled.
           example: https://example.org
         redirect_url:
           type: string
-          description: The URL to have PayPal redirect to when payment is approved.
+          description: The URL to have PayPal redirect to when Payment is approved.
           example: https://example.org
         usd:
           type: string
-          description: The amount, in US dollars, of the payment.
+          description: The amount, in US dollars, of the Payment.
           example: '120.50'
     PayPalExecute:
       type: object
@@ -12567,7 +12572,7 @@ components:
       - payer_id
       - payment_id
       description: >
-        An object representing an execution of payment to PayPal to capture the
+        An object representing an execution of Payment to PayPal to capture the
         funds and credit your Linode Account.
       properties:
         payer_id:
@@ -12732,8 +12737,8 @@ components:
             credit:
               type: integer
               description: >
-                The amount of account credit issued to you through the referral
-                program, in US Dollars.
+                The amount of account credit in US Dollars issued to you through
+                the referral program.
               example: 0
               readOnly: true
         ip_whitelist_enabled:
