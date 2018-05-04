@@ -2480,8 +2480,13 @@ paths:
       - images
       summary: Delete Image
       description: |
-        Deletes an Image you have permission to `read_write`. Deleting an image is a destructive
-        process and cannot be undone. Only private Images are deletable.
+        Deletes an Image you have permission to `read_write`.
+
+
+        **Deleting an Image is a destructive process and cannot be undone.**
+
+
+        Only private Images are deletable.
       operationId: deleteImage
       x-linode-cli-action: delete
       security:
@@ -2565,9 +2570,9 @@ paths:
         [GET /linode/types](/#operation/getLinodeTypes) to get more
         information about each Type's specs and cost.
 
-        Linodes can be created in any one of our available regions, see
+        Linodes can be created in any one of our available Regions, see
         [GET /regions](/#operation/getRegions) for a list
-        of available regions you deploy your Linode in.
+        of available Regions you deploy your Linode in.
 
         Linodes can be created in a number of ways:
 
@@ -2654,7 +2659,7 @@ paths:
                   region:
                     type: string
                     description: >
-                      The region to deploy this Linode in.
+                      The Region to deploy this Linode in.
                     readOnly: false
       responses:
         '200':
@@ -3258,7 +3263,7 @@ paths:
                   description: >
                     This is the location where the Linode will be deployed.
 
-                    To view all available regions you can deploy with see
+                    To view all available Regions you can deploy with see
                     [GET /regions](/#operation/getRegions).
 
                     * Region can only be provided when cloning to a new Linode.
@@ -4102,8 +4107,8 @@ paths:
                   enum:
                   - ipv4
                   description: >
-                    The type of address you are requesting. Only
-                    IPv4 addresses may be allocated through this endpoint.
+                    The type of address you are requesting. Only IPv4 addresses
+                    may be allocated through this endpoint.
                   example: ipv4
                 public:
                   type: boolean
@@ -6533,9 +6538,9 @@ paths:
       - networking
       summary: Update IP Address RDNS
       description: >
-        Sets RDNS on an IP Address.  Forward DNS must already be set up for
-        reverse DNS to be applied.  If you set the RDNS to `null` for public
-        IPv4 addresses, it will be reset to the default members.linode.com
+        Sets RDNS on an IP Address. Forward DNS must already be set up for
+        reverse DNS to be applied.If you set the RDNS to `null` for public
+        IPv4 addresses, it will be reset to the default _members.linode.com_
         RDNS value.
       operationId: updateIP
       x-linode-cli-action: ip-update
@@ -6573,7 +6578,7 @@ paths:
           linode-cli networking ip-update 97.107.143.141 --rdns "test.example.org"
   /networking/ipv4/assign:
     description: >
-      Allows redistribution of IPv4 Addresses within a region.  Any number
+      Allows redistribution of IPv4 Addresses within a Region. Any number
       of IPs may be assigned in one request, as long as all Linodes end up
       with at least one public and no more than one private IP Address at the
       end of the assignment.
@@ -6584,7 +6589,7 @@ paths:
       - networking
       summary: Assign IPs to Linodes
       description: >
-        Assign multiple IPs to multiple Linodes in one region.  This allows
+        Assign multiple IPs to multiple Linodes in one Region. This allows
         swapping, shuffling, or otherwise reorganizing IPv4 Addresses to your
         Linodes.  When the assignment is finished, all Linodes must end up with
         at least one public IPv4 and no more than one private IPv4.
@@ -6609,8 +6614,8 @@ paths:
                 region:
                   type: string
                   description: >
-                    The ID of the region in which these assignments are to take
-                    place.  All IPs and Linodes must exist in this region.
+                    The ID of the Region in which these assignments are to take
+                    place.  All IPs and Linodes must exist in this Region.
                   example: us-east
                 assignments:
                   type: array
@@ -6625,14 +6630,14 @@ paths:
                         type: string
                         format: ip
                         description: >
-                          Ths IP Address for this assignment.  Must be a v4
-                          address you can access in the region specified.  May
+                          Ths IP Address for this assignment. Must be a IPv4
+                          address you can access in the Region specified. May
                           be a public or private address.
                         example: 12.34.56.78
                       linode_id:
                         type: integer
                         description: >
-                          The ID of the Linode to assign this address to.  The IP's
+                          The ID of the Linode to assign this address to. The IP's
                           previous Linode will lose this address, and must end up
                           with at least one public address and no more than one
                           private address once all assignments have been made.
@@ -6716,7 +6721,7 @@ paths:
                     this is finished, the given Linode will be able to bring up
                     these addresses in addition to the Linodes that these
                     addresses belong to.  You must have access to all of these
-                    addresses and they must be in the same region as the
+                    addresses and they must be in the same Region as the
                     Linode.
       responses:
         '200':
@@ -8613,7 +8618,7 @@ paths:
                   region:
                     type: string
                     description: >
-                      The region to deploy this Volume in. This is only required
+                      The Region to deploy this Volume in. This is only required
                       if a linode_id is not given.
                     example: null
                   config_id:
@@ -10468,13 +10473,13 @@ components:
     IPAddress:
       type: object
       description: >
-        An IP address that exists in Linode's system, either v4 or v6.
+        An IP address that exists in Linode's system, either IPv4 or IPv6.
       properties:
         address:
           type: string
           format: ip
           description: >
-            The address.
+            The IP address.
           example: 97.107.143.141
           readOnly: true
           x-linode-cli-display: 1
@@ -10520,7 +10525,7 @@ components:
         rdns:
           type: string
           description: >
-            The reverse-dns assigned to this address.  For public v4 addresses,
+            The reverse DNS assigned to this address. For public IPv4 addresses,
             this will be set to a default value provided by Linode if not
             explicitly set.
           x-linode-cli-display: 4
@@ -10528,18 +10533,18 @@ components:
         linode_id:
           type: integer
           description: >
-            The ID of the Linode this address currently belongs to.  For v4
+            The ID of the Linode this address currently belongs to. For IPv4
             addresses, this is by default the Linode that this address was
             assigned to on creation, and these addresses my be moved using the
-            [/networking/ipv4/assign](/#operation/assignIPs) endpoint. For slaac and link_local
-            addresses, this value may not be changed.
+            [/networking/ipv4/assign](https://developers.linode.com/api/v4/#operation/assignIPs)
+            endpoint. For slaac and link-local addresses, this value may not be changed.
           example: 123
           readOnly: true
           x-linode-cli-display: 6
         region:
           type: string
           description: >
-            The region this address resides in.
+            The Region this IP address resides in.
           example: us-east
           readOnly: true
           x-linode-filterable: true
@@ -10547,13 +10552,13 @@ components:
     IPAddressPrivate:
       type: object
       description: >
-        A Private IPv4 address that exists in Linode's system,.
+        A private IPv4 address that exists in Linode's system.
       properties:
         address:
           type: string
           format: ip
           description: >
-            The address.
+            The private IPv4 address.
           example: 192.168.133.234
           readOnly: true
           x-linode-cli-display: 1
@@ -10594,7 +10599,7 @@ components:
         rdns:
           type: string
           description: >
-            The reverse-dns assigned to this address.
+            The reverse DNS assigned to this address.
           example: null
           x-linode-cli-display: 4
         linode_id:
@@ -10607,7 +10612,7 @@ components:
         region:
           type: string
           description: >
-            The region this address resides in.
+            The Region this address resides in.
           example: us-east
           readOnly: true
           x-linode-filterable: true
@@ -10615,13 +10620,13 @@ components:
     IPAddressV6LinkLocal:
       type: object
       description: >
-        A Link_Local IPv6 address that exists in Linode's system,.
+        A link-local IPv6 address that exists in Linode's system,.
       properties:
         address:
           type: string
           format: ip
           description: >
-            The address.
+            The IPv6 link-local address.
           example: fe80::f03c:91ff:fe24:3a2f
           readOnly: true
           x-linode-cli-display: 1
@@ -10661,7 +10666,7 @@ components:
         rdns:
           type: string
           description: >
-            The reverse-dns assigned to this address.
+            The reverse DNS assigned to this address.
           example: null
           x-linode-cli-display: 4
         linode_id:
@@ -10674,7 +10679,7 @@ components:
         region:
           type: string
           description: >
-            The region this address resides in.
+            The Region this address resides in.
           example: us-east
           readOnly: true
           x-linode-filterable: true
@@ -10682,7 +10687,7 @@ components:
     IPAddressV6Slaac:
       type: object
       description: >
-        A Slaac IPv6 address that exists in Linode's system,.
+        A Slaac IPv6 address that exists in Linode's system.
       properties:
         address:
           type: string
@@ -10728,7 +10733,7 @@ components:
         rdns:
           type: string
           description: >
-            The reverse-dns assigned to this address.
+            The reverse DNS assigned to this address.
           example: null
           x-linode-cli-display: 4
         linode_id:
@@ -10741,7 +10746,7 @@ components:
         region:
           type: string
           description: >
-            The region this address resides in.
+            The Region this address resides in.
           example: us-east
           readOnly: true
           x-linode-filterable: true
@@ -10761,8 +10766,8 @@ components:
         region:
           type: string
           description: >
-            An IPv6 Pool is a pool of IPv6 addresses that are routed to all of
-            your Linodes in a single region. Any Linode you own may bring up any
+            A pool of IPv6 addresses that are routed to all of
+            your Linodes in a single Region. Any Linode you own may bring up any
             address in this pool at any time, with no external configuration
             required.
           example: us-east
@@ -10784,7 +10789,7 @@ components:
           type: string
           description: >
             A range of IPv6 addresses routed to a single Linode in the given
-            region. Your Linode is responsible for routing individual addresses
+            Region. Your Linode is responsible for routing individual addresses
             in the range, or handling traffic for all of the addresses in the
             range.
           example: us-east
@@ -10796,40 +10801,40 @@ components:
       properties:
         id:
           type: string
-          description: The unique ID of this kernel.
+          description: The unique ID of this Kernel.
           example: linode/latest-64bit
           readOnly: true
           x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
-          description: The friendly name of this kernel.
+          description: The friendly name of this Kernel.
           example: Latest 64 bit (4.15.7-x86_64-linode102)
           readOnly: true
           x-linode-cli-display: 2
         version:
           x-linode-filterable: true
           type: string
-          description: Linux kernel version.
+          description: Linux Kernel version.
           example: 4.15.7
           readOnly: true
           x-linode-cli-display: 3
         kvm:
           x-linode-filterable: true
           type: boolean
-          description: If this kernel is suitable for KVM Linodes.
+          description: If this Kernel is suitable for KVM Linodes.
           example: true
           readOnly: true
         xen:
           x-linode-filterable: true
           type: boolean
-          description: If this kernel is suitable for Xen Linodes.
+          description: If this Kernel is suitable for Xen Linodes.
           example: false
           readOnly: true
         architecture:
           x-linode-filterable: true
           type: string
-          description: The architecture of this kernel.
+          description: The architecture of this Kernel.
           enum:
           - x86_64
           - i386
@@ -10839,7 +10844,7 @@ components:
         pvops:
           x-linode-filterable: true
           type: boolean
-          description: If this kernel is suitable for paravirtualized operations.
+          description: If this Kernel is suitable for paravirtualized operations.
           example: false
           readOnly: true
     Linode:
@@ -12106,7 +12111,7 @@ components:
             * If set to `table` sessions from the same remote address will be routed to the same
               backend.
 
-            * For http or https clients, `http_cookie` allows sessions to be
+            * For HTTP or HTTPS clients, `http_cookie` allows sessions to be
               routed to the same backend based on a cookie set by the NodeBalancer.
           example: http_cookie
           x-linode-cli-display: 5
