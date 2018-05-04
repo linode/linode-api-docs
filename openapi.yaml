@@ -4881,7 +4881,7 @@ paths:
       - StackScripts
       summary: Create StackScript
       description: >
-        Creates a new StackScript to your Account.
+        Creates a new StackScript in your Account.
       operationId: addStackScript
       x-linode-cli-action: create
       security:
@@ -7079,7 +7079,7 @@ paths:
         on, one Config per port.
 
 
-        For example, if you wanted to accept standard http traffic, you would
+        For example, if you wanted to accept standard HTTP traffic, you would
         need a Config listening on port 80.
       operationId: getNodeBalancerConfigs
       x-linode-cli-action: configs-list
@@ -11966,7 +11966,7 @@ components:
     NodeBalancer:
       type: object
       description: >
-        Linode's load balancing solution.  Can handle multiple ports, ssl termination,
+        Linode's load balancing solution.  Can handle multiple ports, SSL termination,
         and any number of backends.  NodeBalancer ports are configured with
         NodeBalancerConfigs, and each config is given one or more NodeBalancerNode that
         accepts traffic.  The traffic should be routed to the  NodeBalancer's ip address,
@@ -11994,7 +11994,7 @@ components:
           type: string
           description: >
             The Region where this NodeBalancer is located. NodeBalancers only
-            support backends in the same Region as they are.
+            support backends in the same Region.
           example: us-east
           readOnly: true
           x-linode-cli-display: 3
@@ -12067,8 +12067,8 @@ components:
             on a single NodeBalancer (you can't have two configs for port 80, for
             example).  While some ports imply some protocols, no enforcement is done
             and you may configure your NodeBalancer however is useful to you. For
-            example, while port 443 is generally used for https, you do not need
-            ssl configured to have a NodeBalancer listening on port 443.
+            example, while port 443 is generally used for HTTPS, you do not need
+            SSL configured to have a NodeBalancer listening on port 443.
           example: 80
           x-linode-cli-display: 2
         protocol:
@@ -12080,7 +12080,7 @@ components:
           description: >
             The protocol this port is configured to serve.
 
-            * If this is set to `https` you must include an ssl_cert and an ssl_key.
+            * If this is set to `https` you must include an `ssl_cert` and an `ssl_key`.
           example: http
           x-linode-cli-display: 3
         algorithm:
@@ -12174,7 +12174,7 @@ components:
           - recommended
           - legacy
           description: >
-            What ciphers to use for ssl connections served by this NodeBalancer.
+            What ciphers to use for SSL connections served by this NodeBalancer.
 
 
             * `legacy` is considered insecure and should only be used if necessary.
@@ -12193,7 +12193,7 @@ components:
           type: string
           description: >
             The common name for the SSL certification this port is serving. null
-            if this port is not configured to use ssl.
+            if this port is not configured to use SSL.
           example: null
           readOnly: true
           x-linode-cli-display: 8
@@ -12201,7 +12201,7 @@ components:
           type: string
           description: >
             The fingerprint for the SSL certification this port is serving.  null
-            if this port is not configured to use ssl.
+            if this port is not configured to use SSL.
           example: null
           readOnly: true
           x-linode-cli-display: 9
