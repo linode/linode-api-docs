@@ -7,6 +7,7 @@ info:
     backgroundColor: '#fafafa'
   }
   description: |
+    # Introduction
     The Linode API provides the ability to programmatically manage the full
     range of Linode products and services.
 
