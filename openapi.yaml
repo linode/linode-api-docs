@@ -2480,13 +2480,10 @@ paths:
       - images
       summary: Delete Image
       description: |
-        Deletes an Image you have permission to `read_write`.
+        Deletes a private Image you have permission to `read_write`.
 
 
         **Deleting an Image is a destructive process and cannot be undone.**
-
-
-        Only private Images are deletable.
       operationId: deleteImage
       x-linode-cli-action: delete
       security:
@@ -2572,7 +2569,7 @@ paths:
 
         Linodes can be created in any one of our available Regions, see
         [GET /regions](/#operation/getRegions) for a list
-        of available Regions you deploy your Linode in.
+        of available Regions you can deploy your Linode in.
 
         Linodes can be created in a number of ways:
 
@@ -3263,7 +3260,7 @@ paths:
                   description: >
                     This is the location where the Linode will be deployed.
 
-                    To view all available Regions you can deploy with see
+                    To view all available Regions you can deploy to see
                     [GET /regions](/#operation/getRegions).
 
                     * Region can only be provided when cloning to a new Linode.
@@ -4107,7 +4104,7 @@ paths:
                   enum:
                   - ipv4
                   description: >
-                    The type of address you are requesting. Only IPv4 addresses
+                    The type of address you are allocating. Only IPv4 addresses
                     may be allocated through this endpoint.
                   example: ipv4
                 public:
@@ -6539,7 +6536,7 @@ paths:
       summary: Update IP Address RDNS
       description: >
         Sets RDNS on an IP Address. Forward DNS must already be set up for
-        reverse DNS to be applied.If you set the RDNS to `null` for public
+        reverse DNS to be applied. If you set the RDNS to `null` for public
         IPv4 addresses, it will be reset to the default _members.linode.com_
         RDNS value.
       operationId: updateIP
@@ -7018,7 +7015,7 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345
       - lang: CLI
         source: >
-          linode-cli nodebalancers updarte 12345 --label balancer12345 --client_conn_throttle 0
+          linode-cli nodebalancers update 12345 --label balancer12345 --client_conn_throttle 0
     delete:
       x-linode-grant: read_write
       tags:
@@ -10537,7 +10534,7 @@ components:
             addresses, this is by default the Linode that this address was
             assigned to on creation, and these addresses my be moved using the
             [/networking/ipv4/assign](https://developers.linode.com/api/v4/#operation/assignIPs)
-            endpoint. For slaac and link-local addresses, this value may not be changed.
+            endpoint. For SLAAC and link-local addresses, this value may not be changed.
           example: 123
           readOnly: true
           x-linode-cli-display: 6
@@ -10687,7 +10684,7 @@ components:
     IPAddressV6Slaac:
       type: object
       description: >
-        A Slaac IPv6 address that exists in Linode's system.
+        A SLAAC IPv6 address that exists in Linode's system.
       properties:
         address:
           type: string
@@ -10968,7 +10965,7 @@ components:
         ipv6:
           type: string
           description: >
-            This Linode's IPv6 slaac addresses. This address is specific to a Linode, and may not
+            This Linode's IPv6 SLAAC addresses. This address is specific to a Linode, and may not
             be shared.
           example: 'c001:d00d::1234'
           readOnly: true
@@ -12051,9 +12048,11 @@ components:
       type: object
       description: >
         A NodeBalancer config represents the configuration of this NodeBalancer
-        on a single port. For example, a NodeBalancer config on port 80 would
-        typically represent how this NodeBalancer responds to http requests.
-        NodeBalaner configs have a list of backends, called "nodes," that they
+        on a single port.  For example, a NodeBalancer Config on port 80 would
+        typically represent how this NodeBalancer response to HTTP requests.
+
+
+        NodeBalancer configs have a list of backends, called "nodes," that they
         forward requests between based on their configuration.
       properties:
         id:
@@ -12150,7 +12149,7 @@ components:
           minimum: 1
           maximum: 30
           description: >
-            How many times, in seconds, to attempt a check before considering a backend to be down.
+            How many times to attempt a check before considering a backend to be down.
           example: 3
         check_path:
           type: string
@@ -12256,8 +12255,8 @@ components:
         traffic over their private IP.  If the same Linode is serving traffic for more
         than one port on the same NodeBalancer, one NodeBalancer Node is required for
         each config (port) it should serve requests on.  For example, if you have
-        four backends, and each should response to both http and https requests, you
-        will need two NodeBalancer Configs (port 80 and port 443) and four backends
+        four backends, and each should response to both HTTP and HTTPS requests, you
+        will need two NodeBalancerConfigs (port 80 and port 443) and four backends
         each - one for each of the Linodes serving requests for that port.
       properties:
         id:
