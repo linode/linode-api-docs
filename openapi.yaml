@@ -269,8 +269,8 @@ info:
 
     # CLI (Command Line Interface)
 
-    An _early access_ version of the [Linode CLI](https://bits.linode.com/LinodeAPI/linode-cli)
-    is now available to use. It requires a [Personal Access Token](/#section/Personal-Access-Token)
+    An _early access_ version of the [Linode CLI](https://github.com/linode/linode-cli) is now available to use. It
+    requires a [Personal Access Token](/#section/Personal-Access-Token)
     for authentication, and gives you access to all of the features and functionality
     of the Linode API that are documented here with CLI examples.
 
@@ -729,7 +729,7 @@ paths:
       summary: List Notifications
       description: >
         This endpoint returns a collection of Notification objects representing
-        important, often time-sensitive items related to your account.
+        important, often time-sensitive items related to your Account.
 
         You cannot interact directly with Notifications, and it will disappear
         when the circumstances causing the Notification have been resolved. For
@@ -782,7 +782,7 @@ paths:
       description: >
         Returns a paginated list of OAuth Clients registered to your Account.  OAuth
         Clients allow users to log into applications you write or host using their
-        Linode account, and may allow them to grant some level of access to their
+        Linode Account, and may allow them to grant some level of access to their
         Linodes or other entities to your application.
       operationId: getClients
       x-linode-cli-action: clients-list
@@ -1501,8 +1501,8 @@ paths:
       - account
       summary: Create User
       description: >
-        Creates a new User on your account.  Once created, the User will be
-        able to log in and access portions of your account. Access is
+        Creates a new User on your Account. Once created, the User will be
+        able to log in and access portions of your Account. Access is
         determined by whether or not they are restricted, and what grants they
         have been given.
       operationId: createUser
@@ -1568,7 +1568,7 @@ paths:
       - account
       summary: View User
       description: >
-        Returns information about a single User on your account.
+        Returns information about a single User on your Account.
       operationId: getUser
       x-linode-cli-action: view
       security:
@@ -1598,10 +1598,10 @@ paths:
       - account
       summary: Update User
       description: >
-        Update information about a User on your account.  This can be used to
+        Update information about a User on your Account. This can be used to
         change the restricted status of a User. When making a User restricted,
         no grants will be configured by default and you must then set up grants
-        in order for the User to access anything on the account.
+        in order for the User to access anything on the Account.
       operationId: updateUser
       x-linode-cli-action: update
       security:
@@ -1685,7 +1685,7 @@ paths:
       summary: View User's grants
       description: >
         Returns the full grants structure for this User. This includes all
-        entities on the account alongside what level of access this User has
+        entities on the Account alongside what level of access this User has
         to each of them. Individual users may view their own grants at the
         [/profile/grants](/#operation/getProfileGrants)
         endpoint, but will not see entities that they have no access to.
@@ -1706,7 +1706,7 @@ paths:
         '204':
           description: >
             This is an unrestricted User, and therefore has no grants to return.
-            This User may access everything on the account and perform all actions.
+            This User may access everything on the Account and perform all actions.
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -1722,7 +1722,7 @@ paths:
       description: >
         Update the grants a User has. This can be used to give a User access
         to new entities or actions, or take access away.  You do not need to
-        include the grant for every entity on the account in this request; any
+        include the grant for every entity on the Account in this request; any
         that are not included will remain unchanged.
       operationId: updateUserGrants
       x-linode-cli-action: update-grants
@@ -2296,7 +2296,7 @@ paths:
       summary: List Images
       description: >
         Returns a paginated list of Images. This list includes public Images and
-        your private Images. You can call this enpoint without authentication
+        your private Images. You can call this endpoint without authentication
         to get all of the public Images.
       operationId: getImages
       x-linode-cli-action: list
@@ -2339,7 +2339,7 @@ paths:
       description: >
         Creates a new private gold-master Image from a Linode Disk. There is no
         additional charge to store Images for Linode users, with a limit of 2GB
-        per Image and 3 Images per account.
+        per Image and 3 Images per Account.
       operationId: createImage
       x-linode-cli-action: create
       security:
@@ -2556,9 +2556,9 @@ paths:
       x-linode-grant: add_linodes
       summary: Create Linode
       description: |
-        This endpoint allows you to create a new Linode server on your account. In order for this
+        This endpoint allows you to create a new Linode server on your Account. In order for this
         request to complete successfully, your User must have the `add_linodes` grant. Creating a
-        new Linode will incur a charge on your account.
+        new Linode will incur a charge on your Account.
 
         Linodes can be created using one of the available Types. See
         [GET /linode/types](/#operation/getLinodeTypes) to get more
@@ -2574,14 +2574,14 @@ paths:
           * The Linode will be `running` after it completes `provisioning`
           * A default config with two disks, one being a 512 swap disk, is created
             * `swap_size` can be used to customize the swap disk size
-          * Requires a `root_pass` be supplied to use for the root User's account
+          * Requires a `root_pass` be supplied to use for the root User's Account
           * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
 
         * Using one of your own StackScripts or a public StackScript
           * The Linode will be `running` after it completes `provisioning`
           * Requires a compatible Linode Linux Distribution `image` to be supplied
             * See [GET /linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible images
-          * Requires a `root_pass` be supplied to use for the root User's account
+          * Requires a `root_pass` be supplied to use for the root User's Account
           * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
 
         * Using one of your other Linode's backups
@@ -3229,9 +3229,9 @@ paths:
       summary: Clone Linode
       description: >
         You can clone your Linode's existing disks or configuration profiles to
-        another Linode on your account. In order for this request to complete
-        successfully, your User must have the `add_linodes` Grant. Cloning to a
-        new Linode will incur a charge on your account.
+        another Linode on your Account. In order for this request to complete
+        successfully, your User must have the `add_linodes` grant. Cloning to a
+        new Linode will incur a charge on your Account.
 
         If cloning to an existing Linode, any actions currently running or
         queued must be completed first before you can clone to it.
@@ -4443,7 +4443,7 @@ paths:
         attributes. Additionally:
 
           * Requires an `image` be supplied.
-          * Requires a `root_pass` be supplied to use for the root User's account.
+          * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply ssh keys for the root User using the
             `authorized_keys` field.
       tags:
@@ -4591,7 +4591,7 @@ paths:
           * Any pending free upgrades to the Linode's current Type must be performed
           before a resize can occur.
           * The Linode must not have a pending migration.
-          * Your account cannot have an outstanding balance.
+          * Your Account cannot have an outstanding balance.
           * The Linode must not have more disk allocation than the new Type allows.
             * In that situation, you must first delete or resize the disk to be smaller.
       tags:
@@ -4882,7 +4882,7 @@ paths:
       - StackScripts
       summary: Create StackScript
       description: >
-        This endpoint allows you to add a new StackScript to your account.
+        This endpoint allows you to add a new StackScript to your Account.
       operationId: addStackScript
       x-linode-cli-action: create
       security:
@@ -5298,8 +5298,8 @@ paths:
       - longview
       summary: Delete Longview Client
       description: >
-        Deletes a Longview Client from your account.  All information stored
-        for this client will be lost.  This _does not_ uninstall the Longview
+        Deletes a Longview Client from your Account. All information stored
+        for this client will be lost. This _does not_ uninstall the Longview
         Client application for your server - you must do that manually.
       operationId: deleteLongviewClient
       x-linode-cli-action: delete
@@ -6375,7 +6375,7 @@ paths:
       - networking
       summary: List IP Addresses
       description: >
-        Returns a paginated list of IP Addresses on your account, excluding
+        Returns a paginated list of IP Addresses on your Account, excluding
         private addresses.
       operationId: getIPs
       x-linode-cli-action: ips-list
@@ -6417,7 +6417,7 @@ paths:
       - networking
       summary: Allocate IP Address
       description: >
-        Allocates a new IPv4 Address on your account. The Linode must be
+        Allocates a new IPv4 Address on your Account. The Linode must be
         configured to support additional addresses - please
         [open a support ticket](/#operation/createTicket) requesting additional
         addresses before attempting allocation.
@@ -7612,7 +7612,7 @@ paths:
           linode-cli profile update --email example-user@gmail.com --timezone US/Eastern --email_notifications true --list_auth_method keys_only --two_factor_auth true --restricted false
   /profile/apps:
     description: >
-      Returns information about OAuth Apps you have authorized to access your account.
+      Returns information about OAuth Apps you have authorized to access your Account.
     x-linode-cli-command: profile
     get:
       parameters:
@@ -7622,7 +7622,7 @@ paths:
         - profile
       summary: List Authorized Apps
       description: >
-        This is a collection of OAuth apps that you've given access to your account, and
+        This is a collection of OAuth apps that you've given access to your Account, and
         includes the level of access granted.
       operationId: getProfileApps
       x-linode-cli-action: apps-list
@@ -7674,7 +7674,7 @@ paths:
       summary: View Authorized App
       description: >
         Returns information about a single app you've authorized to access your
-        account.
+        Account.
       operationId: getProfileApp
       x-linode-cli-action: app-view
       security:
@@ -7703,8 +7703,8 @@ paths:
       - profile
       summary: Revoke App Access
       description: >
-        Expires all tokens and refresh tokens possessed by this app.  This app is no
-        longer authorized to access your account.
+        Expires all tokens and refresh tokens possessed by this app. This app is no
+        longer authorized to access your Account.
       operationId: deleteProfileApp
       x-linode-cli-action: app-delete
       security:
@@ -7761,7 +7761,7 @@ paths:
         '204':
           description: >
             This is an unrestricted User, who has no grants. This User can access
-            everything on the account.
+            everything on the Account.
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7896,7 +7896,7 @@ paths:
                     description: >
                       A one-use code that can be used in place of your Two Factor
                       code, in case you are unable to generate one.  Keep this in
-                      a safe place to avoid being locked out of your account.
+                      a safe place to avoid being locked out of your Account.
                     example: sample two factor scratch
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -8219,11 +8219,11 @@ paths:
       summary: List Support Tickets
       description: >
         This endpoint returns a collection of Support Tickets on your
-        account. Support Tickets can be both tickets you open with Linode
+        Account. Support Tickets can be both tickets you open with Linode
         for support, as well as tickets generated by Linode and regarding
-        your account.
+        your Account.
 
-        This collection includes all Support Tickets generated on your account,
+        This collection includes all Support Tickets generated on your Account,
         with open tickets returned first.
       operationId: getTickets
       x-linode-cli-action: list
@@ -8319,7 +8319,7 @@ paths:
       - support
       summary: View Support Ticket
       description: >
-        This endpoint returns a Support Ticket under your account.
+        This endpoint returns a Support Ticket under your Account.
       operationId: getTicket
       x-linode-cli-action: view
       security:
@@ -8559,14 +8559,14 @@ paths:
       x-linode-grant: add_volumes
       summary: Create Volume
       description: >
-        This endpoint allows you to create a new Volume on your account. In order
+        This endpoint allows you to create a new Volume on your Account. In order
         for this to complete successfully, your User must have the `add_volumes`
-        Grant. Creating a new Volume will start accruing additional charges
-        on your account.
+        grant. Creating a new Volume will start accruing additional charges
+        on your Account.
 
-        Volume service may not be available in all regions. See
+        Volume service may not be available in all Regions. See
         [GET /regions](/#operation/getRegions)
-        for a list of available regions you deploy your Volume in.
+        for a list of available Regions you deploy your Volume in.
       tags:
       - volumes
       operationId: createVolume
@@ -8594,10 +8594,10 @@ paths:
                   config_id:
                     type: integer
                     description: >
-                      When creating a volume attached to a Linode, the ID of the
+                      When creating a Volume attached to a Linode, the ID of the
                       Linode Config to include the new Volume in. This Config
-                      must belong to the Linode referenced by linode_id. Must
-                      not be provided if linode_id is not sent.
+                      must belong to the Linode referenced by `linode_id`. Must
+                      _not_ be provided if `linode_id` is not sent.
                     example: 23456
       responses:
         '200':
@@ -8779,11 +8779,11 @@ paths:
     post:
       summary: Attach Volume
       description: >
-        This endpoint allows you to attach a Volume on your account
-        to an existing Linode on your account. In order for this request to
+        This endpoint allows you to attach a Volume on your Account
+        to an existing Linode on your Account. In order for this request to
         complete successfully, your User must have `read_only` or `read_write`
         permission to the Volume and `read_write` permission to the Linode.
-        Additionally, the Volume and Linode must be located in the same region.
+        Additionally, the Volume and Linode must be located in the same Region.
       tags:
       - volumes
       operationId: attachVolume
@@ -8810,7 +8810,7 @@ paths:
                 config_id:
                   type: integer
                   description: >
-                    The ID of the Linode Config to include this volume in. Must
+                    The ID of the Linode Config to include this Volume in. Must
                     belong to the Linode referenced by `linode_id`. If not given,
                     the last booted Config will be chosen.
                   example: 23456
@@ -8850,11 +8850,11 @@ paths:
       x-linode-grant: add_volumes
       summary: Clone Volume
       description: >
-        This endpoint allows you to create a new Volume on your account. In
+        This endpoint allows you to create a new Volume on your Account. In
         order for this request to complete successfully, your User must have the
         `add_volumes` grant. The new Volume will have the same size and data as
         the source Volume. Creating a new Volume will incur a charge on your
-        account.
+        Account.
       tags:
       - volumes
       operationId: cloneVolume
@@ -8908,8 +8908,8 @@ paths:
     post:
       summary: Detach Volume
       description: >
-        This endpoint allows you to detach a Volume on your account
-        from a Linode on your account. In order for this request to
+        This endpoint allows you to detach a Volume on your Account
+        from a Linode on your Account. In order for this request to
         complete successfully, your User must have `read_write` access to the
         Volume and `read_write` access to the Linode.
       tags:
@@ -8953,7 +8953,7 @@ paths:
       x-linode-charge: true
       summary: Resize Volume
       description: >
-        This endpoint allows you to resize an existing Volume on your account. In
+        This endpoint allows you to resize an existing Volume on your Account. In
         order for this request to complete successfully, your User must have the
         `read_write` permissions to the Volume.
 
@@ -9252,7 +9252,7 @@ components:
     AuthorizedApp:
       type: object
       description: >
-        An application you have authorized access to your account through OAuth.
+        An application you have authorized access to your Account through OAuth.
       properties:
         id:
           type: integer
@@ -9280,7 +9280,7 @@ components:
           format: oauth-scopes
           description: >
             The OAuth scopes this app was authorized with.  This defines what parts of your
-            account the app is allowed to access.
+            Account the app is allowed to access.
           example: linodes:read_only
           readOnly: true
           x-linode-cli-display: 3
@@ -9404,7 +9404,7 @@ components:
       type: object
       description: >
         An object representing the credit card information you have on file with
-        Linode to make payments against your account.
+        Linode to make payments against your Account.
       required:
       - card_number
       - expiry_month
@@ -10063,7 +10063,7 @@ components:
       type: object
       description: >
         Represents the level of access a restricted User has to a specific
-        resource on the account.
+        resource on the Account.
       properties:
         id:
           type: integer
@@ -10091,14 +10091,14 @@ components:
       type: object
       description: >
         A structure representing all grants a restricted User has on the
-        account.  Not available for unrestricted users, as they have access to
-        everything without grants.  If retrieved from the `/profile/grants`
+        Account. Not available for unrestricted users, as they have access to
+        everything without grants. If retrieved from the `/profile/grants`
         endpoint, entities to which a User has no access will be omitted.
       properties:
         global:
           type: object
           description: >
-            A structure containing the account-level grants a User has.
+            A structure containing the Account-level grants a User has.
           properties:
             add_linodes:
               type: boolean
@@ -10110,7 +10110,7 @@ components:
               example: true
             longview_subscription:
               type: boolean
-              description: If true, this User may manage the account's Longview subscription.
+              description: If true, this User may manage the Account's Longview subscription.
               example: true
             account_access:
               type: string
@@ -10119,7 +10119,7 @@ components:
               - read_only
               - read_write
               description: >
-                The level of access this User has to account-level actions,
+                The level of access this User has to Account-level actions,
                 like billing information. A restricted User will never be able
                 to manage users.
               example: read_only
@@ -10153,28 +10153,28 @@ components:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has pertaining to Linodes on this Account.
-            There will be one entry per Linode on the account.
+            There will be one entry per Linode on the Account.
         domain:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has pertaining to Domains on this Account.
-            There will be one entry per Domain on the account.
+            There will be one entry per Domain on the Account.
         nodebalancer:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has pertaining to NodeBalancers on this
-            account.  There will be one entry per NodeBalancer on the Account.
+            Account. There will be one entry per NodeBalancer on the Account.
         image:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has pertaining to Images on this Account.
-            There will be one entry per Image on the account.
+            There will be one entry per Image on the Account.
         longview:
           type: array
           items:
@@ -10182,14 +10182,14 @@ components:
           description: >
             The grants this User has pertaining to Longview Clients on this
             Account. There will be one entry per Longview Client on the
-            Sccount.
+            Account.
         stackscript:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has pertaining to StackScripts on this
-            account.  There will be one entry per StackScript on the Account.
+            Account.  There will be one entry per StackScript on the Account.
         volume:
           type: array
           items:
@@ -11511,7 +11511,7 @@ components:
           type: string
           description: >
             The install code for this Client, used when configuring the Longview
-            CLient application on your server.
+            Client application on your server.
           example: BD1B5605-BF5E-D385-BA07AD518BE7F321
           readOnly: true
           x-linode-cli-display: 4
@@ -12294,7 +12294,7 @@ components:
     Notification:
       type: object
       description: >
-        An important, often time-sensitive item related to your account.
+        An important, often time-sensitive item related to your Account.
       properties:
         entity:
           type: object
@@ -12568,7 +12568,7 @@ components:
       - payment_id
       description: >
         An object representing an execution of payment to PayPal to capture the
-        funds and credit yoru Linode account.
+        funds and credit your Linode Account.
       properties:
         payer_id:
           type: string
@@ -12603,9 +12603,9 @@ components:
           type: string
           format: oauth-scopes
           description: >
-            The scopes this token was created with.  These define what parts of
-            the account the token can be used to access.  Many command-line tools,
-            such as the Linode CLI, require tokens with access to `*`.  Tokens with
+            The scopes this token was created with. These define what parts of
+            the Account the token can be used to access. Many command-line tools,
+            such as the Linode CLI, require tokens with access to `*`. Tokens with
             more restrictive scopes are generally more secure.
           example: '*'
           readOnly: true
@@ -12779,7 +12779,7 @@ components:
           type: boolean
           description: >
             If true, your User has restrictions on what can be accessed on your
-            account.  To get details on what entities/actions you can
+            Account. To get details on what entities/actions you can
             access/perform, see [/profile/grants](/#operation/getProfileGrants).
           example: false
           x-linode-cli-display: 3
@@ -12790,13 +12790,11 @@ components:
         id:
           readOnly: true
           type: string
-          title: The unique ID of this Region.
           description: The unique ID of this Region.
           example: us-east
           x-linode-cli-display: 1
         country:
           type: string
-          title: The country where this Region resides.
           description: The country where this Region resides.
           example: us
           readOnly: true
@@ -13212,9 +13210,8 @@ components:
     User:
       type: object
       description: >
-        A User on your account. Users can log in and access information about
-        your account. Unrestricted users have full access to everything on the
-        account, while restricted users may only access entities or perform
+        A User on your Account. Unrestricted users can log in and access information about
+        your Account, while restricted users may only access entities or perform
         actions they've been granted access to.
       properties:
         username:
@@ -13242,7 +13239,7 @@ components:
           type: boolean
           description: >
             If true, this User must be granted access to perform actions or access
-            entities on this account. See
+            entities on this Account. See
             [/account/users/{username}/grants](/#operation/getUserGrants)
             for details on how to configure grants for a restricted User.
           example: true
@@ -13294,7 +13291,7 @@ components:
       required:
       - label
       description: >
-        A Block Storage Volume associated with your account.
+        A Block Storage Volume associated with your Account.
       properties:
         id:
           type: integer
@@ -13305,7 +13302,6 @@ components:
         label:
           x-linode-filterable: true
           type: string
-          title: Label for the Volume.
           description: >
             The Volume's label is for display purposes only.
           example: my-volume
@@ -13315,7 +13311,6 @@ components:
           x-linode-cli-display: 2
         filesystem_path:
           type: string
-          title: The full filesystem path for the Volume.
           description: >
             The full filesystem path for the Volume based on the Volume's label.
             Path is /dev/disk/by-id/scsi-0Linode_Volume_ + Volume label.
@@ -13323,7 +13318,6 @@ components:
           readOnly: true
         status:
           type: string
-          title: The status of the Volume.
           description: >
             Can be one of `creating`, `active`, `resizing`, `deleting`,
             `deleted`, and `contact_support`:
@@ -13336,7 +13330,7 @@ components:
               * deleting - the Volume is being deleted and is unavailable for use.
               * deleted - the Volume has been deleted.
               * contact_support - there is a problem with your Volume. Please
-                open a support ticket to resolve the issue.
+                [open a Support Ticket](/#operation/createTicket) to resolve the issue.
           enum:
           - creating
           - active
@@ -13353,7 +13347,6 @@ components:
             default_: yellow
         size:
           type: integer
-          title: The Volume's size, in GiB.
           description: >
             The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB.
           minimum: 10
@@ -13365,7 +13358,6 @@ components:
           x-linode-cli-display: 5
         linode_id:
           type: integer
-          title: The ID of the Linode this Volume is attached to, if applicable.
           description: >
             If a Volume is attached to a specific Linode, the ID of that Linode
             will be displayed here.
