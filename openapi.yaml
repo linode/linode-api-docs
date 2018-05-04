@@ -3166,12 +3166,12 @@ paths:
       x-linode-grant: read_write
       summary: Boot Linode
       description: |
-        Boots a Linode you have permission to modify.  If no parameters are given, a config profile
+        Boots a Linode you have permission to modify. If no parameters are given, a Config profile
         will be chosen for this boot based on the following criteria:
 
-        * If there is only one config profile for this Linode, it will be used.
-        * If there is more than one config profile, the last booted config will be used.
-        * If there is more than one config profile and none were the last to be booted, because the
+        * If there is only one Config profile for this Linode, it will be used.
+        * If there is more than one Config profile, the last booted config will be used.
+        * If there is more than one Config profile and none were the last to be booted, because the
           Linode was never booted or the last booted config was deleted, an error will be returned.
       tags:
       - Linode Instances
@@ -3228,7 +3228,7 @@ paths:
       x-linode-grant: add_linodes
       summary: Clone Linode
       description: >
-        You can clone your Linode's existing disks or configuration profiles to
+        You can clone your Linode's existing Disks or Configuration profiles to
         another Linode on your Account. In order for this request to complete
         successfully, your User must have the `add_linodes` grant. Cloning to a
         new Linode will incur a charge on your Account.
@@ -3364,7 +3364,7 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: ID of the Linode to look up configuration profiles for.
+      description: ID of the Linode to look up Configuration profiles for.
       required: true
       schema:
         type: integer
@@ -3377,7 +3377,7 @@ paths:
       - Linode Instances
       summary: List Configuration Profiles
       description: |
-        Lists configuration profiles associated with a Linode.
+        Lists Configuration profiles associated with a Linode.
       operationId: getLinodeConfigs
       x-linode-cli-action: configs-list
       security:
@@ -3387,7 +3387,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns an array of configuration profiles associated with this Linode.
+            Returns an array of Configuration profiles associated with this Linode.
           content:
             application/json:
               schema:
@@ -3416,7 +3416,7 @@ paths:
       - Linode Instances
       summary: Create Configuration Profile
       description: >
-        Adds a new configuration profile to a Linode.
+        Adds a new Configuration profile to a Linode.
       operationId: addLinodeConfig
       x-linode-cli-action: config-create
       security:
@@ -3425,7 +3425,7 @@ paths:
         - linodes:read_write
       requestBody:
         description: >
-          The parameters to set when creating the configuration profile.
+          The parameters to set when creating the Configuration profile.
 
           This determines which kernel, devices, how much memory, etc. a Linode boots with.
         required: true
@@ -3436,7 +3436,7 @@ paths:
       responses:
         '200':
           description: |
-            A configuration profile was created.
+            A Configuration profile was created.
           content:
             application/json:
               schema:
@@ -3481,13 +3481,13 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: The ID of the Linode whose configuration profile to look up.
+      description: The ID of the Linode whose Configuration profile to look up.
       required: true
       schema:
         type: integer
     - name: configId
       in: path
-      description: The ID of the configuration profile to look up.
+      description: The ID of the Configuration profile to look up.
       required: true
       schema:
         type: integer
@@ -3498,7 +3498,7 @@ paths:
       x-linode-grant: read_only
       summary: View Configuration Profile
       description: >
-        Returns information about a specific configuration profile.
+        Returns information about a specific Configuration profile.
       operationId: getLinodeConfig
       x-linode-cli-action: config-view
       security:
@@ -3507,7 +3507,7 @@ paths:
         - linodes:read_only
       responses:
         '200':
-          description: A configuration profile object.
+          description: A Configuration profile object.
           content:
             application/json:
               schema:
@@ -3526,7 +3526,7 @@ paths:
       x-linode-grant: read_write
       summary: Update Configuration Profile
       description: >
-        Updates the parameters of a single configuration profile.
+        Updates the parameters of a single Configuration profile.
       tags:
       - Linode Instances
       operationId: updateLinodeConfig
@@ -3536,7 +3536,7 @@ paths:
       - oauth:
         - linodes:read_write
       requestBody:
-        description: The configuration profile parameters to modify.
+        description: The Configuration profile parameters to modify.
         required: true
         content:
           application/json:
@@ -3588,7 +3588,7 @@ paths:
     delete:
       summary: Delete Configuration Profile
       description: >
-        Deletes the specified configuration profile from the specified Linode.
+        Deletes the specified Configuration profile from the specified Linode.
       x-linode-grant: read_write
       tags:
       - Linode Instances
@@ -7538,8 +7538,8 @@ paths:
       summary: View Profile
       description: >
         Returns information about the current User. This can be used to see
-        who is acting in applications where more than one token is managed, for
-        example in third-party OAuth applications. This endpoint is always
+        who is acting in applications where more than one token is managed. For
+        example, in third-party OAuth applications. This endpoint is always
         accessible, no matter what OAuth scopes the acting token has.
       operationId: getProfile
       x-linode-cli-action: view
@@ -7568,7 +7568,7 @@ paths:
       - profile
       summary: Update Profile
       description: >
-        Update information in your profile.  This option is _not_ available to
+        Update information in your Profile.  This option is _not_ available to
         all third-party clients.
       operationId: updateProfile
       x-linode-cli-action: update
@@ -7832,7 +7832,7 @@ paths:
                   secret:
                     type: string
                     description: >
-                      Your two-factor secret.  This is used to generate
+                      Your Two Factor secret. This is used to generate
                       time-based two factor codes required for login. Doing
                       this will be required to confirm TFA an actually enable it.
                     example: 5FXX6KLACOC33GTC
@@ -8108,7 +8108,7 @@ paths:
       summary: Revoke Personal Access Token
       description: >
         Immediately revokes a Personal Access Token.  The token will be invalidated
-        immediately, and requests using that token will fail with a 401.  It _is_
+        immediately, and requests using that token will fail with a 401.  It is
         possible to revoke access to the token making the request to revoke a token,
         but keep in mind that doing so could lose you access to the api and require
         you to create a new token through some other means.
@@ -8562,7 +8562,7 @@ paths:
         This endpoint allows you to create a new Volume on your Account. In order
         for this to complete successfully, your User must have the `add_volumes`
         grant. Creating a new Volume will start accruing additional charges
-        on your Account.
+        on your account.
 
         Volume service may not be available in all Regions. See
         [GET /regions](/#operation/getRegions)
@@ -9382,7 +9382,7 @@ components:
             example: My Debian 9 Config
           readOnly: true
           description: >
-            A list of the labels of the configuration profiles that are part
+            A list of the labels of the Configuration profiles that are part
             of the Backup.
         disks:
           type: array
@@ -10068,7 +10068,7 @@ components:
         id:
           type: integer
           description: >
-            The ID of the entity this Grant applies to.
+            The ID of the entity this grant applies to.
           example: 123
         permissions:
           type: string
@@ -10083,7 +10083,7 @@ components:
         label:
           type: string
           description: >
-            The current label of the entity this Grant applies to, for display
+            The current label of the entity this grant applies to, for display
             purposes.
           example: example-entity
           readOnly: true
@@ -12770,9 +12770,9 @@ components:
         two_factor_auth:
           type: boolean
           description: >
-            If true, logins from untrusted computers will require two-factor
-            authentication.  See [/profile/tfa-enable](/#operation/tfaEnable) to enable two-factor
-            authentication.
+            If true, logins from untrusted computers will require Two Factor
+            Authentication.  See [/profile/tfa-enable](/#operation/tfaEnable) to
+            enable Two Factor Authentication.
           example: true
           x-linode-cli-display: 4
         restricted:
