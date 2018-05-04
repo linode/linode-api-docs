@@ -3388,7 +3388,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns an array of Configuration profiles associated with this Linode.
+            Returns a list of Configuration profiles associated with this Linode.
           content:
             application/json:
               schema:
@@ -4798,7 +4798,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns an array of Block Storage Volumes attached to this Linode.
+            Returns a list of Block Storage Volumes attached to this Linode.
           content:
             application/json:
               schema:
@@ -4837,8 +4837,6 @@ paths:
       description: >
         If the request is not authenticated, only public StackScripts are returned.
 
-        In addition to filterable attributes, you may apply the filter
-        `"mine": true` to see only your StackScripts.
 
         For more information on StackScripts, please read our guide:
         [Automate Deployment with StackScripts](https://linode.com/docs/platform/stackscripts/).
@@ -6886,7 +6884,7 @@ paths:
       - NodeBalancers
       summary: Create NodeBalancer
       description: >
-        Creates a new NodeBalancer in the requested region.  This NodeBalancer
+        Creates a new NodeBalancer in the requested Region. This NodeBalancer
         will not start serving requests until it is configured.
       operationId: createNodeBalancer
       x-linode-cli-action: create
@@ -6906,7 +6904,7 @@ paths:
                 region:
                   type: string
                   description: >
-                    The ID of the region to create this NodeBalancer in.
+                    The ID of the Region to create this NodeBalancer in.
                   example: us-east
                 label:
                   $ref: '#/components/schemas/NodeBalancer/properties/label'
@@ -6980,7 +6978,7 @@ paths:
       - NodeBalancers
       summary: Update NodeBalancer
       description: >
-        Update information about a NodeBalancer you can access.
+        Updates information about a NodeBalancer you can access.
       operationId: updateNodeBalancer
       x-linode-cli-action: update
       security:
@@ -7022,12 +7020,17 @@ paths:
       - NodeBalancers
       summary: Delete NodeBalancer
       description: >
-        Deletes a NodeBalancer.  This cannot be undone.  Deleting a
-        NodeBalancer will also delete all associated configs and nodes,
-        although the backend servers represented by the nodes will not
-        be changed or removed.  Deleting a NodeBalancer will cause you
-        to lose access to the IP Addresses that NodeBalancer was
-        assigned.
+        Deletes a NodeBalancer.
+
+
+        **This cannot be undone.**
+
+
+        Deleting a
+        NodeBalancer will also delete all associated Configs and Nodes,
+        although the backend servers represented by the Nodes will not
+        be changed or removed. Deleting a NodeBalancer will cause you
+        to lose access to the IP Addresses assigned to this NodeBalancer.
       operationId: deleteNodeBalancer
       x-linode-cli-action: delete
       security:
@@ -7071,11 +7074,13 @@ paths:
       summary: List Configs
       description: >
         Returns a paginated list of NodeBalancerConfigs associated
-        with this NodeBalancer.  NodeBalancer configs represent
+        with this NodeBalancer. NodeBalancerConfigs represent
         individual ports that this NodeBalancer will accept traffic
-        on, one config per port.  For example, if you wanted to
-        accept standard http traffic, you would need a config listening
-        on port 80.
+        on, one Config per port.
+
+
+        For example, if you wanted to accept standard http traffic, you would
+        need a Config listening on port 80.
       operationId: getNodeBalancerConfigs
       x-linode-cli-action: configs-list
       security:
@@ -7118,8 +7123,8 @@ paths:
       description: >
         Creates a new NodeBalancerConfig, which allows the NodeBalancer to
         accept traffic on a new port.  You will need to add NodeBalancerNodes
-        to the new config before it can actually serve requests.
-      operationId: createaNodeBalancerConfig
+        to the new Config before it can actually serve requests.
+      operationId: createNodeBalancerConfig
       x-linode-cli-action: config-create
       security:
       - personalAccessToken: []
@@ -7215,7 +7220,7 @@ paths:
       - NodeBalancers
       summary: Update Config
       description: >
-        Update the configuration for a single port on a NodeBalancer.
+        Updates the configuration for a single port on a NodeBalancer.
       operationId: updateNodeBalancerConfig
       x-linode-cli-action: config-update
       security:
@@ -7267,11 +7272,16 @@ paths:
       - NodeBalancers
       summary: Delete Config
       description: >
-        Deletes the configuration for a port of this NodeBalancer.  This
-        cannot be undone.  Once completed, this NodeBalancer will no longer
-        respond to requests on the given port.  This also deletes all
+        Deletes the Config for a port of this NodeBalancer.
+
+
+        **This cannot be undone.**
+
+
+        Once completed, this NodeBalancer will no longer
+        respond to requests on the given port. This also deletes all
         associated NodeBalancerNodes, but the Linodes they were routing
-        traffic to are unchanged and not removed.
+        traffic to will be unchanged and not removed.
       operationId: deleteNodeBalancerConfig
       x-linode-cli-action: config-delete
       security:
@@ -7321,7 +7331,7 @@ paths:
       summary: List Nodes
       description: >
         Returns a paginated list of NodeBalancer nodes associated with
-        this config.  These are the backends that will be sent traffic
+        this Config. These are the backends that will be sent traffic
         for this port.
       operationId: getNodeBalancerConfigNodes
       x-linode-cli-action: nodes-list
@@ -7363,8 +7373,8 @@ paths:
       - NodeBalancers
       summary: Create Node
       description: >
-        Creates a new NodeBalancer node, a backend that can accept
-        traffic, for this NodeBalancer config.  Nodes are routed
+        Creates a new NodeBalancerNode, a backend that can accept
+        traffic for this NodeBalancer Config. Nodes are routed
         requests on the configured port based on their status.
       operationId: createNodeBalancerNode
       x-linode-cli-action: node-create
@@ -7373,7 +7383,7 @@ paths:
       - oauth:
         - nodebalancers:read_write
       requestBody:
-        description: Information about the node to create.
+        description: Information about the Node to create.
         required: true
         content:
           application/json:
@@ -7434,7 +7444,7 @@ paths:
       - NodeBalancers
       summary: View Node
       description: >
-        Returns information about a single node, a backend for this
+        Returns information about a single Node, a backend for this
         NodeBalancer's configured port.
       operationId: getNodeBalancerNode
       x-linode-cli-action: node-view
@@ -7465,7 +7475,7 @@ paths:
       - NodeBalancers
       summary: Update Node
       description: >
-        Updates information about a node, a backend for this NodeBalancer's
+        Updates information about a Node, a backend for this NodeBalancer's
         configured port.
       operationId: updateNodeBalancerNode
       x-linode-cli-action: node-update
@@ -7510,10 +7520,12 @@ paths:
       - NodeBalancers
       summary: Delete Node
       description: >
-        Deletes a node from this config.  Is backend will no longer
+        Deletes a Node from this Config. This backend will no longer
         receive traffic for the configured port of this NodeBalancer.
+
+
         This does not change or remove the server whose address was
-        used in the creation of this node.
+        used in the creation of this Node.
       operationId: deleteNodeBalancerConfigNode
       x-linode-cli-action: node-delete
       security:
@@ -7547,8 +7559,10 @@ paths:
       description: >
         Returns information about the current User. This can be used to see
         who is acting in applications where more than one token is managed. For
-        example, in third-party OAuth applications. This endpoint is always
-        accessible, no matter what OAuth scopes the acting token has.
+        example, in third-party OAuth applications.
+
+
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
       operationId: getProfile
       x-linode-cli-action: view
       security:
@@ -7749,10 +7763,14 @@ paths:
         no body because unrestricted users have access to everything without
         grants.  This will not return information about entities you do not have
         access to.  This endpoint is useful when writing third-party OAuth
-        applications to see what options you should present to the acting User
-        (for example, if they do not have `global.add_linodes`, you might not
-        display a button to deploy a new Linode). Any client may access this
-        endpoint, as no OAuth scopes are required.
+        applications to see what options you should present to the acting User.
+
+
+        For example, if they do not have `global.add_linodes`, you might not
+        display a button to deploy a new Linode.
+
+
+        Any client may access this endpoint; no OAuth scopes are required.
       operationId: getProfileGrants
       x-linode-cli-action: grants
       x-linode-cli-skip: true
@@ -11968,22 +11986,22 @@ components:
           maxLength: 32
           pattern: '[a-zA-Z0-9-_]{3,32}'
           description: >
-            This NodeBalancer's label.  These must be unique on your Account.
+            This NodeBalancer's label. These must be unique on your Account.
           example: balancer12345
           x-linode-cli-display: 2
         region:
           x-linode-filterable: true
           type: string
           description: >
-            The region where this NodeBalancer is located.  NodeBalancers only
-            support backends in the same region as they are.
+            The Region where this NodeBalancer is located. NodeBalancers only
+            support backends in the same Region as they are.
           example: us-east
           readOnly: true
           x-linode-cli-display: 3
         hostname:
           type: string
           description: >
-            This NodeBalancer's hostname, ending with .nodebalancer.linode.com
+            This NodeBalancer's hostname, ending with _.nodebalancer.linode.com_
           example: nb-207-192-68-16.newark.nodebalancer.linode.com
           readOnly: true
           x-linode-cli-display: 4
@@ -12022,14 +12040,14 @@ components:
           minimum: 0
           maximum: 20
           description: >
-            Throttle connections per second.  Set to 0 to disable throttling.
+            Throttle connections per second.  Set to 0 (zero) to disable throttling.
           example: 0
           x-linode-cli-display: 6
     NodeBalancerConfig:
       type: object
       description: >
         A NodeBalancer config represents the configuration of this NodeBalancer
-        on a single port.  For example, a NodeBalancer config on port 80 would
+        on a single port. For example, a NodeBalancer config on port 80 would
         typically represent how this NodeBalancer response to http requests.
         NodeBalaner configs have a list of backends, called "nodes," that they
         forward requests between based on their configuration.
@@ -12045,12 +12063,12 @@ components:
           minimum: 1
           maximum: 65535
           description: >
-            The port this config is for.  These values must be unique across configs
+            The port this Config is for. These values must be unique across configs
             on a single NodeBalancer (you can't have two configs for port 80, for
             example).  While some ports imply some protocols, no enforcement is done
-            and you may configure your NodeBalancer however is useful to you (for
+            and you may configure your NodeBalancer however is useful to you. For
             example, while port 443 is generally used for https, you do not need
-            ssl configured to have a NodeBalancer listening on port 443).
+            ssl configured to have a NodeBalancer listening on port 443.
           example: 80
           x-linode-cli-display: 2
         protocol:
@@ -12060,8 +12078,9 @@ components:
           - https
           - tcp
           description: >
-            The protocol this port is configured to serve.  If this is set to "https,"
-            you must include an ssl_cert and an ssl_key.
+            The protocol this port is configured to serve.
+
+            * If this is set to `https` you must include an ssl_cert and an ssl_key.
           example: http
           x-linode-cli-display: 3
         algorithm:
@@ -12081,11 +12100,15 @@ components:
           - table
           - http_cookie
           description: >
-            Controls how session stickiness is handled on this port.  If set to `none,`
-            connections will always be assigned a backend based on the algorithm configured.
-            If `table,` sessions from the same remote address will be routed to the same
-            backend.  For http or https clients, `http_cookie` allows sessions to be
-            routed to the same backend based on a cookie set by the NodeBalancer.
+            Controls how session stickiness is handled on this port.
+
+            * If set to `none` connections will always be assigned a backend based on the algorithm configured.
+
+            * If set to `table` sessions from the same remote address will be routed to the same
+              backend.
+
+            * For http or https clients, `http_cookie` allows sessions to be
+              routed to the same backend based on a cookie set by the NodeBalancer.
           example: http_cookie
           x-linode-cli-display: 5
         check:
@@ -12097,47 +12120,51 @@ components:
           - http_body
           description: >
             The type of check to perform against backends to ensure they are serving
-            requests.  This is used to determine if backends are up or down.  If `none,`
-            no check is performed.  `connection` requires only a connection to the
-            backend to succeed.  `http` and `http_body` rely on the backend serving
-            http, and that the response returned is expected.
+            requests. This is used to determine if backends are up or down.
+
+            * If `none` no check is performed.
+
+            * `connection` requires only a connection to the backend to succeed.
+
+            * `http` and `http_body` rely on the backend serving http, and that
+              the response returned is expected.
           example: http_body
         check_interval:
           type: integer
           description: >
-            How often to check that backends are up and serving requests, in seconds.
+            How often, in seconds, to check that backends are up and serving requests.
           example: 90
         check_timeout:
           type: integer
           minimum: 1
           maximum: 30
           description: >
-            How long to wait for a check attempt before considering it failed, in seconds.
+            How long, in seconds, to wait for a check attempt before considering it failed.
           example: 10
         check_attempts:
           type: integer
           minimum: 1
           maximum: 30
           description: >
-            How many times to attempt a check before considering a backend to be down.
+            How many times, in seconds, to attempt a check before considering a backend to be down.
           example: 3
         check_path:
           type: string
           description: >
-            The URL path to check on each backend.  If the backend does not respond
-            to this request, it is considered to be down.
+            The URL path to check on each backend. If the backend does not respond
+            to this request it is considered to be down.
           example: /test
         check_body:
           type: string
           description: >
             This value must be present in the response body of the check in order for
-            it to pass.  If this value is not present in the response body of a check
+            it to pass. If this value is not present in the response body of a check
             request, the backend is considered to be down.
           example: it works
         check_passive:
           type: boolean
           description: >
-            If true, any response from this backend with a 5xx status code will be
+            If true, any response from this backend with a `5xx` status code will be
             enough for it to be considered unhealthy and taken out of rotation.
           example: true
           x-linode-cli-display: 6
@@ -12148,7 +12175,9 @@ components:
           - legacy
           description: >
             What ciphers to use for ssl connections served by this NodeBalancer.
-            `legacy` is considered insecure and should only be used if necessary.
+
+
+            * `legacy` is considered insecure and should only be used if necessary.
           example: recommended
           x-linode-cli-display: 7
           x-linode-cli-color:
@@ -12179,16 +12208,18 @@ components:
         ssl_cert:
           type: string
           description: >
-            The certificate this port is serving.  This is not returned, and if set
-            will come back as "<REDACTED>".  Please use the ssl_commonname and
-            ssl_fingerprint to identify the certificate.
+            The certificate this port is serving. This is not returned. If set,
+            this field will come back as "&lt;REDACTED&gt;".
+
+            * Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
           example: null
         ssl_key:
           type: string
           description: >
             The private key corresponding to this port's certificate.  This is not
-            returned, and will come back as "<REDACTED>" if set.  Please use the
-            ssl_commonname and ssl_fingerprint to identify the certificate.
+            returned. If set, this field will come back as "&lt;REDACTED&gt;".
+
+            * Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
           example: null
         nodes_status:
           type: object
@@ -12235,7 +12266,7 @@ components:
           type: string
           format: ip
           description: >
-            The private IP Address this backend can be reached at. This _must_
+            The private IP Address where this backend can be reached. This _must_
             be a private IP address.
           example: 192.168.210.120:80
           x-linode-cli-display: 3
@@ -12281,22 +12312,24 @@ components:
           - reject
           - drain
           description: >
-            If set to `accept,` this backend is accepting traffic.  If set to
-            `reject,` this backend will not receive traffic.  If set to `drain,`
-            this backend will not receive _new_ traffic, but connections already
-            pinned to it will continue to be routed to it.
+            * If set to `accept` this backend is accepting traffic.
+
+            * If set to `reject` this backend will not receive traffic.
+
+            * If set to `drain` this backend will not receive _new_ traffic, but connections already
+              pinned to it will continue to be routed to it.
           example: accept
           x-linode-cli-display: 6
         config_id:
           type: integer
           description: >
-            The NodeBalancerConfig ID that this node belongs to.
+            The NodeBalancerConfig ID that this Node belongs to.
           example: 4567
           readOnly: true
         nodebalancer_id:
           type: integer
           description: >
-            The NodeBalancer ID that this node belongs to.
+            The NodeBalancer ID that this Node belongs to.
           example: 12345
           readOnly: true
     Notification:
@@ -12846,8 +12879,7 @@ components:
         user_gravatar_id:
           type: string
           description: >
-            The Gravatar ID for the User who
-            created the StackScript.
+            The Gravatar ID for the User who created the StackScript.
           example: a445b305abda30ebc766bc7fda037c37
           readOnly: true
         label:
