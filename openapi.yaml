@@ -3387,7 +3387,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns a list of Configuration profiles associated with this Linode.
+            Returns an array of Configuration profiles associated with this Linode.
           content:
             application/json:
               schema:
@@ -4797,7 +4797,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns a list of Block Storage Volumes attached to this Linode.
+            Returns an array of Block Storage Volumes attached to this Linode.
           content:
             application/json:
               schema:
@@ -4834,10 +4834,7 @@ paths:
       - StackScripts
       summary: List StackScripts
       description: >
-        Returns a list StackScripts available to you. If the request is
-        authenticated, the list also includes private StackScripts the User has
-        permissions to view.
-
+        If the request is not authenticated, only public StackScripts are returned.
 
         In addition to filterable attributes, you may apply the filter
         `"mine": true` to see only your StackScripts.
@@ -12843,7 +12840,7 @@ components:
         user_gravatar_id:
           type: string
           description: >
-            The Gravatar ID (if available) for the User who
+            The Gravatar ID for the User who
             created the StackScript.
           example: a445b305abda30ebc766bc7fda037c37
           readOnly: true
@@ -12922,14 +12919,16 @@ components:
         script:
           type: string
           description: >
-            This field is for inputting the contents of this StackScript.
+            The script to execute when provisioning a new Linode with this Stackscript.
           example: >
             "#!/bin/bash"
         user_defined_fields:
           type: array
           description: >
             This is a list of fields defined with a special syntax inside this StackScript
-            that allow for supplying customized parameters during deployment.
+            that allow for supplying customized parameters during deployment. See
+            [Variables and UDFs](https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs)
+            for more information.
           items:
             $ref: '#/components/schemas/UserDefinedField'
           readOnly: true
