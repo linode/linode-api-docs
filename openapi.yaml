@@ -2526,7 +2526,7 @@ paths:
         - linodes:read_only
       responses:
         '200':
-          description: Returns a list of all Linodes on your Account.
+          description: Returns an array of all Linodes on your Account.
           content:
             application/json:
               schema:
@@ -3388,7 +3388,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns a list of Configuration profiles associated with this Linode.
+            Returns an array of Configuration profiles associated with this Linode.
           content:
             application/json:
               schema:
@@ -4275,7 +4275,7 @@ paths:
       x-linode-cli-action: list
       responses:
         '200':
-          description: Returns a list of kernels.
+          description: Returns an array of kernels.
           content:
             application/json:
               schema:
@@ -4798,7 +4798,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns a list of Block Storage Volumes attached to this Linode.
+            Returns an array of Block Storage Volumes attached to this Linode.
           content:
             application/json:
               schema:
@@ -7026,11 +7026,10 @@ paths:
         **This cannot be undone.**
 
 
-        Deleting a
-        NodeBalancer will also delete all associated Configs and Nodes,
-        although the backend servers represented by the Nodes will not
-        be changed or removed. Deleting a NodeBalancer will cause you
-        to lose access to the IP Addresses assigned to this NodeBalancer.
+        Deleting a NodeBalancer will also delete all associated Configs and Nodes,
+        although the backend servers represented by the Nodes will not be
+        changed or removed. Deleting a NodeBalancer will cause you to lose access
+        to the IP Addresses assigned to this NodeBalancer.
       operationId: deleteNodeBalancer
       x-linode-cli-action: delete
       security:
@@ -7073,8 +7072,8 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       summary: List Configs
       description: >
-        Returns a paginated list of NodeBalancerConfigs associated
-        with this NodeBalancer. NodeBalancerConfigs represent
+        Returns a paginated list of NodeBalancer Configs associated
+        with this NodeBalancer. NodeBalancer Configs represent
         individual ports that this NodeBalancer will accept traffic
         on, one Config per port.
 
@@ -7089,7 +7088,7 @@ paths:
         - nodebalancers:read_only
       responses:
         '200':
-          description: A paginted list of NodeBalancerConfigs
+          description: A paginted list of NodeBalancer Configs
           content:
             application/json:
               schema:
@@ -7121,8 +7120,8 @@ paths:
       - NodeBalancers
       summary: Create Config
       description: >
-        Creates a new NodeBalancerConfig, which allows the NodeBalancer to
-        accept traffic on a new port.  You will need to add NodeBalancerNodes
+        Creates a new NodeBalancer Config, which allows the NodeBalancer to
+        accept traffic on a new port.  You will need to add NodeBalancer Nodes
         to the new Config before it can actually serve requests.
       operationId: createNodeBalancerConfig
       x-linode-cli-action: config-create
@@ -7281,7 +7280,7 @@ paths:
         Once completed, this NodeBalancer will no longer
         respond to requests on the given port. This also deletes all
         associated NodeBalancerNodes, but the Linodes they were routing
-        traffic to will be unchanged and not removed.
+        traffic to will be unchanged and will not be removed.
       operationId: deleteNodeBalancerConfig
       x-linode-cli-action: config-delete
       security:
@@ -7290,7 +7289,7 @@ paths:
         - nodebalancers:read_write
       responses:
         '200':
-          description: NodeBalancerConfig deleted successfully.
+          description: NodeBalancer Config deleted successfully.
           content:
             application/json:
               schema:
@@ -7524,7 +7523,7 @@ paths:
         receive traffic for the configured port of this NodeBalancer.
 
 
-        This does not change or remove the server whose address was
+        This does not change or remove the Linode whose address was
         used in the creation of this Node.
       operationId: deleteNodeBalancerConfigNode
       x-linode-cli-action: node-delete
@@ -8175,7 +8174,7 @@ paths:
       x-linode-cli-action: list
       responses:
         '200':
-          description: Returns a list of Regions.
+          description: Returns an array of Regions.
           content:
             application/json:
               schema:
@@ -8554,7 +8553,7 @@ paths:
         - volumes:read_only
       responses:
         '200':
-          description: Returns a list of all Volumes on your Account.
+          description: Returns an array of all Volumes on your Account.
           content:
             application/json:
               schema:
@@ -11968,7 +11967,7 @@ components:
       description: >
         Linode's load balancing solution.  Can handle multiple ports, SSL termination,
         and any number of backends.  NodeBalancer ports are configured with
-        NodeBalancerConfigs, and each config is given one or more NodeBalancerNode that
+        NodeBalancer Configs, and each config is given one or more NodeBalancer Node that
         accepts traffic.  The traffic should be routed to the  NodeBalancer's ip address,
         the NodeBalancer will handle routing individual requests to backends.
       properties:
@@ -12048,7 +12047,7 @@ components:
       description: >
         A NodeBalancer config represents the configuration of this NodeBalancer
         on a single port. For example, a NodeBalancer config on port 80 would
-        typically represent how this NodeBalancer response to http requests.
+        typically represent how this NodeBalancer responds to http requests.
         NodeBalaner configs have a list of backends, called "nodes," that they
         forward requests between based on their configuration.
       properties:
@@ -12126,8 +12125,8 @@ components:
 
             * `connection` requires only a connection to the backend to succeed.
 
-            * `http` and `http_body` rely on the backend serving http, and that
-              the response returned is expected.
+            * `http` and `http_body` rely on the backend serving HTTP, and that
+              the response returned matches what is expected.
           example: http_body
         check_interval:
           type: integer
@@ -12192,7 +12191,7 @@ components:
         ssl_commonname:
           type: string
           description: >
-            The common name for the SSL certification this port is serving. null
+            The common name for the SSL certification this port is serving
             if this port is not configured to use SSL.
           example: null
           readOnly: true
@@ -12200,7 +12199,7 @@ components:
         ssl_fingerprint:
           type: string
           description: >
-            The fingerprint for the SSL certification this port is serving.  null
+            The fingerprint for the SSL certification this port is serving
             if this port is not configured to use SSL.
           example: null
           readOnly: true
@@ -12211,7 +12210,7 @@ components:
             The certificate this port is serving. This is not returned. If set,
             this field will come back as "&lt;REDACTED&gt;".
 
-            * Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
+            Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
           example: null
         ssl_key:
           type: string
@@ -12219,7 +12218,7 @@ components:
             The private key corresponding to this port's certificate.  This is not
             returned. If set, this field will come back as "&lt;REDACTED&gt;".
 
-            * Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
+            Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
           example: null
         nodes_status:
           type: object
@@ -12248,12 +12247,12 @@ components:
       type: object
       description: >
         A NodeBalancerNode represents a single backend serving requests for a single
-        port of a NodeBalancer.  Nodes are specific to NodeBalancerConfigs, and serve
+        port of a NodeBalancer.  Nodes are specific to NodeBalancer Configs, and serve
         traffic over their private IP.  If the same Linode is serving traffic for more
-        than one port on the same NodeBalancer, one NodeBalancerNode is required for
+        than one port on the same NodeBalancer, one NodeBalancer Node is required for
         each config (port) it should serve requests on.  For example, if you have
         four backends, and each should response to both http and https requests, you
-        will need two NodeBalancerConfigs (port 80 and port 443) and four backends
+        will need two NodeBalancer Configs (port 80 and port 443) and four backends
         each - one for each of the Linodes serving requests for that port.
       properties:
         id:
@@ -12312,6 +12311,8 @@ components:
           - reject
           - drain
           description: >
+            The mode this NodeBalancer should use when sending traffic to this backend.
+
             * If set to `accept` this backend is accepting traffic.
 
             * If set to `reject` this backend will not receive traffic.
@@ -12323,7 +12324,7 @@ components:
         config_id:
           type: integer
           description: >
-            The NodeBalancerConfig ID that this Node belongs to.
+            The NodeBalancer Config ID that this Node belongs to.
           example: 4567
           readOnly: true
         nodebalancer_id:
