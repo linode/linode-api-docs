@@ -2345,7 +2345,7 @@ paths:
         Creates a new private gold-master Image from a Linode Disk. There is no
         additional charge to store Images for Linode users.
 
-        Images are limited to 2GB per Image and three Images per Account.
+        Images are limited to three per Account.
       operationId: createImage
       x-linode-cli-action: create
       security:
@@ -2406,7 +2406,7 @@ paths:
     parameters:
     - name: imageId
       in: path
-      description: ID of the gold-master Image to look up.
+      description: ID of the Image to look up.
       required: true
       schema:
         type: string
@@ -2450,8 +2450,7 @@ paths:
         - images:read_write
       requestBody:
         description: >
-          Any field that is not marked as `readOnly` may not be updated. If any
-          updated field fails to pass validation, the Image will not be updated.
+          The fields to update.
         required: true
         content:
           application/json:
@@ -2921,8 +2920,8 @@ paths:
       description: >
         Creates a snapshot backup of a Linode.
 
-        ** If you already have a snapshot this is a destructive operation. The
-        previous snapshot will be deleted.**
+        ** If you already have a snapshot of this Linode, this is a destructive
+        operation. The previous snapshot will be deleted.**
       tags:
       - Linode Instances
       operationId: createSnapshot
@@ -7736,8 +7735,8 @@ paths:
       - profile
       summary: Revoke App Access
       description: >
-        Expires tokens and refresh tokens possessed by this app. This app is no
-        longer authorized to access your Account.
+        Expires this app token. This token may no longer be used to
+        access your Account.
       operationId: deleteProfileApp
       x-linode-cli-action: app-delete
       security:
