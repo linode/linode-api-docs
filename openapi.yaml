@@ -2296,9 +2296,13 @@ paths:
       - images
       summary: List Images
       description: >
-        Returns a paginated list of Images. This list includes public Images and
-        your private Images. You can call this endpoint without authentication
-        to get all of the public Images.
+        Returns paginated list of Images.
+
+
+        * Calling this endpoint without authentication returns all public Images.
+
+        * Authentication is required to return a combined paginated list of all public and
+          your private Images.
       operationId: getImages
       x-linode-cli-action: list
       security:
@@ -2339,8 +2343,9 @@ paths:
       summary: Create Image
       description: >
         Creates a new private gold-master Image from a Linode Disk. There is no
-        additional charge to store Images for Linode users, with a limit of 2GB
-        per Image and 3 Images per Account.
+        additional charge to store Images for Linode users.
+
+        Images are limited to three per Account.
       operationId: createImage
       x-linode-cli-action: create
       security:
@@ -2367,12 +2372,12 @@ paths:
                   label:
                     type: string
                     description: >
-                      A short title of the Image. Defaults to the label of the
+                      A short title of this Image. Defaults to the label of the
                       Disk it is being created from if not provided.
                   description:
                     type: string
                     description: >
-                      A detailed description of the Image.
+                      A detailed description of this Image.
       responses:
         '200':
           description: New private Image created successfully.
@@ -2401,7 +2406,7 @@ paths:
     parameters:
     - name: imageId
       in: path
-      description: ID of the gold-master image to look up.
+      description: ID of the Image to look up.
       required: true
       schema:
         type: string
@@ -2410,12 +2415,12 @@ paths:
       - images
       summary: View Image
       description: >
-        Get information about a single image.
+        Get information about a single Image.
       operationId: getImage
       x-linode-cli-action: view
       responses:
         '200':
-          description: A single image object.
+          description: A single Image object.
           content:
             application/json:
               schema:
@@ -2435,7 +2440,7 @@ paths:
       - images
       summary: Update Image
       description: >
-        This allows you to update an private Image that you have permission to
+        This allows you to update a private Image that you have permission to
         `read_write`.
       operationId: updateImage
       x-linode-cli-action: update
@@ -2445,8 +2450,7 @@ paths:
         - images:read_write
       requestBody:
         description: >
-          Any field that is not marked as `readOnly` may not be updated. If any
-          updated field fails to pass validation, the image will not be updated.
+          The fields to update.
         required: true
         content:
           application/json:
@@ -2819,13 +2823,16 @@ paths:
       - Linode Instances
       summary: Delete Linode
       description: |
-        Deletes a Linode you have permission to `read_write`. Deleting a Linode is a destructive
-        process and cannot be undone. Additionally, deleting a Linode:
+        Deletes a Linode you have permission to `read_write`.
 
-        * Gives up any IP addresses the Linode was assigned
-        * Deletes all disks, backups, configs, etc.
-        * Stops billing for the Linode and its associated services. You will be billed for time used
-          within the billing period the Linode was active.
+        **Deleting a Linode is a destructive process and cannot be undone.**
+
+        Additionally, deleting a Linode:
+
+          * Gives up any IP addresses the Linode was assigned
+          * Deletes all Disks, Backups, Configs, etc.
+          * Stops billing for the Linode and its associated services. You will be billed for time used
+            within the billing period the Linode was active.
       operationId: deleteLinodeInstance
       x-linode-cli-action: delete
       security:
@@ -2911,9 +2918,10 @@ paths:
       x-linode-grant: read_write
       summary: Create Snapshot
       description: >
-        Creates a snapshot backup of a Linode. WARNING: If you already have a
-        snapshot this is a destructive operation. The previous snapshot will be
-        deleted.
+        Creates a snapshot backup of a Linode.
+
+        ** If you already have a snapshot of this Linode, this is a destructive
+        operation. The previous snapshot will be deleted.**
       tags:
       - Linode Instances
       operationId: createSnapshot
@@ -3131,7 +3139,7 @@ paths:
                 overwrite:
                   type: boolean
                   description: >
-                    If true, deletes all disks and configs on the target Linode
+                    If True, deletes all disks and configs on the target Linode
                     before restoring.
                   example: true
       responses:
@@ -3820,8 +3828,9 @@ paths:
       - Linode Instances
       summary: Delete Disk
       description: |
-        Deletes a Disk you have permission to `read_write`. Deleting a Disk is a
-        destructive process and cannot be undone.
+        Deletes a Disk you have permission to `read_write`.
+
+        **Deleting a Disk is a destructive process and cannot be undone.**
       operationId: deleteDisk
       x-linode-cli-action: disk-delete
       security:
@@ -7726,8 +7735,8 @@ paths:
       - profile
       summary: Revoke App Access
       description: >
-        Expires all tokens and refresh tokens possessed by this app. This app is no
-        longer authorized to access your Account.
+        Expires this app token. This token may no longer be used to
+        access your Account.
       operationId: deleteProfileApp
       x-linode-cli-action: app-delete
       security:
@@ -8765,9 +8774,11 @@ paths:
       - volumes
       summary: Delete Volume
       description: |
-        Deletes a Volume you have permission to `read_write`. Deleting a Volume
-        is a destructive process and cannot be undone. Additionally, deleting
-        stops billing for the Volume. You will be billed for time used within
+        Deletes a Volume you have permission to `read_write`.
+
+        **Deleting a Volume is a destructive process and cannot be undone.**
+
+        Deleting stops billing for the Volume. You will be billed for time used within
         the billing period the Volume was active.
       operationId: deleteVolume
       x-linode-cli-action: delete
@@ -9555,15 +9566,14 @@ components:
         filesystem:
           type: string
           title: The filesystem on the Disk.
-          readOnly: true
           description: >
             The Disk filesystem can be one of:
 
-            * raw - No filesystem, just a raw binary stream
-            * swap - Linux swap area
-            * ext3 - The ext3 journaling filesystem for Linux
-            * ext4 - The ext4 journaling filesystem for Linux
-            * initrd - initrd (uncompressed initrd, ext2, max 32 MB)
+              * raw - No filesystem, just a raw binary stream
+              * swap - Linux swap area
+              * ext3 - The ext3 journaling filesystem for Linux
+              * ext4 - The ext4 journaling filesystem for Linux
+              * initrd - initrd (uncompressed initrd, ext2, max 32 MB)
           example: ext4
           enum:
           - raw
@@ -10258,7 +10268,7 @@ components:
           x-linode-filterable: true
           type: boolean
           description: >
-            Whether or not this Image is deprecated. Will only be true for
+            Whether or not this Image is deprecated. Will only be True for
             deprecated public Images.
           example: false
           readOnly: true
@@ -10289,7 +10299,7 @@ components:
           type: string
           description: >
             How the image was created. Manual images can be created at any time.
-            Automatic images are created automatically from a deleted Linode.
+            "Automatic" images are created automatically from a deleted Linode.
           enum:
           - manual
           - automatic
@@ -10299,8 +10309,7 @@ components:
           x-linode-filterable: true
           type: string
           description: >
-            The upstream distribution vendor. Consistent between releases of a
-            distro. `None` for private images.
+            The upstream distribution vendor. `None` for private images.
           example: null
           readOnly: true
           x-linode-cli-display: 3
@@ -10333,7 +10342,7 @@ components:
         created_by:
           type: string
           description: >
-            The name of the User who created this Image, or linode for
+            The name of the User who created this Image, or "linode" for
             official Images.
           example: linode
           readOnly: true
@@ -10372,7 +10381,7 @@ components:
           type: string
           description: >
             How the Image was created. Manual Images can be created at any time.
-            Automatic Images are created automatically from a deleted Linode.
+            "Automatic" Images are created automatically from a deleted Linode.
           enum:
           - manual
           - automatic
@@ -10382,8 +10391,7 @@ components:
           x-linode-filterable: true
           type: string
           description: >
-            The upstream distribution vendor. Consistent between releases of a
-            distro. `None` for private Images.
+            The upstream distribution vendor. `None` for private Images.
           example: Ubuntu
           readOnly: true
           x-linode-cli-display: 3
