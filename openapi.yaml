@@ -4835,13 +4835,13 @@ paths:
       - StackScripts
       summary: List StackScripts
       description: >
-        Returns a list of publicly available StackScripts. If the request is
-        authenticated, the list also includes private StackScripts the User has
-        permissions to view.
-
+        If the request is not authenticated, only public StackScripts are returned.
 
         In addition to filterable attributes, you may apply the filter
         `"mine": true` to see only your StackScripts.
+
+        For more information on StackScripts, please read our guide:
+        [Automate Deployment with StackScripts](https://linode.com/docs/platform/stackscripts/).
       operationId: getStackScripts
       x-linode-cli-action: list
       security:
@@ -4851,7 +4851,7 @@ paths:
       responses:
         '200':
           description: >
-            A list of publicly available StackScripts, including private
+            A list of StackScripts available to the User, including private
             StackScripts owned by the User if the request is authenticated.
           content:
             application/json:
@@ -4883,7 +4883,7 @@ paths:
       - StackScripts
       summary: Create StackScript
       description: >
-        This endpoint allows you to add a new StackScript to your Account.
+        Creates a new StackScript to your Account.
       operationId: addStackScript
       x-linode-cli-action: create
       security:
@@ -4971,8 +4971,10 @@ paths:
       - StackScripts
       summary: Update StackScript
       description: >
-        This endpoint allows you to modify a StackScript. Setting a
-        StackScript to public is a permanent change.
+        This endpoint allows you to modify a StackScript.
+
+
+        **Once a StackScript is made public, it cannot be made private.**
       operationId: updateStackScript
       x-linode-cli-action: update
       security:
@@ -12836,7 +12838,6 @@ components:
           x-linode-cli-display: 1
         username:
           type: string
-          title: The User who created the StackScript.
           description: >
             The User who created the StackScript.
           example: myuser
@@ -12844,16 +12845,14 @@ components:
           x-linode-cli-display: 2
         user_gravatar_id:
           type: string
-          title: The author's Gravatar ID
           description: >
             The Gravatar ID for the User who
-            created the StackScript, if one is available.
+            created the StackScript.
           example: a445b305abda30ebc766bc7fda037c37
           readOnly: true
         label:
           x-linode-filterable: true
           type: string
-          title: A label for the StackScript.
           description: >
             The StackScript's label is for display purposes only.
           example: a-stackscript
@@ -12871,8 +12870,8 @@ components:
           type: array
           x-linode-filterable: true
           description: >
-            The images that the StackScript is compatible for
-            deployment with. A list of Image IDs.
+            An array of Image IDs representing the Images that this StackScript
+            is compatible for deploying with.
           items:
             type: string
           example:
@@ -12881,66 +12880,61 @@ components:
           x-linode-cli-display: 4
         deployments_total:
           type: integer
-          title: The number of times the StackScript has been deployed.
           description: >
             The total number of times this StackScript has been deployed.
           example: 12
           readOnly: true
         deployments_active:
           type: integer
-          title: The number of currently active deployments of this StackScript.
           description: >
-            The count of only the still actively deployed Linodes created from
+            Count of currently active, deployed Linodes created from
             this StackScript.
           example: 1
           readOnly: true
         is_public:
           x-linode-filterable: true
           type: boolean
-          title: Whether the StackScript is publicly accessible or not.
           description: >
             This determines whether other users can use your StackScript.
-            Once a StackScript is made public, it cannot be made private.
+            **Once a StackScript is made public, it cannot be made private.**
           example: true
           x-linode-cli-display: 5
         created:
           type: string
           format: date-time
-          title: The date the StackScript was created.
           description: >
-            The date the StackScript was created.
+            The date this StackScript was created.
           readOnly: true
           example: "2018-01-01T00:01:01"
           x-linode-cli-display: 6
         updated:
           type: string
           format: date-time
-          title: The date the StackScript was last updated.
           description: >
-            The date the StackScript was last updated.
+            The date this StackScript was last updated.
           readOnly: true
           example: "2018-01-01T00:01:01"
           x-linode-cli-display: 7
         rev_note:
           x-linode-filterable: true
           type: string
-          title: A note regarding the last revision of this StackScript.
           description: >
-            This field allows you to leave notes when making revisions to StackScripts.
+            This field allows you to add notes for the set of revisions made to
+            this StackScript.
           example: Set up MySQL
         script:
           type: string
-          title: The StackScript.
           description: >
-            This field is for inputting the contents of the StackScript.
+            The script to execute when provisioning a new Linode with this Stackscript.
           example: >
             "#!/bin/bash"
         user_defined_fields:
           type: array
-          title: A list of custom fields defined by the User using special tags within the StackScript.
           description: >
-            This is a list of fields defined with a special syntax inside the StackScript
-            that allow for supplying customized parameters during deployment.
+            This is a list of fields defined with a special syntax inside this StackScript
+            that allow for supplying customized parameters during deployment. See
+            [Variables and UDFs](https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs)
+            for more information.
           items:
             $ref: '#/components/schemas/UserDefinedField'
           readOnly: true
