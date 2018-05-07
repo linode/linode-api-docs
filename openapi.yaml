@@ -16,7 +16,7 @@ info:
     using standard HTTP requests. Response data is returned in JSON format.
 
 
-    [Download the Linode OpenAPI Specification](/openapi.yaml)
+    [Download the Linode OpenAPI Specification](https://developers.linode.com/api/v4/openapi.yaml)
 
 
     # Changelog
@@ -89,7 +89,7 @@ info:
 
     ## Authentication Schema
 
-    See our [Authentication Schema](/#section/Authentication) for
+    See our [Authentication Schema](https://developers.linode.com/api/v4/#section/Authentication) for
     information on scopes and authorization/token URLs.
 
     # Requests
@@ -117,7 +117,7 @@ info:
     | 403 Forbidden | You are authenticated, but don't have permission to do this. |
     | 404 Not Found | The resource you're requesting does not exist. |
     | 429 Too Many Requests | You've hit a rate limit. |
-    | 500 Internal Server Error | Please [open a Support Ticket](/#operation/createTicket). |
+    | 500 Internal Server Error | Please [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket). |
 
     # Errors
 
@@ -127,7 +127,7 @@ info:
     request error might be an invalid input, a required parameter being omitted,
     or a malformed request. A server error means something went wrong processing
     your request, and we'll fix it shortly. If this occurs, please
-    [open a Support Ticket](/#operation/createTicket) and let us know.
+    [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket) and let us know.
 
     The `errors` field is an array of the things that went wrong with your request.
     We will try to include as many of the problems in the response as possible,
@@ -271,7 +271,7 @@ info:
     # CLI (Command Line Interface)
 
     An _early access_ version of the [Linode CLI](https://github.com/linode/linode-cli) is now available to use. It
-    requires a [Personal Access Token](/#section/Personal-Access-Token)
+    requires a [Personal Access Token](https://developers.linode.com/api/v4/#section/Personal-Access-Token)
     for authentication, and gives you access to all of the features and functionality
     of the Linode API that are documented here with CLI examples.
 
@@ -1244,7 +1244,7 @@ paths:
         This begins the process of submitting a payment via PayPal. After calling
         this endpoint, you must take the resulting `payment_id` along with
         the `payer_id` from your PayPal account and
-        [POST /account/payments/paypal-execute](/#operation/executePayPalPayment)
+        [POST /account/payments/paypal-execute](https://developers.linode.com/api/v4/#operation/executePayPalPayment)
         to complete the payment.
       operationId: createPayPalPayment
       x-linode-cli-action: paypal-start
@@ -1688,7 +1688,7 @@ paths:
         Returns the full grants structure for this User. This includes all
         entities on the Account alongside what level of access this User has
         to each of them. Individual users may view their own grants at the
-        [/profile/grants](/#operation/getProfileGrants)
+        [/profile/grants](https://developers.linode.com/api/v4/#operation/getProfileGrants)
         endpoint, but will not see entities that they have no access to.
       operationId: getUserGrants
       x-linode-cli-action: grants
@@ -2568,11 +2568,11 @@ paths:
         new Linode will incur a charge on your Account.
 
         Linodes can be created using one of the available Types. See
-        [GET /linode/types](/#operation/getLinodeTypes) to get more
+        [GET /linode/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes) to get more
         information about each Type's specs and cost.
 
         Linodes can be created in any one of our available Regions, see
-        [GET /regions](/#operation/getRegions) for a list
+        [GET /regions](https://developers.linode.com/api/v4/#operation/getRegions) for a list
         of available Regions you can deploy your Linode in.
 
         Linodes can be created in a number of ways:
@@ -2587,7 +2587,7 @@ paths:
         * Using one of your own StackScripts or a public StackScript
           * The Linode will be `running` after it completes `provisioning`
           * Requires a compatible Linode Linux Distribution `image` to be supplied
-            * See [GET /linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible images
+            * See [GET /linode/stackscript/{stackscriptId}](https://developers.linode.com/api/v4/#operation/getStackScript) for compatible images
           * Requires a `root_pass` be supplied to use for the root User's Account
           * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
 
@@ -2598,7 +2598,7 @@ paths:
 
         * Create an empty Linode
           * The Linode will remain `offline` and must be manually started
-            * See [POST /linode/instances/{linodeId}/boot](/#operation/bootLinodeInstance)
+            * See [POST /linode/instances/{linodeId}/boot](https://developers.linode.com/api/v4/#operation/bootLinodeInstance)
           * Disks and Configs must be created manually
           * This is only recommended for advanced use-cases
       tags:
@@ -2631,7 +2631,7 @@ paths:
                       A Backup ID from another Linode's available backups. Your User must have
                       `read_write` access to that Linode, the backup must have a `status` of
                       `successful`, and the Linode must be deployed to the same `region` as the backup.
-                      See [GET /linode/instances/{linodeId}/backups](/#operation/getBackups)
+                      See [GET /linode/instances/{linodeId}/backups](https://developers.linode.com/api/v4/#operation/getBackups)
                       for a Linode's available backups.
 
                       This field and the `image` field are mutually exclusive.
@@ -2643,7 +2643,7 @@ paths:
                       enrolled in the Linode Backup service. This will incur an additional charge.
                       The cost for the Backup service is dependent on the Type of Linode deployed.
 
-                      Backup pricing is included in the response from [GET /linodes/types](/#operation/getLinodeTypes)
+                      Backup pricing is included in the response from [GET /linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes)
                   swap_size:
                     type: integer
                     title: Swap Disk size in MB
@@ -3269,7 +3269,7 @@ paths:
                     This is the location where the Linode will be deployed.
 
                     To view all available Regions you can deploy to see
-                    [GET /regions](/#operation/getRegions).
+                    [GET /regions](https://developers.linode.com/api/v4/#operation/getRegions).
 
                     * Region can only be provided when cloning to a new Linode.
                   example: us-east
@@ -3283,7 +3283,7 @@ paths:
                     `specs` on the Linode object.
 
                     To view all available Linode Types you can deploy with
-                    see [GET /linode/types](/#operation/getLinodeTypes).
+                    see [GET /linode/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
 
                     * Type can only be provided when cloning to a new Linode.
                   example: g5-standard-2
@@ -3321,7 +3321,7 @@ paths:
                     service is dependent on the Type of Linode deployed.
 
                     Backup pricing is included in the response from
-                    [GET /linodes/types](/#operation/getLinodeTypes).
+                    [GET /linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
 
                     * Can only be included when cloning to a new Linode.
                   example: true
@@ -3687,7 +3687,7 @@ paths:
       summary: Create Disk
       description: >
         Adds a new disk to a Linode. You can optionally create a disk
-        from an image (see [GET /images](/#operation/getImages) for a list of available public images,
+        from an image (see [GET /images](https://developers.linode.com/api/v4/#operation/getImages) for a list of available public images,
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
       operationId: addLinodeDisk
@@ -6436,7 +6436,7 @@ paths:
       description: >
         Allocates a new IPv4 Address on your Account. The Linode must be
         configured to support additional addresses - please
-        [open a support ticket](/#operation/createTicket) requesting additional
+        [open a support ticket](https://developers.linode.com/api/v4/#operation/createTicket) requesting additional
         addresses before attempting allocation.
       operationId: allocateIP
       x-linode-cli-action: ip-add
@@ -7849,7 +7849,7 @@ paths:
       description: >
         Generates a Two Factor secret for your User. TFA will
         not be enabled until you have successfully confirmed the code you
-        were given with [tfa-enable-confirm](/#operation/tfaConfirm) (see below).
+        were given with [tfa-enable-confirm](https://developers.linode.com/api/v4/#operation/tfaConfirm) (see below).
         Once enabled, login from untrusted computers will be required to provide
         a TFA code before they are successful.
       operationId: tfaEnable
@@ -8601,7 +8601,7 @@ paths:
         on your account.
 
         Volume service may not be available in all Regions. See
-        [GET /regions](/#operation/getRegions)
+        [GET /regions](https://developers.linode.com/api/v4/#operation/getRegions)
         for a list of available Regions you deploy your Volume in.
       tags:
       - volumes
@@ -9277,7 +9277,7 @@ components:
           type: string
           description: >
             The Longview Pro tier you are currently subscribed to. The value must
-            be null or an ID from [GET /longview/subscriptions](/#operation/getLongviewSubscriptions).
+            be null or an ID from [GET /longview/subscriptions](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions).
           example: longview-30
           x-linode-cli-display: 2
         network_helper:
@@ -9622,7 +9622,7 @@ components:
             An image id to deploy the disk from. Official Linode images start with
             `linode/ `, while your images start with `private`.
 
-            See [/images](/#operation/getImages) for more information on the images available for you to use.
+            See [/images](https://developers.linode.com/api/v4/#operation/getImages) for more information on the images available for you to use.
           example: linode/debian9
         authorized_keys:
           type: array
@@ -9663,7 +9663,7 @@ components:
             A StackScript ID that will cause the referenced StackScript to be run during
             deployment of this Linode. A compatible `image` is required to use a
             StackScript. To get a list of available StackScript and their permitted images
-            see [GET /stackscripts](/#operation/getStackScripts).
+            see [GET /stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts).
 
             You may only deploy from a StackScript that you own or that is listed as
             `public`.
@@ -9677,7 +9677,7 @@ components:
           description: |
             This field is required only if the StackScript being deployed requires input
             data from the User for successful completion.
-            See [GET /linode/stackscript/{stackScriptId}](/#operation/getStackScript)
+            See [GET /linode/stackscript/{stackScriptId}](https://developers.linode.com/api/v4/#operation/getStackScript)
             for more details.
 
             This field is required to be valid JSON.
@@ -9914,7 +9914,7 @@ components:
           description: >
             What happened to cause this error. In most cases, this can be fixed immediately by
             changing the data you sent in the request, but in some cases you will be instructed to
-            [open a Support Ticket](/#operation/createTicket) or perform some
+            [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket) or perform some
             other action before you can complete the request successfully.
           example: fieldname must be a valid value
         field:
@@ -10889,7 +10889,7 @@ components:
             with.
 
             To change a Linode's Type, use
-            [POST /linode/instances/{linodeId}/resize](/#operation/resizeLinodeInstance).
+            [POST /linode/instances/{linodeId}/resize](https://developers.linode.com/api/v4/#operation/resizeLinodeInstance).
           x-linode-cli-display: 5
         group:
           deprecated: true
@@ -10965,10 +10965,10 @@ components:
           description: |
             This Linode's IPv4 Addresses. Each Linode is assigned a single public IPv4 address
             upon creation, and may get a single private IPv4 address if needed. You may need to
-            [open a support ticket](/#operation/createTicket) to get additional IPv4 addresses.
+            [open a support ticket](https://developers.linode.com/api/v4/#operation/createTicket) to get additional IPv4 addresses.
 
             IPv4 addresses may be reassigned between your Linodes, or shared with other Linodes.
-            See the [/networking](/#tag/networking) endpoints for details.
+            See the [/networking](https://developers.linode.com/api/v4/#tag/networking) endpoints for details.
           x-linode-cli-display: 10
         ipv6:
           type: string
@@ -11058,7 +11058,7 @@ components:
           type: object
           description: >
             Information about this Linode's backups status. For information about available
-            backups, see [GET /linode/instances/{linodeId}/backups](/#operation/getBackups).
+            backups, see [GET /linode/instances/{linodeId}/backups](https://developers.linode.com/api/v4/#operation/getBackups).
           properties:
             enabled:
               type: boolean
@@ -12634,7 +12634,7 @@ components:
           type: string
           description: >
             The PaymentID returned from
-            [POST /account/payments/paypal](/#operation/createPayPalPayment) that has
+            [POST /account/payments/paypal](https://developers.linode.com/api/v4/#operation/createPayPalPayment) that has
             been approved with PayPal.
           example: PAY-1234567890ABCDEFGHIJKLMN
     PersonalAccessToken:
@@ -12825,7 +12825,7 @@ components:
           type: boolean
           description: >
             If true, logins from untrusted computers will require Two Factor
-            Authentication.  See [/profile/tfa-enable](/#operation/tfaEnable) to
+            Authentication.  See [/profile/tfa-enable](https://developers.linode.com/api/v4/#operation/tfaEnable) to
             enable Two Factor Authentication.
           example: true
           x-linode-cli-display: 4
@@ -12834,7 +12834,7 @@ components:
           description: >
             If true, your User has restrictions on what can be accessed on your
             Account. To get details on what entities/actions you can
-            access/perform, see [/profile/grants](/#operation/getProfileGrants).
+            access/perform, see [/profile/grants](https://developers.linode.com/api/v4/#operation/getProfileGrants).
           example: false
           x-linode-cli-display: 3
     Region:
@@ -13286,7 +13286,7 @@ components:
           description: >
             If true, this User must be granted access to perform actions or access
             entities on this Account. See
-            [/account/users/{username}/grants](/#operation/getUserGrants)
+            [/account/users/{username}/grants](https://developers.linode.com/api/v4/#operation/getUserGrants)
             for details on how to configure grants for a restricted User.
           example: true
           x-linode-cli-display: 3
@@ -13376,7 +13376,7 @@ components:
               * deleting - the Volume is being deleted and is unavailable for use.
               * deleted - the Volume has been deleted.
               * contact_support - there is a problem with your Volume. Please
-                [open a Support Ticket](/#operation/createTicket) to resolve the issue.
+                [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket) to resolve the issue.
           enum:
           - creating
           - active

@@ -32,10 +32,13 @@ node {
         sh "sed -i -- 's|version: DEVELOPMENT|version: ${version}|' openapi.yaml"
 
         replace_to = ''
+        page_url = ''
         if (env.BRANCH_NAME == 'development') {
             replace_to = 'https://api.dev.linode.com/v4'
+            page_url = 'https://developers.dev.linode.com'
         } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) { 
             replace_to = 'https://api.testing.linode.com/v4'
+            page_url = 'https://developers.testing.linode.com'
         } else {
             echo "Skipping environment-specific changes"
         }
@@ -44,6 +47,7 @@ node {
             echo "Applying environment-specific changes"
             image.inside() { c ->
                 sh "sed -i -- 's|https://api.linode.com/v4|${replace_to}|' openapi.yaml"
+                sh "sed -i -- 's|https://developers.linode.com|${page_url}|' openapi.yaml"
             }
         }
     }
