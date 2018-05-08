@@ -2584,15 +2584,17 @@ paths:
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
 
-        * Using one of your own StackScripts or a public StackScript.
+        * Using a StackScript.
+          * See [/linode/stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts) for
+            a list of available StackScripts.
           * The Linode will be `running` after it completes `provisioning`.
-          * Requires a compatible Linode Linux Distribution `image` to be supplied.
+          * Requires a compatible Image to be supplied.
             * See [/linode/stackscript/{stackscriptId}](https://developers.linode.com/api/v4/#operation/getStackScript) for compatible Images.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
 
         * Using one of your other Linode's backups.
-          * The Linode will be `running` after it completes `provisioning`.
+          * You must create a Linode large enough to accommodate the Backup's size.
           * The Disks and Config will match that of the Linode that was backed up.
           * The `root_pass` will match that of the Linode that was backed up.
 
@@ -2976,7 +2978,8 @@ paths:
       x-linode-grant: read_write
       summary: Cancel Backups
       description: >
-        Cancels the Backup service on the given Linode.
+        Cancels the Backup service on the given Linode. Deletes all of this Linode's
+        existing backups forever.
       tags:
       - Linode Instances
       operationId: cancelBackups
@@ -3262,7 +3265,7 @@ paths:
                 region:
                   type: string
                   description: >
-                    This is the location where the Linode will be deployed.
+                    This is the Region where the Linode will be deployed.
 
                     To view all available Regions you can deploy to see
                     [/regions](https://developers.linode.com/api/v4/#operation/getRegions).
@@ -3286,7 +3289,8 @@ paths:
                   type: integer
                   description: >
                     If an existing Linode is to be the target for the clone,
-                    the ID of that Linode.
+                    the ID of that Linode. The existing Linode must have enough
+                    resources to accept the clone.
                   example: 124
                 label:
                   type: string
@@ -3308,10 +3312,8 @@ paths:
                   description: |
                     If this field is set to `true`, the created Linode will
                     automatically be enrolled in the Linode Backup service. This
-                    will incur an additional charge. The cost for the Backup
-                    service is dependent on the Type of Linode deployed.
-
-                    Backup pricing is included in the response from
+                    will incur an additional charge. Pricing is included in the
+                    response from
                     [/linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
 
                     * Can only be included when cloning to a new Linode.
@@ -3967,8 +3969,7 @@ paths:
                   description: >
                     The desired size, in MB, of the disk.
 
-                    The Linode this Disk is attached to must be shut down for
-                    resizing to take effect.
+                    * The Disk must not be in use.
                   minimum: 1
                   example: 2048
       responses:
@@ -4074,12 +4075,12 @@ paths:
       - Linode Instances
       summary: Allocate IPv4 Address
       description: >
-        Allocate a public or private IPv4 address to a Linode.
-        Public IP Addresses, over and above the one included with each Linode,
+        Allocates a public or private IPv4 address to a Linode.
+        Public IP Addresses, after the one included with each Linode,
         incur an additional monthly charge. If you need an additional public
         IP Address you must request one - please
         [open a support ticket](https://developers.linode.com/api/v4/#operation/createTicket).
-        One may not add more than one private IPv4 address to a single Linode.
+        You may not add more than one private IPv4 address to a single Linode.
       operationId: addLinodeIP
       x-linode-cli-action: ip-add
       security:
@@ -9264,7 +9265,7 @@ components:
           type: string
           description: >
             The Longview Pro tier you are currently subscribed to. The value must
-            be null or an ID from [/longview/subscriptions](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions).
+            be `null` or a [Longview Subscription ID](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions).
           example: longview-30
           x-linode-cli-display: 2
         network_helper:
@@ -9468,11 +9469,11 @@ components:
       properties:
         disk_id:
           type: integer
-          description: Null if a Volume is assigned to this slot.
+          description: The Disk ID, or `null` if a Volume is assigned to this slot.
           example: 124458
         volume_id:
           type: integer
-          description: Null if a Disk is assigned to this slot.
+          description: The Volume ID, or `null` if a Disk is assigned to this slot.
           example: null
     Devices:
       type: object
@@ -9517,13 +9518,8 @@ components:
           type: string
           description: >
             A brief description of this Disk's current state. This field may change without
-            direct action from you.
-
-
-            For instance, if the status is `not ready`, the next time you
-            request the same Disk object it may be `ready`. All statuses except for
-            `ready` are transitory. A Disk in one of these statuses will
-            update to another status when it has completed this transitory action.
+            direct action from you, as a result of operations performed to the Disk
+            or the Linode containing the Disk.
           example: ready
           readOnly: true
           enum:
@@ -9635,8 +9631,7 @@ components:
             A StackScript ID that will cause the referenced StackScript to be run during
             deployment of this Linode. A compatible `image` is required to use a
             StackScript. To get a list of available StackScript and their permitted images
-            see [/stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts). You may only
-            deploy from a StackScript that you own or that is listed as `public`.
+            see [/stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts).
             This field cannot be used when deploying from a Backup or a private image.
         stackscript_data:
           type: object
@@ -9645,7 +9640,7 @@ components:
           description: |
             This field is required only if the StackScript being deployed requires input
             data from the User for successful completion. See
-            [/linode/stackscript/{stackScriptId}](https://developers.linode.com/api/v4/#operation/getStackScript)
+            [Variables and UDFs](https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs)
             for more details. This field is required to be valid JSON.
     Domain:
       type: object
@@ -10876,10 +10871,8 @@ components:
           type: string
           description: >
             A brief description of this Linode's current state. This field may change without
-            direct action from you. For instance, if the status is "booting" the next time you
-            request the same Linode object it may be "running".  Most statuses, except for
-            "offline" and "running" are transitory. A Linode in one of these statuses will
-            transition to another status when it has completed this transitory action.
+            direct action from you. For instance, the status will change to "running"
+             when the boot process completes.
           example: running
           readOnly: true
           enum:
@@ -11159,6 +11152,12 @@ components:
           type: string
           description: >
             Controls the virtualization mode. Defaults to `paravirt`.
+
+            * `paravirt` is suitable for most cases. Linodes running in paravirt mode
+              share some qualities with the host, ultimately making it run faster since
+              there is less transition between it and the host.
+            * `full_virt` affords more customization, but is slower because 100% of the VM
+              is virtualized.
           enum:
           - paravirt
           - fullvirt
