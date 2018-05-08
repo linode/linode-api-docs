@@ -2440,7 +2440,7 @@ paths:
       - images
       summary: Update Image
       description: >
-        This allows you to update a private Image that you have permission to
+        Updates a private Image that you have permission to
         `read_write`.
       operationId: updateImage
       x-linode-cli-action: update
@@ -2563,7 +2563,7 @@ paths:
       x-linode-grant: add_linodes
       summary: Create Linode
       description: |
-        This endpoint allows you to create a new Linode server on your Account. In order for this
+        Creates a new Linode Instance on your Account. In order for this
         request to complete successfully, your User must have the `add_linodes` grant. Creating a
         new Linode will incur a charge on your Account.
 
@@ -2571,36 +2571,38 @@ paths:
         [GET /linode/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes) to get more
         information about each Type's specs and cost.
 
-        Linodes can be created in any one of our available Regions, see
-        [GET /regions](https://developers.linode.com/api/v4/#operation/getRegions) for a list
+        Linodes can be created in any one of our available
+        [Regions](https://developers.linode.com/api/v4/#operation/getRegions) for a list
         of available Regions you can deploy your Linode in.
 
         Linodes can be created in a number of ways:
 
-        * Using a Linode Linux Distribution image or an image you created based on another Linode
-          * The Linode will be `running` after it completes `provisioning`
-          * A default config with two disks, one being a 512 swap disk, is created
-            * `swap_size` can be used to customize the swap disk size
-          * Requires a `root_pass` be supplied to use for the root User's Account
-          * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
+        * Using a Linode Linux Distribution image or an Image you created based on another Linode.
+          * The Linode will be `running` after it completes `provisioning`.
+          * A default config with two Disks, one being a 512 swap disk, is created.
+            * `swap_size` can be used to customize the swap disk size.
+          * Requires a `root_pass` be supplied to use for the root User's Account.
+          * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
 
-        * Using one of your own StackScripts or a public StackScript
-          * The Linode will be `running` after it completes `provisioning`
-          * Requires a compatible Linode Linux Distribution `image` to be supplied
-            * See [GET /linode/stackscript/{stackscriptId}](https://developers.linode.com/api/v4/#operation/getStackScript) for compatible images
-          * Requires a `root_pass` be supplied to use for the root User's Account
-          * It is recommended to supply ssh keys for the root User using the `authorized_keys` field
+        * Using a StackScript.
+          * See [/linode/stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts) for
+            a list of available StackScripts.
+          * The Linode will be `running` after it completes `provisioning`.
+          * Requires a compatible Image to be supplied.
+            * See [/linode/stackscript/{stackscriptId}](https://developers.linode.com/api/v4/#operation/getStackScript) for compatible Images.
+          * Requires a `root_pass` be supplied to use for the root User's Account.
+          * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
 
-        * Using one of your other Linode's backups
-          * The Linode will be `running` after it completes `provisioning`
-          * The disks and config will match that of the Linode that was backed up
-          * The `root_pass` will match that of the Linode that was backed up
+        * Using one of your other Linode's backups.
+          * You must create a Linode large enough to accommodate the Backup's size.
+          * The Disks and Config will match that of the Linode that was backed up.
+          * The `root_pass` will match that of the Linode that was backed up.
 
-        * Create an empty Linode
-          * The Linode will remain `offline` and must be manually started
-            * See [POST /linode/instances/{linodeId}/boot](https://developers.linode.com/api/v4/#operation/bootLinodeInstance)
-          * Disks and Configs must be created manually
-          * This is only recommended for advanced use-cases
+        * Create an empty Linode.
+          * The Linode will remain `offline` and must be manually started.
+            * See [POST /linode/instances/{linodeId}/boot](https://developers.linode.com/api/v4/#operation/bootLinodeInstance).
+          * Disks and Configs must be created manually.
+          * This is only recommended for advanced use cases.
       tags:
       - Linode Instances
       operationId: createLinodeInstance
@@ -2625,32 +2627,29 @@ paths:
               - properties:
                   backup_id:
                     type: integer
-                    title: The ID of a Linode Backup
                     example: 1234
                     description: |
                       A Backup ID from another Linode's available backups. Your User must have
-                      `read_write` access to that Linode, the backup must have a `status` of
-                      `successful`, and the Linode must be deployed to the same `region` as the backup.
-                      See [GET /linode/instances/{linodeId}/backups](https://developers.linode.com/api/v4/#operation/getBackups)
+                      `read_write` access to that Linode, the Backup must have a `status` of
+                      `successful`, and the Linode must be deployed to the same `region` as the Backup.
+                      See [/linode/instances/{linodeId}/backups](https://developers.linode.com/api/v4/#operation/getBackups)
                       for a Linode's available backups.
 
                       This field and the `image` field are mutually exclusive.
                   backups_enabled:
                     type: boolean
-                    title: If Backups should be enabled.
                     description: |
                       If this field is set to `true`, the created Linode will automatically be
                       enrolled in the Linode Backup service. This will incur an additional charge.
                       The cost for the Backup service is dependent on the Type of Linode deployed.
 
-                      Backup pricing is included in the response from [GET /linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes)
+                      Backup pricing is included in the response from [/linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes)
                   swap_size:
                     type: integer
-                    title: Swap Disk size in MB
                     example: 512
                     description: >
                       When deploying from an Image, this field is optional, otherwise it is ignored.
-                      This is used to set the Swap Disk size for the newly created Linode.
+                      This is used to set the swap disk size for the newly created Linode.
                     default: 512
                   type:
                     type: string
@@ -2765,7 +2764,7 @@ paths:
       - Linode Instances
       summary: Update Linode
       description: >
-        This allows you to update a Linode that you have permission to `read_write`.
+        Updates a Linode that you have permission to `read_write`.
       operationId: updateLinodeInstance
       x-linode-cli-action: update
       security:
@@ -2829,7 +2828,7 @@ paths:
 
         Additionally, deleting a Linode:
 
-          * Gives up any IP addresses the Linode was assigned
+          * Gives up any IP addresses the Linode was assigned.
           * Deletes all Disks, Backups, Configs, etc.
           * Stops billing for the Linode and its associated services. You will be billed for time used
             within the billing period the Linode was active.
@@ -2918,7 +2917,7 @@ paths:
       x-linode-grant: read_write
       summary: Create Snapshot
       description: >
-        Creates a snapshot backup of a Linode.
+        Creates a snapshot Backup of a Linode.
 
         ** If you already have a snapshot of this Linode, this is a destructive
         operation. The previous snapshot will be deleted.**
@@ -2979,7 +2978,8 @@ paths:
       x-linode-grant: read_write
       summary: Cancel Backups
       description: >
-        Cancels the backup service on the given Linode.
+        Cancels the Backup service on the given Linode. Deletes all of this Linode's
+        existing backups forever.
       tags:
       - Linode Instances
       operationId: cancelBackups
@@ -3052,13 +3052,13 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: The ID of the Linode the backup belongs to.
+      description: The ID of the Linode the Backup belongs to.
       required: true
       schema:
         type: integer
     - name: backupId
       in: path
-      description: The ID of the backup to look up.
+      description: The ID of the Backup to look up.
       required: true
       schema:
         type: integer
@@ -3067,7 +3067,7 @@ paths:
       x-linode-grant: read_only
       summary: View Backup
       description: >
-        Return information about a backup.
+        Returns information about a Backup.
       tags:
       - Linode Instances
       operationId: getBackup
@@ -3078,7 +3078,7 @@ paths:
         - linodes:read_only
       responses:
         '200':
-          description: A single Linode backup.
+          description: A single Backup.
           content:
             application/json:
               schema:
@@ -3097,13 +3097,13 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: The ID of the Linode that the backup belongs to.
+      description: The ID of the Linode that the Backup belongs to.
       required: true
       schema:
         type: integer
     - name: backupId
       in: path
-      description: The ID of the backup to restore.
+      description: The ID of the Backup to restore.
       required: true
       schema:
         type: integer
@@ -3112,7 +3112,7 @@ paths:
       x-linode-grant: read_write
       summary: Restore Backup
       description: >
-        Restores a Linode's backup to the specified Linode.
+        Restores a Linode's Backup to the specified Linode.
       tags:
       - Linode Instances
       operationId: restoreBackup
@@ -3122,7 +3122,7 @@ paths:
       - oauth:
         - linodes:read_write
       requestBody:
-        description: Parameters to provide when restoring the backup.
+        description: Parameters to provide when restoring the Backup.
         required: true
         content:
           application/json:
@@ -3134,17 +3134,17 @@ paths:
                 linode_id:
                   type: integer
                   description: >
-                    The ID of the Linode to restore a backup to.
+                    The ID of the Linode to restore a Backup to.
                   example: 234
                 overwrite:
                   type: boolean
                   description: >
-                    If True, deletes all disks and configs on the target Linode
+                    If True, deletes all Disks and Configs on the target Linode
                     before restoring.
                   example: true
       responses:
         '200':
-          description: Restore from backup was initiated.
+          description: Restore from Backup was initiated.
           content:
             application/json:
               schema:
@@ -3168,7 +3168,7 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: The ID of the Linode to boot
+      description: The ID of the Linode to boot.
       required: true
       schema:
         type: integer
@@ -3264,18 +3264,16 @@ paths:
               properties:
                 region:
                   type: string
-                  title: The Region a Linode is deploy to.
                   description: >
-                    This is the location where the Linode will be deployed.
+                    This is the Region where the Linode will be deployed.
 
                     To view all available Regions you can deploy to see
-                    [GET /regions](https://developers.linode.com/api/v4/#operation/getRegions).
+                    [/regions](https://developers.linode.com/api/v4/#operation/getRegions).
 
                     * Region can only be provided when cloning to a new Linode.
                   example: us-east
                 type:
                   type: string
-                  title: The Linode Type.
                   description: |
                     A Linode's Type determines what resources are available to
                     it, including disk space, memory, and virtual cpus. The
@@ -3283,20 +3281,19 @@ paths:
                     `specs` on the Linode object.
 
                     To view all available Linode Types you can deploy with
-                    see [GET /linode/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
+                    see [/linode/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
 
                     * Type can only be provided when cloning to a new Linode.
                   example: g5-standard-2
                 linode_id:
                   type: integer
-                  title: Target clone's Linode ID.
                   description: >
                     If an existing Linode is to be the target for the clone,
-                    the ID of that Linode.
+                    the ID of that Linode. The existing Linode must have enough
+                    resources to accept the clone.
                   example: 124
                 label:
                   type: string
-                  title: Label for the target Linode.
                   description: >
                     The label to assign this Linode when cloning to a new Linode.
 
@@ -3306,28 +3303,23 @@ paths:
                 group:
                   deprecated: true
                   type: string
-                  title: The group this Linode is in.
                   description: >
                     A label used to group Linodes for display. Linodes are not
                     required to have a group.
                   example: Linode-Group
                 backups_enabled:
                   type: boolean
-                  title: If Backups should be enabled.
                   description: |
                     If this field is set to `true`, the created Linode will
                     automatically be enrolled in the Linode Backup service. This
-                    will incur an additional charge. The cost for the Backup
-                    service is dependent on the Type of Linode deployed.
-
-                    Backup pricing is included in the response from
-                    [GET /linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
+                    will incur an additional charge. Pricing is included in the
+                    response from
+                    [/linodes/types](https://developers.linode.com/api/v4/#operation/getLinodeTypes).
 
                     * Can only be included when cloning to a new Linode.
                   example: true
                 disks:
                   type: array
-                  title: List of disk IDs to include.
                   description: >
                     All disks attached to configs will be cloned from the
                     source Linode if not provided.
@@ -3336,7 +3328,6 @@ paths:
                     example: 25674
                 configs:
                   type: array
-                  title: List of config IDs to include.
                   description: >
                     All configs attached to will be cloned from the source
                     Linode if not provided.
@@ -3686,8 +3677,8 @@ paths:
       - Linode Instances
       summary: Create Disk
       description: >
-        Adds a new disk to a Linode. You can optionally create a disk
-        from an image (see [GET /images](https://developers.linode.com/api/v4/#operation/getImages) for a list of available public images,
+        Adds a new Disk to a Linode. You can optionally create a Disk
+        from an Image (see [/images](https://developers.linode.com/api/v4/#operation/getImages) for a list of available public images,
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
       operationId: addLinodeDisk
@@ -3698,7 +3689,7 @@ paths:
         - linodes:read_write
       requestBody:
         description: >
-          The parameters to set when creating the disk.
+          The parameters to set when creating the Disk.
         required: true
         content:
           application/json:
@@ -3756,7 +3747,7 @@ paths:
       - Linode Instances
       summary: View Disk
       description: >
-        View Disk information for a disk associated with this Linode.
+        View Disk information for a Disk associated with this Linode.
       operationId: getLinodeDisk
       x-linode-cli-action: disk-view
       security:
@@ -3786,7 +3777,7 @@ paths:
       - Linode Instances
       summary: Update Disk
       description: >
-        This allows you to update a Disk that you have permission to `read_write`.
+        Updates a Disk that you have permission to `read_write`.
       operationId: updateDisk
       x-linode-cli-action: disk-update
       security:
@@ -3876,7 +3867,7 @@ paths:
       - Linode Instances
       summary: Reset Disk Root Password
       description: >
-        This endpoint allows you to reset the password of a disk you have
+        This endpoint allows you to reset the password of a Disk you have
         permission to `read_write`.
       operationId: resetDiskPassword
       x-linode-cli-action: disk-reset-password
@@ -3895,7 +3886,6 @@ paths:
               properties:
                 password:
                   type: string
-                  title: The root password for the Disk.
                   description: >
                     The new root password for the OS installed on this Disk.
 
@@ -3951,7 +3941,7 @@ paths:
       - Linode Instances
       summary: Resize Disk
       description: >
-        This endpoint allows you to resize a disk you have
+        This endpoint allows you to resize a Disk you have
         permission to `read_write`.
 
         The Linode this Disk is attached to must be shut down for resizing to
@@ -3976,12 +3966,10 @@ paths:
               properties:
                 size:
                   type: integer
-                  title: The requested size of the Disk.
                   description: >
-                    The desired size of the disk, in MB.
+                    The desired size, in MB, of the disk.
 
-                    The Linode this Disk is attached to must be shut down for
-                    resizing to take effect.
+                    * The Disk must not be in use.
                   minimum: 1
                   example: 2048
       responses:
@@ -4037,7 +4025,7 @@ paths:
                   ipv4:
                     type: object
                     description: >
-                      Information about this Linode's IPv4 addresses
+                      Information about this Linode's IPv4 addresses.
                     readOnly: true
                     properties:
                       public:
@@ -4087,11 +4075,12 @@ paths:
       - Linode Instances
       summary: Allocate IPv4 Address
       description: >
-        Allocate a public or private IPv4 address to a Linode.
-        Public IP Addresses, over and above the one included with each Linode,
-        incur an additional monthly charge. If you need an additional Public
-        IP Address you must request one - please open a ticket.
-        One may not add more than one private IPv4 address to a single Linode.
+        Allocates a public or private IPv4 address to a Linode.
+        Public IP Addresses, after the one included with each Linode,
+        incur an additional monthly charge. If you need an additional public
+        IP Address you must request one - please
+        [open a support ticket](https://developers.linode.com/api/v4/#operation/createTicket).
+        You may not add more than one private IPv4 address to a single Linode.
       operationId: addLinodeIP
       x-linode-cli-action: ip-add
       security:
@@ -4626,7 +4615,6 @@ paths:
               properties:
                 type:
                   type: string
-                  title: The ID representing the Linode Type.
                   description: The ID representing the Linode Type.
                   example: g5-standard-2
                   x-linode-cli-display: 1
@@ -8601,7 +8589,7 @@ paths:
         on your account.
 
         Volume service may not be available in all Regions. See
-        [GET /regions](https://developers.linode.com/api/v4/#operation/getRegions)
+        [/regions](https://developers.linode.com/api/v4/#operation/getRegions)
         for a list of available Regions you deploy your Volume in.
       tags:
       - volumes
@@ -8716,7 +8704,7 @@ paths:
       - volumes
       summary: Update Volume
       description: >
-        This allows you to update a Volume that you have permission to `read_write`.
+        Updates a Volume that you have permission to `read_write`.
       operationId: updateVolume
       x-linode-cli-action: update
       security:
@@ -9277,7 +9265,7 @@ components:
           type: string
           description: >
             The Longview Pro tier you are currently subscribed to. The value must
-            be null or an ID from [GET /longview/subscriptions](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions).
+            be `null` or a [Longview Subscription ID](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions).
           example: longview-30
           x-linode-cli-display: 2
         network_helper:
@@ -9366,7 +9354,7 @@ components:
           - snapshot
           readOnly: true
           description: >
-            This indicates whether the Backup is an automatic Backup, or a
+            This indicates whether the Backup is an automatic Backup or
             manual snapshot taken by the User at a specific point in time.
           example: snapshot
           x-linode-cli-display: 3
@@ -9475,26 +9463,17 @@ components:
       type: object
       description: >
         Device can be either a Disk or Volume identified by `disk_id` or
-        `volume_id`. Only one type per slot allowed.
+        `volume_id`. Only one type per slot allowed. Can be null.
 
-        * sda: The device mapped to /dev/sda. Can be null.
-        * sdb: The device mapped to /dev/sdb. Can be null.
-        * sdc: The device mapped to /dev/sdc. Can be null.
-        * sdd: The device mapped to /dev/sdd. Can be null.
-        * sde: The device mapped to /dev/sde. Unavailable in `fullvirt` virt_mode.
-        * sdf: The device mapped to /dev/sdf. Unavailable in `fullvirt` virt_mode.
-        * sdg: The device mapped to /dev/sdg. Unavailable in `fullvirt` virt_mode.
-        * sdh: The device mapped to /dev/sdh. Unavailable in `fullvirt` virt_mode.
+        Devices mapped from _sde_ through _sdh_ are unavailable in `fullvirt` virt_mode.
       properties:
         disk_id:
           type: integer
-          title: The ID of the Disk.
-          description: Null if a volume is assigned to this slot.
+          description: The Disk ID, or `null` if a Volume is assigned to this slot.
           example: 124458
         volume_id:
           type: integer
-          title: The ID of the Volume.
-          description: Null if a disk is assigned to this slot.
+          description: The Volume ID, or `null` if a Disk is assigned to this slot.
           example: null
     Devices:
       type: object
@@ -9520,7 +9499,6 @@ components:
       properties:
         id:
           type: integer
-          title: The ID of this Disk.
           description: >
             This Disk's ID which must be provided for all
             operations impacting this Disk.
@@ -9530,7 +9508,6 @@ components:
         label:
           x-linode-filterable: true
           type: string
-          title: Label for the Disk.
           description: >
             The Disk's label is for display purposes only.
           example: Debian 9 Disk
@@ -9541,10 +9518,8 @@ components:
           type: string
           description: >
             A brief description of this Disk's current state. This field may change without
-            direct action from you - for instance, if the status is "not ready," the next time you
-            request the same Disk object it may be "ready."  All statuses except for
-            "ready" are transitory. A Disk in one of these statuses will
-            transition to another status when it has completed this transitory action.
+            direct action from you, as a result of operations performed to the Disk
+            or the Linode containing the Disk.
           example: ready
           readOnly: true
           enum:
@@ -9560,12 +9535,11 @@ components:
           x-linode-filterable: true
           type: integer
           readOnly: true
-          title: The size of the Disk in MB.
+          description: The size of the Disk in MB.
           example: 48640
           x-linode-cli-display: 4
         filesystem:
           type: string
-          title: The filesystem on the Disk.
           description: >
             The Disk filesystem can be one of:
 
@@ -9604,7 +9578,6 @@ components:
         size:
           x-linode-filterable: true
           type: integer
-          title: The size of the Disk in MB.
           example: 48640
         label:
           $ref: '#/components/schemas/Disk/properties/label'
@@ -9617,18 +9590,16 @@ components:
           example: false
         image:
           type: string
-          title: An Image identifier.
           description: >
-            An image id to deploy the disk from. Official Linode images start with
-            `linode/ `, while your images start with `private`.
+            An Image ID to deploy the Disk from. Official Linode Images start with
+            `linode/ `, while your Images start with `private/`.
 
-            See [/images](https://developers.linode.com/api/v4/#operation/getImages) for more information on the images available for you to use.
+            See [/images](https://developers.linode.com/api/v4/#operation/getImages) for more information on the Images available for you to use.
           example: linode/debian9
         authorized_keys:
           type: array
           items:
             type: string
-          title: A list of public SSH keys.
           writeOnly: true
           example:
           - ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer
@@ -9638,15 +9609,13 @@ components:
         root_pass:
           type: string
           format: password
-          title: Set the root user's password.
           writeOnly: true
           example: aComplexP@ssword
           description: |
             This will set the root user's password on the newly created Linode.
-
             The root password must conform to the following constraints:
 
-              * May only use alphanumerics, punctuation, spaces, and tabs
+              * May only use alphanumerics, punctuation, spaces, and tabs.
               * Must contain at least two of the following characters classes:
                 * Upper-case letters
                 * Lower-case letters
@@ -9657,30 +9626,22 @@ components:
           pattern: ^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\]))|((?=.*[A-Z])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\]))|((?=.*[0-9])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\])))
         stackscript_id:
           type: integer
-          title: The ID of a StackScript to deploy.
           example: 10079
           description: |
             A StackScript ID that will cause the referenced StackScript to be run during
             deployment of this Linode. A compatible `image` is required to use a
             StackScript. To get a list of available StackScript and their permitted images
-            see [GET /stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts).
-
-            You may only deploy from a StackScript that you own or that is listed as
-            `public`.
-
-            This field cannot be used when deploying from a backup or a private image.
+            see [/stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts).
+            This field cannot be used when deploying from a Backup or a private image.
         stackscript_data:
           type: object
-          title: Optional User-defined field data for this StackScript.
           example:
             gh_username: linode
           description: |
             This field is required only if the StackScript being deployed requires input
-            data from the User for successful completion.
-            See [GET /linode/stackscript/{stackScriptId}](https://developers.linode.com/api/v4/#operation/getStackScript)
-            for more details.
-
-            This field is required to be valid JSON.
+            data from the User for successful completion. See
+            [Variables and UDFs](https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs)
+            for more details. This field is required to be valid JSON.
     Domain:
       type: object
       description: >
@@ -10866,15 +10827,16 @@ components:
 
             Linode labels have the following constraints:
 
-            * Must start with an alpha character.
-            * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
-            * Cannot have two dashes (`--`) or underscores (`__`) in a row.
+              * Must start with an alpha character.
+              * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
+              * Cannot have two dashes (`--`) or underscores (`__`) in a row.
         region:
           x-linode-filterable: true
           readOnly: true
           description: >
             This is the location where the Linode was deployed. This cannot be
-            changed without opening a support ticket.
+            changed without
+            [opening a support ticket](https://developers.linode.com/api/v4/#operation/createTicket).
           x-linode-cli-display: 4
         image:
           x-linode-filterable: true
@@ -10885,8 +10847,8 @@ components:
         type:
           readOnly: true
           description: >
-            This is the Linode Type that this Linode was deployed
-            with.
+            This is the [Linode Type](https://developers.linode.com/api/v4/#operation/getLinodeTypes) that this
+            Linode was deployed with.
 
             To change a Linode's Type, use
             [POST /linode/instances/{linodeId}/resize](https://developers.linode.com/api/v4/#operation/resizeLinodeInstance).
@@ -10900,7 +10862,6 @@ components:
           example: "Linode-Group"
         id:
           type: integer
-          title: The ID of this Linode.
           description: >
             This Linode's ID which must be provided for all operations impacting this Linode.
           example: 123
@@ -10909,11 +10870,9 @@ components:
         status:
           type: string
           description: >
-            A brief description of this Linode's current state.  This field may change without
-            direct action from you - for instance, if the status is "booting," the next time you
-            request the same Linode object it may be "running."  Most statuses, except for
-            "offline" and "running", are transitory. A Linode in one of these statuses will
-            transition to another status when it has completed this transitory action.
+            A brief description of this Linode's current state. This field may change without
+            direct action from you. For instance, the status will change to "running"
+             when the boot process completes.
           example: running
           readOnly: true
           enum:
@@ -10936,13 +10895,11 @@ components:
         hypervisor:
           type: string
           description: >
-            The virtualization software powering this Linode. Xen is no longer available, and is
-            only used by legacy Linodes at this time.
+            The virtualization software powering this Linode.
           example: kvm
           readOnly: true
           enum:
           - kvm
-          - xen
         created:
           type: string
           format: date-time
@@ -10965,7 +10922,8 @@ components:
           description: |
             This Linode's IPv4 Addresses. Each Linode is assigned a single public IPv4 address
             upon creation, and may get a single private IPv4 address if needed. You may need to
-            [open a support ticket](https://developers.linode.com/api/v4/#operation/createTicket) to get additional IPv4 addresses.
+            [open a support ticket](https://developers.linode.com/api/v4/#operation/createTicket)
+            to get additional IPv4 addresses.
 
             IPv4 addresses may be reassigned between your Linodes, or shared with other Linodes.
             See the [/networking](https://developers.linode.com/api/v4/#tag/networking) endpoints for details.
@@ -10985,21 +10943,25 @@ components:
             disk:
               type: integer
               description: >
-                The amount of storage space this Linode has access to, in GB. A typical Linode
+                The amount of storage space, in GB. this Linode has access to. A typical Linode
                 will divide this space between a primary disk with an `image` deployed to it, and
                 a swap disk, usually 512 MB. This is the default configuration created when
-                deploying a Linode with an `image` through `POST /linode/instances`. While this
-                configuration is suitable for 99% of use cases, if you need finer control over
-                your Linode's disks, see the `/linode/instances/{linodeId}/disks` endpoints.
+                deploying a Linode with an `image` through
+                [POST /linode/instances](https://developers.linode.com/api/v4/#operation/createLinodeInstance).
+                While this configuration is suitable for 99% of use cases, if you need finer control over
+                your Linode's disks, see the
+                [/linode/instances/{linodeId}/disks](https://developers.linode.com/api/v4/#operation/getLinodeDisks)
+                endpoints.
               example: 30720
               readOnly: true
             memory:
               type: integer
               description: >
-                The amount of RAM this Linode has access to, in MB.  Typically a Linode will
+                The amount of RAM, in MB, this Linode has access to. Typically a Linode will
                 choose to boot with all of its available RAM, but this can be configured in a
-                Config Profile, see the `/linode/instances/{linodeId}/configs` endpoints and the
-                LinodeConfig object for more information.
+                Config Profile, see the
+                [/linode/instances/{linodeId}/configs](https://developers.linode.com/api/v4/#operation/getLinodeConfigs)
+                endpoints and the LinodeConfig object for more information.
               example: 2048
               readOnly: true
             vcpus:
@@ -11007,8 +10969,9 @@ components:
               description: >
                 The number of vcpus this Linode has access to.  Typically a Linode will choose to
                 boot with all of its available vcpus, but this can be configured in a Config
-                Profile, see the `/linode/instances/{linodeId}/configs` endpoints and the
-                LinodeConfig object for more information.
+                Profile, see the
+                [/linode/instances/{linodeId}/configs](https://developers.linode.com/api/v4/#operation/getLinodeConfigs)
+                endpoints and the LinodeConfig object for more information.
               example: 1
               readOnly: true
             transfer:
@@ -11058,13 +11021,13 @@ components:
           type: object
           description: >
             Information about this Linode's backups status. For information about available
-            backups, see [GET /linode/instances/{linodeId}/backups](https://developers.linode.com/api/v4/#operation/getBackups).
+            backups, see [/linode/instances/{linodeId}/backups](https://developers.linode.com/api/v4/#operation/getBackups).
           properties:
             enabled:
               type: boolean
               description: >
-                If this Linode has the backup service enabled. To enable backups, see
-                `POST /linode/instances/{linodeId}/backups/enable`.
+                If this Linode has the Backup service enabled. To enable backups, see
+                [POST /linode/instances/{linodeId}/backups/enable](https://developers.linode.com/api/v4/#operation/enableBackups).
               example: true
               readOnly: true
             schedule:
@@ -11073,12 +11036,13 @@ components:
                 day:
                   type: string
                   description: |
-                    The day of the week that your Linode's weekly backup is taken. If you do not
-                    set this, a day will be chosen for you. Backups are taken every day, but
-                    backups taken on this day are preferred when selecting backups to retain for a
-                    longer period.
+                    The day of the week that your Linode's weekly Backup is taken.
+                    If not set manually, a day will be chosen for you. Backups
+                    are taken every day, but backups taken on this day are
+                    preferred when selecting backups to retain for a longer period.
 
-                    If you do not set this manually, then when backups are initially enabled, this
+
+                    If not set manually, then when backups are initially enabled, this
                     may come back as `Scheduling` until the `day` is automatically selected.
                   example: Saturday
                   enum:
@@ -11093,12 +11057,17 @@ components:
                 window:
                   type: string
                   description: |
-                    The window in which your backups will be taken, in UTC. A backups window is a
-                    two-hour span of time in which the backup may occur. For example, W10
-                    indicates that your backups should be taken between 10:00 and 12:00. If you do
-                    not choose a backup window, one will be selected for you automatically.
+                    The window in which your backups will be taken, in UTC. A
+                    backups window is a two-hour span of time in which the backup
+                    may occur.
 
-                    If you do not set this manually, then when backups are initially enabled, this
+
+                    For example, `W10` indicates that your backups should be
+                    taken between 10:00 and 12:00. If you do not choose a backup
+                    window, one will be selected for you automatically.
+
+
+                    If not set manually, when backups are initially enabled this
                     may come back as `Scheduling` until the `window` is automatically selected.
                   example: W22
                   enum:
@@ -11120,7 +11089,6 @@ components:
       properties:
         label:
           type: string
-          title: This Linode's unique label.
           description: >
             The Linode's label is for display purposes only. If no label is provided for a Linode,
             a default will be assigned.
@@ -11159,7 +11127,7 @@ components:
           x-linode-cli-display: 1
         kernel:
           type: string
-          description: A kernel ID to boot a Linode with. Defaults to 'linode/latest-64bit'
+          description: A Kernel ID to boot a Linode with. Defaults to "linode/latest-64bit".
           example: linode/latest-64bit
           x-linode-cli-display: 3
         comments:
@@ -11174,11 +11142,7 @@ components:
         run_level:
           type: string
           description: >
-            One of:
-
-            * default
-            * single (for single user mode)
-            * binbash
+            Defines the state of your Linode after booting. Defaults to `default`.
           enum:
           - default
           - single
@@ -11187,11 +11151,16 @@ components:
         virt_mode:
           type: string
           description: >
-            Controls the virtualization mode.
-            One of:
+            Controls the virtualization mode. Defaults to `paravirt`.
 
-              * paravirt (default)
-              * fullvirt
+            * `paravirt` is suitable for most cases. Linodes running in paravirt mode
+              share some qualities with the host, ultimately making it run faster since
+              there is less transition between it and the host.
+            * `full_virt` affords more customization, but is slower because 100% of the VM
+              is virtualized.
+          enum:
+          - paravirt
+          - fullvirt
           example: paravirt
         helpers:
           type: object
@@ -11207,7 +11176,7 @@ components:
               example: true
             modules_dep:
               type: boolean
-              description: Creates a modules dependency file for the kernel you run.
+              description: Creates a modules dependency file for the Kernel you run.
               example: true
             network:
               type: boolean
@@ -11221,7 +11190,6 @@ components:
         label:
           x-linode-filterable: true
           type: string
-          title: Label for the Config.
           description: >
             The Config's label is for display purposes only.
           example: My Config
@@ -11251,7 +11219,6 @@ components:
           $ref: '#/components/schemas/DiskRequest/properties/stackscript_data'
         booted:
           type: boolean
-          title: If the Linode should start booted.
           writeOnly: true
           description: >
             This field defaults to `true` if the Linode is created with an Image or from a
