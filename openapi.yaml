@@ -16,12 +16,12 @@ info:
     using standard HTTP requests. Response data is returned in JSON format.
 
 
-    [Download the Linode OpenAPI Specification](https://developers.linode.com/api/v4/openapi.yaml)
+    [Download the Linode OpenAPI Specification](/openapi.yaml)
 
 
     # Changelog
 
-    [View our Changelog](https://developers.linode.com/changelog) to see release
+    [View our Changelog](/changelog) to see release
     notes on all changes made to our API.
 
     # Access
