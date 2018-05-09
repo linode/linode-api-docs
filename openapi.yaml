@@ -8220,7 +8220,6 @@ paths:
          * `ap-south`
          * `eu-central`
          * `ap-northeast`
-         * `ap-northeast-1a`
       operationId: getRegions
       x-linode-cli-action: list
       responses:
