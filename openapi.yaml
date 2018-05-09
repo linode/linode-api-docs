@@ -2303,29 +2303,7 @@ paths:
 
         * Authentication is required to return a combined paginated list of all public and
           your private Images.
-
-        The following public images are currently available:
-
-         * `linode/slackware13.37`
-         * `linode/slackware14.1`
-         * `linode/ubuntu14.04lts`
-         * `linode/centos6.8`
-         * `linode/centos7`
-         * `linode/debian7`
-         * `linode/debian8`
-         * `linode/ubuntu16.04lts`
-         * `linode/arch`
-         * `linode/slackware14.2`
-         * `linode/gentoo`
-         * `linode/opensuseleap42.2`
-         * `linode/containerlinux`
-         * `linode/debian9`
-         * `linode/fedora26`
-         * `linode/opensuse42.3`
-         * `linode/ubuntu17.10`
-         * `linode/fedora27`
-         * `linode/ubuntu18.04`
-         * `linode/fedora28`
+      x-linode-redoc-load-ids: true
       operationId: getImages
       x-linode-cli-action: list
       security:
@@ -5078,23 +5056,7 @@ paths:
         Returns collection of Linode Types, including pricing and
         specifications for each Type. These are used when creating or resizing
         Linodes.
-
-        The following types are currently available:
-
-         * `g5-standard-1`
-         * `g5-standard-2`
-         * `g5-standard-4`
-         * `g5-standard-6`
-         * `g5-standard-8`
-         * `g5-standard-12`
-         * `g5-standard-16`
-         * `g5-standard-20`
-         * `g5-nanode-1`
-         * `g5-highmem-1`
-         * `g5-highmem-2`
-         * `g5-highmem-4`
-         * `g5-highmem-8`
-         * `g5-highmem-16`
+      x-linode-redoc-load-ids: true
       operationId: getLinodeTypes
       x-linode-cli-action: types
       responses:
@@ -8209,17 +8171,7 @@ paths:
       description: |
         Lists the Regions available for Linode services. Not all services are guaranteed to be
         available in all Regions.
-
-        The following regions are currently available:
-
-         * `us-central`
-         * `us-west`
-         * `us-southeast`
-         * `us-east`
-         * `eu-west`
-         * `ap-south`
-         * `eu-central`
-         * `ap-northeast`
+      x-linode-redoc-load-ids: true 
       operationId: getRegions
       x-linode-cli-action: list
       responses:
