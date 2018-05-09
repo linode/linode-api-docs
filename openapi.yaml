@@ -37,7 +37,7 @@ info:
     generated from the
     [Linode Cloud Manager](https://cloud.linode.com/profile/tokens).
 
-    All scopes for the `oauth` security model (defined below) apply to this
+    All scopes for the OAuth security model (defined below) apply to this
     security model as well.
 
     ## OAuth
@@ -80,7 +80,7 @@ info:
     }
     ```
 
-    Included is the actual access_token. With this token, you can proceed to make
+    Included in the reponse is `access_token`. With this token, you can proceed to make
     authenticated HTTP requests with the API by adding this header to each request:
 
     ```
@@ -94,7 +94,8 @@ info:
 
     # Requests
 
-    Requests should be made over HTTPS to ensure transactions are encrypted.
+    Requests should be made over HTTPS to ensure transactions are encrypted. The
+    following Request methods are supported:
 
     | METHOD | USAGE |
     |--------|-------|
@@ -110,7 +111,7 @@ info:
 
     | STATUS  | DESCRIPTION |
     |---------|-------------|
-    | 200 OK  | The request was successful |
+    | 200 OK  | The request was successful. |
     | 204 No Content | The server successfully fulfilled the request and there is no additional content to send. |
     | 400 Bad Request | You submitted an invalid request (missing parameters, etc.). |
     | 401 Unauthorized | You failed to authenticate for this resource. |
@@ -126,8 +127,10 @@ info:
     `5xx` errors indicate a server error. A
     request error might be an invalid input, a required parameter being omitted,
     or a malformed request. A server error means something went wrong processing
-    your request, and we'll fix it shortly. If this occurs, please
-    [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket) and let us know.
+    your request. If this occurs, please
+    [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket)
+    and let us know. Though errors are logged and we work quickly to resolve issues,
+    opening a ticket and providing us with reproducable steps and data is always helpful.
 
     The `errors` field is an array of the things that went wrong with your request.
     We will try to include as many of the problems in the response as possible,
@@ -138,7 +141,7 @@ info:
 
     Within each error object, the `field` parameter will be included if the error
     pertains to a specific field in the JSON you've submitted. This will be
-    omitted if there is no relevant field. The reason is a human-readable
+    omitted if there is no relevant field. The `reason` is a human-readable
     explanation of the error, and will always be included.
 
     # Pagination
@@ -200,7 +203,7 @@ info:
       }'
     ```
 
-    Each filter in the `+or` array is its own filter object, and all condintions
+    Each filter in the `+or` array is its own filter object, and all conditions
     in it are combined with an "and" operation as they were in the previous example.
 
     Other operators are also available. Operators are keys of a Filter JSON
@@ -209,19 +212,19 @@ info:
 
     | OPERATOR | TYPE   | DESCRIPTION                       |
     |----------|--------|-----------------------------------|
-    | +and     | array  | All conditions must be true       |
-    | +or      | array  | One condition must be true        |
-    | +gt      | number | Value must be greater than number |
-    | +gte     | number | Value must be greater than or equal to number |
-    | +lt      | number | Value must be less than number |
-    | +lte     | number | Value must be less than or equal to number |
-    | +contains | string | Given string must be in the value |
-    | +neq      | string | Does not equal the value          |
-    | +order_by | string | Attribute to order the results by - must be filterable |
-    | +order    | string | Either "asc" or "desc". Defaults to "asc". Requires an `+order_by` be given. |
+    | +and     | array  | All conditions must be true.       |
+    | +or      | array  | One condition must be true.        |
+    | +gt      | number | Value must be greater than number. |
+    | +gte     | number | Value must be greater than or equal to number. |
+    | +lt      | number | Value must be less than number. |
+    | +lte     | number | Value must be less than or equal to number. |
+    | +contains | string | Given string must be in the value. |
+    | +neq      | string | Does not equal the value.          |
+    | +order_by | string | Attribute to order the results by - must be filterable. |
+    | +order    | string | Either "asc" or "desc". Defaults to "asc". Requires `+order_by`. |
 
-    For example, filtering for Linode Types that offer memory equal to or higher
-    than 61440:
+    For example, filtering for [Linode Types](https://developers.linode.com/api/v4//#operation/getLinodeTypes)
+    that offer memory equal to or higher than 61440:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
@@ -233,8 +236,8 @@ info:
     ```
 
     You can combine and nest operators to construct arbitrarily-complex queries.
-    For example, give me all Linode Types which are either `standard` or
-    `highmem` class, and have between 12 and 20 vcpus:
+    For example, give me all [Linode Types](https://developers.linode.com/api/v4//#operation/getLinodeTypes)
+    which are either `standard` or `highmem` class, and have between 12 and 20 vcpus:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
@@ -276,7 +279,7 @@ info:
     of the Linode API that are documented here with CLI examples.
 
     Endpoints that do not have CLI examples are currently unavailable through the CLI, but
-    can be access via other methods such as Shell commands and other third-party applications.
+    can be accessed via other methods such as Shell commands and other third-party applications.
   contact:
     name: Linode
     url: /
@@ -291,7 +294,7 @@ paths:
       - account
       summary: View Account
       description: >
-        This endpoint returns the contact and billing information related to
+        Returns the contact and billing information related to
         your Account.
       operationId: getAccount
       x-linode-cli-action: view
@@ -322,7 +325,7 @@ paths:
       - account
       summary: Update Account
       description: >
-        This endpoint allows you to update contact and billing information
+        Updates contact and billing information
         related to your Account.
       operationId: updateAccount
       x-linode-cli-action: update
@@ -377,7 +380,7 @@ paths:
       - account
       summary: Add/Edit Credit Card
       description: >
-        This endpoint allows you to add/edit credit card information to your Account.
+        Adds/edits credit card information to your Account.
 
         Only one credit card can be associated with your Account, so using this
         endpoint will overwrite your currently active card information with the
@@ -429,8 +432,8 @@ paths:
       - account
       summary: List Events
       description: >
-         This endpoint returns a collection of Event objects representing
-         actions taken on your Account. The events returned depends on your
+         Returns a collection of Event objects representing
+         actions taken on your Account. The Events returned depends on your
          grants.
       operationId: getEvents
       x-linode-cli-action: list
@@ -518,7 +521,7 @@ paths:
       tags:
       - account
       summary: Mark Event as Read
-      description: Marks Event as read.
+      description: Marks a single Event as read.
       operationId: eventRead
       x-linode-cli-action: mark-read
       security:
@@ -596,7 +599,7 @@ paths:
       - account
       summary: List Invoices
       description: >
-        This endpoint returns a paginated list of invoices against your Account.
+        Returns a paginated list of Invoices against your Account.
       operationId: getInvoices
       x-linode-cli-action: invoices-list
       security:
@@ -729,13 +732,13 @@ paths:
       - account
       summary: List Notifications
       description: >
-        This endpoint returns a collection of Notification objects representing
+        Returns a collection of Notification objects representing
         important, often time-sensitive items related to your Account.
 
-        You cannot interact directly with Notifications, and it will disappear
-        when the circumstances causing the Notification have been resolved. For
-        example, if you have an important ticket open, you must respond to the
-        ticket to dismiss the Notification.
+        You cannot interact directly with Notifications, and the Notification will disappear
+        when the circumstances causing it has been resolved. For
+        example, if you have an important Ticket open, you must respond to the
+        Ticket to dismiss the Notification.
       operationId: getNotifications
       x-linode-cli-action: notifications-list
       security:
@@ -824,8 +827,8 @@ paths:
       - account
       summary: Create OAuth Client
       description: >
-        Creates a new OAuth Client, which can be used to allow users to login to
-        your own applications using their Linode account, and optionally grant
+        Creates an OAuth Client, which can be used to allow users
+        (using their Linode account) to login to your own application, and optionally grant
         your application some amount of access to their Linodes or other entities.
       operationId: createClient
       x-linode-cli-action: client-create
@@ -958,8 +961,8 @@ paths:
       - account
       summary: Delete OAuth Client
       description: >
-        Deletes an OAuth Client registered with Linode.  The Client ID and
-        Client Secret will no longer be accepted by https://login.linode.com,
+        Deletes an OAuth Client registered with Linode. The Client ID and
+        Client secret will no longer be accepted by https://login.linode.com,
         and all tokens issued to this client will be invalidated (meaning that
         if your application was using a token, it will no longer work).
       operationId: deleteClient
@@ -1000,11 +1003,11 @@ paths:
       - account
       summary: Reset OAuth Client Secret
       description: >
-        Resets the OAuth Client Secret for a client you own, and returns the
-        OAuth Client with the plaintext secret.  This secret is not supposed to
-        be publicly known or disclosed anywhere.  This can be used to generate
+        Resets the OAuth Client secret for a client you own, and returns the
+        OAuth Client with the plaintext secret. This secret is not supposed to
+        be publicly known or disclosed anywhere. This can be used to generate
         a new secret in case the one you have has been leaked, or to get a new
-        secret if you lost the original.  The old secret is expired immediately,
+        secret if you lost the original. The old secret is expired immediately,
         and logins to your client with the old secret will fail.
       operationId: resetClientSecret
       x-linode-cli-action: client-reset-secret
@@ -1014,7 +1017,7 @@ paths:
         - account:read_write
       responses:
         '200':
-          description: Client Secret reset successfully.
+          description: Client secret reset successfully.
           content:
             application/json:
               schema:
@@ -1116,7 +1119,7 @@ paths:
       - account
       summary: List Payments
       description: >
-        This endpoint returns a paginated list of Payments made on this Account.
+        Returns a paginated list of Payments made on this Account.
       operationId: getPayments
       x-linode-cli-action: payments-list
       security:
@@ -1157,8 +1160,8 @@ paths:
       - account
       summary: Make Payment
       description: >
-        This endpoint allows you to make a payment to your Account
-        via credit card. This will charge your credit card the requested amount.
+        Makes a Payment to your Account via credit card. This will charge your
+        credit card the requested amount.
       operationId: createPayment
       x-linode-cli-action: payment-create
       security:
@@ -1166,7 +1169,7 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: Information about the payment you are making.
+        description: Information about the Payment you are making.
         required: true
         content:
           application/json:
@@ -1241,11 +1244,11 @@ paths:
       - account
       summary: Stage PayPal Payment
       description: >
-        This begins the process of submitting a payment via PayPal. After calling
+        This begins the process of submitting a Payment via PayPal. After calling
         this endpoint, you must take the resulting `payment_id` along with
         the `payer_id` from your PayPal account and
         [POST /account/payments/paypal-execute](https://developers.linode.com/api/v4/#operation/executePayPalPayment)
-        to complete the payment.
+        to complete the Payment.
       operationId: createPayPalPayment
       x-linode-cli-action: paypal-start
       security:
@@ -1254,7 +1257,7 @@ paths:
         - account:read_write
       requestBody:
         description: >
-          The amount to submit as payment via PayPal.
+          The amount of the Payment to submit via PayPal.
         required: true
         content:
           application/json:
@@ -1262,7 +1265,7 @@ paths:
               $ref: '#/components/schemas/PayPal'
       responses:
         '200':
-          description: PayPal payment staged.
+          description: PayPal Payment staged.
           content:
             application/json:
               schema:
@@ -1271,8 +1274,8 @@ paths:
                   payment_id:
                       type: string
                       description: >
-                        The paypal-generated ID for this payment.  Used when
-                        authorizing the payment in PayPal's interface.
+                        The paypal-generated ID for this Payment. Used when
+                        authorizing the Payment in PayPal's interface.
                       example: PAY-1234567890ABCDEFGHIJKLMN
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -1300,7 +1303,7 @@ paths:
       description: >
         Given a PaymentID and PayerID - as generated by PayPal during the
         transaction authorization process - this endpoint executes the Payment
-        to capture the funds and credit your Linode account.
+        to capture the funds and credit your Linode Account.
       operationId: executePayPalPayment
       x-linode-cli-action: paypal-execute
       security:
@@ -1309,7 +1312,7 @@ paths:
         - account:read_write
       requestBody:
         description: >
-          The details of the payment to execute.
+          The details of the Payment to execute.
         required: true
         content:
           application/json:
@@ -1317,7 +1320,7 @@ paths:
               $ref: '#/components/schemas/PayPalExecute'
       responses:
         '200':
-          description: PayPal payment executed.
+          description: PayPal Payment executed.
           content:
             application/json:
              schema:
@@ -1345,7 +1348,7 @@ paths:
       - account
       summary: View Account Settings
       description: >
-        This endpoint returns information related to
+        Returns information related to
         your Account settings: Managed service subscription, Longview
         subscription, and network helper.
       operationId: getAccountSettings
@@ -1377,7 +1380,7 @@ paths:
       - account
       summary: Update Account Settings
       description: >
-        This endpoint allows you to update your Account settings.
+        Updates your Account settings.
       operationId: updateAccountSettings
       x-linode-cli-action: settings-update
       security:
@@ -1421,7 +1424,7 @@ paths:
       - account
       summary: View Network Utilization
       description: >
-        This endpoint returns a Transfer object showing your network utilization,
+        Returns a Transfer object showing your network utilization,
         in GB, for the current month.
       operationId: getTransfer
       x-linode-cli-action: transfer
@@ -1458,7 +1461,7 @@ paths:
       summary: List Users
       description: >
         Returns a paginated list of Users on your Account. Users may access all
-        or part of your account based on their restricted status and grants.  An
+        or part of your Account based on their restricted status and grants.  An
         unrestricted User may access everything on the account, whereas restricted
         User may only access entities or perform actions they've been given specific
         grants to.
@@ -1502,7 +1505,7 @@ paths:
       - account
       summary: Create User
       description: >
-        Creates a new User on your Account. Once created, the User will be
+        Creates a User on your Account. Once created, the User will be
         able to log in and access portions of your Account. Access is
         determined by whether or not they are restricted, and what grants they
         have been given.
@@ -1643,9 +1646,9 @@ paths:
       - account
       summary: Delete User
       description: >
-        Deletes a User.  The deleted User will be immediately logged out and
-        may no longer log in or perform any actions. All grants the User had
-        will be lost.
+        Deletes a User. The deleted User will be immediately logged out and
+        may no longer log in or perform any actions. All of the User's Grants
+        will be removed.
       operationId: deleteUser
       x-linode-cli-action: delete
       security:
@@ -2296,7 +2299,7 @@ paths:
       - images
       summary: List Images
       description: >
-        Returns paginated list of Images.
+        Returns a paginated list of Images.
 
 
         * Calling this endpoint without authentication returns all public Images.
@@ -2342,7 +2345,7 @@ paths:
       - images
       summary: Create Image
       description: >
-        Creates a new private gold-master Image from a Linode Disk. There is no
+        Creates a private gold-master Image from a Linode Disk. There is no
         additional charge to store Images for Linode users.
 
         Images are limited to three per Account.
@@ -2487,7 +2490,7 @@ paths:
         Deletes a private Image you have permission to `read_write`.
 
 
-        **Deleting an Image is a destructive process and cannot be undone.**
+        **Deleting an Image is a destructive action and cannot be undone.**
       operationId: deleteImage
       x-linode-cli-action: delete
       security:
@@ -2563,7 +2566,7 @@ paths:
       x-linode-grant: add_linodes
       summary: Create Linode
       description: |
-        Creates a new Linode Instance on your Account. In order for this
+        Creates a Linode Instance on your Account. In order for this
         request to complete successfully, your User must have the `add_linodes` grant. Creating a
         new Linode will incur a charge on your Account.
 
@@ -2649,7 +2652,7 @@ paths:
                     example: 512
                     description: >
                       When deploying from an Image, this field is optional, otherwise it is ignored.
-                      This is used to set the swap disk size for the newly created Linode.
+                      This is used to set the swap disk size for the newly-created Linode.
                     default: 512
                   type:
                     type: string
@@ -2824,7 +2827,7 @@ paths:
       description: |
         Deletes a Linode you have permission to `read_write`.
 
-        **Deleting a Linode is a destructive process and cannot be undone.**
+        **Deleting a Linode is a destructive action and cannot be undone.**
 
         Additionally, deleting a Linode:
 
@@ -2920,7 +2923,7 @@ paths:
         Creates a snapshot Backup of a Linode.
 
         ** If you already have a snapshot of this Linode, this is a destructive
-        operation. The previous snapshot will be deleted.**
+        action. The previous snapshot will be deleted.**
       tags:
       - Linode Instances
       operationId: createSnapshot
@@ -3182,8 +3185,8 @@ paths:
 
         * If there is only one Config profile for this Linode, it will be used.
         * If there is more than one Config profile, the last booted config will be used.
-        * If there is more than one Config profile and none were the last to be booted, because the
-          Linode was never booted or the last booted config was deleted, an error will be returned.
+        * If there is more than one Config profile and none were the last to be booted (because the
+          Linode was never booted or the last booted config was deleted) an error will be returned.
       tags:
       - Linode Instances
       operationId: bootLinodeInstance
@@ -3203,8 +3206,8 @@ paths:
                 config_id:
                   type: integer
                   description: >
-                    The Linode Config ID to boot into.  If omitted, we will attempt to select a
-                    config to use (this will do the right thing in most cases).
+                    The Linode Config ID to boot into. If omitted, we will attempt to select a
+                    config to use. (This will do the right thing in most cases.)
                   example: null
       responses:
         '200':
@@ -3528,7 +3531,7 @@ paths:
       x-linode-grant: read_write
       summary: Update Configuration Profile
       description: >
-        Updates the parameters of a single Configuration profile.
+        Updates a Configuration profile.
       tags:
       - Linode Instances
       operationId: updateLinodeConfig
@@ -3637,7 +3640,7 @@ paths:
       - Linode Instances
       summary: List Disks
       description: >
-        View Disk information for disks associated with this Linode.
+        View Disk information for Disks associated with this Linode.
       operationId: getLinodeDisks
       x-linode-cli-action: disks-list
       security:
@@ -3821,7 +3824,7 @@ paths:
       description: |
         Deletes a Disk you have permission to `read_write`.
 
-        **Deleting a Disk is a destructive process and cannot be undone.**
+        **Deleting a Disk is a destructive action and cannot be undone.**
       operationId: deleteDisk
       x-linode-cli-action: disk-delete
       security:
@@ -3867,8 +3870,7 @@ paths:
       - Linode Instances
       summary: Reset Disk Root Password
       description: >
-        This endpoint allows you to reset the password of a Disk you have
-        permission to `read_write`.
+        Resets the password of a Disk you have permission to `read_write`.
       operationId: resetDiskPassword
       x-linode-cli-action: disk-reset-password
       security:
@@ -3941,14 +3943,14 @@ paths:
       - Linode Instances
       summary: Resize Disk
       description: >
-        This endpoint allows you to resize a Disk you have
-        permission to `read_write`.
+        Resizes a Disk you have permission to `read_write`.
 
         The Linode this Disk is attached to must be shut down for resizing to
         take effect.
 
         If you are resizing the Disk to a smaller size, it cannot be made smaller
         than what is required by the total size of the files current on the Disk.
+        The Disk must not be in use.
       operationId: resizeDisk
       x-linode-cli-action: disk-resize
       security:
@@ -3968,8 +3970,6 @@ paths:
                   type: integer
                   description: >
                     The desired size, in MB, of the disk.
-
-                    * The Disk must not be in use.
                   minimum: 1
                   example: 2048
       responses:
@@ -4185,7 +4185,7 @@ paths:
       - Linode Instances
       summary: Update IP Address
       description: >
-        Manage a particular IP Address associated with this Linode.
+        Updates a particular IP Address associated with this Linode.
         Only allows setting/resetting reverse DNS.
       operationId: updateLinodeIP
       x-linode-cli-action: ip-update
@@ -4233,7 +4233,7 @@ paths:
       summary: Delete IPv4 Address
       description: >
         Deletes a public IPv4 address associated with this Linode. This will
-        fail if it is the Linode's last remaining IP address. Private
+        fail if it is the Linode's last remaining public IPv4 address. Private
         IPv4 addresses cannot be removed via this endpoint.
       operationId: removeLinodeIP
       x-linode-cli-action: ip-delete
@@ -4270,12 +4270,12 @@ paths:
       - Linode Instances
       summary: List Kernels
       description: |
-        Lists available kernels.
+        Lists available Kernels.
       operationId: getKernels
       x-linode-cli-action: list
       responses:
         '200':
-          description: Returns an array of kernels.
+          description: Returns an array of Kernels.
           content:
             application/json:
               schema:
@@ -4304,7 +4304,7 @@ paths:
     parameters:
     - name: kernelId
       in: path
-      description: ID of the kernel to look up.
+      description: ID of the Kernel to look up.
       required: true
       schema:
         type: string
@@ -4314,7 +4314,7 @@ paths:
       - Linode Instances
       summary: View Kernel
       description: >
-        Get information about a single kernel.
+        Returns information about a single Kernel.
       operationId: getKernel
       x-linode-cli-action: view
       responses:
@@ -4435,9 +4435,9 @@ paths:
       x-linode-grant: read_write
       summary: Rebuild Linode
       description: >
-        This endpoint allows you to rebuild a Linode if you have the `read_write`
-        permission for it. If any actions are currently running or queued,
-        those actions must be completed first before you can initiate a rebuild.
+        Rebuilds a Linode if you have the `read_write` permission for it. If any
+        actions are currently running or queued, those actions must be completed
+        first before you can initiate a rebuild.
 
         A rebuild will first shut down the Linode, delete all disks and configs
         on the Linode, and then deploy a new `image` to the Linode with the given
@@ -4445,7 +4445,7 @@ paths:
 
           * Requires an `image` be supplied.
           * Requires a `root_pass` be supplied to use for the root User's Account.
-          * It is recommended to supply ssh keys for the root User using the
+          * It is recommended to supply SSH keys for the root User using the
             `authorized_keys` field.
       tags:
       - Linode Instances
@@ -4695,7 +4695,7 @@ paths:
       - Linode Instances
       summary: View Current Month Statistics
       description: >
-        This endpoint returns CPU, IO, IPv4, and IPv6 statistics for your Linode
+        Returns CPU, IO, IPv4, and IPv6 statistics for your Linode
         for the past 24 hours.
       operationId: getLinodeStats
       x-linode-cli-skip: true
@@ -4746,7 +4746,7 @@ paths:
       - Linode Instances
       summary: View Statistics (year/month)
       description: >
-        This endpoint returns statistics for a specific month. The year/month
+        Returns statistics for a specific month. The year/month
         values must be either a date in the past, or the current month. If the
         current month, statistics will be retrieved for the past 30 days.
       operationId: getLinodeStatsByYearMonth
@@ -4880,7 +4880,7 @@ paths:
       - StackScripts
       summary: Create StackScript
       description: >
-        Creates a new StackScript in your Account.
+        Creates a StackScript in your Account.
       operationId: addStackScript
       x-linode-cli-action: create
       security:
@@ -4938,7 +4938,7 @@ paths:
       - StackScripts
       summary: View StackScript
       description: >
-        This endpoint returns all of the information about a specified
+        Returns all of the information about a specified
         StackScript, including the contents of the script.
       operationId: getStackScript
       x-linode-cli-action: view
@@ -4968,7 +4968,7 @@ paths:
       - StackScripts
       summary: Update StackScript
       description: >
-        This endpoint allows you to modify a StackScript.
+        Updates a StackScript.
 
 
         **Once a StackScript is made public, it cannot be made private.**
@@ -5019,8 +5019,7 @@ paths:
       - StackScripts
       summary: Delete StackScript
       description: >
-        This endpoint allows you to permanently delete a specific StackScript.
-        You cannot delete a public StackScript.
+        Deletes a private StackScript you have permission to `read_write`. You cannot delete a public StackScript.
       operationId: deleteStackScript
       x-linode-cli-action: delete
       security:
@@ -5053,7 +5052,9 @@ paths:
       summary: List Types
       description: >
         Returns collection of Linode Types, including pricing and
-        specifications for each Type. These are used when creating or resizing
+        specifications for each Type. These are used when
+        [creating](https://developers.linode.com/api/v4//#operation/createLinodeInstance)
+        or [resizing](https://developers.linode.com/api/v4//#operation/resizeLinodeInstance)
         Linodes.
       operationId: getLinodeTypes
       x-linode-cli-action: types
@@ -5099,7 +5100,10 @@ paths:
       summary: View Type
       description: >
         Returns information about a specific Linode Type, including pricing and
-        specifications. This is used when creating or resizing a Linode.
+        specifications. This is used when
+        [creating](https://developers.linode.com/api/v4//#operation/createLinodeInstance)
+        or [resizing](https://developers.linode.com/api/v4//#operation/resizeLinodeInstance)
+        Linodes.
       operationId: getLinodeType
       x-linode-cli-action: type-view
       responses:
@@ -5130,7 +5134,7 @@ paths:
       summary: List Longview Clients
       description: >
         Returns a paginated list of Longview Clients you have access
-        to.  Longview Clients are used to monitor stats on your servers
+        to. Longview Client is used to monitor stats on your Linode
         with the help of the Longview Client application.
       operationId: getLongviewClients
       x-linode-cli-action: list
@@ -5172,9 +5176,9 @@ paths:
       - longview
       summary: Create Longview Client
       description: >
-        Creates a new Longview Client.  This Client will not begin monitoring
+        Creates a Longview Client.  This Client will not begin monitoring
         the status of your server until you configure the Longview
-        Client application on your server using the returning `install_code`
+        Client application on your Linode using the returning `install_code`
         and `api_key`.
       operationId: createLongviewClient
       x-linode-cli-action: create
@@ -5256,7 +5260,7 @@ paths:
       summary: Update Longview Client
       description: >
         Updates a Longview Client.  This cannot update how it monitors your
-        server; use the Longview Client application on your server for
+        server; use the Longview Client application on your Linode for
         monitoring configuration.
       operationId: updateLongviewClient
       x-linode-cli-action: update
@@ -5305,7 +5309,7 @@ paths:
 
 
         This _does not_ uninstall the Longview Client application for your
-        server - you must do that manually.
+        Linode - you must do that manually.
       operationId: deleteLongviewClient
       x-linode-cli-action: delete
       security:
@@ -5459,7 +5463,7 @@ paths:
       - managed
       summary: Create Managed Contact
       description: >
-        Creates a new Managed Contact.  A Managed Contact is someone Linode
+        Creates a Managed Contact.  A Managed Contact is someone Linode
         special forces can contact in the course of attempting to resolve an issue
         with a Managed Service.
       operationId: createManagedContact
@@ -5670,7 +5674,7 @@ paths:
       - managed
       summary: Create Managed Credential
       description: >
-        Creates a new Managed Credential.  A Managed Credential is stored securely
+        Creates a Managed Credential. A Managed Credential is stored securely
         to allow Linode special forces to access your Managed Services and resolve
         issues.
       operationId: createManagedCredential
@@ -6120,7 +6124,7 @@ paths:
       - managed
       summary: Create Managed Service
       description: >
-        Creates a new Managed Service.  Linode Managed will being monitoring this
+        Creates a Managed Service. Linode Managed will being monitoring this
         service and reporting and attempting to resolve any Issues.
       operationId: createManagedService
       x-linode-cli-action: service-create
@@ -6344,7 +6348,7 @@ paths:
       - managed
       summary: Enable Managed Service
       description: >
-        Re-enables monitoring of a Managed Service.
+        Enables monitoring of a Managed Service.
       operationId: enableManagedService
       x-linode-cli-action: service-enable
       security:
@@ -6883,7 +6887,7 @@ paths:
       - NodeBalancers
       summary: Create NodeBalancer
       description: >
-        Creates a new NodeBalancer in the requested Region. This NodeBalancer
+        Creates a NodeBalancer in the requested Region. This NodeBalancer
         will not start serving requests until it is configured.
       operationId: createNodeBalancer
       x-linode-cli-action: create
@@ -7022,7 +7026,7 @@ paths:
         Deletes a NodeBalancer.
 
 
-        **This cannot be undone.**
+        **This is a destructive action and cannot be undone.**
 
 
         Deleting a NodeBalancer will also delete all associated Configs and Nodes,
@@ -7119,8 +7123,8 @@ paths:
       - NodeBalancers
       summary: Create Config
       description: >
-        Creates a new NodeBalancer Config, which allows the NodeBalancer to
-        accept traffic on a new port.  You will need to add NodeBalancer Nodes
+        Creates a NodeBalancer Config, which allows the NodeBalancer to
+        accept traffic on a new port. You will need to add NodeBalancer Nodes
         to the new Config before it can actually serve requests.
       operationId: createNodeBalancerConfig
       x-linode-cli-action: config-create
@@ -7371,7 +7375,7 @@ paths:
       - NodeBalancers
       summary: Create Node
       description: >
-        Creates a new NodeBalancerNode, a backend that can accept
+        Creates a NodeBalancer Node, a backend that can accept
         traffic for this NodeBalancer Config. Nodes are routed
         requests on the configured port based on their status.
       operationId: createNodeBalancerNode
@@ -7800,7 +7804,7 @@ paths:
       - profile
       summary: Disable Two Factor Authentication
       description: >
-        Disabled Two Factor Authentication for your User. Once successful,
+        Disables Two Factor Authentication for your User. Once successful,
         login attempts from untrusted computers will only require a password
         before being successful. This is less secure, and is discouraged.
       operationId: tfaDisable
@@ -7986,7 +7990,7 @@ paths:
       - profile
       summary: Create Personal Access Token
       description: >
-        Creates a new Personal Access Token for your User. The raw token will
+        Creates a Personal Access Token for your User. The raw token will
         be returned in the response, but will never be returned again afterward
         so be sure to take note of it. You may create a token with _at most_
         the scopes of your current token. The created token will be able to
@@ -8091,7 +8095,7 @@ paths:
       - profile
       summary: Update Personal Access Token
       description: >
-        Updates a Personal Access Token's label.
+        Updates a Personal Access Token.
       operationId: updatePersonalAccessToken
       x-linode-cli-action: token-update
       security:
@@ -8131,8 +8135,8 @@ paths:
       - profile
       summary: Revoke Personal Access Token
       description: >
-        Immediately revokes a Personal Access Token.  The token will be invalidated
-        immediately, and requests using that token will fail with a 401.  It is
+        Revokes a Personal Access Token. The token will be invalidated
+        immediately, and requests using that token will fail with a 401. It is
         possible to revoke access to the token making the request to revoke a token,
         but keep in mind that doing so could lose you access to the api and require
         you to create a new token through some other means.
@@ -8212,7 +8216,7 @@ paths:
       - regions
       summary: View Region
       description: >
-        Get information about a single Region.
+        Returns a single Region.
       operationId: getRegion
       x-linode-cli-action: view
       responses:
@@ -8242,7 +8246,7 @@ paths:
       - support
       summary: List Support Tickets
       description: >
-        This endpoint returns a collection of Support Tickets on your
+        Returns a collection of Support Tickets on your
         Account. Support Tickets can be both tickets you open with Linode
         for support, as well as tickets generated by Linode regarding
         your Account.
@@ -8343,7 +8347,7 @@ paths:
       - support
       summary: View Support Ticket
       description: >
-        This endpoint returns a Support Ticket under your Account.
+        Returns a Support Ticket under your Account.
       operationId: getTicket
       x-linode-cli-action: view
       security:
@@ -8382,7 +8386,7 @@ paths:
       - support
       summary: Create Ticket Attachment
       description: >
-        This endpoint allows you to add a file attachment to an existing Support
+        Adds a file attachment to an existing Support
         Ticket on your Account. File attachments are used to assist our
         Support team in resolving your Ticket. Examples of attachments
         are screen shots and text files that provide additional information.
@@ -8443,7 +8447,7 @@ paths:
       - support
       summary: List Replies
       description: >
-        This endpoint returns a collection of replies to a Support Ticket on
+        Returns a collection of replies to a Support Ticket on
         your Account.
       operationId: getTicketReplies
       x-linode-cli-action: replies
@@ -8485,7 +8489,7 @@ paths:
       - support
       summary: Create Reply
       description: >
-        This endpoint allows you to add a reply to an existing Support Ticket.
+        Adds a reply to an existing Support Ticket.
       operationId: createTicketReply
       x-linode-cli-action: reply
       security:
@@ -8583,7 +8587,7 @@ paths:
       x-linode-grant: add_volumes
       summary: Create Volume
       description: >
-        This endpoint allows you to create a new Volume on your Account. In order
+        Creates a Volume on your Account. In order
         for this to complete successfully, your User must have the `add_volumes`
         grant. Creating a new Volume will start accruing additional charges
         on your account.
@@ -8764,7 +8768,7 @@ paths:
       description: |
         Deletes a Volume you have permission to `read_write`.
 
-        **Deleting a Volume is a destructive process and cannot be undone.**
+        **Deleting a Volume is a destructive action and cannot be undone.**
 
         Deleting stops billing for the Volume. You will be billed for time used within
         the billing period the Volume was active.
@@ -8805,7 +8809,7 @@ paths:
     post:
       summary: Attach Volume
       description: >
-        This endpoint allows you to attach a Volume on your Account
+        Attaches a Volume on your Account
         to an existing Linode on your Account. In order for this request to
         complete successfully, your User must have `read_only` or `read_write`
         permission to the Volume and `read_write` permission to the Linode.
@@ -8876,7 +8880,7 @@ paths:
       x-linode-grant: add_volumes
       summary: Clone Volume
       description: >
-        This endpoint allows you to create a new Volume on your Account. In
+        Creates a Volume on your Account. In
         order for this request to complete successfully, your User must have the
         `add_volumes` grant. The new Volume will have the same size and data as
         the source Volume. Creating a new Volume will incur a charge on your
@@ -8934,7 +8938,7 @@ paths:
     post:
       summary: Detach Volume
       description: >
-        This endpoint allows you to detach a Volume on your Account
+        Detaches a Volume on your Account
         from a Linode on your Account. In order for this request to
         complete successfully, your User must have `read_write` access to the
         Volume and `read_write` access to the Linode.
@@ -8979,7 +8983,7 @@ paths:
       x-linode-charge: true
       summary: Resize Volume
       description: >
-        This endpoint allows you to resize an existing Volume on your Account. In
+        Resize an existing Volume on your Account. In
         order for this request to complete successfully, your User must have the
         `read_write` permissions to the Volume.
 
@@ -9048,7 +9052,7 @@ components:
             'images:read_write': Allows access to all endpoints related to your Images.
             'ips:read_only': Allows access to GET your ips.
             'ips:read_write': Allows access to all endpoints related to your ips.
-            'linodes:read_only': Allow access to GET Linodes on your Account
+            'linodes:read_only': Allows access to GET Linodes on your Account.
             'linodes:read_write': Allow access to all endpoints related to your Linodes.
             'longview:read_only': Allows access to GET your Longview Clients.
             'longview:read_write': Allows access to all endpoints related to your Longview Clients.
@@ -9236,7 +9240,7 @@ components:
           description: >
             The tax identification number associated with this Account,
             for tax calculations in some countries.
-            If you do not live in a country that collects tax, this should be null.
+            If you do not live in a country that collects tax, this should be `null`.
           maxLength: 100
           example: ATU99999999
         zip:
@@ -9257,22 +9261,22 @@ components:
             servers remain online and available at all times. Linode Managed can
             monitor any service or software stack reachable over TCP or HTTP.
             Once you add a service to Linode Managed, we'll monitor it for
-            connectivity, response, and total request time. This guide shows
-            you how to start monitoring your services with Linode Managed.
+            connectivity, response, and total request time.
           example: true
           x-linode-cli-display: 3
         longview_subscription:
           type: string
           description: >
             The Longview Pro tier you are currently subscribed to. The value must
-            be `null` or a [Longview Subscription ID](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions).
+            a [Longview Subscription](https://developers.linode.com/api/v4/#operation/getLongviewSubscriptions)
+            ID or `null`.
           example: longview-30
           x-linode-cli-display: 2
         network_helper:
           type: boolean
           description: >
             Enables network helper across all users by default for
-            new Linodes or Linode Configs.
+            new Linodes and Linode Configs.
           example: false
           x-linode-cli-display: 1
     AuthorizedApp:
@@ -9430,7 +9434,7 @@ components:
       type: object
       description: >
         An object representing the credit card information you have on file with
-        Linode to make payments against your Account.
+        Linode to make Payments against your Account.
       required:
       - card_number
       - expiry_month
@@ -9447,7 +9451,10 @@ components:
           description: >
             A value from 1-12 representing the expiration month of your credit card.
 
-            * 1 = January, 2 = February, 3 = March, etc.
+              * 1 = January
+              * 2 = February
+              * 3 = March
+              * Etc.
           example: 12
         expiry_year:
           type: integer
@@ -9543,11 +9550,11 @@ components:
           description: >
             The Disk filesystem can be one of:
 
-              * raw - No filesystem, just a raw binary stream
-              * swap - Linux swap area
-              * ext3 - The ext3 journaling filesystem for Linux
-              * ext4 - The ext4 journaling filesystem for Linux
-              * initrd - initrd (uncompressed initrd, ext2, max 32 MB)
+              * raw - No filesystem, just a raw binary stream.
+              * swap - Linux swap area.
+              * ext3 - The ext3 journaling filesystem for Linux.
+              * ext4 - The ext4 journaling filesystem for Linux.
+              * initrd - initrd (uncompressed initrd, ext2, max 32 MB).
           example: ext4
           enum:
           - raw
@@ -9612,7 +9619,7 @@ components:
           writeOnly: true
           example: aComplexP@ssword
           description: |
-            This will set the root user's password on the newly created Linode.
+            This will set the root user's password on the newly-created Linode.
             The root password must conform to the following constraints:
 
               * May only use alphanumerics, punctuation, spaces, and tabs.
@@ -9630,9 +9637,9 @@ components:
           description: |
             A StackScript ID that will cause the referenced StackScript to be run during
             deployment of this Linode. A compatible `image` is required to use a
-            StackScript. To get a list of available StackScript and their permitted images
+            StackScript. To get a list of available StackScript and their permitted Images
             see [/stackscripts](https://developers.linode.com/api/v4/#operation/getStackScripts).
-            This field cannot be used when deploying from a Backup or a private image.
+            This field cannot be used when deploying from a Backup or a private Image.
         stackscript_data:
           type: object
           example:
@@ -9675,7 +9682,7 @@ components:
           pattern: ([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|XN--[a-zA-Z0-9]+)
           description: >
             The domain this Domain represents. These must be unique in our
-            system, you cannot have two Domains representing the same domain.
+            system; you cannot have two Domains representing the same domain.
           example: example.org
           x-linode-filterable: true
           x-linode-cli-display: 2
@@ -9892,7 +9899,7 @@ components:
         entity related to your Account. For example, booting a Linode would
         create an Event.
 
-        The events returned depends on your grants.
+        The Events returned depends on your grants.
       properties:
         id:
           type: integer
@@ -9974,7 +9981,7 @@ components:
           type: object
           readOnly: true
           description: >
-            Detailed information about the event's entity, including ID, type,
+            Detailed information about the Event's entity, including ID, type,
             label, and URL used to access it.
           x-linode-cli-display: 4
           properties:
@@ -10013,7 +10020,7 @@ components:
           readOnly: true
           description: >
               The rate of completion of the Event. Only some Events will return
-              rate; for example, migration and resize events.
+              rate; for example, migration and resize Events.
           example: null
         read:
           type: boolean
@@ -10259,7 +10266,7 @@ components:
         type:
           type: string
           description: >
-            How the image was created. Manual images can be created at any time.
+            How the Image was created. "Manual" Images can be created at any time.
             "Automatic" images are created automatically from a deleted Linode.
           enum:
           - manual
@@ -10270,7 +10277,7 @@ components:
           x-linode-filterable: true
           type: string
           description: >
-            The upstream distribution vendor. `None` for private images.
+            The upstream distribution vendor. `None` for private Images.
           example: null
           readOnly: true
           x-linode-cli-display: 3
@@ -10959,7 +10966,7 @@ components:
               description: >
                 The amount of RAM, in MB, this Linode has access to. Typically a Linode will
                 choose to boot with all of its available RAM, but this can be configured in a
-                Config Profile, see the
+                Config profile, see the
                 [/linode/instances/{linodeId}/configs](https://developers.linode.com/api/v4/#operation/getLinodeConfigs)
                 endpoints and the LinodeConfig object for more information.
               example: 2048
@@ -10994,20 +11001,20 @@ components:
               description: >
                 The amount of incoming traffic, in Mbit/s, required to trigger an alert. If the
                 average incoming traffic over two hours exceeds this value, we'll send you an
-                alert. If this is set to 0, the alert is disabled.
+                alert. If this is set to 0 (zero), the alert is disabled.
               example: 10
             network_out:
               type: integer
               description: >
                 The amount of outbound traffic, in Mbit/s, required to trigger an alert. If the
                 average outbound traffic over two hours exceeds this value, we'll send you an
-                alert. If this is set to 0, the alert is disabled.
+                alert. If this is set to 0 (zero), the alert is disabled.
               example: 10
             transfer_quota:
               type: integer
               description: >
                 The percentage of network transfer that may be used before an alert is triggered.
-                When this value is exceeded, we'll alert you. If this is set to 0, the alert is
+                When this value is exceeded, we'll alert you. If this is set to 0 (zero), the alert is
                 disabled.
               example: 80
             io:
@@ -11180,7 +11187,7 @@ components:
               example: true
             network:
               type: boolean
-              description: Automatically configure static networking.
+              description: Automatically configures static networking.
               example: true
             devtmpfs_automount:
               type: boolean
@@ -11365,7 +11372,10 @@ components:
       type: object
       description: >
         Returns collection of Linode types, including pricing and specifications
-        for each type. These are used when creating or resizing Linodes.
+        for each type. These are used when
+        [creating](https://developers.linode.com/api/v4//#operation/createLinodeInstance)
+        or [resizing](https://developers.linode.com/api/v4//#operation/resizeLinodeInstance)
+        Linodes.
       properties:
         id:
           readOnly: true
@@ -11386,7 +11396,7 @@ components:
           type: integer
           readOnly: true
           description: >
-            The Disk size of the Linode Type, in MB.
+            The Disk size, in MB, of the Linode Type.
           example: 49152
           x-linode-cli-display: 4
         class:
@@ -11499,28 +11509,28 @@ components:
           maxLength: 32
           pattern: '[a-zA-Z0-9-_]{3,32}'
           description: >
-            This Client's unique label.  This is for display purposes only.
+            This Client's unique label. This is for display purposes only.
           example: client789
           x-linode-cli-display: 2
         api_key:
           type: string
           description: >
             The API key for this Client, used when configuring the Longview
-            Client application on your server.
+            Client application on your Linode.
           example: BD1B4B54-D752-A76D-5A9BD8A17F39DB61
           readOnly: true
         install_code:
           type: string
           description: >
             The install code for this Client, used when configuring the Longview
-            Client application on your server.
+            Client application on your Linode.
           example: BD1B5605-BF5E-D385-BA07AD518BE7F321
           readOnly: true
           x-linode-cli-display: 4
         apps:
           type: object
           description: >
-            The apps this Client is monitoring on your server.  This is configured
+            The apps this Client is monitoring on your Linode. This is configured
             when you install the Longview Client application, and is present here
             for information purposes only.
           readOnly: true
@@ -11584,7 +11594,7 @@ components:
             hourly:
               type: number
               description: >
-                The hourly price in US dollars for this Subscription tier.
+                The hourly price, in US dollars, for this Subscription tier.
               example: 0.06
               readOnly: true
             monthly:
@@ -12393,10 +12403,10 @@ components:
           readOnly: true
           format: date-time
           description: >
-            If this Notification is of an event that will happen at a fixed,
+            If this Notification is of an Event that will happen at a fixed,
             future time, this is when the named action will be taken. For
             example, if a Linode is to be migrated in response to a
-            Security Advisory, this field will contain around the time the
+            Security Advisory, this field will contain the approximate time the
             Linode will be taken offline for migration.
           example: null
           x-linode-cli-display: 4
@@ -12408,7 +12418,7 @@ components:
           format: date-time
           description: >
             If this Notification has a duration, this will be the ending time
-            for the event or action.  For example, if there is scheduled
+            for the Event/action. For example, if there is scheduled
             maintenance for one of our systems, `until` would be set to the end
             of the maintenance window.
           example: null
@@ -12470,7 +12480,7 @@ components:
         secret:
           type: string
           description: >
-            The OAuth Client Secret, used in the OAuth exchange.  This is returned
+            The OAuth Client secret, used in the OAuth exchange.  This is returned
             as `<REDACTED>` except when an OAuth Client is created or its secret
             is reset.  This is a secret, and should not be shared or disclosed
             publicly.
@@ -12527,20 +12537,20 @@ components:
         id:
           type: integer
           readOnly: true
-          description: The unique ID of the payment.
+          description: The unique ID of the Payment.
           example: 123
           x-linode-cli-display: 1
         date:
           type: string
           readOnly: true
           format: date-time
-          description: When the payment was made.
+          description: When the Payment was made.
           example: '2018-01-15T00:01:01'
           x-linode-cli-display: 2
         usd:
           type: integer
           readOnly: true
-          description: The amount, in US dollars, of the payment.
+          description: The amount, in US dollars, of the Payment.
           example: '120.50'
           x-linode-cli-display: 3
     PaymentRequest:
@@ -12554,7 +12564,7 @@ components:
           type: string
           description: >
             CVV (Card Verification Value) of the credit card to be used for
-            the payment.
+            the Payment.
           example: '123'
         usd:
           type: string
@@ -12626,8 +12636,9 @@ components:
           description: >
             The scopes this token was created with. These define what parts of
             the Account the token can be used to access. Many command-line tools,
-            such as the Linode CLI, require tokens with access to `*`. Tokens with
-            more restrictive scopes are generally more secure.
+            such as the [Linode CLI](https://github.com/linode/linode-cli),
+            require tokens with access to `*`. Tokens with more restrictive scopes
+            are generally more secure.
           example: '*'
           readOnly: true
           x-linode-cli-display: 3
@@ -13335,14 +13346,14 @@ components:
             Can be one of `creating`, `active`, `resizing`, `deleting`,
             `deleted`, and `contact_support`:
 
-              * creating - the Volume is being created and is not yet available
+              * `creating` - the Volume is being created and is not yet available
                 for use.
-              * active - the Volume is online and available for use.
-              * resizing - the Volume is in the process of upgrading or downgrading
+              * `active` - the Volume is online and available for use.
+              * `resizing` - the Volume is in the process of upgrading or downgrading
                 its current capacity.
-              * deleting - the Volume is being deleted and is unavailable for use.
-              * deleted - the Volume has been deleted.
-              * contact_support - there is a problem with your Volume. Please
+              * `deleting` - the Volume is being deleted and is unavailable for use.
+              * `deleted` - the Volume has been deleted.
+              * `contact_support` - there is a problem with your Volume. Please
                 [open a Support Ticket](https://developers.linode.com/api/v4/#operation/createTicket) to resolve the issue.
           enum:
           - creating
