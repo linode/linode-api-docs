@@ -7,7 +7,6 @@ RUN gem install --no-ri --no-rdoc fpm
 
 COPY openapi-linter.py .
 COPY openapi.yaml .
-COPY style.css .
 COPY build-docs.sh .
 COPY linode-docs.postinst .
 COPY linode-logo.svg .
