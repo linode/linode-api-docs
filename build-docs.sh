@@ -17,7 +17,7 @@ version_extension=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[
 version=${version_number}-${version_extension}
 
 echo 'Building Debian Package'
-# index.html, openapi.yaml, style.css
+# index.html, openapi.yaml
 package_version="${version}"
 description='Linode API Docs'
 pkg_name="linode-docs"
@@ -35,7 +35,7 @@ fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version
   -a all --prefix /usr/share/linode-docs/templates/ \
   --after-install linode-docs.postinst \
   --replaces "${replaces}" -- \
-  index.html openapi.yaml style.css linode-logo.svg redoc.standalone.js \
+  index.html openapi.yaml linode-logo.svg redoc.standalone.js \
   favicon.ico changelog/index.html changelog/changelog-style.css linode-logo-white.svg
 
 outfile="$(ls -t ${pkg_name}*_all.deb | head -1)"
