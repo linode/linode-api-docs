@@ -2303,6 +2303,7 @@ paths:
 
         * Authentication is required to return a combined paginated list of all public and
           your private Images.
+      x-linode-redoc-load-ids: true
       operationId: getImages
       x-linode-cli-action: list
       security:
@@ -5055,6 +5056,7 @@ paths:
         Returns collection of Linode Types, including pricing and
         specifications for each Type. These are used when creating or resizing
         Linodes.
+      x-linode-redoc-load-ids: true
       operationId: getLinodeTypes
       x-linode-cli-action: types
       responses:
@@ -8169,6 +8171,7 @@ paths:
       description: |
         Lists the Regions available for Linode services. Not all services are guaranteed to be
         available in all Regions.
+      x-linode-redoc-load-ids: true 
       operationId: getRegions
       x-linode-cli-action: list
       responses:
