@@ -11,11 +11,16 @@ info:
     The Linode API provides the ability to programmatically manage the full
     range of Linode products and services.
 
-    This reference is designed to assist application developers and users.
-    Each endpoint includes descriptions, request syntax, and examples
-    using standard HTTP requests. Response data is returned in JSON format.
+    This reference is designed to assist application developers and system
+    administrators.  Each endpoint includes descriptions, request syntax, and
+    examples using standard HTTP requests. Response data is returned in JSON
+    format.
 
 
+    This document was generated from our OpenAPI Specification.  You can find
+    more information about OpenAPI on [their
+    website](ihttps://www.openapis.org).
+    
     [Download the Linode OpenAPI Specification](/openapi.yaml)
 
 
