@@ -81,7 +81,7 @@ info:
     ```
 
     Included in the reponse is `access_token`. With this token, you can proceed to make
-    authenticated HTTP requests with the API by adding this header to each request:
+    authenticated HTTP requests to the API by adding this header to each request:
 
     ```
     Authorization: Bearer 03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c
@@ -94,7 +94,7 @@ info:
 
     # Requests
 
-    Requests should be made over HTTPS to ensure transactions are encrypted. The
+    Requests must be made over HTTPS to ensure transactions are encrypted. The
     following Request methods are supported:
 
     | METHOD | USAGE |
@@ -380,7 +380,7 @@ paths:
       - account
       summary: Add/Edit Credit Card
       description: >
-        Adds/edits credit card information to your Account.
+        Adds/edit credit card information to your Account.
 
         Only one credit card can be associated with your Account, so using this
         endpoint will overwrite your currently active card information with the
@@ -735,8 +735,8 @@ paths:
         Returns a collection of Notification objects representing
         important, often time-sensitive items related to your Account.
 
-        You cannot interact directly with Notifications, and the Notification will disappear
-        when the circumstances causing it has been resolved. For
+        You cannot interact directly with Notifications, and a Notification will disappear
+        when the circumstances causing it have been resolved. For
         example, if you have an important Ticket open, you must respond to the
         Ticket to dismiss the Notification.
       operationId: getNotifications
@@ -828,7 +828,7 @@ paths:
       summary: Create OAuth Client
       description: >
         Creates an OAuth Client, which can be used to allow users
-        (using their Linode account) to login to your own application, and optionally grant
+        (using their Linode account) to log in to your own application, and optionally grant
         your application some amount of access to their Linodes or other entities.
       operationId: createClient
       x-linode-cli-action: client-create
@@ -3950,7 +3950,8 @@ paths:
 
         If you are resizing the Disk to a smaller size, it cannot be made smaller
         than what is required by the total size of the files current on the Disk.
-        The Disk must not be in use.
+        The Disk must not be in use. If the Disk is in use, the request will
+        succeed but the resize will ultimately fail.
       operationId: resizeDisk
       x-linode-cli-action: disk-resize
       security:
@@ -4435,9 +4436,7 @@ paths:
       x-linode-grant: read_write
       summary: Rebuild Linode
       description: >
-        Rebuilds a Linode if you have the `read_write` permission for it. If any
-        actions are currently running or queued, those actions must be completed
-        first before you can initiate a rebuild.
+        Rebuilds a Linode you have the `read_write` permission to modify.
 
         A rebuild will first shut down the Linode, delete all disks and configs
         on the Linode, and then deploy a new `image` to the Linode with the given
@@ -7842,7 +7841,7 @@ paths:
         Generates a Two Factor secret for your User. TFA will
         not be enabled until you have successfully confirmed the code you
         were given with [tfa-enable-confirm](https://developers.linode.com/api/v4/#operation/tfaConfirm) (see below).
-        Once enabled, login from untrusted computers will be required to provide
+        Once enabled, logins from untrusted computers will be required to provide
         a TFA code before they are successful.
       operationId: tfaEnable
       x-linode-cli-action: tfa-enable
@@ -7861,7 +7860,7 @@ paths:
                     type: string
                     description: >
                       Your Two Factor secret. This is used to generate
-                      time-based two factor codes required for login. Doing
+                      time-based two factor codes required for logging in. Doing
                       this will be required to confirm TFA an actually enable it.
                     example: 5FXX6KLACOC33GTC
                   expiry:
@@ -12448,7 +12447,7 @@ components:
           type: string
           format: url
           description: >
-            The location a successful login from https://login.linode.com should be
+            The location a successful log in from https://login.linode.com should be
             redirected to for this client.  The receiver of this redirect should be
             ready to accept an OAuth exchange code and finish the OAuth exchange.
           example: https://example.org/oauth/callback
@@ -13349,7 +13348,7 @@ components:
               * `creating` - the Volume is being created and is not yet available
                 for use.
               * `active` - the Volume is online and available for use.
-              * `resizing` - the Volume is in the process of upgrading or downgrading
+              * `resizing` - the Volume is in the process of upgrading
                 its current capacity.
               * `deleting` - the Volume is being deleted and is unavailable for use.
               * `deleted` - the Volume has been deleted.
