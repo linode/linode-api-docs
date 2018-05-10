@@ -81,3 +81,4 @@ Attribute | Location | Type | Supported By | Explanation
 `x-linode-cli-command` | path | string | linode-cli | The command group the methods of this path fall into when generating commands in the `linode-cli <command> <action>` format.
 `x-linode-cli-action` | method | string | linode-cli | The action this method will be mapped to when generating commands in the `linode-cli <command> <action>` format.
 `x-linode-cli-skip` | method | boolean | linode-cli | If true, the CLI will not expose this action.
+`x-linode-redoc-load-ids`| operation | boolean | If true, ReDoc will load this path and print a bulleted list of IDs.  This only works on public collections.
