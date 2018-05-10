@@ -223,7 +223,7 @@ info:
     | +order_by | string | Attribute to order the results by - must be filterable. |
     | +order    | string | Either "asc" or "desc". Defaults to "asc". Requires `+order_by`. |
 
-    For example, filtering for [Linode Types](//#operation/getLinodeTypes)
+    For example, filtering for [Linode Types](/#operation/getLinodeTypes)
     that offer memory equal to or higher than 61440:
 
     ```Shell
@@ -236,7 +236,7 @@ info:
     ```
 
     You can combine and nest operators to construct arbitrarily-complex queries.
-    For example, give me all [Linode Types](//#operation/getLinodeTypes)
+    For example, give me all [Linode Types](/#operation/getLinodeTypes)
     which are either `standard` or `highmem` class, and have between 12 and 20 vcpus:
 
     ```Shell
@@ -5053,8 +5053,8 @@ paths:
       description: >
         Returns collection of Linode Types, including pricing and
         specifications for each Type. These are used when
-        [creating](//#operation/createLinodeInstance)
-        or [resizing](//#operation/resizeLinodeInstance)
+        [creating](/#operation/createLinodeInstance)
+        or [resizing](/#operation/resizeLinodeInstance)
         Linodes.
       x-linode-redoc-load-ids: true
       operationId: getLinodeTypes
@@ -5102,8 +5102,8 @@ paths:
       description: >
         Returns information about a specific Linode Type, including pricing and
         specifications. This is used when
-        [creating](//#operation/createLinodeInstance)
-        or [resizing](//#operation/resizeLinodeInstance)
+        [creating](/#operation/createLinodeInstance)
+        or [resizing](/#operation/resizeLinodeInstance)
         Linodes.
       operationId: getLinodeType
       x-linode-cli-action: type-view
@@ -11375,8 +11375,8 @@ components:
       description: >
         Returns collection of Linode types, including pricing and specifications
         for each type. These are used when
-        [creating](//#operation/createLinodeInstance)
-        or [resizing](//#operation/resizeLinodeInstance)
+        [creating](/#operation/createLinodeInstance)
+        or [resizing](/#operation/resizeLinodeInstance)
         Linodes.
       properties:
         id:
