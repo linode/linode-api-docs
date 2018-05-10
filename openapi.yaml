@@ -3,7 +3,7 @@ info:
   version: DEVELOPMENT
   title: Linode API
   x-logo: {
-    url: 'linode-logo.svg',
+    url: '/linode-logo.svg',
     backgroundColor: '#fafafa'
   }
   description: |
