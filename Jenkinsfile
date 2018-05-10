@@ -36,7 +36,7 @@ node {
         if (env.BRANCH_NAME == 'development') {
             replace_to = 'https://api.dev.linode.com/v4'
             page_url = 'https://developers.dev.linode.com'
-        } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) { 
+        } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) {
             replace_to = 'https://api.testing.linode.com/v4'
             page_url = 'https://developers.testing.linode.com'
         } else {
@@ -74,7 +74,7 @@ node {
         stage('Apt-Repo') {
             sh "dupload --to linode-internal-apt-jessie-dev --nomail *.changes"
         }
-    } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+$/) { 
+    } else if (env.BRANCH_NAME ==~ /^release\/\d+\.\d+\.\d+$/) {
         stage('Apt-Repo') {
             sh "dupload --to linode-internal-apt-jessie-testing --nomail *.changes"
         }
