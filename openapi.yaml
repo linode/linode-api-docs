@@ -277,8 +277,9 @@ info:
 
     # CLI (Command Line Interface)
 
-    An _early access_ version of the [Linode CLI](https://github.com/linode/linode-cli) is now available to use. It
-    requires a [Personal Access Token](/#section/Personal-Access-Token)
+    The [Linode CLI](https://github.com/linode/linode-cli) allows you to easily
+    work with the API using intuitive and simple syntax. It requires a
+    [Personal Access Token](/#section/Personal-Access-Token)
     for authentication, and gives you access to all of the features and functionality
     of the Linode API that are documented here with CLI examples.
 
