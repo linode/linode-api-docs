@@ -376,7 +376,9 @@ paths:
               https://api.linode.com/v4/account
       - lang: CLI
         source: >
-          linode-cli account update --first_name John --last_name Smith
+          linode-cli account update \
+            --first_name John \
+            --last_name Smith
   /account/credit-card:
     x-linode-cli-command: account
     post:
@@ -425,7 +427,10 @@ paths:
                 https://api.linode.com/v4/account/credit-card
         - lang: CLI
           source: >
-            linode-cli account update-card --card_number 4111111111111111 --expiry_month 11 --expiry_year 2025
+            linode-cli account update-card \
+              --card_number 4111111111111111 \
+              --expiry_month 11 \
+              --expiry_year 2025
   /account/events:
     x-linode-cli-command: events
     get:
@@ -879,7 +884,9 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients
         - lang: CLI
           source: >
-            linode-cli account client-create --label Test_Client_1 --redirect_uri https://example.org/callback
+            linode-cli account client-create \
+              --label Test_Client_1 \
+              --redirect_uri https://example.org/callback
   /account/oauth-clients/{clientId}:
     parameters:
       - name: clientId
@@ -917,7 +924,8 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
         - lang: CLI
           source: >
-            linode-cli account client-view edc6790ea9db4d224c5c
+            linode-cli account client-view \
+              edc6790ea9db4d224c5c
     put:
       tags:
       - account
@@ -960,7 +968,9 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
         - lang: CLI
           source: >
-            linode-cli account client-update edc6790ea9db4d224c5c --label Test_Client_1
+            linode-cli account client-update \
+              edc6790ea9db4d224c5c \
+              --label Test_Client_1
     delete:
       tags:
       - account
@@ -993,7 +1003,8 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c
         - lang: CLI
           source: >
-            linode-cli account client-delete edc6790ea9db4d224c5c
+            linode-cli account client-delete \
+              edc6790ea9db4d224c5c
   /account/oauth-clients/{clientId}/reset-secret:
     x-linode-cli-command: account
     parameters:
@@ -1038,7 +1049,8 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/reset-secret
         - lang: CLI
           source: >
-            linode-cli account client-reset-secret edc6790ea9db4d224c5c
+            linode-cli account client-reset-secret \
+              edc6790ea9db4d224c5c
   /account/oauth-clients/{clientId}/thumbnail:
     x-linode-cli-command: account
     parameters:
@@ -1201,7 +1213,9 @@ paths:
                 https://api.linode.com/v4/account/payments
         - lang: CLI
           source: >
-            linode-cli account payment-create --cvv 123 --usd 120.50
+            linode-cli account payment-create \
+              --cvv 123 \
+              --usd 120.50
   /account/payments/{paymentId}:
     x-linode-cli-command: account
     parameters:
@@ -1297,7 +1311,10 @@ paths:
                 https://api.linode.com/v4/account/payments/paypal
         - lang: CLI
           source: >
-            linode-cli account paypal-start --cancel_url https://example.org --redirect_url https://example.org --usd 120.50
+            linode-cli account paypal-start \
+              --cancel_url https://example.org \
+              --redirect_url https://example.org \
+              --usd 120.50
   /account/payment/paypal/execute:
     x-linode-cli-command: account
     post:
@@ -1420,7 +1437,9 @@ paths:
                 https://api.linode.com/v4/account/settings
         - lang: CLI
           source: >
-            linode-cli account settings-update --longview_subscription longview-30 --network_helper false
+            linode-cli account settings-update \
+              --longview_subscription longview-30 \
+              --network_helper false
   /account/transfer:
     x-linode-cli-command: account
     get:
@@ -1561,7 +1580,9 @@ paths:
                 https://api.linode.com/v4/account/users
         - lang: CLI
           source: >
-            linode-cli users create --username example_user --email example_user@linode.com
+            linode-cli users create \
+              --username example_user \
+              --email example_user@linode.com
   /account/users/{username}:
     x-linode-cli-command: users
     parameters:
@@ -1644,7 +1665,9 @@ paths:
                 https://api.linode.com/v4/account/users/example_user
         - lang: CLI
           source: >
-            linode-cli users update example_user --username example_user --restricted true
+            linode-cli users update example_user \
+              --username example_user \
+              --restricted true
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -1937,7 +1960,10 @@ paths:
                 https://api.linode.com/v4/domains
         - lang: CLI
           source: >
-            linode-cli domains create --type master --domain example.org --soa_email admin@example.org
+            linode-cli domains create \
+              --type master \
+              --domain example.org \
+              --soa_email admin@example.org
   /domains/{domainId}:
     x-linode-cli-command: domains
     parameters:
@@ -2031,7 +2057,9 @@ paths:
               https://api.linode.com/v4/domains/123
       - lang: CLI
         source: >
-          linode-cli domains update 1234 --retry_sec 7200 --ttl_sec 300
+          linode-cli domains update 1234 \
+            --retry_sec 7200 \
+            --ttl_sec 300
     delete:
       x-linode-grant: read_write
       tags:
@@ -2166,7 +2194,14 @@ paths:
               https://api.linode.com/v4/domains/123/records
       - lang: CLI
         source: >
-          linode-cli domains records-create 123 --type A --name test --target 12.34.56.78 --priority 50 --weight 50 --port 80 --ttl_sec 604800
+          linode-cli domains records-create 123 \
+            --type A \
+            --name test \
+            --target 12.34.56.78 \
+            --priority 50 \
+            --weight 50 \
+            --port 80 \
+            --ttl_sec 604800
   /domains/{domainId}/records/{recordId}:
     x-linode-cli-command: domains
     parameters:
@@ -2261,7 +2296,14 @@ paths:
               https://api.linode.com/v4/domains/123/records/234
       - lang: CLI
         source: >
-          linode-cli domains records-update 123 234 --type A --name test --target 12.34.56.78 --priority 50 --weight 50 --port 80 --ttl_sec 604800
+          linode-cli domains records-update 123 234 \
+            --type A \
+            --name test \
+            --target 12.34.56.78 \
+            --priority 50 \
+            --weight 50 \
+            --port 80 \
+            --ttl_sec 604800
     delete:
       x-linode-grant: read_write
       tags:
@@ -2409,7 +2451,11 @@ paths:
               https://api.linode.com/v4/images
       - lang: CLI
         source: >
-          linode-cli images create --label this_is_a_label --description "A longer description of the image" --disk_id 123
+          linode-cli images create \
+            --label this_is_a_label \
+            --description "A longer description \
+              of the image" \
+            --disk_id 123
   /images/{imageId}:
     x-linode-cli-command: images
     parameters:
@@ -2486,7 +2532,10 @@ paths:
               https://api.linode.com/v4/images/private/67848373
       - lang: CLI
         source: >
-          linode-cli images update private/67848373 --label "My gold-master image" --description "The detailed description of my Image."
+          linode-cli images update private/67848373 \
+            --label "My gold-master image" \
+            --description "The detailed description \
+              of my Image."
     delete:
       x-linode-grant: read_write
       tags:
@@ -2707,7 +2756,15 @@ paths:
               https://api.linode.com/v4/linode/instances
       - lang: CLI
         source: >
-          linode-cli linodes create --label linode123 --root_pass aComplex@Password --booted true --stackscript_id 10079 --stackscript_data '{"gh_username": "linode"}' --region us-east --type g5-standard-2 --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+          linode-cli linodes create \
+            --label linode123 \
+            --root_pass aComplex@Password \
+            --booted true \
+            --stackscript_id 10079 \
+            --stackscript_data '{"gh_username": "linode"}' \
+            --region us-east \
+            --type g5-standard-2 \
+            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
@@ -2824,7 +2881,15 @@ paths:
               https://api.linode.com/v4/linode/instances/123
       - lang: CLI
         source: >
-          linode-cli linodes update 7833080 --label linode123 --backups.schedule.day "Saturday" --backups.schedule.window "W22" --alerts.cpu 90 --alerts.network_in 10 --alerts.network_out 10 --alerts.transfer_quota 80 --alerts.io 10000
+          linode-cli linodes update 7833080 \
+            --label linode123 \
+            --backups.schedule.day "Saturday" \
+            --backups.schedule.window "W22" \
+            --alerts.cpu 90 \
+            --alerts.network_in 10 \
+            --alerts.network_out 10 \
+            --alerts.transfer_quota 80 \
+            --alerts.io 10000
     delete:
       x-linode-grant: read_write
       tags:
@@ -3172,7 +3237,9 @@ paths:
               https://api.linode.com/v4/linode/instances/123/backups/123456/restore
       - lang: CLI
         source: >
-          linode-cli linodes backup-restore 123 123456 --linode_id 234 --overwrite true
+          linode-cli linodes backup-restore 123 123456 \
+            --linode_id 234 \
+            --overwrite true
   /linode/instances/{linodeId}/boot:
     parameters:
     - name: linodeId
@@ -3370,7 +3437,14 @@ paths:
               https://api.linode.com/v4/linode/instances/123/clone
       - lang: CLI
         source: >
-          linode-cli linodes clone 123 --linode_id 124 --region us-east --type g5-standard-2 --label cloned-linode --backups_enabled true --disks 25674 --configs 23456
+          linode-cli linodes clone 123 \
+            --linode_id 124 \
+            --region us-east \
+            --type g5-standard-2 \
+            --label cloned-linode \
+            --backups_enabled true \
+            --disks 25674 \
+            --configs 23456
   /linode/instances/{linodeId}/configs:
     parameters:
     - name: linodeId
@@ -3487,7 +3561,10 @@ paths:
               https://api.linode.com/v4/linode/instances/123/configs
       - lang: CLI
         source: >
-          linode-cli linodes config-create 7590910 --label "My Config" --devices.sda.disk_id 123456 --devices.sdb.disk_id 123457
+          linode-cli linodes config-create 7590910 \
+            --label "My Config" \
+            --devices.sda.disk_id 123456 \
+            --devices.sdb.disk_id 123457
   /linode/instances/{linodeId}/configs/{configId}:
     parameters:
     - name: linodeId
@@ -3586,7 +3663,20 @@ paths:
               https://api.linode.com/v4/linode/instances/123/configs/23456
       - lang: CLI
         source: >
-          linode-cli linodes config-update 123 23456 --kernel "linode/latest-64bit" --comments "This is my main Config" --memory_limit 2048 --run_level default --virt_mode paravirt --helpers.updatedb_disabled true --helpers.distro true --helpers.modules_dep true --helpers.network true --helpers.devtmpfs_automount false --label "My Config" --devices.sda.disk_id 123456 --devices.sdb.disk_id 123457
+          linode-cli linodes config-update 123 23456 \
+            --kernel "linode/latest-64bit" \
+            --comments "This is my main Config" \
+            --memory_limit 2048 \
+            --run_level default \
+            --virt_mode paravirt \
+            --helpers.updatedb_disabled true \
+            --helpers.distro true \
+            --helpers.modules_dep true \
+            --helpers.network true \
+            --helpers.devtmpfs_automount false \
+            --label "My Config" \
+            --devices.sda.disk_id 123456 \
+            --devices.sdb.disk_id 123457
       responses:
         '200':
           description: Configuration profile successfully updated.
@@ -3734,7 +3824,13 @@ paths:
               https://api.linode.com/v4/linode/instances/123/disks
       - lang: CLI
         source: >
-          linode-cli linodes disk-create 123 --size 1300 --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" --root_pass aComplex@Password --image "linode/debian9" --stackscript_id 10079 --stackscript_data '{"gh_username": "linode"}'
+          linode-cli linodes disk-create 123 \
+            --size 1300 \
+            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --root_pass aComplex@Password \
+            --image "linode/debian9" \
+            --stackscript_id 10079 \
+            --stackscript_data '{"gh_username": "linode"}'
   /linode/instances/{linodeId}/disks/{diskId}:
     parameters:
     - name: linodeId
@@ -3821,7 +3917,8 @@ paths:
               https://api.linode.com/v4/linode/instances/123/disks/25674
       - lang: CLI
         source: >
-          linode-cli linodes disk-update 123 25674 "Debian 9 Disk"
+          linode-cli linodes disk-update 123 25674 \
+            --label "Debian 9 Disk"
     delete:
       x-linode-grant: read_write
       tags:
@@ -3927,7 +4024,9 @@ paths:
               https://api.linode.com/v4/linode/instances/123/disks/25674/password
       - lang: CLI
         source: >
-          linode-cli linodes disk-reset-password 123 25674 --password aComplex@Password
+          linode-cli linodes disk-reset-password \
+            123 25674 \
+            --password aComplex@Password
   /linode/instances/{linodeId}/disks/{diskId}/resize:
     parameters:
     - name: linodeId
@@ -3999,7 +4098,8 @@ paths:
               https://api.linode.com/v4/linode/instances/123/disks/25674/resize
       - lang: CLI
         source: >
-          linode-cli linodes disk-resize 123 25674 --size 2048
+          linode-cli linodes disk-resize 123 25674 \
+            --size 2048
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
@@ -4138,7 +4238,9 @@ paths:
               https://api.linode.com/v4/linode/instances/123/ips
       - lang: CLI
         source: >
-          linode-cli linodes ip-add 123 --type ipv4 --public true
+          linode-cli linodes ip-add 123 \
+            --type ipv4 \
+            --public true
   /linode/instances/{linodeId}/ips/{address}:
     parameters:
     - name: linodeId
@@ -4232,7 +4334,9 @@ paths:
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
       - lang: CLI
         source: >
-          linode-cli linodes ip-update 123 97.107.143.141 --rdns test.example.org
+          linode-cli linodes ip-update 123 \
+            97.107.143.141 \
+            --rdns test.example.org
     delete:
       x-linode-grant: read_write
       tags:
@@ -4506,7 +4610,13 @@ paths:
               https://api.linode.com/v4/linode/instances/123/rebuild
       - lang: CLI
         source: >
-          linode-cli linodes rebuild 123 --image "linode/debian9" --root_pass aComplex@Password --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" --booted true --stackscript_id 10079 --stackscript_data '{"gh_username": "linode"}'
+          linode-cli linodes rebuild 123 \
+            --image "linode/debian9" \
+            --root_pass aComplex@Password \
+            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --booted true \
+            --stackscript_id 10079 \
+            --stackscript_data '{"gh_username": "linode"}'
   /linode/instances/{linodeId}/rescue:
     parameters:
     - name: linodeId
@@ -4575,7 +4685,8 @@ paths:
               https://api.linode.com/v4/linode/instances/123/rescue
       - lang: CLI
         source: >
-          linode-cli linodes rescue 123 --devices.sda.disk_id 124458
+          linode-cli linodes rescue 123 \
+            --devices.sda.disk_id 124458
   /linode/instances/{linodeId}/resize:
     parameters:
     - name: linodeId
@@ -4643,7 +4754,8 @@ paths:
               https://api.linode.com/v4/linode/instances/123/resize
       - lang: CLI
         source: >
-          linode-cli linodes resize 123 --type g5-standard-2
+          linode-cli linodes resize 123 \
+            --type g5-standard-2
   /linode/instances/{linodeId}/shutdown:
     parameters:
     - name: linodeId
@@ -4927,7 +5039,14 @@ paths:
               https://api.linode.com/v4/linode/stackscripts
       - lang: CLI
         source: >
-          linode-cli stackscripts create --label a-stackscript --description "This StackScript install and configures MySQL" --images "linode/debian9" --images "linode/debian8" --is_public true --rev_note "Set up MySQL" --script '#!/bin/bash'
+          linode-cli stackscripts create \
+            --label a-stackscript \
+            --description "This StackScript install and configures MySQL" \
+            --images "linode/debian9" \
+            --images "linode/debian8" \
+            --is_public true \
+            --rev_note "Set up MySQL" \
+            --script '#!/bin/bash'
   /linode/stackscripts/{stackscriptId}:
     parameters:
     - name: stackscriptId
@@ -5017,7 +5136,15 @@ paths:
               https://api.linode.com/v4/linode/stackscripts/10079
       - lang: CLI
         source: >
-          linode-cli stackscripts update 10079 --label a-stackscript --description "This StackScript install and configures MySQL" --images "linode/debian9" --images "linode/debian8" --is_public true --rev_note "Set up MySQL" --script '#!/bin/bash'
+          linode-cli stackscripts update 10079 \
+            --label a-stackscript \
+            --description "This StackScript installs \
+              and configures MySQL" \
+            --images "linode/debian9" \
+            --images "linode/debian8" \
+            --is_public true \
+            --rev_note "Set up MySQL" \
+            --script '#!/bin/bash'
     delete:
       x-linode-grant: read_write
       tags:
@@ -5219,7 +5346,8 @@ paths:
               https://api.linode.com/v4/longview/clients
       - lang: CLI
         source: >
-          linode-cli longview create --label client789
+          linode-cli longview create \
+            --label client789
   /longview/clients/{clientId}:
     parameters:
     - name: clientId
@@ -5301,7 +5429,8 @@ paths:
               https://api.linode.com/v4/longview/clients/789
       - lang: CLI
         source: >
-          linode-cli longview update 789 --label client789
+          linode-cli longview update 789 \
+            --label client789
     delete:
       x-linode-grant: read_write
       tags:
@@ -5416,7 +5545,8 @@ paths:
               https://api.linode.com/v4/longview/subscriptions/longview-10
       - lang: CLI
         source: >
-          linode-cli longview subscription-view longview-10
+          linode-cli longview subscription-view \
+            longview-10
   /managed/contacts:
     x-linode-cli-command: managed
     get:
@@ -5510,7 +5640,10 @@ paths:
               https://api.linode.com/v4/managed/contacts
       - lang: CLI
         source: >
-          linode-cli managed contact-create --name "John Doe" --email "john.doe@example.org" --phone.primary "123-456-7890"
+          linode-cli managed contact-create \
+            --name "John Doe" \
+            --email "john.doe@example.org" \
+            --phone.primary "123-456-7890"
   /managed/contacts/{contactId}:
     parameters:
     - name: contactId
@@ -5596,7 +5729,10 @@ paths:
               https://api.linode.com/v4/managed/contacts/567
       - lang: CLI
         source: >
-          linode-cli managed contact-update 567 --name "John Doe" --email "john.doe@example.org" --phone.primary "123-456-7890"
+          linode-cli managed contact-update 567 \
+            --name "John Doe" \
+            --email "john.doe@example.org" \
+            --phone.primary "123-456-7890"
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -5736,7 +5872,10 @@ paths:
               https://api.linode.com/v4/managed/credentials
       - lang: CLI
         source: >
-          linode-cli managed credential-create --label prod-password-1 --username johndoe --password s3cur3P@ssw0rd
+          linode-cli managed credential-create \
+            --label prod-password-1 \
+            --username johndoe \
+            --password s3cur3P@ssw0rd
   /managed/credentials/{credentialId}:
     parameters:
     - name: credentialId
@@ -5816,7 +5955,8 @@ paths:
               https://api.linode.com/v4/managed/credentials/9991
       - lang: CLI
         source: >
-          linode-cli managed credential-update 9991 --label prod-password-1
+          linode-cli managed credential-update 9991 \
+            --label prod-password-1
   /managed/credentials/{credentialId}/revoke:
     parameters:
     - name: credentialId
@@ -6078,7 +6218,12 @@ paths:
               https://api.linode.com/v4/managed/linode-settings/123
       - lang: CLI
         source: >
-          linode-cli managed linode-setting-update 7833234 --ssh.access true --ssh.user linode --ssh.port 22 --ssh.ip 12.34.56.78
+          linode-cli managed linode-setting-update \
+            7833234 \
+            --ssh.access true \
+            --ssh.user linode \
+            --ssh.port 22 \
+            --ssh.ip 12.34.56.78
   /managed/services:
     x-linode-cli-command: managed
     get:
@@ -6176,7 +6321,16 @@ paths:
               https://api.linode.com/v4/managed/services
       - lang: CLI
         source: >
-          linode-cli managed service-create --service_type url --label prod-1 --address "https://example.org" --timeout 30 --body "it worked" --consultation_group on-call --notes "The service name is my-cool-application" --credentials 9991
+          linode-cli managed service-create \
+            --service_type url \
+            --label prod-1 \
+            --address "https://example.org" \
+            --timeout 30 \
+            --body "it worked" \
+            --consultation_group on-call \
+            --notes "The service name is \
+              my-cool-application" \
+            --credentials 9991
   /managed/services/{serviceId}:
     parameters:
     - name: serviceId
@@ -6265,7 +6419,15 @@ paths:
               https://api.linode.com/v4/managed/services/9994
       - lang: CLI
         source: >
-          linode-cli managed service-update 9994 --service_type url --label prod-1 --address "https://example.org" --timeout 30 --body "it worked" --consultation_group on-call --notes "The service name is my-cool-application" --credentials 9991
+          linode-cli managed service-update 9994 \
+            --service_type url \
+            --label prod-1 \
+            --address "https://example.org" \
+            --timeout 30 \
+            --body "it worked" \
+            --consultation_group on-call \
+            --notes "The service name is my-cool-application" \
+            --credentials 9991
     delete:
       x-linode-grant: unrestricted only
       tags:
@@ -6495,7 +6657,10 @@ paths:
               https://api.linode.com/v4/networking/ips
       - lang: CLI
         source: >
-          linode-cli networking ip-add --type ipv4 --public true --linode_id 123
+          linode-cli networking ip-add \
+            --type ipv4 \
+            --public true \
+            --linode_id 123
   /networking/ips/{address}:
     parameters:
     - name: address
@@ -6579,7 +6744,9 @@ paths:
               https://api.linode.com/v4/networking/ips/97.107.143.141
       - lang: CLI
         source: >
-          linode-cli networking ip-update 97.107.143.141 --rdns "test.example.org"
+          linode-cli networking ip-update \
+            97.107.143.141 \
+            --rdns "test.example.org"
   /networking/ipv4/assign:
     description: >
       Allows redistribution of IPv4 Addresses within a Region. Any number
@@ -6676,7 +6843,12 @@ paths:
               https://api.linode.com/v4/networking/ipv4/assign
       - lang: CLI
         source: >
-          linode-cli networking ip-assign --region us-east --assignments '{"address": "12.34.56.100", "linode_id": 123}' --assignments '{"23.45.67.200", "linode_id": 234}'
+          linode-cli networking ip-assign \
+            --region us-east \
+            --assignments \
+              '{"address": "12.34.56.100", "linode_id": 123}' \
+            --assignments \
+              '{"23.45.67.200", "linode_id": 234}'
   /networking/ipv4/share:
     description: >
       Configure shared IPs.  A shared IP may be brought up on a Linode other
@@ -6750,7 +6922,9 @@ paths:
               https://api.linode.com/v4/networking/ipv4/share
       - lang: CLI
         source: >
-          linode-cli networking ip-share --linode_id 123 --ips 12.34.56.78
+          linode-cli networking ip-share \
+            --linode_id 123 \
+            --ips 12.34.56.78
   /networking/ipv6/pools:
     x-linode-cli-command: networking
     get:
@@ -6941,7 +7115,10 @@ paths:
               https://api.linode.com/v4/nodebalancers
       - lang: CLI
         source: >
-          linode-cli nodebalancers create --region us-east --label balancer12345 --client_conn_throttle 0
+          linode-cli nodebalancers create \
+            --region us-east \
+            --label balancer12345 \
+            --client_conn_throttle 0
   /nodebalancers/{nodeBalancerId}:
     parameters:
     - name: nodeBalancerId
@@ -7022,7 +7199,9 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345
       - lang: CLI
         source: >
-          linode-cli nodebalancers update 12345 --label balancer12345 --client_conn_throttle 0
+          linode-cli nodebalancers update 12345 \
+            --label balancer12345 \
+            --client_conn_throttle 0
     delete:
       x-linode-grant: read_write
       tags:
@@ -7175,7 +7354,19 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs
       - lang: CLI
         source: >
-          linode-cli nodebalancers config-create 12345 --port 80 --protocol http --algorithm roundrobin --stickiness http_cookie --check http_body --check_interval 90 --check_timeout 10 --check_attempts 3 --check_path "/test" --check_body "it works" --check_passive true --cipher_suite recommended
+          linode-cli nodebalancers config-create 12345 \
+            --port 80 \
+            --protocol http \
+            --algorithm roundrobin \
+            --stickiness http_cookie \
+            --check http_body \
+            --check_interval 90 \
+            --check_timeout 10 \
+            --check_attempts 3 \
+            --check_path "/test" \
+            --check_body "it works" \
+            --check_passive true \
+            --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
     - name: nodeBalancerId
@@ -7221,7 +7412,8 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
       - lang: CLI
         source: >
-          linode-cli nodebalancers config-view 12345 4567
+          linode-cli nodebalancers config-view \
+            12345 4567
     put:
       x-linode-grant: read_write
       tags:
@@ -7273,7 +7465,20 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
       - lang: CLI
         source: >
-          linode-cli nodebalancers config-update 12345 4567 --port 80 --protocol http --algorithm roundrobin --stickiness http_cookie --check http_body --check_interval 90 --check_timeout 10 --check_attempts 3 --check_path "/test" --check_body "it works" --check_passive true --cipher_suite recommended
+          linode-cli nodebalancers config-update \
+            12345 4567 \
+            --port 80 \
+            --protocol http \
+            --algorithm roundrobin \
+            --stickiness http_cookie \
+            --check http_body \
+            --check_interval 90 \
+            --check_timeout 10 \
+            --check_attempts 3 \
+            --check_path "/test" \
+            --check_body "it works" \
+            --check_passive true \
+            --cipher_suite recommended
     delete:
       x-linode-grant: read_write
       tags:
@@ -7313,7 +7518,8 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
       - lang: CLI
         source: >
-          linode-cli nodebalancers config-delete 12345 4567
+          linode-cli nodebalancers config-delete \
+            12345 4567
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
     - name: nodeBalancerId
@@ -7424,7 +7630,12 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes
       - lang: CLI
         source: >
-          linode-cli nodebalancers node-create 12345 4567 --address 192.168.210.120:80 --label node54321 --weight 50 --mode accept
+          linode-cli nodebalancers node-create \
+            12345 4567 \
+            --address 192.168.210.120:80 \
+            --label node54321 \
+            --weight 50 \
+            --mode accept
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes/{nodeId}:
     parameters:
     - name: nodeBalancerId
@@ -7521,7 +7732,12 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
       - lang: CLI
         source: >
-          linode-cli nodebalancers node-create 12345 4567 54321 --address 192.168.210.120:80 --label node54321 --weight 50 --mode accept
+          linode-cli nodebalancers node-create \
+            12345 4567 54321 \
+            --address 192.168.210.120:80 \
+            --label node54321 \
+            --weight 50 \
+            --mode accept
     delete:
       x-linode-grant: read_write
       tags:
@@ -7557,7 +7773,8 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes/54321
       - lang: CLI
         source: >
-          linode-cli nodebalancers node-delete 12345 4567 54321
+          linode-cli nodebalancers node-delete \
+            12345 4567 54321
   /profile:
     x-linode-cli-command: profile
     get:
@@ -7639,7 +7856,13 @@ paths:
               https://api.linode.com/v4/profile
       - lang: CLI
         source: >
-          linode-cli profile update --email example-user@gmail.com --timezone US/Eastern --email_notifications true --list_auth_method keys_only --two_factor_auth true --restricted false
+          linode-cli profile update \
+            --email example-user@gmail.com \
+            --timezone US/Eastern \
+            --email_notifications true \
+            --list_auth_method keys_only \
+            --two_factor_auth true \
+            --restricted false
   /profile/apps:
     description: >
       Returns information about OAuth Apps you have authorized to access your Account.
@@ -7945,7 +8168,8 @@ paths:
               https://api.linode.com/v4/profile/tfa-enable-confirm
       - lang: CLI
         source: >
-          linode-cli profile tfa-confirm --tfa_code 213456
+          linode-cli profile tfa-confirm \
+            --tfa_code 213456
   /profile/tokens:
     x-linode-cli-command: profile
     description: >
@@ -8056,7 +8280,10 @@ paths:
               https://api.linode.com/v4/profile/tokens
       - lang: CLI
         source: >
-          linode-cli profile token-create --scopes '*' --expiry '2018-01-01T13:46:32' --label linode-cli
+          linode-cli profile token-create \
+            --scopes '*' \
+            --expiry '2018-01-01T13:46:32' \
+            --label linode-cli
   /profile/tokens/{tokenId}:
     description: View or revoke a single token.
     parameters:
@@ -8135,7 +8362,8 @@ paths:
               https://api.linode.com/v4/profile/tokens/123
       - lang: CLI
         source: >
-          linode-cli profile token-update 123 --label linode-cli
+          linode-cli profile token-update 123 \
+            --label linode-cli
     delete:
       tags:
       - profile
@@ -8338,7 +8566,10 @@ paths:
               https://api.linode.com/v4/support/tickets
       - lang: CLI
         source: >
-          linode-cli tickets create --description "I'm having trouble setting the root password on my Linode. I tried following the instructions but something is not working and I'm not sure what I'm doing wrong. Can you please help me figure out how I can reset it?" --linode_id 123 --summary "Having trouble resetting root password on my Linode"
+          linode-cli tickets create \
+            --description "I'm having trouble setting the root password on my Linode. I tried following the instructions but something is not working and I'm not sure what I'm doing wrong. Can you please help me figure out how I can reset it?" \
+            --linode_id 123 \
+            --summary "Having trouble resetting root password on my Linode"
   /support/tickets/{ticketId}:
     parameters:
     - name: ticketId
@@ -8542,7 +8773,8 @@ paths:
               https://api.linode.com/v4/support/tickets/11223344/replies
       - lang: CLI
         source: >
-          linode-cli tickets reply 11223344 --description "Thank you for your help. I was able to figure out what the problem was and I successfully reset my password. You guys are the best!"
+          linode-cli tickets reply 11223344 \
+            --description "Thank you for your help. I was able to figure out what the problem was and I successfully reset my password. You guys are the best!"
   /volumes:
     x-linode-cli-command: volumes
     get:
@@ -8657,7 +8889,11 @@ paths:
               https://api.linode.com/v4/volumes
       - lang: CLI
         source: >
-          linode-cli volumes create --label my-volume --size 20 --linode_id 12346 --no-defaults
+          linode-cli volumes create \
+            --label my-volume \
+            --size 20 \
+            --linode_id 12346 \
+            --no-defaults
   /volumes/{volumeId}:
     parameters:
     - name: volumeId
@@ -8766,7 +9002,8 @@ paths:
               https://api.linode.com/v4/volumes/12345
       - lang: CLI
         source: >
-          linode-cli volumes update 12345 --label my_volume
+          linode-cli volumes update 12345 \
+            --label my_volume
     delete:
       x-linode-grant: read_write
       tags:
@@ -8872,7 +9109,9 @@ paths:
               https://api.linode.com/v4/volumes/12345/attach
       - lang: CLI
         source: >
-          linode-cli volumes attach 12345 --linode_id 12346 --config_id 23456
+          linode-cli volumes attach 12345 \
+            --linode_id 12346 \
+            --config_id 23456
   /volumes/{volumeId}/clone:
     parameters:
     - name: volumeId
@@ -8932,7 +9171,8 @@ paths:
               https://api.linode.com/v4/volumes/12345/clone
       - lang: CLI
         source: >
-          linode-cli volumes clone 12345 --label my-volume
+          linode-cli volumes clone 12345 \
+            --label my-volume
   /volumes/{volumeId}/detach:
     parameters:
     - name: volumeId
@@ -9035,8 +9275,8 @@ paths:
               https://api.linode.com/v4/volumes/12345/resize
       - lang: CLI
         source: >
-          linode-cli volumes resize 12345 --size 30
-
+          linode-cli volumes resize 12345 \
+            --size 30
 components:
   securitySchemes:
     personalAccessToken:
