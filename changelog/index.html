@@ -52,14 +52,17 @@
 
               <h2 class="release-header">
                 2018-05-14
-                <span class="release-version">version 4.0.2</span>
+                <span class="release-version">version 4.0.1</span>
               </h2>
+              <h3>Added:</h3>
               <ul>
-                 <li>Fixed rescue config being used on next non-rescue boot.</li>
-                 <li>Fixed missing "resizing" Linode status.</li>
-                 <li>Attach volume didn't handle not having any configs.</li>
-                 <li>`cancel_volume` doesn't check all linode statuses.</li>
-                 <li>Return 500 when an IP Address cannot be allocated.</li>
+                  <li>Added missing "resizing" Linode status.</li>
+              </ul>
+              <h3>Fixed:</h3>
+              <ul>
+                 <li>Fixed bug where Linodes got stuck in rescue mode.</li>
+                 <li>Fixed bug when attaching a Volume to a Linode with no configs.</li>
+                 <li>API now returns 500 when an IP Address cannot be allocated.</li>
                     <ul>
                       <li>Previously, this incorrectly returned a 400.</li>
                     </ul></li>
@@ -67,8 +70,7 @@
                     <ul>
                       <li>Bug occurred when service was sent into this endpoint without `"type": "SRV"`.</li>
                     </ul></li>
-                 <li>Fixed illegal characters in URL errors.</li>
-                 <li>Fixed error with SRV records when target is blank or empty.</li>
+                 <li>Fixed errors caused by illegal characters in URL errors.</li>
               </ul>
 
               <h2 class="release-header">
@@ -76,7 +78,7 @@
                 <span class="release-version">version 4.0.0</span>
               </h2>
 
-              <h3>Fixed:</h3>
+              <h3>Added:</h3>
               <ul>
                 <li>Added fields to Notification object
                   <ul>
