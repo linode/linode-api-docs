@@ -49,6 +49,30 @@
                   Versioning 2.0.0 Guidelines</a>.
               </p>
 
+
+              <h2 class="release-header">
+                2018-05-14
+                <span class="release-version">version 4.0.1</span>
+              </h2>
+              <h3>Added:</h3>
+              <ul>
+                  <li>Added missing "resizing" Linode status.</li>
+              </ul>
+              <h3>Fixed:</h3>
+              <ul>
+                 <li>Fixed bug where Linodes got stuck in rescue mode.</li>
+                 <li>Fixed bug when attaching a Volume to a Linode with no configs.</li>
+                 <li>API now returns 500 when an IP Address cannot be allocated.</li>
+                    <ul>
+                      <li>Previously, this incorrectly returned a 400.</li>
+                    </ul></li>
+                 <li>Fixed 500 on POST /domains/:id/records with service.</li>
+                    <ul>
+                      <li>Bug occurred when service was sent into this endpoint without `"type": "SRV"`.</li>
+                    </ul></li>
+                 <li>Fixed errors caused by illegal characters in URL errors.</li>
+              </ul>
+
               <h2 class="release-header">
                 2018-04-02
                 <span class="release-version">version 4.0.0</span>
