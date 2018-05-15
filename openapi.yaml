@@ -7788,9 +7788,9 @@ paths:
       x-linode-grant: read_only
       tags:
       - NodeBalancers
-      summary: Get NodeBalancer Stats
+      summary: View NodeBalancer Statistics
       description: >
-        Returns details stats about the requested NodeBalancers.
+          Returns detailed statistics about the requested NodeBalancer.
       x-linode-cli-action: stats
       x-linode-cli-skip: true
       security:
@@ -12603,12 +12603,12 @@ components:
     NodeBalancerStats:
       type: object
       description: >
-        Stats for your NodeBalancer
+        Stats for this NodeBalancer.
       properties:
         data:
           type: object
           description: >
-            The data returned about this NodeBalancers
+            The data returned about this NodeBalancers.
           properties:
             connections:
               type: array
@@ -12623,7 +12623,7 @@ components:
             traffic:
               type: object
               description: >
-                Traffic statistics for this NodeBalancer
+                Traffic statistics for this NodeBalancer.
               properties:
                 in:
                   type: array
@@ -12648,7 +12648,7 @@ components:
         title:
           type: string
           description: >
-            The title for the statistics generated in this response..
+            The title for the statistics generated in this response.
           example: linode.com - balancer12345 (12345) - day (5 min avg)
     Notification:
       type: object
