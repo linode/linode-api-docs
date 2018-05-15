@@ -19,7 +19,7 @@ info:
 
     This document was generated from our OpenAPI Specification.  See the
     [OpenAPI website](https://www.openapis.org) for more information.
-    
+
     [Download the Linode OpenAPI Specification](/openapi.yaml)
 
 
@@ -7775,6 +7775,37 @@ paths:
         source: >
           linode-cli nodebalancers node-delete \
             12345 4567 54321
+  /nodebalancers/{nodeBalancerId}/stats:
+    x-linode-cli-command: nodebalancers
+    parameters:
+    - name: nodeBalancerId
+      in: path
+      description: The ID of the NodeBalancer to access.
+      required: true
+      schema:
+        type: integer
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      summary: Get NodeBalancer Stats
+      description: >
+        Returns details stats about the requested NodeBalancers.
+      x-linode-cli-action: stats
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - nodebalancers:read_only
+      responses:
+        '200':
+          description: The requested stats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeBalancerStats'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /profile:
     x-linode-cli-command: profile
     get:
@@ -8407,7 +8438,7 @@ paths:
       description: |
         Lists the Regions available for Linode services. Not all services are guaranteed to be
         available in all Regions.
-      x-linode-redoc-load-ids: true 
+      x-linode-redoc-load-ids: true
       operationId: getRegions
       x-linode-cli-action: list
       responses:
@@ -12569,6 +12600,56 @@ components:
             The NodeBalancer ID that this Node belongs to.
           example: 12345
           readOnly: true
+    NodeBalancerStats:
+      type: object
+      description: >
+        Stats for your NodeBalancer
+      properties:
+        data:
+          type: object
+          description: >
+            The data returned about this NodeBalancers
+          properties:
+            connections:
+              type: array
+              description: >
+                An array of key/value pairs representing unix timestamp and
+                reading for connections to this NodeBalancer.
+              items:
+                type: number
+                example:
+                - 1526391300000
+                - 0
+            traffic:
+              type: object
+              description: >
+                Traffic statistics for this NodeBalancer
+              properties:
+                in:
+                  type: array
+                  description: >
+                    An array of key/value pairs representing unix timestamp and
+                    reading for inbound traffic.
+                  items:
+                    type: number
+                    example:
+                    - 1526391300000
+                    - 631.21
+                out:
+                  type: array
+                  description: >
+                    An array of key/value pairs representing unix timestamp and
+                    reading for outbound traffic.
+                  items:
+                    type: number
+                    example:
+                    - 1526391300000
+                    - 103.44
+        title:
+          type: string
+          description: >
+            The title for the statistics generated in this response..
+          example: linode.com - balancer12345 (12345) - day (5 min avg)
     Notification:
       type: object
       description: >
