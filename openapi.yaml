@@ -11368,6 +11368,16 @@ components:
                   - W18
                   - W20
                   - W22
+        watchdog_enabled:
+          type: boolean
+          description: >
+            The watchdog, named Lassie, is a Shutdown Watchdog that monitors your Linode and will reboot it
+            if it powers off unexpectedly. It works by issuing a boot job when your
+            Linode powers off without a shutdown job being responsible.
+
+            To prevent a loop, Lassie will give up if there have been more than 5 boot
+            jobs issued within 15 minutes.
+          example: true
     LinodeBase:
       type: object
       description: Common properties for Linode Request and Response objects.
