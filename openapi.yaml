@@ -12317,6 +12317,32 @@ components:
             Throttle connections per second.  Set to 0 (zero) to disable throttling.
           example: 0
           x-linode-cli-display: 6
+        transfer:
+          type: object
+          description: >
+            Information about the amount of transfer this NodeBalancer has had
+            so far this month.
+          properties:
+            total:
+              type: number
+              description: >
+                The total transfer, in MB, used by this NodeBalancer this month.
+              example: 32.46078109741211
+              readOnly: true
+            out:
+              type: number
+              description: >
+                The total inbound transfer, in MB, used for this NodeBalancer
+                this month.
+              example: 3.5487728118896484
+              readOnly: true
+            in:
+              type: number
+              description: >
+                The total outbound transfer, in MB, used for this NodeBalancer
+                this month.
+              example: 28.91200828552246
+              readOnly: true
     NodeBalancerConfig:
       type: object
       description: >
