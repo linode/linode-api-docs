@@ -12326,21 +12326,21 @@ components:
             total:
               type: number
               description: >
-                The total transfer, in MB, used this NodeBalancer this month
+                The total transfer, in MB, used by this NodeBalancer this month.
               example: 32.46078109741211
               readOnly: true
             out:
               type: number
               description: >
-                The total inbound transfer, in MB, used for this
-                NodeBalancer this month
+                The total inbound transfer, in MB, used for this NodeBalancer
+                this month.
               example: 3.5487728118896484
               readOnly: true
             in:
               type: number
               description: >
-                The total outbound transfer, in MB, used for this
-                NodeBalancer this month
+                The total outbound transfer, in MB, used for this NodeBalancer
+                this month.
               example: 28.91200828552246
               readOnly: true
     NodeBalancerConfig:
