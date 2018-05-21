@@ -7438,7 +7438,7 @@ paths:
         '200':
           description: Config updated successfully.
           content:
-            applicaiton/json:
+            application/json:
               schema:
                 $ref: '#/components/schemas/NodeBalancerConfig'
         default:
