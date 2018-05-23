@@ -2749,7 +2749,7 @@ paths:
                 ],
                 "booted": true,
                 "label": "linode123",
-                "type": "g5-standard-2",
+                "type": "g6-standard-2",
                 "region": "us-east",
                 "group": "Linode-Group"
               }' \
@@ -2763,7 +2763,7 @@ paths:
             --stackscript_id 10079 \
             --stackscript_data '{"gh_username": "linode"}' \
             --region us-east \
-            --type g5-standard-2 \
+            --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
   /linode/instances/{linodeId}:
     parameters:
@@ -3360,7 +3360,7 @@ paths:
                     see [/linode/types](/#operation/getLinodeTypes).
 
                     * Type can only be provided when cloning to a new Linode.
-                  example: g5-standard-2
+                  example: g6-standard-2
                 linode_id:
                   type: integer
                   description: >
@@ -3426,7 +3426,7 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "region": "us-east",
-                "type": "g5-standard-2",
+                "type": "g6-standard-2",
                 "linode_id": 124,
                 "label": "cloned-linode",
                 "group": "Linode-Group",
@@ -3440,7 +3440,7 @@ paths:
           linode-cli linodes clone 123 \
             --linode_id 124 \
             --region us-east \
-            --type g5-standard-2 \
+            --type g6-standard-2 \
             --label cloned-linode \
             --backups_enabled true \
             --disks 25674 \
@@ -4732,7 +4732,7 @@ paths:
                 type:
                   type: string
                   description: The ID representing the Linode Type.
-                  example: g5-standard-2
+                  example: g6-standard-2
                   x-linode-cli-display: 1
       responses:
         '200':
@@ -4749,13 +4749,13 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "type": "g5-standard-2"
+                "type": "g6-standard-2"
               }' \
               https://api.linode.com/v4/linode/instances/123/resize
       - lang: CLI
         source: >
           linode-cli linodes resize 123 \
-            --type g5-standard-2
+            --type g6-standard-2
   /linode/instances/{linodeId}/shutdown:
     parameters:
     - name: linodeId
@@ -5251,10 +5251,10 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/linode/types/g5-standard-2
+          curl https://api.linode.com/v4/linode/types/g6-standard-2
       - lang: CLI
         source: >
-          linode-cli linodes type-view g5-standard-2
+          linode-cli linodes type-view g6-standard-2
   /longview/clients:
     x-linode-cli-command: longview
     get:
@@ -11669,7 +11669,7 @@ components:
           readOnly: true
           type: string
           description: The ID representing the Linode Type.
-          example: g5-standard-2
+          example: g6-standard-2
           x-linode-cli-display: 1
         label:
           x-linode-filterable: true
@@ -11677,7 +11677,7 @@ components:
           readOnly: true
           description: >
             The Linode Type's label is for display purposes only.
-          example: Linode 4096
+          example: Linode 4GB
           x-linode-cli-display: 2
         disk:
           x-linode-filterable: true
@@ -11685,7 +11685,7 @@ components:
           readOnly: true
           description: >
             The Disk size, in MB, of the Linode Type.
-          example: 49152
+          example: 81920
           x-linode-cli-display: 4
         class:
           x-linode-filterable: true
@@ -11767,7 +11767,7 @@ components:
           readOnly: true
           description: >
             The monthly outbound transfer amount, in MB.
-          example: 3000
+          example: 4000
           x-linode-cli-display: 8
         vcpus:
           x-linode-filterable: true
