@@ -12882,6 +12882,8 @@ components:
         data:
           type: array
           readOnly: true
+          items:
+            type: object
         pages:
           type: integer
           readOnly: true
@@ -13312,7 +13314,7 @@ components:
         script:
           type: string
           description: >
-            The script to execute when provisioning a new Linode with this Stackscript.
+            The script to execute when provisioning a new Linode with this StackScript.
           example: >
             "#!/bin/bash"
         user_defined_fields:
