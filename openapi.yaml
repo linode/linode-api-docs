@@ -8201,6 +8201,131 @@ paths:
         source: >
           linode-cli profile tfa-confirm \
             --tfa_code 213456
+  /profile/tfa-trusted-computers:
+    x-linode-cli-command: profile
+    description: >
+      A collection of two-factor Trusted Computers associated with your Account.
+    get:
+      tags:
+      - profile
+      summary: List Trusted Computers
+      description: >
+        Returns a paginated list of Trusted Computers that can skip two-factor
+        authentication.
+      operationId: getTrustedComputers
+      x-linode-cli-action: trusted-computers-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: A paginated list of Trusted Computers.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TFATrustedComputer'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+        x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/tfa-trusted-computers
+        - lang: CLI
+          source: >
+            linode-cli profile tfa-trusted-computers-list
+  /profile/tfa-trusted-computers/{trustedComputerId}:
+    x-linode-cli-command: profile
+    parameters:
+    - name: trustedComputerId
+      in: path
+      description: ID of the Trusted Computer to look up.
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - profile
+      summary: View Trusted Computer
+      description: >
+        View a single Trusted Computer by ID.
+      operationId: getTrustedComputer
+      x-linode-cli-action: tfa-trusted-computers-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a single Trusted Computer object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TFATrustedComputer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+        x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/tfa-trusted-computers/123456
+        - lang: CLI
+          source: >
+            linode-cli profile tfa-trusted-computers-view 123456
+  /profile/tfa-trusted-computers/{trustedComputerId}/untrust:
+    x-linode-cli-command: profile
+    parameters:
+    - name: trustedComputerId
+      in: path
+      description: ID of the Trusted Computer to look up.
+      required: true
+      schema:
+        type: string
+    post:
+      x-linode-grant: read_write
+      tags:
+      - profile
+      summary: Untrust Trusted Computer
+      description: >
+        Revokes two-factor authentication for a Trusted Computer associated
+        with your Account.
+      operationId: untrustTrustedComputer
+      x-linode-cli-action: untrust-tfa-trusted-computer
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: Two-factor authentication revoked.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST \
+            https://api.linode.com/v4/profile/tfa-trusted-computers/123456/untrust
+      - lang: CLI
+        source: >
+          linode-cli profile untrust-tfa-trusted-computer 123456
   /profile/tokens:
     x-linode-cli-command: profile
     description: >
@@ -13597,6 +13722,46 @@ components:
             The amount of network usage you have used this billing cycle.
           example: 2
           x-linode-cli-display: 2
+    TFATrustedComputer:
+      type: object
+      description: >
+        An object representing Trusted Computers associated with your Account that
+        can skip two-factor authentication.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: >
+            This Trusted Computer's ID.
+          example: 123456
+        last_remote_addr:
+          type: string
+          format: ip
+          readOnly: true
+          description: >
+            The IP of the last log in with this Trusted Computer.
+          example: 123.45.67.89
+        user_agent:
+          type: string
+          readOnly: true
+          description: >
+            The user agent acting on behalf of the user for this Trusted Computer.
+          example: >
+            Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36
+        last_authenticated:
+          type: string
+          format: date-time
+          readOnly: true
+          description: >
+            When this Trusted Computer was last authenticated.
+          example: '2018-03-01T00:01:01'
+        expiry:
+          type: string
+          format: date-time
+          readOnly: true
+          description: >
+            When this Trusted Computer will expire.
+          example: '2018-04-01T00:01:01'
     User:
       type: object
       description: >
