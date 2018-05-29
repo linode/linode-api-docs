@@ -11825,7 +11825,7 @@ components:
           enum:
           - nanode
           - standard
-          - himem
+          - highmem
           example: standard
           x-linode-cli-display: 3
         price:
