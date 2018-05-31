@@ -28,7 +28,7 @@ info:
     [View our Changelog](/changelog) to see release
     notes on all changes made to our API.
 
-    # Access
+    # Access and Authentication
 
     Some endpoints are publicly accessible without requiring authentication.
     All endpoints affecting your Account, however, require either a Personal
@@ -43,6 +43,12 @@ info:
 
     All scopes for the OAuth security model (defined below) apply to this
     security model as well.
+
+    ### Authentication
+
+    | Security Scheme Type: | HTTP |
+    |-----------------------|------|
+    | **HTTP Authorization Scheme** | bearer |
 
     ## OAuth
 
@@ -91,10 +97,11 @@ info:
     Authorization: Bearer 03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c
     ```
 
-    ## Authentication Schema
+    ### Authentication
 
-    See our [Authentication Schema](/#section/Authentication) for
-    information on scopes and authorization/token URLs.
+    | Security Scheme Type: | Oauth2 |
+    |-----------------------|--------|
+    | **AuthorizationCode Oauth Flow** |  **Authorization URL:** https://login.linode.com/oauth/authorize<br />**Token URL:** https://login.linode.com/oauth/token<br />**Scopes:**<br /><ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br />|
 
     # Requests
 
