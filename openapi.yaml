@@ -296,7 +296,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: View Account
       description: >
         Returns the contact and billing information related to
@@ -327,7 +327,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Update Account
       description: >
         Updates contact and billing information
@@ -384,7 +384,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Add/Edit Credit Card
       description: >
         Adds/edit credit card information to your Account.
@@ -439,7 +439,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - account
+      - Account
       summary: List Events
       description: >
          Returns a collection of Event objects representing
@@ -491,7 +491,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: View Event
       description: Returns a single Event object.
       operationId: getEvent
@@ -529,7 +529,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Mark Event as Read
       description: Marks a single Event as read.
       operationId: eventRead
@@ -569,7 +569,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Mark Event as Seen
       description: >
         Marks all Events up to and including this Event by ID as seen.
@@ -606,7 +606,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - account
+      - Account
       summary: List Invoices
       description: >
         Returns a paginated list of Invoices against your Account.
@@ -656,7 +656,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: View Invoice
       description: Returns a single Invoice object.
       operationId: getInvoice
@@ -697,7 +697,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - account
+      - Account
       summary: List Invoice Items
       description: Returns a paginated list of Invoice items.
       operationId: getInvoiceItems
@@ -739,7 +739,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: List Notifications
       description: >
         Returns a collection of Notification objects representing
@@ -791,7 +791,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - account
+      - Account
       summary: List OAuth Clients
       description: >
         Returns a paginated list of OAuth Clients registered to your Account.  OAuth
@@ -834,7 +834,7 @@ paths:
             linode-cli account clients-list
     post:
       tags:
-      - account
+      - Account
       summary: Create OAuth Client
       description: >
         Creates an OAuth Client, which can be used to allow users
@@ -898,7 +898,7 @@ paths:
     x-linode-cli-command: account
     get:
       tags:
-      - account
+      - Account
       summary: View OAuth Client
       description: >
         Returns information about a single OAuth client.
@@ -928,7 +928,7 @@ paths:
               edc6790ea9db4d224c5c
     put:
       tags:
-      - account
+      - Account
       summary: Update OAuth Client
       description: >
         Update information about an OAuth Client on your Account. This can be
@@ -973,7 +973,7 @@ paths:
               --label Test_Client_1
     delete:
       tags:
-      - account
+      - Account
       summary: Delete OAuth Client
       description: >
         Deletes an OAuth Client registered with Linode. The Client ID and
@@ -1016,7 +1016,7 @@ paths:
           type: string
     post:
       tags:
-      - account
+      - Account
       summary: Reset OAuth Client Secret
       description: >
         Resets the OAuth Client secret for a client you own, and returns the
@@ -1062,7 +1062,7 @@ paths:
           type: string
     get:
       tags:
-      - account
+      - Account
       summary: View OAuth Client Thumbnail
       description: >
         Returns the thumbnail for this OAuth Client.  This is a
@@ -1087,7 +1087,7 @@ paths:
                 https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail > thumbnail.png
     put:
       tags:
-      - account
+      - Account
       summary: Update OAuth Client Thumbnail
       description: >
         Upload a thumbnail for a client you own.  You must upload an image file
@@ -1133,7 +1133,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: List Payments
       description: >
         Returns a paginated list of Payments made on this Account.
@@ -1174,7 +1174,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Make Payment
       description: >
         Makes a Payment to your Account via credit card. This will charge your
@@ -1228,7 +1228,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: View Payment
       description: >
         Returns information about a specific Payment.
@@ -1260,7 +1260,7 @@ paths:
     post:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: Stage PayPal Payment
       description: >
         This begins the process of submitting a Payment via PayPal. After calling
@@ -1320,7 +1320,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Execute Staged/Approved PayPal Payment
       description: >
         Given a PaymentID and PayerID - as generated by PayPal during the
@@ -1367,7 +1367,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: View Account Settings
       description: >
         Returns information related to
@@ -1399,7 +1399,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - account
+      - Account
       summary: Update Account Settings
       description: >
         Updates your Account settings.
@@ -1445,7 +1445,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - account
+      - Account
       summary: View Network Utilization
       description: >
         Returns a Transfer object showing your network utilization,
@@ -1481,7 +1481,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - account
+      - Account
       summary: List Users
       description: >
         Returns a paginated list of Users on your Account. Users may access all
@@ -1526,7 +1526,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - account
+      - Account
       summary: Create User
       description: >
         Creates a User on your Account. Once created, the User will be
@@ -1595,7 +1595,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - account
+      - Account
       summary: View User
       description: >
         Returns information about a single User on your Account.
@@ -1625,7 +1625,7 @@ paths:
     put:
       x-linode-grant: unrestricted only
       tags:
-      - account
+      - Account
       summary: Update User
       description: >
         Update information about a User on your Account. This can be used to
@@ -1671,7 +1671,7 @@ paths:
     delete:
       x-linode-grant: unrestricted only
       tags:
-      - account
+      - Account
       summary: Delete User
       description: >
         Deletes a User. The deleted User will be immediately logged out and
@@ -1713,7 +1713,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - account
+      - Account
       summary: View User's grants
       description: >
         Returns the full grants structure for this User. This includes all
@@ -1749,7 +1749,7 @@ paths:
     put:
       x-linode-grant: unrestricted only
       tags:
-      - account
+      - Account
       summary: Update User's grants
       description: >
         Update the grants a User has. This can be used to give a User access
@@ -1865,7 +1865,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - domains
+      - Domains
       summary: List Domains
       description: >
         This is a collection of Domains that you have registered in Linode's DNS
@@ -1908,7 +1908,7 @@ paths:
     post:
       x-linode-grant: add_domains
       tags:
-      - domains
+      - Domains
       summary: Create Domain
       description: >
         Adds a new Domain to Linode's DNS Manager. Linode is not a registrar, and
@@ -1976,7 +1976,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - domains
+      - Domains
       summary: View Domain
       description: >
         This is a single Domain that you have registered in Linode's DNS Manager.
@@ -2009,7 +2009,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - domains
+      - Domains
       summary: Update Domain
       description: |
         Update information about a Domain in Linode's DNS Manager.
@@ -2063,7 +2063,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - domains
+      - Domains
       summary: Delete Domain
       description: >
         Deletes a Domain from Linode's DNS Manager. The Domain will be removed
@@ -2105,7 +2105,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - domains
+      - Domains
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -2148,7 +2148,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - domains
+      - Domains
       security:
       - personalAccessToken: []
       - oauth:
@@ -2220,7 +2220,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - domains
+      - Domains
       security:
       - personalAccessToken: []
       - oauth:
@@ -2250,7 +2250,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - domains
+      - Domains
       security:
       - personalAccessToken: []
       - oauth:
@@ -2307,7 +2307,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - domains
+      - Domains
       security:
       - personalAccessToken: []
       - oauth:
@@ -2343,7 +2343,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - images
+      - Images
       summary: List Images
       description: >
         Returns a paginated list of Images.
@@ -2390,7 +2390,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - images
+      - Images
       summary: Create Image
       description: >
         Creates a private gold-master Image from a Linode Disk. There is no
@@ -2467,7 +2467,7 @@ paths:
         type: string
     get:
       tags:
-      - images
+      - Images
       summary: View Image
       description: >
         Get information about a single Image.
@@ -2492,7 +2492,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - images
+      - Images
       summary: Update Image
       description: >
         Updates a private Image that you have permission to
@@ -2539,7 +2539,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - images
+      - Images
       summary: Delete Image
       description: |
         Deletes a private Image you have permission to `read_write`.
@@ -5263,7 +5263,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - longview
+      - Longview
       summary: List Longview Clients
       description: >
         Returns a paginated list of Longview Clients you have access
@@ -5306,7 +5306,7 @@ paths:
     post:
       x-linode-grant: add_longview
       tags:
-      - longview
+      - Longview
       summary: Create Longview Client
       description: >
         Creates a Longview Client.  This Client will not begin monitoring
@@ -5360,7 +5360,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - longview
+      - Longview
       summary: View Longview Client
       description: >
         Returns a single Longview Client you can access.
@@ -5390,7 +5390,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - longview
+      - Longview
       summary: Update Longview Client
       description: >
         Updates a Longview Client.  This cannot update how it monitors your
@@ -5434,7 +5434,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - longview
+      - Longview
       summary: Delete Longview Client
       description: >
         Deletes a Longview Client from your Account.
@@ -5476,7 +5476,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - longview
+      - Longview
       summary: List Longview Subscriptions
       description: >
         Returns a paginated list of available Longview Subscriptions. This is
@@ -5522,7 +5522,7 @@ paths:
     x-linode-cli-command: longview
     get:
       tags:
-      - longview
+      - Longview
       summary: View Longview Subscription
       description: >
         Returns a single LongviewSubscription object.  This is a public
@@ -5555,7 +5555,7 @@ paths:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageSize'
       tags:
-      - managed
+      - Managed
       summary: List Managed Contacts
       description: >
         Returns a paginated list of Managed Contacts on your Account.
@@ -5596,7 +5596,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Create Managed Contact
       description: >
         Creates a Managed Contact.  A Managed Contact is someone Linode
@@ -5656,7 +5656,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: View Managed Contact
       description: >
         Returns a single Managed Contact.
@@ -5686,7 +5686,7 @@ paths:
     put:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Update Managed Contact
       description: >
         Updates information about a Managed Contact.
@@ -5736,7 +5736,7 @@ paths:
     delete:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Delete Managed Contact
       description: >
         Deletes a Managed Contact.
@@ -5772,7 +5772,7 @@ paths:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageSize'
       tags:
-      - managed
+      - Managed
       summary: List Managed Credentials
       description: >
         Returns a paginated list of Managed Credentials on your Account.
@@ -5813,7 +5813,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Create Managed Credential
       description: >
         Creates a Managed Credential. A Managed Credential is stored securely
@@ -5888,7 +5888,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: View Managed Credential
       description: >
         Returns a single Managed Credential.
@@ -5918,7 +5918,7 @@ paths:
     put:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Update Managed Credential
       description: >
         Updates information about a Managed Credential.
@@ -5969,7 +5969,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Delete Managed Credential
       description: >
         Deletes a Managed Credential.  Linode special forces will no longer
@@ -6006,7 +6006,7 @@ paths:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageSize'
       tags:
-      - managed
+      - Managed
       summary: List Managed Issues
       description: >
         Returns a paginated list of recent and ongoing issues detected on your
@@ -6058,7 +6058,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: View Managed Issue
       description: >
         Returns a single Issue that is impacting or did impact one of your
@@ -6094,7 +6094,7 @@ paths:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageSize'
       tags:
-      - managed
+      - Managed
       summary: List Managed Linode Settings
       description: >
         Returns a paginated list of Managed Settings for your Linodes. There will
@@ -6146,7 +6146,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: View Linode's Managed Settings
       description: >
         Returns a single Linode's Managed settings.
@@ -6176,7 +6176,7 @@ paths:
     put:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Update Linode's Managed Settings
       description: >
         Updates a single Linode's Managed settings.
@@ -6229,7 +6229,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: List Managed Services
       description: >
         Returns a paginated list of Managed Services on your Account. These
@@ -6272,7 +6272,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Create Managed Service
       description: >
         Creates a Managed Service. Linode Managed will being monitoring this
@@ -6343,7 +6343,7 @@ paths:
     get:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: View Managed Service
       description: >
         Returns information about a single Managed Service on your Account.
@@ -6373,7 +6373,7 @@ paths:
     put:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Update Managed Service
       description: >
         Updates information about a Managed Service.
@@ -6431,7 +6431,7 @@ paths:
     delete:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Delete Managed Service
       description: >
         Deletes a Managed Service.  This service will no longer be monitored by
@@ -6472,7 +6472,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Disable Managed Service
       description: >
         Temporarily disables monitoring of a Managed Service.
@@ -6513,7 +6513,7 @@ paths:
     post:
       x-linode-grant: unrestricted only
       tags:
-      - managed
+      - Managed
       summary: Enable Managed Service
       description: >
         Enables monitoring of a Managed Service.
@@ -6549,7 +6549,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - networking
+      - Networking
       summary: List IP Addresses
       description: >
         Returns a paginated list of IP Addresses on your Account, excluding
@@ -6591,7 +6591,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - networking
+      - Networking
       summary: Allocate IP Address
       description: >
         Allocates a new IPv4 Address on your Account. The Linode must be
@@ -6674,7 +6674,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - networking
+      - Networking
       summary: View IP Address
       description: >
         Returns information about a single IP Address on your Account.
@@ -6704,7 +6704,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - networking
+      - Networking
       summary: Update IP Address RDNS
       description: >
         Sets RDNS on an IP Address. Forward DNS must already be set up for
@@ -6757,7 +6757,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - networking
+      - Networking
       summary: Assign IPs to Linodes
       description: >
         Assign multiple IPs to multiple Linodes in one Region. This allows
@@ -6858,7 +6858,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - networking
+      - Networking
       summary: Configure IP Sharing
       description: >
         Configure shared IPs.  A shared IP may be brought up on a Linode other
@@ -6932,7 +6932,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - networking
+      - Networking
       summary: List IPv6 Pools
       description: >
         Displays the IPv6 pools on your Account.
@@ -6977,7 +6977,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - networking
+      - Networking
       summary: List IPv6 Ranges
       description: >
         Displays the IPv6 ranges on your Account.
@@ -7810,7 +7810,7 @@ paths:
     x-linode-cli-command: profile
     get:
       tags:
-      - profile
+      - Profile
       summary: View Profile
       description: >
         Returns information about the current User. This can be used to see
@@ -7843,7 +7843,7 @@ paths:
           linode-cli profile view
     put:
       tags:
-      - profile
+      - Profile
       summary: Update Profile
       description: >
         Update information in your Profile.  This option is _not_ available to
@@ -7903,7 +7903,7 @@ paths:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageSize'
       tags:
-        - profile
+        - Profile
       summary: List Authorized Apps
       description: >
         This is a collection of OAuth apps that you've given access to your Account, and
@@ -7954,7 +7954,7 @@ paths:
     x-linode-cli-command: profile
     get:
       tags:
-      - profile
+      - Profile
       summary: View Authorized App
       description: >
         Returns information about a single app you've authorized to access your
@@ -7984,7 +7984,7 @@ paths:
           linode-cli profile app-view 1234
     delete:
       tags:
-      - profile
+      - Profile
       summary: Revoke App Access
       description: >
         Expires this app token. This token may no longer be used to
@@ -8017,7 +8017,7 @@ paths:
     x-linode-cli-command: profile
     get:
       tags:
-      - profile
+      - Profile
       summary: List Grants
       description: >
         This returns a GrantsResponse describing what the acting User has been
@@ -8061,7 +8061,7 @@ paths:
     x-linode-cli-command: profile
     post:
       tags:
-      - profile
+      - Profile
       summary: Disable Two Factor Authentication
       description: >
         Disables Two Factor Authentication for your User. Once successful,
@@ -8096,7 +8096,7 @@ paths:
     x-linode-cli-command: profile
     post:
       tags:
-      - profile
+      - Profile
       summary: Create Two Factor Secret
       description: >
         Generates a Two Factor secret for your User. TFA will
@@ -8146,7 +8146,7 @@ paths:
     x-linode-cli-command: profile
     post:
       tags:
-      - profile
+      - Profile
       summary: Confirm/Enable Two Factor Authentication
       description: >
         Confirms that you can successfully generate Two Factor codes and
@@ -8207,7 +8207,7 @@ paths:
       A collection of two-factor Trusted Computers associated with your Account.
     get:
       tags:
-      - profile
+      - Profile
       summary: List Trusted Computers
       description: >
         Returns a paginated list of Trusted Computers that can skip two-factor
@@ -8257,7 +8257,7 @@ paths:
         type: string
     get:
       tags:
-      - profile
+      - Profile
       summary: View Trusted Computer
       description: >
         View a single Trusted Computer by ID.
@@ -8296,7 +8296,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - profile
+      - Profile
       summary: Untrust Trusted Computer
       description: >
         Revokes two-factor authentication for a Trusted Computer associated
@@ -8332,7 +8332,7 @@ paths:
       A collection of Personal Access Tokens you've created.
     get:
       tags:
-      - profile
+      - Profile
       summary: List Personal Access Tokens
       description: >
         Returns a paginated list of Personal Access Tokens currently active for
@@ -8373,7 +8373,7 @@ paths:
           linode-cli profile tokens-list
     post:
       tags:
-      - profile
+      - Profile
       summary: Create Personal Access Token
       description: >
         Creates a Personal Access Token for your User. The raw token will
@@ -8452,7 +8452,7 @@ paths:
     x-linode-cli-command: profile
     get:
       tags:
-      - profile
+      - Profile
       summary: View Personal Access Token
       description: >
         Returns a single Personal Access Token.
@@ -8481,7 +8481,7 @@ paths:
           linode-cli profile token-view 123
     put:
       tags:
-      - profile
+      - Profile
       summary: Update Personal Access Token
       description: >
         Updates a Personal Access Token.
@@ -8522,7 +8522,7 @@ paths:
             --label linode-cli
     delete:
       tags:
-      - profile
+      - Profile
       summary: Revoke Personal Access Token
       description: >
         Revokes a Personal Access Token. The token will be invalidated
@@ -8558,7 +8558,7 @@ paths:
     x-linode-cli-command: regions
     get:
       tags:
-      - regions
+      - Regions
       summary: List Regions
       description: |
         Lists the Regions available for Linode services. Not all services are guaranteed to be
@@ -8604,7 +8604,7 @@ paths:
         type: string
     get:
       tags:
-      - regions
+      - Regions
       summary: View Region
       description: >
         Returns a single Region.
@@ -8634,7 +8634,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - support
+      - Support
       summary: List Support Tickets
       description: >
         Returns a collection of Support Tickets on your
@@ -8681,7 +8681,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - support
+      - Support
       summary: Open Support Ticket
       description: >
         Open a Support Ticket.
@@ -8738,7 +8738,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - support
+      - Support
       summary: View Support Ticket
       description: >
         Returns a Support Ticket under your Account.
@@ -8777,7 +8777,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - support
+      - Support
       summary: Create Ticket Attachment
       description: >
         Adds a file attachment to an existing Support
@@ -8838,7 +8838,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - support
+      - Support
       summary: List Replies
       description: >
         Returns a collection of replies to a Support Ticket on
@@ -8880,7 +8880,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - support
+      - Support
       summary: Create Reply
       description: >
         Adds a reply to an existing Support Ticket.
@@ -8942,7 +8942,7 @@ paths:
       description: >
         Returns a paginated list of Volumes you have permission to view.
       tags:
-      - volumes
+      - Volumes
       operationId: getVolumes
       x-linode-cli-action: list
       security:
@@ -8991,7 +8991,7 @@ paths:
         [/regions](/#operation/getRegions)
         for a list of available Regions you deploy your Volume in.
       tags:
-      - volumes
+      - Volumes
       operationId: createVolume
       x-linode-cli-action: create
       security:
@@ -9065,7 +9065,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
-      - volumes
+      - Volumes
       summary: View Volume
       description: >
         Get information about a single Volume.
@@ -9104,7 +9104,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - volumes
+      - Volumes
       summary: Update Volume
       description: >
         Updates a Volume that you have permission to `read_write`.
@@ -9163,7 +9163,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - volumes
+      - Volumes
       summary: Delete Volume
       description: |
         Deletes a Volume you have permission to `read_write`.
@@ -9215,7 +9215,7 @@ paths:
         permission to the Volume and `read_write` permission to the Linode.
         Additionally, the Volume and Linode must be located in the same Region.
       tags:
-      - volumes
+      - Volumes
       operationId: attachVolume
       x-linode-cli-action: attach
       security:
@@ -9288,7 +9288,7 @@ paths:
         the source Volume. Creating a new Volume will incur a charge on your
         Account.
       tags:
-      - volumes
+      - Volumes
       operationId: cloneVolume
       x-linode-cli-action: clone
       security:
@@ -9346,7 +9346,7 @@ paths:
         complete successfully, your User must have `read_write` access to the
         Volume and `read_write` access to the Linode.
       tags:
-      - volumes
+      - Volumes
       operationId: detachVolume
       x-linode-cli-action: detach
       security:
@@ -9392,7 +9392,7 @@ paths:
 
         * Volumes can only be resized up.
       tags:
-      - volumes
+      - Volumes
       operationId: resizeVolume
       x-linode-cli-action: resize
       security:
