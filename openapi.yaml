@@ -6290,6 +6290,9 @@ paths:
             schema:
               required:
               - label
+              - service_type
+              - address
+              - timeout
               allOf:
               - $ref: '#/components/schemas/ManagedService'
       responses:
@@ -9808,6 +9811,7 @@ components:
           description: A label for Backups that are of type `snapshot`.
           example: Webserver-Backup-2018
           x-linode-cli-display: 5
+          nullable: true
         configs:
           type: array
           items:
@@ -11552,6 +11556,7 @@ components:
           x-linode-cli-display: 3
         comments:
           type: string
+          nullable: true
           description: Optional field for arbitrary User comments on this Config.
           example: This is my main Config
         memory_limit:
@@ -12069,12 +12074,14 @@ components:
           properties:
             primary:
               type: string
+              nullable: true
               format: phone
               description: >
                 This Contact's primary phone number.
               example: 123-456-7890
             secondary:
               type: string
+              nullable: true
               format: phone
               description: >
                 This Contact's secondary phone number.
@@ -12314,6 +12321,7 @@ components:
           example: 30
         body:
           type: string
+          nullable: true
           minLength: 0
           maxLength: 100
           description: >
@@ -12332,6 +12340,7 @@ components:
           x-linode-cli-display: 6
         notes:
           type: string
+          nullable: true
           description: >
             Any information relevant to the Service that Linode special forces
             should know when attempting to resolve Issues.
@@ -12414,6 +12423,7 @@ components:
           x-linode-cli-display: 5
         ipv6:
           type: string
+          nullable: true
           format: ip
           description: >
             This NodeBalancer's public IPv6 address.
@@ -12450,12 +12460,14 @@ components:
           properties:
             total:
               type: number
+              nullable: true
               description: >
                 The total transfer, in MB, used by this NodeBalancer this month.
               example: 32.46078109741211
               readOnly: true
             out:
               type: number
+              nullable: true
               description: >
                 The total inbound transfer, in MB, used for this NodeBalancer
                 this month.
@@ -12463,6 +12475,7 @@ components:
               readOnly: true
             in:
               type: number
+              nullable: true
               description: >
                 The total outbound transfer, in MB, used for this NodeBalancer
                 this month.
@@ -12634,6 +12647,7 @@ components:
           x-linode-cli-display: 9
         ssl_cert:
           type: string
+          nullable: true
           description: >
             The certificate this port is serving. This is not returned. If set,
             this field will come back as "&lt;REDACTED&gt;".
@@ -12642,6 +12656,7 @@ components:
           example: null
         ssl_key:
           type: string
+          nullable: true
           description: >
             The private key corresponding to this port's certificate.  This is not
             returned. If set, this field will come back as "&lt;REDACTED&gt;".
