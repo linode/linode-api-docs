@@ -2165,7 +2165,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DomainRecord'
+              required:
+              - type
+              allOf:
+              - $ref: '#/components/schemas/DomainRecord'
       responses:
         '200':
           description: Domain Record created successfully.
@@ -10254,11 +10257,13 @@ components:
           example: 80
         service:
           type: string
+          nullable: true
           description: >
             The service this Record identified. Only valid for SRV records.
           example: null
         protocol:
           type: string
+          nullable: true
           description: >
             The protocol this Record's service communicates with. Only valid
             for SRV records.
@@ -10275,6 +10280,7 @@ components:
           x-linode-cli-display: 5
         tag:
           type: string
+          nullable: true
           description: >
             The tag portion of a CAA record. It is invalid to set this on
             other record types.
@@ -10484,6 +10490,7 @@ components:
           example: 123
         permissions:
           type: string
+          nullable: true
           enum:
           - null
           - read_only
@@ -10526,6 +10533,7 @@ components:
               example: true
             account_access:
               type: string
+              nullable: true
               enum:
               - null
               - read_only
@@ -10683,6 +10691,7 @@ components:
         vendor:
           x-linode-filterable: true
           type: string
+          nullable: true
           description: >
             The upstream distribution vendor. `None` for private Images.
           example: null
@@ -12992,6 +13001,7 @@ components:
           readOnly: true
         thumbnail_url:
           type: string
+          nullable: true
           format: url
           description: >
             The URL where this client's thumbnail may be viewed, or `null` if this client
