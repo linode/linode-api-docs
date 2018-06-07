@@ -2714,7 +2714,7 @@ paths:
                   region:
                     type: string
                     description: >
-                      The [Region](/#operation/getRegions) where the Linode
+                      The [Region](#operation/getRegions) where the Linode
                       will be located.
       responses:
         '200':
