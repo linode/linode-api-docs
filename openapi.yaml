@@ -2675,14 +2675,11 @@ paths:
         content:
           application/json:
             schema:
-              type: object
               required:
               - type
               - region
-              allOf:
-              - $ref: '#/components/schemas/LinodeRequest'
-              - $ref: '#/components/schemas/LinodeBase'
-              - properties:
+              type: object
+              properties:
                   backup_id:
                     type: integer
                     example: 1234
@@ -2712,13 +2709,13 @@ paths:
                   type:
                     type: string
                     description: >
-                      The type of Linode to deploy.
-                    readOnly: false
+                      The [Linode Type](#operation/getLinodeTypes) of the Linode
+                      you are creating.
                   region:
                     type: string
                     description: >
-                      The Region to deploy this Linode in.
-                    readOnly: false
+                      The [Region](/#operation/getRegions) where the Linode
+                      will be located.
       responses:
         '200':
           description: >
@@ -10861,6 +10858,7 @@ components:
           x-linode-cli-display: 1
         gateway:
           type: string
+          nullable: true
           format: ip
           description: >
             The default gateway for this address.
@@ -11251,6 +11249,7 @@ components:
         image:
           x-linode-filterable: true
           readOnly: true
+          nullable: true
           allOf:
           - $ref: '#/components/schemas/DiskRequest/properties/image'
           x-linode-cli-display: 6
@@ -11445,6 +11444,7 @@ components:
               properties:
                 day:
                   type: string
+                  nullable: true
                   description: |
                     The day of the week that your Linode's weekly Backup is taken.
                     If not set manually, a day will be chosen for you. Backups
@@ -11466,6 +11466,7 @@ components:
                   - Saturday
                 window:
                   type: string
+                  nullable: true
                   description: |
                     The window in which your backups will be taken, in UTC. A
                     backups window is a two-hour span of time in which the backup
