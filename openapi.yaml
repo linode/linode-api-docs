@@ -5013,7 +5013,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/StackScript'
+              required:
+              - script
+              - label
+              - images
+              allOf:
+              - $ref: '#/components/schemas/StackScript'
       responses:
         '200':
           description: StackScript successfully created.
@@ -8399,8 +8404,6 @@ paths:
         content:
           application/json:
             schema:
-              required:
-              - label
               properties:
                 scopes:
                   type: string
@@ -13308,6 +13311,7 @@ components:
           example: keys_only
         authorized_keys:
           type: array
+          nullable: true
           items:
             type: string
             format: ssh-key
@@ -13507,6 +13511,7 @@ components:
         closed:
           x-linode-filterable: true
           type: string
+          nullable: true
           format: date-time
           readOnly: true
           description: >
@@ -13527,6 +13532,7 @@ components:
           x-linode-cli-display: 5
         entity:
           type: object
+          nullable: true
           readOnly: true
           description: >
             The entity this Ticket was opened for.
@@ -13609,6 +13615,7 @@ components:
           example: '2015-06-04T16:07:03'
         updated_by:
           type: string
+          nullable: true
           readOnly: true
           description: >
             The User who last updated this Ticket.
@@ -13938,6 +13945,7 @@ components:
           x-linode-cli-display: 5
         linode_id:
           type: integer
+          nullable: true
           description: >
             If a Volume is attached to a specific Linode, the ID of that Linode
             will be displayed here.
