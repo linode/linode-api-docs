@@ -7111,6 +7111,25 @@ paths:
                   $ref: '#/components/schemas/NodeBalancer/properties/label'
                 client_conn_throttle:
                   $ref: '#/components/schemas/NodeBalancer/properties/client_conn_throttle'
+                configs:
+                  type: array
+                  description: >
+                    The ports to configure this NodeBalancer with on creation.
+                    Each config must have a unique port and at least one Node.
+                  items:
+                      allOf:
+                      - $ref: '#/components/schemas/NodeBalancerConfig'
+                      - type: object
+                        properties:
+                          nodes:
+                            type: array
+                            description: >
+                              The NodeBalancer Nodes that serve this port.  When
+                              creating a NodeBalancer this way, at least one Node
+                              is required per configured port.
+                            items:
+                              $ref: '#/components/schemas/NodeBalancerNode'
+
       responses:
         '200':
           description: NodeBalancer created successfully.
