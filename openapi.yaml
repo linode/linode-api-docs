@@ -13900,6 +13900,11 @@ components:
             combination or order.
           example: avalue,anothervalue,thirdvalue
           readOnly: true
+        default:
+          type: string
+          description: >
+            The default value.  If not specified, this value will be used.
+          readOnly: true
     Volume:
       type: object
       required:
