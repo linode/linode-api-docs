@@ -7881,7 +7881,7 @@ paths:
       summary: Update Profile
       description: >
         Update information in your Profile.  This endpoint requires the
-        "account:read_write".
+        "account:read_write" OAuth Scope.
       operationId: updateProfile
       x-linode-cli-action: update
       security:
