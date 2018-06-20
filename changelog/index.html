@@ -49,7 +49,42 @@
                   Versioning 2.0.0 Guidelines</a>.
               </p>
 
-
+              <h2 class="release-header">
+                2018-06-20
+                <span class="release-version">version 4.0.1</span>
+              </h2>
+              <h3>Added:</h3>
+              <ul>
+                <li>Added fast-track NodeBalancer creation
+                  <ul>
+                    <li>POST /nodebalancers now accepts "configs", details of configs to create</li>
+                    <li>Each config in "configs" must have at least one node in "nodes"</li>
+                  </ul>
+                </li>
+                <li>Added X-Spec-Version header to API responses
+                  <ul>
+                    <li>Indicates the version of Linode's OpenAPI specification describes this API</li>
+                    <li>Spec is available at https://developers.linode.com/api/v4</li>
+                  </ul>
+                </li>
+                <li>Added persistent ordering to all collections
+                  <ul>
+                    <li>All collections are now returned in a predictable, consistent order</li>
+                  </ul>
+                </li>
+                <li>Added watchdog_enabled to Linode object</li>
+                <li>Added X-Spec-Version header to all responses
+                  <ul>
+                    <li>This header describes the version of our OpenAPI spec that
+                        describes this API</li>
+                  </ul>
+                </li>
+              </ul>
+              <h3>Fixed:</h3>
+              <ul>
+                <li>Require shutting down before resetting root password for a disk</li>
+                <li>Fixed url for Community events</li>
+              </ul>
               <h2 class="release-header">
                 2018-05-14
                 <span class="release-version">version 4.0.1</span>
