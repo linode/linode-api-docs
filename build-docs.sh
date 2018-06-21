@@ -5,7 +5,7 @@ set -x -e
 ## Build the Docs
 ##
 
-BRANCHNAME=shift || "none"
+BRANCHNAME=$1
 version_flag='~PR'
 
 if [ $BRANCHNAME = 'development' ]; then
