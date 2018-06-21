@@ -5,6 +5,17 @@ set -x -e
 ## Build the Docs
 ##
 
+BRANCHNAME=shift || "none"
+version_flag='~PR'
+
+if [ $BRANCHNAME = 'development' ]; then
+    version_flag='~dev'
+elif [[ $BRANCHNAME = release/* ]]; then
+    version_flag='~test'
+elif [ $BRANCHNAME = 'master' ]; then
+    version_flag=''
+fi
+
 # if run from the vagrant project switch to linode-api-docs to mimic baker
 [[ -d "linode-api-docs" ]] && cd linode-api-docs
 
@@ -22,7 +33,7 @@ echo $HOME
 version_number=$(git describe --tags --abbrev=0 | tr -d '[:space:]')
 version_extension=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[:space:]')
 
-version=${version_number}-${version_extension}
+version=${version_number}-${version_extension}${version_flag}
 
 echo 'Building Debian Package'
 # index.html, openapi.yaml
