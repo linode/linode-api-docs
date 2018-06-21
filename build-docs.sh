@@ -47,7 +47,7 @@ if [ -v BUILD_ENV -a -n "${BUILD_ENV}" ]; then
   package_version="${version}~${BUILD_ENV}${commit_num:-0}"
 fi
 
-fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extension}" \
+fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extension}${version_flag}" \
   -x Vagrantfile -x Dockerfile -x build.sh -x \*.deb -x \*.changes -x .git -x .vagrant \
   --vendor Linode --url https://github.com/linode/linode-api-docs \
   --description "${description}" -m ops@linode.com \
