@@ -5,6 +5,17 @@ set -x -e
 ## Build the Docs
 ##
 
+BRANCHNAME=$1
+version_flag='~PR'
+
+if [ $BRANCHNAME = 'development' ]; then
+    version_flag='~dev'
+elif [[ $BRANCHNAME = release/* ]]; then
+    version_flag='~test'
+elif [ $BRANCHNAME = 'master' ]; then
+    version_flag=''
+fi
+
 # if run from the vagrant project switch to linode-api-docs to mimic baker
 [[ -d "linode-api-docs" ]] && cd linode-api-docs
 
@@ -22,7 +33,7 @@ echo $HOME
 version_number=$(git describe --tags --abbrev=0 | tr -d '[:space:]')
 version_extension=$(git log ${version_number}..HEAD --oneline | wc -l | tr -d '[:space:]')
 
-version=${version_number}-${version_extension}
+version=${version_number}-${version_extension}${version_flag}
 
 echo 'Building Debian Package'
 # index.html, openapi.yaml
@@ -36,7 +47,7 @@ if [ -v BUILD_ENV -a -n "${BUILD_ENV}" ]; then
   package_version="${version}~${BUILD_ENV}${commit_num:-0}"
 fi
 
-fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extension}" \
+fpm -s dir -t deb -n "${pkg_name}" -v "${version_number}" --iteration "${version_extension}${version_flag}" \
   -x Vagrantfile -x Dockerfile -x build.sh -x \*.deb -x \*.changes -x .git -x .vagrant \
   --vendor Linode --url https://github.com/linode/linode-api-docs \
   --description "${description}" -m ops@linode.com \
