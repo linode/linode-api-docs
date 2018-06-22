@@ -9,11 +9,12 @@ set -x -e
 [[ -d "linode-api-docs" ]] && cd linode-api-docs
 
 # run the static site builder
-ls -la ReDoc-customized/ReDoc-customized/cli
 chmod +x ReDoc-customized/ReDoc-customized/cli/index.js
 
 ./ReDoc-customized/ReDoc-customized/cli/index.js bundle openapi.yaml --options.hideDownloadButton=true --options.pathInMiddlePanel=true --options.requiredPropsFirst=true --options.expandResponses="200,"
 
+rm index.html
+mv redoc-static.html index.html
 
 export HOME='/target'
 echo $HOME
