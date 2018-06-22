@@ -21,7 +21,7 @@ node {
         checkout scm
         sh "git fetch"
 
-        dir('ReDoc-Customized') {
+        dir('ReDoc-customized') {
             checkout poll: false, scm: [
                 $class: 'GitSCM',
                 branches: [[name: 'development']],
