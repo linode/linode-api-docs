@@ -48,7 +48,7 @@ node {
         BUILD_NAME = URLDecoder.decode(env.BUILD_TAG, "UTF-8").replaceAll("[^a-zA-Z0-9_.-]", "_")
         image = docker.build(BUILD_NAME.toLowerCase(), '.')
         image.inside() { c ->
-            sh "cd ReDoc-customized/ReDoc-customized && yarn install && yarn bundle && yarn compile:cli"
+            sh "cd ReDoc-customized/ReDoc-customized && yarn install && yarn bundle && yarn compile:cli && cd  cli && yarn install && ln -s node_modules/redoc ../.."
         }
     }
 
