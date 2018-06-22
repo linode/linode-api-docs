@@ -20,11 +20,36 @@ node {
         deleteDir()
         checkout scm
         sh "git fetch"
+
+        dir('ReDoc-customized') {
+            checkout poll: false, scm: [
+                $class: 'GitSCM',
+                branches: [[name: 'development']],
+                doGenerateSubmoduleConfigurations: false,
+                credentialsId: "baker",
+                extensions: [[
+                    $class: 'WipeWorkspace',
+                ], [
+                    $class: 'RelativeTargetDirectory',
+                    relativeTargetDir: 'ReDoc-customized',
+                ], [
+                    $class: 'CloneOption',
+                    noTags: false,
+                ]],
+                userRemoteConfigs: [[
+                    refspec: "+refs/heads/*:refs/remotes/origin/*",
+                    url: 'git@bits.linode.com:LinodeAPI/ReDoc-customized',
+                ]]
+            ]
+        }
     }
 
     stage('Build Docker') {
         BUILD_NAME = URLDecoder.decode(env.BUILD_TAG, "UTF-8").replaceAll("[^a-zA-Z0-9_.-]", "_")
         image = docker.build(BUILD_NAME.toLowerCase(), '.')
+        image.inside() { c ->
+            sh "cd ReDoc-customized/ReDoc-customized && yarn install && yarn bundle && yarn compile:cli && cd  cli && yarn install && ln -s node_modules/redoc ../.."
+        }
     }
 
     stage ('Apply Substitutions') {
