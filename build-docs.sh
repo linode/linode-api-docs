@@ -8,6 +8,10 @@ set -x -e
 # if run from the vagrant project switch to linode-api-docs to mimic baker
 [[ -d "linode-api-docs" ]] && cd linode-api-docs
 
+# run the static site builder
+redoc-cli bundle openapi.yaml --options.hideDownloadButton=true --options.pathInMiddlePanel=true --options.requiredPropsFirst=true --options.expandResponses="200,"
+
+
 export HOME='/target'
 echo $HOME
 
