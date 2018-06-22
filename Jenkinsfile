@@ -52,6 +52,7 @@ node {
                 sh "yarn install"
                 sh "yarn bundle"
             }
+        }
     }
 
     stage ('Apply Substitutions') {
