@@ -4588,6 +4588,7 @@ paths:
                   type: string
                 root_pass:
                   type: string
+                  format: password
       responses:
         '200':
           description: Rebuild started.
@@ -12686,6 +12687,7 @@ components:
           x-linode-cli-display: 9
         ssl_cert:
           type: string
+          format: ssl-cert
           nullable: true
           description: >
             The certificate this port is serving. This is not returned. If set,
@@ -12695,6 +12697,7 @@ components:
           example: null
         ssl_key:
           type: string
+          format: ssl-key
           nullable: true
           description: >
             The private key corresponding to this port's certificate.  This is not
