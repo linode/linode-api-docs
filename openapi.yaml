@@ -4087,7 +4087,7 @@ paths:
                   example: 2048
       responses:
         '200':
-          description: Returns a single Disk object.
+          description: Resize started.
           content:
             application/json:
               schema:
