@@ -2100,6 +2100,70 @@ paths:
         - lang: CLI
           source: >
             linode-cli domains delete 1234
+  /domains/import:
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Domains
+      summary: Import a Domain Zone
+      description: >
+        Imports a domain zone from a remote nameserver.
+
+        Your nameserver must allow zone transfers (AXFR) from the following IPs:
+          - 96.126.114.97
+          - 96.126.114.98
+          - 2600:3c00::5e
+          - 2600:3c00::5f
+      operationId: importDomain
+      x-linode-cli-action: import
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - domains:read_write
+      requestBody:
+        description: Information about the Domain to import.
+        content:
+          application/json:
+            schema:
+              required:
+              - domain
+              - remote_nameserver
+              allOf:
+              - type: object
+                properties:
+                  domain:
+                    type: string
+                    description: >
+                       The domain to import.
+                    example: example.com
+                  remote_nameserver:
+                    type: string
+                    description: >
+                      The remote nameserver that allows zone transfers (AXFR).
+                    example: examplenameserver.com
+      responses:
+        '200':
+          description: |
+            A single Domain in Linode's DNS Manager.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "domain": "example.com",
+                  "remote_nameserver": "examplenameserver.com"
+                }' \
+                https://api.linode.com/v4/domains/import
+        - lang: CLI
+          source: >
+            linode-cli domains import --domain example.com --remote_nameserver examplenameserver.com
   /domains/{domainId}/records:
     x-linode-cli-command: domains
     parameters:
