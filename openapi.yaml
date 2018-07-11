@@ -2109,8 +2109,11 @@ paths:
       description: >
         Imports a domain zone from a remote nameserver.
 
-        Your nameserver must allow zone transfers (AXFR) from 96.126.114.97,
-        96.126.114.98, 2600:3c00::5e, and 2600:3c00::5f
+        Your nameserver must allow zone transfers (AXFR) from the following IPs:
+          - 96.126.114.97
+          - 96.126.114.98
+          - 2600:3c00::5e
+          - 2600:3c00::5f
       operationId: importDomain
       x-linode-cli-action: import
       security:
@@ -2138,7 +2141,6 @@ paths:
                     description: >
                       The remote nameserver that allows zone transfers (AXFR).
                     example: examplenameserver.com
-
       responses:
         '200':
           description: |
@@ -2161,7 +2163,7 @@ paths:
                 https://api.linode.com/v4/domains/import
         - lang: CLI
           source: >
-            linode-cli domains import example.com examplenameserver.com
+            linode-cli domains import --domain example.com --remote_nameserver examplenameserver.com
   /domains/{domainId}/records:
     x-linode-cli-command: domains
     parameters:
