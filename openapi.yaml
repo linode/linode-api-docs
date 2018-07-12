@@ -13275,7 +13275,6 @@ components:
       type: object
       description: Payment object request.
       required:
-      - cvv
       - usd
       properties:
         cvv:
