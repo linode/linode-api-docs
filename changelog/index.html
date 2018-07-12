@@ -48,10 +48,37 @@
                 <a href="https://semver.org" target="_blank">Semantic
                   Versioning 2.0.0 Guidelines</a>.
               </p>
-
+              <h2 class="release-header">
+                2018-07-12
+                <span class="release-version">version 4.0.3</span>
+              </h2>
+              <h3>Added:</h3>
+              <ul>
+                <li>Added POST /linode/instances/{linodeId}/migrate
+                  <ul>
+                    <li>In some circumstances, a Linode may have pending migrations scheduled that that you can initiate when convenient.</li>
+                    <li>This endpoint initiates the scheduled migration, which will shut the Linode down, migrate it, and then bring it back to its original state.</li>
+                  </ul>
+                </li>
+                <li>Added POST /domains/import
+                  <ul>
+                    <li>Imports a domain zone from a remote nameserver that allows zone transfers (AXFR).</li>
+                  </ul>
+                </li>
+                <li>Added ability to create a Linode with private networking enabled.
+                  <ul>
+                    <li>POST /linode/instances now accepts a boolean "private_ip".</li>
+                    <li>If true, the created Linode will have private networking enabled when created.</li>
+                  </ul>
+                </li>
+                <li>Added optional "config_id" to POST /linode/instances/{linodeId}/reboot</li>
+              <h3>Fixed:</h3>
+              <ul>
+                <li>Fixed example response for POST /volumes/{volumeId}/attach</li>
+              </ul>
               <h2 class="release-header">
                 2018-06-20
-                <span class="release-version">version 4.0.1</span>
+                <span class="release-version">version 4.0.2</span>
               </h2>
               <h3>Added:</h3>
               <ul>
