@@ -9188,10 +9188,6 @@ paths:
         for this to complete successfully, your User must have the `add_volumes`
         grant. Creating a new Volume will start accruing additional charges
         on your account.
-
-        Volume service may not be available in all Regions. See
-        [/regions](/#operation/getRegions)
-        for a list of available Regions you deploy your Volume in.
       tags:
       - Volumes
       operationId: createVolume
@@ -9206,24 +9202,36 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/Volume'
-              - type: object
-                properties:
-                  region:
-                    type: string
-                    description: >
-                      The Region to deploy this Volume in. This is only required
-                      if a linode_id is not given.
-                    example: null
-                  config_id:
-                    type: integer
-                    description: >
-                      When creating a Volume attached to a Linode, the ID of the
-                      Linode Config to include the new Volume in. This Config
-                      must belong to the Linode referenced by `linode_id`. Must
-                      _not_ be provided if `linode_id` is not sent.
-                    example: 23456
+              type: object
+              properties:
+                region:
+                  type: string
+                  description: >
+                    The Region to deploy this Volume in. This is only required
+                    if a linode_id is not given.
+                  example: null
+                size:
+                  type: integer
+                  description: >
+                    The initial size of this volume, in GB.  Be aware that volumes
+                    may only be resized up after creation.  Defaults to 20 GB
+                    if not provided.
+                  example: 20
+                  default: 20
+                linode_id:
+                  type: integer
+                  description: >
+                    The Linode this volume should be attached to upon creation.
+                    If not given, the volume will be created without an attachment.
+                  example: 123
+                config_id:
+                  type: integer
+                  description: >
+                    When creating a Volume attached to a Linode, the ID of the
+                    Linode Config to include the new Volume in. This Config
+                    must belong to the Linode referenced by `linode_id`. Must
+                    _not_ be provided if `linode_id` is not sent.
+                  example: 23456
       responses:
         '200':
           description: >
@@ -14109,24 +14117,19 @@ components:
         status:
           type: string
           description: >
-            Can be one of `creating`, `active`, `resizing`, `deleting`,
-            `deleted`, and `contact_support`:
+            The current status of the volume.  Can be one of:
 
               * `creating` - the Volume is being created and is not yet available
                 for use.
               * `active` - the Volume is online and available for use.
               * `resizing` - the Volume is in the process of upgrading
                 its current capacity.
-              * `deleting` - the Volume is being deleted and is unavailable for use.
-              * `deleted` - the Volume has been deleted.
               * `contact_support` - there is a problem with your Volume. Please
                 [open a Support Ticket](/#operation/createTicket) to resolve the issue.
           enum:
           - creating
           - active
           - resizing
-          - deleting
-          - deleted
           - contact_support
           example: active
           readOnly: true
@@ -14138,8 +14141,7 @@ components:
         size:
           type: integer
           description: >
-            The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB.
-          minimum: 10
+            The Volume's size, in GiB.
           maximum: 10240
           x-linode-cli-display: 4
           example: 30
