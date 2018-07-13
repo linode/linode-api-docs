@@ -9220,14 +9220,14 @@ paths:
                   type: integer
                   description: >
                     The initial size of this volume, in GB.  Be aware that volumes
-                    may only be resized up after creation.  Defaults to 20 GB
-                    if not provided.
+                    may only be resized up after creation.
                   example: 20
                   default: 20
                 label:
                   type: string
                   description: >
-                    The Volume's label, for display purposes only.
+                    The Volume's label, which is also used in the
+                    `filesystem_path` of the resulting volume.
                   example: my-volume
                   minLength: 1
                   maxLength: 32
@@ -9238,7 +9238,15 @@ paths:
                     When creating a Volume attached to a Linode, the ID of the
                     Linode Config to include the new Volume in. This Config
                     must belong to the Linode referenced by `linode_id`. Must
-                    _not_ be provided if `linode_id` is not sent.
+                    _not_ be provided if `linode_id` is not sent. If a
+                    `linode_id` is sent without a `config_id`, the volume will be
+                    attached:
+
+                      * to the Linode's only config if it only has one config.
+                      * to the Linode's last used config, if possible.
+
+                    If no config can be selected for attachment, an error will be
+                    returned.
                   example: 23456
       responses:
         '200':
