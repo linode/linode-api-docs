@@ -126,14 +126,16 @@
               <ul>
                  <li>Fixed bug where Linodes got stuck in rescue mode.</li>
                  <li>Fixed bug when attaching a Volume to a Linode with no configs.</li>
-                 <li>API now returns 500 when an IP Address cannot be allocated.</li>
+                 <li>API now returns 500 when an IP Address cannot be allocated.
                     <ul>
                       <li>Previously, this incorrectly returned a 400.</li>
-                    </ul></li>
-                 <li>Fixed 500 on POST /domains/:id/records with service.</li>
+                    </ul>
+                 </li>
+                 <li>Fixed 500 on POST /domains/:id/records with service.
                     <ul>
                       <li>Bug occurred when service was sent into this endpoint without `"type": "SRV"`.</li>
-                    </ul></li>
+                    </ul>
+                </li>
                  <li>Fixed errors caused by illegal characters in URL errors.</li>
               </ul>
 
