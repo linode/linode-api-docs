@@ -9210,6 +9210,12 @@ paths:
                     The Region to deploy this Volume in. This is only required
                     if a linode_id is not given.
                   example: null
+                linode_id:
+                  type: integer
+                  description: >
+                    The Linode this volume should be attached to upon creation.
+                    If not given, the volume will be created without an attachment.
+                  example: 123
                 size:
                   type: integer
                   description: >
@@ -9218,12 +9224,14 @@ paths:
                     if not provided.
                   example: 20
                   default: 20
-                linode_id:
-                  type: integer
+                label:
+                  type: string
                   description: >
-                    The Linode this volume should be attached to upon creation.
-                    If not given, the volume will be created without an attachment.
-                  example: 123
+                    The Volume's label, for display purposes only.
+                  example: my-volume
+                  minLength: 1
+                  maxLength: 32
+                  pattern: '^[a-zA-Z]((?!--|__)[a-zA-Z0-9-_])+$'
                 config_id:
                   type: integer
                   description: >
