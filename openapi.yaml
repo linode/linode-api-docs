@@ -2804,6 +2804,7 @@ paths:
                     example: linode/debian9
                   root_pass:
                     type: string
+                    format: password
                     description: >
                       The password for the root user on the newly created Linode.
                       Only accepted if "image" is provided.
