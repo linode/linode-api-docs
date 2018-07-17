@@ -10073,9 +10073,10 @@ components:
       properties:
         card_number:
           type: string
+          format: PAN
           description: Your credit card number. No spaces or dashes allowed.
-          minLength: 16
-          maxLength: 16
+          minLength: 13
+          maxLength: 23
           example: 4111111111111111
         expiry_month:
           type: integer
