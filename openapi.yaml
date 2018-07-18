@@ -10910,6 +10910,13 @@ components:
           - automatic
           example: manual
           readOnly: true
+        expiry:
+          type: string
+          format: date-time
+          description: >
+            Only Images created automatically (from a deleted Linode; type=automatic) will expire.
+          example: '2018-08-01T00:01:01'
+          readOnly: true
         vendor:
           x-linode-filterable: true
           type: string
@@ -10992,6 +10999,13 @@ components:
           - manual
           - automatic
           example: manual
+          readOnly: true
+        expiry:
+          type: string
+          format: date-time
+          description: >
+            Only Images created automatically (from a deleted Linode; type=automatic) will expire.
+          example: null
           readOnly: true
         vendor:
           x-linode-filterable: true
