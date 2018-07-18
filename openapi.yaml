@@ -1554,17 +1554,31 @@ paths:
               required:
               - username
               - email
-              - password
-              allOf:
-              - $ref: '#/components/schemas/User'
-              - type: object
-                properties:
-                  email:
-                    type: string
-                    format: email
-                    description: >
-                      The new User's email address.
-                    example: example_user@linode.com
+              properties:
+                username:
+                  type: string
+                  pattern: ^[a-zA-Z0-9]((?![_-]{2,})[a-zA-Z0-9-_])+[a-zA-Z0-9]$
+                  minLength: 3
+                  maxLength: 32
+                  description: >
+                    The new User's username. This is used for logging in, and may also be
+                    displayed alongside actions the User performs (for example, in Events
+                    or public StackScripts).
+                  example: example_user
+                email:
+                  type: string
+                  format: email
+                  description: >
+                    The new User's email address.
+                  example: example_user@linode.com
+                restricted:
+                  type: boolean
+                  description: >
+                    If true, the new User must be granted access to perform actions or access
+                    entities on this Account. See
+                    [/account/users/{username}/grants](/#operation/getUserGrants)
+                    for details on how to configure grants for a restricted User.
+                  example: true
       responses:
         '200':
           description: New User created successfully.
