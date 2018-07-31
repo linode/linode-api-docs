@@ -14144,15 +14144,23 @@ components:
         label:
           type: string
           description: >
-            The user-defined string for user referencing of a UserSSHKey.
+            Your name for your key.
           example: "My SSH Key"
           minLength: 0
           maxLength: 64
         ssh_key:
           type: string
+          format: ssh-key
           description: >
-            The 1024 to 16384 bit length algorithmically generated character string 
-            from which a challenge code is created for authentication.
+            Your public key. The 1024 to 16384 bit length algorithmically generated character
+            string from which a challenge code is created for authentication.
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          description: >
+            The date this key was added.
+          example: "2018-01-01T00:01:01"
           readOnly: true
     Volume:
       type: object
