@@ -14130,6 +14130,30 @@ components:
           description: >
             The default value.  If not specified, this value will be used.
           readOnly: true
+    UserSSHKey:
+      type: object
+      description: >
+        A credential object for authenticating a User's secure shell connection to a Linode.
+      properties:
+        id:
+          type: integer
+          description: >
+            The unique identifier of a UserSSHKey object.
+          example: 42
+          readOnly: true
+        label:
+          type: string
+          description: >
+            The user-defined string for user referencing of a UserSSHKey.
+          example: "My SSH Key"
+          minLength: 0
+          maxLength: 64
+        ssh_key:
+          type: string
+          description: >
+            The 1024 to 16384 bit length algorithmically generated character string 
+            from which a challenge code is created for authentication.
+          readOnly: true
     Volume:
       type: object
       required:
