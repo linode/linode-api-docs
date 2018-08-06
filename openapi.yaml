@@ -8771,6 +8771,52 @@ paths:
       - lang: CLI
         source: >
           linode-cli profile token-delete 123
+  /profile/sshkeys:
+    x-linode-cli-command: profile
+    description:
+    post:
+      tags:
+      - Profile
+      summary: Create User SSH Key
+      description: >
+        Creates a SSH Key for your User. The key object with label and created
+        time will be returned in the response.
+      operationId: createUserSSHKey
+      x-linode-cli-action: sshkey-create
+      security:
+      - userSSHKey: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: The 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSSHKeyRequest'
+      responses:
+        '200':
+          description: User SSHKey created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSSHKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+        curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+                "label": "My SSH Key"
+                "ssh_key": "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+            }' \
+            https://api.linode.com/v4/profile/sshkeys
+      - lang: CLI
+        source: >
+          linode-cli sshkeys create \
+            --label "My SSH Key"
+            --ssh_key "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
   /regions:
     x-linode-cli-command: regions
     get:
@@ -14162,6 +14208,26 @@ components:
             The date this key was added.
           example: "2018-01-01T00:01:01"
           readOnly: true
+    UserSSHKeyRequest:
+      type: object
+      description: >
+        An object consisting of a user identified name as the "label" and the
+        generated key as the "ssh-key"
+      properties:
+        label:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: >
+            Your name for your key.
+          example: "My SSH Key"
+        ssh_key:
+          type: string
+          format: ssh-key
+          description: >
+            Your public key. The 1024 to 16384 bit length algorithmically 
+            generated character string from which a challenge code is created
+            for authentication.
     Volume:
       type: object
       required:
