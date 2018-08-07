@@ -8805,13 +8805,13 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-        curl -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $TOKEN" \
-            -X POST -d '{
-                "label": "My SSH Key"
-                "ssh_key": "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-            }' \
-            https://api.linode.com/v4/profile/sshkeys
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "label": "My SSH Key"
+                  "ssh_key": "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+              }' \
+              https://api.linode.com/v4/profile/sshkeys
       - lang: CLI
         source: >
           linode-cli sshkeys create \
