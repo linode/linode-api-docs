@@ -8775,6 +8775,49 @@ paths:
     x-linode-cli-command: sshkeys
     description: >
       A collection of SSH Keys added by you.
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - Profile
+      summary: List UserSSHKeys
+      description: >
+        Returns a collection of UserSSHKeys you've added.
+      operationId: getSSHKeys
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of UserSSHKey objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserSSHKey'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/profile/sshkeys
+      - lang: CLI
+        source: >
+          linode-cli sshkeys list
     post:
       tags:
       - Profile
