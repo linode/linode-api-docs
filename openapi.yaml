@@ -8788,7 +8788,7 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: The 
+        description: Create User SSH Key
         content:
           application/json:
             schema:
