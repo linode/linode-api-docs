@@ -8772,7 +8772,7 @@ paths:
         source: >
           linode-cli profile token-delete 123
   /profile/sshkeys:
-    x-linode-cli-command: profile
+    x-linode-cli-command: sshkeys
     description: >
       A collection of SSH Keys added by you.
     post:
@@ -8783,9 +8783,9 @@ paths:
         Creates a SSH Key for your User. The key object with label and created
         time will be returned in the response.
       operationId: createUserSSHKey
-      x-linode-cli-action: sshkey-create
+      x-linode-cli-action: create
       security:
-      - userSSHKey: []
+      - personalAccessToken: []
       - oauth:
         - account:read_write
       requestBody:
