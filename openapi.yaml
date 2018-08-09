@@ -8828,7 +8828,6 @@ paths:
       schema:
         type: integer
     get:
-      x-linode-grant: read_only
       tags:
       - Profile
       summary: View SSH Key
