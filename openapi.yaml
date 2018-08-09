@@ -8832,7 +8832,7 @@ paths:
       - Profile
       summary: View SSH Key
       description: >
-        Returns a single UserSSHKey object.
+        Returns a single UserSSHKey object that you have access to view.
       operationId: getSSHKey
       x-linode-cli-action: view
       security:
