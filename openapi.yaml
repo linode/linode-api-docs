@@ -8818,17 +8818,16 @@ paths:
           linode-cli sshkeys create \
             --label "My SSH Key"
             --ssh_key "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-  /profile/sshkeys/{id}:
+  /profile/sshkeys/{sshkeyid}:
     x-linode-cli-command: sshkeys
     parameters:
-    - name: id
+    - name: sshkeyid
       in: path
       description: The ID of the SSHKey
       required: true
       schema:
         type: integer
     put:
-      x-linode-grant: read_write
       tags:
       - Profile
       summary: Update SSH Key
@@ -8842,8 +8841,7 @@ paths:
         - account:read_write
       requestBody:
         description: >
-          If any updated field fails to pass validation, the SSHKey will not be
-          updated.
+          The fields to update.
         required: true
         content:
           application/json:
@@ -8867,7 +8865,7 @@ paths:
               https://api.linode.com/v4/profile/sshkey/42
       - lang: CLI
         source: >
-          linode-cli profile sshkey-update 42 \
+          linode-cli sshkey update 42 \
             --label linode-cli
 
   /regions:
