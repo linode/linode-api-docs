@@ -8914,6 +8914,37 @@ paths:
         source: >
           linode-cli sshkey update 42 \
             --label "my laptop"
+    delete:
+      tags:
+      - Profile
+      summary: Delete SSHKey
+      description: >
+        Deletes an SSHKey you have access to.
+      operationId: deleteSSHKey
+      x-linode-cli-action: delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: SSHKey deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authoriztion: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/profile/sshkeys/42
+      - lang: CLI
+        source: >
+          linode-cli sshkey delete 42
   /regions:
     x-linode-cli-command: regions
     get:
