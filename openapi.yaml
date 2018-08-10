@@ -8854,20 +8854,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserSSHKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "label": "linode-cli"
+                "label": "my laptop"
               }' \
               https://api.linode.com/v4/profile/sshkey/42
       - lang: CLI
         source: >
           linode-cli sshkey update 42 \
-            --label linode-cli
-
+            --label "my laptop"
   /regions:
     x-linode-cli-command: regions
     get:
