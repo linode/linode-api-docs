@@ -8814,7 +8814,9 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/profile/sshkeys
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/sshkeys
       - lang: CLI
         source: >
           linode-cli sshkeys list
