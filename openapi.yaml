@@ -8787,6 +8787,51 @@ paths:
     x-linode-cli-command: sshkeys
     description: >
       A collection of SSH Keys added by you.
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - Profile
+      summary: List UserSSHKeys
+      description: >
+        Returns a collection of UserSSHKeys you've added.
+      operationId: getSSHKeys
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of UserSSHKey objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserSSHKey'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/sshkeys
+      - lang: CLI
+        source: >
+          linode-cli sshkeys list
     post:
       tags:
       - Profile
@@ -8830,10 +8875,10 @@ paths:
           linode-cli sshkeys create \
             --label "My SSH Key"
             --ssh_key "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-  /profile/sshkeys/{sshkeyid}:
+  /profile/sshkeys/{sshKeyId}:
     x-linode-cli-command: sshkeys
     parameters:
-    - name: sshkeyid
+    - name: sshKeyId
       in: path
       description: The ID of the SSHKey
       required: true
@@ -8881,6 +8926,37 @@ paths:
         source: >
           linode-cli sshkey update 42 \
             --label "my laptop"
+    delete:
+      tags:
+      - Profile
+      summary: Delete SSHKey
+      description: >
+        Deletes an SSHKey you have access to.
+      operationId: deleteSSHKey
+      x-linode-cli-action: delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: SSHKey deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authoriztion: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/profile/sshkeys/42
+      - lang: CLI
+        source: >
+          linode-cli sshkey delete 42
   /regions:
     x-linode-cli-command: regions
     get:
