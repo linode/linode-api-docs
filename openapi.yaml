@@ -8863,10 +8863,10 @@ paths:
           linode-cli sshkeys create \
             --label "My SSH Key"
             --ssh_key "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-  /profile/sshkeys/{sshkeyid}:
+  /profile/sshkeys/{sshKeyId}:
     x-linode-cli-command: sshkeys
     parameters:
-    - name: sshkeyid
+    - name: sshKeyId
       in: path
       description: The ID of the SSHKey
       required: true
