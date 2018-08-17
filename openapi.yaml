@@ -14286,6 +14286,17 @@ components:
             for details on how to configure grants for a restricted User.
           example: true
           x-linode-cli-display: 3
+        ssh_keys:
+          type: list
+          items:
+            type: string
+          description: >
+            A list of ssh key labels uploaded by this user.  These are the keys
+            that will be deployed if this user is included in the `authorized_users`
+            field of a create Linode, rebuild Linode, or create Disk request.
+          example:
+          - home-pc
+          - laptop
     UserDefinedField:
       type: object
       required:
