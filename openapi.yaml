@@ -2864,7 +2864,8 @@ paths:
                     type: array
                     description: >
                       A list of usernames to add ssh keys for. If adding as a
-                      restricted user, you may only add your username.
+                      restricted user, you may only add your username. These
+                      keys will end up on the `root` user of the resulting Linode.
                     items:
                       type: string
       responses:
@@ -2918,6 +2919,7 @@ paths:
             --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
             --usernames "myUser"
+            --usernames "secondaryUser"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
