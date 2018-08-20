@@ -4799,6 +4799,10 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
+                "authorized_users": [
+                  "myUsername",
+                  "secondaryUsername"
+                ]
                 "booted": true,
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -4812,6 +4816,8 @@ paths:
             --image "linode/debian9" \
             --root_pass aComplex@Password \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUsername" \
+            --authorized_users "secondaryUsername" \
             --booted true \
             --stackscript_id 10079 \
             --stackscript_data '{"gh_username": "linode"}'
@@ -12121,6 +12127,8 @@ components:
           $ref: '#/components/schemas/DiskRequest/properties/root_pass'
         authorized_keys:
           $ref: '#/components/schemas/DiskRequest/properties/authorized_keys'
+        authorized_users:
+          $ref: '#/components/schemas/DiskRequest/properties/authorized_users'
         stackscript_id:
           $ref: '#/components/schemas/DiskRequest/properties/stackscript_id'
         stackscript_data:
