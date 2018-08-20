@@ -2860,12 +2860,12 @@ paths:
                     description: >
                       If true, the created Linode will have private networking enabled.
                     example: true
-                  usernames:
+                  authorized_users:
                     type: array
                     description: >
-                      A list of usernames to add ssh keys for. If adding as a
-                      restricted user, you may only add your username. These
-                      keys will end up on the `root` user of the resulting Linode.
+                      An optional list of usernames that will have their sshkeys,
+                      if they have any, automatically appended to the root users's
+                      `~/.ssh/authorized_keys` file.
                     items:
                       type: string
       responses:
@@ -2896,7 +2896,7 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
-                "usernames": [
+                "authorized_users": [
                   "myUser",
                   "secondaryUser"
                 ]
@@ -2918,8 +2918,8 @@ paths:
             --region us-east \
             --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-            --usernames "myUser"
-            --usernames "secondaryUser"
+            --authorized_users "myUser"
+            --authorized_users "secondaryUser"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
