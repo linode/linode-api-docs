@@ -3959,7 +3959,7 @@ paths:
                 "authorized_users": [
                   "myUser",
                   "secondaryUser"
-                ]
+                ],
                 "root_pass": "aComplexP@ssword",
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -10474,7 +10474,8 @@ components:
             type: string
           writeOnly: true
           example:
-          - MyUsername
+          - myUser
+          - secondaryUser
           description: >
             This is an optional list of usernames that will have their sshkeys, if they have any,
             automatically appended to the root user's `~/.ssh/authorized_keys` file.
