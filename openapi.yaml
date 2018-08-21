@@ -8878,6 +8878,35 @@ paths:
       required: true
       schema:
         type: integer
+    get:
+      tags:
+      - Profile
+      summary: View SSH Key
+      description: >
+        Returns a single UserSSHKey object that you have access to view.
+      operationId: getSSHKey
+      x-linode-cli-action: view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: A UserSSHKey object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSSHKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/sshkeys/42
+      - lang: CLI
+        source: >
+          linode-cli sshkeys view 42
     put:
       tags:
       - Profile
