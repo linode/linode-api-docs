@@ -4802,7 +4802,7 @@ paths:
                 "authorized_users": [
                   "myUsername",
                   "secondaryUsername"
-                ]
+                ],
                 "booted": true,
                 "stackscript_id": 10079,
                 "stackscript_data": {
