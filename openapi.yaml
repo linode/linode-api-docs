@@ -2863,9 +2863,9 @@ paths:
                   authorized_users:
                     type: array
                     description: >
-                      An optional list of usernames that will have their sshkeys,
-                      if they have any, automatically appended to the root users's
-                      `~/.ssh/authorized_keys` file.
+                      An optional list of usernames. If the usernames have associated 
+                      ssh keys, the keys will be appended to the root users 
+                      `~/.ssh/authorized_keys` file automatically.
                     items:
                       type: string
       responses:
@@ -2899,7 +2899,7 @@ paths:
                 "authorized_users": [
                   "myUser",
                   "secondaryUser"
-                ]
+                ],
                 "booted": true,
                 "label": "linode123",
                 "type": "g6-standard-2",
