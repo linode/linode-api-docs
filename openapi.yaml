@@ -3956,6 +3956,10 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
+                "authorized_users": [
+                  "myUser",
+                  "secondaryUser"
+                ],
                 "root_pass": "aComplexP@ssword",
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -3968,6 +3972,8 @@ paths:
           linode-cli linodes disk-create 123 \
             --size 1300 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUser" \
+            --authorized_users "secondaryUser" \
             --root_pass aComplex@Password \
             --image "linode/debian9" \
             --stackscript_id 10079 \
@@ -4793,6 +4799,10 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
+                "authorized_users": [
+                  "myUsername",
+                  "secondaryUsername"
+                ],
                 "booted": true,
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -4806,6 +4816,8 @@ paths:
             --image "linode/debian9" \
             --root_pass aComplex@Password \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUsername" \
+            --authorized_users "secondaryUsername" \
             --booted true \
             --stackscript_id 10079 \
             --stackscript_data '{"gh_username": "linode"}'
@@ -10462,6 +10474,17 @@ components:
           description: >
             This is an optional list of public SSH keys that will be automatically appended
             to the root user's `~/.ssh/authorized_keys` file.
+        authorized_users:
+          type: array
+          items:
+            type: string
+          writeOnly: true
+          example:
+          - myUser
+          - secondaryUser
+          description: >
+            This is an optional list of usernames that will have their sshkeys, if they have any,
+            automatically appended to the root user's `~/.ssh/authorized_keys` file.
         root_pass:
           type: string
           format: password
@@ -12104,6 +12127,8 @@ components:
           $ref: '#/components/schemas/DiskRequest/properties/root_pass'
         authorized_keys:
           $ref: '#/components/schemas/DiskRequest/properties/authorized_keys'
+        authorized_users:
+          $ref: '#/components/schemas/DiskRequest/properties/authorized_users'
         stackscript_id:
           $ref: '#/components/schemas/DiskRequest/properties/stackscript_id'
         stackscript_data:
