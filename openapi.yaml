@@ -2729,7 +2729,8 @@ paths:
             * `swap_size` can be used to customize the swap disk size.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
-            * SSH keys must be associated with your Profile first. See [/profile/sshkeys](/#operation/addSSHKey) for more information.
+          * You may also supply a list of usernames via the `authorized_users` field.
+            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/#operation/addSSHKey) for more information.
 
         * Using a StackScript.
           * See [/linode/stackscripts](/#operation/getStackScripts) for
@@ -2739,7 +2740,8 @@ paths:
             * See [/linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible Images.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
-            * SSH keys must be associated with your Profile first. See [/profile/sshkeys](/#operation/addSSHKey) for more information.
+          * You may also supply a list of usernames via the `authorized_users` field.
+            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/#operation/addSSHKey) for more information.
 
         * Using one of your other Linode's backups.
           * You must create a Linode large enough to accommodate the Backup's size.
@@ -8914,7 +8916,7 @@ paths:
         - account:read_only
       responses:
         '200':
-          description: A SSH Key object
+          description: An SSH Key object
           content:
             application/json:
               schema:
@@ -8934,7 +8936,7 @@ paths:
       - Profile
       summary: Update SSH Key
       description: >
-        Updates a SSH Key that you have permission to `read_write`.
+        Updates an SSH Key that you have permission to `read_write`.
       operationId: updateSSHKey
       x-linode-cli-action: update
       security:
@@ -8981,8 +8983,8 @@ paths:
 
         **Note:** deleting an SSH Key will *not* remove it from any Linode or
         Disk that was deployed with `authorized_keys`. In those cases, the keys
-        must be manually deleted. This endpoint will only delete the key's
-        association from your Profile.
+        must be manually deleted on the Linode or Disk.
+        This endpoint will only delete the key's association from your Profile.
       operationId: deleteSSHKey
       x-linode-cli-action: delete
       security:
@@ -14416,8 +14418,8 @@ components:
           type: string
           format: ssh-key
           description: >
-            The public SSH Key. A 1024 to 16384 bit length algorithmically generated character
-            string from which a challenge code is created for authentication.
+            The public SSH Key, which is used to authenticate to the root user
+            of the Linodes you deploy.
           readOnly: true
         created:
           type: string
@@ -14443,9 +14445,8 @@ components:
           type: string
           format: ssh-key
           description: >
-            The public key. A 1024 to 16384 bit length algorithmically
-            generated character string from which a challenge code is created
-            for authentication.
+            The public SSH Key, which is used to authenticate to the root user
+            of the Linodes you deploy.
     Volume:
       type: object
       required:
