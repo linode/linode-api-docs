@@ -49,6 +49,57 @@
                   Versioning 2.0.0 Guidelines</a>.
               </p>
               <h2 class="release-header">
+                2018-08-28
+                <span class="release-version">version 4.0.4</span>
+              </h2>
+              <h3>Added:</h3>
+              <ul>
+                <li>Added User SSH Keys
+                  <ul>
+                    <li>Allows storage and deployment of public SSH Keys</li>
+                    <li>Added GET /profile/sshkeys</li>
+                    <li>Added POST /profile/sshkeys</li>
+                    <li>Added GET /profile/sshkeys/{ssh_key_id}</li>
+                    <li>Added PUT /profile/sshkeys/{ssh_key_id}</li>
+                    <li>Added DELETE /profile/sshkeys/{ssh_key_id}</li>
+                    <li>Added SSH Key labels to User object</li>
+                  </ul>
+                </li>
+                <li>Allow deploying Linodes with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/</li>
+                  </ul>
+                </li>
+                <li>Allow rebuilding Linodes with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/{linode_id}/rebuild</li>
+                  </ul>
+                </li>
+                <li>Allow rebuilding Linodes with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/{linode_id}/rebuild</li>
+                  </ul>
+                </li>
+                <li>Allow deploying Disks with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/{linode_id}/disks</li>
+                  </ul>
+                </li>
+                <li>NodeBalancer config rebuild
+                  <ul>
+                    <li>Allows fast track config/node rebuilding</li>
+                    <li>POST nodebalancers/{nodebalancerId}/configs/{configId}/rebuild</li>
+                  </ul>
+                </li>
+                <li>Add expires to Image map for automatic Images</li>
+              </ul>
+              <h3>Fixed:</h3>
+              <ul>
+                <li>Removed duplicative Event for StackScript creation</li>
+                <li>Fixed typo in DNS error message</li>
+                <li>Added 'field' to StackScript errors</li>
+              </ul>
+              <h2 class="release-header">
                 2018-07-12
                 <span class="release-version">version 4.0.3</span>
               </h2>
