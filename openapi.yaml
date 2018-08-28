@@ -1554,17 +1554,31 @@ paths:
               required:
               - username
               - email
-              - password
-              allOf:
-              - $ref: '#/components/schemas/User'
-              - type: object
-                properties:
-                  email:
-                    type: string
-                    format: email
-                    description: >
-                      The new User's email address.
-                    example: example_user@linode.com
+              properties:
+                username:
+                  type: string
+                  pattern: ^[a-zA-Z0-9]((?![_-]{2,})[a-zA-Z0-9-_])+[a-zA-Z0-9]$
+                  minLength: 3
+                  maxLength: 32
+                  description: >
+                    The new User's username. This is used for logging in, and may also be
+                    displayed alongside actions the User performs (for example, in Events
+                    or public StackScripts).
+                  example: example_user
+                email:
+                  type: string
+                  format: email
+                  description: >
+                    The new User's email address.
+                  example: example_user@linode.com
+                restricted:
+                  type: boolean
+                  description: >
+                    If true, the new User must be granted access to perform actions or access
+                    entities on this Account. See
+                    [/account/users/{username}/grants](/#operation/getUserGrants)
+                    for details on how to configure grants for a restricted User.
+                  example: true
       responses:
         '200':
           description: New User created successfully.
@@ -2715,6 +2729,8 @@ paths:
             * `swap_size` can be used to customize the swap disk size.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
+          * You may also supply a list of usernames via the `authorized_users` field.
+            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/#operation/addSSHKey) for more information.
 
         * Using a StackScript.
           * See [/linode/stackscripts](/#operation/getStackScripts) for
@@ -2724,6 +2740,8 @@ paths:
             * See [/linode/stackscript/{stackscriptId}](/#operation/getStackScript) for compatible Images.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
+          * You may also supply a list of usernames via the `authorized_users` field.
+            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/#operation/addSSHKey) for more information.
 
         * Using one of your other Linode's backups.
           * You must create a Linode large enough to accommodate the Backup's size.
@@ -2806,21 +2824,21 @@ paths:
                     type: string
                     format: password
                     description: >
-                      The password for the root user on the newly created Linode.
+                      The password for the root user on the newly-created Linode.
                       Only accepted if "image" is provided.
                     example: s3cureP@ssw0rd
                   authorized_keys:
                     type: array
                     description: >
                       A list of SSH public keys to deploy for the root user on
-                      the newly created Linode.  Only accepted if "image" is
+                      the newly-created Linode.  Only accepted if `image` is
                       provided.
                     items:
                       type: string
                   stackscript_id:
                     type: integer
                     description: >
-                      The StackScript to deploy to the newly created Linode.  If
+                      The StackScript to deploy to the newly-created Linode.  If
                       provided, "image" must also be provided, and must be an
                       Image that is compatible with this StackScript.
                     example: 10079
@@ -2829,13 +2847,13 @@ paths:
                     description: >
                       An object containing responses to any User Defined Fields
                       present in the StackScript being deployed to this Linode.
-                      Only accepted if "stackscript_id" is given.  The required
+                      Only accepted if `stackscript_id` is given.  The required
                       values depend on the StackScript being deployed.
                   booted:
                     type: boolean
                     description: >
                       Whether to boot this Linode after the deploy is complete.
-                      Defaults to true if an "image" is provided.  Not accepted
+                      Defaults to true if `image` is provided. Not accepted
                       if not deploying from an Image.
                   label:
                     $ref: '#/components/schemas/Linode/properties/label'
@@ -2846,6 +2864,14 @@ paths:
                     description: >
                       If true, the created Linode will have private networking enabled.
                     example: true
+                  authorized_users:
+                    type: array
+                    description: >
+                      A list of usernames. If the usernames have associated
+                      SSH keys, the keys will be appended to the root users
+                      `~/.ssh/authorized_keys` file automatically.
+                    items:
+                      type: string
       responses:
         '200':
           description: >
@@ -2874,6 +2900,10 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
+                "authorized_users": [
+                  "myUser",
+                  "secondaryUser"
+                ],
                 "booted": true,
                 "label": "linode123",
                 "type": "g6-standard-2",
@@ -2892,6 +2922,8 @@ paths:
             --region us-east \
             --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+            --authorized_users "myUser"
+            --authorized_users "secondaryUser"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
@@ -3942,6 +3974,10 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
+                "authorized_users": [
+                  "myUser",
+                  "secondaryUser"
+                ],
                 "root_pass": "aComplexP@ssword",
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -3954,6 +3990,8 @@ paths:
           linode-cli linodes disk-create 123 \
             --size 1300 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUser" \
+            --authorized_users "secondaryUser" \
             --root_pass aComplex@Password \
             --image "linode/debian9" \
             --stackscript_id 10079 \
@@ -4779,6 +4817,10 @@ paths:
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
+                "authorized_users": [
+                  "myUsername",
+                  "secondaryUsername"
+                ],
                 "booted": true,
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -4792,6 +4834,8 @@ paths:
             --image "linode/debian9" \
             --root_pass aComplex@Password \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUsername" \
+            --authorized_users "secondaryUsername" \
             --booted true \
             --stackscript_id 10079 \
             --stackscript_data '{"gh_username": "linode"}'
@@ -8632,6 +8676,215 @@ paths:
       - lang: CLI
         source: >
           linode-cli profile token-delete 123
+  /profile/sshkeys:
+    x-linode-cli-command: sshkeys
+    description: >
+      A collection of SSH Keys added by you.
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - Profile
+      summary: List SSH Keys
+      description: >
+        Returns a collection of SSH Keys you've added to your Profile.
+      operationId: getSSHKeys
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of SSH Key objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SSHKey'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/sshkeys
+      - lang: CLI
+        source: >
+          linode-cli sshkeys list
+    post:
+      tags:
+      - Profile
+      summary: Add SSH Key
+      description: >
+        Adds an SSH Key to your Account profile.
+      operationId: addSSHKey
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: Add SSH Key
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SSHKeyRequest'
+      responses:
+        '200':
+          description: SSH Key associated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "label": "My SSH Key"
+                  "ssh_key": "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+              }' \
+              https://api.linode.com/v4/profile/sshkeys
+      - lang: CLI
+        source: >
+          linode-cli sshkeys create \
+            --label "My SSH Key"
+            --ssh_key "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
+  /profile/sshkeys/{sshKeyId}:
+    x-linode-cli-command: sshkeys
+    parameters:
+    - name: sshKeyId
+      in: path
+      description: The ID of the SSHKey
+      required: true
+      schema:
+        type: integer
+    get:
+      tags:
+      - Profile
+      summary: View SSH Key
+      description: >
+        Returns a single SSH Key object identified by `id` that you have access
+        to view.
+      operationId: getSSHKey
+      x-linode-cli-action: view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: An SSH Key object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/sshkeys/42
+      - lang: CLI
+        source: >
+          linode-cli sshkeys view 42
+    put:
+      tags:
+      - Profile
+      summary: Update SSH Key
+      description: >
+        Updates an SSH Key that you have permission to `read_write`.
+      operationId: updateSSHKey
+      x-linode-cli-action: update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: >
+          The fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SSHKey'
+      responses:
+        '200':
+          description: SSH Key updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSHKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "my laptop"
+              }' \
+              https://api.linode.com/v4/profile/sshkey/42
+      - lang: CLI
+        source: >
+          linode-cli sshkey update 42 \
+            --label "my laptop"
+    delete:
+      tags:
+      - Profile
+      summary: Delete SSH Key
+      description: >
+        Deletes an SSH Key you have access to.
+
+
+        **Note:** deleting an SSH Key will *not* remove it from any Linode or
+        Disk that was deployed with `authorized_keys`. In those cases, the keys
+        must be manually deleted on the Linode or Disk.
+        This endpoint will only delete the key's association from your Profile.
+      operationId: deleteSSHKey
+      x-linode-cli-action: delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: SSH Key deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authoriztion: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/profile/sshkeys/42
+      - lang: CLI
+        source: >
+          linode-cli sshkey delete 42
   /regions:
     x-linode-cli-command: regions
     get:
@@ -9948,9 +10201,10 @@ components:
       properties:
         card_number:
           type: string
+          format: PAN
           description: Your credit card number. No spaces or dashes allowed.
-          minLength: 16
-          maxLength: 16
+          minLength: 13
+          maxLength: 23
           example: 4111111111111111
         expiry_month:
           type: integer
@@ -10117,8 +10371,20 @@ components:
           example:
           - ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer
           description: >
-            This is an optional list of public SSH keys that will be automatically appended
+            A list of public SSH keys that will be automatically appended
             to the root user's `~/.ssh/authorized_keys` file.
+        authorized_users:
+          type: array
+          items:
+            type: string
+          writeOnly: true
+          example:
+          - myUser
+          - secondaryUser
+          description: >
+            A list of usernames that will have their SSH keys,
+            if any, automatically appended to the root user's
+            `~/.ssh/authorized_keys` file.
         root_pass:
           type: string
           format: password
@@ -10753,7 +11019,7 @@ components:
           readOnly: true
         description:
           type: string
-          description: An optional detailed description of this Image.
+          description: A detailed description of this Image.
           example: The detailed description of my Image.
           x-linode-cli-display: 4
           x-linode-cli-color:
@@ -10783,6 +11049,13 @@ components:
           - manual
           - automatic
           example: manual
+          readOnly: true
+        expiry:
+          type: string
+          format: date-time
+          description: >
+            Only Images created automatically (from a deleted Linode; type=automatic) will expire.
+          example: '2018-08-01T00:01:01'
           readOnly: true
         vendor:
           x-linode-filterable: true
@@ -10836,7 +11109,7 @@ components:
           readOnly: true
         description:
           type: string
-          description: An optional detailed description of this Image.
+          description: A detailed description of this Image.
           example: null
           x-linode-cli-display: 4
           x-linode-cli-color:
@@ -10866,6 +11139,13 @@ components:
           - manual
           - automatic
           example: manual
+          readOnly: true
+        expiry:
+          type: string
+          format: date-time
+          description: >
+            Only Images created automatically (from a deleted Linode; type=automatic) will expire.
+          example: null
           readOnly: true
         vendor:
           x-linode-filterable: true
@@ -11747,6 +12027,8 @@ components:
           $ref: '#/components/schemas/DiskRequest/properties/root_pass'
         authorized_keys:
           $ref: '#/components/schemas/DiskRequest/properties/authorized_keys'
+        authorized_users:
+          $ref: '#/components/schemas/DiskRequest/properties/authorized_users'
         stackscript_id:
           $ref: '#/components/schemas/DiskRequest/properties/stackscript_id'
         stackscript_data:
@@ -13889,6 +14171,19 @@ components:
             for details on how to configure grants for a restricted User.
           example: true
           x-linode-cli-display: 3
+        ssh_keys:
+          type: list
+          items:
+            type: string
+          description: >
+            A list of SSH Key labels added by this User. These are the keys
+            that will be deployed if this User is included in the `authorized_users`
+            field of a [create Linode](/#operation/createLinodeInstance),
+            [rebuild Linode](/#operation/rebuildLinodeInstance),
+            or [create Disk](/#operation/addLinodeDisk) request.
+          example:
+          - home-pc
+          - laptop
     UserDefinedField:
       type: object
       required:
@@ -13936,6 +14231,57 @@ components:
           description: >
             The default value.  If not specified, this value will be used.
           readOnly: true
+    SSHKey:
+      type: object
+      description: >
+        A credential object for authenticating a User's secure shell connection to a Linode.
+      properties:
+        id:
+          type: integer
+          description: >
+            The unique identifier of an SSH Key object.
+          example: 42
+          readOnly: true
+        label:
+          type: string
+          description: >
+            A label for the SSH Key.
+          example: "My SSH Key"
+          minLength: 0
+          maxLength: 64
+        ssh_key:
+          type: string
+          format: ssh-key
+          description: >
+            The public SSH Key, which is used to authenticate to the root user
+            of the Linodes you deploy.
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          description: >
+            The date this key was added.
+          example: "2018-01-01T00:01:01"
+          readOnly: true
+    SSHKeyRequest:
+      type: object
+      description: >
+        An object consisting of a user identified name as the `label` and the
+        generated key as the `ssh-key`.
+      properties:
+        label:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: >
+            A label for the key.
+          example: "My SSH Key"
+        ssh_key:
+          type: string
+          format: ssh-key
+          description: >
+            The public SSH Key, which is used to authenticate to the root user
+            of the Linodes you deploy.
     Volume:
       type: object
       required:
