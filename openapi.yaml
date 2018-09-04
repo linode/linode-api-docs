@@ -9384,18 +9384,25 @@ paths:
       responses:
         '200':
           description: >
-            A paginated list of objects that have been tagged with the requested
-            Tag.
+            A paginated list of objects, organized by type, that have been
+            tagged with the requested Tag.
           content:
-            applicaiton/json:
+            application/json:
               schema:
-                type: object
                 properties:
                   data:
                     type: array
                     items:
-                      anyOf:
-                      - $ref: '#/components/schemas/Linode'
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: 'linode'
+                        data:
+                          oneOf:
+                          - $ref: '#/components/schemas/Linode'
+                          discriminator:
+                            propertyName: type
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
