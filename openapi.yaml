@@ -12463,6 +12463,15 @@ components:
             Amount of RAM included in this Linode Type.
           example: 4096
           x-linode-cli-display: 5
+        successor:
+          type: string
+          readOnly: true
+          nullable: true
+          description: >
+            The Linode Type that a [mutate](#operation/mutateLinodeInstance)
+            will upgrade to for a Linode of this type.  If "null", a Linode of this type
+            may not mutate.
+          example: null
         transfer:
           x-linode-filterable: true
           type: integer
