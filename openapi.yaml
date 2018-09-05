@@ -12468,7 +12468,7 @@ components:
           readOnly: true
           nullable: true
           description: >
-            The Linode Type that a <a href="#operation/mutateLinodeInstance">mutate</a>
+            The Linode Type that a [mutate](#operation/mutateLinodeInstance)
             will upgrade to for a Linode of this type.  If "null", a Linode of this type
             may not mutate.
           example: null
