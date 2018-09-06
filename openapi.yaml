@@ -2753,6 +2753,10 @@ paths:
             * See [POST /linode/instances/{linodeId}/boot](/#operation/bootLinodeInstance).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        tags on Linodes.
       tags:
       - Linode Instances
       operationId: createLinodeInstance
@@ -2992,6 +2996,10 @@ paths:
       summary: Update Linode
       description: >
         Updates a Linode that you have permission to `read_write`.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        tags on Linodes.
       operationId: updateLinodeInstance
       x-linode-cli-action: update
       security:
@@ -9275,7 +9283,12 @@ paths:
       - Tags
       summary: List Tags
       description: >
-        Returns a paginated list of Tags on your account.
+        Tags are User-defined labels attached to objects in your Account, such
+        as Linodes. They are used for specifying and grouping attributes of
+        objects that are relevant to the User.
+
+
+        This endpoint returns a paginated list of Tags on your account.
       operationId: getTags
       x-linode-cli-action: list
       security:
@@ -9314,6 +9327,10 @@ paths:
       description: >
         Creates a new Tag and optionally tags requested objects with it
         immediately.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        Tags.
       operationId: createTag
       x-linode-cli-action: create
       security:
@@ -9415,6 +9432,10 @@ paths:
       summary: Delete a Tag
       description: >
         Remove a Tag from all objects and delete it.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        Tags.
       tags:
       - Tags
       operationId: deleteTag
