@@ -2794,6 +2794,10 @@ paths:
                       enrolled in the Linode Backup service. This will incur an additional charge.
                       The cost for the Backup service is dependent on the Type of Linode deployed.
 
+                      This option is always treated as `true` if the account-wide `backups_enabled`
+                      setting is `true`.  See [account settings](/#operaton/getAccountSettings)
+                      for more information.
+
                       Backup pricing is included in the response from [/linodes/types](/#operation/getLinodeTypes)
                   swap_size:
                     type: integer
@@ -10228,6 +10232,15 @@ components:
             new Linodes and Linode Configs.
           example: false
           x-linode-cli-display: 1
+        backups_enabled:
+          type: boolean
+          description: >
+            Account-wide backups default.  If `true`, all Linodes created will
+            automatically be enrolled in the Backups service.  If `false`, Linodes
+            will not be enrolled by default, but may still be enrolled on creation
+            or later.
+          example: true
+          x-linode-cli-display: 4
     AuthorizedApp:
       type: object
       description: >
