@@ -2753,6 +2753,10 @@ paths:
             * See [POST /linode/instances/{linodeId}/boot](/#operation/bootLinodeInstance).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        tags on Linodes.
       tags:
       - Linode Instances
       operationId: createLinodeInstance
@@ -2789,6 +2793,10 @@ paths:
                       If this field is set to `true`, the created Linode will automatically be
                       enrolled in the Linode Backup service. This will incur an additional charge.
                       The cost for the Backup service is dependent on the Type of Linode deployed.
+
+                      This option is always treated as `true` if the account-wide `backups_enabled`
+                      setting is `true`.  See [account settings](/#operaton/getAccountSettings)
+                      for more information.
 
                       Backup pricing is included in the response from [/linodes/types](/#operation/getLinodeTypes)
                   swap_size:
@@ -2857,6 +2865,8 @@ paths:
                       if not deploying from an Image.
                   label:
                     $ref: '#/components/schemas/Linode/properties/label'
+                  tags:
+                    $ref: '#/components/schemas/Linode/properties/tags'
                   group:
                     $ref: '#/components/schemas/Linode/properties/group'
                   private_ip:
@@ -2990,6 +3000,10 @@ paths:
       summary: Update Linode
       description: >
         Updates a Linode that you have permission to `read_write`.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        tags on Linodes.
       operationId: updateLinodeInstance
       x-linode-cli-action: update
       security:
@@ -9262,6 +9276,187 @@ paths:
         source: >
           linode-cli tickets reply 11223344 \
             --description "Thank you for your help. I was able to figure out what the problem was and I successfully reset my password. You guys are the best!"
+  /tags:
+    x-linode-cli-command: tags
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - Tags
+      summary: List Tags
+      description: >
+        Tags are User-defined labels attached to objects in your Account, such
+        as Linodes. They are used for specifying and grouping attributes of
+        objects that are relevant to the User.
+
+
+        This endpoint returns a paginated list of Tags on your account.
+      operationId: getTags
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: A paginated list of Tags
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Tag'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/tags
+    post:
+      tags:
+      - Tags
+      summary: Create New Tag
+      description: >
+        Creates a new Tag and optionally tags requested objects with it
+        immediately.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        Tags.
+      operationId: createTag
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: >
+          The tag to create, and optionally the objects to tag.
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - label
+              properties:
+                label:
+                  type: string
+                  description: >
+                    The new Tag.
+                  minLength: 3
+                  maxLength: 30
+                  example: example tag
+                linodes:
+                  type: array
+                  items:
+                    type: integer
+                  description: >
+                    A list of Linode IDs to apply the new Tag to.  You must be
+                    allowed to `read_write` all of the requested Linodes, or the
+                    Tag will not be created and an error will be returned.
+                  example:
+                  - 123
+                  - 456
+      responses:
+        '200':
+          description: The new Tag.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /tags/{label}:
+    x-linode-cli-command: tags
+    parameters:
+    - name: label
+      in: path
+      schema:
+        type: string
+      required: true
+    get:
+      summary: List Tagged Objects
+      description: >
+        Returns a paginated list of all objects you've tagged with the requested
+        Tag. This is a mixed collection of all object types.
+      tags:
+      - Tags
+      operationId: getTaggedObjects
+      x-linode-cli-command: view
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: >
+            A paginated list of objects, organized by type, that have been
+            tagged with the requested Tag.
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: 'linode'
+                        data:
+                          oneOf:
+                          - $ref: '#/components/schemas/Linode'
+                          discriminator:
+                            propertyName: type
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      summary: Delete a Tag
+      description: >
+        Remove a Tag from all objects and delete it.
+
+
+        **Important**: You must be an unrestricted User in order to add or modify
+        Tags.
+      tags:
+      - Tags
+      operationId: deleteTag
+      x-linode-cli-command: delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: Tag deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /volumes:
     x-linode-cli-command: volumes
     get:
@@ -10037,6 +10232,15 @@ components:
             new Linodes and Linode Configs.
           example: false
           x-linode-cli-display: 1
+        backups_enabled:
+          type: boolean
+          description: >
+            Account-wide backups default.  If `true`, all Linodes created will
+            automatically be enrolled in the Backups service.  If `false`, Linodes
+            will not be enrolled by default, but may still be enrolled on creation
+            or later.
+          example: true
+          x-linode-cli-display: 4
     AuthorizedApp:
       type: object
       description: >
@@ -11661,6 +11865,17 @@ components:
           description: >
             A deprecated property denoting a group label for this Linode.
           example: "Linode-Group"
+        tags:
+          x-linode-filterable: true
+          description: >
+            An array of tags applied to this object.  Tags are for organizational
+            purposes only.
+          type: list
+          items:
+            type: string
+          example:
+          - example tag
+          - another example
         id:
           type: integer
           description: >
@@ -12282,6 +12497,15 @@ components:
             Amount of RAM included in this Linode Type.
           example: 4096
           x-linode-cli-display: 5
+        successor:
+          type: string
+          readOnly: true
+          nullable: true
+          description: >
+            The Linode Type that a [mutate](#operation/mutateLinodeInstance)
+            will upgrade to for a Linode of this type.  If "null", a Linode of this type
+            may not mutate.
+          example: null
         transfer:
           x-linode-filterable: true
           type: integer
@@ -14134,6 +14358,17 @@ components:
             The amount of network usage you have used this billing cycle.
           example: 2
           x-linode-cli-display: 2
+    Tag:
+      type: object
+      description: >
+        A tag that has been applied to an object on your Account. Tags are
+        currently for organizational purposes only.
+      properties:
+        label:
+          type: string
+          description: >
+            A Label used for organization of objects on your Account.
+          example: example tag
     User:
       type: object
       description: >
