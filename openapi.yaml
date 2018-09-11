@@ -9395,6 +9395,7 @@ paths:
       - Tags
       operationId: getTaggedObjects
       x-linode-cli-command: view
+      x-linode-cli-skip: true
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -9443,7 +9444,7 @@ paths:
       tags:
       - Tags
       operationId: deleteTag
-      x-linode-cli-command: delete
+      x-linode-cli-action: delete
       security:
       - personalAccessToken: []
       - oauth:
