@@ -11871,7 +11871,7 @@ components:
           description: >
             An array of tags applied to this object.  Tags are for organizational
             purposes only.
-          type: list
+          type: array
           items:
             type: string
           example:
@@ -14408,7 +14408,7 @@ components:
           example: true
           x-linode-cli-display: 3
         ssh_keys:
-          type: list
+          type: array
           items:
             type: string
           description: >
