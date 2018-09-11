@@ -49,6 +49,72 @@
                   Versioning 2.0.0 Guidelines</a>.
               </p>
               <h2 class="release-header">
+                2018-09-10
+                <span class="release-version">version 4.0.5</span>
+              </h2>
+              <h3>Added:</h3>
+              <ul>
+                <li>Added `backups-enabled` to /account/settings to automatically
+                  add backups service for new Linodes. </li>
+                <li>Added tags for Linodes </li>
+                <li>Added linode/types-legacy collection, returning all Linode
+                  types that <em>cannot</em> be deployed.</li>
+                <li>Added `successor` field to Linode Type object.</li>
+              </ul>
+              <h3>Fixed:</h3>
+              <ul>
+                <li>Fixed issue with backup windows when a window could not
+                  be determined.</li>
+                <li>Fixed bug related to reattaching volumes to another Linode
+                  when the original Linode is deleted.</li>
+              </ul>
+              <h2 class="release-header">
+                2018-08-28
+                <span class="release-version">version 4.0.4</span>
+              </h2>
+              <h3>Added:</h3>
+              <ul>
+                <li>Added User SSH Keys
+                  <ul>
+                    <li>Allows storage and deployment of public SSH Keys</li>
+                    <li>Added GET /profile/sshkeys</li>
+                    <li>Added POST /profile/sshkeys</li>
+                    <li>Added GET /profile/sshkeys/{ssh_key_id}</li>
+                    <li>Added PUT /profile/sshkeys/{ssh_key_id}</li>
+                    <li>Added DELETE /profile/sshkeys/{ssh_key_id}</li>
+                    <li>Added SSH Key labels to User object</li>
+                  </ul>
+                </li>
+                <li>Allow deploying Linodes with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/</li>
+                  </ul>
+                </li>
+                <li>Allow rebuilding Linodes with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/{linode_id}/rebuild</li>
+                  </ul>
+                </li>
+                <li>Allow deploying Disks with stored SSH Keys
+                  <ul>
+                    <li>Added `authorized_users` to POST /linodes/instances/{linode_id}/disks</li>
+                  </ul>
+                </li>
+                <li>NodeBalancer config rebuild
+                  <ul>
+                    <li>Allows fast track config/node rebuilding</li>
+                    <li>POST nodebalancers/{nodebalancerId}/configs/{configId}/rebuild</li>
+                  </ul>
+                </li>
+                <li>Add expires to Image map for automatic Images</li>
+              </ul>
+              <h3>Fixed:</h3>
+              <ul>
+                <li>Removed duplicative Event for StackScript creation</li>
+                <li>Fixed typo in DNS error message</li>
+                <li>Added 'field' to StackScript errors</li>
+              </ul>
+              <h2 class="release-header">
                 2018-07-12
                 <span class="release-version">version 4.0.3</span>
               </h2>
@@ -501,44 +567,6 @@
               <h3>Fixed:</h3>
               <ul>
                 <li>Allow filtering of GET /images</li>
-              </ul>
-
-              <h2 class="release-header">
-                  2017-11-20
-              </h2>
-
-              <h3>Changed:</h3>
-              <ul>
-                <li>Reworked UserGrant system
-                  <ul>
-                    <li>Three Grant levels are now enforced: No grants, "read_only", and "read_write"</li>
-                    <li>"read_only" allows access to GET endpoints</li>
-                    <li>"read_write" is equivalent to legacy "all" grant</li>
-                    <li>Legacy "all" or "access" grants are treated as "read_write"</li>
-                  </ul>
-                </li>
-                <li>Changed GET /account/users/:username/grants
-                  <ul>
-                    <li>Grants response objects now always include "id", "label" and "permissions"</li>
-                    <li>"permissions" can be null or an enum of either "read_only" or "read_write"</li>
-                  </ul>
-                </li>
-                <li>Changed PUT /account/users/:username/grants
-                  <ul>
-                    <li>Grants now accepted in the new format detailed above</li>
-                  </ul>
-                </li>
-                <li>Changed GET /profile/grants
-                  <ul>
-                    <li>Grants returned in new format detailed above</li>
-                  </ul>
-                </li>
-                <li>Added support for CAA Domain records</li>
-                <li>Changed POST /linode/instances/:id/disks
-                  <ul>
-                    <li>Now accepts "image" - an image ID to deploy from</li>
-                  </ul>
-                </li>
               </ul>
 
               <h2 class="release-header">
