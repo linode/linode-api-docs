@@ -7783,6 +7783,127 @@ paths:
         source: >
           linode-cli nodebalancers config-delete \
             12345 4567
+  /nodebalancers/{nodeBalancerId}/configs/{configId}/rebuild:
+    parameters:
+    - name: nodeBalancerId
+      in: path
+      description: The ID of the NodeBalancer to access.
+      required: true
+      schema:
+        type: integer
+    - name: configId
+      in: path
+      description: The ID of the Config to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: nodebalancers
+    post:
+      x-linode-grant: add_nodebalancers
+      tags:
+      - NodeBalancers
+      summary: Rebuild Config
+      description: >
+        Rebuilds a NodeBalancer Config and its Nodes that you have
+        permission to modify.
+      operationId: rebuildNodeBalancerConfig
+      x-linode-cli-action: rebuild
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - nodebalancers:read_write
+      requestBody:
+        description: >
+          Information about the NodeBalancer Config to rebuild.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                configs:
+                  type: array
+                  description: >
+                    Each config must have a unique port and at least one Node. Additionally:
+                      * Current Nodes excluded from the request body will be deleted.
+                      * Current Nodes (identified by their ID) will be updated.
+                      * New Nodes (included without an ID) will be created.
+                  items:
+                      allOf:
+                      - $ref: '#/components/schemas/NodeBalancerConfig'
+                      - type: object
+                        properties:
+                          nodes:
+                            type: array
+                            description: >
+                              The NodeBalancer Node(s) that serve this port.
+                              At least one Node is required per configured port.
+
+                              Some considerations for Nodes when rebuilding a config:
+                                * Current Nodes excluded from the request body will be deleted.
+                                * Current Nodes (identified by their ID) will be updated.
+                                * New Nodes (included without an ID) will be created.
+                            items:
+                              $ref: '#/components/schemas/NodeBalancerNode'
+      responses:
+        '200':
+          description: NodeBalancer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeBalancer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "port": 80,
+                "protocol": "http",
+                "algorithm": "roundrobin",
+                "stickiness": "http_cookie",
+                "check": "http_body",
+                "check_interval": 90,
+                "check_timeout": 10,
+                "check_attempts": 3,
+                "check_path": "/test",
+                "check_body": "it works",
+                "check_passive": true,
+                "cipher_suite": "recommended",
+                "nodes": [
+                  {
+                    "id": 543231,
+                    "address": "192.168.210.120:80",
+                    "label": "node54321",
+                    "weight": 50,
+                    "mode": "accept"
+                  },
+                  {
+                    "address": "192.168.210.122:81",
+                    "label": "thenewnode",
+                    "weight": 50,
+                    "mode": "accept"
+                  },
+                ]
+              }' \
+              https://api.linode.com/v4/nodebalancers/12345/configs/4567/rebuild
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers config-rebuild \
+            12345 4567 \
+            --port 80 \
+            --protocol http \
+            --algorithm roundrobin \
+            --stickiness http_cookie \
+            --check http_body \
+            --check_interval 90 \
+            --check_timeout 10 \
+            --check_attempts 3 \
+            --check_path "/test" \
+            --check_body "it works" \
+            --check_passive true \
+            --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
     - name: nodeBalancerId
