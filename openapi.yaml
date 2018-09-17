@@ -9250,6 +9250,9 @@ paths:
         Ticket on your Account. File attachments are used to assist our
         Support team in resolving your Ticket. Examples of attachments
         are screen shots and text files that provide additional information.
+
+        Note: Accepted file extensions include: .gif, .jpg, .jpeg, .pjpg,
+        .pjpeg, .tif, .png, .pdf, or .txt.
       operationId: createTicketAttachment
       x-linode-cli-skip: true
       x-linode-cli-action: upload-attachment
@@ -9284,10 +9287,9 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST ' \
-              -F file=/Users/LinodeGuy/pictures/screen_shot.jpg \
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              -F 'file=/Users/LinodeGuy/pictures/screen_shot.jpg' \
               https://api.linode.com/v4/support/tickets/11223344/attachments
   /support/tickets/{ticketId}/replies:
     parameters:
