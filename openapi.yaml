@@ -11152,11 +11152,14 @@ components:
             started: yellow
             default_: white
         time_remaining:
-          type: integer
+          type: string
           readOnly: true
+          nullable: true
           description: >
             The estimated time remaining until the completion of this Event.
-            This value is only returned for in-progress events.
+            This value is only returned for some in-progress migration events.
+            For all other in-progress events, the `percent_complete` attribute
+            will indicate about how much more work is to be done.
           example: null
         username:
           type: string
