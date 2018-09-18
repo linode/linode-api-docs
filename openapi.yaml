@@ -9252,7 +9252,7 @@ paths:
         are screen shots and text files that provide additional information.
 
         Note: Accepted file extensions include: .gif, .jpg, .jpeg, .pjpg,
-        .pjpeg, .tif, .png, .pdf, or .txt.
+        .pjpeg, .tif, .tiff, .png, .pdf, or .txt.
       operationId: createTicketAttachment
       x-linode-cli-skip: true
       x-linode-cli-action: upload-attachment
