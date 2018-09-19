@@ -9315,7 +9315,7 @@ paths:
         - account:read_write
       responses:
         '200':
-          description: Client deleted successfully.
+          description: Support Ticket closed successfully.
           content:
             application/json:
               schema:
@@ -14291,7 +14291,7 @@ components:
         closable:
           type: boolean
           description: >
-            Whether the Support Ticket has been closed or is still active.
+            Whether the Support Ticket may be closed.
           example: false
         description:
           type: string
