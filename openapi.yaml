@@ -9326,7 +9326,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              -X DELETE \
+              -X POST \
               https://api.linode.com/v4/tickets/11223344/close
       - lang: CLI
         source: >
