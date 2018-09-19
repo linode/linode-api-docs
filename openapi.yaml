@@ -9291,6 +9291,46 @@ paths:
               -X POST \
               -F 'file=/Users/LinodeGuy/pictures/screen_shot.jpg' \
               https://api.linode.com/v4/support/tickets/11223344/attachments
+  /support/tickets/{ticketId}/close:
+    parameters:
+    - name: ticketId
+      in: path
+      description: The ID of the Support Ticket.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: tickets
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Support
+      summary: Close Support Ticket
+      description: >
+        Closes a Support Ticket you have access to modify.
+      operationId: closeTicket
+      x-linode-cli-action: close
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: Support Ticket closed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/tickets/11223344/close
+      - lang: CLI
+        source: >
+          linode-cli tickets close 11223344
   /support/tickets/{ticketId}/replies:
     parameters:
     - name: ticketId
@@ -14248,6 +14288,11 @@ components:
           description: >
             The date and time this Ticket was closed.
           example: '2015-06-04T16:07:03'
+        closable:
+          type: boolean
+          description: >
+            Whether the Support Ticket may be closed.
+          example: false
         description:
           type: string
           readOnly: true
