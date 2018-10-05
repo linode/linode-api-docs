@@ -4150,7 +4150,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - Linode Instances
-      summary: Clone a Disk
+      summary: Clone Disk
       description: >
         Copies a disk, byte-for-byte, into a new Disk belonging to the same Linode.
         The Linode must have enough storage space available to accept a new Disk
