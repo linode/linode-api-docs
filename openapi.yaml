@@ -4132,6 +4132,45 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes disk-delete 123 24674
+  /linode/instances/{linodeId}/disks/{diskId}/clone:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode to look up.
+      required: true
+      schema:
+        type: integer
+    - name: diskId
+      in: path
+      description: ID of the Disk to clone.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Linode Instances
+      summary: Clone Disk
+      description: >
+        Copies a disk, byte-for-byte, into a new Disk belonging to the same Linode.
+        The Linode must have enough storage space available to accept a new Disk
+        of the same size as this one or this operation will fail.
+      operationId: cloneLinodeDisk
+      x-linode-cli-action: disk-clone
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      responses:
+        '200':
+          description: Disk clone initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disk'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /linode/instances/{linodeId}/disks/{diskId}/password:
     parameters:
     - name: linodeId
