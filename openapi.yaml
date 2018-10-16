@@ -13698,6 +13698,7 @@ components:
           type: string
           enum:
           - migration_scheduled
+          - migration_imminent
           - migration_pending
           - reboot_scheduled
           - outage
