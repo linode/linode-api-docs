@@ -2117,6 +2117,7 @@ paths:
   /domains/import:
     post:
       x-linode-grant: read_write
+      x-linode-cli-command: domains
       tags:
       - Domains
       summary: Import a Domain Zone
