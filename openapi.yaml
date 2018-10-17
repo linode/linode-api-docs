@@ -3,7 +3,7 @@ info:
   version: DEVELOPMENT
   title: Linode API
   x-logo: {
-    url: '/linode-logo.svg',
+    url: '/api/v4/linode-logo.svg',
     backgroundColor: '#fafafa'
   }
   description: |
@@ -20,7 +20,7 @@ info:
     This document was generated from our OpenAPI Specification.  See the
     [OpenAPI website](https://www.openapis.org) for more information.
 
-    [Download the Linode OpenAPI Specification](/openapi.yaml)
+    [Download the Linode OpenAPI Specification](/api/v4/openapi.yaml)
 
 
     # Changelog
