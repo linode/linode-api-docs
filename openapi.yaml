@@ -2117,6 +2117,7 @@ paths:
   /domains/import:
     post:
       x-linode-grant: read_write
+      x-linode-cli-command: domains
       tags:
       - Domains
       summary: Import a Domain Zone
@@ -4131,6 +4132,45 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes disk-delete 123 24674
+  /linode/instances/{linodeId}/disks/{diskId}/clone:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode to look up.
+      required: true
+      schema:
+        type: integer
+    - name: diskId
+      in: path
+      description: ID of the Disk to clone.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Linode Instances
+      summary: Clone Disk
+      description: >
+        Copies a disk, byte-for-byte, into a new Disk belonging to the same Linode.
+        The Linode must have enough storage space available to accept a new Disk
+        of the same size as this one or this operation will fail.
+      operationId: cloneLinodeDisk
+      x-linode-cli-action: disk-clone
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      responses:
+        '200':
+          description: Disk clone initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disk'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /linode/instances/{linodeId}/disks/{diskId}/password:
     parameters:
     - name: linodeId
@@ -12126,7 +12166,7 @@ components:
             disk:
               type: integer
               description: >
-                The amount of storage space, in GB. this Linode has access to. A typical Linode
+                The amount of storage space, in MB, this Linode has access to. A typical Linode
                 will divide this space between a primary disk with an `image` deployed to it, and
                 a swap disk, usually 512 MB. This is the default configuration created when
                 deploying a Linode with an `image` through
@@ -13659,6 +13699,7 @@ components:
           type: string
           enum:
           - migration_scheduled
+          - migration_imminent
           - migration_pending
           - reboot_scheduled
           - outage
