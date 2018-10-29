@@ -14010,6 +14010,7 @@ components:
             and will never expire unless revoked.
           x-linode-cli-display: 6
           example: '2018-01-01T13:46:32'
+          readOnly: true
     Profile:
       type: object
       description: >
