@@ -83,7 +83,7 @@ info:
 
     ```json
     {
-      "scope": "linodes:create",
+      "scope": "linodes:read_write",
       "access_token": "03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c"
       "token_type": "bearer",
       "expires_in": 7200,
@@ -3235,7 +3235,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - linode:read_write
+        - linodes:read_write
       responses:
         '200':
           description: Backup service was cancelled for the specified Linode.
@@ -3503,7 +3503,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - linodes:create
+        - linodes:read_write
       requestBody:
         description: The requested state your Linode will be cloned into.
         required: true
@@ -5148,7 +5148,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - linodes_read_only
+        - linodes:read_only
       responses:
         '200':
           description: The Linode's statistics for the requested period.
@@ -5186,7 +5186,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - linodes:read
+        - linodes:read_only
       responses:
         '200':
           description: >
@@ -7727,7 +7727,7 @@ paths:
       operationId: updateNodeBalancerConfig
       x-linode-cli-action: config-update
       security:
-      - personlAccessToken: []
+      - personalAccessToken: []
       - oauth:
         - nodebalancers:read_write
       requestBody:
@@ -9572,6 +9572,17 @@ paths:
                   example:
                   - 123
                   - 456
+                domains:
+                  type: array
+                  items:
+                    type: integer
+                  description: >
+                    A list of Domain IDs to apply the new Tag to.  You must be
+                    allowed to `read_write` all of the requested Domains, or the
+                    Tag will not be created and an error will be returned.
+                  example:
+                  - 564
+                  - 565
       responses:
         '200':
           description: The new Tag.
@@ -9626,6 +9637,7 @@ paths:
                         data:
                           oneOf:
                           - $ref: '#/components/schemas/Linode'
+                          - $ref: '#/components/schemas/Domain'
                           discriminator:
                             propertyName: type
                   page:
@@ -10959,6 +10971,17 @@ components:
             345600, 604800, 1209600, and 2419200 - any other value will be
             rounded to the nearest valid value.
           example: 300
+        tags:
+          x-linode-filterable: true
+          description: >
+            An array of tags applied to this object.  Tags are for organizational
+            purposes only.
+          type: array
+          items:
+            type: string
+          example:
+          - example tag
+          - another example
     DomainRecord:
       type: object
       description: >
@@ -14010,6 +14033,7 @@ components:
             and will never expire unless revoked.
           x-linode-cli-display: 6
           example: '2018-01-01T13:46:32'
+          readOnly: true
     Profile:
       type: object
       description: >
