@@ -9807,6 +9807,17 @@ paths:
                     If no config can be selected for attachment, an error will be
                     returned.
                   example: 23456
+                tags:
+                  x-linode-filterable: true
+                  description: >
+                    An array of Tags applied to this object.  Tags are for organizational
+                    purposes only.
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - example tag
+                  - another example
       responses:
         '200':
           description: >
