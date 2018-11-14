@@ -411,7 +411,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreditCard'
+              allOf:
+              - $ref: '#/components/schemas/CreditCard'
+              - properties:
+                  cvv:
+                    type: string
+                    description: >
+                      The Card Verification Value on the back of the card.
+                    example: '123'
       responses:
         '200':
           description: Credit Card updated.
@@ -9583,6 +9590,17 @@ paths:
                   example:
                   - 564
                   - 565
+                volumes:
+                  type: array
+                  items:
+                    type: integer
+                  description: >
+                    A list of Volume IDs to apply the new Tag to.  You must be
+                    allowed to `read_write` all of the requested Volumes, or the
+                    Tag will not be created and an error will be returned.
+                  example:
+                  - 9082
+                  - 10003
       responses:
         '200':
           description: The new Tag.
@@ -9638,6 +9656,7 @@ paths:
                           oneOf:
                           - $ref: '#/components/schemas/Linode'
                           - $ref: '#/components/schemas/Domain'
+                          - $ref: '#/components/schemas/Volume'
                           discriminator:
                             propertyName: type
                   page:
@@ -13718,6 +13737,14 @@ components:
           description: A human-readable description of the Notification.
           example: You have an important ticket open!
           x-linode-cli-display: 2
+        body:
+          type: string
+          readOnly: true
+          description: >
+            A long, markdown-formatted description of this Notification.  Not all
+            Notifications include bodies.
+          nullable: true
+          example: null
         type:
           type: string
           enum:
@@ -13730,6 +13757,7 @@ components:
           - ticket_important
           - ticket_abuse
           - notice
+          - maintenance
           readOnly: true
           description: The type of Notification this is.
           example: ticket_important
@@ -14838,3 +14866,14 @@ components:
           description: When this Volume was last updated.
           example: '2018-01-01T00:01:01'
           readOnly: true
+        tags:
+          x-linode-filterable: true
+          description: >
+            An array of tags applied to this object.  Tags are for organizational
+            purposes only.
+          type: array
+          items:
+            type: string
+          example:
+          - example tag
+          - another example
