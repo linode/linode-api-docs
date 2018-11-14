@@ -13741,7 +13741,7 @@ components:
           type: string
           readOnly: true
           description: >
-            A long, markdown-formatted description of this Notification.  Not all
+            A full description of this Notification, in markdown format.  Not all
             Notifications include bodies.
           nullable: true
           example: null
@@ -14869,7 +14869,7 @@ components:
         tags:
           x-linode-filterable: true
           description: >
-            An array of tags applied to this object.  Tags are for organizational
+            An array of Tags applied to this object.  Tags are for organizational
             purposes only.
           type: array
           items:
