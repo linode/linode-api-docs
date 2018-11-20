@@ -434,7 +434,7 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
-                  "credit_card": 4111111111111111,
+                  "card_number": "4111111111111111",
                   "expiry_month": 11,
                   "expiry_year": 2020
                 }' \
