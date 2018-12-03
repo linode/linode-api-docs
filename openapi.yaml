@@ -434,7 +434,7 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
-                  "credit_card": 4111111111111111,
+                  "card_number": "4111111111111111",
                   "expiry_month": 11,
                   "expiry_year": 2020
                 }' \
@@ -9601,6 +9601,17 @@ paths:
                   example:
                   - 9082
                   - 10003
+                nodebalancers:
+                  type: array
+                  items:
+                    type: integer
+                  description: >
+                    A list of NodeBalancer IDs to apply the new Tag to. You must
+                    be allowed to `read_write` all of the requested NodeBalancers,
+                    or the Tag will not be created and an error will be returned.
+                  example:
+                  - 10301
+                  - 10501
       responses:
         '200':
           description: The new Tag.
@@ -9657,6 +9668,7 @@ paths:
                           - $ref: '#/components/schemas/Linode'
                           - $ref: '#/components/schemas/Domain'
                           - $ref: '#/components/schemas/Volume'
+                          - $ref: '#/components/schemas/NodeBalancer'
                           discriminator:
                             propertyName: type
                   page:
@@ -13356,6 +13368,18 @@ components:
                 this month.
               example: 28.91200828552246
               readOnly: true
+        tags:
+          x-linode-filterable: true
+          description: >
+            An array of Tags applied to this object.  Tags are for organizational
+            purposes only.
+          type: array
+          items:
+            type: string
+          example:
+          - example tag
+          - another example
+
     NodeBalancerConfig:
       type: object
       description: >
