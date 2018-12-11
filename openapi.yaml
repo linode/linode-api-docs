@@ -11162,6 +11162,7 @@ components:
           - backups_cancel
           - backups_restore
           - community_question_reply
+          - community_like
           - credit_card_updated
           - disk_create
           - disk_delete
