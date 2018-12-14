@@ -12724,16 +12724,17 @@ components:
           readOnly: true
           description: >
             Cost in US dollars, broken down into hourly and monthly charges.
-          x-linode-cli-display: 9
           properties:
             hourly:
               type: integer
               description: Cost (in US dollars) per hour.
               example: 0.03
+              x-linode-cli-display: 9
             monthly:
               type: integer
               description: Cost (in US dollars) per month.
               example: 20
+              x-linode-cli-display: 10
         addons:
           type: object
           readOnly: true
