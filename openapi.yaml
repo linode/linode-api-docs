@@ -5093,7 +5093,7 @@ paths:
     get:
       tags:
       - Linode Instances
-      summary: View Current Month Statistics
+      summary: View Linode Statistics
       description: >
         Returns CPU, IO, IPv4, and IPv6 statistics for your Linode
         for the past 24 hours.
