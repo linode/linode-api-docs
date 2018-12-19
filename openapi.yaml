@@ -8865,7 +8865,7 @@ paths:
     get:
       tags:
       - Profile
-      summary: List active TrustedDevices
+      summary: List TrustedDevices
       description: >
         Returns a paginated list of active TrustedDevices for your User.
         Browsers with an active Remember Me Session are logged into your account
@@ -8908,7 +8908,7 @@ paths:
   /profile/devices/{deviceId}:
     x-linode-cli-command: profile
     description: >
-      View or revoke individual TrustedDevices for your user.
+      View or revoke individual TrustedDevices for your User.
     parameters:
     - name: deviceId
       in: path
@@ -8919,9 +8919,9 @@ paths:
     get:
       tags:
       - Profile
-      summary: View an active TrustedDevice
+      summary: View TrustedDevice
       description: >
-        Returns a single active TrustedDevice for your user.
+        Returns a single active TrustedDevice for your User.
       operationId: getTrustedDevice
       x-linode-cli-action: device-view
       security:
@@ -8949,10 +8949,10 @@ paths:
     delete:
       tags:
       - Profile
-      summary: Revoke a TrustedDevice
+      summary: Revoke TrustedDevice
       description: >
-        Revoke an active TrustedDevice for your user.  Once a TrustedDevice is revoked, this
-        browser will have to log in again before accessing your Linode account.
+        Revoke an active TrustedDevice for your User.  Once a TrustedDevice is revoked, this
+        device will have to log in again before accessing your Linode account.
       operationId: revokeTrustedDevice
       x-linode-cli-action: device-revoke
       security:
