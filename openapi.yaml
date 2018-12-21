@@ -8865,7 +8865,7 @@ paths:
     get:
       tags:
       - Profile
-      summary: List TrustedDevices
+      summary: List Trusted Devices
       description: >
         Returns a paginated list of active TrustedDevices for your User.
         Browsers with an active Remember Me Session are logged into your account
@@ -8919,7 +8919,7 @@ paths:
     get:
       tags:
       - Profile
-      summary: View TrustedDevice
+      summary: View Trusted Device
       description: >
         Returns a single active TrustedDevice for your User.
       operationId: getTrustedDevice
@@ -8949,7 +8949,7 @@ paths:
     delete:
       tags:
       - Profile
-      summary: Revoke TrustedDevice
+      summary: Revoke Trusted Device
       description: >
         Revoke an active TrustedDevice for your User.  Once a TrustedDevice is revoked, this
         device will have to log in again before accessing your Linode account.
