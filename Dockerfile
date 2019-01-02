@@ -3,7 +3,7 @@ FROM ruby:2.3
 COPY requirements.txt ./
 RUN apt-get update && apt-get install -y python3 python3-pip build-essential
 RUN pip3 install -r requirements.txt
-RUN gem install --no-ri --no-rdoc fpm
+RUN gem install fpm
 
 # I stole this from the linodemanager-builder to get yarn installed
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
