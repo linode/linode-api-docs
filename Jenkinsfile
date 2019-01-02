@@ -87,7 +87,7 @@ node {
     stage('Package Docs') {
         image.inside() { c ->
             sh "./build-docs.sh ${env.BRANCH_NAME}"
-            archive '*.deb,*.changes'
+            archive '*.deb,*.changes,index.html,openapi.yaml'
         }
     }
 
