@@ -22,7 +22,7 @@ fi
 # run the static site builder
 chmod +x ReDoc-customized/ReDoc-customized/cli/index.js
 
-./ReDoc-customized/ReDoc-customized/cli/index.js bundle openapi.yaml --options.hideDownloadButton=true --options.pathInMiddlePanel=true --options.requiredPropsFirst=true --options.expandResponses="200," --options.noAutoAuth=true --title='Linode API Documentation'
+./ReDoc-customized/ReDoc-customized/cli/index.js bundle openapi.yaml --options.pathInMiddlePanel=true --options.requiredPropsFirst=true --options.expandResponses="200," --options.noAutoAuth=true --title='Linode API Documentation'
 
 rm index.html
 mv redoc-static.html index.html
