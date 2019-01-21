@@ -8858,6 +8858,126 @@ paths:
       - lang: CLI
         source: >
           linode-cli profile token-delete 123
+  /profile/devices:
+    x-linode-cli-command: profile
+    description: >
+      A collection of active TrustedDevices for your user.
+    get:
+      tags:
+      - Profile
+      summary: List Trusted Devices
+      description: >
+        Returns a paginated list of active TrustedDevices for your User.
+        Browsers with an active Remember Me Session are logged into your account
+        until the session expires or is revoked.
+      operationId: getDevices
+      x-linode-cli-action: devices-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of TrustedDevice objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TrustedDevice'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/devices
+      - lang: CLI
+        source: >
+          linode-cli profile devices-list
+  /profile/devices/{deviceId}:
+    x-linode-cli-command: profile
+    description: >
+      View or revoke individual TrustedDevices for your User.
+    parameters:
+    - name: deviceId
+      in: path
+      description: The ID of the TrustedDevice
+      required: true
+      schema:
+        type: integer
+    get:
+      tags:
+      - Profile
+      summary: View Trusted Device
+      description: >
+        Returns a single active TrustedDevice for your User.
+      operationId: getTrustedDevice
+      x-linode-cli-action: device-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: The requested TrustedDevice object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrustedDevice'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/devices/123
+      - lang: CLI
+        source: >
+          linode-cli profile device-view 123
+    delete:
+      tags:
+      - Profile
+      summary: Revoke Trusted Device
+      description: >
+        Revoke an active TrustedDevice for your User.  Once a TrustedDevice is revoked, this
+        device will have to log in again before accessing your Linode account.
+      operationId: revokeTrustedDevice
+      x-linode-cli-action: device-revoke
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: Session revoked successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/profile/devices/123
+      - lang: CLI
+        source: >
+          linode-cli profile device-revoke 123          
   /profile/sshkeys:
     x-linode-cli-command: sshkeys
     description: >
@@ -14774,6 +14894,53 @@ components:
           description: >
             The default value.  If not specified, this value will be used.
           readOnly: true
+    TrustedDevice:
+      type: object
+      description: >
+        A trusted device object represents an active Remember Me session with login.linode.com.
+      properties:
+        id:
+          type: integer
+          description: The unique ID for this TrustedDevice
+          example: 123
+          readOnly: true
+        created:
+          type: string
+          format: date-time
+          description: >
+            When this Remember Me session was started.  This corresponds to the time of login
+            with the "Remember Me" box checked.
+          example: "2018-01-01T01:01:01"
+          readOnly: true
+        expiry:
+          type: string
+          format: date-time
+          description: >
+            When this TrustedDevice session expires.  Sessions typically last 30 days.
+          example: "2018-01-31T01:01:01"
+          readOnly: true
+        user_agent:
+          type: string
+          description: >
+            The User Agent of the browser that created this TrustedDevice session.
+          example: >
+            Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko)
+            Chrome/70.0.3538.77 Safari/537.36 Vivaldi/2.1.1337.36
+          readOnly: true
+        last_authenticated:
+          type: string
+          format: date-time
+          description: >
+            The last time this TrustedDevice was successfully used to authenticate to
+            login.linode.com.
+          example: "2018-01-05T12:57:12"
+          readOnly: true
+        last_remote_addr:
+          type: string
+          description: >
+            The last IP Address to successfully authenticate with this TrustedDevice.
+          example: 12.34.56.78
+          readOnly: true          
     SSHKey:
       type: object
       description: >
