@@ -12828,14 +12828,16 @@ components:
           type: string
           readOnly: true
           description: >
-            The class of the Linode Type. We currently offer three classes of Linodes:
+            The class of the Linode Type. We currently offer four classes of Linodes:
 
               * nanode - Our entry-level Linode Type.
               * standard - Our flagship Linode Type.
+              * dedicated - Our Dedicated CPU Linode Type.
               * highmem - A Linode Type featuring high memory availability.
           enum:
           - nanode
           - standard
+          - dedicated
           - highmem
           example: standard
           x-linode-cli-display: 3
