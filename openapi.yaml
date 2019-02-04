@@ -292,6 +292,10 @@ info:
 
     Endpoints that do not have CLI examples are currently unavailable through the CLI, but
     can be accessed via other methods such as Shell commands and other third-party applications.
+
+    # APIv3
+
+    View the [Linode APIv3 Documentation](https://linode.com/apiv3).
   contact:
     name: Linode
     url: /
