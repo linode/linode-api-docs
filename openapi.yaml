@@ -248,7 +248,9 @@ info:
 
     You can combine and nest operators to construct arbitrarily-complex queries.
     For example, give me all [Linode Types](#operation/getLinodeTypes)
-    which are either `standard` or `highmem` class, and have between 12 and 20 vcpus:
+    which are either `standard` or `highmem` class, and
+    have between 12 and 20 vcpus (for dedicated CPU Linodes they are real CPU cores
+    but are still called vcpus for API compatibility):
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
@@ -12383,7 +12385,9 @@ components:
             vcpus:
               type: integer
               description: >
-                The number of vcpus this Linode has access to.  Typically a Linode will choose to
+                The number of vcpus this Linode has access to (for dedicated CPU Linodes these are
+                real cpus despite the name vcpu, the name vcpus is left for API compatibility).
+                Typically a Linode will choose to
                 boot with all of its available vcpus, but this can be configured in a Config
                 Profile, see the
                 [/linode/instances/{linodeId}/configs](#operation/getLinodeConfigs)
@@ -12828,14 +12832,16 @@ components:
           type: string
           readOnly: true
           description: >
-            The class of the Linode Type. We currently offer three classes of Linodes:
+            The class of the Linode Type. We currently offer four classes of Linodes:
 
               * nanode - Our entry-level Linode Type.
               * standard - Our flagship Linode Type.
+              * dedicated - Our Dedicated CPU Linode Type.
               * highmem - A Linode Type featuring high memory availability.
           enum:
           - nanode
           - standard
+          - dedicated
           - highmem
           example: standard
           x-linode-cli-display: 3
@@ -12920,7 +12926,8 @@ components:
           type: integer
           readOnly: true
           description: >
-            The number of VCPU cores this Linode Type offers.
+            The number of VCPU cores this Linode Type offers, or real CPU cores
+            in the case of a dedicated CPU Linode.
           example: 2
           x-linode-cli-display: 6
     LongviewClient:
