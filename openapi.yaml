@@ -249,8 +249,7 @@ info:
     You can combine and nest operators to construct arbitrarily-complex queries.
     For example, give me all [Linode Types](#operation/getLinodeTypes)
     which are either `standard` or `highmem` class, and
-    have between 12 and 20 vcpus (for dedicated CPU Linodes they are real CPU cores
-    but are still called vcpus for API compatibility):
+    have between 12 and 20 vcpus:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
@@ -12926,8 +12925,7 @@ components:
           type: integer
           readOnly: true
           description: >
-            The number of VCPU cores this Linode Type offers, or real CPU cores
-            in the case of a dedicated CPU Linode.
+            The number of VCPU cores this Linode Type offers.
           example: 2
           x-linode-cli-display: 6
     LongviewClient:
