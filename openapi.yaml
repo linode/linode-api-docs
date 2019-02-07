@@ -4989,8 +4989,6 @@ paths:
         be completed first before you can initiate a resize. Additionally, the
         following criteria must be met in order to resize a Linode:
 
-          * Any pending free upgrades to the Linode's current Type must be performed
-          before a resize can occur.
           * The Linode must not have a pending migration.
           * Your Account cannot have an outstanding balance.
           * The Linode must not have more disk allocation than the new Type allows.
@@ -9687,7 +9685,7 @@ paths:
                   description: >
                     The new Tag.
                   minLength: 3
-                  maxLength: 30
+                  maxLength: 50
                   example: example tag
                 linodes:
                   type: array
@@ -11359,6 +11357,7 @@ components:
               type: integer
               description: The unique ID for this Event's Entity.
               example: 11111
+              x-linode-filterable: true
             label:
               type: string
               description: >
@@ -11370,6 +11369,7 @@ components:
               description: >
                 The type of entity this Event is related to.
               example: ticket
+              x-linode-filterable: true
             url:
               type: string
               description: >
