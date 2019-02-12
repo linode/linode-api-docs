@@ -1330,7 +1330,7 @@ paths:
               --cancel_url https://example.org \
               --redirect_url https://example.org \
               --usd 120.50
-  /account/payment/paypal/execute:
+  /account/payments/paypal/execute:
     x-linode-cli-command: account
     post:
       x-linode-grant: read_write
