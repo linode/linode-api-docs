@@ -20,12 +20,12 @@ info:
     This document was generated from our OpenAPI Specification.  See the
     [OpenAPI website](https://www.openapis.org) for more information.
 
-    [Download the Linode OpenAPI Specification](/api/v4/openapi.yaml)
+    [Download the Linode OpenAPI Specification](https://developers.linode.com/api/docs/v4/openapi.yaml)
 
 
     # Changelog
 
-    [View our Changelog](/changelog) to see release
+    [View our Changelog](https://developers.linode.com/changelog) to see release
     notes on all changes made to our API.
 
     # Access and Authentication
@@ -8976,7 +8976,7 @@ paths:
               https://api.linode.com/v4/profile/devices/123
       - lang: CLI
         source: >
-          linode-cli profile device-revoke 123          
+          linode-cli profile device-revoke 123
   /profile/sshkeys:
     x-linode-cli-command: sshkeys
     description: >
@@ -14944,7 +14944,7 @@ components:
           description: >
             The last IP Address to successfully authenticate with this TrustedDevice.
           example: 12.34.56.78
-          readOnly: true          
+          readOnly: true
     SSHKey:
       type: object
       description: >
