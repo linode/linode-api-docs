@@ -18,14 +18,14 @@ info:
 
 
     This document was generated from our OpenAPI Specification.  See the
-    [OpenAPI website](https://www.openapis.org) for more information.
+    <a target="_top" href="https://www.openapis.org">OpenAPI website</a> for more information.
 
-    [Download the Linode OpenAPI Specification](https://developers.linode.com/api/docs/v4/openapi.yaml)
+    <a target="_top" href="https://developers.linode.com/api/docs/v4/openapi.yaml">Download the Linode OpenAPI Specification</a>.
 
 
     # Changelog
 
-    [View our Changelog](https://developers.linode.com/changelog) to see release
+    <a target="_top" href="https://developers.linode.com/changelog">View our Changelog</a> to see release
     notes on all changes made to our API.
 
     # Access and Authentication
@@ -39,7 +39,7 @@ info:
 
     The easiest way to access the API is with a Personal Access Token (PAT)
     generated from the
-    [Linode Cloud Manager](https://cloud.linode.com/profile/tokens).
+    <a target="_top" href="https://cloud.linode.com/profile/tokens">Linode Cloud Manager</a>.
 
     All scopes for the OAuth security model (defined below) apply to this
     security model as well.
@@ -133,7 +133,7 @@ info:
 
     # Errors
 
-    Success is indicated via [Standard HTTP status codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes).
+    Success is indicated via <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_top">Standard HTTP status codes</a>.
     `2xx` codes indicate success, `4xx` codes indicate a request error, and
     `5xx` errors indicate a server error. A
     request error might be an invalid input, a required parameter being omitted,
@@ -285,7 +285,7 @@ info:
 
     # CLI (Command Line Interface)
 
-    The [Linode CLI](https://github.com/linode/linode-cli) allows you to easily
+    The <a href="https://github.com/linode/linode-cli" target="_top">Linode CLI</a> allows you to easily
     work with the API using intuitive and simple syntax. It requires a
     [Personal Access Token](#section/Personal-Access-Token)
     for authentication, and gives you access to all of the features and functionality
@@ -992,7 +992,7 @@ paths:
       summary: Delete OAuth Client
       description: >
         Deletes an OAuth Client registered with Linode. The Client ID and
-        Client secret will no longer be accepted by https://login.linode.com,
+        Client secret will no longer be accepted by <a target="_top" href="https://login.linode.com">https://login.linode.com</a>,
         and all tokens issued to this client will be invalidated (meaning that
         if your application was using a token, it will no longer work).
       operationId: deleteClient
@@ -5237,7 +5237,7 @@ paths:
 
 
         For more information on StackScripts, please read our guide:
-        [Automate Deployment with StackScripts](https://linode.com/docs/platform/stackscripts/).
+        <a target="_top" href="https://linode.com/docs/platform/stackscripts/">Automate Deployment with StackScripts</a>.
       operationId: getStackScripts
       x-linode-cli-action: list
       security:
@@ -11000,7 +11000,7 @@ components:
           description: |
             This field is required only if the StackScript being deployed requires input
             data from the User for successful completion. See
-            [Variables and UDFs](https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs)
+            <a target="_top" href="https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs">Variables and UDFs</a>
             for more details. This field is required to be valid JSON.
     Domain:
       type: object
@@ -13979,7 +13979,7 @@ components:
       description: >
         A third-party application registered to Linode that users may log into
         with their Linode account through our authentication server at
-        https://login.linode.com.  Using an OAuth Client, a third-party
+        <a target="_top" href="https://login.linode.com">https://login.linode.com</a>.  Using an OAuth Client, a third-party
         developer may be given access to some, or all, of a User's account for
         the purposes of their application.
       properties:
@@ -13995,7 +13995,7 @@ components:
           type: string
           format: url
           description: >
-            The location a successful log in from https://login.linode.com should be
+            The location a successful log in from <a target="_top" href="https://login.linode.com">https://login.linode.com</a> should be
             redirected to for this client.  The receiver of this redirect should be
             ready to accept an OAuth exchange code and finish the OAuth exchange.
           example: https://example.org/oauth/callback
@@ -14048,7 +14048,7 @@ components:
           description: >
             If this is a public or private OAuth Client.  Public clients have a slightly
             different authentication workflow than private clients.  See the
-            [OAuth spec](https://oauth.net/2/) for more details.
+            <a target="_top" href="https://oauth.net/2/">OAuth spec</a> for more details.
           example: false
           readOnly: true
           x-linode-cli-display: 4
@@ -14185,7 +14185,7 @@ components:
           description: >
             The scopes this token was created with. These define what parts of
             the Account the token can be used to access. Many command-line tools,
-            such as the [Linode CLI](https://github.com/linode/linode-cli),
+            such as the <a target="_top" href="https://github.com/linode/linode-cli">Linode CLI</a>,
             require tokens with access to `*`. Tokens with more restrictive scopes
             are generally more secure.
           example: '*'
@@ -14507,7 +14507,7 @@ components:
           description: >
             This is a list of fields defined with a special syntax inside this StackScript
             that allow for supplying customized parameters during deployment. See
-            [Variables and UDFs](https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs)
+            <a target="_top" href="https://www.linode.com/docs/platform/stackscripts/#variables-and-udfs">Variables and UDFs</a>
             for more information.
           items:
             $ref: '#/components/schemas/UserDefinedField'
@@ -14901,7 +14901,7 @@ components:
     TrustedDevice:
       type: object
       description: >
-        A trusted device object represents an active Remember Me session with login.linode.com.
+        A trusted device object represents an active Remember Me session with <a target="_top" href="https://login.linode.com">login.linode.com</a>.
       properties:
         id:
           type: integer
@@ -14936,7 +14936,7 @@ components:
           format: date-time
           description: >
             The last time this TrustedDevice was successfully used to authenticate to
-            login.linode.com.
+            <a target="_top" href="https://login.linode.com">login.linode.com</a>.
           example: "2018-01-05T12:57:12"
           readOnly: true
         last_remote_addr:
