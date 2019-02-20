@@ -992,7 +992,7 @@ paths:
       summary: Delete OAuth Client
       description: >
         Deletes an OAuth Client registered with Linode. The Client ID and
-        Client secret will no longer be accepted by https://login.linode.com,
+        Client secret will no longer be accepted by `https://login.linode.com`,
         and all tokens issued to this client will be invalidated (meaning that
         if your application was using a token, it will no longer work).
       operationId: deleteClient
@@ -13979,7 +13979,7 @@ components:
       description: >
         A third-party application registered to Linode that users may log into
         with their Linode account through our authentication server at
-        https://login.linode.com.  Using an OAuth Client, a third-party
+        `https://login.linode.com`.  Using an OAuth Client, a third-party
         developer may be given access to some, or all, of a User's account for
         the purposes of their application.
       properties:
@@ -13995,7 +13995,7 @@ components:
           type: string
           format: url
           description: >
-            The location a successful log in from https://login.linode.com should be
+            The location a successful log in from `https://login.linode.com` should be
             redirected to for this client.  The receiver of this redirect should be
             ready to accept an OAuth exchange code and finish the OAuth exchange.
           example: https://example.org/oauth/callback
@@ -14901,7 +14901,7 @@ components:
     TrustedDevice:
       type: object
       description: >
-        A trusted device object represents an active Remember Me session with login.linode.com.
+        A trusted device object represents an active Remember Me session with `login.linode.com`.
       properties:
         id:
           type: integer
@@ -14936,7 +14936,7 @@ components:
           format: date-time
           description: >
             The last time this TrustedDevice was successfully used to authenticate to
-            login.linode.com.
+            `login.linode.com`.
           example: "2018-01-05T12:57:12"
           readOnly: true
         last_remote_addr:
