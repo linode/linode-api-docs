@@ -14901,7 +14901,7 @@ components:
     TrustedDevice:
       type: object
       description: >
-        A trusted device object represents an active Remember Me session with `login.linode.com`.
+        A trusted device object represents an active Remember Me session with <a target="_top" href="https://login.linode.com">login.linode.com</a>.
       properties:
         id:
           type: integer
@@ -14936,7 +14936,7 @@ components:
           format: date-time
           description: >
             The last time this TrustedDevice was successfully used to authenticate to
-            `login.linode.com`.
+            <a target="_top" href="https://login.linode.com">login.linode.com</a>.
           example: "2018-01-05T12:57:12"
           readOnly: true
         last_remote_addr:
