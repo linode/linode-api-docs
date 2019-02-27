@@ -11277,6 +11277,8 @@ components:
         action:
           type: string
           enum:
+          - account_update
+          - account_settings_update
           - backups_enable
           - backups_cancel
           - backups_restore
@@ -11285,19 +11287,24 @@ components:
           - credit_card_updated
           - disk_create
           - disk_delete
+          - disk_update
           - disk_duplicate
           - disk_imagize
           - disk_resize
           - dns_record_create
           - dns_record_delete
+          - dns_record_update
           - dns_zone_create
           - dns_zone_delete
+          - dns_zone_update
           - image_delete
+          - image_update
           - linode_addip
           - linode_boot
           - linode_clone
           - linode_create
           - linode_delete
+          - linode_update
           - linode_deleteip
           - linode_migrate
           - linode_mutate
@@ -11306,20 +11313,27 @@ components:
           - linode_resize
           - linode_shutdown
           - linode_snapshot
+          - linode_config_create
+          - linode_config_delete
+          - linode_config_update
           - longviewclient_create
           - longviewclient_delete
+          - longviewclient_update
           - managed_disabled
           - managed_enabled
           - managed_service_create
           - managed_service_delete
           - nodebalancer_create
           - nodebalancer_delete
+          - nodebalancer_update
           - nodebalancer_config_create
           - nodebalancer_config_delete
+          - nodebalancer_config_update
           - password_reset
           - payment_submitted
           - stackscript_create
           - stackscript_delete
+          - stackscript_update
           - stackscript_publicize
           - stackscript_revise
           - tfa_disabled
@@ -11327,10 +11341,14 @@ components:
           - ticket_attachment_upload
           - ticket_create
           - ticket_update
+          - user_ssh_key_add
+          - user_ssh_key_delete
+          - user_ssh_key_update
           - volume_attach
           - volume_clone
           - volume_create
           - volume_delete
+          - volume_update
           - volume_detach
           - volume_resize
           readOnly: true
