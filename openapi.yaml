@@ -6597,7 +6597,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "service_type": "URL",
+                "service_type": "url",
                 "label": "prod-1",
                 "address": "https://example.org",
                 "timeout": 30,
@@ -6695,7 +6695,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "service_type": "URL",
+                "service_type": "url",
                 "label": "prod-1",
                 "address": "https://example.org",
                 "timeout": 30,
@@ -13308,11 +13308,11 @@ components:
         service_type:
           type: string
           enum:
-          - URL
-          - TCP
+          - url
+          - tcp
           description: >
             How this Service is monitored.
-          example: URL
+          example: url
           x-linode-cli-display: 3
         label:
           type: string
