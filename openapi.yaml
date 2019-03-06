@@ -1311,6 +1311,12 @@ paths:
                         The paypal-generated ID for this Payment. Used when
                         authorizing the Payment in PayPal's interface.
                       example: PAY-1234567890ABCDEFGHIJKLMN
+                  checkout_token:
+                      type: string
+                      description: >
+                        The checkout token generated for this Payment.
+                      example: EC-1A2B3C4D5E6F7G8H9
+                      readOnly: true
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
