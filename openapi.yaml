@@ -10505,8 +10505,9 @@ components:
           type: number
           readOnly: true
           description: >
-            This Account's estimated invoice, in US dollars. This does not
-            reflect your final invoice amount.
+            This Account's current estimated invoice in US dollars. This is not
+            your final invoice balance. Bandwidth charges are not included in
+            the estimate.
           example: 145
           x-linode-cli-display: 4
         city:
