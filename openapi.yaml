@@ -10507,6 +10507,15 @@ components:
           description: This Account's balance, in US dollars.
           example: 200
           x-linode-cli-display: 4
+        balance_uninvoiced:
+          type: number
+          readOnly: true
+          description: >
+            This Account's current estimated invoice in US dollars. This is not
+            your final invoice balance. Bandwidth charges are not included in
+            the estimate.
+          example: 145
+          x-linode-cli-display: 4
         city:
           type: string
           description: The city for this Account's billing address.
