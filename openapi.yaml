@@ -10485,6 +10485,12 @@ components:
       type: object
       description: Account object
       properties:
+        active_since:
+          type: string
+          format: date-time
+          description: The datetime of when the account was activated.
+          example: '2018-01-01T00:01:01'
+          readOnly: true
         address_1:
           type: string
           description: First line of this Account's billing address.
