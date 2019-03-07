@@ -12266,8 +12266,8 @@ components:
             Linode labels have the following constraints:
 
               * Must start with an alpha character.
-              * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
-              * Cannot have two dashes (`--`) or underscores (`__`) in a row.
+              * Must consist of alphanumeric characters, dashes (`-`), underscores (`_`) and periods (`.`).
+              * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
         region:
           x-linode-filterable: true
           readOnly: true
@@ -12559,12 +12559,12 @@ components:
             Linode labels have the following constraints:
 
               * Must start with an alpha character.
-              * Must consist of alphanumeric characters, dashes (`-`), and underscores (`_`).
-              * Cannot have two dashes (`--`) or underscores (`__`) in a row.
+              * Must consist of alphanumeric characters, dashes (`-`), underscores (`_`) and periods (`.`).
+              * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
           example: linode123
           minLength: 3
           maxLength: 32
-          pattern: '^[a-zA-Z]((?!--|__)[a-zA-Z0-9-_])+$'
+          pattern: '^[a-zA-Z]((?!--|__|..)[a-zA-Z0-9-_.])+$'
         group:
           deprecated: true
           type: string
