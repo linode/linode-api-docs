@@ -1311,6 +1311,12 @@ paths:
                         The paypal-generated ID for this Payment. Used when
                         authorizing the Payment in PayPal's interface.
                       example: PAY-1234567890ABCDEFGHIJKLMN
+                  checkout_token:
+                      type: string
+                      description: >
+                        The checkout token generated for this Payment.
+                      example: EC-1A2B3C4D5E6F7G8H9
+                      readOnly: true
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -10506,6 +10512,15 @@ components:
           readOnly: true
           description: This Account's balance, in US dollars.
           example: 200
+          x-linode-cli-display: 4
+        balance_uninvoiced:
+          type: number
+          readOnly: true
+          description: >
+            This Account's current estimated invoice in US dollars. This is not
+            your final invoice balance. Bandwidth charges are not included in
+            the estimate.
+          example: 145
           x-linode-cli-display: 4
         city:
           type: string
