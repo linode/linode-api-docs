@@ -248,7 +248,7 @@ info:
 
     You can combine and nest operators to construct arbitrarily-complex queries.
     For example, give me all [Linode Types](#operation/getLinodeTypes)
-    which are either `standard` or `highmem` class, and
+    which are either `standard` or `highmem` class, or
     have between 12 and 20 vcpus:
 
     ```Shell
