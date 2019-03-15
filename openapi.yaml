@@ -14483,8 +14483,8 @@ components:
           type: array
           x-linode-filterable: true
           description: >
-            An array of Image IDs representing the Images that this StackScript
-            is compatible for deploying with.
+            An array of Image IDs. These are the images that can be deployed
+            with this Stackscript.
           items:
             type: string
           example:
