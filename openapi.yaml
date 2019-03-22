@@ -14179,7 +14179,9 @@ components:
           example: https://example.org
         usd:
           type: string
-          description: The amount, in US dollars, of the Payment.
+          description: The payment amount in USD. Minimum accepted value of $5 USD.
+            Maximum accepted value of $500 USD or credit card payment limit; whichever value is highest. PayPal's
+            maximum transaction limit is $10,000 USD.
           example: '120.50'
     PayPalExecute:
       type: object
