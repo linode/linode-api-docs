@@ -13826,6 +13826,7 @@ components:
           - accept
           - reject
           - drain
+          - backup
           description: >
             The mode this NodeBalancer should use when sending traffic to this backend.
 
@@ -13835,6 +13836,9 @@ components:
 
             * If set to `drain` this backend will not receive _new_ traffic, but connections already
               pinned to it will continue to be routed to it.
+
+            * If set to `backup`, this backend will only receive traffic if all `accept` nodes
+              are down.
           example: accept
           x-linode-cli-display: 6
         config_id:
