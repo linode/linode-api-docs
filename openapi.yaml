@@ -248,7 +248,7 @@ info:
 
     You can combine and nest operators to construct arbitrarily-complex queries.
     For example, give me all [Linode Types](#operation/getLinodeTypes)
-    which are either `standard` or `highmem` class, and
+    which are either `standard` or `highmem` class, or
     have between 12 and 20 vcpus:
 
     ```Shell
@@ -12534,6 +12534,7 @@ components:
                   - W0
                   - W2
                   - W4
+                  - W6
                   - W8
                   - W10
                   - W12
@@ -13825,6 +13826,7 @@ components:
           - accept
           - reject
           - drain
+          - backup
           description: >
             The mode this NodeBalancer should use when sending traffic to this backend.
 
@@ -13834,6 +13836,9 @@ components:
 
             * If set to `drain` this backend will not receive _new_ traffic, but connections already
               pinned to it will continue to be routed to it.
+
+            * If set to `backup`, this backend will only receive traffic if all `accept` nodes
+              are down.
           example: accept
           x-linode-cli-display: 6
         config_id:
@@ -14178,7 +14183,9 @@ components:
           example: https://example.org
         usd:
           type: string
-          description: The amount, in US dollars, of the Payment.
+          description: The payment amount in USD. Minimum accepted value of $5 USD.
+            Maximum accepted value of $500 USD or credit card payment limit; whichever value is highest. PayPal's
+            maximum transaction limit is $10,000 USD.
           example: '120.50'
     PayPalExecute:
       type: object
@@ -14483,8 +14490,8 @@ components:
           type: array
           x-linode-filterable: true
           description: >
-            An array of Image IDs representing the Images that this StackScript
-            is compatible for deploying with.
+            An array of Image IDs. These are the images that can be deployed
+            with this Stackscript.
           items:
             type: string
           example:
