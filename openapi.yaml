@@ -12317,6 +12317,7 @@ components:
           - example tag
           - another example
         id:
+          x-linode-filterable: true
           type: integer
           description: >
             This Linode's ID which must be provided for all operations impacting this Linode.
