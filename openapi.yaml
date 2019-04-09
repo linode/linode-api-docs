@@ -305,7 +305,7 @@ info:
     name: Linode
     url: /
 servers:
-- url: https://api.linode.com/v4
+- url: https://api.dev.linode.com/v4beta
 paths:
   /account:
     x-linode-cli-command: account
@@ -1753,12 +1753,14 @@ paths:
           source: >
             linode-cli users delete example_user
   /account/s3-keys:
+    x-linode-cli-command: s3-keys
     get:
       tags:
       - Account
       summary: List S3 Keys
       description: >
         Returns a paginated list of s3 keys for use with Object Storage.
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -1787,6 +1789,7 @@ paths:
       summary: Create s3 key
       description: >
         Provisions a new s3 key on your account
+      x-linode-cli-action: create
       tags:
       - Account
       security:
@@ -1814,6 +1817,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/S3Key'
   /account/s3-keys/{keyId}:
+    x-linode-cli-command: s3-keys
     parameters:
       - name: keyId
         in: path
@@ -1828,6 +1832,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - account:read_only
+      x-linode-cli-action: view
       tags:
       - Account
       responses:
@@ -1844,6 +1849,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - account:read_write
+      x-linode-cli-action: delete
       tags:
       - Account
       responses:
