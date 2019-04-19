@@ -11318,8 +11318,10 @@ components:
           - dns_zone_create
           - dns_zone_delete
           - dns_zone_update
+          - host_reboot
           - image_delete
           - image_update
+          - lassie_reboot
           - linode_addip
           - linode_boot
           - linode_clone
