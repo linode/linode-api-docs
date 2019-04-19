@@ -11923,7 +11923,7 @@ components:
           type: string
           format: ip
           description: >
-            The mask that sseparates host bits from network bits for this address.
+            The mask that separates host bits from network bits for this address.
           example: 255.255.255.0
           readOnly: true
         prefix:
