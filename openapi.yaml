@@ -11820,12 +11820,24 @@ components:
           description: The Invoice's display label.
           example: Invoice
           x-linode-cli-display: 3
+        subtotal:
+          type: integer
+          readOnly: true
+          description: The amount of the Invoice before taxes in US Dollars.
+          example: 120
+          x-linode-cli-display: 4
+        tax:
+          type: integer
+          readOnly: true
+          description: The amount of tax levied on the Invoice in US Dollars.
+          example: 12
+          x-linode-cli-display: 5
         total:
           type: integer
           readOnly: true
-          description: The amount of the Invoice in US Dollars.
-          example: 120
-          x-linode-cli-display: 4
+          description: The amount of the Invoice after taxes in US Dollars.
+          example: 132
+          x-linode-cli-display: 6
     InvoiceItem:
       type: object
       description: An InvoiceItem object.
@@ -11833,9 +11845,21 @@ components:
         amount:
           type: integer
           readOnly: true
-          description: The price, in US dollars, of unit price multiplied by quantity.
+          description: The price, in US dollars, of the Invoice Item. Equal to the unit price multiplied by quantity.
           example: 20
           x-linode-cli-display: 4
+        tax:
+          type: integer
+          readOnly: true
+          description: The amount of tax levied on this Item in US Dollars.
+          example: 2
+          x-linode-cli-display: 5
+        total:
+          type: integer
+          readOnly: true
+          description: The price of this Item after taxes in US Dollars.
+          example: 22
+          x-linode-cli-display: 6
         from:
           type: string
           readOnly: true
@@ -11853,7 +11877,7 @@ components:
           type: integer
           readOnly: true
           description: The quantity of this Item for the specified Invoice.
-          example: 1
+          example: 2
         to:
           type: string
           readOnly: true
@@ -11899,7 +11923,7 @@ components:
           type: string
           format: ip
           description: >
-            The mask that separates host bits from network bits for this address.
+            The mask that sseparates host bits from network bits for this address.
           example: 255.255.255.0
           readOnly: true
         prefix:
