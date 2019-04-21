@@ -4387,6 +4387,15 @@ paths:
                         readOnly: true
                         items:
                           $ref: '#/components/schemas/IPAddress'
+                        description: >
+                          A list of shared IP Address objects assigned to this Linode.
+                      reserved:
+                        type: array
+                        readOnly: true
+                        items:
+                          $ref: '#/components/schemas/IPAddress'
+                        description: >
+                          A list of reserved IP Address objects belonging to this Linode.
                   ipv6:
                     type: object
                     description: >
