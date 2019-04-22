@@ -37,7 +37,7 @@ see changes.  We're working on a nicer way to do this, but for now this should
 get you started:
 
 ```shell
-python -m SimpleHTTPServer
+python3 -m http.server
 ```
 
 ### Versioning
