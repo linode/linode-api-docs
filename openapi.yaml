@@ -2844,12 +2844,7 @@ paths:
                       on the Images available for you to use.
                     example: linode/debian9
                   root_pass:
-                    type: string
-                    format: password
-                    description: >
-                      The password for the root user on the newly-created Linode.
-                      Only accepted if "image" is provided.
-                    example: s3cureP@ssw0rd
+                    $ref: '#/components/schemas/DiskRequest/properties/root_pass'
                   authorized_keys:
                     type: array
                     description: >
