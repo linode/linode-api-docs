@@ -2134,7 +2134,7 @@ paths:
       x-linode-cli-command: domains
       tags:
       - Domains
-      summary: Import Domain Zone
+      summary: Import Domain
       description: >
         Imports a domain zone from a remote nameserver.
 
@@ -2206,9 +2206,10 @@ paths:
       x-linode-grant: read_write
       tags:
       - Domains
-      summary: Clone Domain Zone
+      summary: Clone Domain
       description: >
-        Clones a domain zone and all associated records.
+        Clones a Domain and all associated DNS records from a Domain that is
+        registered in Linode's DNS manager.
       operationId: cloneDomain
       x-linode-cli-action: clone
       security:
@@ -2227,12 +2228,12 @@ paths:
               properties:
                 domain:
                   type: string
-                  description: The domain to clone.
+                  description: The new domain being created.
                   example: example.com
       responses:
         '200':
           description: |
-            A cloned Domain in Linode's DNS Manager.
+            A new Domain in Linode's DNS Manager, based on a cloned Domain.
           content:
             application/json:
               schema:
@@ -2240,17 +2241,17 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-              "domain": "example.com"
-            }' \
-            https://api.linode.com/v4/domains/clone
-        - lang: CLI
-          source: >
-            linode-cli domains clone --domain example.com
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+            "domain": "example.com"
+          }' \
+          https://api.linode.com/v4/domains/123/clone
+      - lang: CLI
+        source: >
+          linode-cli domains clone 123 --domain example.com
   /domains/{domainId}/records:
     x-linode-cli-command: domains
     parameters:
