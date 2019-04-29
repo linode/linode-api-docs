@@ -2134,7 +2134,7 @@ paths:
       x-linode-cli-command: domains
       tags:
       - Domains
-      summary: Import a Domain Zone
+      summary: Import Domain
       description: >
         Imports a domain zone from a remote nameserver.
 
@@ -2193,6 +2193,65 @@ paths:
         - lang: CLI
           source: >
             linode-cli domains import --domain example.com --remote_nameserver examplenameserver.com
+  /domains/{domainId}/clone:
+    x-linode-cli-command: domains
+    parameters:
+    - name: domainId
+      in: path
+      description: ID of the Domain to clone.
+      required: true
+      schema:
+        type: string
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Domains
+      summary: Clone Domain
+      description: >
+        Clones a Domain and all associated DNS records from a Domain that is
+        registered in Linode's DNS manager.
+      operationId: cloneDomain
+      x-linode-cli-action: clone
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - domains:read_write
+      requestBody:
+        description: Information about the Domain to clone.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - domain
+              type: object
+              properties:
+                domain:
+                  type: string
+                  description: The new domain being created.
+                  example: example.com
+      responses:
+        '200':
+          description: |
+            A new Domain in Linode's DNS Manager, based on a cloned Domain.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Domain'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+            "domain": "example.com"
+          }' \
+          https://api.linode.com/v4/domains/123/clone
+      - lang: CLI
+        source: >
+          linode-cli domains clone 123 --domain example.com
   /domains/{domainId}/records:
     x-linode-cli-command: domains
     parameters:
