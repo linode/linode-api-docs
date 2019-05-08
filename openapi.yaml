@@ -305,7 +305,8 @@ info:
     name: Linode
     url: /
 servers:
-- url: https://api.dev.linode.com/v4beta
+- url: https://api.linode.com/v4
+- url: https://api.linode.com/v4beta
 paths:
   /account:
     x-linode-cli-command: account
@@ -1755,6 +1756,8 @@ paths:
   /account/s3-keys:
     x-linode-cli-command: s3-keys
     get:
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Account
       summary: List S3 Keys
@@ -1786,6 +1789,8 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
     post:
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Create s3 key
       description: >
         Provisions a new s3 key on your account
@@ -1826,6 +1831,8 @@ paths:
         schema:
           type: integer
     get:
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: View S3 Key
       description: Returns a single S3 Key provisioned for your account.
       security:
@@ -1843,6 +1850,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/S3Key'
     delete:
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Revoke S3 Key
       description: Revokes an S3 Key.  This keypair will no longer be usable by third-party clients.
       security:
@@ -8587,6 +8596,8 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
   /object-storage/clusters:
     get:
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: List Clusters
       description: >
         Returns a paginated list of Object Storage Clusters that are available for 
@@ -8624,6 +8635,8 @@ paths:
       schema:
         type: string
     get:
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: View Cluster
       description: Returns a single Object Storage Cluster
       tags:
@@ -15005,6 +15018,16 @@ components:
             access/perform, see [/profile/grants](#operation/getProfileGrants).
           example: false
           x-linode-cli-display: 3
+        beta_programs:
+          type: array
+          items:
+            type: string
+          description: >
+            A list of Beta Programs you are currently a part of.  Programs are only
+            listed here for as long as they are active.
+          example:
+          - Object Storage EAP
+          readOnly: true
     Region:
       type: object
       description: An area where Linode services are available.
@@ -15021,6 +15044,16 @@ components:
           example: us
           readOnly: true
           x-linode-cli-display: 2
+        features:
+          type: array
+          items:
+            type: string
+          description: >
+            A list of features this Region supports, in addition to the feature
+            set that all Regions offer.
+          example:
+          - Object Storage
+          readOnly: true
     RescueDevices:
       type: object
       properties:
