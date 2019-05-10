@@ -11397,6 +11397,7 @@ components:
           - image_delete
           - image_update
           - lassie_reboot
+          - lish_boot
           - linode_addip
           - linode_boot
           - linode_clone
