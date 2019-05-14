@@ -12776,8 +12776,18 @@ components:
           $ref: '#/components/schemas/Devices'
         root_device:
           type: string
+          pattern: a-z, A-Z, 0-9, /, _, -
           description: >
-            The root device to boot. The corresponding disk must be attached.
+            The root device to boot.
+
+            * Accepts a disk's UUID or label as a value.
+
+            * If no value or an invalid value is provided, root device will default
+            to `/dev/sda`.
+
+            * If the root device's corresponding disk is not mounted, the Linode's
+            boot will pause until a disk is mounted.
+
           example: /dev/sda
     LinodeRequest:
       type: object
