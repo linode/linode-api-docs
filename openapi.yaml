@@ -5164,7 +5164,7 @@ paths:
       - Linode Instances
       summary: View Network Transfer
       description: >
-        Returns a Linode's network transfer pool statistics, in GB, for the current month.
+        Returns a Linode's network transfer pool statistics for the current month.
       operationId: getLinodeTransferPool
       x-linode-cli-action: transfer-view
       security:
@@ -5181,19 +5181,19 @@ paths:
                   used:
                     type: integer
                     description: >
-                      The amount of network transfer used by this Linode in the current month's billing cycle.
+                      The amount of network transfer used by this Linode, in bytes, for the current month's billing cycle.
                     example: 2
                     readOnly: true
                   quota:
                     type: integer
                     description: >
-                      The amount of network transfer this Linode adds to your transfer pool for the current month's billing cycle.
+                      The amount of network transfer this Linode adds to your transfer pool, in GB, for the current month's billing cycle.
                     example: 2000
                     readOnly: true
                   billable:
                     type: integer
                     description: >
-                      The amount of network transfer this Linode has used past your monthly quota.
+                      The amount of network transfer this Linode has used, in GB, past your monthly quota.
                     example: 0
                     readOnly: true
         default:
