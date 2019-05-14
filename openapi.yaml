@@ -168,8 +168,12 @@ info:
     }
     ```
 
-    Pages start at 1. You may retrieve a specific page of results by adding
-    `?page=x` to your URL (for example, `?page=4`). Page sizes default to 100,
+    * Pages start at 1. You may retrieve a specific page of results by adding
+    `?page=x` to your URL (for example, `?page=4`). If the value of `page`
+    exceeds `2^64/page_size`, the last possible page will be returned.
+
+
+    * Page sizes default to 100,
     and can be set to return between 25 and 100. Page size can be set using
     `?page_size=x`.
 
