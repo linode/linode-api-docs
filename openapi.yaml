@@ -3871,7 +3871,68 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LinodeConfig'
+              required:
+              - label
+              - devices
+              properties:
+                id:
+                  $ref: '#/components/schemas/LinodeConfig/properties/id'
+                kernel:
+                  $ref: '#/components/schemas/LinodeConfig/properties/kernel'
+                comments:
+                  $ref: '#/components/schemas/LinodeConfig/properties/comments'
+                memory_limit:
+                  $ref: '#/components/schemas/LinodeConfig/properties/memory_limit'
+                run_level:
+                  $ref: '#/components/schemas/LinodeConfig/properties/run_level'
+                virt_mode:
+                  $ref: '#/components/schemas/LinodeConfig/properties/virt_mode'
+                helpers:
+                  $ref: '#/components/schemas/LinodeConfig/properties/helpers'
+                label:
+                  $ref: '#/components/schemas/LinodeConfig/properties/label'
+                devices:
+                  type: object
+                  description: >
+                    A dictionary of device disks to use as a device map in a Linode's configuration profile.
+
+                    * An empty device disk dictionary is allowed only if an empty device map already exits.
+                    An error will result if a non-empty device map exists for the Linode's configuration profile.
+                    <br /><br />
+
+                    **Note**: An empty device disk dictionary previously errored in all cases.
+                  properties:
+                    sda:
+                      $ref: '#/components/schemas/Device'
+                    sdb:
+                      $ref: '#/components/schemas/Device'
+                    sdc:
+                      $ref: '#/components/schemas/Device'
+                    sdd:
+                      $ref: '#/components/schemas/Device'
+                    sde:
+                      $ref: '#/components/schemas/Device'
+                    sdf:
+                      $ref: '#/components/schemas/Device'
+                    sdg:
+                      $ref: '#/components/schemas/Device'
+                    sdh:
+                      $ref: '#/components/schemas/Device'
+                root_device:
+                  type: string
+                  pattern: a-z, A-Z, 0-9, /, _, -
+                  description: >
+                    The root device to boot.
+
+                    * Accepts a disk's UUID or label as a value.
+
+                    * If no value or an invalid value is provided, root device will default
+                    to `/dev/sda`.<br /><br />
+                    **Note**: Previous validation errored when no value was provided for root device and an empty device
+                    map existed for the Linode's configuration profile.
+
+                    * If the root device's corresponding disk is not mounted, the Linode's
+                    boot will pause until a disk is mounted.
       x-code-samples:
       - lang: Shell
         source: >
@@ -10921,6 +10982,9 @@ components:
           example: null
     Devices:
       type: object
+      description: >
+        A dictionary of device disks to use as a device map in a Linode's configuration profile.
+        An empty dictionary is allowed.
       properties:
         sda:
           $ref: '#/components/schemas/Device'
