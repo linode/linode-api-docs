@@ -14593,7 +14593,6 @@ components:
             This StackScript installs and configures MySQL
         images:
           type: array
-          x-linode-filterable: true
           description: >
             An array of Image IDs. These are the images that can be deployed
             with this Stackscript.
