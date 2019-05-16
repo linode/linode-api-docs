@@ -5149,7 +5149,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes shutdown 123
-  /linode/instances/{linodeId}/transferpool:
+  /linode/instances/{linodeId}/transfer:
     parameters:
     - name: linodeId
       in: path
@@ -5165,7 +5165,7 @@ paths:
       summary: View Network Transfer
       description: >
         Returns a Linode's network transfer pool statistics for the current month.
-      operationId: getLinodeTransferPool
+      operationId: getLinodeTransfer
       x-linode-cli-action: transfer-view
       security:
       - personalAccessToken: []
@@ -5182,7 +5182,7 @@ paths:
                     type: integer
                     description: >
                       The amount of network transfer used by this Linode, in bytes, for the current month's billing cycle.
-                    example: 2
+                    example: 22956600198
                     readOnly: true
                   quota:
                     type: integer
@@ -5202,7 +5202,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/linode/instances/123/transferpool
+              https://api.linode.com/v4/linode/instances/123/transfer
       - lang: CLI
         source: >
           linode-cli linodes transfer-view 123
