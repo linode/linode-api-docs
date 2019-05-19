@@ -12736,7 +12736,7 @@ components:
 
             Linode labels have the following constraints:
 
-              * Must start with an alpha character.
+              * Must begin and end with an alphanumeric character.
               * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
               * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
           example: linode123
