@@ -3902,11 +3902,7 @@ paths:
 
                     * An empty device disk dictionary or a dictionary with empty values for device slots is allowed.
                     If no devices are specified, booting from this configuration will hold waiting for a device to
-                    exist before being able to boot.
-
-                    * If a non-empty device map already exists for this configuration, an error will result when
-                    an empty device disk dicitonary or a dictionary with empty values for device slots is provided.
-                    <br /><br />
+                    exist before being able to boot. <br /><br />
 
                     **Note**: An empty device disk dictionary or a dictionary with empty values for device slots
                     previously errored in all cases.
