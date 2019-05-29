@@ -3875,7 +3875,67 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LinodeConfig'
+              required:
+              - label
+              - devices
+              properties:
+                id:
+                  $ref: '#/components/schemas/LinodeConfig/properties/id'
+                kernel:
+                  $ref: '#/components/schemas/LinodeConfig/properties/kernel'
+                comments:
+                  $ref: '#/components/schemas/LinodeConfig/properties/comments'
+                memory_limit:
+                  $ref: '#/components/schemas/LinodeConfig/properties/memory_limit'
+                run_level:
+                  $ref: '#/components/schemas/LinodeConfig/properties/run_level'
+                virt_mode:
+                  $ref: '#/components/schemas/LinodeConfig/properties/virt_mode'
+                helpers:
+                  $ref: '#/components/schemas/LinodeConfig/properties/helpers'
+                label:
+                  $ref: '#/components/schemas/LinodeConfig/properties/label'
+                devices:
+                  type: object
+                  description: >
+                    A dictionary of device disks to use as a device map in a Linode's configuration profile.
+
+                    * An empty device disk dictionary or a dictionary with empty values for device slots is allowed.
+                    If no devices are specified, booting from this configuration will hold waiting for a device to
+                    exist before being able to boot. <br /><br />
+
+                    **Note**: An empty device disk dictionary or a dictionary with empty values for device slots
+                    previously errored in all cases.
+                  properties:
+                    sda:
+                      $ref: '#/components/schemas/Device'
+                    sdb:
+                      $ref: '#/components/schemas/Device'
+                    sdc:
+                      $ref: '#/components/schemas/Device'
+                    sdd:
+                      $ref: '#/components/schemas/Device'
+                    sde:
+                      $ref: '#/components/schemas/Device'
+                    sdf:
+                      $ref: '#/components/schemas/Device'
+                    sdg:
+                      $ref: '#/components/schemas/Device'
+                    sdh:
+                      $ref: '#/components/schemas/Device'
+                root_device:
+                  type: string
+                  pattern: a-z, A-Z, 0-9, /, _, -
+                  description: >
+                    The root device to boot.
+
+                    * If no value or an invalid value is provided, root device will default
+                    to `/dev/sda`.<br /><br />
+                    **Note**: Previous validation errored when no value was provided for root device and an empty device
+                    map existed for the Linode's configuration profile.
+
+                    * If the device specified at the root device location is not mounted,
+                    the Linode will not boot until a device is mounted.
       x-code-samples:
       - lang: Shell
         source: >
@@ -5153,6 +5213,63 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes shutdown 123
+  /linode/instances/{linodeId}/transfer:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    get:
+      x-linode-grant: read_only
+      tags:
+      - Linode Instances
+      summary: View Network Transfer
+      description: >
+        Returns a Linode's network transfer pool statistics for the current month.
+      operationId: getLinodeTransfer
+      x-linode-cli-action: transfer-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_only
+      responses:
+        '200':
+          description: A collection of the specified Linode's network transfer statistics.
+          content:
+            application/json:
+              schema:
+                properties:
+                  used:
+                    type: integer
+                    description: >
+                      The amount of network transfer used by this Linode, in bytes, for the current month's billing cycle.
+                    example: 22956600198
+                    readOnly: true
+                  quota:
+                    type: integer
+                    description: >
+                      The amount of network transfer this Linode adds to your transfer pool, in GB, for the current month's billing cycle.
+                    example: 2000
+                    readOnly: true
+                  billable:
+                    type: integer
+                    description: >
+                      The amount of network transfer this Linode has used, in GB, past your monthly quota.
+                    example: 0
+                    readOnly: true
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/transfer
+      - lang: CLI
+        source: >
+          linode-cli linodes transfer-view 123
   /linode/instances/{linodeId}/stats:
     parameters:
     - name: linodeId
@@ -10925,6 +11042,13 @@ components:
           example: null
     Devices:
       type: object
+      description: >
+        A dictionary of device disks to use as a device map in a Linode's configuration profile.
+
+        * An empty device disk dictionary or a dictionary with empty values for device slots is allowed.
+
+        * If no devices are specified, booting from this configuration will hold waiting for a device
+        to exist before being able to boot.
       properties:
         sda:
           $ref: '#/components/schemas/Device'
@@ -11227,10 +11351,15 @@ components:
           type: integer
           description: >
             "Time to Live" - the amount of time in seconds that this Domain's
-            records may be cached by resolvers or other domain servers. Valid
-            values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800,
+            records may be cached by resolvers or other domain servers.
+
+            * Valid values are 0, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800,
             345600, 604800, 1209600, and 2419200 - any other value will be
             rounded to the nearest valid value.
+
+            * ttl_sec will default to 0 if no value is provided.
+
+            * A value of 0 is equivalent to a value of 300.
           example: 300
         tags:
           x-linode-filterable: true
@@ -12674,7 +12803,7 @@ components:
 
             Linode labels have the following constraints:
 
-              * Must start with an alpha character.
+              * Must begin and end with an alphanumeric character.
               * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
               * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
           example: linode123
@@ -12780,8 +12909,16 @@ components:
           $ref: '#/components/schemas/Devices'
         root_device:
           type: string
+          pattern: a-z, A-Z, 0-9, /, _, -
           description: >
-            The root device to boot. The corresponding disk must be attached.
+            The root device to boot.
+
+            * If no value or an invalid value is provided, root device will default
+            to `/dev/sda`.
+
+            * If the device specified at the root device location is not mounted,
+            the Linode will not boot until a device is mounted.
+
           example: /dev/sda
     LinodeRequest:
       type: object
