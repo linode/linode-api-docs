@@ -5149,6 +5149,13 @@ paths:
                   description: The ID representing the Linode Type.
                   example: g6-standard-2
                   x-linode-cli-display: 1
+                allow_auto_disk_resize:
+                  type: boolean
+                  description: >
+                    Automatically resize disks when resizing a Linode.
+                    When resizing down to a smaller plan your Linode's
+                    data must fit within the smaller disk size.
+                  example: true
       responses:
         '200':
           description: Resize started.
