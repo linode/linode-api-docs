@@ -4818,7 +4818,7 @@ paths:
       summary: Initiate Pending Migration
       description: >
         In some circumstances, a Linode may have pending migrations scheduled that
-        that you can initiate when convenient.  In these cases, a Notification
+        you can initiate when convenient.  In these cases, a Notification
         will be returned from [GET /account/notifications](#getNotifications).
         This endpoint initiates the scheduled migration, which will shut the Linode
         down, migrate it, and then bring it back to its original state.
@@ -4830,6 +4830,18 @@ paths:
       - personalAccessToken: []
       - oauth:
         - linodes:read_write
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                region:
+                  type: string
+                  description: >
+                    The name of the region to which the Linode will be migrated.
+                    Must be a valid region slug. A list of regions can be viewed
+                    by using the `GET /regions` endpoint.
+                  example: us-east
       responses:
         '200':
           description: Scheduled migration started
