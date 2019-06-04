@@ -874,6 +874,13 @@ paths:
               - label
               - redirect_uri
               allOf:
+              - type: object
+                properties:
+                  public:
+                    type: boolean
+                    description: Whether to create a public or private client.
+                    example: false
+                    readOnly: false
               - $ref: '#/components/schemas/OAuthClient'
               - type: object
                 properties:
@@ -881,6 +888,7 @@ paths:
                     type: boolean
                     description: Whether to create a public or private client.
                     example: false
+                    readOnly: false
       responses:
         '200':
           description: Client created successfully.
