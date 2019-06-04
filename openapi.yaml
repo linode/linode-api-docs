@@ -4841,6 +4841,8 @@ paths:
                     The name of the region to which the Linode will be migrated.
                     Must be a valid region slug. A list of regions can be viewed
                     by using the `GET /regions` endpoint.
+                    A cross-region migration will cancel a pending migration
+                    that has not yet been initiated.
                   example: us-east
       responses:
         '200':
