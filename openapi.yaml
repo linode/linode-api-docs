@@ -874,6 +874,13 @@ paths:
               - label
               - redirect_uri
               allOf:
+              - type: object
+                properties:
+                  public:
+                    type: boolean
+                    description: Whether to create a public or private client.
+                    example: false
+                    readOnly: false
               - $ref: '#/components/schemas/OAuthClient'
               - type: object
                 properties:
@@ -881,6 +888,7 @@ paths:
                     type: boolean
                     description: Whether to create a public or private client.
                     example: false
+                    readOnly: false
       responses:
         '200':
           description: Client created successfully.
@@ -4818,7 +4826,7 @@ paths:
       summary: Initiate Pending Migration
       description: >
         In some circumstances, a Linode may have pending migrations scheduled that
-        that you can initiate when convenient.  In these cases, a Notification
+        you can initiate when convenient.  In these cases, a Notification
         will be returned from [GET /account/notifications](#getNotifications).
         This endpoint initiates the scheduled migration, which will shut the Linode
         down, migrate it, and then bring it back to its original state.
@@ -4830,6 +4838,20 @@ paths:
       - personalAccessToken: []
       - oauth:
         - linodes:read_write
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                region:
+                  type: string
+                  description: >
+                    The name of the region to which the Linode will be migrated.
+                    Must be a valid region slug. A list of regions can be viewed
+                    by using the `GET /regions` endpoint.
+                    A cross-region migration will cancel a pending migration
+                    that has not yet been initiated.
+                  example: us-east
       responses:
         '200':
           description: Scheduled migration started
@@ -5149,6 +5171,13 @@ paths:
                   description: The ID representing the Linode Type.
                   example: g6-standard-2
                   x-linode-cli-display: 1
+                allow_auto_disk_resize:
+                  type: boolean
+                  description: >
+                    Automatically resize disks when resizing a Linode.
+                    When resizing down to a smaller plan your Linode's
+                    data must fit within the smaller disk size.
+                  example: true
       responses:
         '200':
           description: Resize started.
@@ -14035,6 +14064,7 @@ components:
           type: string
           minLength: 3
           maxLength: 32
+          pattern: '[a-zA-Z0-9-_.]{3,32}'
           description: >
             The label for this node.  This is for display purposes only.
           example: node54321
