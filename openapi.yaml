@@ -14050,6 +14050,7 @@ components:
           type: string
           minLength: 3
           maxLength: 32
+          pattern: '[a-zA-Z0-9-_.]{3,32}'
           description: >
             The label for this node.  This is for display purposes only.
           example: node54321
