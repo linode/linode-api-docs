@@ -4889,6 +4889,21 @@ paths:
       - personalAccessToken: []
       - oauth:
         - linodes:read_write
+      requestBody:
+        description: Whether to automatically resize disks or not.
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allow_auto_disk_resize:
+                  type: boolean
+                  description: >
+                    Automatically resize disks when resizing a Linode.
+                    When resizing down to a smaller plan your Linode's
+                    data must fit within the smaller disk size.
+                  example: true
       responses:
         '200':
           description: Mutate started.
@@ -5157,7 +5172,9 @@ paths:
       - oauth:
         - linodes:read_write
       requestBody:
-        description: The Type your current Linode will resize to.
+        description: >
+          The Type your current Linode will resize to, and whether to attempt
+          to automatically resize the Linode's disks.
         required: true
         content:
           application/json:
