@@ -4904,6 +4904,7 @@ paths:
                     When resizing down to a smaller plan your Linode's
                     data must fit within the smaller disk size.
                   example: true
+                  default: true
       responses:
         '200':
           description: Mutate started.
@@ -5195,6 +5196,7 @@ paths:
                     When resizing down to a smaller plan your Linode's
                     data must fit within the smaller disk size.
                   example: true
+                  default: true
       responses:
         '200':
           description: Resize started.
