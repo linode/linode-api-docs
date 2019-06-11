@@ -9424,6 +9424,89 @@ paths:
       - lang: CLI
         source: >
           linode-cli sshkey delete 42
+  /profile/preferences:
+    x-linode-cli-command: profile
+    get:
+      x-linode-grant: read_only
+      tags:
+        - Profile
+      summary: View User Preferences
+      description: |
+        View a list of user preferences. These preferences are tied to the access token
+        used to create them, so an account may have multiple preferences.
+      operationId: getUserPreferences
+      x-linode-cli-action: preferences-view
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns an object of user preferences.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A dictionary of user preferences.
+                example: { "key1": "value1", "key2": "value2"}
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X GET \
+              https://api.linode.com/v4/profile/preferences
+    put:
+      tags:
+      - Profile
+      summary: Update User Preferences
+      description: >
+        Updates a user's preferences. These preferences are tied to the access
+        token used to create them, so any account may have multiple preferences.
+        Preferences, and the pertaining request body, may contain any arbitrary
+        JSON data that the user would like to store.
+      operationId: updateUserPreferences
+      x-linode-cli-action: preferences-update
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      requestBody:
+        description: >
+          The user preferences to update or store.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: |
+                Arbitrary JSON of your choosing.
+      responses:
+        '200':
+          description: Returns an object of user preferences.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: An object of user preferences.
+                example: { "key1": "value1", "key2": "value2"}
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "key1": "value1",
+                "key1": "value2"
+              }' \
+              https://api.linode.com/v4/profile/preferences
+
   /regions:
     x-linode-cli-command: regions
     get:
