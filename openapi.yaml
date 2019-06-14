@@ -4850,9 +4850,9 @@ paths:
                 region:
                   type: string
                   description: >
-                    The name of the region to which the Linode will be migrated.
+                    The region to which the Linode will be migrated.
                     Must be a valid region slug. A list of regions can be viewed
-                    by using the `GET /regions` endpoint.
+                    by using the [GET /regions](#operation/getRegions) endpoint.
                     A cross-region migration will cancel a pending migration
                     that has not yet been initiated.
                   example: us-east
