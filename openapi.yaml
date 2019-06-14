@@ -8495,8 +8495,8 @@ paths:
       security:
       - personalAccessToken: []
       - oauth: []
-      - responses:
-        - '200':
+      responses:
+        '200':
           description: A paginated list of available clusters
           content:
             application/json:
