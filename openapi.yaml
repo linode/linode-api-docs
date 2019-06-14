@@ -8497,7 +8497,7 @@ paths:
       - oauth: []
       responses:
         '200':
-          description: A paginated list of available clusters
+          description: A paginated list of available clusters.
           content:
             application/json:
               schema:
@@ -8513,6 +8513,8 @@ paths:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
                   results:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /object-storage/clusters/{clusterId}:
     x-linode-cli-command: object-storage
     parameters:
@@ -8588,7 +8590,6 @@ paths:
         - object_storage:read_only
       requestBody:
         description: The label of the key to create
-        required: true
         content:
           application/json:
             schema:
@@ -8598,7 +8599,6 @@ paths:
                   type: string
                   description: The label for this keypair, for display purposes only
                   example: my-key
-                  required: true
       responses:
         '200':
           description: The new keypair.  This is the only time the secret key is returned.
@@ -11026,56 +11026,6 @@ components:
       parameters:
         volumeId: '$request.body#/id'
   schemas:
-    ObjectStorageCluster:
-      type: object
-      description: An Object Storage Cluster
-      properties:
-        id:
-          type: string
-          description: The unique ID for this cluster.
-          example: us-east-1
-        domain:
-          type: string
-          description: The base URL for this cluster, used for connecting with third-party clients.
-          example: us-east-1.linodeobjects.com
-        status:
-          type: enum
-          values:
-          - available
-          - unavailable
-          description: This cluster's status.
-          example: available
-        region:
-          type: string
-          description: The region this cluster is located in.
-          example: us-east
-        static_site_domain:
-          type: string
-          description: The base URL for this cluster used when hosting static sites.
-          example: website-us-east-1.linodeobjects.com
-    ObjectStorageKey:
-      type: object
-      description: A keypair used to talk to the S3 API for Object Storage
-      properties:
-        id:
-          type: integer
-          description: This keypair's unique ID
-          example: 123
-          readOnly: true
-        label:
-          type: string
-          description: The label given to this key.  For organization only.
-          example: my-key
-        access_key:
-          type: string
-          description: This keypair's access key.  This is not secret.
-          example: KVAKUTGBA4WTR2NSJQ81
-          readOnly: true
-        secret_key:
-          type: string
-          description: This keypair's secret key.  Only returned on key creation.
-          example: '[REDACTED]'
-          readOnly: true
     Account:
       type: object
       description: Account object
@@ -14748,6 +14698,56 @@ components:
           example: false
           readOnly: true
           x-linode-cli-display: 4
+    ObjectStorageCluster:
+      type: object
+      description: An Object Storage Cluster
+      properties:
+        id:
+          type: string
+          description: The unique ID for this cluster.
+          example: us-east-1
+        domain:
+          type: string
+          description: The base URL for this cluster, used for connecting with third-party clients.
+          example: us-east-1.linodeobjects.com
+        status:
+          type: string
+          enum:
+          - available
+          - unavailable
+          description: This cluster's status.
+          example: available
+        region:
+          type: string
+          description: The region this cluster is located in.
+          example: us-east
+        static_site_domain:
+          type: string
+          description: The base URL for this cluster used when hosting static sites.
+          example: website-us-east-1.linodeobjects.com
+    ObjectStorageKey:
+      type: object
+      description: A keypair used to talk to the S3 API for Object Storage
+      properties:
+        id:
+          type: integer
+          description: This keypair's unique ID
+          example: 123
+          readOnly: true
+        label:
+          type: string
+          description: The label given to this key.  For organization only.
+          example: my-key
+        access_key:
+          type: string
+          description: This keypair's access key.  This is not secret.
+          example: KVAKUTGBA4WTR2NSJQ81
+          readOnly: true
+        secret_key:
+          type: string
+          description: This keypair's secret key.  Only returned on key creation.
+          example: '[REDACTED]'
+          readOnly: true
     PaginationEnvelope:
       type: object
       description: >
