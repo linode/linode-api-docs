@@ -9432,8 +9432,10 @@ paths:
         - Profile
       summary: View User Preferences
       description: |
-        View a list of user preferences. These preferences are tied to the access token
-        used to create them, so an account may have multiple preferences.
+        View a list of user preferences tied to the OAuth client that generated
+        the token making the request. User preferences are available for each
+        OAuth client registered to your account, and as such an account can
+        have multiple user preferences.
       operationId: getUserPreferences
       x-linode-cli-action: preferences-view
       x-linode-cli-skip: true
@@ -9464,17 +9466,18 @@ paths:
       - Profile
       summary: Update User Preferences
       description: >
-        Updates a user's preferences. These preferences are tied to the access
-        token used to create them, so any account may have multiple preferences.
-        Preferences, and the pertaining request body, may contain any arbitrary
-        JSON data that the user would like to store.
+        Updates a user's preferences. These preferences are tied to the
+        OAuth client that generated the token making the request. An account
+        may have multiple preferences. Preferences, and the pertaining request
+        body, may contain any arbitrary JSON data that the user would like to
+        store.
       operationId: updateUserPreferences
       x-linode-cli-action: preferences-update
       x-linode-cli-skip: true
       security:
       - personalAccessToken: []
       - oauth:
-        - account:read_only
+        - account:read_write
       requestBody:
         description: >
           The user preferences to update or store.
