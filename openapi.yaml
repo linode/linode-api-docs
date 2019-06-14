@@ -8540,7 +8540,7 @@ paths:
   /object-storage/keys:
     x-linode-cli-command: object-storage
     get:
-      x-linode-cli-command: keys-list
+      x-linode-cli-action: keys-list
       servers:
       - url: https://api.linode.com/v4beta
       tags:
@@ -8549,7 +8549,6 @@ paths:
       description: >
         Returns a paginated list of Object Storage Keys for authenticating to the
         S3 API in Object Storage.
-      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -8575,13 +8574,12 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
     post:
-      x-linode-cli-command: keys-create
+      x-linode-cli-action: keys-create
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create an Object Storage Key
       description: >
         Provisions a new Object Storage Key on your account
-      x-linode-cli-action: create
       tags:
       - Object Storage
       security:
@@ -15094,6 +15092,7 @@ components:
           - Block Storage
           - Object Storage
           readOnly: true
+          x-linode-cli-display: 3
     RescueDevices:
       type: object
       properties:
