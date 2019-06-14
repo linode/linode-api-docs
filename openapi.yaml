@@ -1753,121 +1753,6 @@ paths:
         - lang: CLI
           source: >
             linode-cli users delete example_user
-  /account/s3-keys:
-    x-linode-cli-command: s3-keys
-    get:
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Account
-      summary: List S3 Keys
-      description: >
-        Returns a paginated list of s3 keys for use with Object Storage.
-      x-linode-cli-action: list
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - account:read_only
-      responses:
-        '200':
-          description: A paginated list of s3 keys
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/S3Key'
-                  page:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-    post:
-      servers:
-      - url: https://api.linode.com/v4beta
-      summary: Create s3 key
-      description: >
-        Provisions a new s3 key on your account
-      x-linode-cli-action: create
-      tags:
-      - Account
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - account:read_only
-      requestBody:
-        description: The label of the key to create
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                label:
-                  type: string
-                  description: The label for this keypair, for display purposes only
-                  example: my-key
-                  required: true
-      responses:
-        '200':
-          description: The new keypair.  This is the only time the secret key is returned.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/S3Key'
-  /account/s3-keys/{keyId}:
-    x-linode-cli-command: s3-keys
-    parameters:
-      - name: keyId
-        in: path
-        description: The key to look up.
-        required: true
-        schema:
-          type: integer
-    get:
-      servers:
-      - url: https://api.linode.com/v4beta
-      summary: View S3 Key
-      description: Returns a single S3 Key provisioned for your account.
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - account:read_only
-      x-linode-cli-action: view
-      tags:
-      - Account
-      responses:
-        '200':
-          description: The keypair
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/S3Key'
-    delete:
-      servers:
-      - url: https://api.linode.com/v4beta
-      summary: Revoke S3 Key
-      description: Revokes an S3 Key.  This keypair will no longer be usable by third-party clients.
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - account:read_write
-      x-linode-cli-action: delete
-      tags:
-      - Account
-      responses:
-        '200':
-          description: Deletion successful
-          content:
-            application/json:
-              schema:
-                type: object
   /account/users/{username}/grants:
     x-linode-cli-command: users
     parameters:
@@ -8595,7 +8480,9 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
   /object-storage/clusters:
+    x-linode-cli-command: object-storage
     get:
+      x-linode-cli-action: clusters-list
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Clusters
@@ -8627,6 +8514,7 @@ paths:
                   results:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
   /object-storage/clusters/{clusterId}:
+    x-linode-cli-command: object-storage
     parameters:
     - name: clusterId
       in: path
@@ -8635,6 +8523,7 @@ paths:
       schema:
         type: string
     get:
+      x-linode-cli-action: clusters-view
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Cluster
@@ -8648,6 +8537,150 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectStorageCluster'
+  /object-storage/keys:
+    x-linode-cli-command: object-storage
+    get:
+      x-linode-cli-command: keys-list
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Object Storage
+      summary: List Object Storage Keys
+      description: >
+        Returns a paginated list of Object Storage Keys for authenticating to the
+        S3 API in Object Storage.
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: A paginated list of Object Storage Keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageKey'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      x-linode-cli-command: keys-create
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Create an Object Storage Key
+      description: >
+        Provisions a new Object Storage Key on your account
+      x-linode-cli-action: create
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      requestBody:
+        description: The label of the key to create
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: The label for this keypair, for display purposes only
+                  example: my-key
+                  required: true
+      responses:
+        '200':
+          description: The new keypair.  This is the only time the secret key is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageKey'
+  /object-storage/keys/{keyId}:
+    x-linode-cli-command: object-storage
+    parameters:
+      - name: keyId
+        in: path
+        description: The key to look up.
+        required: true
+        schema:
+          type: integer
+    get:
+      x-linode-cli-action: keys-view
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: View Object Storage Key
+      description: Returns a single Object Storage Key provisioned for your account.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: The keypair
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageKey'
+    put:
+      x-linode-cli-action: keys-update
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Update an Object Storage Key
+      description: Updates an Object Storage Key on your account.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      tags:
+      - Object Storage
+      requestBody:
+        description: The fields to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectStorageKey'
+      responses:
+        '200':
+          description: Update Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageKey'
+    delete:
+      x-linode-cli-action: keys-delete
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Revoke Object Storage Key
+      description: >
+          Revokes an Object Storage Key.  This keypair will no longer be usable by third-party clients.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: Deletion successful
+          content:
+            application/json:
+              schema:
+                type: object
   /profile:
     x-linode-cli-command: profile
     get:
@@ -11001,12 +11034,12 @@ components:
       properties:
         id:
           type: string
-          description: The unique ID for this cluster
-          example: alpha
+          description: The unique ID for this cluster.
+          example: us-east-1
         domain:
           type: string
           description: The base URL for this cluster, used for connecting with third-party clients.
-          example: alpha.linodeobjects.com
+          example: us-east-1.linodeobjects.com
         status:
           type: enum
           values:
@@ -11020,9 +11053,9 @@ components:
           example: us-east
         static_site_domain:
           type: string
-          description: The base URL for this cluster used when hosting static sites
-          example: alpha-websites.linodeobjects.com
-    S3Key:
+          description: The base URL for this cluster used when hosting static sites.
+          example: website-us-east-1.linodeobjects.com
+    ObjectStorageKey:
       type: object
       description: A keypair used to talk to the S3 API for Object Storage
       properties:
@@ -11030,6 +11063,7 @@ components:
           type: integer
           description: This keypair's unique ID
           example: 123
+          readOnly: true
         label:
           type: string
           description: The label given to this key.  For organization only.
@@ -11038,10 +11072,12 @@ components:
           type: string
           description: This keypair's access key.  This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
+          readOnly: true
         secret_key:
           type: string
           description: This keypair's secret key.  Only returned on key creation.
           example: '[REDACTED]'
+          readOnly: true
     Account:
       type: object
       description: Account object
@@ -11077,6 +11113,18 @@ components:
             the estimate.
           example: 145
           x-linode-cli-display: 4
+        capabilities:
+          type: array
+          items:
+            type: string
+          description: >
+              A list of capabilities your account supports.
+          example:
+          - Linodes
+          - NodeBalancers
+          - Block Storage
+          - Object Storage
+          readOnly: true
         city:
           type: string
           description: The city for this Account's billing address.
@@ -15018,16 +15066,6 @@ components:
             access/perform, see [/profile/grants](#operation/getProfileGrants).
           example: false
           x-linode-cli-display: 3
-        beta_programs:
-          type: array
-          items:
-            type: string
-          description: >
-            A list of Beta Programs you are currently a part of.  Programs are only
-            listed here for as long as they are active.
-          example:
-          - Object Storage EAP
-          readOnly: true
     Region:
       type: object
       description: An area where Linode services are available.
@@ -15044,14 +15082,16 @@ components:
           example: us
           readOnly: true
           x-linode-cli-display: 2
-        features:
+        capabilities:
           type: array
           items:
             type: string
           description: >
-            A list of features this Region supports, in addition to the feature
-            set that all Regions offer.
+              A list of capabilities of this region.
           example:
+          - Linodes
+          - NodeBalancers
+          - Block Storage
           - Object Storage
           readOnly: true
     RescueDevices:
