@@ -8482,6 +8482,7 @@ paths:
   /object-storage/clusters:
     x-linode-cli-command: object-storage
     get:
+      operationId: getObjectStorageClusters
       x-linode-cli-action: clusters-list
       servers:
       - url: https://api.linode.com/v4beta
@@ -8530,6 +8531,7 @@ paths:
       schema:
         type: string
     get:
+      operationId: getObjectStorageCluster
       x-linode-cli-action: clusters-view
       servers:
       - url: https://api.linode.com/v4beta
@@ -8555,6 +8557,7 @@ paths:
   /object-storage/keys:
     x-linode-cli-command: object-storage
     get:
+      operationId: getObjectStorageKeys
       x-linode-cli-action: keys-list
       servers:
       - url: https://api.linode.com/v4beta
@@ -8594,6 +8597,7 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
     post:
+      operationId: createObjectStorageKeys
       x-linode-cli-action: keys-create
       servers:
       - url: https://api.linode.com/v4beta
@@ -8646,6 +8650,7 @@ paths:
         schema:
           type: integer
     get:
+      operationId: getObjectStorageKey
       x-linode-cli-action: keys-view
       servers:
       - url: https://api.linode.com/v4beta
@@ -8673,6 +8678,7 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
     put:
+      operationId: updateObjectStorageKey
       x-linode-cli-action: keys-update
       servers:
       - url: https://api.linode.com/v4beta
@@ -8706,6 +8712,7 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
     delete:
+      operationId: deleteObjectStorageKey
       x-linode-cli-action: keys-delete
       servers:
       - url: https://api.linode.com/v4beta
