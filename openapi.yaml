@@ -297,6 +297,10 @@ info:
 
     Endpoints that do not have CLI examples are currently unavailable through the CLI, but
     can be accessed via other methods such as Shell commands and other third-party applications.
+
+    # APIv3
+
+    View the [Linode APIv3 Documentation](https://linode.com/apiv3).
   contact:
     name: Linode
     url: /
@@ -4838,6 +4842,20 @@ paths:
       - personalAccessToken: []
       - oauth:
         - linodes:read_write
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              properties:
+                region:
+                  type: string
+                  description: >
+                    The region to which the Linode will be migrated.
+                    Must be a valid region slug. A list of regions can be viewed
+                    by using the [GET /regions](#operation/getRegions) endpoint.
+                    A cross-region migration will cancel a pending migration
+                    that has not yet been initiated.
+                  example: us-east
       responses:
         '200':
           description: Scheduled migration started
@@ -9410,6 +9428,96 @@ paths:
       - lang: CLI
         source: >
           linode-cli sshkey delete 42
+  /profile/preferences:
+    x-linode-cli-command: profile
+    get:
+      x-linode-grant: read_only
+      tags:
+        - Profile
+      summary: View User Preferences
+      description: |
+        View a list of user preferences tied to the OAuth client that generated
+        the token making the request. The user preferences endpoints allow
+        consumers of the API to store arbitrary JSON data, such as a user's font
+        size preference or preferred display name. User preferences are available
+        for each OAuth client registered to your account, and as such an account can
+        have multiple user preferences.
+      operationId: getUserPreferences
+      x-linode-cli-action: preferences-view
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns an object of user preferences.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A dictionary of user preferences.
+                example: { "key1": "value1", "key2": "value2"}
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X GET \
+              https://api.linode.com/v4/profile/preferences
+    put:
+      tags:
+      - Profile
+      summary: Update User Preferences
+      description: >
+        Updates a user's preferences. These preferences are tied to the
+        OAuth client that generated the token making the request. The user
+        preferences endpoints allow consumers of the API to store arbitrary
+        JSON data, such as a user's font size preference or preferred display
+        name. An account may have multiple preferences. Preferences, and the
+        pertaining request body, may contain any arbitrary JSON data that
+        the user would like to store.
+      operationId: updateUserPreferences
+      x-linode-cli-action: preferences-update
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: >
+          The user preferences to update or store.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: |
+                Arbitrary JSON of your choosing.
+      responses:
+        '200':
+          description: Returns an object of user preferences.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: An object of user preferences.
+                example: { "key1": "value1", "key2": "value2"}
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "key1": "value1",
+                "key1": "value2"
+              }' \
+              https://api.linode.com/v4/profile/preferences
+
   /regions:
     x-linode-cli-command: regions
     get:
@@ -12660,7 +12768,8 @@ components:
           type: string
           description: >
             This Linode's IPv6 SLAAC addresses. This address is specific to a Linode, and may not
-            be shared.
+            be shared. If the Linode has not been assigned an IPv6 address, the return value will
+            be `null`.
           example: 'c001:d00d::1234'
           readOnly: true
         specs:
