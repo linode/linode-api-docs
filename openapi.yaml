@@ -8521,6 +8521,14 @@ paths:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/clusters
+      - lang: CLI
+        source: >
+          linode-cli object-storage clusters-list
   /object-storage/clusters/{clusterId}:
     x-linode-cli-command: object-storage
     parameters:
@@ -8554,6 +8562,14 @@ paths:
                 $ref: '#/components/schemas/ObjectStorageCluster'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/clusters/us-east-1
+      - lang: CLI
+        source: >
+          linode-cli object-storage clusters-view us-east-1
   /object-storage/keys:
     x-linode-cli-command: object-storage
     get:
@@ -8596,6 +8612,14 @@ paths:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/keys
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-list
     post:
       operationId: createObjectStorageKeys
       x-linode-cli-action: keys-create
@@ -8640,6 +8664,18 @@ paths:
                       example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+                "label": "my-object-storage-key"
+            }' \
+            https://api.linode.com/v4beta/object-storage/keys
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-create \
+            --label "my-object-storage-key"
   /object-storage/keys/{keyId}:
     x-linode-cli-command: object-storage
     parameters:
@@ -8677,6 +8713,15 @@ paths:
                 $ref: '#/components/schemas/ObjectStorageKey'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/keys/12345
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-view \
+            --keyId 12345
     put:
       operationId: updateObjectStorageKey
       x-linode-cli-action: keys-update
@@ -8711,6 +8756,19 @@ paths:
                 $ref: '#/components/schemas/ObjectStorageKey'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -x PUT -d '{
+              "label": "my-object-storage-key"
+            }' \
+            https://api.linode.com/v4beta/object-storage/keys/12345
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-update \
+            --keyId 12345
+            --label "my-object-storage-key"
     delete:
       operationId: deleteObjectStorageKey
       x-linode-cli-action: keys-delete
@@ -8739,6 +8797,16 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -x DELETE \
+            https://api.linode.com/v4beta/object-storage/keys/12345
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-delete \
+            --keyId 12345
   /profile:
     x-linode-cli-command: profile
     get:
