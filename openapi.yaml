@@ -8640,7 +8640,8 @@ paths:
       - oauth:
         - object_storage:read_only
       requestBody:
-        description: The label of the key to create.
+        description: >
+          The label of the key to create. This is used to identify the created key.
         content:
           application/json:
             schema:
@@ -8652,7 +8653,7 @@ paths:
                   example: my-key
       responses:
         '200':
-          description: The new keypair.  This is the only time the secret key is returned.
+          description: The new keypair.  **This is the only time** the secret key is returned.
           content:
             application/json:
               schema:
@@ -14874,7 +14875,7 @@ components:
           readOnly: true
         secret_key:
           type: string
-          description: This keypair's secret key.  Only returned on key creation.
+          description: This keypair's secret key.  **Only returned on key creation**.
           example: '[REDACTED]'
           readOnly: true
     PaginationEnvelope:
