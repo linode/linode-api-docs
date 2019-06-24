@@ -306,6 +306,7 @@ info:
     url: /
 servers:
 - url: https://api.linode.com/v4
+- url: https://api.linode.com/v4beta
 paths:
   /account:
     x-linode-cli-command: account
@@ -8478,6 +8479,335 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerStats'
         default:
           $ref: '#/components/responses/ErrorResponse'
+  /object-storage/clusters:
+    x-linode-cli-command: object-storage
+    get:
+      operationId: getObjectStorageClusters
+      x-linode-cli-action: clusters-list
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: List Clusters
+      description: >
+        Returns a paginated list of Object Storage Clusters that are available for
+        use.  Users can connect to the clusters with third party clients to create buckets
+        and upload objects.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth: []
+      responses:
+        '200':
+          description: A paginated list of available clusters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageCluster'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/clusters
+      - lang: CLI
+        source: >
+          linode-cli object-storage clusters-list
+  /object-storage/clusters/{clusterId}:
+    x-linode-cli-command: object-storage
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the Cluster.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageCluster
+      x-linode-cli-action: clusters-view
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: View Cluster
+      description: >
+        Returns a single Object Storage Cluster.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: The requested Cluster
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageCluster'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/clusters/us-east-1
+      - lang: CLI
+        source: >
+          linode-cli object-storage clusters-view us-east-1
+  /object-storage/keys:
+    x-linode-cli-command: object-storage
+    get:
+      operationId: getObjectStorageKeys
+      x-linode-cli-action: keys-list
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Object Storage
+      summary: List Object Storage Keys
+      description: >
+        Returns a paginated list of Object Storage Keys for authenticating to
+        the Object Storage S3 API.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: A paginated list of Object Storage Keys
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageKey'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/keys
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-list
+    post:
+      operationId: createObjectStorageKeys
+      x-linode-cli-action: keys-create
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Create an Object Storage Key
+      description: >
+        Provisions a new Object Storage Key on your account.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      requestBody:
+        description: >
+          The label of the key to create. This is used to identify the created key.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: The label for this keypair, for display purposes only.
+                  example: my-key
+      responses:
+        '200':
+          description: The new keypair.  **This is the only time** the secret key is returned.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/ObjectStorageKey'
+                - type: object
+                  properties:
+                    secret_key:
+                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+                "label": "my-object-storage-key"
+            }' \
+            https://api.linode.com/v4beta/object-storage/keys
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-create \
+            --label "my-object-storage-key"
+  /object-storage/keys/{keyId}:
+    x-linode-cli-command: object-storage
+    parameters:
+      - name: keyId
+        in: path
+        description: The key to look up.
+        required: true
+        schema:
+          type: integer
+    get:
+      operationId: getObjectStorageKey
+      x-linode-cli-action: keys-view
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: View Object Storage Key
+      description: >
+        Returns a single Object Storage Key provisioned for your account.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: The keypair
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/keys/12345
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-view \
+            --keyId 12345
+    put:
+      operationId: updateObjectStorageKey
+      x-linode-cli-action: keys-update
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Update an Object Storage Key
+      description: >
+        Updates an Object Storage Key on your account.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      tags:
+      - Object Storage
+      requestBody:
+        description: The fields to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectStorageKey'
+      responses:
+        '200':
+          description: Update Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageKey'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -x PUT -d '{
+              "label": "my-object-storage-key"
+            }' \
+            https://api.linode.com/v4beta/object-storage/keys/12345
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-update \
+            --keyId 12345
+            --label "my-object-storage-key"
+    delete:
+      operationId: deleteObjectStorageKey
+      x-linode-cli-action: keys-delete
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Revoke Object Storage Key
+      description: >
+        Revokes an Object Storage Key.  This keypair will no longer be usable by third-party clients.
+        <br/><br/>
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: Deletion successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -x DELETE \
+            https://api.linode.com/v4beta/object-storage/keys/12345
+      - lang: CLI
+        source: >
+          linode-cli object-storage keys-delete \
+            --keyId 12345
   /profile:
     x-linode-cli-command: profile
     get:
@@ -10860,6 +11190,18 @@ components:
             the estimate.
           example: 145
           x-linode-cli-display: 4
+        capabilities:
+          type: array
+          items:
+            type: string
+          description: >
+              A list of capabilities your account supports.
+          example:
+          - Linodes
+          - NodeBalancers
+          - Block Storage
+          - Object Storage
+          readOnly: true
         city:
           type: string
           description: The city for this Account's billing address.
@@ -14486,6 +14828,56 @@ components:
           example: false
           readOnly: true
           x-linode-cli-display: 4
+    ObjectStorageCluster:
+      type: object
+      description: An Object Storage Cluster
+      properties:
+        id:
+          type: string
+          description: The unique ID for this cluster.
+          example: us-east-1
+        domain:
+          type: string
+          description: The base URL for this cluster, used for connecting with third-party clients.
+          example: us-east-1.linodeobjects.com
+        status:
+          type: string
+          enum:
+          - available
+          - unavailable
+          description: This cluster's status.
+          example: available
+        region:
+          type: string
+          description: The region this cluster is located in.
+          example: us-east
+        static_site_domain:
+          type: string
+          description: The base URL for this cluster used when hosting static sites.
+          example: website-us-east-1.linodeobjects.com
+    ObjectStorageKey:
+      type: object
+      description: A keypair used to communicate with the Object Storage S3 API.
+      properties:
+        id:
+          type: integer
+          description: This keypair's unique ID
+          example: 123
+          readOnly: true
+        label:
+          type: string
+          description: The label given to this key.  For display purposes only.
+          example: my-key
+        access_key:
+          type: string
+          description: This keypair's access key.  This is not secret.
+          example: KVAKUTGBA4WTR2NSJQ81
+          readOnly: true
+        secret_key:
+          type: string
+          description: This keypair's secret key.  **Only returned on key creation**.
+          example: '[REDACTED]'
+          readOnly: true
     PaginationEnvelope:
       type: object
       description: >
@@ -14818,6 +15210,19 @@ components:
           example: us
           readOnly: true
           x-linode-cli-display: 2
+        capabilities:
+          type: array
+          items:
+            type: string
+          description: >
+              A list of capabilities of this region.
+          example:
+          - Linodes
+          - NodeBalancers
+          - Block Storage
+          - Object Storage
+          readOnly: true
+          x-linode-cli-display: 3
     RescueDevices:
       type: object
       properties:
