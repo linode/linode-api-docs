@@ -13041,7 +13041,8 @@ components:
           type: string
           description: >
             This Linode's IPv6 SLAAC addresses. This address is specific to a Linode, and may not
-            be shared.
+            be shared. If the Linode has not been assigned an IPv6 address, the return value will
+            be `null`.
           example: 'c001:d00d::1234'
           readOnly: true
         specs:
