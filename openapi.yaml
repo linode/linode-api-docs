@@ -13601,16 +13601,23 @@ components:
           type: string
           readOnly: true
           description: >
-            The class of the Linode Type. We currently offer four classes of Linodes:
+            The class of the Linode Type. We currently offer five classes of Linodes:
 
-              * nanode - Our entry-level Linode Type.
-              * standard - Our flagship Linode Type.
-              * dedicated - Our Dedicated CPU Linode Type.
-              * highmem - A Linode Type featuring high memory availability.
+              * nanode - Nanode instances are good for low-duty workloads,
+                where performance isn't critical.
+              * standard - Standard instances are good for medium-duty workloads and
+                are a good mix of performance, resources, and price.
+              * dedicated - Dedicated CPU instances are good for full-duty workloads
+                where consistent performance is important.
+              * gpu - Linodes with dedicated NVIDIA Quadro &reg; RTX 6000 GPUs accelerate highly
+                specialized applications such as machine learning, AI, and video transcoding.
+              * highmem - High Memory instances favor RAM over other resources, and can be
+                good for memory hungry use cases like caching and in-memory databases.
           enum:
           - nanode
           - standard
           - dedicated
+          - gpu
           - highmem
           example: standard
           x-linode-cli-display: 3
@@ -13698,6 +13705,14 @@ components:
             The number of VCPU cores this Linode Type offers.
           example: 2
           x-linode-cli-display: 6
+        gpus:
+          x-linode-filterable: true
+          type: integer
+          readOnly: true
+          description: >
+            The number of GPUs this Linode Type offers.
+          example: 0
+          x-linode-cli-display: 11
     LongviewClient:
       type: object
       description: >
