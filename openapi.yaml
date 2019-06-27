@@ -12050,6 +12050,9 @@ components:
           - nodebalancer_config_create
           - nodebalancer_config_delete
           - nodebalancer_config_update
+          - nodebalancer_node_create
+          - nodebalancer_node_delete
+          - nodebalancer_node_update
           - password_reset
           - payment_submitted
           - profile_update
