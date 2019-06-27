@@ -12023,7 +12023,6 @@ components:
           - linode_delete
           - linode_update
           - linode_deleteip
-          - linode_kvmify
           - linode_migrate
           - linode_migrate_datacenter
           - linode_migrate_datacenter_create
