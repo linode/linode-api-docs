@@ -12009,6 +12009,7 @@ components:
           - dns_record_update
           - dns_zone_create
           - dns_zone_delete
+          - dnz_zone_import
           - dns_zone_update
           - host_reboot
           - image_delete
@@ -12022,7 +12023,10 @@ components:
           - linode_delete
           - linode_update
           - linode_deleteip
+          - linode_kvmify
           - linode_migrate
+          - linode_migrate_datacenter
+          - linode_migrate_datacenter_create
           - linode_mutate
           - linode_mutate_create
           - linode_reboot
@@ -12049,6 +12053,7 @@ components:
           - nodebalancer_config_update
           - password_reset
           - payment_submitted
+          - profile_update
           - stackscript_create
           - stackscript_delete
           - stackscript_update
@@ -12062,6 +12067,8 @@ components:
           - user_ssh_key_add
           - user_ssh_key_delete
           - user_ssh_key_update
+          - vlan_attach
+          - vlan_detach
           - volume_attach
           - volume_clone
           - volume_create
