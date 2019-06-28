@@ -12014,6 +12014,7 @@ components:
           - host_reboot
           - image_delete
           - image_update
+          - ipaddress_update
           - lassie_reboot
           - lish_boot
           - linode_addip
