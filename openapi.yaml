@@ -12093,6 +12093,9 @@ components:
           - ticket_attachment_upload
           - ticket_create
           - ticket_update
+          - user_create
+          - user_update
+          - user_delete
           - user_ssh_key_add
           - user_ssh_key_delete
           - user_ssh_key_update
