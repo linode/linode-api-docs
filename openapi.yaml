@@ -3656,16 +3656,42 @@ paths:
                 disks:
                   type: array
                   description: >
-                    All disks attached to configs will be cloned from the
-                    source Linode if not provided.
+                    An array of disk IDs.
+
+                    * If the `disks` parameter **is not provided**, then **no extra disks
+                    will be cloned** from the source Linode. All disks associated
+                    with the configuration profiles specified by the `configs`
+                    parameter will still be cloned.
+
+                    * **If an empty array is provided** for the `disks` parameter, then **no extra disks
+                    will be cloned** from the source Linode. All disks associated
+                    with the configuration profiles specified by the `configs`
+                    parameter will still be cloned.
+
+                    * **If a non-empty array is provided** for the `disks` parameter, then **the disks
+                    specified in the array will be cloned** from the source Linode, in addition to
+                    any disks associated with the configuration profiles specified by the `configs`
+                    parameter.
                   items:
                     type: integer
                     example: 25674
                 configs:
                   type: array
                   description: >
-                    All configs attached to will be cloned from the source
-                    Linode if not provided.
+                    An array of configuration profile IDs.
+
+                    * If the `configs` parameter **is not provided**, then **all configuration profiles and their associated disks
+                    will be cloned** from the source Linode. Any disks specified by the `disks`
+                    parameter will also be cloned.
+
+                    * **If an empty array is provided** for the `configs` parameter, then **no
+                    configuration profiles (nor their associated disks) will be cloned** from
+                    the source Linode. Any disks specified by the `disks`
+                    parameter will still be cloned.
+
+                    * **If a non-empty array is provided** for the `configs` parameter, then **the configuration profiles
+                    specified in the array (and their associated disks) will be cloned** from the source Linode.
+                    Any disks specified by the `disks` parameter will also be cloned.
                   items:
                     type: integer
                     example: 23456
