@@ -396,6 +396,89 @@ paths:
           linode-cli account update \
             --first_name John \
             --last_name Smith
+  /account/cancel:
+    x-linode-cli-command: account
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Account
+      summary: Cancel Account
+      description: >
+        Cancels an active Linode account. This action will cause
+        Linode to attempt to charge the credit card on file for the remaining
+        balance. An error will occur if Linode fails to charge the credit card
+        on file. Restricted users will not be able to cancel an account.
+      operationId: cancelAccount
+      x-linode-cli-action: cancel
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: >
+          Supply a comment stating the reason that you are cancelling your account.
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                comments:
+                  type: string
+                  description: >
+                    Any reason for cancelling the account, and any other comments
+                    you might have about your Linode service.
+                  example: "I'm consolidating multiple accounts into one."
+      responses:
+        '200':
+          description: Account cancelled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  survey_link:
+                    type: string
+                    description: A link to Linode's exit survey.
+                example: {'survey_link':
+                'https://alinktothesurvey.com'}
+        '409':
+          description: Could not charge the credit card on file
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        reason:
+                          type: string
+                          description: >
+                            A string explaining that the account could not be cancelled
+                            because there is an outstanding balance on the account
+                            that must be paid first.
+                          example: >
+                            We were unable to charge your credit
+                            card for services rendered. We cannot cancel
+                            this account until the balance has been paid.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "comments": "I'm consolidating my accounts."
+                }
+              }' \
+              https://api.linode.com/v4/account/cancel
+      - lang: CLI
+        source: >
+          linode-cli account cancel \
+            --comments "I'm consolidating my accounts"
   /account/credit-card:
     x-linode-cli-command: account
     post:
