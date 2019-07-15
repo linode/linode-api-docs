@@ -11849,7 +11849,7 @@ components:
           x-linode-cli-display: 3
         domain:
           type: string
-          pattern: ([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|XN--[a-zA-Z0-9]+)
+          pattern: ([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)
           description: >
             The domain this Domain represents. These must be unique in our
             system; you cannot have two Domains representing the same domain.
