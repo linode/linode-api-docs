@@ -12171,6 +12171,8 @@ components:
           - stackscript_update
           - stackscript_publicize
           - stackscript_revise
+          - tag_create
+          - tag_delete
           - tfa_disabled
           - tfa_enabled
           - ticket_attachment_upload
