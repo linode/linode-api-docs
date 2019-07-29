@@ -12163,6 +12163,10 @@ components:
           - nodebalancer_node_create
           - nodebalancer_node_delete
           - nodebalancer_node_update
+          - oauth_client_create
+          - oauth_client_delete
+          - oauth_client_secret_reset
+          - oauth_client_update
           - password_reset
           - payment_submitted
           - profile_update
