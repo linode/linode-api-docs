@@ -11952,7 +11952,7 @@ components:
 
             * ttl_sec will default to 0 if no value is provided.
 
-            * A value of 0 is equivalent to a value of 300.
+            * A value of 0 is equivalent to a value of 86400.
           example: 300
         tags:
           x-linode-filterable: true
