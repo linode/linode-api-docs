@@ -3207,7 +3207,7 @@ paths:
                 "label": "linode123",
                 "group": "Linode-Group",
                 "alerts": {
-                  "cpu": 90,
+                  "cpu": 180,
                   "network_in": 10,
                   "network_out": 10,
                   "transfer_quota": 80,
@@ -3227,7 +3227,7 @@ paths:
             --label linode123 \
             --backups.schedule.day "Saturday" \
             --backups.schedule.window "W22" \
-            --alerts.cpu 90 \
+            --alerts.cpu 180 \
             --alerts.network_in 10 \
             --alerts.network_out 10 \
             --alerts.transfer_quota 80 \
@@ -13264,7 +13264,7 @@ components:
                 your Linode's disks, see the
                 [/linode/instances/{linodeId}/disks](#operation/getLinodeDisks)
                 endpoints.
-              example: 30720
+              example: 81920
               readOnly: true
             memory:
               type: integer
@@ -13274,7 +13274,7 @@ components:
                 Config profile, see the
                 [/linode/instances/{linodeId}/configs](#operation/getLinodeConfigs)
                 endpoints and the LinodeConfig object for more information.
-              example: 2048
+              example: 4096
               readOnly: true
             vcpus:
               type: integer
@@ -13285,42 +13285,48 @@ components:
                 Profile, see the
                 [/linode/instances/{linodeId}/configs](#operation/getLinodeConfigs)
                 endpoints and the LinodeConfig object for more information.
-              example: 1
+              example: 2
               readOnly: true
             transfer:
               type: integer
               description: The amount of network transfer this Linode is allotted each month.
-              example: 2000
+              example: 4000
               readOnly: true
         alerts:
           type: object
           properties:
             cpu:
               type: integer
-              description: >
-                The percentage of CPU usage required to trigger an alert. If the average CPU
-                usage over two hours exceeds this value, we'll send you an alert. If this is set
-                to 0, the alert is disabled.
-              example: 90
+              description: |
+                The percentage of CPU usage required to trigger an alert.
+                If the average CPU usage over two hours exceeds this value, we'll send you an alert.
+                Your Linode's total CPU capacity is represented as 100%, multiplied by its number of
+                cores.
+
+                For example, a two core Linode's CPU capacity is represented as 200%. If you want
+                to be alerted at 90% of a two core Linode's CPU capacity, set the alert value to `180`.
+
+                If the value is set to `0` (zero), the alert is disabled.
+              example: 180
             network_in:
               type: integer
               description: >
                 The amount of incoming traffic, in Mbit/s, required to trigger an alert. If the
                 average incoming traffic over two hours exceeds this value, we'll send you an
-                alert. If this is set to 0 (zero), the alert is disabled.
+                alert. If this is set to `0` (zero), the alert is disabled.
               example: 10
             network_out:
               type: integer
               description: >
                 The amount of outbound traffic, in Mbit/s, required to trigger an alert. If the
                 average outbound traffic over two hours exceeds this value, we'll send you an
-                alert. If this is set to 0 (zero), the alert is disabled.
+                alert. If this is set to `0` (zero), the alert is disabled.
               example: 10
             transfer_quota:
               type: integer
               description: >
                 The percentage of network transfer that may be used before an alert is triggered.
-                When this value is exceeded, we'll alert you. If this is set to 0 (zero), the alert is
+                When this value is exceeded, we'll alert you. If this is set to `0` (zero), the alert is
                 disabled.
               example: 80
             io:
@@ -13328,7 +13334,7 @@ components:
               description: >
                 The amount of disk IO operation per second required to trigger an alert. If the
                 average disk IO over two hours exceeds this value, we'll send you an alert. If set
-                to 0, this alert is disabled.
+                to `0` (zero), this alert is disabled.
               example: 10000
         backups:
           type: object
