@@ -12224,7 +12224,24 @@ components:
           properties:
             id:
               type: integer
-              description: The unique ID for this Event's Entity.
+              description: |
+                The unique ID for an Event's entity.
+
+
+                Some Event entities do not have IDs associated with them, so they
+                will not be returned when filtering by ID. These Events include:
+                  * `account`
+                  * `profile`
+
+                Entities for some Events are assigned the ID of the Linode they correspond to.
+                When filtering by ID for these Events, use the corresponding Linode's ID.
+                These Events include:
+                  * `disks`
+                  * `backups`
+
+
+                Tag Events use a tag's name for the entity ID field. When filtering by ID
+                for tag Events, supply the name of the tag.
               example: 11111
               x-linode-filterable: true
             label:
@@ -12235,6 +12252,28 @@ components:
               example: Problem booting my Linode
             type:
               type: string
+              enum:
+              - account
+              - backups
+              - community
+              - disks
+              - domain
+              - image
+              - ipaddress
+              - linode
+              - longview
+              - managed_service
+              - nodebalancer
+              - oauth_client
+              - profile
+              - stackscript
+              - tag
+              - ticket
+              - token
+              - user
+              - user_ssh_key
+              - volume
+              readOnly: true
               description: >
                 The type of entity this Event is related to.
               example: ticket
