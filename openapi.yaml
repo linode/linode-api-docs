@@ -6914,7 +6914,7 @@ paths:
       - Managed
       summary: Create Managed Service
       description: >
-        Creates a Managed Service. Linode Managed will being monitoring this
+        Creates a Managed Service. Linode Managed will begin monitoring this
         service and reporting and attempting to resolve any Issues.
       operationId: createManagedService
       x-linode-cli-action: service-create
