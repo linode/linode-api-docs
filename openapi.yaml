@@ -11849,10 +11849,12 @@ components:
           x-linode-cli-display: 3
         domain:
           type: string
-          pattern: ([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)
+          pattern: ([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)
           description: >
-            The domain this Domain represents. These must be unique in our
-            system; you cannot have two Domains representing the same domain.
+            The domain this Domain represents. Domain labels cannot be longer than
+            63 characters and must conform to [RFC1035](https://tools.ietf.org/html/rfc1035).
+            Domains must be unique on Linode's platform, including across different Linode
+            accounts; there cannot be two Domains representing the same domain.
           example: example.org
           x-linode-filterable: true
           x-linode-cli-display: 2
