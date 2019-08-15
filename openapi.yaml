@@ -11314,6 +11314,57 @@ components:
       type: object
       description: Account object
       properties:
+        active_promotions:
+          type: array
+          items:
+            type: object
+            readOnly: true
+            description: |
+              A list of active promotions on your account. Promotions generally
+              offer a set amount of credit that can be used toward your Linode
+              services, and the promotion expires after a specified date. As well,
+              a monthly cap on the promotional offer is set.
+
+              Simply put, a promotion offers a certain amount of credit every
+              month, until either the expiration date is passed, or until the total
+              promotional credit is used, whichever comes first.
+            properties:
+              credit_monthly_cap:
+                type: string
+                description: >
+                  The amount available to spend per month.
+                example: "10.00"
+              credit_remaining:
+                type: string
+                description: >
+                  The total amount of credit left for this promotion.
+                example: "50.00"
+              description:
+                type: string
+                description: >
+                  A detailed description of this promotion.
+                example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
+              expire_dt:
+                type: string
+                description: >
+                  When this promotion's credits expire.
+                example: '2018-01-31T23:59:59'
+              image_url:
+                type: string
+                description: >
+                  The location of an image for this promotion.
+                example: "https://linode.com/10_a_month_promotion.svg"
+              summary:
+                type: string
+                description: >
+                  Short details of this promotion.
+                example: "$10 off your Linode a month!"
+              this_month_credit_remaining:
+                type: string
+                description: >
+                  The amount of credit left for this month for this promotion.
+                example:  "10.00"
+
         active_since:
           type: string
           format: date-time
@@ -14940,6 +14991,7 @@ components:
           - ticket_abuse
           - notice
           - maintenance
+          - promotion
           readOnly: true
           description: The type of Notification this is.
           example: ticket_important
