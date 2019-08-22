@@ -3207,7 +3207,7 @@ paths:
                 "label": "linode123",
                 "group": "Linode-Group",
                 "alerts": {
-                  "cpu": 90,
+                  "cpu": 180,
                   "network_in": 10,
                   "network_out": 10,
                   "transfer_quota": 80,
@@ -3227,7 +3227,7 @@ paths:
             --label linode123 \
             --backups.schedule.day "Saturday" \
             --backups.schedule.window "W22" \
-            --alerts.cpu 90 \
+            --alerts.cpu 180 \
             --alerts.network_in 10 \
             --alerts.network_out 10 \
             --alerts.transfer_quota 80 \
@@ -6637,6 +6637,52 @@ paths:
       - lang: CLI
         source: >
           linode-cli managed credential-revoke 9991
+  /managed/credentials/sshkey:
+    x-linode-cli-command: managed
+    get:
+      x-linode-grant: unrestricted only
+      tags:
+      - Managed
+      summary: View Managed SSH Key
+      description: >
+        Returns the unique SSH public key assigned to your Linode account's
+        Managed service. If you [add this public key](https://linode.com/docs/platform/linode-managed/#adding-the-public-key) to a Linode on your account,
+        Linode special forces will be able to log in to the Linode with this key
+        when attempting to resolve issues.
+      operationId: viewManagedSSHKey
+      x-linode-cli-action: credential-sshkey-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: The requested Managed SSH public key.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: >
+                  A unique SSH public key that allows Linode's special forces
+                  to access a Managed server to respond to Issues.
+                properties:
+                  ssh_key:
+                    type: string
+                    description: >
+                      The unique SSH public key assigned to your Linode account's Managed service.
+                    example: ssh-rsa AAAAB...oD2ZQ== managedservices@linode
+                    readOnly: true
+                    x-linode-cli-display: 1
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/credentials/sshkey
+      - lang: CLI
+        source: >
+          linode-cli managed credential-sshkey-view
   /managed/issues:
     x-linode-cli-command: managed
     get:
@@ -6914,7 +6960,7 @@ paths:
       - Managed
       summary: Create Managed Service
       description: >
-        Creates a Managed Service. Linode Managed will being monitoring this
+        Creates a Managed Service. Linode Managed will begin monitoring this
         service and reporting and attempting to resolve any Issues.
       operationId: createManagedService
       x-linode-cli-action: service-create
@@ -11268,6 +11314,57 @@ components:
       type: object
       description: Account object
       properties:
+        active_promotions:
+          type: array
+          items:
+            type: object
+            readOnly: true
+            description: |
+              A list of active promotions on your account. Promotions generally
+              offer a set amount of credit that can be used toward your Linode
+              services, and the promotion expires after a specified date. As well,
+              a monthly cap on the promotional offer is set.
+
+              Simply put, a promotion offers a certain amount of credit every
+              month, until either the expiration date is passed, or until the total
+              promotional credit is used, whichever comes first.
+            properties:
+              credit_monthly_cap:
+                type: string
+                description: >
+                  The amount available to spend per month.
+                example: "10.00"
+              credit_remaining:
+                type: string
+                description: >
+                  The total amount of credit left for this promotion.
+                example: "50.00"
+              description:
+                type: string
+                description: >
+                  A detailed description of this promotion.
+                example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
+              expire_dt:
+                type: string
+                description: >
+                  When this promotion's credits expire.
+                example: '2018-01-31T23:59:59'
+              image_url:
+                type: string
+                description: >
+                  The location of an image for this promotion.
+                example: "https://linode.com/10_a_month_promotion.svg"
+              summary:
+                type: string
+                description: >
+                  Short details of this promotion.
+                example: "$10 off your Linode a month!"
+              this_month_credit_remaining:
+                type: string
+                description: >
+                  The amount of credit left for this month for this promotion.
+                example:  "10.00"
+
         active_since:
           type: string
           format: date-time
@@ -11849,10 +11946,12 @@ components:
           x-linode-cli-display: 3
         domain:
           type: string
-          pattern: ([a-zA-Z0-9-_]+\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)
+          pattern: ([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)
           description: >
-            The domain this Domain represents. These must be unique in our
-            system; you cannot have two Domains representing the same domain.
+            The domain this Domain represents. Domain labels cannot be longer than
+            63 characters and must conform to [RFC1035](https://tools.ietf.org/html/rfc1035).
+            Domains must be unique on Linode's platform, including across different Linode
+            accounts; there cannot be two Domains representing the same domain.
           example: example.org
           x-linode-filterable: true
           x-linode-cli-display: 2
@@ -12222,7 +12321,24 @@ components:
           properties:
             id:
               type: integer
-              description: The unique ID for this Event's Entity.
+              description: |
+                The unique ID for an Event's entity.
+
+
+                Some Event entities do not have IDs associated with them, so they
+                will not be returned when filtering by ID. These Events include:
+                  * `account`
+                  * `profile`
+
+                Entities for some Events are assigned the ID of the Linode they correspond to.
+                When filtering by ID for these Events, use the corresponding Linode's ID.
+                These Events include:
+                  * `disks`
+                  * `backups`
+
+
+                Tag Events use a tag's name for the entity ID field. When filtering by ID
+                for tag Events, supply the name of the tag.
               example: 11111
               x-linode-filterable: true
             label:
@@ -12233,6 +12349,28 @@ components:
               example: Problem booting my Linode
             type:
               type: string
+              enum:
+              - account
+              - backups
+              - community
+              - disks
+              - domain
+              - image
+              - ipaddress
+              - linode
+              - longview
+              - managed_service
+              - nodebalancer
+              - oauth_client
+              - profile
+              - stackscript
+              - tag
+              - ticket
+              - token
+              - user
+              - user_ssh_key
+              - volume
+              readOnly: true
               description: >
                 The type of entity this Event is related to.
               example: ticket
@@ -13262,7 +13400,7 @@ components:
                 your Linode's disks, see the
                 [/linode/instances/{linodeId}/disks](#operation/getLinodeDisks)
                 endpoints.
-              example: 30720
+              example: 81920
               readOnly: true
             memory:
               type: integer
@@ -13272,7 +13410,7 @@ components:
                 Config profile, see the
                 [/linode/instances/{linodeId}/configs](#operation/getLinodeConfigs)
                 endpoints and the LinodeConfig object for more information.
-              example: 2048
+              example: 4096
               readOnly: true
             vcpus:
               type: integer
@@ -13283,42 +13421,48 @@ components:
                 Profile, see the
                 [/linode/instances/{linodeId}/configs](#operation/getLinodeConfigs)
                 endpoints and the LinodeConfig object for more information.
-              example: 1
+              example: 2
               readOnly: true
             transfer:
               type: integer
               description: The amount of network transfer this Linode is allotted each month.
-              example: 2000
+              example: 4000
               readOnly: true
         alerts:
           type: object
           properties:
             cpu:
               type: integer
-              description: >
-                The percentage of CPU usage required to trigger an alert. If the average CPU
-                usage over two hours exceeds this value, we'll send you an alert. If this is set
-                to 0, the alert is disabled.
-              example: 90
+              description: |
+                The percentage of CPU usage required to trigger an alert.
+                If the average CPU usage over two hours exceeds this value, we'll send you an alert.
+                Your Linode's total CPU capacity is represented as 100%, multiplied by its number of
+                cores.
+
+                For example, a two core Linode's CPU capacity is represented as 200%. If you want
+                to be alerted at 90% of a two core Linode's CPU capacity, set the alert value to `180`.
+
+                If the value is set to `0` (zero), the alert is disabled.
+              example: 180
             network_in:
               type: integer
               description: >
                 The amount of incoming traffic, in Mbit/s, required to trigger an alert. If the
                 average incoming traffic over two hours exceeds this value, we'll send you an
-                alert. If this is set to 0 (zero), the alert is disabled.
+                alert. If this is set to `0` (zero), the alert is disabled.
               example: 10
             network_out:
               type: integer
               description: >
                 The amount of outbound traffic, in Mbit/s, required to trigger an alert. If the
                 average outbound traffic over two hours exceeds this value, we'll send you an
-                alert. If this is set to 0 (zero), the alert is disabled.
+                alert. If this is set to `0` (zero), the alert is disabled.
               example: 10
             transfer_quota:
               type: integer
               description: >
                 The percentage of network transfer that may be used before an alert is triggered.
-                When this value is exceeded, we'll alert you. If this is set to 0 (zero), the alert is
+                When this value is exceeded, we'll alert you. If this is set to `0` (zero), the alert is
                 disabled.
               example: 80
             io:
@@ -13326,7 +13470,7 @@ components:
               description: >
                 The amount of disk IO operation per second required to trigger an alert. If the
                 average disk IO over two hours exceeds this value, we'll send you an alert. If set
-                to 0, this alert is disabled.
+                to `0` (zero), this alert is disabled.
               example: 10000
         backups:
           type: object
@@ -14847,6 +14991,7 @@ components:
           - ticket_abuse
           - notice
           - maintenance
+          - promotion
           readOnly: true
           description: The type of Notification this is.
           example: ticket_important
