@@ -14724,16 +14724,18 @@ components:
         ssl_commonname:
           type: string
           description: >
-            The common name for the SSL certification this port is serving
-            if this port is not configured to use SSL.
+            The read-only common name derived from the SSL certificate assigned to this
+            NodeBalancerConfig. Please refer to this field to verify that the appropriate
+            certificate is assigned to your NodeBalancerConfig.
           example: null
           readOnly: true
           x-linode-cli-display: 8
         ssl_fingerprint:
           type: string
           description: >
-            The fingerprint for the SSL certification this port is serving
-            if this port is not configured to use SSL.
+            The read-only fingerprint derived from the SSL certificate assigned to this
+            NodeBalancerConfig. Please refer to this field to verify that the appropriate
+            certificate is assigned to your NodeBalancerConfig.
           example: null
           readOnly: true
           x-linode-cli-display: 9
@@ -14741,21 +14743,33 @@ components:
           type: string
           format: ssl-cert
           nullable: true
-          description: >
-            The certificate this port is serving. This is not returned. If set,
-            this field will come back as "&lt;REDACTED&gt;".
+          description: |
+            The PEM-formatted public SSL certificate (or the combined PEM-formatted SSL
+            certificate and Certificate Authority chain) that should be served on this
+            NodeBalancerConfig's port.
 
-            Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
+            The contents of this field will not be shown in any responses that display
+            the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
+            appears.
+
+            The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
+            response are derived from your certificate. Please refer to these fields to
+            verify that the appropriate certificate was assigned to your NodeBalancerConfig.
           example: null
         ssl_key:
           type: string
           format: ssl-key
           nullable: true
-          description: >
-            The private key corresponding to this port's certificate.  This is not
-            returned. If set, this field will come back as "&lt;REDACTED&gt;".
+          description: |
+            The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.
 
-            Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
+            The contents of this field will not be shown in any responses that display
+            the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
+            appears.
+
+            The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
+            response are derived from your certificate. Please refer to these fields to
+            verify that the appropriate certificate was assigned to your NodeBalancerConfig.
           example: null
         nodes_status:
           type: object
