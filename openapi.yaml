@@ -6606,7 +6606,7 @@ paths:
     - name: credentialId
       in: path
       required: true
-      description: The ID of the Credential to access.
+      description: The ID of the Credential to update.
       schema:
         type: integer
     x-linode-cli-command: managed
