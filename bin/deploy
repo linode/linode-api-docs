@@ -35,6 +35,17 @@ echo "Deploying version ${1}"
 
 echo "Checking out development branch"
 git checkout development
+
+# ensure no local changes to openapi.yaml
+git diff-index --quiet HEAD -- openapi.yaml
+
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+  echo "Error: Local changes have been made to openapi.yaml."
+  echo "       Please commit those changes before proceeding."
+  exit 1
+fi
+
 echo "Creating a release branch release-${1}"
 git checkout -b "release-${1}"
 echo "Updating openapi.yaml with the new version number"
