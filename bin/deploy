@@ -92,6 +92,7 @@ fi
 if [ $exit_status -ne 0 ]; then
   echo
   echo "Please resolve the ERRORs above."
+  exit 1
 else
   echo
   echo "Release process is complete."
