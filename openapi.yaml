@@ -4359,7 +4359,9 @@ paths:
       - Linode Instances
       summary: Delete Disk
       description: |
-        Deletes a Disk you have permission to `read_write`.
+        Deletes a Disk you have permission to `read_write`. The Disk cannot be
+        deleted if it is currently attached to a Linode with a currently-running
+        configuration profile.
 
         **Deleting a Disk is a destructive action and cannot be undone.**
       operationId: deleteDisk
