@@ -2,69 +2,33 @@
 
 This is the Linode API OpenAPI 3 Schema
 
-## Implementation
-
-We are using [ReDoc](https://github.com/Rebilly/ReDoc) as the front end
-UI for our OpenAPI specification.
-
-Additionally, we are taking advantage of ReDoc's support of
-[Vendor Extensions](https://github.com/Rebilly/ReDoc/blob/master/docs/redoc-vendor-extensions.md)
-such as `x-logo` and `x-code-samples` for extended functionality.
-
-A CSS file has also been added to the html page, to allow customization to the
-output.
-
 ## Requirements
 
-Per the [Deployment
-Guidelines](https://github.com/Rebilly/ReDoc#deployment) of the ReDoc
-specification, ReDoc must be installed on the server via yarn or npm.
+The linter used for the OpenAPI spec is written in python3.
+A virtualenv is recommended for local work.
 
-**yarn:**
 ```
-yarn add redoc
-```
-
-**NPM:**
-```
-npm install redoc --save
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 ## Development
 
-Any http server serving this directory will work - simply reload the page to
-see changes.  We're working on a nicer way to do this, but for now this should
-get you started:
+The spec can be linted using the `./bin/lint` helper.
 
-```shell
-python3 -m http.server
+```
+python3 ./bin/lint openapi.yaml
 ```
 
 ### Versioning
 
-This specification is automatically versioned on build by Jenkins.  The version
-presented in the spec is taken directly from the most recent annotated `git tag`
-to the build's `HEAD`.  The package version appends the number of commits since
-the last tag to this number, separated by a hyphen.  When making a new release
-you **must** tag the release with the correct semantic versioning-compliant
-version string so that all versions are populated appropriately.
+When making a new release you **must** tag the release with the correct semantic versioning-compliant version string so that all versions are populated appropriately.
+There is a `./bin/release` helper which will help with this process.
 
-### Updating Dependencies
-
-The ReDoc version we are using in this repo is from a fork of the mainline ReDoc
-repo, found [here](https://github.com/dnknapp/ReDoc).  This fork has custom
-modifications for Linode.  In order to update the ReDoc we are using, clone that
-repo, rebase it's HEAD onto the latest upstream ReDoc (if desired), and run the
-following commands to generate a `redoc.standalone.js`:
-
-```bash
-yarn
-yarn bundle
-cp bundles/redoc.standalone.js /path/to/linode-api-docs/
 ```
-
-This file _is_ committed to this repository, _is_ packaged with this repo's deb,
-and _is_ referenced with a relative link on the server.
+./bin/deploy 0.1.0
+```
 
 ## Spec Extensions
 
