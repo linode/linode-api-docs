@@ -76,7 +76,7 @@ echo
 
 exit_status=0
 
-if grep -Fxq "${version}" openapi.yaml; then
+if grep -Fxq "  version: ${version}" openapi.yaml; then
   echo "OK    - version ${version} is present in openapi.yaml"
 else
   echo "ERROR - version ${version} is not present in openapi.yaml"
