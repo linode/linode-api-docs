@@ -14724,7 +14724,7 @@ components:
         ssl_commonname:
           type: string
           description: >
-            The read-only common name derived from the SSL certificate assigned to this
+            The read-only common name automatically derived from the SSL certificate assigned to this
             NodeBalancerConfig. Please refer to this field to verify that the appropriate
             certificate is assigned to your NodeBalancerConfig.
           example: null
@@ -14733,7 +14733,7 @@ components:
         ssl_fingerprint:
           type: string
           description: >
-            The read-only fingerprint derived from the SSL certificate assigned to this
+            The read-only fingerprint automatically derived from the SSL certificate assigned to this
             NodeBalancerConfig. Please refer to this field to verify that the appropriate
             certificate is assigned to your NodeBalancerConfig.
           example: null
@@ -14753,7 +14753,7 @@ components:
             appears.
 
             The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
-            response are derived from your certificate. Please refer to these fields to
+            response are automatically derived from your certificate. Please refer to these fields to
             verify that the appropriate certificate was assigned to your NodeBalancerConfig.
           example: null
         ssl_key:
@@ -14768,7 +14768,7 @@ components:
             appears.
 
             The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
-            response are derived from your certificate. Please refer to these fields to
+            response are automatically derived from your certificate. Please refer to these fields to
             verify that the appropriate certificate was assigned to your NodeBalancerConfig.
           example: null
         nodes_status:
