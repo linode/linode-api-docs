@@ -2836,6 +2836,66 @@ paths:
       - lang: CLI
         source: >
           linode-cli domains records-delete 123 234
+  /firewalls:
+    x-linode-cli-command: firewalls
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Firewalls
+      summary: Create Firewalls
+      description: >
+        Accepts a firewall setup and creates a new firewall for the user. At minimum,
+        the firewall config requires a label and 1 rule in either the inbound or outbound direction.
+        Other information is optional.
+      operationId: createFirewalls
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewalls:read_write
+      requestBody:
+        description: >
+          Information about the firewall you are creating.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Firewall'
+      responses:
+        '200':
+          description: Creates a firewall_created event with a status of enabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "this_is_a_label",
+                "rules": {
+                  "inbound": [
+                    {
+                      "type": "TCP",
+                      "protocol": "HTTPS",
+                      "start_port": 443
+                    }
+                  ],
+                  "outbound": []
+                },
+                "devices": {
+                  "linodes": [],
+                  "nodebalancers": []
+                },
+                "tags": []
+              }' \
+              https://api.linode.com/v4/firewalls
+      - lang: CLI
+        source: >
+          linode-cli firewalls create
   /images:
     x-linode-cli-command: images
     get:
@@ -14612,6 +14672,112 @@ components:
             The username of the User who caused the Event.
           example: exampleUser
           x-linode-cli-display: 2
+    Firewall:
+      type: object
+      description: >
+        A firewall object that controls incoming and outgoing network traffic.
+      properties:
+        label:
+          type: string
+          description: >
+            The current label of the firewall, for display purposes.
+          example: example-firewall
+        rules:
+          type: object
+          description: >
+            A structure containing the
+          oneOf:
+            - $ref: '#/components/schemas/FirewallInboundRule'
+            - $ref: '#/components/schemas/FirewallOutboundRule'
+        devices:
+          type: object
+          description: >
+            A dictionary of devices, Linodes and Nodebalancers, to use when setting up the firewalls.
+          properties:
+            linodes:
+              type: array
+              description: An array of Linode ids
+              example: [123, 345]
+            nodebalancers:
+              type: array
+              description: An array of NodeBalancer ids
+              example: [123]
+        tags:
+          x-linode-filterable: true
+          description: >
+            An array of tags applied to this object.  Tags are for organizational
+            purposes only.
+          type: array
+          items:
+            type: string
+          example:
+          - example tag
+          - another example
+      required:
+        - label
+        - rules
+    FirewallInboundRule:
+      type: object
+      description: >
+        Rules passed to create or modify firewalls.
+      properties:
+        type:
+          type: string
+          enum:
+            - "TCP"
+            - "UDP"
+          description: >
+            Something here
+          example: "TCP"
+        protocol:
+          type: string
+          enum:
+            - "SSH"
+            - "HTTPS"
+          description: >
+            Something here
+          example: "HTTPS"
+        start_port:
+          type: integer
+          description: >
+            Inbound Start Port
+          example:
+            443
+        end_port:
+          type: integer
+          description: >
+            Optional. Must be greater than the start_port
+    FirewallOutboundRule:
+      type: object
+      description: >
+        Rules passed to create or modify firewalls.
+      properties:
+        type:
+          type: string
+          enum:
+            - "TCP"
+            - "UDP"
+          description: >
+            Something here
+          example: "TCP"
+        protocol:
+          type: string
+          enum:
+            - "SSH"
+            - "HTTPS"
+          description: >
+            Something here
+          example: "HTTPS"
+        start_port:
+          type: integer
+          description: >
+            Outbound Start Port
+          example:
+            200
+        end_port:
+          type: integer
+          description: >
+            Optional. Must be greater than the start_port
     Grant:
       type: object
       description: >
