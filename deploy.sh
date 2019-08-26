@@ -9,7 +9,7 @@ fi
 echo "Checking out development branch"
 git checkout development
 echo "Creating a release branch release-${1}"
-git checkout -b release-{1}
+git checkout -b "release-${1}"
 echo "Updating openapi.yaml with the new version number"
 sed -ie -E -- "s|version: [0-9]+\.[0-9]+\.[0-9]|version: ${1}|" openapi.yaml
 echo "Committing the version bump"
