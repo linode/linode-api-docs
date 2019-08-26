@@ -26,21 +26,19 @@ else
   exit 1
 fi
 
-# only run without prompting in CI
-if [ "$CI" != "true" ]; then
-  echo
-  echo "The following changes are about to be made:"
-  echo "  - the development branch will be checked out"
-  echo "  - a new release branch for ${version} will be created at release-${version}"
-  echo "  - the version will be updated to ${version} in openapi.yaml"
-  echo "  - these changes will be commited and tagged ${git_tag}"
-  echo
-  read -p "Do you want to continue? " -n 1 -r
-  echo
+# let's get some permission before making changes
+echo
+echo "The following changes are about to be made:"
+echo "  - the development branch will be checked out"
+echo "  - a new release branch for ${version} will be created at release-${version}"
+echo "  - the version will be updated to ${version} in openapi.yaml"
+echo "  - these changes will be commited and tagged ${git_tag}"
+echo
+read -p "Do you want to continue? " -n 1 -r
+echo
 
-  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    exit 1
-  fi
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  exit 1
 fi
 
 # if we have made it this far, we are ready to make changes
