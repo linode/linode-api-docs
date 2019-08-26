@@ -1,6 +1,6 @@
 sudo: false
 language: python
 python:
-  - 3.7 
+  - 3.7
 script:
-  - python openapi-linter.py openapi.yaml
+  - python ./bin/lint openapi.yaml
