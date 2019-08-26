@@ -24,7 +24,7 @@ python3 ./bin/lint openapi.yaml
 ### Versioning
 
 When making a new release you **must** tag the release with the correct semantic versioning-compliant version string so that all versions are populated appropriately.
-There is a `./bin/release` helper which will help with this process.
+There is a `./bin/deploy` helper which will help with this process.
 
 ```
 ./bin/deploy 0.1.0
