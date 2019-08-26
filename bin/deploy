@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git_tag=""
 version=""
 version_regex="[0-9]+\.[0-9]+\.[0-9]"
 
@@ -18,6 +19,7 @@ fi
 
 if [[ "$1" =~ ^${version_regex}$ ]]; then
   version="${1}"
+  git_tag="v${version}"
 else
   help_text
   echo "Error: VERSION must be a valid semantic version (major.minor.patch)"
@@ -31,7 +33,7 @@ if [ "$CI" != "true" ]; then
   echo "  - the development branch will be checked out"
   echo "  - a new release branch for ${version} will be created at release-${version}"
   echo "  - the version will be updated to ${version} in openapi.yaml"
-  echo "  - these changes will be commited and tagged ${version}"
+  echo "  - these changes will be commited and tagged ${git_tag}"
   echo
   read -p "Do you want to continue? " -n 1 -r
   echo
@@ -69,4 +71,34 @@ git add openapi.yaml
 git commit -m "Bump version to ${version}"
 
 echo "Tagging the version commit with the version number"
-git tag ${version}
+git tag "${git_tag}"
+
+echo "Running some final checks"
+
+exit_status=0
+
+if grep -Fxq "${version}" openapi.yaml; then
+  echo "OK - version ${version} is present in openapi.yaml"
+else
+  echo "ERROR - version ${version} is not present in openapi.yaml"
+  exit_status=1
+fi
+
+if $(git tag | grep -Fxq "${git_tag}"); then
+  echo "OK - ${git_tag} is present in git tags"
+else
+  echo "ERROR - ${git_tag} is not present in git tags"
+  exit_status=1
+fi
+
+if [ $exit_status -ne 0 ]; then
+  echo
+  echo "Please resolve the ERRORs above."
+else
+  echo
+  echo "Release process is complete."
+  echo
+  echo "Once confirmed changes are verified, you can:"
+  echo "  git push release-${version}"
+  echo "  git push ${git_tag}"
+fi
