@@ -65,7 +65,7 @@ echo "Updating openapi.yaml with the new version number"
 sed -ie -E -- "s|version: ${version_regex}|version: ${version}|" openapi.yaml
 
 echo "Committing the version bump"
-git add --all
+git add openapi.yaml
 git commit -m "Bump version to ${version}"
 
 echo "Tagging the version commit with the version number"
