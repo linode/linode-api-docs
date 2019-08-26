@@ -1,10 +1,20 @@
 #!/usr/bin/env bash
 
-if [ -z ${1+x} ]
-  then echo "Version is required"; exit 1;
+help_text () {
+  echo
+  echo "Usage: deploy VERSION"
+  echo
+}
 
-  else echo "Deploying version ${1}"
+# check for required version to deploy
+if [ -z ${1+x} ]; then
+  help_text
+  echo "Error: VERSION is required"
+  exit 1
 fi
+
+# if we have made it this far, we are ready to make changes
+echo "Deploying version ${1}"
 
 echo "Checking out development branch"
 git checkout development
