@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+version=""
+version_regex="[0-9]+\.[0-9]+\.[0-9]"
+
 help_text () {
   echo
   echo "Usage: deploy VERSION"
@@ -13,14 +16,22 @@ if [ -z ${1+x} ]; then
   exit 1
 fi
 
+if [[ "$1" =~ ^${version_regex}$ ]]; then
+  version="${1}"
+else
+  help_text
+  echo "Error: VERSION must be a valid semantic version (major.minor.patch)"
+  exit 1
+fi
+
 # only run without prompting in CI
 if [ "$CI" != "true" ]; then
   echo
   echo "The following changes are about to be made:"
   echo "  - the development branch will be checked out"
-  echo "  - a new release branch for ${1} will be created at release-${1}"
-  echo "  - the version will be updated to ${1} in openapi.yaml"
-  echo "  - these changes will be commited and tagged ${1}"
+  echo "  - a new release branch for ${version} will be created at release-${version}"
+  echo "  - the version will be updated to ${version} in openapi.yaml"
+  echo "  - these changes will be commited and tagged ${version}"
   echo
   read -p "Do you want to continue? " -n 1 -r
   echo
@@ -31,7 +42,7 @@ if [ "$CI" != "true" ]; then
 fi
 
 # if we have made it this far, we are ready to make changes
-echo "Deploying version ${1}"
+echo "Deploying version ${version}"
 
 echo "Checking out development branch"
 git checkout development
@@ -41,20 +52,21 @@ git diff-index --quiet HEAD -- openapi.yaml
 
 exit_status=$?
 if [ $exit_status -ne 0 ]; then
+  echo
   echo "Error: Local changes have been made to openapi.yaml."
   echo "       Please commit those changes before proceeding."
   exit 1
 fi
 
-echo "Creating a release branch release-${1}"
-git checkout -b "release-${1}"
+echo "Creating a release branch release-${version}"
+git checkout -b "release-${version}"
 
 echo "Updating openapi.yaml with the new version number"
-sed -ie -E -- "s|version: [0-9]+\.[0-9]+\.[0-9]|version: ${1}|" openapi.yaml
+sed -ie -E -- "s|version: ${version_regex}|version: ${version}|" openapi.yaml
 
 echo "Committing the version bump"
 git add --all
-git commit -m "Bump version to ${1}"
+git commit -m "Bump version to ${version}"
 
 echo "Tagging the version commit with the version number"
-git tag ${1}
+git tag ${version}
