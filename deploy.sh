@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo "Deploying version ${1}"
+if [ -z ${1+x} ]
+  then echo "Version is required"; exit 1;
+
+  else echo "Deploying version ${1}"
+fi
 
 sed -i -- "s|version: DEVELOPMENT|version: ${1}|" openapi.yaml
 git add --all
