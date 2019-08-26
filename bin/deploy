@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -z ${1+x} ]
   then echo "Version is required"; exit 1;
