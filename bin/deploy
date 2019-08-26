@@ -72,18 +72,19 @@ echo "Tagging the version commit with the version number"
 git tag "${git_tag}"
 
 echo "Running some final checks"
+echo
 
 exit_status=0
 
 if grep -Fxq "${version}" openapi.yaml; then
-  echo "OK - version ${version} is present in openapi.yaml"
+  echo "OK    - version ${version} is present in openapi.yaml"
 else
   echo "ERROR - version ${version} is not present in openapi.yaml"
   exit_status=1
 fi
 
 if $(git tag | grep -Fxq "${git_tag}"); then
-  echo "OK - ${git_tag} is present in git tags"
+  echo "OK    - ${git_tag} is present in git tags"
 else
   echo "ERROR - ${git_tag} is not present in git tags"
   exit_status=1
