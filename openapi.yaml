@@ -3656,7 +3656,7 @@ paths:
       x-linode-charge: true
       x-linode-grant: add_linodes
       summary: Clone Linode
-      description: >
+      description: |
         You can clone your Linode's existing Disks or Configuration profiles to
         another Linode on your Account. In order for this request to complete
         successfully, your User must have the `add_linodes` grant. Cloning to a
@@ -3664,6 +3664,10 @@ paths:
 
         If cloning to an existing Linode, any actions currently running or
         queued must be completed first before you can clone to it.
+
+        Up to five clone operations from any given source Linode can be run concurrently.
+        If more concurrent clones are attempted, an HTTP 400 error will be
+        returned by this endpoint.
       tags:
       - Linode Instances
       operationId: cloneLinodeInstance
@@ -6471,6 +6475,7 @@ paths:
             schema:
               required:
               - label
+              - password
               allOf:
               - $ref: '#/components/schemas/ManagedCredential'
               - type: object
@@ -6560,7 +6565,11 @@ paths:
       - Managed
       summary: Update Managed Credential
       description: >
-        Updates information about a Managed Credential.
+        Updates the label of a Managed Credential. This endpoint
+        does not update the username and password for a Managed Credential.
+        To do this, use the Update Managed Credential Username and Password
+        ([POST /managed/credentials/{credentialId}/update](https://developers.linode.com/api/docs/v4#operation/updateManagedCredentialUsernamePassword))
+        endpoint instead.
       operationId: updateManagedCredential
       x-linode-cli-action: credential-update
       security:
@@ -6596,6 +6605,78 @@ paths:
         source: >
           linode-cli managed credential-update 9991 \
             --label prod-password-1
+  /managed/credentials/{credentialId}/update:
+    parameters:
+    - name: credentialId
+      in: path
+      required: true
+      description: The ID of the Credential to update.
+      schema:
+        type: integer
+    x-linode-cli-command: managed
+    post:
+      x-linode-grant: unrestricted only
+      tags:
+      - Managed
+      summary: Update Managed Credential Username and Password
+      description: >
+        Updates the username and password for a Managed Credential.
+      operationId: updateManagedCredentialUsernamePassword
+      x-linode-cli-action: credential-update-username-password
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: >
+          The new username and password to assign to the
+          Managed Credential.
+        content:
+          application/json:
+            schema:
+              required:
+              - password
+              allOf:
+              - type: object
+                properties:
+                  username:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The username to use when accessing the Managed Service.
+                    example: johndoe
+                  password:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The password to use when accessing the Managed Service.
+                    example: s3cur3P@ssw0rd
+      responses:
+        '200':
+          description: Credential username and password updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "username": "johndoe",
+                "password": "s3cur3P@ssw0rd"
+              }' \
+              https://api.linode.com/v4/managed/credentials/9991/update
+      - lang: CLI
+        source: >
+          linode-cli managed credential-update-username-password 9991 \
+            --username johndoe \
+            --password s3cur3P@ssw0rd
   /managed/credentials/{credentialId}/revoke:
     parameters:
     - name: credentialId
@@ -12051,7 +12132,7 @@ components:
 
             * ttl_sec will default to 0 if no value is provided.
 
-            * A value of 0 is equivalent to a value of 300.
+            * A value of 0 is equivalent to a value of 86400.
           example: 300
         tags:
           x-linode-filterable: true
@@ -14207,6 +14288,15 @@ components:
             only.
           example: prod-password-1
           x-linode-cli-display: 2
+        last_decrypted:
+          type: string
+          format: date-time
+          description: >
+            The date this Credential was last decrypted by a member of Linode
+            special forces.
+          readOnly: true
+          example: "2018-01-01T00:01:01"
+          x-linode-cli-display: 3
     ManagedIssue:
       type: object
       description: >
@@ -14724,16 +14814,18 @@ components:
         ssl_commonname:
           type: string
           description: >
-            The common name for the SSL certification this port is serving
-            if this port is not configured to use SSL.
+            The read-only common name automatically derived from the SSL certificate assigned to this
+            NodeBalancerConfig. Please refer to this field to verify that the appropriate
+            certificate is assigned to your NodeBalancerConfig.
           example: null
           readOnly: true
           x-linode-cli-display: 8
         ssl_fingerprint:
           type: string
           description: >
-            The fingerprint for the SSL certification this port is serving
-            if this port is not configured to use SSL.
+            The read-only fingerprint automatically derived from the SSL certificate assigned to this
+            NodeBalancerConfig. Please refer to this field to verify that the appropriate
+            certificate is assigned to your NodeBalancerConfig.
           example: null
           readOnly: true
           x-linode-cli-display: 9
@@ -14741,21 +14833,33 @@ components:
           type: string
           format: ssl-cert
           nullable: true
-          description: >
-            The certificate this port is serving. This is not returned. If set,
-            this field will come back as "&lt;REDACTED&gt;".
+          description: |
+            The PEM-formatted public SSL certificate (or the combined PEM-formatted SSL
+            certificate and Certificate Authority chain) that should be served on this
+            NodeBalancerConfig's port.
 
-            Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
+            The contents of this field will not be shown in any responses that display
+            the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
+            appears.
+
+            The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
+            response are automatically derived from your certificate. Please refer to these fields to
+            verify that the appropriate certificate was assigned to your NodeBalancerConfig.
           example: null
         ssl_key:
           type: string
           format: ssl-key
           nullable: true
-          description: >
-            The private key corresponding to this port's certificate.  This is not
-            returned. If set, this field will come back as "&lt;REDACTED&gt;".
+          description: |
+            The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.
 
-            Please use the `ssl_commonname` and `ssl_fingerprint` to identify the certificate.
+            The contents of this field will not be shown in any responses that display
+            the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
+            appears.
+
+            The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
+            response are automatically derived from your certificate. Please refer to these fields to
+            verify that the appropriate certificate was assigned to your NodeBalancerConfig.
           example: null
         nodes_status:
           type: object
@@ -15235,7 +15339,8 @@ components:
         usd:
           type: string
           description: >
-            The amount in US Dollars of the Payment.
+            The amount in US Dollars of the Payment. The maximum credit card
+            payment that can be made is $50,000 dollars.
           example: '120.50'
     PayPal:
       type: object
