@@ -6475,6 +6475,7 @@ paths:
             schema:
               required:
               - label
+              - password
               allOf:
               - $ref: '#/components/schemas/ManagedCredential'
               - type: object
@@ -6564,7 +6565,11 @@ paths:
       - Managed
       summary: Update Managed Credential
       description: >
-        Updates information about a Managed Credential.
+        Updates the label of a Managed Credential. This endpoint
+        does not update the username and password for a Managed Credential.
+        To do this, use the Update Managed Credential Username and Password
+        ([POST /managed/credentials/{credentialId}/update](https://developers.linode.com/api/docs/v4#operation/updateManagedCredentialUsernamePassword))
+        endpoint instead.
       operationId: updateManagedCredential
       x-linode-cli-action: credential-update
       security:
@@ -6600,6 +6605,78 @@ paths:
         source: >
           linode-cli managed credential-update 9991 \
             --label prod-password-1
+  /managed/credentials/{credentialId}/update:
+    parameters:
+    - name: credentialId
+      in: path
+      required: true
+      description: The ID of the Credential to update.
+      schema:
+        type: integer
+    x-linode-cli-command: managed
+    post:
+      x-linode-grant: unrestricted only
+      tags:
+      - Managed
+      summary: Update Managed Credential Username and Password
+      description: >
+        Updates the username and password for a Managed Credential.
+      operationId: updateManagedCredentialUsernamePassword
+      x-linode-cli-action: credential-update-username-password
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: >
+          The new username and password to assign to the
+          Managed Credential.
+        content:
+          application/json:
+            schema:
+              required:
+              - password
+              allOf:
+              - type: object
+                properties:
+                  username:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The username to use when accessing the Managed Service.
+                    example: johndoe
+                  password:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The password to use when accessing the Managed Service.
+                    example: s3cur3P@ssw0rd
+      responses:
+        '200':
+          description: Credential username and password updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "username": "johndoe",
+                "password": "s3cur3P@ssw0rd"
+              }' \
+              https://api.linode.com/v4/managed/credentials/9991/update
+      - lang: CLI
+        source: >
+          linode-cli managed credential-update-username-password 9991 \
+            --username johndoe \
+            --password s3cur3P@ssw0rd
   /managed/credentials/{credentialId}/revoke:
     parameters:
     - name: credentialId
@@ -14211,6 +14288,15 @@ components:
             only.
           example: prod-password-1
           x-linode-cli-display: 2
+        last_decrypted:
+          type: string
+          format: date-time
+          description: >
+            The date this Credential was last decrypted by a member of Linode
+            special forces.
+          readOnly: true
+          example: "2018-01-01T00:01:01"
+          x-linode-cli-display: 3
     ManagedIssue:
       type: object
       description: >
