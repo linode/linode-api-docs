@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: DEVELOPMENT
+  version: 4.3.1
   title: Linode API
   x-logo: {
     url: '/api/v4/linode-logo.svg',
