@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+
+git_tag=""
+version=""
+version_regex="[0-9]+\.[0-9]+\.[0-9]"
+
+help_text () {
+  echo
+  echo "Usage: deploy VERSION"
+  echo
+}
+
+# check for required version to deploy
+if [ -z ${1+x} ]; then
+  help_text
+  echo "Error: VERSION is required"
+  exit 1
+fi
+
+if [[ "$1" =~ ^${version_regex}$ ]]; then
+  version="${1}"
+  git_tag="v${version}"
+else
+  help_text
+  echo "Error: VERSION must be a valid semantic version (major.minor.patch)"
+  exit 1
+fi
+
+# let's get some permission before making changes
+echo
+echo "The following changes are about to be made:"
+echo "  - the development branch will be checked out"
+echo "  - a new release branch for ${version} will be created at release-${version}"
+echo "  - the version will be updated to ${version} in openapi.yaml"
+echo "  - these changes will be commited and tagged ${git_tag}"
+echo
+read -p "Do you want to continue? " -n 1 -r
+echo
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  exit 1
+fi
+
+# if we have made it this far, we are ready to make changes
+echo "Deploying version ${version}"
+
+echo "Checking out development branch"
+git checkout development
+
+# ensure no local changes to openapi.yaml
+git diff-index --quiet HEAD -- openapi.yaml
+
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+  echo
+  echo "Error: Local changes have been made to openapi.yaml."
+  echo "       Please commit those changes before proceeding."
+  exit 1
+fi
+
+echo "Creating a release branch release-${version}"
+git checkout -b "release-${version}"
+
+echo "Updating openapi.yaml with the new version number"
+sed -E -i.bak "s|version: ${version_regex}|version: ${version}|" openapi.yaml \
+  && rm openapi.yaml.bak
+
+echo "Committing the version bump"
+git add openapi.yaml
+git commit -m "Bump version to ${version}"
+
+echo "Tagging the version commit with the version number"
+git tag "${git_tag}"
+
+echo "Running some final checks"
+echo
+
+exit_status=0
+
+if grep -Fxq "  version: ${version}" openapi.yaml; then
+  echo "OK    - version ${version} is present in openapi.yaml"
+else
+  echo "ERROR - version ${version} is not present in openapi.yaml"
+  exit_status=1
+fi
+
+if git tag | grep -Fxq "${git_tag}"; then
+  echo "OK    - ${git_tag} is present in git tags"
+else
+  echo "ERROR - ${git_tag} is not present in git tags"
+  exit_status=1
+fi
+
+if [ $exit_status -ne 0 ]; then
+  echo
+  echo "Please resolve the ERRORs above."
+  exit 1
+else
+  echo
+  echo "Release process is complete."
+  echo
+  echo "Once confirmed changes are verified, you can:"
+  echo "  git push release-${version}"
+  echo "  git push ${git_tag}"
+fi
