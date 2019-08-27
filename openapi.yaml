@@ -15239,7 +15239,8 @@ components:
         usd:
           type: string
           description: >
-            The amount in US Dollars of the Payment.
+            The amount in US Dollars of the Payment. The maximum credit card
+            payment that can be made is $50,000 dollars.
           example: '120.50'
     PayPal:
       type: object
