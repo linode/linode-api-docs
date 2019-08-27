@@ -84,7 +84,7 @@ else
   exit_status=1
 fi
 
-if $(git tag | grep -Fxq "${git_tag}"); then
+if git tag | grep -Fxq "${git_tag}"; then
   echo "OK    - ${git_tag} is present in git tags"
 else
   echo "ERROR - ${git_tag} is not present in git tags"
