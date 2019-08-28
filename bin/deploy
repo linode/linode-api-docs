@@ -89,7 +89,7 @@ if git tag | grep -Fxq "${git_tag}"; then
 else
   echo "ERROR - ${git_tag} is not present in git tags"
   exit_status=1
-fis
+fi
 
 if [ $exit_status -ne 0 ]; then
   echo
