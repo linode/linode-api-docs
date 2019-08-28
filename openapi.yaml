@@ -12276,6 +12276,7 @@ components:
           description: The unique ID of this Event.
           example: 123
           x-linode-cli-display: 1
+          x-linode-filterable: true
         action:
           type: string
           enum:
@@ -12392,6 +12393,7 @@ components:
           description: When this Event was created.
           example: '2018-01-01T00:01:01'
           x-linode-cli-display: 5
+          x-linode-filterable: true
         entity:
           type: object
           readOnly: true
