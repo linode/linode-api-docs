@@ -12463,6 +12463,43 @@ components:
                 a relative URL, it is relative to the domain you retrieved the
                 Event from.
               example: /v4/support/tickets/11111
+        secondary_entity:
+          type: object
+          readOnly: true
+          description: |
+            Detailed information about the Event's secondary entity, which provides additional information
+            for Linode boot, create, and clone jobs
+          properties:
+            id:
+              type: integer
+              description: |
+                The unique ID for an Event's secondary entity.
+
+
+                Secondary Entities are assigned the ID of the Linode they correspond to.
+                When filtering by ID for these Events, use the corresponding Linode's ID.
+                These Events include:
+                  * `linode`
+              example: 1234
+            label:
+              type: string
+              description: >
+                The current label of this object. The label may reflect changes
+                that occur with this Event.
+              example: linode1234
+            type:
+              type: string
+              readOnly: true
+              description: >
+                The type of entity this Event is related to.
+              example: linode
+            url:
+              type: string
+              description: >
+                The URL where you can access the object this Event is for. If
+                a relative URL, it is relative to the domain you retrieved the
+                Event from.
+              example: /v4/linode/instances/1234
         percent_complete:
           type: integer
           readOnly: true
