@@ -1,9 +1,0 @@
-#!/bin/bash
-# The old linodedocs-builder did this big fancy debconf thing here, but all I
-# really need is for the files to end up in /srv/linode-docs, so I trimmed the
-# fat.  Maybe in the future we could use this for configurable server in the
-# OpenAPI spec.
-
-PKG="linode-docs"
-
-cp -a /usr/share/$PKG/templates/. /srv/linode-docs
