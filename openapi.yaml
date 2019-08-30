@@ -2,10 +2,6 @@ openapi: 3.0.1
 info:
   version: 4.3.2
   title: Linode API
-  x-logo: {
-    url: '/api/v4/linode-logo.svg',
-    backgroundColor: '#fafafa'
-  }
   description: |
     # Introduction
     The Linode API provides the ability to programmatically manage the full
