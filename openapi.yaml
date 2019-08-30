@@ -4941,13 +4941,25 @@ paths:
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
-      summary: Initiate Pending Migration
+      summary: Initiate Pending Host Migration/DC Migration
       description: >
-        In some circumstances, a Linode may have pending migrations scheduled that
-        you can initiate when convenient.  In these cases, a Notification
-        will be returned from [GET /account/notifications](#getNotifications).
-        This endpoint initiates the scheduled migration, which will shut the Linode
-        down, migrate it, and then bring it back to its original state.
+        Initiate a pending host migration that has been scheduled by Linode or
+        initiate a cross data center (DC) migration.  A list of pending migrations,
+        if any, can be accessed from [GET /account/notifications](/api/v4/account-notifications).
+        When the migration begins, your Linode will be shutdown if not already off.
+        If the migration initiated the shutdown, it will reboot the Linode when completed.
+
+
+        To initiate a cross DC migration, you must pass a `region` parameter to the
+        request body specifying the target data center region.
+        You can view a list of all available regions and their feature capabilities
+        from [GET /regions](/api/v4/regions). If your Linode has a pending migration already queued,
+        you will not be able to initiate a DC migration until it has completed.
+
+
+        **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
+        If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
+        the migration will not initiate. NGN data centers include Toronto and Mumbai.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
@@ -4969,6 +4981,8 @@ paths:
                     by using the [GET /regions](/api/v4/regions) endpoint.
                     A cross-region migration will cancel a pending migration
                     that has not yet been initiated.
+
+                    A cross-region migration will initiate a `linode_migrate_datacenter_create` event.
                   example: us-east
       responses:
         '200':
@@ -4979,6 +4993,18 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "region": "us-central"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/migrate
+      - lang: CLI
+        source: >
+          linode-cli linodes migrate 123
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
