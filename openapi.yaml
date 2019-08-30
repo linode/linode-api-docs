@@ -5004,7 +5004,7 @@ paths:
               https://api.linode.com/v4/linode/instances/123/migrate
       - lang: CLI
         source: >
-          linode-cli linodes migrate 123
+          linode-cli linodes migrate 123 --region us-central
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
