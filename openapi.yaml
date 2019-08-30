@@ -14246,7 +14246,7 @@ components:
               example: null
         group:
           x-linode-filterable: true
-          deprecated: true
+          nullable: true
           type: string
           minLength: 2
           maxLength: 50
