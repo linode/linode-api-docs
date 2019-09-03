@@ -12392,7 +12392,7 @@ components:
           format: date-time
           description: When this Event was created.
           example: '2018-01-01T00:01:01'
-          x-linode-cli-display: 5
+          x-linode-cli-display: 6
           x-linode-filterable: true
         entity:
           type: object
@@ -12455,7 +12455,7 @@ components:
               - volume
               readOnly: true
               description: >
-                The type of entity this Event is related to.
+                The type of entity that is being referenced by the Event.
               example: ticket
               x-linode-filterable: true
             url:
@@ -12470,7 +12470,8 @@ components:
           readOnly: true
           description: |
             Detailed information about the Event's secondary entity, which provides additional information
-            for Linode boot, create, and clone jobs
+            for `linode_boot`, `linode_create`, and `linode_clone` Event actions.
+          x-linode-cli-display: 5
           properties:
             id:
               type: integer
@@ -12479,9 +12480,6 @@ components:
 
 
                 Secondary Entities are assigned the ID of the Linode they correspond to.
-                When filtering by ID for these Events, use the corresponding Linode's ID.
-                These Events include:
-                  * `linode`
               example: 1234
             label:
               type: string
@@ -12491,9 +12489,13 @@ components:
               example: linode1234
             type:
               type: string
+              enum:
+              - backup
+              - image
+              - linode
               readOnly: true
               description: >
-                The type of entity this Event is related to.
+                The type of entity that is being referenced by the Event.
               example: linode
             url:
               type: string
@@ -12522,13 +12524,13 @@ components:
           readOnly: true
           description: If this Event has been read.
           example: true
-          x-linode-cli-display: 8
+          x-linode-cli-display: 9
         seen:
           type: boolean
           readOnly: true
           description: If this Event has been seen.
           example: true
-          x-linode-cli-display: 7
+          x-linode-cli-display: 8
         status:
           type: string
           readOnly: true
@@ -12539,7 +12541,7 @@ components:
           - notification
           - scheduled
           - started
-          x-linode-cli-display: 6
+          x-linode-cli-display: 7
           x-linode-cli-color:
             failed: red
             finished: green
