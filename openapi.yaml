@@ -8711,6 +8711,427 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerStats'
         default:
           $ref: '#/components/responses/ErrorResponse'
+  /object-storage/buckets:
+    get:
+      operationId: getObjectStorageBuckets
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Get Object Storage Buckets
+      description: >
+        Returns a paginated list of all Object Storage Buckets that you own.  This
+        endpoint is available for convenience, but it is recommended you use the
+        more fully-featured s3 API directly; [click here for details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: A paginated list of buckets you own.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageBucket'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    post:
+      operationId: createObjectStorageBucket
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Create and Object Storage Bucket
+      description: >
+        Creates an Object Storage Bucket in the cluster specified.  If the
+        bucket already exists and is owned by you, this endpoint will return a
+        200 response with that bucket, the same as if it had just been created.
+        <br/><br/>
+        This endpoint is available for convenience, but it is recommended you
+        use the more fully- featured s3 API directly; [click here for
+        details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: >
+          Information about the bucket you want to create.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: >
+                    The label for this bucket.  Must be unique in the cluster you
+                    are creating the bucket in, or an error will be returned.
+                  pattern: ^[a-z0-09][a-z0-9-]*[a-z0-9]?$
+                  example: example-bucket
+                cluster:
+                  type: string
+                  description: >
+                    The ID of the Object Storage Cluster where this bucket should
+                    be created.
+                  example: us-east-1
+                cors_enabled:
+                  type: boolean
+                  description: >
+                    If true, the bucket will be created with CORS enabled for all
+                    origins.  For more fine-grained controls of CORS, use the s3
+                    API directly.
+                  example: true
+                  default: false
+                acl:
+                  type: string
+                  enum:
+                  - private
+                  - public-read
+                  - authenticated-read
+                  description: >
+                    The Access Control Level of the bucket, as a canned ACL string.
+                    For more fine-grained control of ACLs, use the s3 API directly.
+                  default: private
+                  example: private
+      responses:
+        '200':
+          description: The bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageBucket'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /object-storage/buckets/{clusterId}/{bucket}:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageBucket
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Get Object Storage Bucket
+      description: >
+        Returns a single Object Storage Bucket.
+        <br/><br/>
+        This endpoint is available for convenience, but it is recommended you
+        use the more fully- featured s3 API directly; [click here for
+        details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: The requested bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageBucket'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+    delete:
+      operationId: deleteObjectStorageBucket
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Remove Object Storage Bucket
+      description: >
+        Removes a single bucket.  While buckets containing objects _may_ be
+        deleted by including the "force" option in the request, such operations
+        will fail if the bucket contains too many objects; the recommended
+        method of emptying large buckets is configuring lifecycle policies to
+        remove all objects, then deleting the bucket (see [the s3 API
+        docs](docs link) for more information).
+        <br/><br/>
+        This endpoint is available for convenience, but it is recommended you
+        use the more fully- featured s3 API directly; [click here for
+        details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      parameters:
+      - name: force
+        in: query
+        required: false
+        description: >
+          If false, this operation will fail if the bucket is not empty.  If true,
+          will attempt to remove the bucket and its contents; very large buckets
+          may still return an error and require object deletion manually or through
+          object lifecycle management.  See [the s3 API docs](docs link) for details.
+        schema:
+          type: integer
+          default: false
+      responses:
+        '200':
+          description: Bucket deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /object-storage/buckets/{clusterId}/{bucket}/access:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: modifyObjectStorageBucketAccess
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Modify Object Storage Bucket Access
+      description: >
+        Allows changing basic CORS and ACL settings.  Only allows
+        enabling/disabling CORS for all origins, and/or setting canned ACLs.
+        For more fine-grained control of both systems, please use the s3 API
+        directly.
+        <br/><br/>
+        This endpoint is available for convenience, but it is recommended you
+        use the more fully- featured s3 API directly; [click here for
+        details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: The changes to make to the bucket's access controls.
+        content:
+          application/json:
+            schema:
+              properties:
+                cors_enabled:
+                  type: boolean
+                  description: >
+                    If true, the bucket will be created with CORS enabled for all
+                    origins.  For more fine-grained controls of CORS, use the s3
+                    API directly.
+                  example: true
+                acl:
+                  type: string
+                  enum:
+                  - private
+                  - public-read
+                  - authenticated-read
+                  description: >
+                    The Access Control Level of the bucket, as a canned ACL string.
+                    For more fine-grained control of ACLs, use the s3 API directly.
+                  example: private
+      responses:
+        '200':
+          description: Access controls updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /object-storage/buckets/{clusterId}/{bucket}/object-list:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageBucketContent
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Get Object Storage Bucket Contents
+      description: >
+        Returns the contents of a bucket.  These contents are paginated by `marker`,
+        which is the name of the last object on the previous page.  Objects may
+        be filtered by `prefix` and `delimiter` as well; see parameters for more
+        information.
+        <br/><br/>
+        This endpoint is available for convenience, but it is recommended you
+        use the more fully- featured s3 API directly; [click here for
+        details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      parameters:
+      - name: marker
+        in: query
+        required: false
+        description: >
+          The "marker" for this request, used to paginate through large buckets.
+          Should be the name of the last object on the last page of results.  Listing
+          bucket contents _does not_ support arbitrary page access.
+        schema:
+          type: string
+      - name: delimiter
+        in: query
+        required: false
+        description: >
+          The delimiter for object names; if given, object names will be returned
+          up to the first occurrence of this character.  This is most commonly used
+          with the `/` character to allow bucket transversal in a manner similar to
+          a filesystem, however any delimiter may be used.  Use in conjunction with
+          `prefix` to see object names past the first occurrence of the delimiter.
+        schema:
+          type: string
+      - name: prefix
+        in: query
+        required: false
+        description: >
+          Filters objects returned to only those whose name start with the given
+          prefix.  Commonly used in conjunction with `delimiter` to allow transversal
+          of bucket contents in a manner similar to a filesystem.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: One page of the requested bucket's contents.
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    description: This page of objects in the bucket.
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageObject'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /object-storage/buckets/{clusterId}/{bucket}/object-url:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: createObjectStorageObjectURL
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Create Object Storage Object URL
+      description: >
+        Creates a pre-signed URL for accessing a single Object in a bucket.  This
+        can be used to share objects, but also to create/delete objects by using
+        the appropriate HTTP method on creation.
+        <br/><br/>
+        This endpoint is available for convenience, but it is recommended you
+        use the more fully- featured s3 API directly; [click here for
+        details](docs link).
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: Information about the request to sign.
+        content:
+          application/json:
+            schema:
+              properties:
+                method:
+                  type: string
+                  description: The HTTP method to sign this request for.
+                  example: GET
+                  default: GET
+                name:
+                  type: string
+                  description: >
+                    The name of the object to sign a URL to.  This object need not
+                    exist, and indeed no error is returned if it doesn't; this is
+                    useful for generating pre-signed URLs to upload new objects by
+                    setting the `method` to "PUT".
+                  example: example
+                content_type:
+                  type: string
+                  description: >
+                    The expected `Content-type` header of the request this signed
+                    URL will be valid for.  If provided, the `Content-type` header
+                    _must_ be sent with the request when this URL is used, and
+                    _must_ be the same as it was when the signed URL was created.
+                    Required for methods that are not "GET" or "DELETE".
+                  example: null
+                expires_in:
+                  type: integer
+                  minimum: 360
+                  maximum: 68400
+                  default: 3600
+                  description: >
+                    How long this signed URL will be valid for, in seconds.  If
+                    omitted, the URL will be valid for 3600 seconds (1 hour).
+                  example: null
+      responses:
+        '200':
+          description: The URL with which to access your object.
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    description: The signed URL to perform the request at.
+                    example:  https://us-east-1.linodeobjects.com/example-bucket/example?Signature=qr98TEucCntPgEG%2BsZQGDsJg93c%3D&Expires=1567609905&AWSAccessKeyId=G4YAF81XWY61DQM94SE0
+        default:
+          $ref: '#/components/responses/ErrorResponse'
   /object-storage/clusters:
     x-linode-cli-command: object-storage
     get:
@@ -15219,6 +15640,78 @@ components:
           example: false
           readOnly: true
           x-linode-cli-display: 4
+    ObjectStorageBucket:
+      type: object
+      description: >
+        An Object Storage Bucket.  This should be accessed primarily through the
+        s3 API; [click here for more information]().
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: When this bucket was created.
+          example: 2019-01-01T01:23:45
+        cluster:
+          type: string
+          description: The ID of the Object Storage Cluster this bucket is in.
+          example: us-east-1
+        label:
+          type: string
+          description: The name of this bucket.
+          example: example-bucket
+        hostname:
+          type: string
+          description: >
+            The hostname of this bucket where it can be accessed.  This hostname
+            can be accessed through a browser if the bucket is made public.
+          example: example-bucket.us-east-1.linodeobjects.com
+        region:
+          type: string
+          description: The ID of the Region this bucket exists in.
+          example: us-east
+        size:
+          type: integer
+          description: The size of this bucket, in bytes.
+          example: 123
+        objects:
+          type: integer
+          description: The number of objects in this bucket.
+          example: 4
+    ObjectStorageObject:
+      type: object
+      description: >
+        An Object in Object Storage, or a "prefix" that contains one
+        or more objects when a `delimiter` is used.
+      properties:
+        name:
+          type: string
+          description: >
+            The name of this object or prefix.
+          example: example
+        etag:
+          type: string
+          description: >
+            Honestly, I don't know :( `null` if this object represents a prefix.
+          example: 9f254c71e28e033bf9e0e5262e3e72ab
+        last_modified:
+          type: string
+          format: date-time
+          description: >
+            The date and time this object was last modified.  `null` if this object
+            represents a prefix.
+          example: 2019-01-01T01:23:45
+        owner:
+          type: string
+          description: >
+            The owner of this object, as a UUID.  `null` if this object represents
+            a prefix.
+          example: bfc70ab2-e3d4-42a4-ad55-83921822270c
+        size:
+          type: integer
+          description: >
+            The size of this object, in bytes.  `null` if this object represents
+            a prefix.
+          example: 123
     ObjectStorageCluster:
       type: object
       description: An Object Storage Cluster
