@@ -1557,6 +1557,40 @@ paths:
             linode-cli account settings-update \
               --longview_subscription longview-30 \
               --network_helper false
+  /account/settings/managed-enable:
+    x-linode-cli-command: account
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Account
+      summary: Enable Account Managed Services
+      description: >
+        Enables managed services for the entire account and sends a welcome email.
+        You must have super user privileges for this.
+      operationId: enableAccountManged
+      x-linode-cli-action: account-settings-managed
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: Managed services enabled for account.
+          content:
+            application/json:
+             schema:
+               type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X POST -d \
+                https://api.linode.com/v4/account/settings/managed-enable
+        - lang: CLI
+          source: >
+            linode-cli account settings-managed
   /account/transfer:
     x-linode-cli-command: account
     get:
