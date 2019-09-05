@@ -8717,7 +8717,7 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Get Object Storage Buckets
+      summary: List Object Storage Buckets
       description: |
         Returns a paginated list of all Object Storage Buckets that you own.
 
@@ -8871,7 +8871,7 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Get Object Storage Bucket
+      summary: View Object Storage Bucket
       description: |
         Returns a single Object Storage Bucket.
 
@@ -9059,7 +9059,7 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Get Object Storage Bucket Contents
+      summary: List Object Storage Bucket Contents
       description: |
         Returns the contents of a bucket. The contents are paginated using a `marker`,
         which is the name of the last object on the previous page.  Objects may
