@@ -9034,7 +9034,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
                 "cors_enabled": true,
                 "acl": "private"
@@ -9225,7 +9226,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
                 "method": "GET",
                 "name": "example"
@@ -9424,7 +9426,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
                 "label": "my-object-storage-key"
             }' \
@@ -9518,7 +9521,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
             -x PUT -d '{
               "label": "my-object-storage-key"
             }' \
