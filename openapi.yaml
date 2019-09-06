@@ -12830,6 +12830,7 @@ components:
           description: The unique ID of this Event.
           example: 123
           x-linode-cli-display: 1
+          x-linode-filterable: true
         action:
           type: string
           enum:
@@ -12945,7 +12946,8 @@ components:
           format: date-time
           description: When this Event was created.
           example: '2018-01-01T00:01:01'
-          x-linode-cli-display: 5
+          x-linode-cli-display: 6
+          x-linode-filterable: true
         entity:
           type: object
           readOnly: true
@@ -13007,7 +13009,7 @@ components:
               - volume
               readOnly: true
               description: >
-                The type of entity this Event is related to.
+                The type of entity that is being referenced by the Event.
               example: ticket
               x-linode-filterable: true
             url:
@@ -13017,6 +13019,37 @@ components:
                 a relative URL, it is relative to the domain you retrieved the
                 Event from.
               example: /v4/support/tickets/11111
+        secondary_entity:
+          type: object
+          readOnly: true
+          description: |
+            Detailed information about the Event's secondary entity, which provides additional information
+            for events such as, but not limited to, `linode_boot`, `linode_create`, and `linode_clone` Event actions.
+          x-linode-cli-display: 5
+          properties:
+            id:
+              type: string
+              description: >
+                The ID of the object that is the secondary entity.
+              example: linode/debian9
+            label:
+              type: string
+              description: >
+                The label of this object.
+              example: linode1234
+            type:
+              type: string
+              readOnly: true
+              description: >
+                The type of entity that is being referenced by the Event.
+              example: linode
+            url:
+              type: string
+              description: >
+                The URL where you can access the object this Event is for. If
+                a relative URL, it is relative to the domain you retrieved the
+                Event from.
+              example: /v4/linode/instances/1234
         percent_complete:
           type: integer
           readOnly: true
@@ -13037,13 +13070,13 @@ components:
           readOnly: true
           description: If this Event has been read.
           example: true
-          x-linode-cli-display: 8
+          x-linode-cli-display: 9
         seen:
           type: boolean
           readOnly: true
           description: If this Event has been seen.
           example: true
-          x-linode-cli-display: 7
+          x-linode-cli-display: 8
         status:
           type: string
           readOnly: true
@@ -13054,7 +13087,7 @@ components:
           - notification
           - scheduled
           - started
-          x-linode-cli-display: 6
+          x-linode-cli-display: 7
           x-linode-cli-color:
             failed: red
             finished: green
