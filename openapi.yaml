@@ -12470,29 +12470,21 @@ components:
           readOnly: true
           description: |
             Detailed information about the Event's secondary entity, which provides additional information
-            for `linode_boot`, `linode_create`, and `linode_clone` Event actions.
+            for events such as, but not limited to, `linode_boot`, `linode_create`, and `linode_clone` Event actions.
           x-linode-cli-display: 5
           properties:
             id:
-              type: integer
-              description: |
-                The unique ID for an Event's secondary entity.
-
-
-                Secondary Entities are assigned the ID of the Linode they correspond to.
-              example: 1234
+              type: string
+              description: >
+                The ID of the object that is the secondary entity.
+              example: linode/debian9
             label:
               type: string
               description: >
-                The current label of this object. The label may reflect changes
-                that occur with this Event.
+                The label of this object.
               example: linode1234
             type:
               type: string
-              enum:
-              - backup
-              - image
-              - linode
               readOnly: true
               description: >
                 The type of entity that is being referenced by the Event.
