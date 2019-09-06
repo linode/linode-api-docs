@@ -14496,7 +14496,6 @@ components:
             considered up.
           example: it worked
         consultation_group:
-          deprecated: true
           type: string
           minLength: 0
           maxLength: 50
