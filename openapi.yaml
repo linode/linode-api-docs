@@ -8717,15 +8717,17 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Get Object Storage Buckets
+      summary: List Object Storage Buckets
       description: |
-        Returns a paginated list of all Object Storage Buckets that you own. This
-        endpoint is available for convenience, but it is recommended you use the
-        more fully-featured S3 API directly; [click here for details](https://docs.ceph.com/docs/mimic/radosgw/s3/serviceops/).
+        Returns a paginated list of all Object Storage Buckets that you own.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/serviceops/) directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -8764,20 +8766,19 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Create an Object Storage Bucket
+      summary: Create Object Storage Bucket
       description: |
         Creates an Object Storage Bucket in the cluster specified. If the
         bucket already exists and is owned by you, this endpoint will return a
-        200 response with that bucket as if it had just been created.
+        `200` response with that bucket as if it had just been created.
 
 
-        This endpoint is available for convenience, but it is recommended you
-        use the more fully-featured S3 API directly; [click here for
-        details](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket).
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket) directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -8793,6 +8794,9 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - label
+              - cluster
               properties:
                 label:
                   type: string
@@ -8821,8 +8825,9 @@ paths:
                   - private
                   - public-read
                   - authenticated-read
+                  - public-read-write
                   description: >
-                    The Access Control Level of the bucket, as a canned ACL string.
+                    The Access Control Level of the bucket using a canned ACL string.
                     For more fine-grained control of ACLs, use the S3 API directly.
                   default: private
                   example: private
@@ -8866,18 +8871,17 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Get Object Storage Bucket
+      summary: View Object Storage Bucket
       description: |
         Returns a single Object Storage Bucket.
 
 
-        This endpoint is available for convenience, but it is recommended you
-        use the more fully-featured S3 API directly; [click here for
-        details](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket).
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket) directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -8908,20 +8912,18 @@ paths:
       summary: Remove Object Storage Bucket
       description: >
         Removes a single bucket. While buckets containing objects _may_ be
-        deleted by including the "force" option in the request, such operations
-        will fail if the bucket contains too many objects; the recommended
-        method of emptying large buckets is configuring lifecycle policies to
-        remove all objects(see [the s3 API
-        docs](https://docs.ceph.com/docs/mimic/radosgw/s3/objectops/#remove-object) for more information), then deleting the bucket.
+        deleted by including the `force` option in the request, such operations
+        will fail if the bucket contains too many objects. The recommended
+        way to empty large buckets is to use the [S3 API to configure lifecycle policies](https://docs.ceph.com/docs/master/radosgw/bucketpolicy/#) that
+        remove all objects, then delete the bucket.
 
 
-        This endpoint is available for convenience, but it is recommended you
-        use the more fully- featured s3 API directly; [click here for
-        details](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket).
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully- featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -8978,19 +8980,17 @@ paths:
       - url: https://api.linode.com/v4beta
       summary: Modify Object Storage Bucket Access
       description: >
-        Allows changing basic CORS and ACL settings. Only allows
-        enabling/disabling CORS for all origins, and/or setting canned ACLs.
-        For more fine-grained control of both systems, please use the S3 API
-        directly.
+        Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
+        Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
+        For more fine-grained control of both systems, please use the S3 API directly.
 
 
-        This endpoint is available for convenience, but it is recommended you
-        use the more fully-featured S3 API directly; [click here for
-        details](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl).
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -9060,21 +9060,20 @@ paths:
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4beta
-      summary: Get Object Storage Bucket Contents
+      summary: List Object Storage Bucket Contents
       description: |
-        Returns the contents of a bucket. These contents are paginated by `marker`,
+        Returns the contents of a bucket. The contents are paginated using a `marker`,
         which is the name of the last object on the previous page.  Objects may
-        be filtered by `prefix` and `delimiter` as well; see parameters for more
+        be filtered by `prefix` and `delimiter` as well; see Query Parameters for more
         information.
 
 
-        This endpoint is available for convenience, but it is recommended you
-        use the more fully- featured s3 API directly; [click here for
-        details](https://docs.ceph.com/docs/mimic/radosgw/s3/objectops/#get-object).
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/luminous/radosgw/s3/bucketops/#get-bucket) directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -9088,9 +9087,9 @@ paths:
         in: query
         required: false
         description: >
-          The "marker" for this request, used to paginate through large buckets.
-          Should be the name of the last object on the last page of results. Listing
-          bucket contents _does not_ support arbitrary page access.
+          The "marker" for this request, which can be used to paginate through large buckets.
+          This should be the name of the last object on the last page of results. Listing
+          bucket contents *does not* support arbitrary page access.
         schema:
           type: string
       - name: delimiter
@@ -9113,6 +9112,7 @@ paths:
           of bucket contents in a manner similar to a filesystem.
         schema:
           type: string
+      - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           description: One page of the requested bucket's contents.
@@ -9153,18 +9153,18 @@ paths:
       - url: https://api.linode.com/v4beta
       summary: Create Object Storage Object URL
       description: |
-        Creates a pre-signed URL for accessing a single Object in a bucket. This
-        can be used to share objects, but also to create/delete objects by using
-        the appropriate HTTP method on creation.
+        Creates a pre-signed URL to access a single Object in a bucket. This
+        can be used to share objects, and also to create/delete objects by using
+        the appropriate HTTP method in your request body's `method` parameter.
 
 
-        This endpoint is available for convenience, but it is recommended you
-        use the more fully-featured S3 API directly; [click here for
-        details](https://docs.ceph.com/docs/mimic/radosgw/s3/objectops/#get-object-info).
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/)
+        directly.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -9178,18 +9178,21 @@ paths:
         content:
           application/json:
             schema:
+              required:
+              - name
+              - method
               properties:
                 method:
                   type: string
-                  description: The HTTP method to sign this request for.
+                  description: The HTTP method allowed to be used with the pre-signed URL.
                   example: GET
                   default: GET
                 name:
                   type: string
                   description: >
-                    The name of the object to sign a URL to.  This object need not
-                    exist, and indeed no error is returned if it doesn't; this is
-                    useful for generating pre-signed URLs to upload new objects by
+                    The name of the object that will be accessed with the pre-signed URL. This object need not
+                    exist, and no error will be returned if it doesn't. This behavior is
+                    useful for generating pre-signed URLs to upload new objects to by
                     setting the `method` to "PUT".
                   example: example
                 content_type:
@@ -9199,7 +9202,7 @@ paths:
                     URL will be valid for.  If provided, the `Content-type` header
                     _must_ be sent with the request when this URL is used, and
                     _must_ be the same as it was when the signed URL was created.
-                    Required for methods that are not "GET" or "DELETE".
+                    Required for all methods *except* "GET" or "DELETE".
                   example: null
                 expires_in:
                   type: integer
@@ -15772,7 +15775,7 @@ components:
         hostname:
           type: string
           description: >
-            The hostname of this bucket where it can be accessed. This hostname
+            The hostname where this bucket can be accessed. This hostname
             can be accessed through a browser if the bucket is made public.
           example: example-bucket.us-east-1.linodeobjects.com
         region:
