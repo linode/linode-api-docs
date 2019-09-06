@@ -4953,8 +4953,9 @@ paths:
         To initiate a cross DC migration, you must pass a `region` parameter to the
         request body specifying the target data center region.
         You can view a list of all available regions and their feature capabilities
-        from [GET /regions](/api/v4/regions). If your Linode has a pending migration already queued,
-        you will not be able to initiate a DC migration until it has completed.
+        from [GET /regions](/api/v4/regions). If your Linode has a DC migration already queued
+        or you have initiated a previously scheduled migration, you will not be able to initiate
+        a DC migration until it has completed.
 
 
         **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
@@ -4979,10 +4980,10 @@ paths:
                     The region to which the Linode will be migrated.
                     Must be a valid region slug. A list of regions can be viewed
                     by using the [GET /regions](/api/v4/regions) endpoint.
-                    A cross-region migration will cancel a pending migration
+                    A cross data center migration will cancel a pending migration
                     that has not yet been initiated.
 
-                    A cross-region migration will initiate a `linode_migrate_datacenter_create` event.
+                    A cross data center migration will initiate a `linode_migrate_datacenter_create` event.
                   example: us-east
       responses:
         '200':
