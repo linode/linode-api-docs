@@ -8979,7 +8979,7 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: Modify Object Storage Bucket Access
-      description: >
+      description: |
         Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
         Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
         For more fine-grained control of both systems, please use the S3 API directly.
@@ -9256,9 +9256,6 @@ paths:
         beta.
       tags:
       - Object Storage
-      security:
-      - personalAccessToken: []
-      - oauth: []
       responses:
         '200':
           description: A paginated list of available clusters.
