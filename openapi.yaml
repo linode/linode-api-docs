@@ -1563,12 +1563,14 @@ paths:
       x-linode-grant: read_write
       tags:
       - Account
-      summary: Enable Account Managed Services
+      summary: Enable Linode Managed
       description: >
-        Enables managed services for the entire account and sends a welcome email.
-        You must have super user privileges for this.
+        Enables Linode Managed for the entire account and sends a welcome email to the account's associated
+        email address. Linode Managed can monitor any service or software stack reachable over TCP or HTTP. See
+        our [Linode Managed guide](https://linode.com/docs/platform/linode-managed/)
+        to learn more.
       operationId: enableAccountManged
-      x-linode-cli-action: account-settings-managed
+      x-linode-cli-action: enable-managed
       security:
       - personalAccessToken: []
       - oauth:
@@ -1586,11 +1588,11 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                -X POST -d \
+                -X POST \
                 https://api.linode.com/v4/account/settings/managed-enable
         - lang: CLI
           source: >
-            linode-cli account settings-managed
+            linode-cli account enable-managed
   /account/transfer:
     x-linode-cli-command: account
     get:
