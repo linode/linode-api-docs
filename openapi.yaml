@@ -1,11 +1,7 @@
 openapi: 3.0.1
 info:
-  version: 4.3.2
+  version: 4.4.0
   title: Linode API
-  x-logo: {
-    url: '/api/v4/linode-logo.svg',
-    backgroundColor: '#fafafa'
-  }
   description: |
     # Introduction
     The Linode API provides the ability to programmatically manage the full
@@ -4941,13 +4937,26 @@ paths:
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
-      summary: Initiate Pending Migration
+      summary: Initiate Pending Host Migration/DC Migration
       description: >
-        In some circumstances, a Linode may have pending migrations scheduled that
-        you can initiate when convenient.  In these cases, a Notification
-        will be returned from [GET /account/notifications](#getNotifications).
-        This endpoint initiates the scheduled migration, which will shut the Linode
-        down, migrate it, and then bring it back to its original state.
+        Initiate a pending host migration that has been scheduled by Linode or
+        initiate a cross data center (DC) migration.  A list of pending migrations,
+        if any, can be accessed from [GET /account/notifications](/api/v4/account-notifications).
+        When the migration begins, your Linode will be shutdown if not already off.
+        If the migration initiated the shutdown, it will reboot the Linode when completed.
+
+
+        To initiate a cross DC migration, you must pass a `region` parameter to the
+        request body specifying the target data center region.
+        You can view a list of all available regions and their feature capabilities
+        from [GET /regions](/api/v4/regions). If your Linode has a DC migration already queued
+        or you have initiated a previously scheduled migration, you will not be able to initiate
+        a DC migration until it has completed.
+
+
+        **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
+        If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
+        the migration will not initiate. NGN data centers include Toronto and Mumbai.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
@@ -4967,8 +4976,10 @@ paths:
                     The region to which the Linode will be migrated.
                     Must be a valid region slug. A list of regions can be viewed
                     by using the [GET /regions](/api/v4/regions) endpoint.
-                    A cross-region migration will cancel a pending migration
+                    A cross data center migration will cancel a pending migration
                     that has not yet been initiated.
+
+                    A cross data center migration will initiate a `linode_migrate_datacenter_create` event.
                   example: us-east
       responses:
         '200':
@@ -4979,6 +4990,18 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "region": "us-central"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/migrate
+      - lang: CLI
+        source: >
+          linode-cli linodes migrate 123 --region us-central
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
@@ -8715,6 +8738,531 @@ paths:
                 $ref: '#/components/schemas/NodeBalancerStats'
         default:
           $ref: '#/components/responses/ErrorResponse'
+  /object-storage/buckets:
+    get:
+      operationId: getObjectStorageBuckets
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: List Object Storage Buckets
+      description: |
+        Returns a paginated list of all Object Storage Buckets that you own.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/serviceops/) directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: A paginated list of buckets you own.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageBucket'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/buckets/
+    post:
+      operationId: createObjectStorageBucket
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Create Object Storage Bucket
+      description: |
+        Creates an Object Storage Bucket in the cluster specified. If the
+        bucket already exists and is owned by you, this endpoint will return a
+        `200` response with that bucket as if it had just been created.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket) directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: >
+          Information about the bucket you want to create.
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - label
+              - cluster
+              properties:
+                label:
+                  type: string
+                  description: >
+                    The name for this bucket. Must be unique in the cluster you
+                    are creating the bucket in, or an error will be returned.
+                  pattern: ^[a-z0-09][a-z0-9-]*[a-z0-9]?$
+                  example: example-bucket
+                cluster:
+                  type: string
+                  description: >
+                    The ID of the Object Storage Cluster where this bucket should
+                    be created.
+                  example: us-east-1
+                cors_enabled:
+                  type: boolean
+                  description: >
+                    If true, the bucket will be created with CORS enabled for all
+                    origins. For more fine-grained controls of CORS, use the S3
+                    API directly.
+                  example: true
+                  default: false
+                acl:
+                  type: string
+                  enum:
+                  - private
+                  - public-read
+                  - authenticated-read
+                  - public-read-write
+                  description: >
+                    The Access Control Level of the bucket using a canned ACL string.
+                    For more fine-grained control of ACLs, use the S3 API directly.
+                  default: private
+                  example: private
+      responses:
+        '200':
+          description: The bucket created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageBucket'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "example-bucket",
+                "cluster": "us-east-1",
+                "cors_enabled": true,
+                "acl": "private",
+              }' \
+            https://api.linode.com/v4beta/object-storage/buckets/
+  /object-storage/buckets/{clusterId}/{bucket}:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageBucket
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: View Object Storage Bucket
+      description: |
+        Returns a single Object Storage Bucket.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket) directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: The requested bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageBucket'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/buckets/us-east-1/example-bucket
+    delete:
+      operationId: deleteObjectStorageBucket
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Remove Object Storage Bucket
+      description: >
+        Removes a single bucket. While buckets containing objects _may_ be
+        deleted by including the `force` option in the request, such operations
+        will fail if the bucket contains too many objects. The recommended
+        way to empty large buckets is to use the [S3 API to configure lifecycle policies](https://docs.ceph.com/docs/master/radosgw/bucketpolicy/#) that
+        remove all objects, then delete the bucket.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully- featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      parameters:
+      - name: force
+        in: query
+        required: false
+        description: >
+          If false, this operation will fail if the bucket is not empty. If true, this operation
+          will attempt to remove the bucket and its contents; very large buckets
+          may still return an error and require object deletion manually or through
+          object lifecycle management. See [the S3 API docs](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) for details.
+        schema:
+          type: integer
+          default: false
+      responses:
+        '200':
+          description: Bucket deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -X DELETE \
+            https://api.linode.com/v4beta/object-storage/buckets/us-east-1/example-bucket
+  /object-storage/buckets/{clusterId}/{bucket}/access:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: modifyObjectStorageBucketAccess
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Modify Object Storage Bucket Access
+      description: |
+        Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
+        Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
+        For more fine-grained control of both systems, please use the S3 API directly.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: The changes to make to the bucket's access controls.
+        content:
+          application/json:
+            schema:
+              properties:
+                cors_enabled:
+                  type: boolean
+                  description: >
+                    If true, the bucket will be created with CORS enabled for all
+                    origins. For more fine-grained controls of CORS, use the S3
+                    API directly.
+                  example: true
+                acl:
+                  type: string
+                  enum:
+                  - private
+                  - public-read
+                  - authenticated-read
+                  description: >
+                    The Access Control Level of the bucket, as a canned ACL string.
+                    For more fine-grained control of ACLs, use the S3 API directly.
+                  example: private
+      responses:
+        '200':
+          description: Access controls updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+                "cors_enabled": true,
+                "acl": "private"
+              }' \
+            https://api.linode.com/v4beta/object-storage/buckets/us-east-1/example-bucket/access
+  /object-storage/buckets/{clusterId}/{bucket}/object-list:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageBucketContent
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: List Object Storage Bucket Contents
+      description: |
+        Returns the contents of a bucket. The contents are paginated using a `marker`,
+        which is the name of the last object on the previous page.  Objects may
+        be filtered by `prefix` and `delimiter` as well; see Query Parameters for more
+        information.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/luminous/radosgw/s3/bucketops/#get-bucket) directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      parameters:
+      - name: marker
+        in: query
+        required: false
+        description: >
+          The "marker" for this request, which can be used to paginate through large buckets.
+          This should be the name of the last object on the last page of results. Listing
+          bucket contents *does not* support arbitrary page access.
+        schema:
+          type: string
+      - name: delimiter
+        in: query
+        required: false
+        description: >
+          The delimiter for object names; if given, object names will be returned
+          up to the first occurrence of this character. This is most commonly used
+          with the `/` character to allow bucket transversal in a manner similar to
+          a filesystem, however any delimiter may be used. Use in conjunction with
+          `prefix` to see object names past the first occurrence of the delimiter.
+        schema:
+          type: string
+      - name: prefix
+        in: query
+        required: false
+        description: >
+          Filters objects returned to only those whose name start with the given
+          prefix. Commonly used in conjunction with `delimiter` to allow transversal
+          of bucket contents in a manner similar to a filesystem.
+        schema:
+          type: string
+      - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: One page of the requested bucket's contents.
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    description: This page of objects in the bucket.
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageObject'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4beta/object-storage/buckets/us-east-1/example-bucket/object-list
+  /object-storage/buckets/{clusterId}/{bucket}/object-url:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    post:
+      operationId: createObjectStorageObjectURL
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Create Object Storage Object URL
+      description: |
+        Creates a pre-signed URL to access a single Object in a bucket. This
+        can be used to share objects, and also to create/delete objects by using
+        the appropriate HTTP method in your request body's `method` parameter.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/)
+        directly.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: Information about the request to sign.
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              - method
+              properties:
+                method:
+                  type: string
+                  description: The HTTP method allowed to be used with the pre-signed URL.
+                  example: GET
+                  default: GET
+                name:
+                  type: string
+                  description: >
+                    The name of the object that will be accessed with the pre-signed URL. This object need not
+                    exist, and no error will be returned if it doesn't. This behavior is
+                    useful for generating pre-signed URLs to upload new objects to by
+                    setting the `method` to "PUT".
+                  example: example
+                content_type:
+                  type: string
+                  description: >
+                    The expected `Content-type` header of the request this signed
+                    URL will be valid for.  If provided, the `Content-type` header
+                    _must_ be sent with the request when this URL is used, and
+                    _must_ be the same as it was when the signed URL was created.
+                    Required for all methods *except* "GET" or "DELETE".
+                  example: null
+                expires_in:
+                  type: integer
+                  minimum: 360
+                  maximum: 68400
+                  default: 3600
+                  description: >
+                    How long this signed URL will be valid for, in seconds.  If
+                    omitted, the URL will be valid for 3600 seconds (1 hour).
+                  example: null
+      responses:
+        '200':
+          description: The URL with which to access your object.
+          content:
+            application/json:
+              schema:
+                properties:
+                  url:
+                    type: string
+                    description: The signed URL to perform the request at.
+                    example:  https://us-east-1.linodeobjects.com/example-bucket/example?Signature=qr98TEucCntPgEG%2BsZQGDsJg93c%3D&Expires=1567609905&AWSAccessKeyId=G4YAF81XWY61DQM94SE0
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+                "method": "GET",
+                "name": "example"
+              }' \
+            https://api.linode.com/v4beta/object-storage/buckets/us-east-1/example-bucket/object-url
   /object-storage/clusters:
     x-linode-cli-command: object-storage
     get:
@@ -8723,20 +9271,18 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Clusters
-      description: >
+      description: |
         Returns a paginated list of Object Storage Clusters that are available for
         use.  Users can connect to the clusters with third party clients to create buckets
         and upload objects.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       tags:
       - Object Storage
-      security:
-      - personalAccessToken: []
-      - oauth: []
       responses:
         '200':
           description: A paginated list of available clusters.
@@ -8780,9 +9326,10 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Cluster
-      description: >
+      description: |
         Returns a single Object Storage Cluster.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -8816,10 +9363,11 @@ paths:
       tags:
       - Object Storage
       summary: List Object Storage Keys
-      description: >
+      description: |
         Returns a paginated list of Object Storage Keys for authenticating to
         the Object Storage S3 API.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -8862,9 +9410,10 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create an Object Storage Key
-      description: >
+      description: |
         Provisions a new Object Storage Key on your account.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -8904,7 +9453,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
                 "label": "my-object-storage-key"
             }' \
@@ -8928,12 +9478,13 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Object Storage Key
-      description: >
+      description: |
         Returns a single Object Storage Key provisioned for your account.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
+        updates in the future. This notice will be removed when this endpoint is out of
         beta.
       security:
       - personalAccessToken: []
@@ -8965,12 +9516,13 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: Update an Object Storage Key
-      description: >
+      description: |
         Updates an Object Storage Key on your account.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
+        updates in the future. This notice will be removed when this endpoint is out of
         beta.
       security:
       - personalAccessToken: []
@@ -8996,7 +9548,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
             -x PUT -d '{
               "label": "my-object-storage-key"
             }' \
@@ -9012,12 +9565,13 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: Revoke Object Storage Key
-      description: >
+      description: |
         Revokes an Object Storage Key.  This keypair will no longer be usable by third-party clients.
-        <br/><br/>
+
+
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
+        updates in the future. This notice will be removed when this endpoint is out of
         beta.
       security:
       - personalAccessToken: []
@@ -12276,6 +12830,7 @@ components:
           description: The unique ID of this Event.
           example: 123
           x-linode-cli-display: 1
+          x-linode-filterable: true
         action:
           type: string
           enum:
@@ -12391,7 +12946,8 @@ components:
           format: date-time
           description: When this Event was created.
           example: '2018-01-01T00:01:01'
-          x-linode-cli-display: 5
+          x-linode-cli-display: 6
+          x-linode-filterable: true
         entity:
           type: object
           readOnly: true
@@ -12453,7 +13009,7 @@ components:
               - volume
               readOnly: true
               description: >
-                The type of entity this Event is related to.
+                The type of entity that is being referenced by the Event.
               example: ticket
               x-linode-filterable: true
             url:
@@ -12463,6 +13019,37 @@ components:
                 a relative URL, it is relative to the domain you retrieved the
                 Event from.
               example: /v4/support/tickets/11111
+        secondary_entity:
+          type: object
+          readOnly: true
+          description: |
+            Detailed information about the Event's secondary entity, which provides additional information
+            for events such as, but not limited to, `linode_boot`, `linode_create`, and `linode_clone` Event actions.
+          x-linode-cli-display: 5
+          properties:
+            id:
+              type: string
+              description: >
+                The ID of the object that is the secondary entity.
+              example: linode/debian9
+            label:
+              type: string
+              description: >
+                The label of this object.
+              example: linode1234
+            type:
+              type: string
+              readOnly: true
+              description: >
+                The type of entity that is being referenced by the Event.
+              example: linode
+            url:
+              type: string
+              description: >
+                The URL where you can access the object this Event is for. If
+                a relative URL, it is relative to the domain you retrieved the
+                Event from.
+              example: /v4/linode/instances/1234
         percent_complete:
           type: integer
           readOnly: true
@@ -12483,13 +13070,13 @@ components:
           readOnly: true
           description: If this Event has been read.
           example: true
-          x-linode-cli-display: 8
+          x-linode-cli-display: 9
         seen:
           type: boolean
           readOnly: true
           description: If this Event has been seen.
           example: true
-          x-linode-cli-display: 7
+          x-linode-cli-display: 8
         status:
           type: string
           readOnly: true
@@ -12500,7 +13087,7 @@ components:
           - notification
           - scheduled
           - started
-          x-linode-cli-display: 6
+          x-linode-cli-display: 7
           x-linode-cli-color:
             failed: red
             finished: green
@@ -14250,7 +14837,7 @@ components:
               example: null
         group:
           x-linode-filterable: true
-          deprecated: true
+          nullable: true
           type: string
           minLength: 2
           maxLength: 50
@@ -14500,7 +15087,6 @@ components:
             considered up.
           example: it worked
         consultation_group:
-          deprecated: true
           type: string
           minLength: 0
           maxLength: 50
@@ -15223,6 +15809,78 @@ components:
           example: false
           readOnly: true
           x-linode-cli-display: 4
+    ObjectStorageBucket:
+      type: object
+      description: >
+        An Object Storage Bucket. This should be accessed primarily through the
+        S3 API; [click here for more information](https://docs.ceph.com/docs/mimic/radosgw/s3/#api).
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: When this bucket was created.
+          example: 2019-01-01T01:23:45
+        cluster:
+          type: string
+          description: The ID of the Object Storage Cluster this bucket is in.
+          example: us-east-1
+        label:
+          type: string
+          description: The name of this bucket.
+          example: example-bucket
+        hostname:
+          type: string
+          description: >
+            The hostname where this bucket can be accessed. This hostname
+            can be accessed through a browser if the bucket is made public.
+          example: example-bucket.us-east-1.linodeobjects.com
+        region:
+          type: string
+          description: The ID of the Region this bucket exists in.
+          example: us-east
+        size:
+          type: integer
+          description: The size of this bucket, in bytes.
+          example: 123
+        objects:
+          type: integer
+          description: The number of objects in this bucket.
+          example: 4
+    ObjectStorageObject:
+      type: object
+      description: >
+        An Object in Object Storage, or a "prefix" that contains one
+        or more objects when a `delimiter` is used.
+      properties:
+        name:
+          type: string
+          description: >
+            The name of this object or prefix.
+          example: example
+        etag:
+          type: string
+          description: >
+            An MD-5 hash of the object. `null` if this object represents a prefix.
+          example: 9f254c71e28e033bf9e0e5262e3e72ab
+        last_modified:
+          type: string
+          format: date-time
+          description: >
+            The date and time this object was last modified. `null` if this object
+            represents a prefix.
+          example: 2019-01-01T01:23:45
+        owner:
+          type: string
+          description: >
+            The owner of this object, as a UUID. `null` if this object represents
+            a prefix.
+          example: bfc70ab2-e3d4-42a4-ad55-83921822270c
+        size:
+          type: integer
+          description: >
+            The size of this object, in bytes. `null` if this object represents
+            a prefix.
+          example: 123
     ObjectStorageCluster:
       type: object
       description: An Object Storage Cluster
@@ -15244,7 +15902,7 @@ components:
           example: available
         region:
           type: string
-          description: The region this cluster is located in.
+          description: The region where this cluster is located.
           example: us-east
         static_site_domain:
           type: string
@@ -15261,16 +15919,16 @@ components:
           readOnly: true
         label:
           type: string
-          description: The label given to this key.  For display purposes only.
+          description: The label given to this key. For display purposes only.
           example: my-key
         access_key:
           type: string
-          description: This keypair's access key.  This is not secret.
+          description: This keypair's access key. This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
           readOnly: true
         secret_key:
           type: string
-          description: This keypair's secret key.  **Only returned on key creation**.
+          description: This keypair's secret key. **Only returned on key creation**.
           example: '[REDACTED]'
           readOnly: true
     PaginationEnvelope:
