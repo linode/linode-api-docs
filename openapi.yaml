@@ -2836,66 +2836,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli domains records-delete 123 234
-  /firewalls:
-    x-linode-cli-command: firewalls
-    post:
-      x-linode-grant: read_write
-      tags:
-      - Firewalls
-      summary: Create Firewalls
-      description: >
-        Accepts a firewall setup and creates a new firewall for the user. At minimum,
-        the firewall config requires a label and 1 rule in either the inbound or outbound direction.
-        Other information is optional.
-      operationId: createFirewalls
-      x-linode-cli-action: create
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - firewalls:read_write
-      requestBody:
-        description: >
-          Information about the firewall you are creating.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Firewall'
-      responses:
-        '200':
-          description: Creates a firewall_created event with a status of enabled.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Firewall'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "label": "this_is_a_label",
-                "rules": {
-                  "inbound": [
-                    {
-                      "type": "TCP",
-                      "protocol": "HTTPS",
-                      "start_port": 443
-                    }
-                  ],
-                  "outbound": []
-                },
-                "devices": {
-                  "linodes": [],
-                  "nodebalancers": []
-                },
-                "tags": []
-              }' \
-              https://api.linode.com/v4/firewalls
-      - lang: CLI
-        source: >
-          linode-cli firewalls create
   /images:
     x-linode-cli-command: images
     get:
@@ -9209,6 +9149,67 @@ paths:
       - lang: CLI
         source: >
           linode-cli networking v6-ranges
+  /networking/firewalls:
+    x-linode-cli-command: firewalls
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Networking
+      summary: Create Firewall
+      description: >
+        Creates a firewall to filter traffic for the devices you specify. The `rules` property.
+      operationId: createFirewalls
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewalls:read_write
+      requestBody:
+        description: >
+          Information about the firewall you are creating.
+        content:
+          application/json:
+            schema:
+              required:
+                - rules
+              allOf:
+                - $ref: '#/components/schemas/Firewall'
+      responses:
+        '200':
+          description: Creates a firewall_created event with a status of enabled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "this_is_a_label",
+                "rules": {
+                  "inbound": [
+                    {
+                      "type": "TCP",
+                      "protocol": "HTTPS",
+                      "start_port": 443
+                    }
+                  ],
+                  "outbound": []
+                },
+                "devices": {
+                  "linodes": [],
+                  "nodebalancers": []
+                },
+                "tags": []
+              }' \
+              https://api.linode.com/v4/firewalls
+      - lang: CLI
+        source: >
+          linode-cli firewalls create
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -14677,31 +14678,47 @@ components:
       description: >
         A firewall object that controls incoming and outgoing network traffic.
       properties:
+        id:
+          x-linode-filterable: true
+          type: integer
+          readOnly: true
+          description: >
+            The Id of the Firewall.
+          example: 123
         label:
+          x-linode-filterable: true
           type: string
           description: >
             The current label of the firewall, for display purposes.
           example: example-firewall
+        created:
+          x-linode-filterable: true
+          type: string
+          format: date-time
+          readOnly: true
+          description: >
+            When this Firewall was created.
+          example: '2018-01-01T00:01:01'
+          x-linode-cli-display: 5
+        status:
+          type: string
+          readOnly: true
+          description: >
+           The status of this Firewall service.
+          enum:
+            - "enabled"
+            - "disabled"
+            - "deleted"
         rules:
           type: object
           description: >
-            A structure containing the
-          oneOf:
-            - $ref: '#/components/schemas/FirewallInboundRule'
-            - $ref: '#/components/schemas/FirewallOutboundRule'
-        devices:
-          type: object
-          description: >
-            A dictionary of devices, Linodes and Nodebalancers, to use when setting up the firewalls.
+             Inbound and outbound rules configurations to apply to the service.
           properties:
-            linodes:
-              type: array
-              description: An array of Linode ids
-              example: [123, 345]
-            nodebalancers:
-              type: array
-              description: An array of NodeBalancer ids
-              example: [123]
+              inbound:
+                $ref: '#/components/schemas/FirewallInboundRule'
+              outbound:
+                type: object
+                $ref: '#/components/schemas/FirewallOutboundRule'
         tags:
           x-linode-filterable: true
           description: >
@@ -14713,29 +14730,34 @@ components:
           example:
           - example tag
           - another example
-      required:
-        - label
-        - rules
+        devices:
+          type: object
+          description: >
+            A dictionary of devices to use when setting up the firewalls.
+          properties:
+            linodes:
+              description: An array of Linode ids
+              type: array
+              items:
+                type: integer
+              example:
+                - 123
+                - 456
     FirewallInboundRule:
       type: object
       description: >
-        Rules passed to create or modify firewalls.
+        Rules passed to create or modify firewalls. If you are included on the Firewall set of rules,
+        you are allowed by default, and all others will be denied.
       properties:
-        type:
-          type: string
-          enum:
-            - "TCP"
-            - "UDP"
-          description: >
-            Something here
-          example: "TCP"
         protocol:
           type: string
           enum:
-            - "SSH"
-            - "HTTPS"
+            - "ALL"
+            - "TCP"
+            - "UDP"
+            - "ICMP"
           description: >
-            Something here
+            The protocol of the rule.
           example: "HTTPS"
         start_port:
           type: integer
