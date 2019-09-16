@@ -5933,9 +5933,17 @@ paths:
             - lke:read_only
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: List Kubernetes Clusters
       description: >
         Lists current Kubernetes clusters available on your account.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Returns an array of all Kubernetes clusters on your Account.
@@ -5975,11 +5983,19 @@ paths:
           - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Create Kubernetes Cluster
       description: >
         Creates a Kubernetes cluster. The Kubernetes cluster will be created
         asynchronously. You can use the events system to determine when the
         Kubernetes cluster is ready to use.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       requestBody:
         description: Configuration for the Kubernetes cluster
         content:
@@ -6031,9 +6047,17 @@ paths:
             - lke:read_only
       tags:
          - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: View Kubernetes Cluster
       description: >
         Get a specific Cluster by ID.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6060,9 +6084,17 @@ paths:
             - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Update Kubernetes Cluster
       description: >
         Updates a Kubernetes cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       requestBody:
         description: The fields to update
         content:
@@ -6102,6 +6134,8 @@ paths:
             - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Delete Kubernetes Cluster
       description: >-
         Deletes a Cluster you have permission to `read_write`.
@@ -6115,6 +6149,12 @@ paths:
           - Deletes all NodeBalancers created by this Kubernetes cluster
           - Does not delete any of the volumes created by this Kubernetes
             cluster
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Delete successful
@@ -6146,9 +6186,17 @@ paths:
             - lke:read_only
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: List Node Pools
       description: >
         Returns all active Node Pools on a Kubernetes cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Returns an array of all Pools in this Kubernetes cluster.
@@ -6186,9 +6234,17 @@ paths:
             - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Create Node Pool
       description: >
         Creates a new Node Pool for the designated Kubernetes cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       requestBody:
         description: Configuration for the Node Pool
         content:
@@ -6238,8 +6294,17 @@ paths:
             - lke:read_only
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: View Node Pool
-      description: Get a specific Node Pool by ID.
+      description: >
+        Get a specific Node Pool by ID.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Returns a the requested Node Pool.
@@ -6264,11 +6329,19 @@ paths:
             - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Update Node Pool
       description: >
         Updates a Node Pool. When a Node Pool's count are
         changed, the nodes in that pool will be replaced in a rolling
         fashion.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       requestBody:
         description: The fields to update
         content:
@@ -6308,13 +6381,21 @@ paths:
             - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: Delete Node Pool
-      description: >-
+      description: >
         Delete a specific Node Pool from a Kubernetes cluster.
 
         **Deleting a Node Pool is a destructive action and cannot be undone.**
 
         Deleting a Node Pool will delete all Linodes within that Pool.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Delete successful
@@ -6346,9 +6427,17 @@ paths:
           - lke:read_write
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: View Kubeconfig
       description: >
         Get the Kubeconfig file for a Cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Returns the Base64-encoded Kubeconfig file for this Kubernetes cluster.
@@ -6384,10 +6473,18 @@ paths:
             - lke:read_only
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: List Kubernetes Versions
       description: >
         List the Kubernetes versions available for deployment
         to a Kubernetes cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: >
@@ -6430,10 +6527,18 @@ paths:
             - lke:read_only
       tags:
         - Linode Kubernetes Engine
+      servers:
+      - url: https://api.linode.com/v4beta
       summary: View Kubernetes Version
       description: >
         View a Kubernetes version available for deployment
         to a Kubernetes cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: >
