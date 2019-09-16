@@ -6516,6 +6516,13 @@ paths:
           source: >
             linode-cli lke versions-list
   /lke/versions/{version}:
+    parameters:
+    - name: version
+      in: path
+      required: true
+      description: The LKE version to view.
+      schema:
+        type: string
     x-linode-cli-command: lke
     get:
       operationId: getLKEVersion
