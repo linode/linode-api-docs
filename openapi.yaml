@@ -7815,18 +7815,16 @@ paths:
       - Networking
       summary: Create Firewall
       description: >
-        Creates a firewall whitelist to filter network traffic for the devices you specify. When the Firewall service
-        is added for a specific device, all inbound and outbound ports are blocked by default. Use the `rules` property to
-        create access rules to open traffic specific ports.
+        Creates a Firewall to filter network traffic. When the Firewall service
+        is added to a specific device, all inbound and outbound ports are blocked by default. Use the `rules` property to
+        create access rules that open network traffic to specific ports.
       operationId: createFirewalls
       x-linode-cli-action: create
       security:
       - personalAccessToken: []
       - oauth:
-        - firewalls:read_write
+        - firewall:read_write
       requestBody:
-        description: >
-          Information about the firewall you are creating.
         content:
           application/json:
             schema:
@@ -7836,7 +7834,7 @@ paths:
                 - $ref: '#/components/schemas/Firewall'
       responses:
         '200':
-          description: Creates a firewall_created event with a status of enabled.
+          description: Returns information about the created Firewall.
           content:
             application/json:
               schema:
@@ -7849,7 +7847,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "label": "this_is_a_label",
+                "label": "firewall123",
                 "rules": {
                   "inbound": [
                     {
@@ -7861,8 +7859,7 @@ paths:
                   "outbound": []
                 },
                 "devices": {
-                  "linodes": [],
-                  "nodebalancers": []
+                  "linodes": [123, 456],
                 },
                 "tags": []
               }' \
@@ -13183,14 +13180,26 @@ components:
           type: integer
           readOnly: true
           description: >
-            The Id of the Firewall.
+            The Firewall's unique ID.
           example: 123
+          x-linode-cli-display: 1
         label:
           x-linode-filterable: true
           type: string
           description: >
-            The current label of the firewall, for display purposes.
-          example: example-firewall
+            The Firewall's label for display purposes only. If no label is provided for a Firewall,
+            a default will be assigned.
+
+            Firewall labels have the following constraints:
+
+              * Must begin and end with an alphanumeric character.
+              * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
+              * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
+          example: "firewall123"
+          minLength: 3
+          maxLength: 32
+          pattern: '^[a-zA-Z]((?!--|__|..)[a-zA-Z0-9-_.])+$'
+          x-linode-cli-display: 2
         created:
           x-linode-filterable: true
           type: string
@@ -13199,7 +13208,7 @@ components:
           description: >
             When this Firewall was created.
           example: '2018-01-01T00:01:01'
-          x-linode-cli-display: 5
+          x-linode-cli-display: 4
         status:
           type: string
           readOnly: true
@@ -13209,6 +13218,8 @@ components:
             - "enabled"
             - "disabled"
             - "deleted"
+          example: "enabled"
+          x-linode-cli-display: 3
         rules:
           type: object
           description: >
@@ -13227,12 +13238,12 @@ components:
           items:
             type: string
           example:
-          - example tag
-          - another example
+          - "example tag"
+          - "another example"
         devices:
           type: object
           description: >
-            A dictionary of devices to use when setting up the firewalls.
+            The devices that this Firewall will be applied to.
           properties:
             linodes:
               description: An array of Linode ids
@@ -13242,15 +13253,17 @@ components:
               example:
                 - 123
                 - 456
+              x-linode-cli-display: 5
     FirewallRuleConfig:
       type: object
       description: >
-        This Firewall's inbound and outbound access rules.
+        This Firewall's inbound and outbound access rules. To open traffic on a range of ports
+        specify a `start_port` and an `end_port`.
       required:
-        - type
+        - protocol
         - start_port
       properties:
-        type:
+        protocol:
           type: string
           enum:
             - "ALL"
@@ -13259,32 +13272,35 @@ components:
             - "ICMP"
           description: >
             The type of network traffic to allow.
-          example: "HTTPS"
+          example: "TCP"
         start_port:
           type: integer
           description: >
-            Start Port
+            The port on which traffic will be allowed. Must be a value of `1-65535`.
           example:
-            443
+            - 20
         end_port:
           type: integer
           description: >
-            The end port must be greater than or equal to the start port.
+            The end port for a range of ports on which traffic will be allowed. This port must be greater than or equal to the `start_port`
+            and must be a value of `1-65535`.
+          example:
+            - 22
         addresses:
           type: object
           description: >
             Whitelisted IPv4 or IPv6 addresses.
           properties:
             ipv4:
-              description: A list of ipv4 addresses.
+              description: A list of IPv4 addresses or networks.
               type: array
               items:
                 type: string
               example:
-                - "192.0.2.0"
                 - "192.0.2.1"
+                - "192.0.2.0/24"
             ipv6:
-              description: A list of ipv6 addresses.
+              description: A list of IPv6 addresses or networks.
               type: array
               items:
                 type: string
