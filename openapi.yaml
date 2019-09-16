@@ -5932,7 +5932,7 @@ paths:
         - oauth:
             - lke:read_only
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Kubernetes Clusters
@@ -5982,7 +5982,7 @@ paths:
         - oauth:
           - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create Kubernetes Cluster
@@ -6046,7 +6046,7 @@ paths:
         - oauth:
             - lke:read_only
       tags:
-         - Linode Kubernetes Engine
+         - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes Cluster
@@ -6083,7 +6083,7 @@ paths:
         - oauth:
             - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Update Kubernetes Cluster
@@ -6133,7 +6133,7 @@ paths:
         - oauth:
             - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Delete Kubernetes Cluster
@@ -6185,7 +6185,7 @@ paths:
         - oauth:
             - lke:read_only
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Node Pools
@@ -6233,7 +6233,7 @@ paths:
         - oauth:
             - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create Node Pool
@@ -6293,7 +6293,7 @@ paths:
         - oauth:
             - lke:read_only
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Node Pool
@@ -6328,7 +6328,7 @@ paths:
         - oauth:
             - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Update Node Pool
@@ -6380,7 +6380,7 @@ paths:
         - oauth:
             - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Delete Node Pool
@@ -6426,7 +6426,7 @@ paths:
         - oauth:
           - lke:read_write
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubeconfig
@@ -6472,7 +6472,7 @@ paths:
         - oauth:
             - lke:read_only
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Kubernetes Versions
@@ -6533,7 +6533,7 @@ paths:
         - oauth:
             - lke:read_only
       tags:
-        - Linode Kubernetes Engine
+        - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes Version
