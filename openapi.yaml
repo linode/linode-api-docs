@@ -6333,6 +6333,45 @@ paths:
         - lang: CLI
           source: >
             linode-cli lke pool-delete 12345 456
+  /lke/clusters/{clusterId}/kubeconfig:
+    parameters:
+      - $ref: '#/components/parameters/clusterId'
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEClusterKubeconfig
+      x-linode-cli-action: kubeconfig-view
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - lke:read_write
+      tags:
+        - Linode Kubernetes Engine
+      summary: View Kubeconfig
+      description: >
+        Get the Kubeconfig file for a Cluster.
+      responses:
+        '200':
+          description: Returns the Base64-encoded Kubeconfig file for this Kubernetes cluster.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kubeconfig:
+                    type: string
+                    readOnly: true
+                    description: >
+                      The Base64-encoded Kubeconfig file for this Cluster.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                 https://api.linode.com/v4/lke/clusters/12345/kubeconfig
+        - lang: CLI
+          source: >
+            linode-cli lke kubeconfig-view 12345
   /longview/clients:
     x-linode-cli-command: longview
     get:
