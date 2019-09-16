@@ -14868,6 +14868,152 @@ components:
             The number of GPUs this Linode Type offers.
           example: 0
           x-linode-cli-display: 11
+    LKEClusterRequestBody:
+      type: object
+      description: A Kubernetes cluster.
+      properties:
+        label:
+          type: string
+          description: >
+            This Kubernetes cluster's unique label for display purposes only.
+            If no label is provided, one will be assigned automatically.
+
+            Labels have the following constraints:
+              * Must start with an alpha character
+              * Must only consist of alphanumeric characters and dashes (`-`)
+              * Must not contain two dashes in a row
+          minLength: 3
+          maxLength: 32
+          # Kubernetes does NOT allow underscores in resource names and we are
+          # passing this name to Kubernetes. Thus the following pattern:
+          pattern: '[a-zA-Z0-9-]{3, 32}'
+          example: "lkecluster12345"
+        region:
+          type: string
+          description: This Kubernetes cluster's location.
+          example: "us-east"
+        version:
+          type: string
+          description: >
+            The desired Kubernetes version for this Kubernetes cluster.
+          example: "1.14"
+        tags:
+          type: array
+          description: >
+            An array of tags applied to the Kubernetes cluster and _all
+            resources created by the Kubernetes cluster_ (such as NodeBalancers
+            and Volumes). Tags are for organizational purposes only.
+          items:
+            type: string
+          example:
+           - "ecomm"
+           - "blogs"
+        node_pools:
+          type: array
+          items:
+            allOf:
+              - $ref: '#/components/schemas/LKENodePoolRequestBody'
+          example:
+            - type: "g6-standard-4"
+              count: 6
+            - type: "g6-standard-8"
+              count: 3
+      required:
+        - label
+        - region
+        - node_pools
+        - version
+    LKECluster:
+      # Note that LKECluster inherits all properties of
+      # LKEClusterRequestBody and then overrides some of the sub-properties
+      allOf:
+        - $ref: '#/components/schemas/LKEClusterRequestBody'
+      properties:
+        id:
+          type: integer
+          description: This Kubernetes cluster's unique ID.
+          readOnly: true
+          example: 12345
+          x-linode-cli-display: 1
+        status:
+          type: string
+          description: >
+            A brief description of this Kubernetes cluster's current state.
+            This field may change without direct action from you.
+          readOnly: true
+          enum:
+            - "provisioning"
+            - "running"
+            - "deleting"
+          example: "running"
+          x-linode-cli-display: 4
+          x-linode-cli-color:
+            running: green
+            default_: yellow
+        created:
+          type: string
+          format: date-time
+          description: When this Kubernetes cluster was created.
+          example: "2019-09-12T21:25:30Z"
+        updated:
+          type: string
+          format: date-time
+          description: When this Kubernetes cluster was updated.
+          example: "2019-09-13T21:24:16Z"
+        # Note that these properties override some of the sub-properties from
+        # LKEClusterRequestBody but otherwise inherit all of the original
+        # sub-properties.
+        label:
+          allOf:
+            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+          x-linode-filterable: true
+          x-linode-cli-display: 2
+        region:
+          allOf:
+            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/region'
+          readOnly: true
+          x-linode-filterable: true
+          x-linode-cli-display: 3
+        version:
+          allOf:
+            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/version'
+          x-linode-filterable: true
+        tags:
+          allOf:
+            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
+          x-linode-filterable: true
+        node_pools:
+          allOf:
+            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/node_pools'
+          readOnly: true
+          items:
+            allOf:
+              - $ref: '#/components/schemas/LKENodePool'
+          example:
+            - type: "g6-standard-4"
+              count: 6
+              linodes:
+                - id: 123456
+                  status: "ready"
+                - id: 123457
+                  status: "ready"
+                - id: 123458
+                  status: "ready"
+                - id: 123459
+                  status: "ready"
+                - id: 123460
+                  status: "not_ready"
+                - id: 123461
+                  status: "not_ready"
+            - type: "g6-standard-8"
+              count: 3
+              linodes:
+                - id: 123462
+                  status: "ready"
+                - id: 123463
+                  status: "ready"
+                - id: 123464
+                  status: "not_ready"
     LongviewClient:
       type: object
       description: >
