@@ -12524,6 +12524,13 @@ components:
         minimum: 25
         maximum: 100
         default: 100
+    clusterId:
+        name: clusterId
+        in: path
+        description: ID of the Kubernetes cluster to look up.
+        required: true
+        schema:
+          type: integer
   links:
     bootLinode:
       operationId: bootLinodeInstance
