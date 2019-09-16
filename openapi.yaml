@@ -15072,6 +15072,30 @@ components:
             status: "not_ready"
           - id: 123461
             status: "not_ready"
+    LKELinodeStatus:
+      type: object
+      description: >
+        Status information for a Linode which is a member of a Kubernetes
+        cluster.
+      readOnly: true
+      properties:
+        id:
+          type: number
+          description: >
+            The Linode's ID. When no Linode is currently provisioned for this
+            Node slot, this ID will be null.
+          x-linode-filterable: true
+          example: 123456
+        status:
+          type: string
+          description: >
+            The Linode's status as it pertains to being a Kubernetes node.
+          enum:
+            - "ready"
+            - "not_ready"
+      example:
+        id: 123456
+        status: "ready"
     LongviewClient:
       type: object
       description: >
