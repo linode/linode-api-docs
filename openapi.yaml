@@ -5968,7 +5968,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/clusters
+                 https://api.linode.com/v4beta/lke/clusters
         - lang: CLI
           source: >
             linode-cli lke clusters-list
@@ -6026,7 +6026,7 @@ paths:
                      { "type": "g6-standard-8", "count": 3}
                    ]
                  }'
-                 https://api.linode.com/v4/lke/clusters
+                 https://api.linode.com/v4beta/lke/clusters
         - lang: CLI
           source: >
             linode-cli lke cluster-create \
@@ -6071,7 +6071,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/clusters/12345
+                 https://api.linode.com/v4beta/lke/clusters/12345
         - lang: CLI
           source:
             linode-cli lke cluster-view 12345
@@ -6120,7 +6120,7 @@ paths:
                  -X PUT -d '{
                    "label": "lkecluster54321"
                  }'
-                 https://api.linode.com/v4/lke/clusters/12345
+                 https://api.linode.com/v4beta/lke/clusters/12345
         - lang: CLI
           source: >
             linode-cli lke cluster-update 12345 \
@@ -6169,7 +6169,7 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                  -X DELETE \
-                 https://api.linode.com/v4/lke/clusters/12345
+                 https://api.linode.com/v4beta/lke/clusters/12345
         - lang: CLI
           source: >
             linode-cli lke cluster-delete 12345
@@ -6221,7 +6221,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/clusters/12345/pools
+                 https://api.linode.com/v4beta/lke/clusters/12345/pools
         - lang: CLI
           source: >
             linode-cli lke pools-list 12345
@@ -6269,7 +6269,7 @@ paths:
                    "type": "g6-standard-4",
                    "count": 6
                  }'
-                 https://api.linode.com/v4/lke/clusters/12345/pools
+                 https://api.linode.com/v4beta/lke/clusters/12345/pools
         - lang: CLI
           source: >
             linode-cli lke pool-create 12345 \
@@ -6316,7 +6316,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/clusters/12345/pools/456
+                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
         - lang: CLI
           source: >
             linode-cli lke pool-view 12345 456
@@ -6367,7 +6367,7 @@ paths:
                  -X PUT -d '{
                    "count": 6
                  }'
-                 https://api.linode.com/v4/lke/clusters/12345/pools/456
+                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
         - lang: CLI
           source: >
             linode-cli lke pool-update 12345 456 \
@@ -6410,7 +6410,7 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                  -X DELETE \
-                 https://api.linode.com/v4/lke/clusters/12345/pools/456
+                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
         - lang: CLI
           source: >
             linode-cli lke pool-delete 12345 456
@@ -6457,7 +6457,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/clusters/12345/kubeconfig
+                 https://api.linode.com/v4beta/lke/clusters/12345/kubeconfig
         - lang: CLI
           source: >
             linode-cli lke kubeconfig-view 12345
@@ -6511,7 +6511,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/versions
+                 https://api.linode.com/v4beta/lke/versions
         - lang: CLI
           source: >
             linode-cli lke versions-list
@@ -6554,7 +6554,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4/lke/versions/1.15
+                 https://api.linode.com/v4beta/lke/versions/1.15
         - lang: CLI
           source: >
             linode-cli lke version-view 1.15
