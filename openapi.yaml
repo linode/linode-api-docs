@@ -15014,6 +15014,64 @@ components:
                   status: "ready"
                 - id: 123464
                   status: "not_ready"
+    LKENodePoolRequestBody:
+      type: object
+      description: >
+        Specifies a collection of Linodes which will be members of a Kubernetes
+        cluster.
+      properties:
+        type:
+          type: string
+          description: A Linode Type for all of the nodes in the Node Pool.
+          example: "g6-standard-4"
+        count:
+          type: integer
+          description: The number of nodes in the Node Pool.
+          minimum: 1
+          maximum: 100
+      example:
+        type: "g6-standard-4"
+        count: 6
+    LKENodePool:
+      # Note that LKENodePool inherits all properties of
+      # LKENodePoolRequestBody and then overrides some of the sub-properties
+      allOf:
+        - $ref: '#/components/schemas/LKENodePoolRequestBody'
+      description: >
+        The set of Node Pools which are members of the Kubernetes cluster.
+        Node Pools consist of a Linode type, the number of Linodes to
+        deploy of that type, and additional status information.
+      properties:
+        id:
+          type: integer
+          description: >
+           This Node Pool's unique ID.
+        linodes:
+          type: array
+          description: >
+            Status information for the Linodes which are members of this Node
+            Pool. If a Linode has not been provisioned for a given Node slot,
+            its ID will be returned as null.
+          items:
+            allOf:
+              - $ref: '#/components/schemas/LKELinodeStatus'
+      example:
+        id: 456
+        type: "g6-standard-4"
+        count: 6
+        linodes:
+          - id: 123456
+            status: "ready"
+          - id: 123457
+            status: "ready"
+          - id: 123458
+            status: "ready"
+          - id: 123459
+            status: "ready"
+          - id: 123460
+            status: "not_ready"
+          - id: 123461
+            status: "not_ready"
     LongviewClient:
       type: object
       description: >
