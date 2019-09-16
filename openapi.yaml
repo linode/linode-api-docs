@@ -15096,6 +15096,18 @@ components:
       example:
         id: 123456
         status: "ready"
+    LKEVersion:
+      type: object
+      description: >
+        LKE versions
+      readOnly: true
+      properties:
+        id:
+          type: string
+          description: >
+            A Kubernetes version number available for deployment
+            to a Kubernetes cluster.
+          example: "1.15"
     LongviewClient:
       type: object
       description: >
