@@ -6372,6 +6372,87 @@ paths:
         - lang: CLI
           source: >
             linode-cli lke kubeconfig-view 12345
+  /lke/versions:
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEVersions
+      x-linode-cli-action: versions-list
+      x-linode-grant: read_only
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_only
+      tags:
+        - Linode Kubernetes Engine
+      summary: List Kubernetes Versions
+      description: >
+        List the Kubernetes versions available for deployment
+        to a Kubernetes cluster.
+      responses:
+        '200':
+          description: >
+            Returns a list of Kubernetes versions available for deployment
+            to a Kubernetes cluster.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LKEVersion'
+                      page:
+                        $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                      pages:
+                        $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                      results:
+                        $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+            $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                 https://api.linode.com/v4/lke/versions
+        - lang: CLI
+          source: >
+            linode-cli lke versions-list
+  /lke/versions/{version}:
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEVersion
+      x-linode-cli-action: version-view
+      x-linode-grant: read_only
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_only
+      tags:
+        - Linode Kubernetes Engine
+      summary: View Kubernetes Version
+      description: >
+        View a Kubernetes version available for deployment
+        to a Kubernetes cluster.
+      responses:
+        '200':
+          description: >
+            Returns a Kubernetes version object that is available for deployment
+            to a Kubernetes cluster.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LKEVersion'
+        default:
+            $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                 https://api.linode.com/v4/lke/versions/1.15
+        - lang: CLI
+          source: >
+            linode-cli lke version-view 1.15
   /longview/clients:
     x-linode-cli-command: longview
     get:
