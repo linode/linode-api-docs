@@ -6133,6 +6133,206 @@ paths:
         - lang: CLI
           source: >
             linode-cli lke cluster-delete 12345
+  /lke/clusters/{clusterId}/pools:
+    parameters:
+      - $ref: '#/components/parameters/clusterId'
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEClusterPools
+      x-linode-cli-action: pools-list
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_only
+      tags:
+        - Linode Kubernetes Engine
+      summary: List Node Pools
+      description: >
+        Returns all active Node Pools on a Kubernetes cluster.
+      responses:
+        '200':
+          description: Returns an array of all Pools in this Kubernetes cluster.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LKENodePool'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                 https://api.linode.com/v4/lke/clusters/12345/pools
+        - lang: CLI
+          source: >
+            linode-cli lke pools-list 12345
+    post:
+      operationId: postLKEClusterPools
+      x-linode-cli-action: pool-create
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_write
+      tags:
+        - Linode Kubernetes Engine
+      summary: Create Node Pool
+      description: >
+        Creates a new Node Pool for the designated Kubernetes cluster.
+      requestBody:
+        description: Configuration for the Node Pool
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LKENodePoolRequestBody'
+      responses:
+        '200':
+          description: Node Pool has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LKENodePool'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                 -H "Authorization: Bearer $TOKEN" \
+                 -X POST -d '{
+                   "type": "g6-standard-4",
+                   "count": 6
+                 }'
+                 https://api.linode.com/v4/lke/clusters/12345/pools
+        - lang: CLI
+          source: >
+            linode-cli lke pool-create 12345 \
+              --type g6-standard-4 \
+              --count 6 \
+  /lke/clusters/{clusterId}/pools/{poolId}:
+    parameters:
+      - $ref: '#/components/parameters/clusterId'
+      - name: poolId
+        in: path
+        description: ID of the Pool to look up
+        required: true
+        schema:
+          type: integer
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKENodePool
+      x-linode-cli-action: pool-view
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_only
+      tags:
+        - Linode Kubernetes Engine
+      summary: View Node Pool
+      description: Get a specific Node Pool by ID.
+      responses:
+        '200':
+          description: Returns a the requested Node Pool.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LKENodePool'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                 https://api.linode.com/v4/lke/clusters/12345/pools/456
+        - lang: CLI
+          source: >
+            linode-cli lke pool-view 12345 456
+    put:
+      operationId: putLKENodePool
+      x-linode-cli-action: pool-update
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_write
+      tags:
+        - Linode Kubernetes Engine
+      summary: Update Node Pool
+      description: >
+        Updates a Node Pool. When a Node Pool's count are
+        changed, the nodes in that pool will be replaced in a rolling
+        fashion.
+      requestBody:
+        description: The fields to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                count:
+                  allOf:
+                    - $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+      responses:
+        '200':
+          description: Node Pool was successfully modified.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LKENodePool'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                 -H "Authorization: Bearer $TOKEN" \
+                 -X PUT -d '{
+                   "count": 6
+                 }'
+                 https://api.linode.com/v4/lke/clusters/12345/pools/456
+        - lang: CLI
+          source: >
+            linode-cli lke pool-update 12345 456 \
+              --count 6 \
+    delete:
+      operationId: deleteLKENodePool
+      x-linode-cli-action: pool-delete
+      security:
+        - personalAccessToken: []
+        - oauth:
+            - lke:read_write
+      tags:
+        - Linode Kubernetes Engine
+      summary: Delete Node Pool
+      description: >-
+        Delete a specific Node Pool from a Kubernetes cluster.
+
+        **Deleting a Node Pool is a destructive action and cannot be undone.**
+
+        Deleting a Node Pool will delete all Linodes within that Pool.
+      responses:
+        '200':
+          description: Delete successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                 -X DELETE \
+                 https://api.linode.com/v4/lke/clusters/12345/pools/456
+        - lang: CLI
+          source: >
+            linode-cli lke pool-delete 12345 456
   /longview/clients:
     x-linode-cli-command: longview
     get:
