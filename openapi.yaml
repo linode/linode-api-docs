@@ -5928,11 +5928,11 @@ paths:
       x-linode-cli-action: clusters-list
       x-linode-grant: read_only
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_only
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Kubernetes Clusters
@@ -5965,24 +5965,24 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/clusters
-        - lang: CLI
-          source: >
-            linode-cli lke clusters-list
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters
+      - lang: CLI
+        source: >
+          linode-cli lke clusters-list
     post:
       operationId: createLKECluster
       x-linode-cli-action: cluster-create
       x-linode-charge: true
       x-linode-grant: add_clusters
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create Kubernetes Cluster
@@ -6012,28 +6012,28 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Content-Type: application/json" \
-                 -H "Authorization: Bearer $TOKEN" \
-                 -X POST -d '{
-                   "label": "cluster12345",
-                   "region": "us-east",
-                   "version": "1.14",
-                   "tags": ["ecomm", "blogs"],
-                   "node_pools": [
-                     { "type": "g6-standard-4", "count": 6},
-                     { "type": "g6-standard-8", "count": 3}
-                   ]
-                 }'
-                 https://api.linode.com/v4beta/lke/clusters
-        - lang: CLI
-          source: >
-            linode-cli lke cluster-create \
-              --label cluster12345 \
-              --region us-east \
-              --version 1.14 \
-              # you must run subsequent pool-create commands
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "label": "cluster12345",
+                  "region": "us-east",
+                  "version": "1.14",
+                  "tags": ["ecomm", "blogs"],
+                  "node_pools": [
+                    { "type": "g6-standard-4", "count": 6},
+                    { "type": "g6-standard-8", "count": 3}
+                  ]
+                }'
+                https://api.linode.com/v4beta/lke/clusters
+      - lang: CLI
+        source: >
+          linode-cli lke cluster-create \
+            --label cluster12345 \
+            --region us-east \
+            --version 1.14 \
+            # you must run subsequent pool-create commands
   /lke/clusters/{clusterId}:
     parameters:
       - $ref: '#/components/parameters/clusterId'
@@ -6042,11 +6042,11 @@ paths:
       operationId: getLKECluster
       x-linode-cli-action: cluster-view
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_only
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
       tags:
-         - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes Cluster
@@ -6068,22 +6068,22 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/clusters/12345
-        - lang: CLI
-          source:
-            linode-cli lke cluster-view 12345
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters/12345
+      - lang: CLI
+        source:
+          linode-cli lke cluster-view 12345
     put:
       operationId: putLKECluster
       x-linode-cli-action: cluster-update
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Update Kubernetes Cluster
@@ -6113,27 +6113,27 @@ paths:
               schema:
                 $ref: '#/components/schemas/LKECluster'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Content-Type: application/json" \
-                 -H "Authorization: Bearer $TOKEN" \
-                 -X PUT -d '{
-                   "label": "lkecluster54321"
-                 }'
-                 https://api.linode.com/v4beta/lke/clusters/12345
-        - lang: CLI
-          source: >
-            linode-cli lke cluster-update 12345 \
-              --label lkecluster54321
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                  "label": "lkecluster54321"
+                }'
+                https://api.linode.com/v4beta/lke/clusters/12345
+      - lang: CLI
+        source: >
+          linode-cli lke cluster-update 12345 \
+            --label lkecluster54321
     delete:
       operationId: deleteLKECluster
       x-linode-cli-action: cluster-delete
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Delete Kubernetes Cluster
@@ -6165,14 +6165,14 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 -X DELETE \
-                 https://api.linode.com/v4beta/lke/clusters/12345
-        - lang: CLI
-          source: >
-            linode-cli lke cluster-delete 12345
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4beta/lke/clusters/12345
+      - lang: CLI
+        source: >
+          linode-cli lke cluster-delete 12345
   /lke/clusters/{clusterId}/pools:
     parameters:
       - $ref: '#/components/parameters/clusterId'
@@ -6181,11 +6181,11 @@ paths:
       operationId: getLKEClusterPools
       x-linode-cli-action: pools-list
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_only
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Node Pools
@@ -6218,22 +6218,22 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/clusters/12345/pools
-        - lang: CLI
-          source: >
-            linode-cli lke pools-list 12345
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters/12345/pools
+      - lang: CLI
+        source: >
+          linode-cli lke pools-list 12345
     post:
       operationId: postLKEClusterPools
       x-linode-cli-action: pool-create
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create Node Pool
@@ -6261,20 +6261,20 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Content-Type: application/json" \
-                 -H "Authorization: Bearer $TOKEN" \
-                 -X POST -d '{
-                   "type": "g6-standard-4",
-                   "count": 6
-                 }'
-                 https://api.linode.com/v4beta/lke/clusters/12345/pools
-        - lang: CLI
-          source: >
-            linode-cli lke pool-create 12345 \
-              --type g6-standard-4 \
-              --count 6 \
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "type": "g6-standard-4",
+                  "count": 6
+                }'
+                https://api.linode.com/v4beta/lke/clusters/12345/pools
+      - lang: CLI
+        source: >
+          linode-cli lke pool-create 12345 \
+            --type g6-standard-4 \
+            --count 6 \
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
       - $ref: '#/components/parameters/clusterId'
@@ -6289,11 +6289,11 @@ paths:
       operationId: getLKENodePool
       x-linode-cli-action: pool-view
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_only
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Node Pool
@@ -6313,22 +6313,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/LKENodePool'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
-        - lang: CLI
-          source: >
-            linode-cli lke pool-view 12345 456
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters/12345/pools/456
+      - lang: CLI
+        source: >
+          linode-cli lke pool-view 12345 456
     put:
       operationId: putLKENodePool
       x-linode-cli-action: pool-update
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Update Node Pool
@@ -6360,31 +6360,31 @@ paths:
               schema:
                 $ref: '#/components/schemas/LKENodePool'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Content-Type: application/json" \
-                 -H "Authorization: Bearer $TOKEN" \
-                 -X PUT -d '{
-                   "count": 6
-                 }'
-                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
-        - lang: CLI
-          source: >
-            linode-cli lke pool-update 12345 456 \
-              --count 6 \
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X PUT -d '{
+                  "count": 6
+                }'
+                https://api.linode.com/v4beta/lke/clusters/12345/pools/456
+      - lang: CLI
+        source: >
+          linode-cli lke pool-update 12345 456 \
+            --count 6 \
     delete:
       operationId: deleteLKENodePool
       x-linode-cli-action: pool-delete
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Delete Node Pool
-      description: >
+      description: |
         Delete a specific Node Pool from a Kubernetes cluster.
 
         **Deleting a Node Pool is a destructive action and cannot be undone.**
@@ -6406,14 +6406,14 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 -X DELETE \
-                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
-        - lang: CLI
-          source: >
-            linode-cli lke pool-delete 12345 456
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4beta/lke/clusters/12345/pools/456
+      - lang: CLI
+        source: >
+          linode-cli lke pool-delete 12345 456
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
       - $ref: '#/components/parameters/clusterId'
@@ -6422,11 +6422,11 @@ paths:
       operationId: getLKEClusterKubeconfig
       x-linode-cli-action: kubeconfig-view
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_write
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubeconfig
@@ -6454,13 +6454,13 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/clusters/12345/kubeconfig
-        - lang: CLI
-          source: >
-            linode-cli lke kubeconfig-view 12345
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters/12345/kubeconfig
+      - lang: CLI
+        source: >
+          linode-cli lke kubeconfig-view 12345
   /lke/versions:
     x-linode-cli-command: lke
     get:
@@ -6468,11 +6468,11 @@ paths:
       x-linode-cli-action: versions-list
       x-linode-grant: read_only
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_only
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: List Kubernetes Versions
@@ -6508,13 +6508,13 @@ paths:
         default:
             $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/versions
-        - lang: CLI
-          source: >
-            linode-cli lke versions-list
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/versions
+      - lang: CLI
+        source: >
+          linode-cli lke versions-list
   /lke/versions/{version}:
     parameters:
     - name: version
@@ -6529,11 +6529,11 @@ paths:
       x-linode-cli-action: version-view
       x-linode-grant: read_only
       security:
-        - personalAccessToken: []
-        - oauth:
-          - lke:read_only
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
       tags:
-        - Linode Kubernetes Engine (LKE)
+      - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes Version
@@ -6558,13 +6558,13 @@ paths:
         default:
             $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                 https://api.linode.com/v4beta/lke/versions/1.15
-        - lang: CLI
-          source: >
-            linode-cli lke version-view 1.15
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/versions/1.15
+      - lang: CLI
+        source: >
+          linode-cli lke version-view 1.15
   /longview/clients:
     x-linode-cli-command: longview
     get:
@@ -15326,11 +15326,11 @@ components:
           # Kubernetes does NOT allow underscores in resource names and we are
           # passing this name to Kubernetes. Thus the following pattern:
           pattern: '[a-zA-Z0-9-]{3, 32}'
-          example: "lkecluster12345"
+          example: lkecluster12345
         region:
           type: string
           description: This Kubernetes cluster's location.
-          example: "us-east"
+          example: us-east
         version:
           type: string
           description: >
@@ -15345,28 +15345,28 @@ components:
           items:
             type: string
           example:
-           - "ecomm"
-           - "blogs"
+          - ecomm
+          - blogs
         node_pools:
           type: array
           items:
             allOf:
-              - $ref: '#/components/schemas/LKENodePoolRequestBody'
+            - $ref: '#/components/schemas/LKENodePoolRequestBody'
           example:
-            - type: "g6-standard-4"
-              count: 6
-            - type: "g6-standard-8"
-              count: 3
+          - type: "g6-standard-4"
+            count: 6
+          - type: "g6-standard-8"
+            count: 3
       required:
-        - label
-        - region
-        - node_pools
-        - version
+      - label
+      - region
+      - node_pools
+      - version
     LKECluster:
       # Note that LKECluster inherits all properties of
       # LKEClusterRequestBody and then overrides some of the sub-properties
       allOf:
-        - $ref: '#/components/schemas/LKEClusterRequestBody'
+      - $ref: '#/components/schemas/LKEClusterRequestBody'
       properties:
         id:
           type: integer
@@ -15381,10 +15381,10 @@ components:
             This field may change without direct action from you.
           readOnly: true
           enum:
-            - "provisioning"
-            - "running"
-            - "deleting"
-          example: "running"
+          - provisioning
+          - running
+          - deleting
+          example: running
           x-linode-cli-display: 4
           x-linode-cli-color:
             running: green
@@ -15404,55 +15404,55 @@ components:
         # sub-properties.
         label:
           allOf:
-            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
           x-linode-filterable: true
           x-linode-cli-display: 2
         region:
           allOf:
-            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/region'
+          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/region'
           readOnly: true
           x-linode-filterable: true
           x-linode-cli-display: 3
         version:
           allOf:
-            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/version'
+          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/version'
           x-linode-filterable: true
         tags:
           allOf:
-            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
+          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
           x-linode-filterable: true
         node_pools:
           allOf:
-            - $ref: '#/components/schemas/LKEClusterRequestBody/properties/node_pools'
+          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/node_pools'
           readOnly: true
           items:
             allOf:
-              - $ref: '#/components/schemas/LKENodePool'
+            - $ref: '#/components/schemas/LKENodePool'
           example:
-            - type: "g6-standard-4"
-              count: 6
-              linodes:
-                - id: 123456
-                  status: "ready"
-                - id: 123457
-                  status: "ready"
-                - id: 123458
-                  status: "ready"
-                - id: 123459
-                  status: "ready"
-                - id: 123460
-                  status: "not_ready"
-                - id: 123461
-                  status: "not_ready"
-            - type: "g6-standard-8"
-              count: 3
-              linodes:
-                - id: 123462
-                  status: "ready"
-                - id: 123463
-                  status: "ready"
-                - id: 123464
-                  status: "not_ready"
+          - type: g6-standard-4
+            count: 6
+            linodes:
+              - id: 123456
+                status: ready
+              - id: 123457
+                status: ready
+              - id: 123458
+                status: ready
+              - id: 123459
+                status: ready
+              - id: 123460
+                status: not_ready
+              - id: 123461
+                status: not_ready
+          - type: g6-standard-8
+            count: 3
+            linodes:
+              - id: 123462
+                status: ready
+              - id: 123463
+                status: ready
+              - id: 123464
+                status: not_ready
     LKENodePoolRequestBody:
       type: object
       description: >
@@ -15475,7 +15475,7 @@ components:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
       allOf:
-        - $ref: '#/components/schemas/LKENodePoolRequestBody'
+      - $ref: '#/components/schemas/LKENodePoolRequestBody'
       description: >
         The set of Node Pools which are members of the Kubernetes cluster.
         Node Pools consist of a Linode type, the number of Linodes to
@@ -15493,7 +15493,7 @@ components:
             its ID will be returned as null.
           items:
             allOf:
-              - $ref: '#/components/schemas/LKELinodeStatus'
+            - $ref: '#/components/schemas/LKELinodeStatus'
       example:
         id: 456
         type: "g6-standard-4"
@@ -15530,11 +15530,11 @@ components:
           description: >
             The Linode's status as it pertains to being a Kubernetes node.
           enum:
-            - "ready"
-            - "not_ready"
+          - ready
+          - not_ready
       example:
         id: 123456
-        status: "ready"
+        status: ready
     LKEVersion:
       type: object
       description: >
