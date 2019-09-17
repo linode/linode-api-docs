@@ -6499,12 +6499,12 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/LKEVersion'
-                      page:
-                        $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                      pages:
-                        $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                      results:
-                        $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
             $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
