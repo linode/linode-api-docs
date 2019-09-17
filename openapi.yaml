@@ -7815,9 +7815,9 @@ paths:
       - Networking
       summary: Create Firewall
       description: >
-        Creates a Firewall to filter network traffic. When the Firewall service
-        is added to a specific device, all inbound and outbound ports are blocked by default. Use the `rules` property to
-        create access rules that open network traffic to specific ports.
+        Creates a Firewall to filter network traffic. Use the `rules` property to
+        create inbound and outbound access rules. A single Firewall can be applied to
+        Linode services by specifying them in the `devices` object.
       operationId: createFirewalls
       x-linode-cli-action: create
       security:
@@ -13224,11 +13224,19 @@ components:
           type: object
           description: >
              The inbound and outbound access rules to apply to the Firewall.
+
+              * A minimum of one open inbound port is required. Any inbound
+                port that is not open will be blocked.
+              * Outbound rules are optional. When no outbound ports are open, all outbound
+                ports are allowed. If you open one outbound port or more, all
+                remaining outbound ports will be blocked.
           properties:
               inbound:
                 $ref: '#/components/schemas/FirewallRuleConfig'
               outbound:
                 $ref: '#/components/schemas/FirewallRuleConfig'
+          required:
+            - inbound
         tags:
           x-linode-filterable: true
           description: >
@@ -13243,7 +13251,8 @@ components:
         devices:
           type: object
           description: >
-            The devices that this Firewall will be applied to.
+            The devices that this Firewall will be applied to. Currently, you
+            can only add a Firewall to Linodes.
           properties:
             linodes:
               description: An array of Linode ids
@@ -13257,7 +13266,7 @@ components:
     FirewallRuleConfig:
       type: object
       description: >
-        This Firewall's inbound and outbound access rules. To open traffic on a range of ports
+        This Firewall's access rules. To open traffic on a range of ports
         specify a `start_port` and an `end_port`.
       required:
         - protocol
