@@ -5930,7 +5930,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_only
+          - lke:read_only
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6044,7 +6044,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_only
+          - lke:read_only
       tags:
          - Linode Kubernetes Engine (LKE)
       servers:
@@ -6081,7 +6081,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_write
+          - lke:read_write
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6096,7 +6096,7 @@ paths:
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
       requestBody:
-        description: The fields to update
+        description: The fields to update the Kubernetes cluster.
         content:
           application/json:
             schema:
@@ -6107,7 +6107,7 @@ paths:
                     - $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
       responses:
         '200':
-          description: Returns a single Kubernetes cluster..
+          description: Returns a single Kubernetes cluster.
           content:
             application/json:
               schema:
@@ -6131,13 +6131,13 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_write
+          - lke:read_write
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
       summary: Delete Kubernetes Cluster
-      description: >-
+      description: |
         Deletes a Cluster you have permission to `read_write`.
 
         **Deleting a Cluster is a destructive action and cannot be undone.**
@@ -6183,7 +6183,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_only
+          - lke:read_only
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6231,7 +6231,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_write
+          - lke:read_write
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6291,7 +6291,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_only
+          - lke:read_only
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6326,7 +6326,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_write
+          - lke:read_write
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6378,7 +6378,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_write
+          - lke:read_write
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6470,7 +6470,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_only
+          - lke:read_only
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
@@ -6531,7 +6531,7 @@ paths:
       security:
         - personalAccessToken: []
         - oauth:
-            - lke:read_only
+          - lke:read_only
       tags:
         - Linode Kubernetes Engine (LKE)
       servers:
