@@ -14756,8 +14756,8 @@ components:
           items:
             type: string
           example:
-          - "example tag"
-          - "another example"
+          - example tag
+          - another example
         devices:
           type: object
           description: >
@@ -14814,14 +14814,14 @@ components:
               items:
                 type: string
               example:
-              - "192.0.2.1"
-              - "192.0.2.0/24"
+              - 192.0.2.1
+              - 192.0.2.0/24
             ipv6:
               description: A list of IPv6 addresses or networks.
               type: array
               items:
                 type: string
-              example: "2001:DB8::/32"
+              example: 2001:DB8::/32
     Grant:
       type: object
       description: >
