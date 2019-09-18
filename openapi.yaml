@@ -9201,17 +9201,46 @@ paths:
                 "rules": {
                   "inbound": [
                     {
-                      "type": "TCP",
-                      "protocol": "HTTPS",
-                      "start_port": 443
+                      "protocol": "TCP",
+                      "start_port": 20,
+                      "end_port": 22,
+                      "addresses": {
+                        "ipv4": [
+                          "192.0.2.1",
+                          "192.0.2.0/24"
+                        ],
+                        "ipv6": [
+                          "2001:DB8::/32"
+                        ]
+                      }
                     }
                   ],
-                  "outbound": []
+                  "outbound": [
+                      "protocol": "TCP",
+                      "start_port": 20,
+                      "end_port": 22,
+                      "addresses": {
+                        "ipv4": [
+                          "192.0.2.1",
+                          "192.0.2.0/24"
+                        ],
+                        "ipv6": [
+                          "2001:DB8::/32"
+                        ]
+                      }
+                    }
+                  ]
                 },
                 "devices": {
-                  "linodes": [123, 456],
+                  "linodes": [
+                    123,
+                    456
+                    ]
                 },
-                "tags": []
+                "tags": [
+                  "example tag",
+                  "another example"
+                ]
               }' \
               https://api.linode.com/v4/firewalls
       - lang: CLI
