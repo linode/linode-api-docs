@@ -14900,7 +14900,8 @@ components:
               type: array
               items:
                 type: string
-              example: 2001:DB8::/32
+              example:
+              - 2001:DB8::/32
     Grant:
       type: object
       description: >
