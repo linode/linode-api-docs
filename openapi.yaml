@@ -9217,6 +9217,47 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls create
+  /networking/firewalls/{firewallId}:
+    parameters:
+      - name: firewallId
+        in: path
+        description: ID of the Firewall to look up
+        required: true
+        schema:
+          type: integer
+    x-linode-cli-command: firewalls
+    get:
+      x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: View Firewall
+      operationId: getFirewall
+      x-linode-cli-action: view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_only
+      description: Get a specific Firewall resource by its ID.
+      responses:
+        '200':
+          description: Returns information about this Firewall.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/firewalls/123
+      - lang: CLI
+        source: >
+          linode-cli firewalls view 123
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -14719,6 +14760,15 @@ components:
             When this Firewall was created.
           example: '2018-01-01T00:01:01'
           x-linode-cli-display: 4
+        updated:
+          x-linode-filterable: true
+          type: string
+          format: date-time
+          readOnly: true
+          description: >
+            When this Firewall was last updated.
+          example: '2018-01-02T00:01:01'
+          x-linode-cli-display: 5
         status:
           type: string
           readOnly: true
@@ -14772,7 +14822,7 @@ components:
               example:
                 - 123
                 - 456
-              x-linode-cli-display: 5
+              x-linode-cli-display: 6
     FirewallRuleConfig:
       type: object
       description: >
