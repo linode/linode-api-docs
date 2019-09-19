@@ -6001,14 +6001,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LKEClusterRequestBody'
+              required:
+              - label
+              - region
+              - version
+              - node_pools
+              allOf:
+              - $ref: '#/components/schemas/LKEClusterRequestBody'
+              properties:
+                node_pools:
+                  allOf:
+                  - $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Kubernetes cluster creation has started.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKECluster'
+                allOf:
+                - $ref: '#/components/schemas/LKECluster'
+              properties:
+                node_pools:
+                  allOf:
+                  - $ref: '#/components/schemas/LKENodePool'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -15347,20 +15362,9 @@ components:
           example:
           - ecomm
           - blogs
-        node_pools:
-          type: array
-          items:
-            allOf:
-            - $ref: '#/components/schemas/LKENodePoolRequestBody'
-          example:
-          - type: "g6-standard-4"
-            count: 6
-          - type: "g6-standard-8"
-            count: 3
       required:
       - label
       - region
-      - node_pools
       - version
     LKECluster:
       # Note that LKECluster inherits all properties of
@@ -15421,38 +15425,6 @@ components:
           allOf:
           - $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
           x-linode-filterable: true
-        node_pools:
-          allOf:
-          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/node_pools'
-          readOnly: true
-          items:
-            allOf:
-            - $ref: '#/components/schemas/LKENodePool'
-          example:
-          - type: g6-standard-4
-            count: 6
-            linodes:
-              - id: 123456
-                status: ready
-              - id: 123457
-                status: ready
-              - id: 123458
-                status: ready
-              - id: 123459
-                status: ready
-              - id: 123460
-                status: not_ready
-              - id: 123461
-                status: not_ready
-          - type: g6-standard-8
-            count: 3
-            linodes:
-              - id: 123462
-                status: ready
-              - id: 123463
-                status: ready
-              - id: 123464
-                status: not_ready
     LKENodePoolRequestBody:
       type: object
       description: >
