@@ -3586,9 +3586,13 @@ paths:
                   example: 234
                 overwrite:
                   type: boolean
-                  description: >
+                  description: |
                     If True, deletes all Disks and Configs on the target Linode
                     before restoring.
+
+                    If False, and the Disk image size is larger than the available
+                    space on the Linode, an error message indicating insufficient
+                    space is returned.
                   example: true
       responses:
         '200':
