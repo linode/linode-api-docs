@@ -3558,7 +3558,7 @@ paths:
                     If True, deletes all Disks and Configs on the target Linode
                     before restoring.
 
-                    If False, and the Disk image size is bigger than the available
+                    If False, and the Disk image size is larger than the available
                     space on the Linode, an error message indicating insufficient
                     space is returned.
                   example: true
