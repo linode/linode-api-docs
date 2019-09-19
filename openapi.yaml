@@ -15398,11 +15398,13 @@ components:
           format: date-time
           description: When this Kubernetes cluster was created.
           example: "2019-09-12T21:25:30Z"
+          readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Kubernetes cluster was updated.
           example: "2019-09-13T21:24:16Z"
+          readOnly: true
         # Note that these properties override some of the sub-properties from
         # LKEClusterRequestBody but otherwise inherit all of the original
         # sub-properties.
