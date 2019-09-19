@@ -6020,10 +6020,10 @@ paths:
               schema:
                 allOf:
                 - $ref: '#/components/schemas/LKECluster'
-              properties:
-                node_pools:
-                  allOf:
-                  - $ref: '#/components/schemas/LKENodePool'
+                properties:
+                  node_pools:
+                    allOf:
+                    - $ref: '#/components/schemas/LKENodePool'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
