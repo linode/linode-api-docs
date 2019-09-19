@@ -9151,8 +9151,9 @@ paths:
         required: false
         description: >
           The "marker" for this request, which can be used to paginate through large buckets.
-          This should be the name of the last object on the last page of results. Listing
-          bucket contents *does not* support arbitrary page access.
+          This should be the name of the last object in the last page of results. Listing
+          bucket contents *does not* support arbitrary page access. See the `next_marker`
+          property in the responses section for more details.
         schema:
           type: string
       - name: delimiter
@@ -15917,6 +15918,17 @@ components:
             The size of this object, in bytes. `null` if this object represents
             a prefix.
           example: 123
+        next_marker:
+          type: string
+          description: >
+            Returns the value you should pass to the `marker` query parameter to get the next page of objects.
+            If there is no next page, `null` will be returned.
+          example: bd021c21-e734-4823-97a4-58b41c2cd4c8.892602.184
+          nullable: true
+        is_truncated:
+          type: boolean
+          description: Designates if there is another page of bucket objects.
+          example: true
     ObjectStorageCluster:
       type: object
       description: An Object Storage Cluster
