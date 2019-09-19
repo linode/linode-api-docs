@@ -9151,8 +9151,8 @@ paths:
         required: false
         description: >
           The "marker" for this request, which can be used to paginate through large buckets.
-          This should be the name of the last object in the last page of results. Listing
-          bucket contents *does not* support arbitrary page access. See the `next_marker`
+          Its value should be the value of the `next_marker` property returned with the last page.
+          Listing bucket contents *does not* support arbitrary page access. See the `next_marker`
           property in the responses section for more details.
         schema:
           type: string
