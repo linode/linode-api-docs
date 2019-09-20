@@ -13977,9 +13977,8 @@ components:
           x-linode-filterable: true
           readOnly: true
           description: >
-            This is the location where the Linode was deployed. This cannot be
-            changed without
-            [opening a support ticket](/api/v4/support-tickets/#post).
+            This is the location where the Linode was deployed. A Linode's region can only be changed by
+            initiating a [cross data center migration](/api/v4/linode-instances-linode-id-migrate/#post).
           x-linode-cli-display: 4
         image:
           x-linode-filterable: true
