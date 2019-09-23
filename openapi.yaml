@@ -2253,19 +2253,17 @@ paths:
               required:
               - domain
               - remote_nameserver
-              allOf:
-              - type: object
-                properties:
-                  domain:
-                    type: string
-                    description: >
-                       The domain to import.
-                    example: example.com
-                  remote_nameserver:
-                    type: string
-                    description: >
-                      The remote nameserver that allows zone transfers (AXFR).
-                    example: examplenameserver.com
+              properties:
+                domain:
+                  type: string
+                  description: >
+                      The domain to import.
+                  example: example.com
+                remote_nameserver:
+                  type: string
+                  description: >
+                    The remote nameserver that allows zone transfers (AXFR).
+                  example: examplenameserver.com
       responses:
         '200':
           description: |
@@ -2422,8 +2420,7 @@ paths:
             schema:
               required:
               - type
-              allOf:
-              - $ref: '#/components/schemas/DomainRecord'
+              $ref: '#/components/schemas/DomainRecord'
       responses:
         '200':
           description: Domain Record created successfully.
@@ -2670,7 +2667,6 @@ paths:
               - disk_id
               allOf:
               - $ref: '#/components/schemas/ImagePrivate'
-              - type: object
                 properties:
                   disk_id:
                     type: integer
@@ -3301,13 +3297,11 @@ paths:
                   automatic:
                     type: array
                     items:
-                      allOf:
-                      - $ref: '#/components/schemas/Backup'
-                      - type: object
-                        properties:
-                          type:
-                            type: string
-                            example: automatic
+                      $ref: '#/components/schemas/Backup'
+                      properties:
+                        type:
+                          type: string
+                          example: automatic
                   snapshot:
                     type: object
                     properties:
@@ -4789,9 +4783,7 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/IPAddress'
-              - type: object
+              $ref: '#/components/schemas/IPAddress'
               properties:
                 rdns:
                   type: string
@@ -5164,7 +5156,7 @@ paths:
               - image
               - root_pass
               allOf:
-              - $ref: '#/components/schemas/LinodeRequest'
+              $ref: '#/components/schemas/LinodeRequest'
               properties:
                 image:
                   type: string
@@ -5676,7 +5668,7 @@ paths:
               - label
               - images
               allOf:
-              - $ref: '#/components/schemas/StackScript'
+              $ref: '#/components/schemas/StackScript'
       responses:
         '200':
           description: StackScript successfully created.
@@ -6659,23 +6651,21 @@ paths:
             schema:
               required:
               - password
-              allOf:
-              - type: object
-                properties:
-                  username:
-                    type: string
-                    minLength: 0
-                    maxLength: 5000
-                    description: >
-                      The username to use when accessing the Managed Service.
-                    example: johndoe
-                  password:
-                    type: string
-                    minLength: 0
-                    maxLength: 5000
-                    description: >
-                      The password to use when accessing the Managed Service.
-                    example: s3cur3P@ssw0rd
+              properties:
+                username:
+                  type: string
+                  minLength: 0
+                  maxLength: 5000
+                  description: >
+                    The username to use when accessing the Managed Service.
+                  example: johndoe
+                password:
+                  type: string
+                  minLength: 0
+                  maxLength: 5000
+                  description: >
+                    The password to use when accessing the Managed Service.
+                  example: s3cur3P@ssw0rd
       responses:
         '200':
           description: Credential username and password updated.
@@ -7083,7 +7073,7 @@ paths:
               - address
               - timeout
               allOf:
-              - $ref: '#/components/schemas/ManagedService'
+              $ref: '#/components/schemas/ManagedService'
       responses:
         '200':
           description: Service created.
@@ -7891,18 +7881,17 @@ paths:
                     The ports to configure this NodeBalancer with on creation.
                     Each config must have a unique port and at least one Node.
                   items:
-                      allOf:
-                      - $ref: '#/components/schemas/NodeBalancerConfig'
-                      - type: object
-                        properties:
-                          nodes:
-                            type: array
-                            description: >
-                              The NodeBalancer Nodes that serve this port.  When
-                              creating a NodeBalancer this way, at least one Node
-                              is required per configured port.
-                            items:
-                              $ref: '#/components/schemas/NodeBalancerNode'
+                    allOf:
+                    $ref: '#/components/schemas/NodeBalancerConfig'
+                    properties:
+                      nodes:
+                        type: array
+                        description: >
+                          The NodeBalancer Nodes that serve this port.  When
+                          creating a NodeBalancer this way, at least one Node
+                          is required per configured port.
+                        items:
+                          $ref: '#/components/schemas/NodeBalancerNode'
 
       responses:
         '200':
@@ -8376,22 +8365,21 @@ paths:
                       * Current Nodes (identified by their ID) will be updated.
                       * New Nodes (included without an ID) will be created.
                   items:
-                      allOf:
-                      - $ref: '#/components/schemas/NodeBalancerConfig'
-                      - type: object
-                        properties:
-                          nodes:
-                            type: array
-                            description: >
-                              The NodeBalancer Node(s) that serve this port.
-                              At least one Node is required per configured port.
+                    allOf:
+                    $ref: '#/components/schemas/NodeBalancerConfig'
+                    properties:
+                      nodes:
+                        type: array
+                        description: >
+                          The NodeBalancer Node(s) that serve this port.
+                          At least one Node is required per configured port.
 
-                              Some considerations for Nodes when rebuilding a config:
-                                * Current Nodes excluded from the request body will be deleted.
-                                * Current Nodes (identified by their ID) will be updated.
-                                * New Nodes (included without an ID) will be created.
-                            items:
-                              $ref: '#/components/schemas/NodeBalancerNode'
+                          Some considerations for Nodes when rebuilding a config:
+                            * Current Nodes excluded from the request body will be deleted.
+                            * Current Nodes (identified by their ID) will be updated.
+                            * New Nodes (included without an ID) will be created.
+                        items:
+                          $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8534,11 +8522,10 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/NodeBalancerNode'
               required:
               - label
               - address
+              $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: Node created successfully.
@@ -9442,12 +9429,10 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ObjectStorageKey'
-                - type: object
-                  properties:
-                    secret_key:
-                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                $ref: '#/components/schemas/ObjectStorageKey'
+                properties:
+                  secret_key:
+                    example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11501,22 +11486,18 @@ paths:
         content:
           application/json:
             schema:
-               allOf:
-                - $ref: '#/components/schemas/Volume'
-                - type: object
-                  properties:
-                    region:
-                      allOf:
-                      - $ref: '#/components/schemas/Volume/properties/region'
-                      readOnly: true
-                    size:
-                      allOf:
-                      - $ref: '#/components/schemas/Volume/properties/size'
-                      readOnly: true
-                    linode_id:
-                      allOf:
-                      - $ref: '#/components/schemas/Volume/properties/linode_id'
-                      readOnly: true
+              allOf:
+              - $ref: '#/components/schemas/Volume'
+              properties:
+                region:
+                  $ref: '#/components/schemas/Volume/properties/region'
+                  readOnly: true
+                size:
+                  $ref: '#/components/schemas/Volume/properties/size'
+                  readOnly: true
+                linode_id:
+                  $ref: '#/components/schemas/Volume/properties/linode_id'
+                  readOnly: true
       responses:
         '200':
           description: The updated Volume.
@@ -11610,11 +11591,10 @@ paths:
             schema:
               type: object
               required:
-              - linode
+              - linode_id
               properties:
                 linode_id:
-                  allOf:
-                  - $ref: '#/components/schemas/Volume/properties/linode_id'
+                  $ref: '#/components/schemas/Volume/properties/linode_id'
                   readOnly: false
                 config_id:
                   type: integer
