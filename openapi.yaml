@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.4.0
+  version: 4.5.0
   title: Linode API
   description: |
     # Introduction
@@ -1557,6 +1557,42 @@ paths:
             linode-cli account settings-update \
               --longview_subscription longview-30 \
               --network_helper false
+  /account/settings/managed-enable:
+    x-linode-cli-command: account
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Account
+      summary: Enable Linode Managed
+      description: >
+        Enables Linode Managed for the entire account and sends a welcome email to the account's associated
+        email address. Linode Managed can monitor any service or software stack reachable over TCP or HTTP. See
+        our [Linode Managed guide](https://linode.com/docs/platform/linode-managed/)
+        to learn more.
+      operationId: enableAccountManged
+      x-linode-cli-action: enable-managed
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: Managed services enabled for account.
+          content:
+            application/json:
+             schema:
+               type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://api.linode.com/v4/account/settings/managed-enable
+        - lang: CLI
+          source: >
+            linode-cli account enable-managed
   /account/transfer:
     x-linode-cli-command: account
     get:
@@ -3550,9 +3586,13 @@ paths:
                   example: 234
                 overwrite:
                   type: boolean
-                  description: >
+                  description: |
                     If True, deletes all Disks and Configs on the target Linode
                     before restoring.
+
+                    If False, and the Disk image size is larger than the available
+                    space on the Linode, an error message indicating insufficient
+                    space is returned.
                   example: true
       responses:
         '200':
@@ -9115,8 +9155,9 @@ paths:
         required: false
         description: >
           The "marker" for this request, which can be used to paginate through large buckets.
-          This should be the name of the last object on the last page of results. Listing
-          bucket contents *does not* support arbitrary page access.
+          Its value should be the value of the `next_marker` property returned with the last page.
+          Listing bucket contents *does not* support arbitrary page access. See the `next_marker`
+          property in the responses section for more details.
         schema:
           type: string
       - name: delimiter
@@ -11236,10 +11277,14 @@ paths:
                           example: 'linode'
                         data:
                           oneOf:
-                          - $ref: '#/components/schemas/Linode'
-                          - $ref: '#/components/schemas/Domain'
-                          - $ref: '#/components/schemas/Volume'
-                          - $ref: '#/components/schemas/NodeBalancer'
+                            - x-linode-ref-name: "linode"
+                              $ref: '#/components/schemas/Linode'
+                            - x-linode-ref-name: "domain"
+                              $ref: '#/components/schemas/Domain'
+                            - x-linode-ref-name: "volume"
+                              $ref: '#/components/schemas/Volume'
+                            - x-linode-ref-name: "nodeBalancer"
+                              $ref: '#/components/schemas/NodeBalancer'
                           discriminator:
                             propertyName: type
                   page:
@@ -13936,9 +13981,8 @@ components:
           x-linode-filterable: true
           readOnly: true
           description: >
-            This is the location where the Linode was deployed. This cannot be
-            changed without
-            [opening a support ticket](/api/v4/support-tickets/#post).
+            This is the location where the Linode was deployed. A Linode's region can only be changed by
+            initiating a [cross data center migration](/api/v4/linode-instances-linode-id-migrate/#post).
           x-linode-cli-display: 4
         image:
           x-linode-filterable: true
@@ -15881,6 +15925,17 @@ components:
             The size of this object, in bytes. `null` if this object represents
             a prefix.
           example: 123
+        next_marker:
+          type: string
+          description: >
+            Returns the value you should pass to the `marker` query parameter to get the next page of objects.
+            If there is no next page, `null` will be returned.
+          example: bd021c21-e734-4823-97a4-58b41c2cd4c8.892602.184
+          nullable: true
+        is_truncated:
+          type: boolean
+          description: Designates if there is another page of bucket objects.
+          example: true
     ObjectStorageCluster:
       type: object
       description: An Object Storage Cluster
