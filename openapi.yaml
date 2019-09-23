@@ -11272,13 +11272,13 @@ paths:
                           example: 'linode'
                         data:
                           oneOf:
-                            - refName: "linode"
+                            - x-linode-ref-name: "linode"
                               $ref: '#/components/schemas/Linode'
-                            - refName: "domain"
+                            - x-linode-ref-name: "domain"
                               $ref: '#/components/schemas/Domain'
-                            - refName: "volume"
+                            - x-linode-ref-name: "volume"
                               $ref: '#/components/schemas/Volume'
-                            - refName: "nodeBalancer"
+                            - x-linode-ref-name: "nodeBalancer"
                               $ref: '#/components/schemas/NodeBalancer'
                           discriminator:
                             propertyName: type
