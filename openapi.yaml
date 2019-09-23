@@ -11272,10 +11272,14 @@ paths:
                           example: 'linode'
                         data:
                           oneOf:
-                          - $ref: '#/components/schemas/Linode'
-                          - $ref: '#/components/schemas/Domain'
-                          - $ref: '#/components/schemas/Volume'
-                          - $ref: '#/components/schemas/NodeBalancer'
+                            - refName: "linode"
+                              $ref: '#/components/schemas/Linode'
+                            - refName: "domain"
+                              $ref: '#/components/schemas/Domain'
+                            - refName: "volume"
+                              $ref: '#/components/schemas/Volume'
+                            - refName: "nodeBalancer"
+                              $ref: '#/components/schemas/NodeBalancer'
                           discriminator:
                             propertyName: type
                   page:
