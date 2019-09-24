@@ -958,16 +958,8 @@ paths:
               - label
               - redirect_uri
               allOf:
-              - type: object
-                properties:
-                  public:
-                    type: boolean
-                    description: Whether to create a public or private client.
-                    example: false
-                    readOnly: false
               - $ref: '#/components/schemas/OAuthClient'
-              - type: object
-                properties:
+              - properties:
                   public:
                     type: boolean
                     description: Whether to create a public or private client.
@@ -5156,8 +5148,8 @@ paths:
               - image
               - root_pass
               allOf:
-              $ref: '#/components/schemas/LinodeRequest'
-              properties:
+              - $ref: '#/components/schemas/LinodeRequest'
+              - properties:
                 image:
                   type: string
                 root_pass:
@@ -6493,8 +6485,7 @@ paths:
               - password
               allOf:
               - $ref: '#/components/schemas/ManagedCredential'
-              - type: object
-                properties:
+              - properties:
                   username:
                     type: string
                     minLength: 0
@@ -8366,20 +8357,22 @@ paths:
                       * New Nodes (included without an ID) will be created.
                   items:
                     allOf:
-                    $ref: '#/components/schemas/NodeBalancerConfig'
-                    properties:
-                      nodes:
-                        type: array
-                        description: >
-                          The NodeBalancer Node(s) that serve this port.
-                          At least one Node is required per configured port.
+                    - $ref: '#/components/schemas/NodeBalancerConfig'
+                    - properties:
+                        nodes:
+                          type: array
+                          description: >
+                            The NodeBalancer Node(s) that serve this port.
+                            At least one Node is required per configured port.
 
-                          Some considerations for Nodes when rebuilding a config:
-                            * Current Nodes excluded from the request body will be deleted.
-                            * Current Nodes (identified by their ID) will be updated.
-                            * New Nodes (included without an ID) will be created.
-                        items:
-                          $ref: '#/components/schemas/NodeBalancerNode'
+                            Some considerations for Nodes when rebuilding a config:
+                              * Current Nodes excluded from the request body will be deleted.
+                              * Current Nodes (identified by their ID) will be updated.
+                              * New Nodes (included without an ID) will be created.
+                          items:
+                            type: object
+                            allOf:
+                            $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -9429,9 +9422,11 @@ paths:
           content:
             application/json:
               schema:
+                allOf:
                 $ref: '#/components/schemas/ObjectStorageKey'
                 properties:
                   secret_key:
+                    type: string
                     example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
