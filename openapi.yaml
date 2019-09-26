@@ -7374,6 +7374,83 @@ paths:
       - lang: CLI
         source: >
           linode-cli managed service-enable 9994
+  /managed/stats:
+    description: |
+      A collection of managed stats.
+    x-linode-cli-command: managed
+    get:
+      x-linode-grant: unrestricted only
+      tags:
+      - Managed
+      summary: List Managed Stats
+      description: |
+        Returns a list of Managed Stats on your Account. These
+        stats reflect the last 24 hours of combined usage for the following data:
+
+
+        * cpu
+        * disk
+        * swap
+        * network in
+        * network out
+      operationId: getManagedStats
+      x-linode-cli-action: stats-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: A list of Managed Stats from the last 24 hours.
+          content:
+            application/json:
+              schema:
+                properties:
+                  stats_data:
+                    type: object
+                    properties:
+                      errorarray:
+                        type: array
+                        items:
+                          type: string
+                      data:
+                        type: object
+                        properties:
+                          cpu:
+                            type: array
+                            description: CPU usage stats from the last 24 hours.
+                            items:
+                              $ref: '#/components/schemas/StatsData'
+                          disk:
+                            type: array
+                            description: Disk usage stats from the last 24 hours.
+                            items:
+                              $ref: '#/components/schemas/StatsData'
+                          swap:
+                            type: array
+                            description: Swap usage stats from the last 24 hours.
+                            items:
+                              $ref: '#/components/schemas/StatsData'
+                          net_in:
+                            type: array
+                            description: Inbound network traffic stats from the last 24 hours.
+                            items:
+                              $ref: '#/components/schemas/StatsData'
+                          net_out:
+                            type: array
+                            description: Outbound network traffic stats from the last 24 hours.
+                            items:
+                              $ref: '#/components/schemas/StatsData'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/stats
+      - lang: CLI
+        source: >
+          linode-cli managed stats-list
   /networking/ips:
     description: >
       A collection of IP Addresses on your Account. Excludes private addresses.
@@ -16461,6 +16538,23 @@ components:
             label: Enter the DB password
             name: DB_PASSWORD
             example: hunter2
+    StatsData:
+      type: object
+      descrption: >
+        A stat data point.
+      properties:
+        y:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+            example: 29.94
+        x:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+          example: 11513761600000
     SupportTicket:
       type: object
       description: >
