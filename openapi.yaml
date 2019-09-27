@@ -2271,6 +2271,7 @@ paths:
         Imports a domain zone from a remote nameserver.
 
         Your nameserver must allow zone transfers (AXFR) from the following IPs:
+
           - 96.126.114.97
           - 96.126.114.98
           - 2600:3c00::5e
