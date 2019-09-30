@@ -7405,42 +7405,17 @@ paths:
           content:
             application/json:
               schema:
+                type: object
                 properties:
                   stats_data:
                     type: object
-                    properties:
-                      errorarray:
-                        type: array
-                        items:
-                          type: string
-                      data:
-                        type: object
-                        properties:
-                          cpu:
-                            type: array
-                            description: CPU usage stats from the last 24 hours.
-                            items:
-                              $ref: '#/components/schemas/StatsData'
-                          disk:
-                            type: array
-                            description: Disk usage stats from the last 24 hours.
-                            items:
-                              $ref: '#/components/schemas/StatsData'
-                          swap:
-                            type: array
-                            description: Swap usage stats from the last 24 hours.
-                            items:
-                              $ref: '#/components/schemas/StatsData'
-                          net_in:
-                            type: array
-                            description: Inbound network traffic stats from the last 24 hours.
-                            items:
-                              $ref: '#/components/schemas/StatsData'
-                          net_out:
-                            type: array
-                            description: Outbound network traffic stats from the last 24 hours.
-                            items:
-                              $ref: '#/components/schemas/StatsData'
+                    oneOf:
+                      - x-linode-ref-name: "Stats Available"
+                        $ref: '#/components/schemas/StatsDataAvailable'
+                      - x-linode-ref-name: "Stats Unavailable"
+                        $ref: '#/components/schemas/StatsDataUnavailable'
+                    discriminator:
+                      propertyName: x-linode-ref-name
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -16538,6 +16513,44 @@ components:
             label: Enter the DB password
             name: DB_PASSWORD
             example: hunter2
+    StatsDataAvailable:
+      type: object
+      description: >
+        A collection of graph data returned for managed stats.
+      properties:
+        cpu:
+          type: array
+          description: CPU usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        disk:
+          type: array
+          description: Disk usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        swap:
+          type: array
+          description: Swap usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        net_in:
+          type: array
+          description: Inbound network traffic stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        net_out:
+          type: array
+          description: Outbound network traffic stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+    StatsDataUnavailable:
+      type: array
+      readOnly: true
+      description: >
+        An array of error messages if managed stats are unavaliable.
+      items:
+        type: string
+        example: Graphs are not yet available.
     StatsData:
       type: object
       description: >
