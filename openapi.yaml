@@ -16540,7 +16540,7 @@ components:
             example: hunter2
     StatsData:
       type: object
-      descrption: >
+      description: >
         A stat data point.
       properties:
         y:
