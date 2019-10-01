@@ -7809,6 +7809,47 @@ paths:
           linode-cli networking v6-ranges
   /networking/firewalls:
     x-linode-cli-command: firewalls
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: List Firewalls
+      description: |
+        Returns a paginated list of your Firewalls.
+      operationId: getFirewalls
+      x-linode-cli-action: firewalls-list
+      responses:
+        '200':
+          description: Returns an array of Firewalls.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Firewall'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4beta/networking/firewalls
+      - lang: CLI
+        source: >
+          linode-cli networking firewalls-list
     post:
       x-linode-grant: read_write
       servers:
