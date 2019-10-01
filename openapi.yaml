@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.4.0
+  version: 4.5.0
   title: Linode API
   description: |
     # Introduction
@@ -11277,10 +11277,14 @@ paths:
                           example: 'linode'
                         data:
                           oneOf:
-                          - $ref: '#/components/schemas/Linode'
-                          - $ref: '#/components/schemas/Domain'
-                          - $ref: '#/components/schemas/Volume'
-                          - $ref: '#/components/schemas/NodeBalancer'
+                            - x-linode-ref-name: "linode"
+                              $ref: '#/components/schemas/Linode'
+                            - x-linode-ref-name: "domain"
+                              $ref: '#/components/schemas/Domain'
+                            - x-linode-ref-name: "volume"
+                              $ref: '#/components/schemas/Volume'
+                            - x-linode-ref-name: "nodeBalancer"
+                              $ref: '#/components/schemas/NodeBalancer'
                           discriminator:
                             propertyName: type
                   page:
