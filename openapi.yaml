@@ -7908,7 +7908,8 @@ paths:
     parameters:
       - name: firewallId
         in: path
-        description: ID of the Firewall to look up
+        description: >
+          ID of the Firewall to interact with.
         required: true
         schema:
           type: integer
@@ -7926,7 +7927,14 @@ paths:
       - personalAccessToken: []
       - oauth:
         - firewall:read_only
-      description: Get a specific Firewall resource by its ID.
+      description: >
+        Get a specific Firewall resource by its ID.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
       responses:
         '200':
           description: Returns information about this Firewall.
@@ -7945,6 +7953,41 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls view 123
+    delete:
+      x-linode-grant: read_write
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - networking
+      summary: Delete Firewall
+      operationId: deleteFirewall
+      x-linode-cli-action: delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_write
+      description: >
+        Delete a Firewall resource by its ID.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      responses:
+        '200':
+          description: Delete Successful.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -X DELETE \
+              https://api.linode.com/v4beta/firewalls/123
+      - lang: CLI
+        source: >
+          linode-cli firewalls delete 123
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
