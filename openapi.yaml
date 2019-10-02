@@ -7384,8 +7384,8 @@ paths:
       - Managed
       summary: List Managed Stats
       description: |
-        Returns a list of Managed Stats on your Account. These
-        stats reflect the last 24 hours of combined usage for the following data:
+        Returns a list of Managed Stats on your Account in the form of y and x graph data points.
+        These stats reflect the last 24 hours of combined usage for the following data:
 
 
         * cpu
@@ -7407,7 +7407,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  stats_data:
+                  data:
                     type: object
                     oneOf:
                       - x-linode-ref-name: "Stats Available"
