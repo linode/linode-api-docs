@@ -7384,8 +7384,10 @@ paths:
       - Managed
       summary: List Managed Stats
       description: |
-        Returns a list of Managed Stats on your Account in the form of y and x graph data points.
-        These stats reflect the last 24 hours of combined usage for the following data:
+        Returns a list of Managed Stats on your Account in the form of x and y data points.
+        You can use these data points to plot your own graph visualizations. These stats
+        reflect the last 24 hours of combined usage across all managed Linodes on your account
+        giving you a high-level snapshot of data for the following:
 
 
         * cpu
@@ -16556,18 +16558,18 @@ components:
       description: >
         A stat data point.
       properties:
-        y:
-          type: integer
-          readOnly: true
-          description: >
-            A stats graph data point.
-            example: 29.94
         x:
           type: integer
           readOnly: true
           description: >
             A stats graph data point.
           example: 11513761600000
+        y:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+          example: 29.94
     SupportTicket:
       type: object
       description: >
