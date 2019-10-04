@@ -4954,11 +4954,10 @@ paths:
         a DC migration until it has completed.
 
 
-        **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
-        If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
-        the migration will not initiate. NGN data centers include Toronto and Mumbai. If a Linode cannot be
-        migrated because of an incompatibility, the user will be prompted to select a different data center
-        or contact support.
+        **Note:** Next Generation Network (NGN) datacenters do not support IPv6 `/116` pools or IP Failover.
+        If you have these features enabled on your Linode and attempt to migrate to an NGN datacenter,
+        the migration will not initiate. If a Linode cannot be migrated because of an incompatibility,
+        you will be prompted to select a different data center or contact support.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
