@@ -7336,6 +7336,60 @@ paths:
       - lang: CLI
         source: >
           linode-cli managed service-enable 9994
+  /managed/stats:
+    description: |
+      A collection of managed stats.
+    x-linode-cli-command: managed
+    get:
+      x-linode-grant: unrestricted only
+      tags:
+      - Managed
+      summary: List Managed Stats
+      description: |
+        Returns a list of Managed Stats on your Account in the form of x and y data points.
+        You can use these data points to plot your own graph visualizations. These stats
+        reflect the last 24 hours of combined usage across all managed Linodes on your account
+        giving you a high-level snapshot of data for the following:
+
+
+        * cpu
+        * disk
+        * swap
+        * network in
+        * network out
+      operationId: getManagedStats
+      x-linode-cli-action: stats-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: A list of Managed Stats from the last 24 hours.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    oneOf:
+                      - x-linode-ref-name: "Stats Available"
+                        $ref: '#/components/schemas/StatsDataAvailable'
+                      - x-linode-ref-name: "Stats Unavailable"
+                        $ref: '#/components/schemas/StatsDataUnavailable'
+                    discriminator:
+                      propertyName: x-linode-ref-name
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/stats
+      - lang: CLI
+        source: >
+          linode-cli managed stats-list
   /networking/ips:
     description: >
       A collection of IP Addresses on your Account. Excludes private addresses.
@@ -16403,6 +16457,61 @@ components:
             label: Enter the DB password
             name: DB_PASSWORD
             example: hunter2
+    StatsDataAvailable:
+      type: object
+      description: >
+        A collection of graph data returned for managed stats.
+      properties:
+        cpu:
+          type: array
+          description: CPU usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        disk:
+          type: array
+          description: Disk usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        swap:
+          type: array
+          description: Swap usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        net_in:
+          type: array
+          description: Inbound network traffic stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        net_out:
+          type: array
+          description: Outbound network traffic stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+    StatsDataUnavailable:
+      type: array
+      readOnly: true
+      description: >
+        An array of error messages if managed stats are unavaliable.
+      items:
+        type: string
+        example: Graphs are not yet available.
+    StatsData:
+      type: object
+      description: >
+        A stat data point.
+      properties:
+        x:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+          example: 11513761600000
+        y:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+          example: 29.94
     SupportTicket:
       type: object
       description: >
