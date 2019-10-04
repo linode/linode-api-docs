@@ -9242,7 +9242,7 @@ paths:
                   "another example"
                 ]
               }' \
-              https://api.linode.com/v4/firewalls
+              https://api.linode.com/v4beta/firewalls
       - lang: CLI
         source: >
           linode-cli firewalls create
@@ -9295,6 +9295,58 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls view 123
+    put:
+      x-linode-grant: read_write
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: Update Firewall
+      description: >
+        Updates information for a Firewall. A Firewall's Devices cannot be manipulated by
+        this endpoint. A Firewall's status can be set by this endpoint, but it cannot be
+        set to `deleted`. Instead, use the Delete Firewall endpoint to delete a Firewall.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      operationId: updateFirewall
+      x-linode-cli-action: update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_write
+      requestBody:
+        description: The Firewall information to update.
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/Firewall'
+      responses:
+        '200':
+          description: Firewall updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "status": "disabled",
+              }' \
+              https://api.linode.com/v4beta/firewalls/123
+      - lang: CLI
+        source: >
+          linode-cli firewalls update 123 \
+            --status disabled
     delete:
       x-linode-grant: read_write
       servers:
@@ -14887,7 +14939,7 @@ components:
             can only add a Firewall to Linodes.
           properties:
             linodes:
-              description: An array of Linode ids
+              description: An array of Linode IDs
               type: array
               items:
                 type: integer
