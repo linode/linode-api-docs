@@ -8917,7 +8917,7 @@ paths:
                 "label": "example-bucket",
                 "cluster": "us-east-1",
                 "cors_enabled": true,
-                "acl": "private",
+                "acl": "private"
               }' \
             https://api.linode.com/v4beta/object-storage/buckets/
   /object-storage/buckets/{clusterId}/{bucket}:
