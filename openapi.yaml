@@ -7900,7 +7900,7 @@ paths:
                   "another example"
                 ]
               }' \
-              https://api.linode.com/v4beta/firewalls
+              https://api.linode.com/v4beta/networking/firewalls
       - lang: CLI
         source: >
           linode-cli firewalls create
@@ -7949,7 +7949,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/firewalls/123
+              https://api.linode.com/v4beta/networking/firewalls/123
       - lang: CLI
         source: >
           linode-cli firewalls view 123
@@ -8000,7 +8000,7 @@ paths:
               -X PUT -d '{
                 "status": "disabled",
               }' \
-              https://api.linode.com/v4beta/firewalls/123
+              https://api.linode.com/v4beta/networking/firewalls/123
       - lang: CLI
         source: >
           linode-cli firewalls update 123 \
@@ -8036,7 +8036,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -X DELETE \
-              https://api.linode.com/v4beta/firewalls/123
+              https://api.linode.com/v4beta/networking/firewalls/123
       - lang: CLI
         source: >
           linode-cli firewalls delete 123
