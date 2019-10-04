@@ -8919,7 +8919,7 @@ paths:
                 "label": "example-bucket",
                 "cluster": "us-east-1",
                 "cors_enabled": true,
-                "acl": "private",
+                "acl": "private"
               }' \
             https://api.linode.com/v4beta/object-storage/buckets/
   /object-storage/buckets/{clusterId}/{bucket}:
@@ -9002,18 +9002,6 @@ paths:
       - personalAccessToken: []
       - oauth:
         - object_storage:read_write
-      parameters:
-      - name: force
-        in: query
-        required: false
-        description: >
-          If false, this operation will fail if the bucket is not empty. If true, this operation
-          will attempt to remove the bucket and its contents; very large buckets
-          may still return an error and require object deletion manually or through
-          object lifecycle management. See [the S3 API docs](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) for details.
-        schema:
-          type: integer
-          default: false
       responses:
         '200':
           description: Bucket deleted successfully.
@@ -15881,18 +15869,6 @@ components:
             The hostname where this bucket can be accessed. This hostname
             can be accessed through a browser if the bucket is made public.
           example: example-bucket.us-east-1.linodeobjects.com
-        region:
-          type: string
-          description: The ID of the Region this bucket exists in.
-          example: us-east
-        size:
-          type: integer
-          description: The size of this bucket, in bytes.
-          example: 123
-        objects:
-          type: integer
-          description: The number of objects in this bucket.
-          example: 4
     ObjectStorageObject:
       type: object
       description: >
