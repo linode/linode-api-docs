@@ -13072,7 +13072,7 @@ components:
           readOnly: true
           description: |
             Detailed information about the Event's secondary entity, which provides additional information
-            for events such as, but not limited to, `linode_boot`, `linode_create`, and `linode_clone` Event actions.
+            for events such as, but not limited to, `linode_boot`, `linode_reboot`, `linode_create`, and `linode_clone` Event actions.
           x-linode-cli-display: 5
           properties:
             id:
