@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.5.0
+  version: 4.6.0
   title: Linode API
   description: |
     # Introduction
@@ -182,9 +182,7 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-      -H 'X-Filter: { \
-        "class": "standard"
-      }'
+    -H 'X-Filter: { "class": "standard" }'
     ```
 
     The filter object's keys are the keys of the object you're filtering,
@@ -193,11 +191,8 @@ info:
     Types that offer one vcpu:
 
     ```Shell
-     curl "https://api.linode.com/v4/linode/types" \
-      -H 'X-Filter: { \
-        "class": "standard",
-        "vcpus": 1
-      }'
+    curl "https://api.linode.com/v4/linode/types" \
+    -H 'X-Filter: { "class": "standard", "vcpus": 1 }'
     ```
 
     In the above example, both filters are combined with an "and" operation.
@@ -206,12 +201,7 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-      -H 'X-Filter: {
-        "+or": [
-          { "vcpus": 1 },
-          { "class": "standard" }
-        ]
-      }'
+    -H 'X-Filter: { "+or": [ { "vcpus": 1 }, { "class": "standard" } ] }'
     ```
 
     Each filter in the `+or` array is its own filter object, and all conditions
@@ -239,11 +229,7 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-      -H 'X-Filter: {
-        "memory": {
-          "+gte": 61440
-        }
-      }'
+    -H 'X-Filter: { "memory": { "+gte": 61440 } }'
     ```
 
     You can combine and nest operators to construct arbitrarily-complex queries.
@@ -253,34 +239,7 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-      -H 'X-Filter: {
-        "+or": [
-          {
-            "+or": [
-              {
-                "class": "standard"
-              },
-              {
-                "class": "highmem"
-              }
-            ]
-          },
-          {
-            "+and": [
-              {
-                "vcpus": {
-                  "+gte": 12
-                }
-              },
-              {
-                "vcpus": {
-                  "+lte": 20
-                }
-              }
-            ]
-          }
-        ]
-      }'
+    -H 'X-Filter: { "+or": [ { "+or": [ { "class": "standard" }, { "class": "highmem" } ] }, { "+and": [ { "vcpus": { "+gte": 12 } }, { "vcpus": { "+lte": 20 } } ] } ] }'
     ```
 
     # CLI (Command Line Interface)
@@ -2271,6 +2230,7 @@ paths:
         Imports a domain zone from a remote nameserver.
 
         Your nameserver must allow zone transfers (AXFR) from the following IPs:
+
           - 96.126.114.97
           - 96.126.114.98
           - 2600:3c00::5e
@@ -4996,7 +4956,8 @@ paths:
 
         **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
         If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
-        the migration will not initiate. NGN data centers include Toronto and Mumbai.
+        the migration will not initiate. If a Linode cannot be migrated because of an incompatibility,
+        you will be prompted to select a different data center or contact support.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
@@ -7374,6 +7335,60 @@ paths:
       - lang: CLI
         source: >
           linode-cli managed service-enable 9994
+  /managed/stats:
+    description: |
+      A collection of managed stats.
+    x-linode-cli-command: managed
+    get:
+      x-linode-grant: unrestricted only
+      tags:
+      - Managed
+      summary: List Managed Stats
+      description: |
+        Returns a list of Managed Stats on your Account in the form of x and y data points.
+        You can use these data points to plot your own graph visualizations. These stats
+        reflect the last 24 hours of combined usage across all managed Linodes on your account
+        giving you a high-level snapshot of data for the following:
+
+
+        * cpu
+        * disk
+        * swap
+        * network in
+        * network out
+      operationId: getManagedStats
+      x-linode-cli-action: stats-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: A list of Managed Stats from the last 24 hours.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    oneOf:
+                      - x-linode-ref-name: "Stats Available"
+                        $ref: '#/components/schemas/StatsDataAvailable'
+                      - x-linode-ref-name: "Stats Unavailable"
+                        $ref: '#/components/schemas/StatsDataUnavailable'
+                    discriminator:
+                      propertyName: x-linode-ref-name
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/managed/stats
+      - lang: CLI
+        source: >
+          linode-cli managed stats-list
   /networking/ips:
     description: >
       A collection of IP Addresses on your Account. Excludes private addresses.
@@ -8916,7 +8931,7 @@ paths:
                 "label": "example-bucket",
                 "cluster": "us-east-1",
                 "cors_enabled": true,
-                "acl": "private",
+                "acl": "private"
               }' \
             https://api.linode.com/v4beta/object-storage/buckets/
   /object-storage/buckets/{clusterId}/{bucket}:
@@ -8999,18 +9014,6 @@ paths:
       - personalAccessToken: []
       - oauth:
         - object_storage:read_write
-      parameters:
-      - name: force
-        in: query
-        required: false
-        description: >
-          If false, this operation will fail if the bucket is not empty. If true, this operation
-          will attempt to remove the bucket and its contents; very large buckets
-          may still return an error and require object deletion manually or through
-          object lifecycle management. See [the S3 API docs](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) for details.
-        schema:
-          type: integer
-          default: false
       responses:
         '200':
           description: Bucket deleted successfully.
@@ -13069,7 +13072,7 @@ components:
           readOnly: true
           description: |
             Detailed information about the Event's secondary entity, which provides additional information
-            for events such as, but not limited to, `linode_boot`, `linode_create`, and `linode_clone` Event actions.
+            for events such as, but not limited to, `linode_boot`, `linode_reboot`, `linode_create`, and `linode_clone` Event actions.
           x-linode-cli-display: 5
           properties:
             id:
@@ -15878,18 +15881,6 @@ components:
             The hostname where this bucket can be accessed. This hostname
             can be accessed through a browser if the bucket is made public.
           example: example-bucket.us-east-1.linodeobjects.com
-        region:
-          type: string
-          description: The ID of the Region this bucket exists in.
-          example: us-east
-        size:
-          type: integer
-          description: The size of this bucket, in bytes.
-          example: 123
-        objects:
-          type: integer
-          description: The number of objects in this bucket.
-          example: 4
     ObjectStorageObject:
       type: object
       description: >
@@ -16465,6 +16456,61 @@ components:
             label: Enter the DB password
             name: DB_PASSWORD
             example: hunter2
+    StatsDataAvailable:
+      type: object
+      description: >
+        A collection of graph data returned for managed stats.
+      properties:
+        cpu:
+          type: array
+          description: CPU usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        disk:
+          type: array
+          description: Disk usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        swap:
+          type: array
+          description: Swap usage stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        net_in:
+          type: array
+          description: Inbound network traffic stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+        net_out:
+          type: array
+          description: Outbound network traffic stats from the last 24 hours.
+          items:
+            $ref: '#/components/schemas/StatsData'
+    StatsDataUnavailable:
+      type: array
+      readOnly: true
+      description: >
+        An array of error messages if managed stats are unavaliable.
+      items:
+        type: string
+        example: Graphs are not yet available.
+    StatsData:
+      type: object
+      description: >
+        A stat data point.
+      properties:
+        x:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+          example: 11513761600000
+        y:
+          type: integer
+          readOnly: true
+          description: >
+            A stats graph data point.
+          example: 29.94
     SupportTicket:
       type: object
       description: >
