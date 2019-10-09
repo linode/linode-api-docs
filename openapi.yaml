@@ -11478,12 +11478,11 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/Volume'
+              - type: object
               properties:
                 size:
-                  $ref: '#/components/schemas/Volume/properties/size'
                   readOnly: true
                 linode_id:
-                  $ref: '#/components/schemas/Volume/properties/linode_id'
                   readOnly: true
       responses:
         '200':
