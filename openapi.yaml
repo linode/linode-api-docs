@@ -2412,7 +2412,8 @@ paths:
             schema:
               required:
               - type
-              $ref: '#/components/schemas/DomainRecord'
+              allOf:
+              - $ref: '#/components/schemas/DomainRecord'
       responses:
         '200':
           description: Domain Record created successfully.
@@ -3289,11 +3290,12 @@ paths:
                   automatic:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Backup'
-                      properties:
-                        type:
-                          type: string
-                          example: automatic
+                      allOf:
+                      - $ref: '#/components/schemas/Backup'
+                      - properties:
+                          type:
+                            type: string
+                            example: automatic
                   snapshot:
                     type: object
                     properties:
