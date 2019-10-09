@@ -4777,11 +4777,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IPAddress'
-              properties:
-                rdns:
-                  type: string
-                  example: linode.com
+              allOf:
+              - $ref: '#/components/schemas/IPAddress'
+              - type: object
       responses:
         '200':
           description: The updated IP address record.
@@ -5656,7 +5654,8 @@ paths:
               - label
               - images
               allOf:
-              $ref: '#/components/schemas/StackScript'
+              - $ref: '#/components/schemas/StackScript'
+              - type: object
       responses:
         '200':
           description: StackScript successfully created.
@@ -7060,7 +7059,8 @@ paths:
               - address
               - timeout
               allOf:
-              $ref: '#/components/schemas/ManagedService'
+              - $ref: '#/components/schemas/ManagedService'
+              - type: object
       responses:
         '200':
           description: Service created.
@@ -7869,7 +7869,8 @@ paths:
                     Each config must have a unique port and at least one Node.
                   items:
                     allOf:
-                    $ref: '#/components/schemas/NodeBalancerConfig'
+                    - $ref: '#/components/schemas/NodeBalancerConfig'
+                    - type: object
                     properties:
                       nodes:
                         type: array
@@ -7878,6 +7879,7 @@ paths:
                           creating a NodeBalancer this way, at least one Node
                           is required per configured port.
                         items:
+                          allOf:
                           $ref: '#/components/schemas/NodeBalancerNode'
 
       responses:
