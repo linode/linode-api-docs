@@ -502,12 +502,13 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/CreditCard'
-              - properties:
-                  cvv:
-                    type: string
-                    description: >
-                      The Card Verification Value on the back of the card.
-                    example: '123'
+              - type: object
+              properties:
+                cvv:
+                  type: string
+                  description: >
+                    The Card Verification Value on the back of the card.
+                  example: '123'
       responses:
         '200':
           description: Credit Card updated.
@@ -959,12 +960,13 @@ paths:
               - redirect_uri
               allOf:
               - $ref: '#/components/schemas/OAuthClient'
-              - properties:
-                  public:
-                    type: boolean
-                    description: Whether to create a public or private client.
-                    example: false
-                    readOnly: false
+              - type: object
+              properties:
+                public:
+                  type: boolean
+                  description: Whether to create a public or private client.
+                  example: false
+                  readOnly: false
       responses:
         '200':
           description: Client created successfully.
@@ -2414,6 +2416,7 @@ paths:
               - type
               allOf:
               - $ref: '#/components/schemas/DomainRecord'
+              - type: object
       responses:
         '200':
           description: Domain Record created successfully.
@@ -2658,24 +2661,22 @@ paths:
             schema:
               required:
               - disk_id
-              allOf:
-              - $ref: '#/components/schemas/ImagePrivate'
-                properties:
-                  disk_id:
-                    type: integer
-                    description: >
-                       The ID of the Linode Disk that this Image will be
-                       created from.
-                    example: 42
-                  label:
-                    type: string
-                    description: >
-                      A short title of this Image. Defaults to the label of the
-                      Disk it is being created from if not provided.
-                  description:
-                    type: string
-                    description: >
-                      A detailed description of this Image.
+              properties:
+                disk_id:
+                  type: integer
+                  description: >
+                      The ID of the Linode Disk that this Image will be
+                      created from.
+                  example: 42
+                label:
+                  type: string
+                  description: >
+                    A short title of this Image. Defaults to the label of the
+                    Disk it is being created from if not provided.
+                description:
+                  type: string
+                  description: >
+                    A detailed description of this Image.
       responses:
         '200':
           description: New private Image created successfully.
@@ -5149,6 +5150,7 @@ paths:
               - root_pass
               allOf:
                 - $ref: '#/components/schemas/LinodeRequest'
+                - type: object
       responses:
         '200':
           description: Rebuild started.
@@ -6480,21 +6482,22 @@ paths:
               - password
               allOf:
               - $ref: '#/components/schemas/ManagedCredential'
-              - properties:
-                  username:
-                    type: string
-                    minLength: 0
-                    maxLength: 5000
-                    description: >
-                      The username to use when accessing the Managed Service.
-                    example: johndoe
-                  password:
-                    type: string
-                    minLength: 0
-                    maxLength: 5000
-                    description: >
-                      The password to use when accessing the Managed Service.
-                    example: s3cur3P@ssw0rd
+              - type: object
+              properties:
+                username:
+                  type: string
+                  minLength: 0
+                  maxLength: 5000
+                  description: >
+                    The username to use when accessing the Managed Service.
+                  example: johndoe
+                password:
+                  type: string
+                  minLength: 0
+                  maxLength: 5000
+                  description: >
+                    The password to use when accessing the Managed Service.
+                  example: s3cur3P@ssw0rd
       responses:
         '200':
           description: Credential created.
@@ -8514,7 +8517,9 @@ paths:
               required:
               - label
               - address
-              $ref: '#/components/schemas/NodeBalancerNode'
+              allOf:
+              - $ref: '#/components/schemas/NodeBalancerNode'
+              - type: object
       responses:
         '200':
           description: Node created successfully.
