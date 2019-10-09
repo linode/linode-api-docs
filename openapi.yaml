@@ -7879,9 +7879,7 @@ paths:
                           creating a NodeBalancer this way, at least one Node
                           is required per configured port.
                         items:
-                          allOf:
                           $ref: '#/components/schemas/NodeBalancerNode'
-
       responses:
         '200':
           description: NodeBalancer created successfully.
