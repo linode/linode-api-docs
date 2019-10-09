@@ -9418,8 +9418,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                $ref: '#/components/schemas/ObjectStorageKey'
+                type: object
                 properties:
                   secret_key:
                     type: string
@@ -11480,9 +11479,6 @@ paths:
               allOf:
               - $ref: '#/components/schemas/Volume'
               properties:
-                region:
-                  $ref: '#/components/schemas/Volume/properties/region'
-                  readOnly: true
                 size:
                   $ref: '#/components/schemas/Volume/properties/size'
                   readOnly: true
@@ -11586,7 +11582,6 @@ paths:
               properties:
                 linode_id:
                   $ref: '#/components/schemas/Volume/properties/linode_id'
-                  readOnly: false
                 config_id:
                   type: integer
                   description: >
