@@ -5148,13 +5148,7 @@ paths:
               - image
               - root_pass
               allOf:
-              - $ref: '#/components/schemas/LinodeRequest'
-              - properties:
-                image:
-                  type: string
-                root_pass:
-                  type: string
-                  format: password
+                - $ref: '#/components/schemas/LinodeRequest'
       responses:
         '200':
           description: Rebuild started.
