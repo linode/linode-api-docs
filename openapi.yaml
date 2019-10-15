@@ -180,7 +180,7 @@ info:
     in the `X-Filter` header and are formatted as JSON objects. Here is a request
     call for Linode Types in our "standard" class:
 
-    ```Shell
+    ```
     curl "https://api.linode.com/v4/linode/types" \
       -H 'X-Filter: { \
         "class": "standard"
@@ -192,7 +192,7 @@ info:
     including more than one key. For example, filtering for "standard" Linode
     Types that offer one vcpu:
 
-    ```Shell
+    ```
      curl "https://api.linode.com/v4/linode/types" \
       -H 'X-Filter: { \
         "class": "standard",
@@ -204,7 +204,7 @@ info:
     However, if you wanted either Types with one vcpu or Types in our "standard"
     class, you can add an operator:
 
-    ```Shell
+    ```
     curl "https://api.linode.com/v4/linode/types" \
       -H 'X-Filter: {
         "+or": [
@@ -237,7 +237,7 @@ info:
     For example, filtering for [Linode Types](/api/v4/linode-types)
     that offer memory equal to or higher than 61440:
 
-    ```Shell
+    ```
     curl "https://api.linode.com/v4/linode/types" \
       -H 'X-Filter: {
         "memory": {
@@ -251,7 +251,7 @@ info:
     which are either `standard` or `highmem` class, or
     have between 12 and 20 vcpus:
 
-    ```Shell
+    ```
     curl "https://api.linode.com/v4/linode/types" \
       -H 'X-Filter: {
         "+or": [
