@@ -16846,6 +16846,13 @@ components:
           example:
           - home-pc
           - laptop
+        tfa_enabled:
+          type: boolean
+          readOnly: true
+          description: >
+            A boolean value indicating if the User has Two Factor Authentication (TFA)
+            enabled. See the Create Two Factor Secret ([/profile/tfa-enable](/api/v4/profile-tfa-enable/#post))
+            endpoint to enable TFA.
     UserDefinedField:
       type: object
       required:
