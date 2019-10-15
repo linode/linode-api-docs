@@ -182,7 +182,10 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "class": "standard" }'
+      -H '
+        X-Filter: {
+          "class": "standard"
+        }'
     ```
 
     The filter object's keys are the keys of the object you're filtering,
@@ -191,17 +194,27 @@ info:
     Types that offer one vcpu:
 
     ```Shell
-    curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "class": "standard", "vcpus": 1 }'
+     curl "https://api.linode.com/v4/linode/types" \
+      -H '
+        X-Filter: {
+          "class": "standard",
+          "vcpus": 1
+        }'
     ```
 
     In the above example, both filters are combined with an "and" operation.
     However, if you wanted either Types with one vcpu or Types in our "standard"
     class, you can add an operator:
 
-    ```Shell
+     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "+or": [ { "vcpus": 1 }, { "class": "standard" } ] }'
+      -H '
+        X-Filter: {
+          "+or": [
+            { "vcpus": 1 },
+            { "class": "standard" }
+          ]
+        }'
     ```
 
     Each filter in the `+or` array is its own filter object, and all conditions
@@ -229,7 +242,12 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "memory": { "+gte": 61440 } }'
+      -H '
+        X-Filter: {
+          "memory": {
+            "+gte": 61440
+          }
+        }'
     ```
 
     You can combine and nest operators to construct arbitrarily-complex queries.
@@ -239,7 +257,35 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "+or": [ { "+or": [ { "class": "standard" }, { "class": "highmem" } ] }, { "+and": [ { "vcpus": { "+gte": 12 } }, { "vcpus": { "+lte": 20 } } ] } ] }'
+      -H '
+        X-Filter: {
+          "+or": [
+            {
+              "+or": [
+                {
+                  "class": "standard"
+                },
+                {
+                  "class": "highmem"
+                }
+              ]
+            },
+            {
+              "+and": [
+                {
+                  "vcpus": {
+                    "+gte": 12
+                  }
+                },
+                {
+                  "vcpus": {
+                    "+lte": 20
+                  }
+                }
+              ]
+            }
+          ]
+        }'
     ```
 
     # CLI (Command Line Interface)
