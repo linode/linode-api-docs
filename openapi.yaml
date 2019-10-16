@@ -7881,6 +7881,10 @@ paths:
                 - rules
               allOf:
                 - $ref: '#/components/schemas/Firewall'
+                - type: object
+                  properties:
+                    status:
+                      readOnly: true
       responses:
         '200':
           description: Returns information about the created Firewall.
@@ -8022,8 +8026,16 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/Firewall'
+              type: object
+              properties:
+                rules:
+                  $ref: '#/components/schemas/Firewall/properties/rules'
+                tags:
+                  $ref: '#/components/schemas/Firewall/properties/tags'
+                label:
+                  $ref: '#/components/schemas/Firewall/properties/label'
+                status:
+                  $ref: '#/components/schemas/Firewall/properties/status'
       responses:
         '200':
           description: Firewall updated successfully.
@@ -13435,7 +13447,6 @@ components:
           x-linode-cli-display: 5
         status:
           type: string
-          readOnly: true
           description: >
            The status of this Firewall service.
           enum:
