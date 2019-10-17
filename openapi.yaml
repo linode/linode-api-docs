@@ -9405,7 +9405,7 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       tags:
-      - networking
+      - Networking
       summary: Delete Firewall
       operationId: deleteFirewall
       x-linode-cli-action: delete
