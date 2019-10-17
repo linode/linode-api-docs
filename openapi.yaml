@@ -9436,6 +9436,69 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls delete 123
+  /networking/firewalls/{firewallId}/devices:
+    parameters:
+      - name: firewallId
+        in: path
+        description: >
+          ID of the Firewall to interact with.
+        required: true
+        schema:
+          type: integer
+    x-linode-cli-command: firewalls
+    post:
+      x-linode-grant: read_write
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: Add Firewall Devices
+      description: >
+        Applies this Firewall to a new device. Currently, only devices of type `linode`
+        are accepted. A `firewall_device_add` event is created when the Firewall device is added
+        successfully.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      operationId: createFirewallDevices
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_write
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - id
+                - type
+              $ref: '#/components/schemas/FirewallDevices'
+      responses:
+        '200':
+          description: Returns information about the created Firewall.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallDevices'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "type": "linode",
+                "id": "123"
+              }' \
+              https://api.linode.com/v4beta/networking/firewalls/123/devices
+      - lang: CLI
+        source: >
+          linode-cli netowrking firewalls-create-devices
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -15050,6 +15113,67 @@ components:
                 type: string
               example:
               - 2001:DB8::/32
+    FirewallDevices:
+      type: object
+      description: >
+        A firewall object that controls incoming and outgoing network traffic.
+      properties:
+        type:
+          x-linode-filterable: true
+          type: string
+          description: >
+            The device type.
+          example: linode
+          x-linode-cli-display: 1
+        id:
+          x-linode-filterable: true
+          type: integer
+          description: >
+            The device's unique ID
+          example: 123
+          x-linode-cli-display: 2
+        created:
+          x-linode-filterable: true
+          type: string
+          format: date-time
+          readOnly: true
+          description: >
+            When this device was created.
+          example: '2018-01-01T00:01:01'
+          x-linode-cli-display: 3
+        updated:
+          x-linode-filterable: true
+          type: string
+          format: date-time
+          readOnly: true
+          description: >
+            When this device was last updated.
+          example: '2018-01-02T00:01:01'
+          x-linode-cli-display: 4
+        entity:
+          type: object
+          readOnly: true
+          description: >
+            The entity that this Firewall has been applied to.
+          properties:
+            id:
+              description: The entity's ID
+              type: integer
+              example: 123
+            type:
+              description: The entity's type.
+              type: string
+              example: linode
+            label:
+              description: The entity's label.
+              type: string
+              example: my-linode
+            url:
+              description: >
+                The URL you can use to access this entity.
+              type: string
+              format: url
+              example: /v4/linode/instances/123
     Grant:
       type: object
       description: >
