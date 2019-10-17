@@ -14698,6 +14698,7 @@ components:
           - dns_zone_delete
           - dns_zone_import
           - dns_zone_update
+          - firewall_device_add
           - host_reboot
           - image_delete
           - image_update
