@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.6.0
+  version: 4.7.0
   title: Linode API
   description: |
     # Introduction
@@ -182,7 +182,10 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "class": "standard" }'
+      -H '
+        X-Filter: {
+          "class": "standard"
+        }'
     ```
 
     The filter object's keys are the keys of the object you're filtering,
@@ -191,17 +194,27 @@ info:
     Types that offer one vcpu:
 
     ```Shell
-    curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "class": "standard", "vcpus": 1 }'
+     curl "https://api.linode.com/v4/linode/types" \
+      -H '
+        X-Filter: {
+          "class": "standard",
+          "vcpus": 1
+        }'
     ```
 
     In the above example, both filters are combined with an "and" operation.
     However, if you wanted either Types with one vcpu or Types in our "standard"
     class, you can add an operator:
 
-    ```Shell
+     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "+or": [ { "vcpus": 1 }, { "class": "standard" } ] }'
+      -H '
+        X-Filter: {
+          "+or": [
+            { "vcpus": 1 },
+            { "class": "standard" }
+          ]
+        }'
     ```
 
     Each filter in the `+or` array is its own filter object, and all conditions
@@ -229,7 +242,12 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "memory": { "+gte": 61440 } }'
+      -H '
+        X-Filter: {
+          "memory": {
+            "+gte": 61440
+          }
+        }'
     ```
 
     You can combine and nest operators to construct arbitrarily-complex queries.
@@ -239,7 +257,35 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-    -H 'X-Filter: { "+or": [ { "+or": [ { "class": "standard" }, { "class": "highmem" } ] }, { "+and": [ { "vcpus": { "+gte": 12 } }, { "vcpus": { "+lte": 20 } } ] } ] }'
+      -H '
+        X-Filter: {
+          "+or": [
+            {
+              "+or": [
+                {
+                  "class": "standard"
+                },
+                {
+                  "class": "highmem"
+                }
+              ]
+            },
+            {
+              "+and": [
+                {
+                  "vcpus": {
+                    "+gte": 12
+                  }
+                },
+                {
+                  "vcpus": {
+                    "+lte": 20
+                  }
+                }
+              ]
+            }
+          ]
+        }'
     ```
 
     # CLI (Command Line Interface)
@@ -4982,6 +5028,23 @@ paths:
 
                     A cross data center migration will initiate a `linode_migrate_datacenter_create` event.
                   example: us-east
+                upgrade:
+                  type: boolean
+                  description: >
+                    When initiating a cross DC migration, setting this value to
+                    true will also ensure that the Linode is upgraded to the latest
+                    generation of hardware that corresponds to your Linode's Type, if
+                    any free upgrades are available for it.
+
+                    If no free upgrades are available, and this value is set to true,
+                    then the endpoint will return a 400 error code and the migration
+                    will not be performed.
+
+                    If the data center set in the `region` field does not allow upgrades,
+                    then the endpoint will return a 400 error code and the migration
+                    will not be performed.
+                  example: false
+                  default: false
       responses:
         '200':
           description: Scheduled migration started
@@ -16846,6 +16909,13 @@ components:
           example:
           - home-pc
           - laptop
+        tfa_enabled:
+          type: boolean
+          readOnly: true
+          description: >
+            A boolean value indicating if the User has Two Factor Authentication (TFA)
+            enabled. See the Create Two Factor Secret ([/profile/tfa-enable](/api/v4/profile-tfa-enable/#post))
+            endpoint to enable TFA.
     UserDefinedField:
       type: object
       required:

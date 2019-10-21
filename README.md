@@ -46,3 +46,4 @@ Attribute | Location | Type | Supported By | Explanation
 `x-linode-cli-action` | method | string | linode-cli | The action this method will be mapped to when generating commands in the `linode-cli <command> <action>` format.
 `x-linode-cli-skip` | method | boolean | linode-cli | If true, the CLI will not expose this action.
 `x-linode-redoc-load-ids`| operation | boolean | If true, ReDoc will load this path and print a bulleted list of IDs.  This only works on public collections.
+`x-linode-ref-name`| keyword | string | [Linode Developer's Site](https://github.com/linode/developers) | Provides a mechanism by which the Developer's site can generate a dropdown menu with an Object's name when using the `oneOf` keyword with a `discriminator`. **Note**: This front end functionality is currently being developed.
