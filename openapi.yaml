@@ -503,12 +503,12 @@ paths:
               allOf:
               - $ref: '#/components/schemas/CreditCard'
               - type: object
-              properties:
-                cvv:
-                  type: string
-                  description: >
-                    The Card Verification Value on the back of the card.
-                  example: '123'
+                properties:
+                  cvv:
+                    type: string
+                    description: >
+                      The Card Verification Value on the back of the card.
+                    example: '123'
       responses:
         '200':
           description: Credit Card updated.
@@ -961,12 +961,12 @@ paths:
               allOf:
               - $ref: '#/components/schemas/OAuthClient'
               - type: object
-              properties:
-                public:
-                  type: boolean
-                  description: Whether to create a public or private client.
-                  example: false
-                  readOnly: false
+                properties:
+                  public:
+                    type: boolean
+                    description: Whether to create a public or private client.
+                    example: false
+                    readOnly: false
       responses:
         '200':
           description: Client created successfully.
@@ -2416,7 +2416,6 @@ paths:
               - type
               allOf:
               - $ref: '#/components/schemas/DomainRecord'
-              - type: object
       responses:
         '200':
           description: Domain Record created successfully.
@@ -4780,7 +4779,6 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/IPAddress'
-              - type: object
       responses:
         '200':
           description: The updated IP address record.
@@ -5150,7 +5148,6 @@ paths:
               - root_pass
               allOf:
                 - $ref: '#/components/schemas/LinodeRequest'
-                - type: object
       responses:
         '200':
           description: Rebuild started.
@@ -5657,7 +5654,6 @@ paths:
               - images
               allOf:
               - $ref: '#/components/schemas/StackScript'
-              - type: object
       responses:
         '200':
           description: StackScript successfully created.
@@ -6483,21 +6479,21 @@ paths:
               allOf:
               - $ref: '#/components/schemas/ManagedCredential'
               - type: object
-              properties:
-                username:
-                  type: string
-                  minLength: 0
-                  maxLength: 5000
-                  description: >
-                    The username to use when accessing the Managed Service.
-                  example: johndoe
-                password:
-                  type: string
-                  minLength: 0
-                  maxLength: 5000
-                  description: >
-                    The password to use when accessing the Managed Service.
-                  example: s3cur3P@ssw0rd
+                properties:
+                  username:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The username to use when accessing the Managed Service.
+                    example: johndoe
+                  password:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The password to use when accessing the Managed Service.
+                    example: s3cur3P@ssw0rd
       responses:
         '200':
           description: Credential created.
@@ -7063,7 +7059,6 @@ paths:
               - timeout
               allOf:
               - $ref: '#/components/schemas/ManagedService'
-              - type: object
       responses:
         '200':
           description: Service created.
@@ -7874,15 +7869,15 @@ paths:
                     allOf:
                     - $ref: '#/components/schemas/NodeBalancerConfig'
                     - type: object
-                    properties:
-                      nodes:
-                        type: array
-                        description: >
-                          The NodeBalancer Nodes that serve this port.  When
-                          creating a NodeBalancer this way, at least one Node
-                          is required per configured port.
-                        items:
-                          $ref: '#/components/schemas/NodeBalancerNode'
+                      properties:
+                        nodes:
+                          type: array
+                          description: >
+                            The NodeBalancer Nodes that serve this port.  When
+                            creating a NodeBalancer this way, at least one Node
+                            is required per configured port.
+                          items:
+                            $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8357,7 +8352,8 @@ paths:
                   items:
                     allOf:
                     - $ref: '#/components/schemas/NodeBalancerConfig'
-                    - properties:
+                    - type: object
+                      properties:
                         nodes:
                           type: array
                           description: >
@@ -8371,7 +8367,7 @@ paths:
                           items:
                             type: object
                             allOf:
-                            $ref: '#/components/schemas/NodeBalancerNode'
+                            - $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8519,7 +8515,6 @@ paths:
               - address
               allOf:
               - $ref: '#/components/schemas/NodeBalancerNode'
-              - type: object
       responses:
         '200':
           description: Node created successfully.
@@ -9423,11 +9418,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  secret_key:
-                    type: string
-                    example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                allOf:
+                  - $ref: '#/components/schemas/ObjectStorageKey'
+                  - type: object
+                    properties:
+                      secret_key:
+                        example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11484,11 +11480,11 @@ paths:
               allOf:
               - $ref: '#/components/schemas/Volume'
               - type: object
-              properties:
-                size:
-                  readOnly: true
-                linode_id:
-                  readOnly: true
+                properties:
+                  size:
+                    readOnly: true
+                  linode_id:
+                    readOnly: true
       responses:
         '200':
           description: The updated Volume.
