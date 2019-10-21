@@ -507,8 +507,7 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/CreditCard'
-              - type: object
-                properties:
+              - properties:
                   cvv:
                     type: string
                     description: >
@@ -964,6 +963,13 @@ paths:
               - label
               - redirect_uri
               allOf:
+              - type: object
+                properties:
+                  public:
+                    type: boolean
+                    description: Whether to create a public or private client.
+                    example: false
+                    readOnly: false
               - $ref: '#/components/schemas/OAuthClient'
               - type: object
                 properties:
@@ -2289,17 +2295,19 @@ paths:
               required:
               - domain
               - remote_nameserver
-              properties:
-                domain:
-                  type: string
-                  description: >
-                      The domain to import.
-                  example: example.com
-                remote_nameserver:
-                  type: string
-                  description: >
-                    The remote nameserver that allows zone transfers (AXFR).
-                  example: examplenameserver.com
+              allOf:
+              - type: object
+                properties:
+                  domain:
+                    type: string
+                    description: >
+                       The domain to import.
+                    example: example.com
+                  remote_nameserver:
+                    type: string
+                    description: >
+                      The remote nameserver that allows zone transfers (AXFR).
+                    example: examplenameserver.com
       responses:
         '200':
           description: |
@@ -2702,22 +2710,25 @@ paths:
             schema:
               required:
               - disk_id
-              properties:
-                disk_id:
-                  type: integer
-                  description: >
-                      The ID of the Linode Disk that this Image will be
-                      created from.
-                  example: 42
-                label:
-                  type: string
-                  description: >
-                    A short title of this Image. Defaults to the label of the
-                    Disk it is being created from if not provided.
-                description:
-                  type: string
-                  description: >
-                    A detailed description of this Image.
+              allOf:
+              - $ref: '#/components/schemas/ImagePrivate'
+              - type: object
+                properties:
+                  disk_id:
+                    type: integer
+                    description: >
+                       The ID of the Linode Disk that this Image will be
+                       created from.
+                    example: 42
+                  label:
+                    type: string
+                    description: >
+                      A short title of this Image. Defaults to the label of the
+                      Disk it is being created from if not provided.
+                  description:
+                    type: string
+                    description: >
+                      A detailed description of this Image.
       responses:
         '200':
           description: New private Image created successfully.
@@ -3334,7 +3345,8 @@ paths:
                     items:
                       allOf:
                       - $ref: '#/components/schemas/Backup'
-                      - properties:
+                      - type: object
+                        properties:
                           type:
                             type: string
                             example: automatic
@@ -4825,6 +4837,11 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/IPAddress'
+              - type: object
+              properties:
+                rdns:
+                  type: string
+                  example: linode.com
       responses:
         '200':
           description: The updated IP address record.
@@ -5211,7 +5228,13 @@ paths:
               - image
               - root_pass
               allOf:
-                - $ref: '#/components/schemas/LinodeRequest'
+              - $ref: '#/components/schemas/LinodeRequest'
+              properties:
+                image:
+                  type: string
+                root_pass:
+                  type: string
+                  format: password
       responses:
         '200':
           description: Rebuild started.
@@ -6700,21 +6723,23 @@ paths:
             schema:
               required:
               - password
-              properties:
-                username:
-                  type: string
-                  minLength: 0
-                  maxLength: 5000
-                  description: >
-                    The username to use when accessing the Managed Service.
-                  example: johndoe
-                password:
-                  type: string
-                  minLength: 0
-                  maxLength: 5000
-                  description: >
-                    The password to use when accessing the Managed Service.
-                  example: s3cur3P@ssw0rd
+              allOf:
+              - type: object
+                properties:
+                  username:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The username to use when accessing the Managed Service.
+                    example: johndoe
+                  password:
+                    type: string
+                    minLength: 0
+                    maxLength: 5000
+                    description: >
+                      The password to use when accessing the Managed Service.
+                    example: s3cur3P@ssw0rd
       responses:
         '200':
           description: Credential username and password updated.
@@ -7984,18 +8009,19 @@ paths:
                     The ports to configure this NodeBalancer with on creation.
                     Each config must have a unique port and at least one Node.
                   items:
-                    allOf:
-                    - $ref: '#/components/schemas/NodeBalancerConfig'
-                    - type: object
-                      properties:
-                        nodes:
-                          type: array
-                          description: >
-                            The NodeBalancer Nodes that serve this port.  When
-                            creating a NodeBalancer this way, at least one Node
-                            is required per configured port.
-                          items:
-                            $ref: '#/components/schemas/NodeBalancerNode'
+                      allOf:
+                      - $ref: '#/components/schemas/NodeBalancerConfig'
+                      - type: object
+                        properties:
+                          nodes:
+                            type: array
+                            description: >
+                              The NodeBalancer Nodes that serve this port.  When
+                              creating a NodeBalancer this way, at least one Node
+                              is required per configured port.
+                            items:
+                              $ref: '#/components/schemas/NodeBalancerNode'
+
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8468,24 +8494,22 @@ paths:
                       * Current Nodes (identified by their ID) will be updated.
                       * New Nodes (included without an ID) will be created.
                   items:
-                    allOf:
-                    - $ref: '#/components/schemas/NodeBalancerConfig'
-                    - type: object
-                      properties:
-                        nodes:
-                          type: array
-                          description: >
-                            The NodeBalancer Node(s) that serve this port.
-                            At least one Node is required per configured port.
+                      allOf:
+                      - $ref: '#/components/schemas/NodeBalancerConfig'
+                      - type: object
+                        properties:
+                          nodes:
+                            type: array
+                            description: >
+                              The NodeBalancer Node(s) that serve this port.
+                              At least one Node is required per configured port.
 
-                            Some considerations for Nodes when rebuilding a config:
-                              * Current Nodes excluded from the request body will be deleted.
-                              * Current Nodes (identified by their ID) will be updated.
-                              * New Nodes (included without an ID) will be created.
-                          items:
-                            type: object
-                            allOf:
-                            - $ref: '#/components/schemas/NodeBalancerNode'
+                              Some considerations for Nodes when rebuilding a config:
+                                * Current Nodes excluded from the request body will be deleted.
+                                * Current Nodes (identified by their ID) will be updated.
+                                * New Nodes (included without an ID) will be created.
+                            items:
+                              $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8628,11 +8652,11 @@ paths:
         content:
           application/json:
             schema:
+              allOf:
+              - $ref: '#/components/schemas/NodeBalancerNode'
               required:
               - label
               - address
-              allOf:
-              - $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: Node created successfully.
@@ -9526,11 +9550,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/ObjectStorageKey'
-                  - type: object
-                    properties:
-                      secret_key:
-                        example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                - $ref: '#/components/schemas/ObjectStorageKey'
+                - type: object
+                  properties:
+                    secret_key:
+                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11588,14 +11612,22 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/Volume'
-              - type: object
-                properties:
-                  size:
-                    readOnly: true
-                  linode_id:
-                    readOnly: true
+               allOf:
+                - $ref: '#/components/schemas/Volume'
+                - type: object
+                  properties:
+                    region:
+                      allOf:
+                      - $ref: '#/components/schemas/Volume/properties/region'
+                      readOnly: true
+                    size:
+                      allOf:
+                      - $ref: '#/components/schemas/Volume/properties/size'
+                      readOnly: true
+                    linode_id:
+                      allOf:
+                      - $ref: '#/components/schemas/Volume/properties/linode_id'
+                      readOnly: true
       responses:
         '200':
           description: The updated Volume.
@@ -11689,10 +11721,12 @@ paths:
             schema:
               type: object
               required:
-              - linode_id
+              - linode
               properties:
                 linode_id:
-                  $ref: '#/components/schemas/Volume/properties/linode_id'
+                  allOf:
+                  - $ref: '#/components/schemas/Volume/properties/linode_id'
+                  readOnly: false
                 config_id:
                   type: integer
                   description: >
