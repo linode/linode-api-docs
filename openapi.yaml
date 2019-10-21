@@ -5037,11 +5037,12 @@ paths:
                     any free upgrades are available for it.
 
                     If no free upgrades are available, and this value is set to true,
-                    then the Linode will be migrated as normal.
+                    then the endpoint will return a 400 error code and the migration
+                    will not be performed.
 
-                    If the data center set by the `region` field does not allow upgrades,
-                    then then the endpoint will return an error and no migration will
-                    be performed.
+                    If the data center set in the `region` field does not allow upgrades,
+                    then the endpoint will return a 400 error code and the migration
+                    will not be performed.
                   example: false
                   default: false
       responses:
