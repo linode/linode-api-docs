@@ -5028,6 +5028,22 @@ paths:
 
                     A cross data center migration will initiate a `linode_migrate_datacenter_create` event.
                   example: us-east
+                upgrade:
+                  type: boolean
+                  description: >
+                    When initiating a cross DC migration, setting this value to
+                    true will also ensure that the Linode is upgraded to the latest
+                    generation of hardware that corresponds to your Linode's Type, if
+                    any free upgrades are available for it.
+
+                    If no free upgrades are available, and this value is set to true,
+                    then the Linode will be migrated as normal.
+
+                    If the data center set by the `region` field does not allow upgrades,
+                    then then the endpoint will return an error and no migration will
+                    be performed.
+                  example: false
+                  default: false
       responses:
         '200':
           description: Scheduled migration started
