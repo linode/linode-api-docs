@@ -9705,6 +9705,47 @@ paths:
         source: >
           linode-cli object-storage keys-delete \
             --keyId 12345
+  /object-storage/cancel:
+    x-linode-cli-command: object-storage
+    post:
+      operationId: cancelObjectStorage
+      x-linode-cli-action: cancel
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Cancel Object Storage
+      description: |
+        Cancel Object Storage and on your account. All buckets on the account must be empty in order to cancel Object Storage.
+        For more information on how to delete large amounts of objects within a bucket, consult our guide on
+        <a href="https://www.linode.com/docs/platform/object-storage/lifecycle-policies/">lifecycle policies</a>.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: Object Storage cancellation successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4beta/object-storage/cancel
+        - lang: CLI
+          source: >
+            linode-cli object-storage cancel
   /profile:
     x-linode-cli-command: profile
     get:
