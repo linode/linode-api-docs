@@ -12271,6 +12271,13 @@ components:
             or later.
           example: true
           x-linode-cli-display: 4
+        object_storage:
+          type: string
+          description: >
+            A string describing the status of this account's Object Storage
+            service enrollement. Possible values are `disabled`, `suspended`, and `active`.
+          example: active
+          x-linode-cli-display: 5
     AuthorizedApp:
       type: object
       description: >
