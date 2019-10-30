@@ -9201,9 +9201,12 @@ paths:
       summary: Create Firewall
       description: >
         Creates a Firewall to filter network traffic. Use the `rules` property to
-        create inbound and outbound access rules. A single Firewall can be applied to
-        Linode services by specifying them in the `devices` object.
+        create inbound and outbound access rules. Use the `devices` property to assign the
+        Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode
+        instances.
 
+        A Firewall can be assigned to multiple Linode services, and multiple Firewalls can be
+        assigned to a single Linode service.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -9223,6 +9226,23 @@ paths:
                 - rules
               allOf:
                 - $ref: '#/components/schemas/Firewall'
+                - type: object
+                  properties:
+                    devices:
+                      type: object
+                      description: >
+                        A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
+                        can only be assigned to Linode instances.
+                      properties:
+                        linodes:
+                          description: >
+                            An array of Linode IDs. A Firewall Device will be created for each ID.
+                          type: array
+                          items:
+                            type: integer
+                          example:
+                            - 123
+                            - 456
                 - type: object
                   properties:
                     status:
@@ -9296,7 +9316,7 @@ paths:
       - name: firewallId
         in: path
         description: >
-          ID of the Firewall to interact with.
+          ID of the Firewall to access.
         required: true
         schema:
           type: integer
@@ -9314,9 +9334,11 @@ paths:
       - personalAccessToken: []
       - oauth:
         - firewall:read_only
-      description: >
-        Get a specific Firewall resource by its ID.
-
+      description: |
+        Get a specific Firewall resource by its ID. The Firewall's Devices will not be
+        returned in the response. Instead, use the
+        [List Firewall Devices](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-devices/#get)
+        endpoint to review them.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -9347,11 +9369,23 @@ paths:
       tags:
       - Networking
       summary: Update Firewall
-      description: >
-        Updates information for a Firewall. A Firewall's Devices cannot be manipulated by
-        this endpoint. A Firewall's status can be set by this endpoint, but it cannot be
-        set to `deleted`. Instead, use the Delete Firewall endpoint to delete a Firewall.
+      description: |
+        Updates information for a Firewall. Some parts of a Firewall's configuration cannot
+        be manipuslated by this endpoint:
 
+        - A Firewall's Devices cannot be set with this endpoint. Instead, use the
+        [Create Firewall Device](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-devices/#post)
+        and [Delete Firewall Device](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-devices/#delete)
+        endpoints to assign and remove this Firewall from Linode services.
+
+        - A Firewall's Rules cannot be changed with this endpoint. Instead, use the
+        [Update Firewall Rules](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-rules/#put)
+        endpoint to update your Rules.
+
+        - A Firewall's status can be set by this endpoint, but it cannot be
+        set to `deleted`. Instead, use the
+        [Delete Firewall](http://developers.linode.com/api/v4/networking-firewalls-firewall-id/#delete)
+        endpoint to delete a Firewall.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -9370,8 +9404,6 @@ paths:
             schema:
               type: object
               properties:
-                rules:
-                  $ref: '#/components/schemas/Firewall/properties/rules'
                 tags:
                   $ref: '#/components/schemas/Firewall/properties/tags'
                 label:
@@ -9413,10 +9445,9 @@ paths:
       - personalAccessToken: []
       - oauth:
         - firewall:read_write
-      description: >
-        Delete a Firewall resource by its ID. This will also remove all rules from the
-        device it was attched to, returning it to its default state.
-
+      description: |
+        Delete a Firewall resource by its ID. This will remove all of the Firewall's Rules
+        from any Linode services that it was assigned to.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -9441,30 +9472,82 @@ paths:
       - name: firewallId
         in: path
         description: >
-          ID of the Firewall to interact with.
+          ID of the Firewall to access.
         required: true
         schema:
           type: integer
     x-linode-cli-command: firewalls
+    get:
+      x-linode-grant: read_only
+      tags:
+      - Networking
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      summary: List Firewall Devices
+      description: |
+        Returns a paginated list of a Firewall's Devices. A Firewall Device assigns a
+        Firewall to a Linode service (referred to as the Device's `entity`). Currently,
+        only Devices with an entity of type `linode` are accepted.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getFirewallDevices
+      x-linode-cli-action: devices-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_only
+      responses:
+        '200':
+          description: A paginated list of Firewall Devices
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FirewallDevices'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/firewalls/123/devices
+      - lang: CLI
+        source: >
+          linode-cli firewalls devices-list 123
     post:
       x-linode-grant: read_write
       servers:
       - url: https://api.linode.com/v4beta
       tags:
       - Networking
-      summary: Add Firewall Devices
-      description: >
-        Applies this Firewall to a new device. Currently, only devices of type `linode`
-        are accepted. A `firewall_device_add` event is created when the Firewall device is added
-        successfully.
+      summary: Create Firewall Device
+      description: |
+        Creates a Firewall Device, which assigns a Firewall to a Linode service (referred to
+        as the Device's `entity`). Currently, only Devices with an entity of type `linode` are accepted.
 
+        Creating a Firewall Device will apply the Rules from a Firewall to a Linode service.
+        A `firewall_device_add` event is generated when the Firewall Device is added successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
-      operationId: createFirewallDevices
-      x-linode-cli-action: create
+      operationId: createFirewallDevice
+      x-linode-cli-action: device-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -9476,10 +9559,10 @@ paths:
               required:
                 - id
                 - type
-              $ref: '#/components/schemas/FirewallDevices'
+              $ref: '#/components/schemas/FirewallDevices/properties/entity'
       responses:
         '200':
-          description: Returns information about the created Firewall.
+          description: Returns information about the created Firewall Device.
           content:
             application/json:
               schema:
@@ -9498,7 +9581,222 @@ paths:
               https://api.linode.com/v4beta/networking/firewalls/123/devices
       - lang: CLI
         source: >
-          linode-cli netowrking firewalls-create-devices
+          linode-cli networking device-create 123
+  /networking/firewalls/{firewallId}/devices/{deviceId}:
+    parameters:
+      - name: firewallId
+        in: path
+        description: >
+          ID of the Firewall to access.
+        required: true
+        schema:
+          type: integer
+      - name: deviceId
+        in: path
+        description: >
+          ID of the Firewall Device to access.
+        required: true
+        schema:
+          type: integer
+    x-linode-cli-command: firewalls
+    get:
+      x-linode-grant: read_only
+      tags:
+      - Networking
+      summary: View Firewall Device
+      description: |
+        Returns information for a Firewall Device, which assigns a Firewall
+        to a Linode service (referred to as the Device's `entity`). Currently,
+        only Devices with an entity of type `linode` are accepted.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getFirewallDevice
+      x-linode-cli-action: device-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_only
+      responses:
+        '200':
+          description: The requested Firewall Device.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirewallDevices'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/networking/firewalls/123/devices/456
+      - lang: CLI
+        source: >
+          linode-cli firewalls device-view \
+            123 456
+    delete:
+      x-linode-grant: read_write
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: Delete Firewall Device
+      operationId: deleteFirewallDevice
+      x-linode-cli-action: device-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_write
+      description: |
+        Removes a Firewall Device, which removes a Firewall from the Linode service it was
+        assigned to by the Device. This will remove all of the Firewall's Rules from the Linode
+        service. If any other Firewalls have been assigned to the Linode service, then those Rules
+        will remain in effect.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      responses:
+        '200':
+          description: Delete Successful.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -X DELETE \
+              https://api.linode.com/v4beta/networking/firewalls/123/devices/456
+      - lang: CLI
+        source: >
+          linode-cli firewalls device-delete 123 456
+  /networking/firewalls/{firewallId}/rules:
+    parameters:
+      - name: firewallId
+        in: path
+        description: >
+          ID of the Firewall to access.
+        required: true
+        schema:
+          type: integer
+    x-linode-cli-command: firewalls
+    get:
+      x-linode-grant: read_only
+      tags:
+      - Networking
+      summary: List Firewall Rules
+      description: |
+        Returns the inbound and outbound Rules for a Firewall.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getFirewallRules
+      x-linode-cli-action: rules-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_only
+      responses:
+        '200':
+          description: The requested Firewall Rules.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall/properties/rules'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/firewalls/123/rules
+      - lang: CLI
+        source: >
+          linode-cli firewalls rules-list 123
+    put:
+      x-linode-grant: read_write
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: Update Firewall Rules
+      description: |
+        Updates the inbound and outbound Rules for a Firewall.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      operationId: updateFirewallRules
+      x-linode-cli-action: rules-update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewall:read_write
+      requestBody:
+        description: The Firewall Rules information to update.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Firewall/properties/rules'
+      responses:
+        '200':
+          description: Firewall Rules updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Firewall/properties/rules'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                  "inbound": [
+                    {
+                      "protocol": "TCP",
+                      "start_port": 80,
+                      "addresses": {
+                        "ipv4": [
+                          "192.0.2.1",
+                          "192.0.2.0/24"
+                        ],
+                        "ipv6": [
+                          "2001:DB8::/32"
+                        ]
+                      }
+                    }
+                  ],
+                  "outbound": [
+                      "protocol": "TCP",
+                      "start_port": 20,
+                      "end_port": 22,
+                      "addresses": {
+                        "ipv4": [
+                          "192.0.2.1",
+                          "192.0.2.0/24"
+                        ],
+                        "ipv6": [
+                          "2001:DB8::/32"
+                        ]
+                      }
+                    }
+                  ]
+                }' \
+              https://api.linode.com/v4beta/networking/firewalls/123/rules
+      - lang: CLI
+        source: >
+          linode-cli firewalls rules-update 123 \
+            --inbound '[{"protocol": "TCP", "start_port": 80, "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
+            --outbound '[{"protocol": "TCP", "start_port": 20, "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -14699,6 +14997,7 @@ components:
           - dns_zone_import
           - dns_zone_update
           - firewall_device_add
+          - firewall_device_remove
           - host_reboot
           - image_delete
           - image_update
@@ -14966,7 +15265,10 @@ components:
     Firewall:
       type: object
       description: >
-        A firewall object that controls incoming and outgoing network traffic.
+        A resource that controls incoming and outgoing network traffic to a Linode service. A Firewall can
+        be assigned to multiple Linode services, and multiple Firewalls can be assigned to a single Linode service.
+        [Create a Firewall Device](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-devices/#post)
+        to assign a Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode instances.
       properties:
         id:
           x-linode-filterable: true
@@ -14980,7 +15282,7 @@ components:
           x-linode-filterable: true
           type: string
           description: >
-            The Firewall's label for display purposes only. If no label is provided for a Firewall,
+            The Firewall's label, for display purposes only. If no label is provided for a Firewall,
             a default will be assigned.
 
             Firewall labels have the following constraints:
@@ -15033,9 +15335,13 @@ components:
                 remaining outbound ports will be blocked.
           properties:
             inbound:
-              $ref: '#/components/schemas/FirewallRuleConfig'
+              type: array
+              items:
+                $ref: '#/components/schemas/FirewallRuleConfig'
             outbound:
-              $ref: '#/components/schemas/FirewallRuleConfig'
+              type: array
+              items:
+                $ref: '#/components/schemas/FirewallRuleConfig'
           required:
             - inbound
         tags:
@@ -15049,21 +15355,6 @@ components:
           example:
           - example tag
           - another example
-        devices:
-          type: object
-          description: >
-            The devices that this Firewall will be applied to. Currently, you
-            can only add a Firewall to Linodes.
-          properties:
-            linodes:
-              description: An array of Linode IDs
-              type: array
-              items:
-                type: integer
-              example:
-                - 123
-                - 456
-              x-linode-cli-display: 6
     FirewallRuleConfig:
       type: object
       description: >
@@ -15117,20 +15408,13 @@ components:
     FirewallDevices:
       type: object
       description: >
-        A firewall object that controls incoming and outgoing network traffic.
+        Associates a Firewall with a Linode service.
       properties:
-        type:
-          x-linode-filterable: true
-          type: string
-          description: >
-            The device type.
-          example: linode
-          x-linode-cli-display: 1
         id:
           x-linode-filterable: true
           type: integer
           description: >
-            The device's unique ID
+            The Device's unique ID
           example: 123
           x-linode-cli-display: 2
         created:
@@ -15139,7 +15423,7 @@ components:
           format: date-time
           readOnly: true
           description: >
-            When this device was created.
+            When this Device was created.
           example: '2018-01-01T00:01:01'
           x-linode-cli-display: 3
         updated:
@@ -15148,14 +15432,14 @@ components:
           format: date-time
           readOnly: true
           description: >
-            When this device was last updated.
+            When this Device was last updated.
           example: '2018-01-02T00:01:01'
           x-linode-cli-display: 4
         entity:
           type: object
           readOnly: true
           description: >
-            The entity that this Firewall has been applied to.
+            The Linode service that this Firewall has been applied to.
           properties:
             id:
               description: The entity's ID
@@ -15164,16 +15448,20 @@ components:
             type:
               description: The entity's type.
               type: string
+              enum:
+              - linode
               example: linode
             label:
               description: The entity's label.
               type: string
+              readOnly: true
               example: my-linode
             url:
               description: >
                 The URL you can use to access this entity.
               type: string
               format: url
+              readOnly: true
               example: /v4/linode/instances/123
     Grant:
       type: object
