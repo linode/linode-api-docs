@@ -12435,7 +12435,6 @@ components:
       properties:
         card_number:
           type: string
-          format: PAN
           description: Your credit card number. No spaces or dashes allowed.
           minLength: 13
           maxLength: 23
