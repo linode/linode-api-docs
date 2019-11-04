@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.7.0
+  version: 4.8.0
   title: Linode API
   description: |
     # Introduction
@@ -507,7 +507,8 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/CreditCard'
-              - properties:
+              - type: object
+                properties:
                   cvv:
                     type: string
                     description: >
@@ -963,13 +964,6 @@ paths:
               - label
               - redirect_uri
               allOf:
-              - type: object
-                properties:
-                  public:
-                    type: boolean
-                    description: Whether to create a public or private client.
-                    example: false
-                    readOnly: false
               - $ref: '#/components/schemas/OAuthClient'
               - type: object
                 properties:
@@ -2295,19 +2289,17 @@ paths:
               required:
               - domain
               - remote_nameserver
-              allOf:
-              - type: object
-                properties:
-                  domain:
-                    type: string
-                    description: >
-                       The domain to import.
-                    example: example.com
-                  remote_nameserver:
-                    type: string
-                    description: >
-                      The remote nameserver that allows zone transfers (AXFR).
-                    example: examplenameserver.com
+              properties:
+                domain:
+                  type: string
+                  description: >
+                      The domain to import.
+                  example: example.com
+                remote_nameserver:
+                  type: string
+                  description: >
+                    The remote nameserver that allows zone transfers (AXFR).
+                  example: examplenameserver.com
       responses:
         '200':
           description: |
@@ -2710,25 +2702,22 @@ paths:
             schema:
               required:
               - disk_id
-              allOf:
-              - $ref: '#/components/schemas/ImagePrivate'
-              - type: object
-                properties:
-                  disk_id:
-                    type: integer
-                    description: >
-                       The ID of the Linode Disk that this Image will be
-                       created from.
-                    example: 42
-                  label:
-                    type: string
-                    description: >
-                      A short title of this Image. Defaults to the label of the
-                      Disk it is being created from if not provided.
-                  description:
-                    type: string
-                    description: >
-                      A detailed description of this Image.
+              properties:
+                disk_id:
+                  type: integer
+                  description: >
+                      The ID of the Linode Disk that this Image will be
+                      created from.
+                  example: 42
+                label:
+                  type: string
+                  description: >
+                    A short title of this Image. Defaults to the label of the
+                    Disk it is being created from if not provided.
+                description:
+                  type: string
+                  description: >
+                    A detailed description of this Image.
       responses:
         '200':
           description: New private Image created successfully.
@@ -3345,8 +3334,7 @@ paths:
                     items:
                       allOf:
                       - $ref: '#/components/schemas/Backup'
-                      - type: object
-                        properties:
+                      - properties:
                           type:
                             type: string
                             example: automatic
@@ -4837,11 +4825,6 @@ paths:
             schema:
               allOf:
               - $ref: '#/components/schemas/IPAddress'
-              - type: object
-              properties:
-                rdns:
-                  type: string
-                  example: linode.com
       responses:
         '200':
           description: The updated IP address record.
@@ -5228,13 +5211,7 @@ paths:
               - image
               - root_pass
               allOf:
-              - $ref: '#/components/schemas/LinodeRequest'
-              properties:
-                image:
-                  type: string
-                root_pass:
-                  type: string
-                  format: password
+                - $ref: '#/components/schemas/LinodeRequest'
       responses:
         '200':
           description: Rebuild started.
@@ -6723,23 +6700,21 @@ paths:
             schema:
               required:
               - password
-              allOf:
-              - type: object
-                properties:
-                  username:
-                    type: string
-                    minLength: 0
-                    maxLength: 5000
-                    description: >
-                      The username to use when accessing the Managed Service.
-                    example: johndoe
-                  password:
-                    type: string
-                    minLength: 0
-                    maxLength: 5000
-                    description: >
-                      The password to use when accessing the Managed Service.
-                    example: s3cur3P@ssw0rd
+              properties:
+                username:
+                  type: string
+                  minLength: 0
+                  maxLength: 5000
+                  description: >
+                    The username to use when accessing the Managed Service.
+                  example: johndoe
+                password:
+                  type: string
+                  minLength: 0
+                  maxLength: 5000
+                  description: >
+                    The password to use when accessing the Managed Service.
+                  example: s3cur3P@ssw0rd
       responses:
         '200':
           description: Credential username and password updated.
@@ -8009,19 +7984,18 @@ paths:
                     The ports to configure this NodeBalancer with on creation.
                     Each config must have a unique port and at least one Node.
                   items:
-                      allOf:
-                      - $ref: '#/components/schemas/NodeBalancerConfig'
-                      - type: object
-                        properties:
-                          nodes:
-                            type: array
-                            description: >
-                              The NodeBalancer Nodes that serve this port.  When
-                              creating a NodeBalancer this way, at least one Node
-                              is required per configured port.
-                            items:
-                              $ref: '#/components/schemas/NodeBalancerNode'
-
+                    allOf:
+                    - $ref: '#/components/schemas/NodeBalancerConfig'
+                    - type: object
+                      properties:
+                        nodes:
+                          type: array
+                          description: >
+                            The NodeBalancer Nodes that serve this port.  When
+                            creating a NodeBalancer this way, at least one Node
+                            is required per configured port.
+                          items:
+                            $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8494,22 +8468,24 @@ paths:
                       * Current Nodes (identified by their ID) will be updated.
                       * New Nodes (included without an ID) will be created.
                   items:
-                      allOf:
-                      - $ref: '#/components/schemas/NodeBalancerConfig'
-                      - type: object
-                        properties:
-                          nodes:
-                            type: array
-                            description: >
-                              The NodeBalancer Node(s) that serve this port.
-                              At least one Node is required per configured port.
+                    allOf:
+                    - $ref: '#/components/schemas/NodeBalancerConfig'
+                    - type: object
+                      properties:
+                        nodes:
+                          type: array
+                          description: >
+                            The NodeBalancer Node(s) that serve this port.
+                            At least one Node is required per configured port.
 
-                              Some considerations for Nodes when rebuilding a config:
-                                * Current Nodes excluded from the request body will be deleted.
-                                * Current Nodes (identified by their ID) will be updated.
-                                * New Nodes (included without an ID) will be created.
-                            items:
-                              $ref: '#/components/schemas/NodeBalancerNode'
+                            Some considerations for Nodes when rebuilding a config:
+                              * Current Nodes excluded from the request body will be deleted.
+                              * Current Nodes (identified by their ID) will be updated.
+                              * New Nodes (included without an ID) will be created.
+                          items:
+                            type: object
+                            allOf:
+                            - $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -8652,11 +8628,11 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/NodeBalancerNode'
               required:
               - label
               - address
+              allOf:
+              - $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: Node created successfully.
@@ -9385,7 +9361,7 @@ paths:
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       tags:
@@ -9550,11 +9526,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                - $ref: '#/components/schemas/ObjectStorageKey'
-                - type: object
-                  properties:
-                    secret_key:
-                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                  - $ref: '#/components/schemas/ObjectStorageKey'
+                  - type: object
+                    properties:
+                      secret_key:
+                        example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -9705,6 +9681,52 @@ paths:
         source: >
           linode-cli object-storage keys-delete \
             --keyId 12345
+  /object-storage/cancel:
+    x-linode-cli-command: object-storage
+    post:
+      operationId: cancelObjectStorage
+      x-linode-cli-action: cancel
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: Cancel Object Storage
+      description: |
+        Cancel Object Storage on an Account. All buckets on the Account must be empty
+        before Object Storage can be cancelled:
+
+        - To delete a smaller number of objects, review the instructions in our
+        [How to Use Object Storage](https://www.linode.com/docs/platform/object-storage/how-to-use-object-storage/)
+        guide.
+        - To delete large amounts of objects, consult our guide on
+        [Lifecycle Policies](https://www.linode.com/docs/platform/object-storage/lifecycle-policies/).
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      tags:
+      - Object Storage
+      responses:
+        '200':
+          description: Object Storage cancellation successful.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4beta/object-storage/cancel
+        - lang: CLI
+          source: >
+            linode-cli object-storage cancel
   /profile:
     x-linode-cli-command: profile
     get:
@@ -11612,22 +11634,14 @@ paths:
         content:
           application/json:
             schema:
-               allOf:
-                - $ref: '#/components/schemas/Volume'
-                - type: object
-                  properties:
-                    region:
-                      allOf:
-                      - $ref: '#/components/schemas/Volume/properties/region'
-                      readOnly: true
-                    size:
-                      allOf:
-                      - $ref: '#/components/schemas/Volume/properties/size'
-                      readOnly: true
-                    linode_id:
-                      allOf:
-                      - $ref: '#/components/schemas/Volume/properties/linode_id'
-                      readOnly: true
+              allOf:
+              - $ref: '#/components/schemas/Volume'
+              - type: object
+                properties:
+                  size:
+                    readOnly: true
+                  linode_id:
+                    readOnly: true
       responses:
         '200':
           description: The updated Volume.
@@ -11721,12 +11735,10 @@ paths:
             schema:
               type: object
               required:
-              - linode
+              - linode_id
               properties:
                 linode_id:
-                  allOf:
-                  - $ref: '#/components/schemas/Volume/properties/linode_id'
-                  readOnly: false
+                  $ref: '#/components/schemas/Volume/properties/linode_id'
                 config_id:
                   type: integer
                   description: >
@@ -12271,6 +12283,19 @@ components:
             or later.
           example: true
           x-linode-cli-display: 4
+        object_storage:
+          type: string
+          readOnly: true
+          enum:
+          - disabled
+          - suspended
+          - active
+          description: >
+            A string describing the status of this account's Object Storage
+            service enrollment.
+          default: disabled
+          example: active
+          x-linode-cli-display: 5
     AuthorizedApp:
       type: object
       description: >
@@ -12435,7 +12460,6 @@ components:
       properties:
         card_number:
           type: string
-          format: PAN
           description: Your credit card number. No spaces or dashes allowed.
           minLength: 13
           maxLength: 23
@@ -13059,6 +13083,13 @@ components:
           example: '2018-01-01T00:01:01'
           x-linode-cli-display: 6
           x-linode-filterable: true
+        duration:
+          type: number
+          readOnly: true
+          description: >
+            The total duration in seconds that it takes for the Event to complete.
+          example: 300.56
+          x-linode-cli-display: 10
         entity:
           type: object
           readOnly: true
