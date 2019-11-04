@@ -12283,6 +12283,19 @@ components:
             or later.
           example: true
           x-linode-cli-display: 4
+        object_storage:
+          type: string
+          readOnly: true
+          enum:
+          - disabled
+          - suspended
+          - active
+          description: >
+            A string describing the status of this account's Object Storage
+            service enrollment.
+          default: disabled
+          example: active
+          x-linode-cli-display: 5
     AuthorizedApp:
       type: object
       description: >
