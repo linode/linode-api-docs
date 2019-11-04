@@ -13025,6 +13025,13 @@ components:
           example: '2018-01-01T00:01:01'
           x-linode-cli-display: 6
           x-linode-filterable: true
+        duration:
+          type: number
+          readOnly: true
+          description: >
+            The total duration in seconds that it takes for the Event to complete.
+          example: 300.56
+          x-linode-cli-display: 10
         entity:
           type: object
           readOnly: true
