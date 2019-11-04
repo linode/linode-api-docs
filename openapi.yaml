@@ -7869,7 +7869,7 @@ paths:
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: createFirewalls
@@ -8001,7 +8001,7 @@ paths:
         endpoint to review them.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       responses:
@@ -8051,7 +8051,7 @@ paths:
         `firewall_disable` Event will be generated.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: updateFirewall
@@ -8115,7 +8115,7 @@ paths:
         A `firewall_delete` Event is generated when this endpoint returns successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       responses:
@@ -8156,7 +8156,7 @@ paths:
         only Devices with an entity of type `linode` are accepted.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: getFirewallDevices
@@ -8208,7 +8208,7 @@ paths:
         A `firewall_device_add` Event is generated when the Firewall Device is added successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: createFirewallDevice
@@ -8275,7 +8275,7 @@ paths:
         only Devices with an entity of type `linode` are accepted.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: getFirewallDevice
@@ -8324,7 +8324,7 @@ paths:
         A `firewall_device_remove` Event is generated when the Firewall Device is removed successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       responses:
@@ -8360,7 +8360,7 @@ paths:
         Returns the inbound and outbound Rules for a Firewall.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: getFirewallRules
@@ -8397,7 +8397,7 @@ paths:
         Updates the inbound and outbound Rules for a Firewall.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
       operationId: updateFirewallRules
