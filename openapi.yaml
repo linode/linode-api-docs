@@ -7857,7 +7857,7 @@ paths:
       tags:
       - Networking
       summary: Create Firewall
-      description: >
+      description: |
         Creates a Firewall to filter network traffic. Use the `rules` property to
         create inbound and outbound access rules. Use the `devices` property to assign the
         Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode
@@ -7865,6 +7865,8 @@ paths:
 
         A Firewall can be assigned to multiple Linode services, and multiple Firewalls can be
         assigned to a single Linode service.
+
+        A `firewall_create` Event is generated when this endpoint returns successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -8029,7 +8031,7 @@ paths:
       summary: Update Firewall
       description: |
         Updates information for a Firewall. Some parts of a Firewall's configuration cannot
-        be manipuslated by this endpoint:
+        be manipulated by this endpoint:
 
         - A Firewall's Devices cannot be set with this endpoint. Instead, use the
         [Create Firewall Device](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-devices/#post)
@@ -8044,6 +8046,9 @@ paths:
         set to `deleted`. Instead, use the
         [Delete Firewall](http://developers.linode.com/api/v4/networking-firewalls-firewall-id/#delete)
         endpoint to delete a Firewall.
+
+        If a Firewall's status is changed with this endpoint, a corresponding `firewall_enable` or
+        `firewall_disable` Event will be generated.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -8106,6 +8111,8 @@ paths:
       description: |
         Delete a Firewall resource by its ID. This will remove all of the Firewall's Rules
         from any Linode services that it was assigned to.
+
+        A `firewall_delete` Event is generated when this endpoint returns successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -8198,7 +8205,7 @@ paths:
         as the Device's `entity`). Currently, only Devices with an entity of type `linode` are accepted.
 
         Creating a Firewall Device will apply the Rules from a Firewall to a Linode service.
-        A `firewall_device_add` event is generated when the Firewall Device is added successfully.
+        A `firewall_device_add` Event is generated when the Firewall Device is added successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -8313,6 +8320,8 @@ paths:
         assigned to by the Device. This will remove all of the Firewall's Rules from the Linode
         service. If any other Firewalls have been assigned to the Linode service, then those Rules
         will remain in effect.
+
+        A `firewall_device_remove` Event is generated when the Firewall Device is removed successfully.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receiving breaking
@@ -13503,6 +13512,11 @@ components:
           - dns_zone_delete
           - dnz_zone_import
           - dns_zone_update
+          - firewall_create
+          - firewall_delete
+          - firewall_disable
+          - firewall_enable
+          - firewall_update
           - firewall_device_add
           - firewall_device_remove
           - host_reboot
@@ -13642,6 +13656,7 @@ components:
               - community
               - disks
               - domain
+              - firewall
               - image
               - ipaddress
               - linode
