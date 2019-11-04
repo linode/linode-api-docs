@@ -12273,13 +12273,14 @@ components:
           x-linode-cli-display: 4
         object_storage:
           type: string
+          readOnly: true
           enum:
           - disabled
           - suspended
           - active
           description: >
             A string describing the status of this account's Object Storage
-            service enrollement.
+            service enrollment.
           default: disabled
           example: active
           x-linode-cli-display: 5
