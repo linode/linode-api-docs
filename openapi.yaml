@@ -13061,9 +13061,9 @@ components:
           x-linode-filterable: true
         duration:
           type: number
+          readOnly: true
           description: >
-            The total duration in seconds of an Event's jobs from the time the first job to start started,
-            to the time the last job to finish finished.
+            The total duration in seconds that it takes for the Event to complete.
           example: 300.56
           x-linode-cli-display: 10
         entity:
