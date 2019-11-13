@@ -6433,7 +6433,6 @@ paths:
   /lke/clusters/{clusterId}/api-endpoint:
     parameters:
       - $ref: '#/components/parameters/clusterId'
-
     x-linode-cli-command: lke
     get:
       operationId: getLKEClusterAPIEndpoint
@@ -6446,9 +6445,9 @@ paths:
       - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
-      summary: View LKE API Endpoint
+      summary: View Kubernetes API Endpoint
       description: >
-        Get the API endpoint for your cluster.
+        Get the Kubernetes API server endpoints for this cluster.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
@@ -6457,7 +6456,7 @@ paths:
         beta.
       responses:
         '200':
-          description: Returns the URL of the API endpoint for this Cluster.
+          description: Returns the Kubernetes API server endpoints for this cluster.
           content:
             application/json:
               schema:
@@ -6467,7 +6466,9 @@ paths:
                     type: string
                     readOnly: true
                     description: >
-                      The URL of the API endpoint for this Cluster.
+                      The Kubernetes API server endpoints for this cluster.
+                example:
+                  endpoints: "https://192.0.2.1:6443"
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
