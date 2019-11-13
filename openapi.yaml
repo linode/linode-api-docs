@@ -5940,10 +5940,10 @@ paths:
         Lists current Kubernetes clusters available on your account.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns an array of all Kubernetes clusters on your Account.
@@ -5992,15 +5992,16 @@ paths:
         Kubernetes cluster is ready to use.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: Configuration for the Kubernetes cluster
         content:
           application/json:
             schema:
+              type: object
               required:
               - label
               - region
@@ -6011,15 +6012,14 @@ paths:
               properties:
                 node_pools:
                   allOf:
-                  - $ref: '#/components/schemas/LKENodePoolRequestBody'
+                    - $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Kubernetes cluster creation has started.
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/LKECluster'
+                $ref: '#/components/schemas/LKECluster'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6047,7 +6047,12 @@ paths:
             # you must run subsequent pool-create commands
   /lke/clusters/{clusterId}:
     parameters:
-      - $ref: '#/components/parameters/clusterId'
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
     x-linode-cli-command: lke
     get:
       operationId: getLKECluster
@@ -6065,10 +6070,10 @@ paths:
         Get a specific Cluster by ID.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6102,20 +6107,18 @@ paths:
         Updates a Kubernetes cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: The fields to update the Kubernetes cluster.
         content:
           application/json:
             schema:
-              type: object
               properties:
                 label:
-                  allOf:
-                    - $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+                  $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6162,10 +6165,10 @@ paths:
             cluster
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Delete successful
@@ -6186,7 +6189,12 @@ paths:
           linode-cli lke cluster-delete 12345
   /lke/clusters/{clusterId}/pools:
     parameters:
-      - $ref: '#/components/parameters/clusterId'
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
     x-linode-cli-command: lke
     get:
       operationId: getLKEClusterPools
@@ -6204,10 +6212,10 @@ paths:
         Returns all active Node Pools on a Kubernetes cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns an array of all Pools in this Kubernetes cluster.
@@ -6252,10 +6260,10 @@ paths:
         Creates a new Node Pool for the designated Kubernetes cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: Configuration for the Node Pool
         required: true
@@ -6265,8 +6273,7 @@ paths:
               required:
               - type
               - count
-              allOf:
-              - $ref: '#/components/schemas/LKENodePoolRequestBody'
+              $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Node Pool has been created.
@@ -6293,13 +6300,18 @@ paths:
             --count 6 \
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
-      - $ref: '#/components/parameters/clusterId'
-      - name: poolId
-        in: path
-        description: ID of the Pool to look up
-        required: true
-        schema:
-          type: integer
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
+    - name: poolId
+      in: path
+      description: ID of the Pool to look up
+      required: true
+      schema:
+        type: integer
     x-linode-cli-command: lke
     get:
       operationId: getLKENodePool
@@ -6317,10 +6329,10 @@ paths:
         Get a specific Node Pool by ID.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns the requested Node Pool.
@@ -6354,20 +6366,18 @@ paths:
         fashion.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: The fields to update
         content:
           application/json:
             schema:
-              type: object
               properties:
                 count:
-                  allOf:
-                    - $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                  $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
       responses:
         '200':
           description: Node Pool was successfully modified.
@@ -6408,10 +6418,10 @@ paths:
         Deleting a Node Pool will delete all Linodes within that Pool.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Delete successful
@@ -6432,8 +6442,12 @@ paths:
           linode-cli lke pool-delete 12345 456
   /lke/clusters/{clusterId}/api-endpoint:
     parameters:
-      - $ref: '#/components/parameters/clusterId'
-
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
     x-linode-cli-command: lke
     get:
       operationId: getLKEClusterAPIEndpoint
@@ -6451,10 +6465,10 @@ paths:
         Get the API endpoint for your cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns the URL of the API endpoint for this Cluster.
@@ -6480,7 +6494,12 @@ paths:
           linode-cli lke api-endpoint-view 12345
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
-      - $ref: '#/components/parameters/clusterId'
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
     x-linode-cli-command: lke
     get:
       operationId: getLKEClusterKubeconfig
@@ -6498,10 +6517,10 @@ paths:
         Get the Kubeconfig file for a Cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns the Base64-encoded Kubeconfig file for this Kubernetes cluster.
@@ -6545,10 +6564,10 @@ paths:
         to a Kubernetes cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: >
@@ -6606,10 +6625,10 @@ paths:
         to a Kubernetes cluster.
 
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
-        beta.
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: >
@@ -12556,6 +12575,8 @@ components:
             'ips:read_write': Allows access to all endpoints related to your ips.
             'linodes:read_only': Allows access to GET Linodes on your Account.
             'linodes:read_write': Allow access to all endpoints related to your Linodes.
+            'lke:read_only': Allows access to GET LKE Clusters on your Account.
+            'lke:read_write': Allows access to all endpoints related to LKE Clusters on your Account.
             'longview:read_only': Allows access to GET your Longview Clients.
             'longview:read_write': Allows access to all endpoints related to your Longview Clients.
             'nodebalancers:read_only': Allows access to GET NodeBalancers on your Account.
@@ -12595,13 +12616,6 @@ components:
         minimum: 25
         maximum: 100
         default: 100
-    clusterId:
-        name: clusterId
-        in: path
-        description: ID of the Kubernetes cluster to look up.
-        required: true
-        schema:
-          type: integer
   links:
     bootLinode:
       operationId: bootLinodeInstance
@@ -12714,7 +12728,6 @@ components:
                 description: >
                   The amount of credit left for this month for this promotion.
                 example:  "10.00"
-
         active_since:
           type: string
           format: date-time
@@ -15416,6 +15429,7 @@ components:
       - region
       - version
     LKECluster:
+      type: object
       # Note that LKECluster inherits all properties of
       # LKEClusterRequestBody and then overrides some of the sub-properties
       allOf:
@@ -15425,7 +15439,7 @@ components:
           type: integer
           description: This Kubernetes cluster's unique ID.
           readOnly: true
-          example: 12345
+          example: "12345"
           x-linode-cli-display: 1
         created:
           type: string
@@ -15443,24 +15457,22 @@ components:
         # LKEClusterRequestBody but otherwise inherit all of the original
         # sub-properties.
         label:
-          allOf:
-          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
           x-linode-filterable: true
           x-linode-cli-display: 2
+          example: lkecluster12345
         region:
-          allOf:
-          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/region'
           readOnly: true
           x-linode-filterable: true
           x-linode-cli-display: 3
+          example: us-central
         version:
-          allOf:
-          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/version'
           x-linode-filterable: true
+          example: "1.16"
         tags:
-          allOf:
-          - $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
           x-linode-filterable: true
+          example:
+          - ecomm
+          - blogs
     LKENodePoolRequestBody:
       type: object
       description: >
@@ -15475,12 +15487,11 @@ components:
           description: The number of nodes in the Node Pool.
           minimum: 1
           maximum: 100
-      example:
-        type: "g6-standard-4"
-        count: 6
+          example: 6
     LKENodePool:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
+      type: object
       allOf:
       - $ref: '#/components/schemas/LKENodePoolRequestBody'
       description: >
@@ -15491,7 +15502,8 @@ components:
         id:
           type: integer
           description: >
-           This Node Pool's unique ID.
+            This Node Pool's unique ID.
+          example: 456
         linodes:
           type: array
           description: >
@@ -15499,25 +15511,7 @@ components:
             Pool. If a Linode has not been provisioned for a given Node slot,
             its ID will be returned as null.
           items:
-            allOf:
-            - $ref: '#/components/schemas/LKELinodeStatus'
-      example:
-        id: 456
-        type: "g6-standard-4"
-        count: 6
-        linodes:
-          - id: 123456
-            status: "ready"
-          - id: 123457
-            status: "ready"
-          - id: 123458
-            status: "ready"
-          - id: 123459
-            status: "ready"
-          - id: 123460
-            status: "not_ready"
-          - id: 123461
-            status: "not_ready"
+            $ref: '#/components/schemas/LKELinodeStatus'
     LKELinodeStatus:
       type: object
       description: >
@@ -15539,9 +15533,7 @@ components:
           enum:
           - ready
           - not_ready
-      example:
-        id: 123456
-        status: ready
+          example: ready
     LKEVersion:
       type: object
       description: >
