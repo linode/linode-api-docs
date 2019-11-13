@@ -6258,10 +6258,15 @@ paths:
         beta.
       requestBody:
         description: Configuration for the Node Pool
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LKENodePoolRequestBody'
+              required:
+              - type
+              - count
+              allOf:
+              - $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Node Pool has been created.
@@ -15463,6 +15468,7 @@ components:
         cluster.
       properties:
         type:
+          required: true
           type: string
           description: A Linode Type for all of the nodes in the Node Pool.
           example: "g6-standard-4"
