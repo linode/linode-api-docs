@@ -6447,7 +6447,7 @@ paths:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes API Endpoint
       description: >
-        Get the Kubernetes API server endpoints for this cluster.
+        Get the Kubernetes API server endpoint for this cluster.
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
@@ -6456,7 +6456,7 @@ paths:
         beta.
       responses:
         '200':
-          description: Returns the Kubernetes API server endpoints for this cluster.
+          description: Returns the Kubernetes API server endpoint for this cluster.
           content:
             application/json:
               schema:
@@ -6466,7 +6466,7 @@ paths:
                     type: string
                     readOnly: true
                     description: >
-                      The Kubernetes API server endpoints for this cluster.
+                      The Kubernetes API server endpoint for this cluster.
                 example:
                   endpoints: "https://192.0.2.1:6443"
         default:
