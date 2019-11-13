@@ -6460,9 +6460,9 @@ paths:
       - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
-      summary: View LKE API Endpoint
+      summary: View Kubernetes API Endpoint
       description: >
-        Get the API endpoint for your cluster.
+        Get the Kubernetes API server endpoint for this cluster.
 
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
@@ -6471,7 +6471,7 @@ paths:
         beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
-          description: Returns the URL of the API endpoint for this Cluster.
+          description: Returns the Kubernetes API server endpoint for this cluster.
           content:
             application/json:
               schema:
@@ -6481,7 +6481,8 @@ paths:
                     type: string
                     readOnly: true
                     description: >
-                      The URL of the API endpoint for this Cluster.
+                      The Kubernetes API server endpoint for this cluster.
+                    example: "https://192.0.2.1:6443"
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
