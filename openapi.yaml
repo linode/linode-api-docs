@@ -6020,10 +6020,6 @@ paths:
               schema:
                 allOf:
                 - $ref: '#/components/schemas/LKECluster'
-                properties:
-                  node_pools:
-                    allOf:
-                    - $ref: '#/components/schemas/LKENodePool'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6033,14 +6029,14 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                   "label": "cluster12345",
-                  "region": "us-east",
-                  "version": "1.14",
+                  "region": "us-central",
+                  "version": "1.16",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
                     { "type": "g6-standard-4", "count": 6},
                     { "type": "g6-standard-8", "count": 3}
                   ]
-                }'
+                }' \
                 https://api.linode.com/v4beta/lke/clusters
       - lang: CLI
         source: >
@@ -6134,7 +6130,7 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "label": "lkecluster54321"
-                }'
+                }' \
                 https://api.linode.com/v4beta/lke/clusters/12345
       - lang: CLI
         source: >
@@ -6283,7 +6279,7 @@ paths:
                 -X POST -d '{
                   "type": "g6-standard-4",
                   "count": 6
-                }'
+                }' \
                 https://api.linode.com/v4beta/lke/clusters/12345/pools
       - lang: CLI
         source: >
@@ -6322,7 +6318,7 @@ paths:
         beta.
       responses:
         '200':
-          description: Returns a the requested Node Pool.
+          description: Returns the requested Node Pool.
           content:
             application/json:
               schema:
@@ -6381,7 +6377,7 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "count": 6
-                }'
+                }' \
                 https://api.linode.com/v4beta/lke/clusters/12345/pools/456
       - lang: CLI
         source: >
@@ -6429,6 +6425,54 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke pool-delete 12345 456
+  /lke/clusters/{clusterId}/api-endpoint:
+    parameters:
+      - $ref: '#/components/parameters/clusterId'
+
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEClusterAPIEndpoint
+      x-linode-cli-action: api-endpoint-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: View LKE API Endpoint
+      description: >
+        Get the API endpoint for your cluster.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      responses:
+        '200':
+          description: Returns the URL of the API endpoint for this Cluster.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  endpoints:
+                    type: string
+                    readOnly: true
+                    description: >
+                      The URL of the API endpoint for this Cluster.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters/12345/api-endpoint
+      - lang: CLI
+        source: >
+          linode-cli lke api-endpoint-view 12345
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
       - $ref: '#/components/parameters/clusterId'
@@ -6576,10 +6620,10 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/versions/1.15
+                https://api.linode.com/v4beta/lke/versions/1.16
       - lang: CLI
         source: >
-          linode-cli lke version-view 1.15
+          linode-cli lke version-view 1.16
   /longview/clients:
     x-linode-cli-command: longview
     get:
@@ -15345,12 +15389,12 @@ components:
         region:
           type: string
           description: This Kubernetes cluster's location.
-          example: us-east
+          example: us-central
         version:
           type: string
           description: >
             The desired Kubernetes version for this Kubernetes cluster.
-          example: "1.14"
+          example: "1.16"
         tags:
           type: array
           description: >
@@ -15378,21 +15422,6 @@ components:
           readOnly: true
           example: 12345
           x-linode-cli-display: 1
-        status:
-          type: string
-          description: >
-            A brief description of this Kubernetes cluster's current state.
-            This field may change without direct action from you.
-          readOnly: true
-          enum:
-          - provisioning
-          - running
-          - deleting
-          example: running
-          x-linode-cli-display: 4
-          x-linode-cli-color:
-            running: green
-            default_: yellow
         created:
           type: string
           format: date-time
@@ -15520,7 +15549,7 @@ components:
           description: >
             A Kubernetes version number available for deployment
             to a Kubernetes cluster.
-          example: "1.15"
+          example: "1.16"
     LongviewClient:
       type: object
       description: >
