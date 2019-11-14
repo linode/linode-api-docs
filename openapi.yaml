@@ -7821,7 +7821,7 @@ paths:
       summary: List IPv6 Pools
       description: >
         Displays the IPv6 pools on your Account. A pool of IPv6 addresses are routed to all of your
-        Linodes in a single Region. Any Linode on your Account may bring up any address in this
+        Linodes in a single [Region](https://developers.linode.com/api/v4/regions). Any Linode on your Account may bring up any address in this
         pool at any time, with no external configuration required.
       operationId: getIPv6Pools
       x-linode-cli-action: v6-pools
@@ -7868,7 +7868,7 @@ paths:
       summary: List IPv6 Ranges
       description: >
         Displays the IPv6 ranges on your Account. A range of IPv6 addresses is routed to a single
-        Linode in a given Region. Your Linode is responsible for routing individual addresses in
+        Linode in a given [Region](https://developers.linode.com/api/v4/regions). Your Linode is responsible for routing individual addresses in
         the range, or handling traffic for all the addresses in the range.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
