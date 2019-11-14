@@ -7820,7 +7820,9 @@ paths:
       - Networking
       summary: List IPv6 Pools
       description: >
-        Displays the IPv6 pools on your Account.
+        Displays the IPv6 pools on your Account. A pool of IPv6 addresses are routed to all of your
+        Linodes in a single Region. Any Linode on your Account may bring up any address in this
+        pool at any time, with no external configuration required.
       operationId: getIPv6Pools
       x-linode-cli-action: v6-pools
       security:
@@ -7865,7 +7867,9 @@ paths:
       - Networking
       summary: List IPv6 Ranges
       description: >
-        Displays the IPv6 ranges on your Account.
+        Displays the IPv6 ranges on your Account. A range of IPv6 addresses is routed to a single
+        Linode in a given Region. Your Linode is responsible for routing individual addresses in
+        the range, or handling traffic for all the addresses in the range.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
       security:
@@ -13962,27 +13966,31 @@ components:
         range:
           type: string
           description: >
-            The IPv6 pool
+            The IPv6 range of addresses in this pool.
           example: '2600:3c01::02:5000::'
           readOnly: true
           x-linode-cli-display: 1
         prefix:
           type: integer
           description: >
-            The prefix length of the address, denoting which addresses can be
-            assigned from this pool.
+            The prefix length of the address, denoting how many addresses can be
+            assigned from this pool calculated as 2 <sup>128-prefix</sup>.
           example: 124
           x-linode-cli-display: 2
         region:
           type: string
           description: >
-            A pool of IPv6 addresses that are routed to all of
-            your Linodes in a single Region. Any Linode you own may bring up any
-            address in this pool at any time, with no external configuration
-            required.
+            The region for this pool of IPv6 addresses.
           example: us-east
           readOnly: true
           x-linode-cli-display: 3
+          x-linode-filterable: true
+        route_target:
+          type: string
+          description: >
+            The last address in this block of IPv6 addresses.
+          example: '2600:3c01::02:5000::ca72'
+          nullable: true
     IPv6Range:
       type: object
       description: >
@@ -13991,17 +13999,14 @@ components:
         range:
           type: string
           description: >
-            The IPv6 range.
+            The IPv6 range of addresses in this pool.
           example: '2600:3c01::02:5000::'
           readOnly: true
           x-linode-cli-display: 1
         region:
           type: string
           description: >
-            A range of IPv6 addresses routed to a single Linode in the given
-            Region. Your Linode is responsible for routing individual addresses
-            in the range, or handling traffic for all of the addresses in the
-            range.
+            The region for this range of IPv6 addresses.
           example: us-east
           readOnly: true
           x-linode-cli-display: 2
