@@ -6042,8 +6042,8 @@ paths:
         source: >
           linode-cli lke cluster-create \
             --label cluster12345 \
-            --region us-east \
-            --version 1.14 \
+            --region us-central \
+            --version 1.16 \
             # you must run subsequent pool-create commands
   /lke/clusters/{clusterId}:
     parameters:
@@ -15414,14 +15414,13 @@ components:
         version:
           type: string
           description: >
-            The desired Kubernetes version for this Kubernetes cluster.
+            The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
+            and the latest supported patch version will be deployed.
           example: "1.16"
         tags:
           type: array
           description: >
-            An array of tags applied to the Kubernetes cluster and _all
-            resources created by the Kubernetes cluster_ (such as NodeBalancers
-            and Volumes). Tags are for organizational purposes only.
+            An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
           items:
             type: string
           example:
@@ -15442,8 +15441,8 @@ components:
           type: integer
           description: This Kubernetes cluster's unique ID.
           readOnly: true
-          example: "12345"
           x-linode-cli-display: 1
+          example: 1234
         created:
           type: string
           format: date-time
@@ -15547,7 +15546,8 @@ components:
           type: string
           description: >
             A Kubernetes version number available for deployment
-            to a Kubernetes cluster.
+            to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
+            and the latest supported patch version.
           example: "1.16"
     LongviewClient:
       type: object
