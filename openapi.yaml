@@ -15429,7 +15429,9 @@ components:
           description: >
             The protocol this port is configured to serve.
 
-            * If this is set to `https` you must include an `ssl_cert` and an `ssl_key`.
+            * If using `http` or `tcp` protocol, `ssl_cert` and `ssl_key` are not supported.
+
+            * If using `https` protocol, `ssl_cert` and `ssl_key` are required.
           example: http
           x-linode-cli-display: 3
         algorithm:
