@@ -6050,6 +6050,11 @@ paths:
               - node_pools
               allOf:
               - $ref: '#/components/schemas/LKEClusterRequestBody'
+              - properties:
+                  node_pools:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Kubernetes cluster creation has started.
@@ -15568,10 +15573,6 @@ components:
           example:
           - ecomm
           - blogs
-        node_pools:
-          type: array
-          items:
-            $ref: '#/components/schemas/LKENodePoolRequestBody'
       required:
       - label
       - region
