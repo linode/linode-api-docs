@@ -3326,6 +3326,12 @@ paths:
           description: A collection of the specified Linode's available backups.
           content:
             application/json:
+              x-linode-cli-rows:
+              - automatic
+              - snapshot.current
+              - snapshot.in_progress
+              x-linode-cli-use-schema:
+                $ref: '#/components/schemas/Backup'
               schema:
                 type: object
                 properties:
