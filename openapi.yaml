@@ -17323,7 +17323,7 @@ components:
             This region's current operational status.
           example: ok
           readOnly: true
-          x-linode-cli-display: 3
+          x-linode-cli-display: 4
     RescueDevices:
       type: object
       properties:
