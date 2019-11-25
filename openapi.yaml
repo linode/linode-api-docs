@@ -17317,6 +17317,13 @@ components:
           - Object Storage
           readOnly: true
           x-linode-cli-display: 3
+        status:
+          type: string
+          description: >
+            This region's current operational status.
+          example: ok
+          readOnly: true
+          x-linode-cli-display: 3
     RescueDevices:
       type: object
       properties:
