@@ -15660,6 +15660,13 @@ components:
             its ID will be returned as null.
           items:
             $ref: '#/components/schemas/LKELinodeStatus'
+          example:
+            - id: 123456
+              status: ready
+            - id : 123457
+              status: ready
+            - id: 123458
+              status: not_ready
     LKELinodeStatus:
       type: object
       description: >
