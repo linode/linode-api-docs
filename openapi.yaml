@@ -3326,6 +3326,12 @@ paths:
           description: A collection of the specified Linode's available backups.
           content:
             application/json:
+              x-linode-cli-rows:
+              - automatic
+              - snapshot.current
+              - snapshot.in_progress
+              x-linode-cli-use-schema:
+                $ref: '#/components/schemas/Backup'
               schema:
                 type: object
                 properties:
@@ -6263,6 +6269,18 @@ paths:
           description: Returns an array of all Pools in this Kubernetes cluster.
           content:
             application/json:
+              x-linode-cli-nested-list: linodes
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  id:
+                    x-linode-cli-display: 1
+                  type:
+                    x-linode-cli-display: 2
+                  linodes.id:
+                    x-linode-cli-display: 3
+                  linodes.status:
+                    x-linode-cli-display: 4
               schema:
                 type: object
                 properties:
