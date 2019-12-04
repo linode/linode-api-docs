@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.9.0
+  version: 4.10.0
   title: Linode API
   description: |
     # Introduction
@@ -3326,6 +3326,12 @@ paths:
           description: A collection of the specified Linode's available backups.
           content:
             application/json:
+              x-linode-cli-rows:
+              - automatic
+              - snapshot.current
+              - snapshot.in_progress
+              x-linode-cli-use-schema:
+                $ref: '#/components/schemas/Backup'
               schema:
                 type: object
                 properties:
@@ -6050,10 +6056,11 @@ paths:
               - node_pools
               allOf:
               - $ref: '#/components/schemas/LKEClusterRequestBody'
-              properties:
-                node_pools:
-                  allOf:
-                    - $ref: '#/components/schemas/LKENodePoolRequestBody'
+              - properties:
+                  node_pools:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Kubernetes cluster creation has started.
@@ -6262,6 +6269,18 @@ paths:
           description: Returns an array of all Pools in this Kubernetes cluster.
           content:
             application/json:
+              x-linode-cli-nested-list: linodes
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  id:
+                    x-linode-cli-display: 1
+                  type:
+                    x-linode-cli-display: 2
+                  linodes.id:
+                    x-linode-cli-display: 3
+                  linodes.status:
+                    x-linode-cli-display: 4
               schema:
                 type: object
                 properties:
@@ -13451,7 +13470,7 @@ components:
           x-linode-cli-display: 3
         domain:
           type: string
-          pattern: ([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)
+          pattern: ([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+\.?)
           description: >
             The domain this Domain represents. Domain labels cannot be longer than
             63 characters and must conform to [RFC1035](https://tools.ietf.org/html/rfc1035).
@@ -15628,6 +15647,7 @@ components:
         cluster.
       properties:
         type:
+          type: string
           description: A Linode Type for all of the nodes in the Node Pool.
           example: "g6-standard-4"
         count:
@@ -17317,6 +17337,13 @@ components:
           - Object Storage
           readOnly: true
           x-linode-cli-display: 3
+        status:
+          type: string
+          description: >
+            This region's current operational status.
+          example: ok
+          readOnly: true
+          x-linode-cli-display: 4
     RescueDevices:
       type: object
       properties:
