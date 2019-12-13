@@ -12995,7 +12995,7 @@ components:
         euuid:
           type: string
           description: >
-            An external unique identifier for this customer.
+            An external unique identifier for this account.
           format: uuid
           readOnly: true
           example: E1AF5EEC-526F-487D-B317EBEB34C87D71
