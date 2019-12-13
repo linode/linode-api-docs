@@ -12992,6 +12992,13 @@ components:
             If you do not live in a country that collects tax, this should be `null`.
           maxLength: 100
           example: ATU99999999
+        euuid:
+          type: string
+          description: >
+            An external unique identifier for this customer.
+          format: uuid
+          readOnly: true
+          example: E1AF5EEC-526F-487D-B317EBEB34C87D71
         zip:
           type: string
           description: The zip code of this Account's billing address.
