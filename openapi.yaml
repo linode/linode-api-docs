@@ -14028,7 +14028,6 @@ components:
           type: string
           nullable: true
           enum:
-          - null
           - read_only
           - read_write
           description: >
@@ -14071,7 +14070,6 @@ components:
               type: string
               nullable: true
               enum:
-              - null
               - read_only
               - read_write
               description: >
