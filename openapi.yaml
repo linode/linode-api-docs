@@ -17342,6 +17342,9 @@ components:
           description: >
             This region's current operational status.
           example: ok
+          enum:
+          - ok
+          - outage
           readOnly: true
           x-linode-cli-display: 4
     RescueDevices:
