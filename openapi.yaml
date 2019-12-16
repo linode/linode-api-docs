@@ -14224,6 +14224,14 @@ components:
             Only Images created automatically (from a deleted Linode; type=automatic) will expire.
           example: '2018-08-01T00:01:01'
           readOnly: true
+        eol:
+          type: string
+          format: date-time
+          description: >
+            The date of the image's planned end of life. Some images, like custom private images,
+            will not have an end of life date. In that case this field will be empty.
+          example: '2200-10-23T00:00:00'
+          readOnly: true
         vendor:
           x-linode-filterable: true
           type: string
@@ -14313,6 +14321,14 @@ components:
           description: >
             Only Images created automatically (from a deleted Linode; type=automatic) will expire.
           example: null
+          readOnly: true
+        eol:
+          type: string
+          format: date-time
+          description: >
+            The date of the image's planned end of life. Some images, like custom private images,
+            will not have an end of life date. In that case this field will be empty.
+          example: '2200-10-23T00:00:00'
           readOnly: true
         vendor:
           x-linode-filterable: true
