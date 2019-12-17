@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.10.0
+  version: 4.11.0
   title: Linode API
   description: |
     # Introduction
@@ -14234,7 +14234,7 @@ components:
           format: date-time
           description: >
             The date of the image's planned end of life. Some images, like custom private images,
-            will not have an end of life date. In that case this field will be empty.
+            will not have an end of life date. In that case this field will be `None`.
           example: '2200-10-23T00:00:00'
           readOnly: true
         vendor:
@@ -14332,7 +14332,7 @@ components:
           format: date-time
           description: >
             The date of the image's planned end of life. Some images, like custom private images,
-            will not have an end of life date. In that case this field will be empty.
+            will not have an end of life date. In that case this field will be `None`.
           example: '2200-10-23T00:00:00'
           readOnly: true
         vendor:
