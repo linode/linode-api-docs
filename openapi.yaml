@@ -14234,7 +14234,7 @@ components:
           format: date-time
           description: >
             The date of the image's planned end of life. Some images, like custom private images,
-            will not have an end of life date. In that case this field will be empty.
+            will not have an end of life date. In that case this field will be `none`.
           example: '2200-10-23T00:00:00'
           readOnly: true
         vendor:
