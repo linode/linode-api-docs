@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.10.0
+  version: 4.11.0
   title: Linode API
   description: |
     # Introduction
@@ -12992,6 +12992,13 @@ components:
             If you do not live in a country that collects tax, this should be `null`.
           maxLength: 100
           example: ATU99999999
+        euuid:
+          type: string
+          description: >
+            An external unique identifier for this account.
+          format: uuid
+          readOnly: true
+          example: E1AF5EEC-526F-487D-B317EBEB34C87D71
         zip:
           type: string
           description: The zip code of this Account's billing address.
@@ -14021,7 +14028,6 @@ components:
           type: string
           nullable: true
           enum:
-          - null
           - read_only
           - read_write
           description: >
@@ -14064,7 +14070,6 @@ components:
               type: string
               nullable: true
               enum:
-              - null
               - read_only
               - read_write
               description: >
@@ -14224,6 +14229,14 @@ components:
             Only Images created automatically (from a deleted Linode; type=automatic) will expire.
           example: '2018-08-01T00:01:01'
           readOnly: true
+        eol:
+          type: string
+          format: date-time
+          description: >
+            The date of the image's planned end of life. Some images, like custom private images,
+            will not have an end of life date. In that case this field will be `None`.
+          example: '2200-10-23T00:00:00'
+          readOnly: true
         vendor:
           x-linode-filterable: true
           type: string
@@ -14313,6 +14326,14 @@ components:
           description: >
             Only Images created automatically (from a deleted Linode; type=automatic) will expire.
           example: null
+          readOnly: true
+        eol:
+          type: string
+          format: date-time
+          description: >
+            The date of the image's planned end of life. Some images, like custom private images,
+            will not have an end of life date. In that case this field will be `None`.
+          example: '2200-10-23T00:00:00'
           readOnly: true
         vendor:
           x-linode-filterable: true
@@ -15105,6 +15126,12 @@ components:
                   - W18
                   - W20
                   - W22
+            last_successful:
+              type: string
+              format: date-time
+              description: The last successful backup date. 'None' if there was no previous backup.
+              readOnly: true
+              example: '2018-01-01T00:01:01'
         watchdog_enabled:
           type: boolean
           description: >
@@ -17342,6 +17369,9 @@ components:
           description: >
             This region's current operational status.
           example: ok
+          enum:
+          - ok
+          - outage
           readOnly: true
           x-linode-cli-display: 4
     RescueDevices:
