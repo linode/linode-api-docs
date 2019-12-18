@@ -15129,7 +15129,7 @@ components:
             last_successful:
               type: string
               format: date-time
-              description: The last successful backup date. 'None' if there was no previous backup.
+              description: The last successful backup date. 'null' if there was no previous backup.
               readOnly: true
               example: '2018-01-01T00:01:01'
         watchdog_enabled:
