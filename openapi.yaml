@@ -9598,12 +9598,6 @@ paths:
 
         This endpoint is available for convenience. It is recommended that instead you
         use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/serviceops/) directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -9649,12 +9643,6 @@ paths:
 
         This endpoint is available for convenience. It is recommended that instead you
         use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket) directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -9752,12 +9740,6 @@ paths:
 
         This endpoint is available for convenience. It is recommended that instead you
         use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket) directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -9794,12 +9776,6 @@ paths:
 
         This endpoint is available for convenience. It is recommended that instead you
         use the more [fully- featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -9849,12 +9825,6 @@ paths:
 
         This endpoint is available for convenience. It is recommended that instead you
         use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -9932,12 +9902,6 @@ paths:
 
         This endpoint is available for convenience. It is recommended that instead you
         use the more [fully-featured S3 API](https://docs.ceph.com/docs/luminous/radosgw/s3/bucketops/#get-bucket) directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -10024,12 +9988,6 @@ paths:
         This endpoint is available for convenience. It is recommended that instead you
         use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/)
         directly.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -10111,12 +10069,6 @@ paths:
         Returns a paginated list of Object Storage Clusters that are available for
         use.  Users can connect to the clusters with third party clients to create buckets
         and upload objects.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       responses:
@@ -10164,12 +10116,6 @@ paths:
       summary: View Cluster
       description: |
         Returns a single Object Storage Cluster.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       responses:
@@ -10202,12 +10148,6 @@ paths:
       description: |
         Returns a paginated list of Object Storage Keys for authenticating to
         the Object Storage S3 API.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -10248,12 +10188,6 @@ paths:
       summary: Create an Object Storage Key
       description: |
         Provisions a new Object Storage Key on your account.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
       tags:
       - Object Storage
       security:
@@ -10316,12 +10250,6 @@ paths:
       summary: View Object Storage Key
       description: |
         Returns a single Object Storage Key provisioned for your account.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -10354,12 +10282,6 @@ paths:
       summary: Update an Object Storage Key
       description: |
         Updates an Object Storage Key on your account.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -10403,12 +10325,6 @@ paths:
       summary: Revoke Object Storage Key
       description: |
         Revokes an Object Storage Key.  This keypair will no longer be usable by third-party clients.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -10451,11 +10367,6 @@ paths:
         guide.
         - To delete large amounts of objects, consult our guide on
         [Lifecycle Policies](https://www.linode.com/docs/platform/object-storage/lifecycle-policies/).
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
       security:
       - personalAccessToken: []
       - oauth:
