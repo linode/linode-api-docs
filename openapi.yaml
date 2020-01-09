@@ -13501,8 +13501,6 @@ components:
           enum:
           - disabled
           - active
-          - edit_mode
-          - has_errors
           description: >
             Used to control whether this Domain is currently being rendered.
           example: active
