@@ -14395,7 +14395,7 @@ components:
           type: number
           readOnly: true
           description: The price, in US dollars, of the Invoice Item. Equal to the unit price multiplied by quantity.
-          example: 20.25
+          example: 20.20
           x-linode-cli-display: 4
         tax:
           type: number
@@ -14407,7 +14407,7 @@ components:
           type: number
           readOnly: true
           description: The price of this Item after taxes in US Dollars.
-          example: 21.50
+          example: 21.45
           x-linode-cli-display: 6
         from:
           type: string
