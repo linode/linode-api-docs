@@ -14276,44 +14276,44 @@ components:
           example: Invoice
           x-linode-cli-display: 3
         subtotal:
-          type: integer
+          type: number
           readOnly: true
           description: The amount of the Invoice before taxes in US Dollars.
-          example: 120
+          example: 120.25
           x-linode-cli-display: 4
         tax:
-          type: integer
+          type: number
           readOnly: true
           description: The amount of tax levied on the Invoice in US Dollars.
-          example: 12
+          example: 12.25
           x-linode-cli-display: 5
         total:
-          type: integer
+          type: number
           readOnly: true
           description: The amount of the Invoice after taxes in US Dollars.
-          example: 132
+          example: 132.50
           x-linode-cli-display: 6
     InvoiceItem:
       type: object
       description: An InvoiceItem object.
       properties:
         amount:
-          type: integer
+          type: number
           readOnly: true
           description: The price, in US dollars, of the Invoice Item. Equal to the unit price multiplied by quantity.
-          example: 20
+          example: 20.20
           x-linode-cli-display: 4
         tax:
-          type: integer
+          type: number
           readOnly: true
           description: The amount of tax levied on this Item in US Dollars.
-          example: 2
+          example: 1.25
           x-linode-cli-display: 5
         total:
-          type: integer
+          type: number
           readOnly: true
           description: The price of this Item after taxes in US Dollars.
-          example: 22
+          example: 21.45
           x-linode-cli-display: 6
         from:
           type: string
@@ -14332,7 +14332,7 @@ components:
           type: integer
           readOnly: true
           description: The quantity of this Item for the specified Invoice.
-          example: 2
+          example: 4
         to:
           type: string
           readOnly: true
@@ -14343,16 +14343,16 @@ components:
         type:
           type: string
           readOnly: true
-          description: The type of service, ether `prepay` or `misc`.
+          description: The type of service, ether `hourly` or `misc`.
           enum:
           - hourly
-          - prepay
           - misc
+          example: hourly
         unitprice:
-          type: integer
+          type: number
           readOnly: true
           description: The monthly service fee in US Dollars for this Item.
-          example: 10
+          example: 5.05
     IPAddress:
       type: object
       description: >
