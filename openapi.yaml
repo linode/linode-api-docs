@@ -52,14 +52,15 @@ info:
     application can start making API calls on the User's behalf. If all you need
     is a Personal Access Token, feel free to skip ahead to the next section.
 
-    First, the User visits the application's website and is directed to log with
-    Linode. The User is then redirected to Linode's authentication server and
-    presented the scope levels the application is requesting. Once the User
-    accepts the request for access, we redirect them back to the application's
+    1.  The User visits the application's website and is directed to log in with
+    Linode.
+    1.  The User is then redirected to Linode's authentication server and presented with
+    the scope levels the application is requesting.
+    1.  Once the User accepts the request for access, we redirect them back to the application's
     specified redirect URI with an access code.
 
-    Once the User has logged in to Linode and you have received an exchange code,
-    you will need to exchange that access code for an Authorization token. You
+    Once the User has logged into Linode and you have received an exchange code,
+    you will need to trade that exchange code for an Authorization token. You
     do this by making an HTTP POST request to the following address:
 
     ```
@@ -69,11 +70,11 @@ info:
     Make this request as `application/x-www-form-urlencoded` or as
     `multipart/form-data` and include the following parameters in the POST body:
 
-    | PARAMETER | DESCRIPTION |
-    |-----------|-------------|
-    | client_id | Your app's client ID |
-    | client_secret | Your app's client secret |
-    | code | The code you just received from the redirect |
+    | PARAMETER | DESCRIPTION | FIND OR UPDATE THIS INFORMATION |
+    |-----------|-------------|---------------------------------|
+    | client_id | Your app's client ID. | [List your OAuth Clients](https://developers.linode.com/api/v4/account-oauth-clients). |
+    | client_secret | Your app's client secret. | [View your OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients-client-id). [Reset Your OAuth Client Secret](https://developers.linode.com/api/v4/account-oauth-clients-client-id-reset-secret/#post). |
+    | code | The code you just received from the redirect | [View your OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients-client-id). [Reset Your OAuth Client Secret](https://developers.linode.com/api/v4/account-oauth-clients-client-id-reset-secret/#post). |
 
     You'll get a reponse like this:
 
