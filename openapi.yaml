@@ -7927,8 +7927,7 @@ paths:
                   "inbound": [
                     {
                       "protocol": "TCP",
-                      "start_port": 20,
-                      "end_port": 22,
+                      "ports": "22, 80, 443",
                       "addresses": {
                         "ipv4": [
                           "192.0.2.1",
@@ -7942,8 +7941,7 @@ paths:
                   ],
                   "outbound": [
                       "protocol": "TCP",
-                      "start_port": 20,
-                      "end_port": 22,
+                      "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
                           "192.0.2.1",
@@ -8042,7 +8040,7 @@ paths:
         [Update Firewall Rules](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-rules/#put)
         endpoint to update your Rules.
 
-        - A Firewall's status can be set by this endpoint, but it cannot be
+        - A Firewall's status can be set to `enabled` or `disabled` by this endpoint, but it cannot be
         set to `deleted`. Instead, use the
         [Delete Firewall](http://developers.linode.com/api/v4/networking-firewalls-firewall-id/#delete)
         endpoint to delete a Firewall.
@@ -8110,7 +8108,7 @@ paths:
         - firewall:read_write
       description: |
         Delete a Firewall resource by its ID. This will remove all of the Firewall's Rules
-        from any Linode services that it was assigned to.
+        from any Linode services that the Firewall was assigned to.
 
         A `firewall_delete` Event is generated when this endpoint returns successfully.
 
@@ -8394,7 +8392,8 @@ paths:
       - Networking
       summary: Update Firewall Rules
       description: |
-        Updates the inbound and outbound Rules for a Firewall.
+        Updates the inbound and outbound Rules for a Firewall. Using this endpoint will
+        replace all of a Firewall's ruleset with the Rules specified in your request.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -8430,7 +8429,7 @@ paths:
                   "inbound": [
                     {
                       "protocol": "TCP",
-                      "start_port": 80,
+                      "ports": "22, 80, 8080, 443"
                       "addresses": {
                         "ipv4": [
                           "192.0.2.1",
@@ -8444,8 +8443,7 @@ paths:
                   ],
                   "outbound": [
                       "protocol": "TCP",
-                      "start_port": 20,
-                      "end_port": 22,
+                      "ports": "49152-65535"
                       "addresses": {
                         "ipv4": [
                           "192.0.2.1",
@@ -8462,8 +8460,8 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls rules-update 123 \
-            --inbound '[{"protocol": "TCP", "start_port": 80, "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
-            --outbound '[{"protocol": "TCP", "start_port": 20, "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
+            --inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
+            --outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -13841,11 +13839,12 @@ components:
           description: >
              The inbound and outbound access rules to apply to the Firewall.
 
-              * A minimum of one open inbound port is required. Any inbound
-                port that is not open will be blocked.
-              * Outbound rules are optional. When no outbound ports are open, all outbound
-                ports are allowed. If you open one outbound port or more, all
-                remaining outbound ports will be blocked.
+              * A minimum of one open inbound rule is required. Any inbound
+                traffic that is not permitted by your rules will be blocked.
+              * Outbound rules are optional. When no outbound rules are specified,
+                all outbound traffic is allowed. If one or more outbound rules are
+                specified, all outbound traffic that is not permitted by your rules
+                will be blocked.
           properties:
             inbound:
               type: array
@@ -13871,33 +13870,33 @@ components:
     FirewallRuleConfig:
       type: object
       description: >
-        This Firewall's access rules. To open traffic on a range of ports
-        specify a `start_port` and an `end_port`.
+        One of a Firewall's inbound or outbound access rules. The `ports` property
+        can be used to allow traffic on a comma-separated list of different ports.
       required:
       - protocol
-      - start_port
       properties:
         protocol:
           type: string
           enum:
-          - ALL
           - TCP
           - UDP
           - ICMP
           description: >
             The type of network traffic to allow.
           example: TCP
-        start_port:
-          type: integer
-          description: >
-            The port on which traffic will be allowed. Must be a value of `1-65535`.
-          example: 20
-        end_port:
-          type: integer
-          description: >
-            The end port for a range of ports on which traffic will be allowed. This port must be greater than or equal to the `start_port`
-            and must be a value of `1-65535`.
-          example: 22
+        ports:
+          type: string
+          description: |
+            A string representing the port or ports on which traffic will be allowed:
+
+            - The string may be a single port, a range of ports, or a comma-separated list
+            of single ports and port ranges. A space is permitted following each comma.
+            - A range of ports is inclusive of the start and end values for the range. The
+            end value of the range must be greater than the start value.
+            - Ports must be within 1 and 65535.
+            - Ports may not be specified if a rule's protocol is `ICMP`. At least one port
+            must be specified if a rule's protocol is `TCP` or `UDP`.
+          example: '22-24, 80, 443'
         addresses:
           type: object
           description: >
