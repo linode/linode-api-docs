@@ -47,34 +47,45 @@ info:
     | **HTTP Authorization Scheme** | bearer |
 
     ## OAuth
+    If all you need is a Personal Access Token, feel free to skip ahead to the next section.
 
-    The OAuth workflow is a three-step process to authenticate a User before an
-    application can start making API calls on the User's behalf. If all you need
-    is a Personal Access Token, feel free to skip ahead to the next section.
+    For more help on OAuth see our guide on [How to Create an OAuth App with teh Linode Python API Library](https://www.linode.com/docs/platform/api/how-to-create-an-oauth-app-with-the-linode-python-api-library/#oauth-2-authentication-exchange).
 
-    1.  The User visits the application's website and is directed to log in with
-    Linode.
-    1.  The User is then redirected to Linode's authentication server and presented with
-    the scope levels the application is requesting.
-    1.  Once the User accepts the request for access, we redirect them back to the application's
-    specified redirect URI with an access code.
+    Before you begin, you need to [Create an OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients/#post).
 
-    Once the User has logged into Linode and you have received an exchange code,
-    you will need to trade that exchange code for an Authorization token. You
-    do this by making an HTTP POST request to the following address:
+      - For this you will pass a `label` and a `redirect_uri`.
+      - The return from this endpoint will give you a `client_id` and a `secret`.
+      - You can choose to make this `public`. The workflow below is split for public and private paths where they diverge.
 
-    ```
-    https://login.linode.com/oauth/token
-    ```
+    The OAuth workflow is a series of exchanges between your third-party app and Linode used
+    to authenticate a User before an application can start making API calls on the User's behalf.
 
-    Make this request as `application/x-www-form-urlencoded` or as
-    `multipart/form-data` and include the following parameters in the POST body:
+    | PRIVATE WORKFLOW | PUBLIC WORKFLOW |
+    |------------------|-----------------|
+    | 1.  The User visits the application's website and is directed to login with Linode. | 1.  The User visits the application's website and is directed to login with Linode. |
+    | 2.  Your application then redirects the user to Linode's [authentication server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which appear in the URL of the login page. | 2.  Your application then redirects the user to Linode's [authentication server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which appear in the URL of the login page. |
+    | 3.  The user logs into the authorization server with their username and password. | 3.  The user logs into the authorization server with their username and password. |
+    | 4.  The authorization server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The authorization server redirects the user back to your applaction with an OAuth token in the URL hash. This is temporary and expires in 2 hours without a `refresh_token`. |
+    | 5.  The application issues a POST request (*see below*) to the authentication server with the exchange code, `client_id`, and the client application's `client_secret`. In return, the server returns an OAuth token and `refresh_token`. |  |
+    | 6.  The authentication server responds to the client application with a new OAuth `access_token`. `access_token` is set to expire in 2 hours if not refreshed. |  |
+    | 7.  The refresh token can be used to get a new OAuth `access_token` for another 2 hours by contacting the authentication server again with the `client_id`, `client_secret`, and `refresh_token`. | |
 
-    | PARAMETER | DESCRIPTION | FIND OR UPDATE THIS INFORMATION |
-    |-----------|-------------|---------------------------------|
-    | client_id | Your app's client ID. | [List your OAuth Clients](https://developers.linode.com/api/v4/account-oauth-clients). |
-    | client_secret | Your app's client secret. | [View your OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients-client-id). [Reset Your OAuth Client Secret](https://developers.linode.com/api/v4/account-oauth-clients-client-id-reset-secret/#post). |
-    | code | The code you just received from the redirect | [View your OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients-client-id). [Reset Your OAuth Client Secret](https://developers.linode.com/api/v4/account-oauth-clients-client-id-reset-secret/#post). |
+      Once the User has logged into Linode and you have received an exchange code,
+      you will need to trade that exchange code for an Authorization token. You
+      do this by making an HTTP POST request to the following address:
+
+      ```
+      https://login.linode.com/oauth/token
+      ```
+
+      Make this request as `application/x-www-form-urlencoded` or as
+      `multipart/form-data` and include the following parameters in the POST body:
+
+      | PARAMETER | DESCRIPTION | FIND OR UPDATE THIS INFORMATION |
+      |-----------|-------------|---------------------------------|
+      | client_id | Your app's client ID. | [List your OAuth Clients](https://developers.linode.com/api/v4/account-oauth-clients). |
+      | client_secret | Your app's client secret. | [View your OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients-client-id). [Reset Your OAuth Client Secret](https://developers.linode.com/api/v4/account-oauth-clients-client-id-reset-secret/#post). |
+      | code | The code you just received from the redirect | [View your OAuth Client](https://developers.linode.com/api/v4/account-oauth-clients-client-id). [Reset Your OAuth Client Secret](https://developers.linode.com/api/v4/account-oauth-clients-client-id-reset-secret/#post). |
 
     You'll get a reponse like this:
 
