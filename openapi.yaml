@@ -65,14 +65,14 @@ info:
 
     ### OAuth Workflow
 
-    The OAuth spec refers to the private and public workflows listed as the [authorization code flow](https://tools.ietf.org/html/rfc6749#section-1.3.1) and [implicit flow](https://tools.ietf.org/html/rfc6749#section-1.3.2).
-
     The OAuth workflow is a series of exchanges between your third-party app and Linode. The workflow is used
     to authenticate a User before an application can start making API calls on the User's behalf.
 
-    Note: With respect to the diagram in [section 1.2 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-1.2), login.linode.com (referred to in this section as the *login server*)
+    Notes:
+
+    - With respect to the diagram in [section 1.2 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-1.2), login.linode.com (referred to in this section as the *login server*)
     is the Resource Owner and the Authorization Server; api.linode.com (referred to here as the *api server*) is the Resource Server.
-    The OAuth spec refers to the private and public workflows listed below as the [authorization code flow](https://tools.ietf.org/html/rfc6749#section-1.3.1) and [implicit flow](https://tools.ietf.org/html/rfc6749#section-1.3.2).
+    - The OAuth spec refers to the private and public workflows listed below as the [authorization code flow](https://tools.ietf.org/html/rfc6749#section-1.3.1) and [implicit flow](https://tools.ietf.org/html/rfc6749#section-1.3.2).
 
     | PRIVATE WORKFLOW | PUBLIC WORKFLOW |
     |------------------|------------------|
