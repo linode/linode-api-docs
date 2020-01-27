@@ -70,15 +70,18 @@ info:
     The OAuth workflow is a series of exchanges between your third-party app and Linode. The workflow is used
     to authenticate a User before an application can start making API calls on the User's behalf.
 
+    Note: With respect to the diagram in [section 1.2 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-1.2), login.linode.com (referred to in this section as the *login server*)
+    is the Resource Owner and the Authorization Server; api.linode.com (referred to here as the *api server*) is the Resource Server.
+
     | PRIVATE WORKFLOW | PUBLIC WORKFLOW |
     |------------------|------------------|
     | 1.  The User visits the application's website and is directed to login with Linode. | 1.  The User visits the application's website and is directed to login with Linode. |
-    | 2.  Your application then redirects the user to Linode's [authentication server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. | 2.  Your application then redirects the user to Linode's [authentication server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. |
-    | 3.  The user logs into the authorization server with their username and password. | 3.  The user logs into the authorization server with their username and password. |
-    | 4.  The authorization server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The authorization server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in 2 hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user login again. |
-    | 5.  The application issues a POST request (*see below*) to the authentication server with the exchange code, `client_id`, and the client application's `client_secret`. | |
-    | 6.  The authentication server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in 2 hours. | |
-    | 7.  The `refresh_token` can be used by contacting the authentication server with the `client_id`, `client_secret`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another 2 hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
+    | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. |
+    | 3.  The user logs into the login server with their username and password. | 3.  The user logs into the login server with their username and password. |
+    | 4.  The login server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The login server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in 2 hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user login again. |
+    | 5.  The application issues a POST request (*see below*) to the login server with the exchange code, `client_id`, and the client application's `client_secret`. | |
+    | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in 2 hours. | |
+    | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another 2 hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
 
     ### OAuth Private Workflow - Additional Details
 
