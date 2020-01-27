@@ -37,7 +37,7 @@ info:
     generated from the
     <a target="_top" href="https://cloud.linode.com/profile/tokens">Linode Cloud Manager</a>.
 
-    All scopes for the OAuth security model (defined below) apply to this
+    All scopes for the OAuth security model ([defined below](#o-auth)) apply to this
     security model as well.
 
     ### Authentication
@@ -47,19 +47,49 @@ info:
     | **HTTP Authorization Scheme** | bearer |
 
     ## OAuth
+    If you only need to access the Linode API for personal uses,
+    we recommend that you create a [personal access token](#personal-access-token).
+    If you're designing an application that can authenticate with an arbitrary Linode user, then
+    you should use the OAuth 2.0 workflows presented in this section.
 
-    The OAuth workflow is a three-step process to authenticate a User before an
-    application can start making API calls on the User's behalf. If all you need
-    is a Personal Access Token, feel free to skip ahead to the next section.
+    For a more detailed example of an OAuth 2.0 implementation, see our guide on [How to Create an OAuth App with the Linode Python API Library](https://www.linode.com/docs/platform/api/how-to-create-an-oauth-app-with-the-linode-python-api-library/#oauth-2-authentication-exchange).
 
-    First, the User visits the application's website and is directed to log with
-    Linode. The User is then redirected to Linode's authentication server and
-    presented the scope levels the application is requesting. Once the User
-    accepts the request for access, we redirect them back to the application's
-    specified redirect URI with an access code.
+    Before you implement OAuth in your application, you first need to create an OAuth client. You can do this [with the Linode API](https://developers.linode.com/api/v4/account-oauth-clients/#post) or [via the Cloud Manager](https://cloud.linode.com/profile/clients):
 
-    Once the User has logged in to Linode and you have received an exchange code,
-    you will need to exchange that access code for an Authorization token. You
+      - When creating the client, you'll supply a `label` and a `redirect_uri` (referred to as the Callback URL in the Cloud Manager).
+      - The response from this endpoint will give you a `client_id` and a `secret`.
+      - Clients can be public or private, and are private by default. You can choose to make the client public when it is created.
+        - A private client is used with applications which can securely store the client secret (that is, the secret returned to you when you first created the client). For example, an application running on a secured server that only the developer has access to would use a private OAuth client. This is also called a confidential client in some OAuth documentation.
+        - A public client is used with applications where the client secret is not guaranteed to be secure. For example, a native app running on a user's computer may not be able to keep the client secret safe, as a user could potentially inspect the source of the application. So, native apps or apps that run in a user's browser should use a public client.
+        - Public and private clients follow different workflows, as described below.
+
+    ### OAuth Workflow
+
+    The OAuth workflow is a series of exchanges between your third-party app and Linode. The workflow is used
+    to authenticate a User before an application can start making API calls on the User's behalf.
+
+    Notes:
+
+    - With respect to the diagram in [section 1.2 of RFC 6749](https://tools.ietf.org/html/rfc6749#section-1.2), login.linode.com (referred to in this section as the *login server*)
+    is the Resource Owner and the Authorization Server; api.linode.com (referred to here as the *api server*) is the Resource Server.
+    - The OAuth spec refers to the private and public workflows listed below as the [authorization code flow](https://tools.ietf.org/html/rfc6749#section-1.3.1) and [implicit flow](https://tools.ietf.org/html/rfc6749#section-1.3.2).
+
+    | PRIVATE WORKFLOW | PUBLIC WORKFLOW |
+    |------------------|------------------|
+    | 1.  The User visits the application's website and is directed to login with Linode. | 1.  The User visits the application's website and is directed to login with Linode. |
+    | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. |
+    | 3.  The user logs into the login server with their username and password. | 3.  The user logs into the login server with their username and password. |
+    | 4.  The login server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The login server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in 2 hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user log in again. |
+    | 5.  The application issues a POST request (*see below*) to the login server with the exchange code, `client_id`, and the client application's `client_secret`. | |
+    | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in 2 hours. | |
+    | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another 2 hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
+
+    ### OAuth Private Workflow - Additional Details
+
+    The following information expands on steps 5 through 7 of the private workflow:
+
+    Once the User has logged into Linode and you have received an exchange code,
+    you will need to trade that exchange code for an `access_token` and `refresh_token`. You
     do this by making an HTTP POST request to the following address:
 
     ```
@@ -71,11 +101,11 @@ info:
 
     | PARAMETER | DESCRIPTION |
     |-----------|-------------|
-    | client_id | Your app's client ID |
-    | client_secret | Your app's client secret |
-    | code | The code you just received from the redirect |
+    | client_id | Your app's client ID. |
+    | client_secret | Your app's client secret. |
+    | code | The code you just received from the redirect. |
 
-    You'll get a reponse like this:
+    You'll get a response like this:
 
     ```json
     {
@@ -86,18 +116,20 @@ info:
     }
     ```
 
-    Included in the reponse is `access_token`. With this token, you can proceed to make
+    Included in the reponse is an `access_token`. With this token, you can proceed to make
     authenticated HTTP requests to the API by adding this header to each request:
 
     ```
     Authorization: Bearer 03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c
     ```
 
-    ### Authentication
+    ### OAuth Reference
 
-    | Security Scheme Type: | Oauth2 |
+    | Security Scheme Type | OAuth 2.0 |
     |-----------------------|--------|
-    | **AuthorizationCode Oauth Flow** |  **Authorization URL:** https://login.linode.com/oauth/authorize<br />**Token URL:** https://login.linode.com/oauth/token<br />**Scopes:**<br /><ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`lke:read_only` - Allows access to GET LKE Clusters on your Account.</li><li>`lke:read_write` - Allows access to all endpoints related to LKE Clusters on your Account.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br />|
+    | **Authorization URL** | https://login.linode.com/oauth/authorize |
+    | **Token URL** | https://login.linode.com/oauth/token |
+    | **Scopes** | <ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`lke:read_only` - Allows access to GET LKE Clusters on your Account.</li><li>`lke:read_write` - Allows access to all endpoints related to LKE Clusters on your Account.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br />|
 
     # Requests
 
