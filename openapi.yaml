@@ -11768,7 +11768,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X POST \
-              https://api.linode.com/v4/tickets/11223344/close
+              https://api.linode.com/v4/support/tickets/11223344/close
       - lang: CLI
         source: >
           linode-cli tickets close 11223344
