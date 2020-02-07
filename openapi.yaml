@@ -15638,7 +15638,7 @@ components:
           description: >
             This Node Pool's unique ID.
           example: 456
-        linodes:
+        nodes:
           type: array
           description: >
             Status information for the Linodes which are members of this Node
