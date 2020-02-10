@@ -13717,6 +13717,7 @@ components:
           - linode_config_create
           - linode_config_delete
           - linode_config_update
+          - lke_node_create
           - longviewclient_create
           - longviewclient_delete
           - longviewclient_update
@@ -15637,6 +15638,7 @@ components:
           type: integer
           description: >
             This Node Pool's unique ID.
+          x-linode-filterable: true
           example: 456
         linodes:
           type: array
