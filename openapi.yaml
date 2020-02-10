@@ -13718,8 +13718,6 @@ components:
           - linode_config_delete
           - linode_config_update
           - lke_node_create
-          - lke_node_delete
-          - lke_node_update
           - longviewclient_create
           - longviewclient_delete
           - longviewclient_update
