@@ -1,6 +1,7 @@
 openapi: 3.0.1
 info:
-  version: 4.13.0
+  version: 4.14.0
+
   title: Linode API
   description: |
     # Introduction
@@ -6299,7 +6300,7 @@ paths:
           description: Returns an array of all Pools in this Kubernetes cluster.
           content:
             application/json:
-              x-linode-cli-nested-list: linodes
+              x-linode-cli-nested-list: nodes
               x-linode-cli-use-schema:
                 type: object
                 properties:
@@ -6307,10 +6308,12 @@ paths:
                     x-linode-cli-display: 1
                   type:
                     x-linode-cli-display: 2
-                  linodes.id:
+                  nodes.id:
                     x-linode-cli-display: 3
-                  linodes.status:
+                  nodes.instance_id:
                     x-linode-cli-display: 4
+                  nodes.status:
+                    x-linode-cli-display: 5
               schema:
                 type: object
                 properties:
@@ -11768,7 +11771,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X POST \
-              https://api.linode.com/v4/tickets/11223344/close
+              https://api.linode.com/v4/support/tickets/11223344/close
       - lang: CLI
         source: >
           linode-cli tickets close 11223344
@@ -13717,6 +13720,7 @@ components:
           - linode_config_create
           - linode_config_delete
           - linode_config_update
+          - lke_node_create
           - longviewclient_create
           - longviewclient_delete
           - longviewclient_update
@@ -15637,33 +15641,39 @@ components:
           type: integer
           description: >
             This Node Pool's unique ID.
+          x-linode-filterable: true
           example: 456
-        linodes:
+        nodes:
           type: array
           description: >
-            Status information for the Linodes which are members of this Node
+            Status information for the Nodes which are members of this Node
             Pool. If a Linode has not been provisioned for a given Node slot,
-            its ID will be returned as null.
+            the instance_id will be returned as null.
           items:
-            $ref: '#/components/schemas/LKELinodeStatus'
-    LKELinodeStatus:
+            $ref: '#/components/schemas/LKENodeStatus'
+    LKENodeStatus:
       type: object
       description: >
-        Status information for a Linode which is a member of a Kubernetes
+        Status information for a Node which is a member of a Kubernetes
         cluster.
       readOnly: true
       properties:
         id:
           type: number
           description: >
-            The Linode's ID. When no Linode is currently provisioned for this
-            Node slot, this ID will be null.
+            The Node's ID.
           x-linode-filterable: true
           example: 123456
+        instance_id:
+          type: string
+          description: >
+            The Linode's ID. When no Linode is currently provisioned for this
+            Node, this will be null.
+          example: 123458
         status:
           type: string
           description: >
-            The Linode's status as it pertains to being a Kubernetes node.
+            The Node's status as it pertains to being a Kubernetes node.
           enum:
           - ready
           - not_ready
