@@ -1,6 +1,7 @@
 openapi: 3.0.1
 info:
-  version: 4.12.0
+  version: 4.14.0
+
   title: Linode API
   description: |
     # Introduction
@@ -47,7 +48,7 @@ info:
     | **HTTP Authorization Scheme** | bearer |
 
     ## OAuth
-    If you only need to access the Linode API for personal uses,
+    If you only need to access the Linode API for personal use,
     we recommend that you create a [personal access token](#personal-access-token).
     If you're designing an application that can authenticate with an arbitrary Linode user, then
     you should use the OAuth 2.0 workflows presented in this section.
@@ -66,7 +67,7 @@ info:
     ### OAuth Workflow
 
     The OAuth workflow is a series of exchanges between your third-party app and Linode. The workflow is used
-    to authenticate a User before an application can start making API calls on the User's behalf.
+    to authenticate a user before an application can start making API calls on the user's behalf.
 
     Notes:
 
@@ -76,19 +77,19 @@ info:
 
     | PRIVATE WORKFLOW | PUBLIC WORKFLOW |
     |------------------|------------------|
-    | 1.  The User visits the application's website and is directed to login with Linode. | 1.  The User visits the application's website and is directed to login with Linode. |
+    | 1.  The user visits the application's website and is directed to login with Linode. | 1.  The user visits the application's website and is directed to login with Linode. |
     | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. |
     | 3.  The user logs into the login server with their username and password. | 3.  The user logs into the login server with their username and password. |
-    | 4.  The login server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The login server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in 2 hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user log in again. |
+    | 4.  The login server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The login server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in two hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user log in again. |
     | 5.  The application issues a POST request (*see below*) to the login server with the exchange code, `client_id`, and the client application's `client_secret`. | |
-    | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in 2 hours. | |
-    | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another 2 hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
+    | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in two hours. | |
+    | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another two hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
 
     ### OAuth Private Workflow - Additional Details
 
     The following information expands on steps 5 through 7 of the private workflow:
 
-    Once the User has logged into Linode and you have received an exchange code,
+    Once the user has logged into Linode and you have received an exchange code,
     you will need to trade that exchange code for an `access_token` and `refresh_token`. You
     do this by making an HTTP POST request to the following address:
 
