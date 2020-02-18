@@ -9698,7 +9698,7 @@ paths:
                   description: >
                     The name for this bucket. Must be unique in the cluster you
                     are creating the bucket in, or an error will be returned. Labels
-                    will be reserved only in the cluster they were created in.
+                    will be reserved only for the cluster that active buckets are created and stored in.
                   pattern: ^[a-z0-09][a-z0-9-]*[a-z0-9]?$
                   example: example-bucket
                 cluster:
