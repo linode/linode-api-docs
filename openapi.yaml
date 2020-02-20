@@ -2972,11 +2972,13 @@ paths:
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
           * You may also supply a list of usernames via the `authorized_users` field.
             * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/api/v4/profile-sshkeys/#post) for more information.
+          * **StackScripts are not available for Bare Metal Instances.**
 
         * Using one of your other Linode's backups.
           * You must create a Linode large enough to accommodate the Backup's size.
           * The Disks and Config will match that of the Linode that was backed up.
           * The `root_pass` will match that of the Linode that was backed up.
+          * **Backups are not available for Bare Metal Instances.**
 
         * Create an empty Linode.
           * The Linode will remain `offline` and must be manually started.
@@ -2987,6 +2989,16 @@ paths:
 
         **Important**: You must be an unrestricted User in order to add or modify
         tags on Linodes.
+
+        **Bare Metal Beta**
+        Creates a Bare Metal Instance on your account. In order for this request to complete successfully,
+        you must have the `add_metal` grants.
+
+        Additionally Bare Metal Instances:
+        * Are restricted to users in the Beta.
+        * Are restricted to the Beta region.
+        * May have restrictions on additional services including but not limited to Backups, Disks and Configs, Cloning, Networking,
+          Volumes, and StackScripts.
       tags:
       - Linode Instances
       operationId: createLinodeInstance
@@ -3017,6 +3029,8 @@ paths:
                       for a Linode's available backups.
 
                       This field and the `image` field are mutually exclusive.
+
+                      **Backups are not available for Bare Metal Instances.**
                   backups_enabled:
                     type: boolean
                     description: |
@@ -3029,6 +3043,8 @@ paths:
                       for more information.
 
                       Backup pricing is included in the response from [/linodes/types](/api/v4/linode-types)
+
+                      ** Backups are not available for Bare Metal Instances.**
                   swap_size:
                     type: integer
                     example: 512
@@ -3074,6 +3090,9 @@ paths:
                       The StackScript to deploy to the newly-created Linode.  If
                       provided, "image" must also be provided, and must be an
                       Image that is compatible with this StackScript.
+
+
+                      **StackScripts are not available for Bare Metal Instances.**
                     example: 10079
                   stackscript_data:
                     type: object
@@ -3082,6 +3101,9 @@ paths:
                       present in the StackScript being deployed to this Linode.
                       Only accepted if `stackscript_id` is given.  The required
                       values depend on the StackScript being deployed.
+
+
+                      **StackScrips are not available for Bare Metal Instances.**
                   booted:
                     type: boolean
                     description: >
@@ -3304,6 +3326,15 @@ paths:
           * Deletes all Disks, Backups, Configs, etc.
           * Stops billing for the Linode and its associated services. You will be billed for time used
             within the billing period the Linode was active.
+
+        **Bare Metal Beta**
+        Deprovisions a Bare Metal Instance you have permissions to `read_write`.
+
+        Additionally, deleting a Bare Metal Instance:
+
+          * Gives up any IP addresses the Bare Metal Instance was assigned.
+          * Stops billing for the Bare Metal Instance and its associated services. You will be billed for time used
+            within the billing period the Bare Metal Instance was active.
       operationId: deleteLinodeInstance
       x-linode-cli-action: delete
       security:
@@ -3340,8 +3371,10 @@ paths:
     get:
       x-linode-grant: read_only
       summary: List Backups
-      description: >
+      description: |
         Returns information about this Linode's available backups.
+
+        **Linode's Backup service is not available for Bare Metal Instances.**
       tags:
       - Linode Instances
       operationId: getBackups
@@ -3393,11 +3426,13 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Create Snapshot
-      description: >
+      description: |
         Creates a snapshot Backup of a Linode.
 
         ** If you already have a snapshot of this Linode, this is a destructive
         action. The previous snapshot will be deleted.**
+
+        **Linode's Backup service is not available for Bare Metal Instances.**
       tags:
       - Linode Instances
       operationId: createSnapshot
@@ -3454,9 +3489,11 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Cancel Backups
-      description: >
+      description: |
         Cancels the Backup service on the given Linode. Deletes all of this Linode's
         existing backups forever.
+
+        **Linode's Backup service is not available for Bare Metal Instances.**
       tags:
       - Linode Instances
       operationId: cancelBackups
@@ -3496,8 +3533,10 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Enable Backups
-      description: >
+      description: |
         Enables backups for the specified Linode.
+
+        **Linode's Backup service is not available for Bare Metal Instances.**
       tags:
       - Linode Instances
       operationId: enableBackups
@@ -3543,8 +3582,10 @@ paths:
     get:
       x-linode-grant: read_only
       summary: View Backup
-      description: >
+      description: |
         Returns information about a Backup.
+
+        **Linode's Backup service is not available for Bare Metal Instances.**
       tags:
       - Linode Instances
       operationId: getBackup
@@ -3588,8 +3629,10 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Restore Backup
-      description: >
+      description: |
         Restores a Linode's Backup to the specified Linode.
+
+        **Backups cannot be restored to a Bare Metal Instance.**
       tags:
       - Linode Instances
       operationId: restoreBackup
@@ -3667,6 +3710,9 @@ paths:
         * If there is more than one Config profile, the last booted config will be used.
         * If there is more than one Config profile and none were the last to be booted (because the
           Linode was never booted or the last booted config was deleted) an error will be returned.
+
+        **Bare Metal Beta**
+        Boots a Linode identified by the ID of the Bare Metal Linode you have permission to boot.
       tags:
       - Linode Instances
       operationId: bootLinodeInstance
@@ -3733,6 +3779,8 @@ paths:
         Up to five clone operations from any given source Linode can be run concurrently.
         If more concurrent clones are attempted, an HTTP 400 error will be
         returned by this endpoint.
+
+        **Cloning from a Bare Metal Instance is not supported.**
       tags:
       - Linode Instances
       operationId: cloneLinodeInstance
@@ -3900,6 +3948,8 @@ paths:
       summary: List Configuration Profiles
       description: |
         Lists Configuration profiles associated with a Linode.
+
+        **Configuration profiles are not supported for Bare Metal Instances.**
       operationId: getLinodeConfigs
       x-linode-cli-action: configs-list
       security:
@@ -3937,8 +3987,10 @@ paths:
       tags:
       - Linode Instances
       summary: Create Configuration Profile
-      description: >
+      description: |
         Adds a new Configuration profile to a Linode.
+
+        **Configuration profiles are not supported for Bare Metal Instances.**
       operationId: addLinodeConfig
       x-linode-cli-action: config-create
       security:
@@ -4022,8 +4074,10 @@ paths:
       - Linode Instances
       x-linode-grant: read_only
       summary: View Configuration Profile
-      description: >
+      description: |
         Returns information about a specific Configuration profile.
+
+        **Configuration profiles are not supported for Bare Metal Instances.**
       operationId: getLinodeConfig
       x-linode-cli-action: config-view
       security:
@@ -4050,8 +4104,10 @@ paths:
     put:
       x-linode-grant: read_write
       summary: Update Configuration Profile
-      description: >
+      description: |
         Updates a Configuration profile.
+
+        **Configuration profiles are not supported for Bare Metal Instances.**
       tags:
       - Linode Instances
       operationId: updateLinodeConfig
@@ -4185,8 +4241,10 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
     delete:
       summary: Delete Configuration Profile
-      description: >
+      description: |
         Deletes the specified Configuration profile from the specified Linode.
+
+        **Configuration profiles are not supported for Bare Metal Instances.**
       x-linode-grant: read_write
       tags:
       - Linode Instances
@@ -4232,8 +4290,10 @@ paths:
       tags:
       - Linode Instances
       summary: List Disks
-      description: >
+      description: |
         View Disk information for Disks associated with this Linode.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: getLinodeDisks
       x-linode-cli-action: disks-list
       security:
@@ -4272,11 +4332,13 @@ paths:
       tags:
       - Linode Instances
       summary: Create Disk
-      description: >
+      description: |
         Adds a new Disk to a Linode. You can optionally create a Disk
         from an Image (see [/images](/api/v4/images) for a list of available public images,
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: addLinodeDisk
       x-linode-cli-action: disk-create
       security:
@@ -4354,8 +4416,10 @@ paths:
       tags:
       - Linode Instances
       summary: View Disk
-      description: >
+      description: |
         View Disk information for a Disk associated with this Linode.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: getLinodeDisk
       x-linode-cli-action: disk-view
       security:
@@ -4384,8 +4448,10 @@ paths:
       tags:
       - Linode Instances
       summary: Update Disk
-      description: >
+      description: |
         Updates a Disk that you have permission to `read_write`.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: updateDisk
       x-linode-cli-action: disk-update
       security:
@@ -4431,6 +4497,8 @@ paths:
         Deletes a Disk you have permission to `read_write`.
 
         **Deleting a Disk is a destructive action and cannot be undone.**
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: deleteDisk
       x-linode-cli-action: disk-delete
       security:
@@ -4475,10 +4543,12 @@ paths:
       tags:
       - Linode Instances
       summary: Clone Disk
-      description: >
+      description: |
         Copies a disk, byte-for-byte, into a new Disk belonging to the same Linode.
         The Linode must have enough storage space available to accept a new Disk
         of the same size as this one or this operation will fail.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: cloneLinodeDisk
       x-linode-cli-action: disk-clone
       security:
@@ -4514,8 +4584,10 @@ paths:
       tags:
       - Linode Instances
       summary: Reset Disk Root Password
-      description: >
+      description: |
         Resets the password of a Disk you have permission to `read_write`.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: resetDiskPassword
       x-linode-cli-action: disk-reset-password
       security:
@@ -4589,7 +4661,7 @@ paths:
       tags:
       - Linode Instances
       summary: Resize Disk
-      description: >
+      description: |
         Resizes a Disk you have permission to `read_write`.
 
         The Linode this Disk is attached to must be shut down for resizing to
@@ -4599,6 +4671,8 @@ paths:
         than what is required by the total size of the files current on the Disk.
         The Disk must not be in use. If the Disk is in use, the request will
         succeed but the resize will ultimately fail.
+
+        **Disk operations are not available for Bare Metal Instances.**
       operationId: resizeDisk
       x-linode-cli-action: disk-resize
       security:
@@ -5159,9 +5233,12 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Reboot Linode
-      description: >
+      description: |
         Reboots a Linode you have permission to modify. If any actions are currently running or
         queued, those actions must be completed first before you can initiate a reboot.
+
+        **Bare Metal Beta**
+        Reboots a Bare Metal Instance you have permission to modify.
       tags:
       - Linode Instances
       operationId: rebootLinodeInstance
@@ -5448,9 +5525,12 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Shut Down Linode
-      description: >
+      description: |
         Shuts down a Linode you have permission to modify. If any actions are currently running or
         queued, those actions must be completed first before you can initiate a shutdown.
+
+        **Bare Metal Beta**
+        Shuts down a Bare Metal Instance you have permission to modify.
       tags:
       - Linode Instances
       operationId: shutdownLinodeInstance
@@ -8259,11 +8339,13 @@ paths:
       tags:
       - Networking
       summary: Allocate IP Address
-      description: >
+      description: |
         Allocates a new IPv4 Address on your Account. The Linode must be
         configured to support additional addresses - please
         [open a support ticket](/api/v4/support-tickets/#post) requesting additional
         addresses before attempting allocation.
+
+        **Not supported for Bare Metal Instances.**
       operationId: allocateIP
       x-linode-cli-action: ip-add
       security:
@@ -8526,10 +8608,12 @@ paths:
       tags:
       - Networking
       summary: Configure IP Sharing
-      description: >
-        Configure shared IPs.  A shared IP may be brought up on a Linode other
-        than the one it lists in its response.  This can be used to allow one
+      description: |
+        Configure shared IPs. A shared IP may be brought up on a Linode other
+        than the one it lists in its response. This can be used to allow one
         Linode to begin serving requests should another become unresponsive.
+
+        **Not supported for Bare Metal Instances.**
       operationId: shareIPs
       x-linode-cli-action: ip-share
       security:
@@ -12154,11 +12238,13 @@ paths:
       x-linode-charge: true
       x-linode-grant: add_volumes
       summary: Create Volume
-      description: >
+      description: |
         Creates a Volume on your Account. In order
         for this to complete successfully, your User must have the `add_volumes`
         grant. Creating a new Volume will start accruing additional charges
         on your account.
+
+        **Unavailable for Bare Metal Instances.**
       tags:
       - Volumes
       operationId: createVolume
@@ -12408,12 +12494,14 @@ paths:
     x-linode-cli-command: volumes
     post:
       summary: Attach Volume
-      description: >
+      description: |
         Attaches a Volume on your Account
         to an existing Linode on your Account. In order for this request to
         complete successfully, your User must have `read_only` or `read_write`
         permission to the Volume and `read_write` permission to the Linode.
         Additionally, the Volume and Linode must be located in the same Region.
+
+        **Volumes cannot be attached to Bare Metal Instances.**
       tags:
       - Volumes
       operationId: attachVolume
@@ -13381,6 +13469,9 @@ components:
             StackScript. To get a list of available StackScript and their permitted Images
             see [/stackscripts](/api/v4/linode-stackscripts).
             This field cannot be used when deploying from a Backup or a private Image.
+
+
+            **StackScripts are not supported for Bare Metal Instances.**
         stackscript_data:
           type: object
           example:
@@ -15004,6 +15095,9 @@ components:
           description: >
             Information about this Linode's backups status. For information about available
             backups, see [/linode/instances/{linodeId}/backups](/api/v4/linode-instances-linode-id-backups).
+
+
+            **Backups are not supported for Bare Metal Instances.**
           properties:
             enabled:
               type: boolean
@@ -15409,7 +15503,7 @@ components:
           type: string
           readOnly: true
           description: >
-            The class of the Linode Type. We currently offer five classes of Linodes:
+            The class of the Linode Type. We currently offer six classes of Linodes:
 
               * nanode - Nanode instances are good for low-duty workloads,
                 where performance isn't critical.
@@ -15421,12 +15515,15 @@ components:
                 specialized applications such as machine learning, AI, and video transcoding.
               * highmem - High Memory instances favor RAM over other resources, and can be
                 good for memory hungry use cases like caching and in-memory databases.
+              * baremetal - Bare Metal Instances are ideal for customers who want full control
+                over the resources of their machine.
           enum:
           - nanode
           - standard
           - dedicated
           - gpu
           - highmem
+          - baremetal
           example: standard
           x-linode-cli-display: 3
         price:
