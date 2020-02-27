@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.14.1
+  version: 4.14.5
 
   title: Linode API
   description: |
@@ -2290,9 +2290,9 @@ paths:
           source: >
             linode-cli domains delete 1234
   /domains/import:
+    x-linode-cli-command: domains
     post:
       x-linode-grant: read_write
-      x-linode-cli-command: domains
       tags:
       - Domains
       summary: Import Domain
