@@ -17307,6 +17307,12 @@ components:
           type: array
           items:
             type: string
+            enum:
+            - Linodes
+            - NodeBalancers
+            - Block Storage
+            - Object Storage
+            - Kubernetes
           description: >
               A list of capabilities of this region.
           example:
