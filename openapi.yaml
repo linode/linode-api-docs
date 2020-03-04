@@ -12036,8 +12036,10 @@ paths:
           source: >
             linode-cli tags create \
               --label 'example tag' \
-              --linodes (123 456) \
-              --volumes (9082 10003)
+              --linodes 123 \
+              --linodes 456 \
+              --volumes 9082 \
+              --volumes 10003
   /tags/{label}:
     x-linode-cli-command: tags
     parameters:
