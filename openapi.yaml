@@ -12102,6 +12102,11 @@ paths:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/tags/example%20tag
     delete:
       summary: Delete a Tag
       description: >
