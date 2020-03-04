@@ -13639,13 +13639,13 @@ components:
         created:
           type: string
           format: date-time
-          description: When this DomainRecord was created.
+          description: When this Domain Record was created.
           example: '2018-01-01T00:01:01'
           readOnly: true
         updated:
           type: string
           format: date-time
-          description: When this DomainRecord was last updated.
+          description: When this Domain Record was last updated.
           example: '2018-01-01T00:01:01'
           readOnly: true
     ErrorObject:
