@@ -12021,6 +12021,23 @@ paths:
                 $ref: '#/components/schemas/Tag'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                    "label": "example tag",
+                    "linodes": [123,456],
+                    "volumes": [9082,10003]
+                }' \
+                https://api.linode.com/v4/tags
+        - lang: CLI
+          source: >
+            linode-cli tags create \
+              --label 'example tag' \
+              --linodes (123 456) \
+              --volumes (9082 10003)
   /tags/{label}:
     x-linode-cli-command: tags
     parameters:
