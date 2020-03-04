@@ -13636,6 +13636,18 @@ components:
             The tag portion of a CAA record. It is invalid to set this on
             other record types.
           example: null
+        created:
+          type: string
+          format: date-time
+          description: When this DomainRecord was created.
+          example: '2018-01-01T00:01:01'
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          description: When this DomainRecord was last updated.
+          example: '2018-01-01T00:01:01'
+          readOnly: true
     ErrorObject:
       type: object
       description: >
