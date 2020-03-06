@@ -9833,6 +9833,57 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
             -X DELETE \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket
+  /object-storage/buckets/{clusterId}:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageBucketinCluster
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4
+      summary: List Object Storage Buckets in Cluster
+      description: |
+        Returns a list of Buckets in this cluster belonging to this Account.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket) directly.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: A paginated list of buckets you own in this cluster.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ObjectStorageBucket'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1
   /object-storage/buckets/{clusterId}/{bucket}/access:
     parameters:
     - name: clusterId
