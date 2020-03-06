@@ -12106,7 +12106,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/tags/example%20tag
+              "https://api.linode.com/v4/tags/example tag"
     delete:
       summary: Delete a Tag
       description: >
