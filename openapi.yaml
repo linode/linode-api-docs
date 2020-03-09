@@ -13448,6 +13448,8 @@ components:
                 * Lower-case letters
                 * Digits
                 * Punctuation
+              * Must meet a password strength score requirement that is calculated internally by the API.
+                If the strength requirement is not met, you will receive a `Password does not meet strength requirement` error.
           minLength: 6
           maxLength: 128
           pattern: ^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\]))|((?=.*[A-Z])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\]))|((?=.*[0-9])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\])))
