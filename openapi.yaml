@@ -3751,6 +3751,9 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+              - region
+              - type
               properties:
                 region:
                   type: string
