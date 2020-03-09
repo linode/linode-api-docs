@@ -14849,8 +14849,8 @@ components:
           type: string
           description: >
             A brief description of this Linode's current state. This field may change without
-            direct action from you. For instance, the status will change to "stopped"
-            when the Linode goes into maintenance mode.
+            direct action from you. For example, when a Linode goes into maintenance mode
+            its status will display "stopped".
           example: running
           readOnly: true
           enum:
