@@ -36,7 +36,8 @@ info:
 
     The easiest way to access the API is with a Personal Access Token (PAT)
     generated from the
-    <a target="_top" href="https://cloud.linode.com/profile/tokens">Linode Cloud Manager</a>.
+    <a target="_top" href="https://cloud.linode.com/profile/tokens">Linode Cloud Manager</a> or
+    the [Create Personal Access Token](/api/v4/profile-tokens#post) endpoint.
 
     All scopes for the OAuth security model ([defined below](#o-auth)) apply to this
     security model as well.
