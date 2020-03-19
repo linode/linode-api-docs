@@ -17383,6 +17383,19 @@ components:
             access/perform, see [/profile/grants](/api/v4/profile-grants).
           example: false
           x-linode-cli-display: 3
+        authentication_type:
+          type: string
+          description: |
+            The authentication type of the account. Authentication types are chosen through
+            Cloud Manager and authorized through Login. These authentication types are either
+            the user's password (in conjunction with their username), or the name of their
+            indentity provider such as "github", "google", etc. For example:
+
+            - If a user has never used Third-Party Authentication, their authentication type will be "password".
+            - If a user is using Third-Party Authentication, their authentication type will be the name of their Identity Provider (eg. "github").
+            - If a user used Third-Party Authentication and has since revoked it, their authentication type will be "password".
+          example: password
+          readOnly: true
     Region:
       type: object
       description: An area where Linode services are available.
