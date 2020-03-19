@@ -9165,6 +9165,10 @@ paths:
         Returns a paginated list of your Firewalls.
       operationId: getFirewalls
       x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - firewalls:read_only
       responses:
         '200':
           description: Returns an array of Firewalls.
