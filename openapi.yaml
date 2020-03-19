@@ -9188,7 +9188,8 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/networking/firewalls
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/networking/firewalls
       - lang: CLI
         source: >
           linode-cli firewalls list
