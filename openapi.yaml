@@ -9601,7 +9601,9 @@ paths:
               https://api.linode.com/v4beta/networking/firewalls/123/devices
       - lang: CLI
         source: >
-          linode-cli networking device-create 123
+          linode-cli firewalls device-create 123 \
+            --id 456 \
+            --type "linode"
   /networking/firewalls/{firewallId}/devices/{deviceId}:
     parameters:
       - name: firewallId
