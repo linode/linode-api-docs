@@ -9468,6 +9468,10 @@ paths:
       responses:
         '200':
           description: Delete Successful.
+          content:
+            application/json:
+              schema:
+                type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -9681,6 +9685,10 @@ paths:
       responses:
         '200':
           description: Delete Successful.
+          content:
+            application/json:
+              schema:
+                type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
