@@ -9317,7 +9317,8 @@ paths:
               https://api.linode.com/v4beta/networking/firewalls
       - lang: CLI
         source: >
-          linode-cli firewalls create
+          linode-cli firewalls create \
+            --rules '{"inbound": [{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]}' \
   /networking/firewalls/{firewallId}:
     parameters:
       - name: firewallId
