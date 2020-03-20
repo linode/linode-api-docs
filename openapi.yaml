@@ -17385,15 +17385,11 @@ components:
           x-linode-cli-display: 3
         authentication_type:
           type: string
+          enum:
+          - password
           description: |
-            The authentication type of the account. Authentication types are chosen through
-            Cloud Manager and authorized when logging into your account. These authentication types are either
-            the user's password (in conjunction with their username), or the name of their
-            indentity provider such as GitHub. For example, if a user:
-
-            - Has never used Third-Party Authentication, their authentication type will be `password`.
-            - Is using Third-Party Authentication, their authentication type will be the name of their Identity Provider (eg. `github`).
-            - Has used Third-Party Authentication and has since revoked it, their authentication type will be `password`.
+            This account's Cloud Manager authentication type. Currently, a user's password
+            (in conjunction with their username) is the only available authentication type.
           example: password
           readOnly: true
     Region:
