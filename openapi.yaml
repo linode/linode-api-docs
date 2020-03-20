@@ -18171,6 +18171,7 @@ components:
           x-linode-cli-display: 6
         linode_label:
           type: string
+          nullable: true
           description: >
             If a Volume is attached to a specific Linode, the label of that Linode
             will be displayed here.
