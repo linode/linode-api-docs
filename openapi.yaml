@@ -17387,13 +17387,13 @@ components:
           type: string
           description: |
             The authentication type of the account. Authentication types are chosen through
-            Cloud Manager and authorized through Login. These authentication types are either
+            Cloud Manager and authorized when logging into your account. These authentication types are either
             the user's password (in conjunction with their username), or the name of their
-            indentity provider such as "github", "google", etc. For example:
+            indentity provider such as "github", "google", etc. For example, if a user:
 
-            - If a user has never used Third-Party Authentication, their authentication type will be "password".
-            - If a user is using Third-Party Authentication, their authentication type will be the name of their Identity Provider (eg. "github").
-            - If a user used Third-Party Authentication and has since revoked it, their authentication type will be "password".
+            - Has never used Third-Party Authentication, their authentication type will be "password".
+            - Is using Third-Party Authentication, their authentication type will be the name of their Identity Provider (eg. "github").
+            - Has used Third-Party Authentication and has since revoked it, their authentication type will be "password".
           example: password
           readOnly: true
     Region:
