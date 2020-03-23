@@ -10441,8 +10441,7 @@ paths:
             https://api.linode.com/v4/object-storage/keys/12345
       - lang: CLI
         source: >
-          linode-cli object-storage keys-delete \
-            --keyId 12345
+          linode-cli object-storage keys-delete 12345
   /object-storage/cancel:
     x-linode-cli-command: object-storage
     post:
