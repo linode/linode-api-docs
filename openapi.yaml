@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.59.2
+  version: 4.60.0
 
   title: Linode API
   description: |
@@ -14483,8 +14483,8 @@ components:
           - hourly
           - misc
           example: hourly
-        unitprice:
-          type: number
+        unit_price:
+          type: string
           readOnly: true
           description: The monthly service fee in US Dollars for this Item.
           example: 5.05
@@ -17383,6 +17383,15 @@ components:
             access/perform, see [/profile/grants](/api/v4/profile-grants).
           example: false
           x-linode-cli-display: 3
+        authentication_type:
+          type: string
+          enum:
+          - password
+          description: |
+            This account's Cloud Manager authentication type. Currently, a user's password
+            (in conjunction with their username) is the only available authentication type.
+          example: password
+          readOnly: true
     Region:
       type: object
       description: An area where Linode services are available.
@@ -18169,6 +18178,15 @@ components:
             will be displayed here.
           example: 12346
           x-linode-cli-display: 6
+        linode_label:
+          type: string
+          nullable: true
+          description: >
+            If a Volume is attached to a specific Linode, the label of that Linode
+            will be displayed here.
+          example: linode123
+          x-linode-cli-display: 7
+          readOnly: true
         created:
           type: string
           format: date-time
