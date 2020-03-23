@@ -17383,6 +17383,15 @@ components:
             access/perform, see [/profile/grants](/api/v4/profile-grants).
           example: false
           x-linode-cli-display: 3
+        authentication_type:
+          type: string
+          enum:
+          - password
+          description: |
+            This account's Cloud Manager authentication type. Currently, a user's password
+            (in conjunction with their username) is the only available authentication type.
+          example: password
+          readOnly: true
     Region:
       type: object
       description: An area where Linode services are available.
