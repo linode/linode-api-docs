@@ -14483,8 +14483,8 @@ components:
           - hourly
           - misc
           example: hourly
-        unitprice:
-          type: number
+        unit_price:
+          type: string
           readOnly: true
           description: The monthly service fee in US Dollars for this Item.
           example: 5.05
