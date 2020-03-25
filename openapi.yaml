@@ -6127,7 +6127,7 @@ paths:
           linode-cli lke cluster-create \
             --label cluster12345 \
             --region us-central \
-            --version 1.16 \
+            --kube-version 1.16 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3
   /lke/clusters/{clusterId}:
@@ -15651,6 +15651,7 @@ components:
             The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
             and the latest supported patch version will be deployed.
           example: "1.16"
+          x-linode-cli-name: kube-version
         tags:
           type: array
           description: >
