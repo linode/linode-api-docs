@@ -583,8 +583,8 @@ paths:
       summary: List Events
       description: >
          Returns a collection of Event objects representing
-         actions taken on your Account. The Events returned depends on your
-         grants.
+         actions taken on your Account from the last 90 days.
+         The Events returned depend on your grants.
       operationId: getEvents
       x-linode-cli-action: list
       security:
@@ -593,7 +593,9 @@ paths:
         - events:read_only
       responses:
         '200':
-          description: Returns a paginated lists of Event objects.
+          description: >
+             Returns a paginated lists of Event objects from
+             the last 90 days.
           content:
             application/json:
               schema:
@@ -633,7 +635,9 @@ paths:
       tags:
       - Account
       summary: View Event
-      description: Returns a single Event object.
+      description: >
+         Returns a single Event object. Only Event objects
+         from the last 90 days are available.
       operationId: getEvent
       x-linode-cli-action: view
       security:
