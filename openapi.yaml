@@ -636,8 +636,7 @@ paths:
       - Account
       summary: View Event
       description: >
-         Returns a single Event object. Only Event objects
-         from the last 90 days are available.
+         Returns a single Event object.
       operationId: getEvent
       x-linode-cli-action: view
       security:
