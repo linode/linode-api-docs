@@ -14219,6 +14219,12 @@ components:
           description: When this Image was created.
           example: '2018-01-01T00:01:01'
           readOnly: true
+        updated:
+          type: string
+          format: date-time
+          description: When this Image was last updated.
+          example: '2019-01-02T00:01:01'
+          readOnly: true
         created_by:
           type: string
           description: >
@@ -14315,6 +14321,12 @@ components:
           format: date-time
           description: When this Image was created.
           example: '2018-01-01T00:01:01'
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          description: When this Image was last updated.
+          example: '2019-01-02T00:01:01'
           readOnly: true
         created_by:
           type: string
