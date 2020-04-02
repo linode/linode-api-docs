@@ -17504,6 +17504,7 @@ components:
           - linode/debian8
           x-linode-cli-display: 4
         deployments_total:
+          x-linode-filterable: true
           type: integer
           description: >
             The total number of times this StackScript has been deployed.
