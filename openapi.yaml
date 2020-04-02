@@ -6132,7 +6132,8 @@ paths:
             --region us-central \
             --version 1.16 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
-            --node_pools.type g6-standard-8 --node_pools.count 3
+            --node_pools.type g6-standard-8 --node_pools.count 3 \
+            --tags ecomm
   /lke/clusters/{clusterId}:
     parameters:
     - name: clusterId
