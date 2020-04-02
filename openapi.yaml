@@ -6208,13 +6208,32 @@ paths:
               properties:
                 label:
                   $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+                tags:
+                  $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKECluster'
+                properties:
+                  label:
+                    $ref: '#/components/schemas/LKECluster/properties/label'
+                  tags:
+                    x-linode-filterable: true
+                    example:
+                    - prod
+                    - monitoring
+                    - ecomm
+                    - blog
+                  created:
+                    $ref: '#/components/schemas/LKECluster/properties/created'
+                  updated:
+                    $ref: '#/components/schemas/LKECluster/properties/updated'
+                  region:
+                    $ref: '#/components/schemas/LKECluster/properties/region'
+                  version:
+                    $ref: '#/components/schemas/LKECluster/properties/version'
       x-code-samples:
       - lang: Shell
         source: >
@@ -6222,12 +6241,15 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "label": "lkecluster54321"
+                  "tags" : ["prod", "monitoring"]
                 }' \
                 https://api.linode.com/v4beta/lke/clusters/12345
       - lang: CLI
         source: >
           linode-cli lke cluster-update 12345 \
-            --label lkecluster54321
+            --label lkecluster54321 \
+            --tags prod
+            --tags monitoring
     delete:
       operationId: deleteLKECluster
       x-linode-cli-action: cluster-delete
