@@ -6209,7 +6209,18 @@ paths:
                 label:
                   $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
                 tags:
-                  $ref: '#/components/schemas/LKEClusterRequestBody/properties/tags'
+                    x-linode-filterable: true
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - prod
+                    - monitoring
+                    - ecomm
+                    - blog
+                    description: >
+                      An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
+                      To delete a tag, exclude it from your `tags` array.
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6221,11 +6232,17 @@ paths:
                     $ref: '#/components/schemas/LKECluster/properties/label'
                   tags:
                     x-linode-filterable: true
+                    type: array
+                    items:
+                      type: string
                     example:
                     - prod
                     - monitoring
                     - ecomm
                     - blog
+                    description: >
+                      An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
+                      To delete a tag, exclude it from your `tags` array.
                   created:
                     $ref: '#/components/schemas/LKECluster/properties/created'
                   updated:
@@ -6241,14 +6258,16 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "label": "lkecluster54321"
-                  "tags" : ["prod", "monitoring"]
+                  "tags" : ["ecomm", "blog", "prod", "monitoring"]
                 }' \
                 https://api.linode.com/v4beta/lke/clusters/12345
       - lang: CLI
         source: >
           linode-cli lke cluster-update 12345 \
             --label lkecluster54321 \
-            --tags prod
+            --tags ecomm \
+            --tags blog \
+            --tags prod \
             --tags monitoring
     delete:
       operationId: deleteLKECluster
