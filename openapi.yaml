@@ -6209,7 +6209,6 @@ paths:
                 label:
                   $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
                 tags:
-                    x-linode-filterable: true
                     type: array
                     items:
                       type: string
@@ -15750,7 +15749,6 @@ components:
           x-linode-filterable: true
           example: "1.16"
         tags:
-          x-linode-filterable: true
           example:
           - ecomm
           - blogs
