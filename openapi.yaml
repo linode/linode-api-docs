@@ -6132,7 +6132,8 @@ paths:
             --region us-central \
             --version 1.16 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
-            --node_pools.type g6-standard-8 --node_pools.count 3
+            --node_pools.type g6-standard-8 --node_pools.count 3 \
+            --tags ecomm
   /lke/clusters/{clusterId}:
     parameters:
     - name: clusterId
@@ -6207,13 +6208,48 @@ paths:
               properties:
                 label:
                   $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+                tags:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - prod
+                    - monitoring
+                    - ecomm
+                    - blog
+                    description: >
+                      An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
+                      To delete a tag, exclude it from your `tags` array.
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKECluster'
+                properties:
+                  label:
+                    $ref: '#/components/schemas/LKECluster/properties/label'
+                  tags:
+                    x-linode-filterable: true
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - prod
+                    - monitoring
+                    - ecomm
+                    - blog
+                    description: >
+                      An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
+                      To delete a tag, exclude it from your `tags` array.
+                  created:
+                    $ref: '#/components/schemas/LKECluster/properties/created'
+                  updated:
+                    $ref: '#/components/schemas/LKECluster/properties/updated'
+                  region:
+                    $ref: '#/components/schemas/LKECluster/properties/region'
+                  version:
+                    $ref: '#/components/schemas/LKECluster/properties/version'
       x-code-samples:
       - lang: Shell
         source: >
@@ -6221,12 +6257,17 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                   "label": "lkecluster54321"
+                  "tags" : ["ecomm", "blog", "prod", "monitoring"]
                 }' \
                 https://api.linode.com/v4beta/lke/clusters/12345
       - lang: CLI
         source: >
           linode-cli lke cluster-update 12345 \
-            --label lkecluster54321
+            --label lkecluster54321 \
+            --tags ecomm \
+            --tags blog \
+            --tags prod \
+            --tags monitoring
     delete:
       operationId: deleteLKECluster
       x-linode-cli-action: cluster-delete
@@ -15719,7 +15760,6 @@ components:
           x-linode-filterable: true
           example: "1.16"
         tags:
-          x-linode-filterable: true
           example:
           - ecomm
           - blogs
