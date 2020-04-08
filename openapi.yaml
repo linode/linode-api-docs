@@ -15812,11 +15812,11 @@ components:
       readOnly: true
       properties:
         id:
-          type: number
+          type: string
           description: >
             The Node's ID.
           x-linode-filterable: true
-          example: 123456
+          example: "123456"
         instance_id:
           type: string
           description: >
