@@ -15748,16 +15748,13 @@ components:
         # LKEClusterRequestBody but otherwise inherit all of the original
         # sub-properties.
         label:
-          x-linode-filterable: true
           x-linode-cli-display: 2
           example: lkecluster12345
         region:
           readOnly: true
-          x-linode-filterable: true
           x-linode-cli-display: 3
           example: us-central
         version:
-          x-linode-filterable: true
           example: "1.16"
         tags:
           example:
@@ -15812,11 +15809,10 @@ components:
       readOnly: true
       properties:
         id:
-          type: number
+          type: string
           description: >
             The Node's ID.
-          x-linode-filterable: true
-          example: 123456
+          example: "123456"
         instance_id:
           type: string
           description: >
