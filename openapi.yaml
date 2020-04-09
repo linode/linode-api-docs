@@ -6091,7 +6091,7 @@ paths:
               required:
               - label
               - region
-              - version
+              - k8s_version
               - node_pools
               allOf:
               - $ref: '#/components/schemas/LKEClusterRequestBody'
@@ -6117,7 +6117,7 @@ paths:
                 -X POST -d '{
                   "label": "cluster12345",
                   "region": "us-central",
-                  "version": "1.16",
+                  "k8s_version": "1.16",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
                     { "type": "g6-standard-4", "count": 6},
@@ -6130,7 +6130,7 @@ paths:
           linode-cli lke cluster-create \
             --label cluster12345 \
             --region us-central \
-            --version 1.16 \
+            --k8s_version 1.16 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
@@ -15757,7 +15757,6 @@ components:
           x-linode-cli-display: 3
           example: us-central
         k8s_version:
-          x-linode-filterable: true
           example: "1.16"
         tags:
           example:
