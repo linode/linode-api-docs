@@ -15718,7 +15718,7 @@ components:
       required:
       - label
       - region
-      - version
+      - k8s_version
     LKECluster:
       type: object
       # Note that LKECluster inherits all properties of
