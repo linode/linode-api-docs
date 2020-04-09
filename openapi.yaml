@@ -6091,7 +6091,7 @@ paths:
               required:
               - label
               - region
-              - version
+              - k8s_version
               - node_pools
               allOf:
               - $ref: '#/components/schemas/LKEClusterRequestBody'
@@ -6117,7 +6117,7 @@ paths:
                 -X POST -d '{
                   "label": "cluster12345",
                   "region": "us-central",
-                  "version": "1.16",
+                  "k8s_version": "1.16",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
                     { "type": "g6-standard-4", "count": 6},
@@ -6130,7 +6130,7 @@ paths:
           linode-cli lke cluster-create \
             --label cluster12345 \
             --region us-central \
-            --version 1.16 \
+            --k8s_version 1.16 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
@@ -6248,8 +6248,8 @@ paths:
                     $ref: '#/components/schemas/LKECluster/properties/updated'
                   region:
                     $ref: '#/components/schemas/LKECluster/properties/region'
-                  version:
-                    $ref: '#/components/schemas/LKECluster/properties/version'
+                  k8s_version:
+                    $ref: '#/components/schemas/LKECluster/properties/k8s_version'
       x-code-samples:
       - lang: Shell
         source: >
@@ -15700,7 +15700,7 @@ components:
           type: string
           description: This Kubernetes cluster's location.
           example: us-central
-        version:
+        k8s_version:
           type: string
           description: >
             The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
@@ -15718,7 +15718,7 @@ components:
       required:
       - label
       - region
-      - version
+      - k8s_version
     LKECluster:
       type: object
       # Note that LKECluster inherits all properties of
@@ -15754,7 +15754,7 @@ components:
           readOnly: true
           x-linode-cli-display: 3
           example: us-central
-        version:
+        k8s_version:
           example: "1.16"
         tags:
           example:
