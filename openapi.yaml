@@ -15700,7 +15700,7 @@ components:
           type: string
           description: This Kubernetes cluster's location.
           example: us-central
-        version:
+        k8s_version:
           type: string
           description: >
             The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
@@ -15756,7 +15756,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-display: 3
           example: us-central
-        version:
+        k8s_version:
           x-linode-filterable: true
           example: "1.16"
         tags:
