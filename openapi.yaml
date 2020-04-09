@@ -6626,19 +6626,16 @@ paths:
                   data:
                     type: array
                     items:
-                      endpoints:
-                        type: array
-                        description: >
-                          The Kubernetes API server endpoints for this cluster.
-                        items:
-                          type: object
-                          properties:
-                            endpoint:
-                              type: string
-                              readOnly: true
-                              description: >
-                                A Kubernetes API server endpoint for this cluster.
-                              example: "https://192.0.2.1:6443"
+                      type: object
+                      description: >
+                        The Kubernetes API server endpoints for this cluster.
+                      properties:
+                        endpoint:
+                          type: string
+                          readOnly: true
+                          description: >
+                            A Kubernetes API server endpoint for this cluster.
+                          example: "https://192.0.2.1:6443"
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
