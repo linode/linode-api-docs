@@ -6605,9 +6605,9 @@ paths:
       - Linode Kubernetes Engine (LKE)
       servers:
       - url: https://api.linode.com/v4beta
-      summary: List Kubernetes API Endpoint
+      summary: List Kubernetes API Endpoints
       description: >
-        Get the Kubernetes API server endpoints for this cluster. Please note that it often takes
+        List the Kubernetes API server endpoints for this cluster. Please note that it often takes
         2-5 minutes before the endpoint is ready after first [creating a new cluster](/api/v4/lke-clusters/#post).
 
 
@@ -6669,6 +6669,10 @@ paths:
       summary: View Kubernetes API Endpoint
       description: >
         Get the Kubernetes API server endpoint for this cluster.
+
+
+        **Note** This endpoint will be deprecated in favor of
+        [List Kubernetes API Endpoints](/api/v4/lke-clusters-cluster-id-api-endpoints).
 
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
