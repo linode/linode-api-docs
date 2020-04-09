@@ -6248,8 +6248,8 @@ paths:
                     $ref: '#/components/schemas/LKECluster/properties/updated'
                   region:
                     $ref: '#/components/schemas/LKECluster/properties/region'
-                  version:
-                    $ref: '#/components/schemas/LKECluster/properties/version'
+                  k8s_version:
+                    $ref: '#/components/schemas/LKECluster/properties/k8s_version'
       x-code-samples:
       - lang: Shell
         source: >
