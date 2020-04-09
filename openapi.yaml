@@ -6072,11 +6072,13 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create Kubernetes Cluster
-      description: >
+      description: |
         Creates a Kubernetes cluster. The Kubernetes cluster will be created
         asynchronously. You can use the events system to determine when the
-        Kubernetes cluster is ready to use.
-
+        Kubernetes cluster is ready to use. Please note that it often takes 2-5 minutes before the
+        [Kubernetes API server endpoint](/api/v4/lke-clusters-cluster-id-api-endpoint) and
+        the [Kubeconfig file](/api/v4/lke-clusters-cluster-id-kubeconfig) for the new cluster
+        are ready.
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -6606,9 +6608,10 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes API Endpoint
-      description: >
-        Get the Kubernetes API server endpoint for this cluster.
-
+      description: |
+        Get the Kubernetes API server endpoint for this cluster. Please note that it often takes
+        2-5 minutes before the endpoint is ready after first
+        [creating a new cluster](/api/v4/lke-clusters/#post).
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -6659,9 +6662,9 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubeconfig
-      description: >
-        Get the Kubeconfig file for a Cluster.
-
+      description: |
+        Get the Kubeconfig file for a Cluster. Please note that it often takes 2-5 minutes before
+        the Kubeconfig file is ready after first [creating a new cluster](/api/v4/lke-clusters/#post).
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
