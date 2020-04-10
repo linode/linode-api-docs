@@ -6072,11 +6072,13 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: Create Kubernetes Cluster
-      description: >
+      description: |
         Creates a Kubernetes cluster. The Kubernetes cluster will be created
         asynchronously. You can use the events system to determine when the
-        Kubernetes cluster is ready to use.
-
+        Kubernetes cluster is ready to use. Please note that it often takes 2-5 minutes before the
+        [Kubernetes API server endpoint](/api/v4/lke-clusters-cluster-id-api-endpoint) and
+        the [Kubeconfig file](/api/v4/lke-clusters-cluster-id-kubeconfig) for the new cluster
+        are ready.
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -6091,7 +6093,7 @@ paths:
               required:
               - label
               - region
-              - version
+              - k8s_version
               - node_pools
               allOf:
               - $ref: '#/components/schemas/LKEClusterRequestBody'
@@ -6117,7 +6119,7 @@ paths:
                 -X POST -d '{
                   "label": "cluster12345",
                   "region": "us-central",
-                  "version": "1.16",
+                  "k8s_version": "1.16",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
                     { "type": "g6-standard-4", "count": 6},
@@ -6130,7 +6132,7 @@ paths:
           linode-cli lke cluster-create \
             --label cluster12345 \
             --region us-central \
-            --version 1.16 \
+            --k8s_version 1.16 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
@@ -6248,8 +6250,8 @@ paths:
                     $ref: '#/components/schemas/LKECluster/properties/updated'
                   region:
                     $ref: '#/components/schemas/LKECluster/properties/region'
-                  version:
-                    $ref: '#/components/schemas/LKECluster/properties/version'
+                  k8s_version:
+                    $ref: '#/components/schemas/LKECluster/properties/k8s_version'
       x-code-samples:
       - lang: Shell
         source: >
@@ -6585,6 +6587,73 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke pool-delete 12345 456
+  /lke/clusters/{clusterId}/api-endpoints:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEClusterAPIEndpoints
+      x-linode-cli-action: api-endpoints-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      servers:
+      - url: https://api.linode.com/v4beta
+      summary: List Kubernetes API Endpoints
+      description: >
+        List the Kubernetes API server endpoints for this cluster. Please note that it often takes
+        2-5 minutes before the endpoint is ready after first [creating a new cluster](/api/v4/lke-clusters/#post).
+
+
+        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
+      responses:
+        '200':
+          description: Returns the Kubernetes API server endpoints for this cluster.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      description: >
+                        The Kubernetes API server endpoints for this cluster.
+                      properties:
+                        endpoint:
+                          type: string
+                          readOnly: true
+                          description: >
+                            A Kubernetes API server endpoint for this cluster.
+                          example: "https://192.0.2.1:6443"
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/lke/clusters/12345/api-endpoints
+      - lang: CLI
+        source: >
+          linode-cli lke api-endpoint-list 12345
   /lke/clusters/{clusterId}/api-endpoint:
     parameters:
     - name: clusterId
@@ -6606,8 +6675,13 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubernetes API Endpoint
-      description: >
-        Get the Kubernetes API server endpoint for this cluster.
+      description: |
+        Get the Kubernetes API server endpoint for this cluster. Please note that it often takes
+        2-5 minutes before the endpoint is ready after first
+        [creating a new cluster](/api/v4/lke-clusters/#post).
+
+        **Note** This endpoint will be deprecated in favor of
+        [List Kubernetes API Endpoints](/api/v4/lke-clusters-cluster-id-api-endpoints).
 
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
@@ -6659,9 +6733,9 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       summary: View Kubeconfig
-      description: >
-        Get the Kubeconfig file for a Cluster.
-
+      description: |
+        Get the Kubeconfig file for a Cluster. Please note that it often takes 2-5 minutes before
+        the Kubeconfig file is ready after first [creating a new cluster](/api/v4/lke-clusters/#post).
 
         **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -15700,7 +15774,7 @@ components:
           type: string
           description: This Kubernetes cluster's location.
           example: us-central
-        version:
+        k8s_version:
           type: string
           description: >
             The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
@@ -15718,7 +15792,7 @@ components:
       required:
       - label
       - region
-      - version
+      - k8s_version
     LKECluster:
       type: object
       # Note that LKECluster inherits all properties of
@@ -15748,16 +15822,13 @@ components:
         # LKEClusterRequestBody but otherwise inherit all of the original
         # sub-properties.
         label:
-          x-linode-filterable: true
           x-linode-cli-display: 2
           example: lkecluster12345
         region:
           readOnly: true
-          x-linode-filterable: true
           x-linode-cli-display: 3
           example: us-central
-        version:
-          x-linode-filterable: true
+        k8s_version:
           example: "1.16"
         tags:
           example:
@@ -15812,11 +15883,10 @@ components:
       readOnly: true
       properties:
         id:
-          type: number
+          type: string
           description: >
             The Node's ID.
-          x-linode-filterable: true
-          example: 123456
+          example: "123456"
         instance_id:
           type: string
           description: >
