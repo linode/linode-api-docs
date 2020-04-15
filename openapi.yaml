@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.62.0
+  version: 4.63.0
 
   title: Linode API
   description: |
@@ -6019,17 +6019,9 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: List Kubernetes Clusters
       description: >
         Lists current Kubernetes clusters available on your account.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns an array of all Kubernetes clusters on your Account.
@@ -6054,7 +6046,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters
+                https://api.linode.com/v4/lke/clusters
       - lang: CLI
         source: >
           linode-cli lke clusters-list
@@ -6069,8 +6061,6 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: Create Kubernetes Cluster
       description: |
         Creates a Kubernetes cluster. The Kubernetes cluster will be created
@@ -6079,11 +6069,6 @@ paths:
         [Kubernetes API server endpoint](/api/v4/lke-clusters-cluster-id-api-endpoint) and
         the [Kubeconfig file](/api/v4/lke-clusters-cluster-id-kubeconfig) for the new cluster
         are ready.
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: Configuration for the Kubernetes cluster
         content:
@@ -6126,7 +6111,7 @@ paths:
                     { "type": "g6-standard-8", "count": 3}
                   ]
                 }' \
-                https://api.linode.com/v4beta/lke/clusters
+                https://api.linode.com/v4/lke/clusters
       - lang: CLI
         source: >
           linode-cli lke cluster-create \
@@ -6154,17 +6139,9 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: View Kubernetes Cluster
       description: >
         Get a specific Cluster by ID.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6178,7 +6155,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters/12345
+                https://api.linode.com/v4/lke/clusters/12345
       - lang: CLI
         source:
           linode-cli lke cluster-view 12345
@@ -6191,17 +6168,9 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: Update Kubernetes Cluster
       description: >
         Updates a Kubernetes cluster.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: The fields to update the Kubernetes cluster.
         content:
@@ -6261,7 +6230,7 @@ paths:
                   "label": "lkecluster54321"
                   "tags" : ["ecomm", "blog", "prod", "monitoring"]
                 }' \
-                https://api.linode.com/v4beta/lke/clusters/12345
+                https://api.linode.com/v4/lke/clusters/12345
       - lang: CLI
         source: >
           linode-cli lke cluster-update 12345 \
@@ -6279,8 +6248,6 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: Delete Kubernetes Cluster
       description: |
         Deletes a Cluster you have permission to `read_write`.
@@ -6294,12 +6261,6 @@ paths:
           - Deletes all NodeBalancers created by this Kubernetes cluster
           - Does not delete any of the volumes created by this Kubernetes
             cluster
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Delete successful
@@ -6314,7 +6275,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
                 -X DELETE \
-                https://api.linode.com/v4beta/lke/clusters/12345
+                https://api.linode.com/v4/lke/clusters/12345
       - lang: CLI
         source: >
           linode-cli lke cluster-delete 12345
@@ -6336,17 +6297,9 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: List Node Pools
       description: >
         Returns all active Node Pools on a Kubernetes cluster.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns an array of all Pools in this Kubernetes cluster.
@@ -6385,7 +6338,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters/12345/pools
+                https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
         source: >
           linode-cli lke pools-list 12345
@@ -6398,17 +6351,9 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: Create Node Pool
       description: >
         Creates a new Node Pool for the designated Kubernetes cluster.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: Configuration for the Node Pool
         required: true
@@ -6439,7 +6384,7 @@ paths:
                   "type": "g6-standard-4",
                   "count": 6
                 }' \
-                https://api.linode.com/v4beta/lke/clusters/12345/pools
+                https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
         source: >
           linode-cli lke pool-create 12345 \
@@ -6469,17 +6414,9 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: View Node Pool
       description: >
         Get a specific Node Pool by ID.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns the requested Node Pool.
@@ -6491,7 +6428,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters/12345/pools/456
+                https://api.linode.com/v4/lke/clusters/12345/pools/456
       - lang: CLI
         source: >
           linode-cli lke pool-view 12345 456
@@ -6504,19 +6441,11 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: Update Node Pool
       description: >
         Updates a Node Pool. When a Node Pool's count are
         changed, the nodes in that pool will be replaced in a rolling
         fashion.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       requestBody:
         description: The fields to update
         content:
@@ -6540,7 +6469,7 @@ paths:
                 -X PUT -d '{
                   "count": 6
                 }' \
-                https://api.linode.com/v4beta/lke/clusters/12345/pools/456
+                https://api.linode.com/v4/lke/clusters/12345/pools/456
       - lang: CLI
         source: >
           linode-cli lke pool-update 12345 456 \
@@ -6554,8 +6483,6 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: Delete Node Pool
       description: |
         Delete a specific Node Pool from a Kubernetes cluster.
@@ -6563,12 +6490,6 @@ paths:
         **Deleting a Node Pool is a destructive action and cannot be undone.**
 
         Deleting a Node Pool will delete all Linodes within that Pool.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Delete successful
@@ -6583,7 +6504,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
                 -X DELETE \
-                https://api.linode.com/v4beta/lke/clusters/12345/pools/456
+                https://api.linode.com/v4/lke/clusters/12345/pools/456
       - lang: CLI
         source: >
           linode-cli lke pool-delete 12345 456
@@ -6605,18 +6526,10 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: List Kubernetes API Endpoints
       description: >
         List the Kubernetes API server endpoints for this cluster. Please note that it often takes
         2-5 minutes before the endpoint is ready after first [creating a new cluster](/api/v4/lke-clusters/#post).
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns the Kubernetes API server endpoints for this cluster.
@@ -6650,68 +6563,10 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters/12345/api-endpoints
+                https://api.linode.com/v4/lke/clusters/12345/api-endpoints
       - lang: CLI
         source: >
           linode-cli lke api-endpoint-list 12345
-  /lke/clusters/{clusterId}/api-endpoint:
-    parameters:
-    - name: clusterId
-      in: path
-      description: ID of the Kubernetes cluster to look up.
-      required: true
-      schema:
-        type: integer
-    x-linode-cli-command: lke
-    get:
-      operationId: getLKEClusterAPIEndpoint
-      x-linode-cli-action: api-endpoint-view
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - lke:read_only
-      tags:
-      - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
-      summary: View Kubernetes API Endpoint
-      description: |
-        Get the Kubernetes API server endpoint for this cluster. Please note that it often takes
-        2-5 minutes before the endpoint is ready after first
-        [creating a new cluster](/api/v4/lke-clusters/#post).
-
-        **Note** This endpoint will be deprecated in favor of
-        [List Kubernetes API Endpoints](/api/v4/lke-clusters-cluster-id-api-endpoints).
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
-      responses:
-        '200':
-          description: Returns the Kubernetes API server endpoint for this cluster.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  endpoints:
-                    type: string
-                    readOnly: true
-                    description: >
-                      The Kubernetes API server endpoint for this cluster.
-                    example: "https://192.0.2.1:6443"
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters/12345/api-endpoint
-      - lang: CLI
-        source: >
-          linode-cli lke api-endpoint-view 12345
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
     - name: clusterId
@@ -6730,17 +6585,10 @@ paths:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: View Kubeconfig
       description: |
         Get the Kubeconfig file for a Cluster. Please note that it often takes 2-5 minutes before
         the Kubeconfig file is ready after first [creating a new cluster](/api/v4/lke-clusters/#post).
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: Returns the Base64-encoded Kubeconfig file for this Kubernetes cluster.
@@ -6760,7 +6608,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/clusters/12345/kubeconfig
+                https://api.linode.com/v4/lke/clusters/12345/kubeconfig
       - lang: CLI
         source: >
           linode-cli lke kubeconfig-view 12345
@@ -6776,18 +6624,10 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: List Kubernetes Versions
       description: >
         List the Kubernetes versions available for deployment
         to a Kubernetes cluster.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: >
@@ -6814,7 +6654,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/versions
+                https://api.linode.com/v4/lke/versions
       - lang: CLI
         source: >
           linode-cli lke versions-list
@@ -6837,18 +6677,10 @@ paths:
         - lke:read_only
       tags:
       - Linode Kubernetes Engine (LKE)
-      servers:
-      - url: https://api.linode.com/v4beta
       summary: View Kubernetes Version
       description: >
         View a Kubernetes version available for deployment
         to a Kubernetes cluster.
-
-
-        **Beta**: This endpoint is in private beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta. Sign up for the beta [here](https://welcome.linode.com/lkebeta/).
       responses:
         '200':
           description: >
@@ -6864,7 +6696,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/lke/versions/1.16
+                https://api.linode.com/v4/lke/versions/1.16
       - lang: CLI
         source: >
           linode-cli lke version-view 1.16
