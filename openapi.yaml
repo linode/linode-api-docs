@@ -13449,9 +13449,8 @@ components:
           - master
           - slave
           description: >
-            If this Domain represents the authoritative source of information for
-            the domain it describes, or if it is a read-only copy of a master
-            (also called a slave).
+            Whether this Domain represents the authoritative source of information for the domain
+            it describes ("master"), or whether it is a read-only copy of a master ("slave").
           example: master
           x-linode-cli-display: 3
         domain:
@@ -13500,7 +13499,7 @@ components:
           type: string
           format: email
           description: >
-            Start of Authority email address. This is required for master
+            Start of Authority email address. This is required for `type` master
             Domains.
           example: admin@example.org
           x-linode-cli-display: 5
@@ -13518,7 +13517,8 @@ components:
             type: string
             format: ip
           description: >
-            The IP addresses representing the master DNS for this Domain.
+            The IP addresses representing the master DNS for this Domain. At least one value is
+            required for `type` slave Domains.
           example: []
         axfr_ips:
           type: array
