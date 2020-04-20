@@ -11054,6 +11054,90 @@ paths:
       - lang: CLI
         source: >
           linode-cli profile token-delete 123
+  /profile/logins:
+    description: >
+      Returns a collection of successful account logins for this user during the last
+      90 days.
+    x-linode-cli-command: profile
+    get:
+      tags:
+      - Profile
+      summary: List Logins
+      description: >
+        Returns a collection of successful account logins from this user during the last
+        90 days.
+      operationId: getProfileLogins
+      x-linode-cli-action: logins-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: >
+            An array of successful account logins from this user during
+            the last 90 days.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Logins'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/logins
+      - lang: CLI
+        source: >
+          linode-cli profile logins-list
+  /profile/logins/{loginId}:
+    description: >
+      A login object that displays information about a successful
+      account login from this user.
+    parameters:
+    - name: loginId
+      in: path
+      description: The ID of the login object to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: profile
+    get:
+      tags:
+      - Profile
+      summary: View Login
+      description: >
+        Returns a login object displaying information about a successful
+        account login from this user.
+      operationId: getProfileLogin
+      x-linode-cli-action: login-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: The requested login object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Logins'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/logins/1234
+      - lang: CLI
+        source: >
+          linode-cli profile login-view 1234
   /profile/devices:
     x-linode-cli-command: profile
     description: >
@@ -13449,9 +13533,8 @@ components:
           - master
           - slave
           description: >
-            If this Domain represents the authoritative source of information for
-            the domain it describes, or if it is a read-only copy of a master
-            (also called a slave).
+            Whether this Domain represents the authoritative source of information for the domain
+            it describes ("master"), or whether it is a read-only copy of a master ("slave").
           example: master
           x-linode-cli-display: 3
         domain:
@@ -13500,7 +13583,7 @@ components:
           type: string
           format: email
           description: >
-            Start of Authority email address. This is required for master
+            Start of Authority email address. This is required for `type` master
             Domains.
           example: admin@example.org
           x-linode-cli-display: 5
@@ -13518,7 +13601,8 @@ components:
             type: string
             format: ip
           description: >
-            The IP addresses representing the master DNS for this Domain.
+            The IP addresses representing the master DNS for this Domain. At least one value is
+            required for `type` slave Domains.
           example: []
         axfr_ips:
           type: array
@@ -15828,6 +15912,35 @@ components:
             When this Longview Client was last updated.
           example: 2018-01-01T00:01:01
           readOnly: true
+    Logins:
+      type: object
+      description: >
+        A collection of successful account logins from this user during the last
+        90 days
+      properties:
+        id:
+          type: integer
+          description: >
+            The unique ID of this login object.
+          example: 1234
+          readOnly: true
+          x-linode-cli-display: 1
+        datetime:
+          type: string
+          format: date-time
+          description: >
+            When the login was initiated.
+          example: '2018-01-01T00:01:01'
+          readOnly: true
+          x-linode-cli-display: 2
+        ip:
+          type: string
+          format: ip
+          description: >
+            The remote IP address that requested the login.
+          example: 192.0.2.0
+          readOnly: true
+          x-linode-cli-display: 3
     LongviewSubscription:
       type: object
       description: >
