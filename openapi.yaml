@@ -17466,6 +17466,10 @@ components:
             - Has never used Third-Party Authentication, their authentication type will be `password`.
             - Is using Third-Party Authentication, their authentication type will be the name of their Identity Provider (eg. `github`).
             - Has used Third-Party Authentication and has since revoked it, their authentication type will be `password`.
+
+
+            **Note:** Note this functionality is not yet available in Cloud Manager.
+            See the [Cloud Manager Changelog](/changelog/cloud-manager/) for the latest updates.
           example: password
           readOnly: true
     Region:
