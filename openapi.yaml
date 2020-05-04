@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.63.1
+  version: 4.64.0
 
   title: Linode API
   description: |
@@ -5545,6 +5545,83 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes transfer-view 123
+  /linode/instances/{linodeId}/transfer/{year}/{month}:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode to look up.
+      required: true
+      schema:
+        type: integer
+    - name: year
+      in: path
+      description: Numeric value representing the year to look up.
+      required: true
+      schema:
+        type: integer
+        minimum: 2000
+        maximum: 2037
+    - name: month
+      in: path
+      description: Numeric value representing the month to look up.
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 12
+    x-linode-cli-command: linodes
+    get:
+      x-linode-grant: read_only
+      tags:
+      - Linode Instances
+      summary: View Network Transfer (year/month)
+      description: >
+        Returns a Linode's network transfer statistics for a specific month. The year/month
+        values must be either a date in the past, or the current month.
+      operationId: getLinodeTransferByYearMonth
+      x-linode-cli-skip: true
+      x-linode-cli-action: transfer-month
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_only
+      responses:
+        '200':
+          description: >
+            A collection of the specified Linode's network transfer statistics for the requested
+            month.
+          content:
+            application/json:
+              schema:
+                properties:
+                  bytes_in:
+                    type: integer
+                    description: >
+                      The amount of inbound public network traffic received by this Linode, in
+                      bytes, for a specific year/month.
+                    example: 30471077120
+                    readOnly: true
+                  bytes_out:
+                    type: integer
+                    description: >
+                      The amount of outbound public network traffic sent by this Linode, in bytes,
+                      for a specific year/month.
+                    example: 22956600198
+                    readOnly: true
+                  bytes_total:
+                    type: integer
+                    description: >
+                      The total amount of public network traffic sent and received by this Linode,
+                      in bytes, for a specific year/month.
+                    example: 53427677318
+                    readOnly: true
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/transfer/2018/01
   /linode/instances/{linodeId}/stats:
     parameters:
     - name: linodeId
@@ -15674,9 +15751,9 @@ components:
           type: string
           description: >
             This Kubernetes cluster's unique label for display purposes only.
-            If no label is provided, one will be assigned automatically.
 
             Labels have the following constraints:
+
               * Must start with an alpha character
               * Must only consist of alphanumeric characters and dashes (`-`)
               * Must not contain two dashes in a row
@@ -17456,9 +17533,20 @@ components:
           type: string
           enum:
           - password
+          - github
           description: |
-            This account's Cloud Manager authentication type. Currently, a user's password
-            (in conjunction with their username) is the only available authentication type.
+            This account's Cloud Manager authentication type. Authentication types are chosen through
+            Cloud Manager and authorized when logging into your account. These authentication types are either
+            the user's password (in conjunction with their username), or the name of their
+            indentity provider such as GitHub. For example, if a user:
+
+            - Has never used Third-Party Authentication, their authentication type will be `password`.
+            - Is using Third-Party Authentication, their authentication type will be the name of their Identity Provider (eg. `github`).
+            - Has used Third-Party Authentication and has since revoked it, their authentication type will be `password`.
+
+
+            **Note:** This functionality is not yet available in Cloud Manager.
+            See the [Cloud Manager Changelog](/changelog/cloud-manager/) for the latest updates.
           example: password
           readOnly: true
     Region:
