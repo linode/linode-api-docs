@@ -15674,7 +15674,6 @@ components:
           type: string
           description: >
             This Kubernetes cluster's unique label for display purposes only.
-            If no label is provided, one will be assigned automatically.
 
             Labels have the following constraints:
               * Must start with an alpha character
