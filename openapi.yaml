@@ -5559,6 +5559,8 @@ paths:
       required: true
       schema:
         type: integer
+        minimum: 2000
+        maximum: 2037
     - name: month
       in: path
       description: Numeric value representing the month to look up.
