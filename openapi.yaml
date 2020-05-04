@@ -15676,6 +15676,7 @@ components:
             This Kubernetes cluster's unique label for display purposes only.
 
             Labels have the following constraints:
+
               * Must start with an alpha character
               * Must only consist of alphanumeric characters and dashes (`-`)
               * Must not contain two dashes in a row
