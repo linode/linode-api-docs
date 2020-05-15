@@ -18024,9 +18024,9 @@ components:
           description: >
             Designates if this ticket is related to a
             [Managed service](https://www.linode.com/products/managed/).
-             If `true`, the following constraints will apply:
+            If `true`, the following constraints will apply:
 
-             * No ID attributes should be provided with this
+            * No ID attributes should be provided with this
             request (i.e. `linode_id`, `domain_id`, etc.).
 
             * Your account must have a [Managed service enabled](/api/v4/managed-services-service-id-enable/#post).
