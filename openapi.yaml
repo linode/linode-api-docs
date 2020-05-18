@@ -16640,6 +16640,7 @@ components:
           example: 3
         check_path:
           type: string
+          pattern: ^[a-zA-Z0-9\/\-%?&=.]*$
           description: >
             The URL path to check on each backend. If the backend does not respond
             to this request it is considered to be down.
