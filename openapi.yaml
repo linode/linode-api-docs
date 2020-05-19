@@ -17498,10 +17498,17 @@ components:
           - keys_only
           - disabled
           description: >
-            What methods of authentication are allowed when connecting via
-            Lish.  "keys_only" is the most secure if you intend to use Lish,
-            and "disabled" is recommended if you do not intend to use Lish at
+            The authentication methods that are allowed when connecting to
+            [the Linode Shell (Lish)](https://www.linode.com/docs/platform/manager/using-the-linode-shell-lish/).
+
+            * `keys_only` is the most secure if you intend to use Lish.
+
+            * `disabled` is recommended if you do not intend to use Lish at
             all.
+
+            * If this account's Cloud Manager authentication type is set to a third party authentication (TPA) method, `password_keys` cannot
+            be used as your Lish authentication method. To view this account's Cloud Manager `authentication_type` field, send a request
+            to the [View Profile](/api/v4/profile) endpoint.
           example: keys_only
         authorized_keys:
           type: array
