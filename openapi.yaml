@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.64.0
+  version: 4.65.0
 
   title: Linode API
   description: |
@@ -16640,6 +16640,7 @@ components:
           example: 3
         check_path:
           type: string
+          pattern: ^[a-zA-Z0-9\/\-%?&=.]*$
           description: >
             The URL path to check on each backend. If the backend does not respond
             to this request it is considered to be down.
@@ -17498,10 +17499,17 @@ components:
           - keys_only
           - disabled
           description: >
-            What methods of authentication are allowed when connecting via
-            Lish.  "keys_only" is the most secure if you intend to use Lish,
-            and "disabled" is recommended if you do not intend to use Lish at
+            The authentication methods that are allowed when connecting to
+            [the Linode Shell (Lish)](https://www.linode.com/docs/platform/manager/using-the-linode-shell-lish/).
+
+            * `keys_only` is the most secure if you intend to use Lish.
+
+            * `disabled` is recommended if you do not intend to use Lish at
             all.
+
+            * If this account's Cloud Manager authentication type is set to a Third-Party Authentication method, `password_keys` cannot
+            be used as your Lish authentication method. To view this account's Cloud Manager `authentication_type` field, send a request
+            to the [View Profile](/api/v4/profile) endpoint.
           example: keys_only
         authorized_keys:
           type: array
@@ -17545,7 +17553,7 @@ components:
             - Has used Third-Party Authentication and has since revoked it, their authentication type will be `password`.
 
 
-            **Note:** This functionality is not yet available in Cloud Manager.
+            **Note:** This functionality may not yet be available in Cloud Manager.
             See the [Cloud Manager Changelog](/changelog/cloud-manager/) for the latest updates.
           example: password
           readOnly: true
@@ -18019,6 +18027,18 @@ components:
             The summary or title for this SupportTicket.
           example: >
             Having trouble resetting root password on my Linode
+        managed_issue:
+          type: boolean
+          description: >
+            Designates if this ticket is related to a
+            [Managed service](https://www.linode.com/products/managed/).
+            If `true`, the following constraints will apply:
+
+            * No ID attributes (i.e. `linode_id`, `domain_id`, etc.) should be provided with this
+            request.
+
+            * Your account must have a [Managed service enabled](/api/v4/managed-services-service-id-enable/#post).
+          example: false
         volume_id:
           type: integer
           description: >
