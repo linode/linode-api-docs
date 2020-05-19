@@ -17507,7 +17507,7 @@ components:
             * `disabled` is recommended if you do not intend to use Lish at
             all.
 
-            * If this account's Cloud Manager authentication type is set to a third party authentication (TPA) method, `password_keys` cannot
+            * If this account's Cloud Manager authentication type is set to a Third-Party Authentication method, `password_keys` cannot
             be used as your Lish authentication method. To view this account's Cloud Manager `authentication_type` field, send a request
             to the [View Profile](/api/v4/profile) endpoint.
           example: keys_only
