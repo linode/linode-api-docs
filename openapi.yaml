@@ -17552,7 +17552,7 @@ components:
             - Has used Third-Party Authentication and has since revoked it, their authentication type will be `password`.
 
 
-            **Note:** This functionality is not yet available in Cloud Manager.
+            **Note:** This functionality may not yet be available in Cloud Manager.
             See the [Cloud Manager Changelog](/changelog/cloud-manager/) for the latest updates.
           example: password
           readOnly: true
