@@ -204,7 +204,7 @@ info:
 
 
     * Page sizes default to 100,
-    and can be set to return between 25 and 100. Page size can be set using
+    and can be set to return between 25 and 500. Page size can be set using
     `?page_size=x`.
 
     # Filtering and Sorting
