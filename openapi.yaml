@@ -15191,6 +15191,8 @@ components:
                 For example, a two core Linode's CPU capacity is represented as 200%. If you want
                 to be alerted at 90% of a two core Linode's CPU capacity, set the alert value to `180`.
 
+                The default value is 90% multiplied by the number of cores.
+
                 If the value is set to `0` (zero), the alert is disabled.
               example: 180
             network_in:
