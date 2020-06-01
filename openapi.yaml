@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.65.0
+  version: 4.66.0
 
   title: Linode API
   description: |
@@ -204,7 +204,7 @@ info:
 
 
     * Page sizes default to 100,
-    and can be set to return between 25 and 100. Page size can be set using
+    and can be set to return between 25 and 500. Page size can be set using
     `?page_size=x`.
 
     # Filtering and Sorting
@@ -2955,6 +2955,10 @@ paths:
         Linodes can be created in any one of our available
         [Regions](/api/v4/regions) for a list
         of available Regions you can deploy your Linode in.
+
+        In an effort to fight spam, Linode restricts outbound connections on ports 25, 465, and 587
+        on all Linodes for new accounts created after November 5th, 2019. For more information,
+        see [Sending Email on Linode](https://www.linode.com/docs/email/running-a-mail-server/#sending-email-on-linode).
 
         Linodes can be created in a number of ways:
 
@@ -15190,6 +15194,8 @@ components:
 
                 For example, a two core Linode's CPU capacity is represented as 200%. If you want
                 to be alerted at 90% of a two core Linode's CPU capacity, set the alert value to `180`.
+
+                The default value is 90% multiplied by the number of cores.
 
                 If the value is set to `0` (zero), the alert is disabled.
               example: 180
