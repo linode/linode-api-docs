@@ -15639,8 +15639,8 @@ components:
           description: >
             The class of the Linode Type. We currently offer five classes of Linodes:
 
-              * nanode (1 GB linode) - Nanode instances are good for low-duty workloads,
-                where performance isn't critical. **Note:** As of June 16th, 2020 Nanodes became
+              * nanode - Nanode instances are good for low-duty workloads,
+                where performance isn't critical. **Note:** As of June 16th, 2020, Nanodes became
                 1 GB Linodes in the Cloud Manager, however, the API, CLI, and billing
                 continue to refer to these instances as Nanodes.
               * standard - Standard instances are good for low and medium-duty workloads and
