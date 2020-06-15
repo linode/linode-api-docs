@@ -15643,7 +15643,7 @@ components:
                 where performance isn't critical. **Note:** As of June 16th, 2020, Nanodes became
                 1 GB Linodes in the Cloud Manager, however, the API, CLI, and billing
                 continue to refer to these instances as Nanodes.
-              * standard - Standard instances are good for low and medium-duty workloads and
+              * standard - Standard Shared instances are good for low and medium-duty workloads and
                 are a good mix of performance, resources, and price.
               * dedicated - Dedicated CPU instances are good for full-duty workloads
                 where consistent performance is important.
