@@ -15637,8 +15637,12 @@ components:
           type: string
           readOnly: true
           description: >
-            The class of the Linode Type. We currently offer four classes of Linodes:
+            The class of the Linode Type. We currently offer five classes of Linodes:
 
+              * nanode (1 GB linode) - Nanode instances are good for low-duty workloads,
+                where performance isn't critical. **Note:** As of June 16th, 2020 Nanodes became
+                1 GB Linodes in the Cloud Manager, however, the API, CLI, and billing
+                continue to refer to these instances as Nanodes.
               * standard - Standard instances are good for low and medium-duty workloads and
                 are a good mix of performance, resources, and price.
               * dedicated - Dedicated CPU instances are good for full-duty workloads
@@ -15648,6 +15652,7 @@ components:
               * highmem - High Memory instances favor RAM over other resources, and can be
                 good for memory hungry use cases like caching and in-memory databases.
           enum:
+          - nanode
           - standard
           - dedicated
           - gpu
