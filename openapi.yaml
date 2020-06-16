@@ -6995,90 +6995,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli longview delete 789
-  /longview/plan:
-    x-linode-cli-command: longview
-    get:
-      tags:
-      - Longview
-      summary: View Longview Plan
-      description: >
-        Returns the Longview subscription plan for this account. You can send a request to the
-        [View Longview Subscription](/api/v4/longview-subscriptions-subscription-id) endpoint for details on each particular subscription plan.
-      operationId: getLongviewPlan
-      x-linode-cli-action: plan-view
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - longview:read_only
-      responses:
-        '200':
-          description: The Longview Subscription plan for this account.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LongviewPlan'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/longview/plan
-      - lang: CLI
-        source: >
-          linode-cli longview plan-view
-    put:
-      tags:
-      - Longview
-      summary: Update Longview Plan
-      description: >
-        Updates the Longview subscription plan for this user. You can send a request to the
-        [View Longview Subscription](/api/v4/longview-subscriptions-subscription-id) endpoint for details on each particular subscription plan.
-      operationId: updateLongviewPlan
-      x-linode-cli-action: plan-update
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - account:read_write
-      requestBody:
-        description: Update your Longview subscription plan.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LongviewPlan'
-      responses:
-        '200':
-          description: The requested Longview Subscription.
-          content:
-            application/json:
-              schema:
-                properties:
-                  longview_subscription:
-                    type: string
-                    description: >
-                      The Longview subscription plan you are currently subscribed to.
-
-
-
-                      To update your subscription plan send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
-                      The value must be a [Longview Subscription ID](/api/v4/longview-subscriptions) or `null`. Note that a value of `null` will cancel the longview subscription.
-                    example: longview-10
-                    x-linode-cli-display: 1
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-            curl -H "Content-Type: application/json" \
-                -H "Authorization: Bearer $TOKEN" \
-                -X PUT -d '{
-                    "longview_subscription": "longview-10"
-                }' \
-                https://api.linode.com/v4/longview/plan
-      - lang: CLI
-        source: >
-          linode-cli longview plan-update --longview_subscription longview-10
   /longview/subscriptions:
     x-linode-cli-command: longview
     get:
@@ -14299,7 +14215,7 @@ components:
               example: true
             add_longview:
               type: boolean
-              description: If true, this User may create Longview clients and view the current plan.
+              description: If true, this User may create Longview clients.
               example: true
             longview_subscription:
               type: boolean
@@ -16161,22 +16077,6 @@ components:
           example: 10
           readOnly: true
           x-linode-cli-display: 3
-    LongviewPlan:
-      type: object
-      description: >
-        Longview Plan object.
-      properties:
-        longview_subscription:
-          type: string
-          description: >
-            The Longview subscription plan you are currently subscribed to.
-
-
-
-            To update your subscription plan send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
-            The value must be a [Longview Subscription ID](/api/v4/longview-subscriptions) or `null`. Note that a value of `null` will cancel the longview subscription.
-          example: longview-30
-          x-linode-cli-display: 1
     ManagedContact:
       type: object
       description: >
