@@ -877,6 +877,85 @@ paths:
         - lang: CLI
           source: >
             linode-cli account invoice-items 123
+  /account/logins:
+    x-linode-cli-command: account
+    get:
+      tags:
+      - Account
+      summary: List All User Logins
+      description: >
+        Returns a collection of successful logins for all users on the account during the last
+        90 days. This command can only be accessed by the unrestricted users of an account.
+      operationId: getAccountLogins
+      x-linode-cli-action: logins-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: >
+            A collection of successful logins for all users on the account during the last
+            90 days.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Login'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/account/logins
+      - lang: CLI
+        source: >
+          linode-cli account logins-list
+  /account/logins/{loginId}:
+    parameters:
+    - name: loginId
+      in: path
+      description: The ID of the login object to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: account
+    get:
+      tags:
+      - Account
+      summary: View Login
+      description: >
+        Returns a login object that displays information about a successful
+        login from an arbitrary user on the account. This command can only be
+        accessed by the unrestricted users of an account.
+      operationId: getAccountLogin
+      x-linode-cli-action: login-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: The requested login object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Login'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/account/logins/1234
+      - lang: CLI
+        source: >
+          linode-cli account login-view 1234
   /account/notifications:
     x-linode-cli-command: account
     get:
@@ -11166,7 +11245,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Logins'
+                      $ref: '#/components/schemas/Login'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11208,7 +11287,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Logins'
+                $ref: '#/components/schemas/Login'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -16000,11 +16079,10 @@ components:
             When this Longview Client was last updated.
           example: 2018-01-01T00:01:01
           readOnly: true
-    Logins:
+    Login:
       type: object
       description: >
-        A collection of successful account logins from this user during the last
-        90 days
+        An object representing a previous successful login for a User.
       properties:
         id:
           type: integer
@@ -16029,6 +16107,20 @@ components:
           example: 192.0.2.0
           readOnly: true
           x-linode-cli-display: 3
+        username:
+          type: string
+          description: >
+            The username of the User that was logged into.
+          example: example_user
+          readOnly: true
+          x-linode-cli-display: 4
+        restricted:
+          type: boolean
+          description: >
+            True if the User that was logged into was a restricted User, false otherwise.
+          example: true
+          readOnly: true
+          x-linode-cli-display: 5
     LongviewSubscription:
       type: object
       description: >
