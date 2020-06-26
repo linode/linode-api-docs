@@ -930,9 +930,10 @@ paths:
       - Account
       summary: View Login
       description: >
-        Returns a login object that displays information about a successful
-        login from an arbitrary user on the account. This command can only be
-        accessed by the unrestricted users of an account.
+        Returns a Login object that displays information about a successful login.
+        The logins that can be viewed can be for any user on the account, and are not
+        limited to only the logins of the user that is accessing this API endpoint.
+        This command can only be accessed by the unrestricted users of the account.
       operationId: getAccountLogin
       x-linode-cli-action: login-view
       security:
