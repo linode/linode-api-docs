@@ -13805,6 +13805,8 @@ components:
           description: >
             The port this Record points to.
           example: 80
+          minimum: 0
+          maximum: 65535
         service:
           type: string
           nullable: true
