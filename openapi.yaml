@@ -13797,12 +13797,16 @@ components:
           description: >
             The relative weight of this Record. Higher values are preferred.
           example: 50
+          minimum: 0
+          maximum: 65535
           x-linode-cli-display: 7
         port:
           type: integer
           description: >
             The port this Record points to.
           example: 80
+          minimum: 0
+          maximum: 65535
         service:
           type: string
           nullable: true
