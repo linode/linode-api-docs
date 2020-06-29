@@ -14071,7 +14071,7 @@ components:
           - dns_record_update
           - dns_zone_create
           - dns_zone_delete
-          - dnz_zone_import
+          - dns_zone_import
           - dns_zone_update
           - host_reboot
           - image_delete
