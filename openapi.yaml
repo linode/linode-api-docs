@@ -9577,10 +9577,12 @@ paths:
         content:
           application/json:
             schema:
+              type: object
               required:
                 - id
                 - type
-              $ref: '#/components/schemas/FirewallDevices/properties/entity'
+              allOf:
+                - $ref: '#/components/schemas/FirewallDevices/properties/entity'
       responses:
         '200':
           description: Returns information about the created Firewall Device.
