@@ -9436,7 +9436,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "status": "disabled",
+                "status": "disabled"
               }' \
               https://api.linode.com/v4beta/networking/firewalls/123
       - lang: CLI
