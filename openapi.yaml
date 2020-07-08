@@ -15327,6 +15327,7 @@ components:
               * Must begin and end with an alphanumeric character.
               * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
               * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
+              * Must be between 3 and 32 characters.
           example: firewall123
           minLength: 3
           maxLength: 32
