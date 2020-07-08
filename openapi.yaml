@@ -15354,7 +15354,11 @@ components:
         status:
           type: string
           description: >
-           The status of this Firewall service.
+           The status of this Firewall.
+
+             * When a Firewall is first created its status is `enabled`.
+             * Use the [Update Firewall](/api/v4/networking-firewalls-firewall-id/#put) endpoint to set a Firewall's status to `enbaled` or `disabled`.
+             * Use the [Delete Firewall](/api/v4/networking-firewalls-firewall-id/#delete) endpoint to delete a Firewall.
           enum:
           - enabled
           - disabled
