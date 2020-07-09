@@ -6273,7 +6273,7 @@ paths:
                       "count": 6,
                       "disks": [
                         {
-                          "size": "1028",
+                          "size": 1028,
                           "type": "ext4"
                         }
                       ]
@@ -6558,7 +6558,7 @@ paths:
                   "count": 6,
                   "disks": [
                         {
-                          "size": "1028",
+                          "size": 1028,
                           "type": "ext4"
                         }
                       ]
@@ -6569,7 +6569,7 @@ paths:
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
             --count 6 \
-            --disks '[{"size": "1028", "type": "ext4"}]'
+            --disks '[{"size": 1028, "type": "ext4"}]'
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
@@ -16034,7 +16034,7 @@ components:
         type:
           type: string
           description: A Linode Type for all of the nodes in the Node Pool.
-          example: "g6-standard-4"
+          example: g6-standard-4
         count:
           type: integer
           description: The number of nodes in the Node Pool.
@@ -16064,15 +16064,15 @@ components:
                 - 1024
                 - 2048
               type:
-                 description: >
-                   This custome disk partition's filesystem type.
-                 type: string
-                 enum:
-                  - raw
-                  - ext4
-                 example:
-                 - ext4
-                 - raw
+                description: >
+                  This custom disk partition's filesystem type.
+                type: string
+                enum:
+                - raw
+                - ext4
+                example:
+                - ext4
+                - raw
     LKENodePool:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
