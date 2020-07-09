@@ -16087,9 +16087,7 @@ components:
 
                     * The size of this disk partition must not exceed the capacity of the node's plan type.
                 type: integer
-                example:
-                - 1024
-                - 2048
+                example: 1024
               type:
                 description: >
                   This custom disk partition's filesystem type.
@@ -16097,9 +16095,7 @@ components:
                 enum:
                 - raw
                 - ext4
-                example:
-                - ext4
-                - raw
+                example: ext-4
     LKENodePool:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
