@@ -9228,34 +9228,35 @@ paths:
       - oauth:
         - firewall:read_write
       requestBody:
+        description: Creates a Firewall object that can be applied to a Linode service to filter the service's network traffic.
         content:
           application/json:
             schema:
+              type: object
               required:
                 - rules
-              allOf:
-                - $ref: '#/components/schemas/Firewall'
-                - type: object
+              properties:
+                label:
+                  $ref: '#/components/schemas/Firewall/properties/label'
+                rules:
+                  $ref: '#/components/schemas/Firewall/properties/rules'
+                tags:
+                  $ref: '#/components/schemas/Firewall/properties/tags'
+                devices:
+                  type: object
+                  description: >
+                    A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
+                    can only be assigned to Linode instances.
                   properties:
-                    devices:
-                      type: object
+                    linodes:
                       description: >
-                        A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
-                        can only be assigned to Linode instances.
-                      properties:
-                        linodes:
-                          description: >
-                            An array of Linode IDs. A Firewall Device will be created for each ID.
-                          type: array
-                          items:
-                            type: integer
-                          example:
-                            - 123
-                            - 456
-                - type: object
-                  properties:
-                    status:
-                      readOnly: true
+                        An array of Linode IDs. A Firewall Device will be created for each ID.
+                      type: array
+                      items:
+                        type: integer
+                      example:
+                        - 123
+                        - 456
       responses:
         '200':
           description: Returns information about the created Firewall.
