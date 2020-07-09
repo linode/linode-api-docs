@@ -9746,7 +9746,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/firewalls/123/rules
+              https://api.linode.com/v4beta/networking/firewalls/123/rules
       - lang: CLI
         source: >
           linode-cli firewalls rules-list 123
