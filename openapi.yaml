@@ -6545,7 +6545,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKENodePool'
+                type: object
+                properties:
+                  type:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
+                  count:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                  disks:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
+                  id:
+                    $ref: '#/components/schemas/LKENodePool/properties/id'
+                  nodes:
+                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -16084,6 +16095,7 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/LKENodePoolRequestBody'
+      - type: object
       description: >
         The set of Node Pools which are members of the Kubernetes cluster.
         Node Pools consist of a Linode type, the number of Linodes to
