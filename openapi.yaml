@@ -6662,7 +6662,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKENodePool'
+                type: object
+                properties:
+                  type:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
+                  count:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                  disks:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
+                  id:
+                    $ref: '#/components/schemas/LKENodePool/properties/id'
+                  nodes:
+                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
       x-code-samples:
       - lang: Shell
         source: >
