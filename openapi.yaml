@@ -9289,6 +9289,7 @@ paths:
                     }
                   ],
                   "outbound": [
+                    {
                       "protocol": "TCP",
                       "ports": "49152-65535",
                       "addresses": {
