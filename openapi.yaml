@@ -6291,7 +6291,7 @@ paths:
             --label cluster12345 \
             --region us-central \
             --k8s_version 1.16 \
-            --node_pools.type g6-standard-4 --node_pools.count 6 --node_pools.disks '[{"size": "1028", "type": "ext4"}]' \
+            --node_pools.type g6-standard-4 --node_pools.count 6 --node_pools.disks '[{"size": 1028, "type": "ext4"}]' \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
   /lke/clusters/{clusterId}:
@@ -16049,6 +16049,7 @@ components:
 
               * The custom disk layout is applied to each node in this Node Pool.
               * The maximum number of custom disk partitions that can be configured is 7.
+              * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
               * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
           items:
             type: object
@@ -16057,8 +16058,9 @@ components:
             properties:
               size:
                 description: >
-                  The size of this custom disk partition in MB. The size of this disk partition must not exceed the
-                  capacity of the node's plan type.
+                  The size of this custom disk partition in MB.
+
+                    * The size of this disk partition must not exceed the capacity of the node's plan type.
                 type: integer
                 example:
                 - 1024
