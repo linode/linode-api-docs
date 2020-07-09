@@ -6268,8 +6268,20 @@ paths:
                   "k8s_version": "1.16",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
-                    { "type": "g6-standard-4", "count": 6},
-                    { "type": "g6-standard-8", "count": 3}
+                    {
+                      "type": "g6-standard-4",
+                      "count": 6,
+                      "disks": [
+                        {
+                          "size": "1028",
+                          "type": "ext4"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "g6-standard-8",
+                      "count": 3
+                    }
                   ]
                 }' \
                 https://api.linode.com/v4/lke/clusters
@@ -6279,7 +6291,7 @@ paths:
             --label cluster12345 \
             --region us-central \
             --k8s_version 1.16 \
-            --node_pools.type g6-standard-4 --node_pools.count 6 \
+            --node_pools.type g6-standard-4 --node_pools.count 6 --node_pools.disks '[{"size": "1028", "type": "ext4"}]' \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
   /lke/clusters/{clusterId}:
@@ -6543,7 +6555,13 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                   "type": "g6-standard-4",
-                  "count": 6
+                  "count": 6,
+                  "disks": [
+                        {
+                          "size": "1028",
+                          "type": "ext4"
+                        }
+                      ]
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
@@ -6551,6 +6569,7 @@ paths:
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
             --count 6 \
+            --disks '[{"size": "1028", "type": "ext4"}]'
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
@@ -16022,6 +16041,38 @@ components:
           minimum: 1
           maximum: 100
           example: 6
+        disks:
+          type: array
+          description: >
+            This Node Pool's custom disk layout. Each item in this array will create a new disk
+            partition for each node in this Node Pool.
+
+              * The custom disk layout is applied to each node in this Node Pool.
+              * The maximum number of custom disk partitions that can be configured is 7.
+              * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
+          items:
+            type: object
+            description: >
+              The values to assign to each partition in this Node Pool's custom disk layout.
+            properties:
+              size:
+                description: >
+                  The size of this custom disk partition in MB. The size of this disk partition must not exceed the
+                  capacity of the node's plan type.
+                type: integer
+                example:
+                - 1024
+                - 2048
+              type:
+                 description: >
+                   This custome disk partition's filesystem type.
+                 type: string
+                 enum:
+                  - raw
+                  - ext4
+                 example:
+                 - ext4
+                 - raw
     LKENodePool:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
