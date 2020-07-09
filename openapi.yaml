@@ -16051,6 +16051,9 @@ components:
               * The maximum number of custom disk partitions that can be configured is 7.
               * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
               * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
+
+            **Note**: If this field is omitted, the node will have a default disk layout consisting of a single partition.
+            A custom layout is only required for specific use cases.
           items:
             type: object
             description: >
