@@ -14001,6 +14001,7 @@ components:
             The tag portion of a CAA record. It is invalid to set this on
             other record types.
           example: null
+          x-linode-filterable: true
         created:
           type: string
           format: date-time
