@@ -961,12 +961,17 @@ paths:
     x-linode-cli-command: maintenance
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Maintenance
       summary: List Maintenance
       description: >
         Returns a collection of Maintenance objects for any entity
         a user has permissions to view.
+
+
+        Currently, Linodes are the only entities available for viewing.
       operationId: getMaintenance
       x-linode-cli-action: maintenance-list
       security:
@@ -997,7 +1002,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4/account/maintenance
+                https://api.linode.com/v4beta/account/maintenance
         - lang: CLI
           source: >
             linode-cli account maintenance-list
@@ -16324,6 +16329,7 @@ components:
         Information about maintenance affecting an entity.
       properties:
         type:
+          x-linode-filterable: true
           type: string
           enum:
           - reboot
@@ -16333,15 +16339,13 @@ components:
             The type of maintenance.
           example: reboot
         status:
+          x-linode-filterable: true
           type: string
           enum:
           - pending
-          - ticketed
-          - scheduled
           - ready
           - started
           - completed
-          - cancelled
           description: >
             The maintenance status.
           example: started
