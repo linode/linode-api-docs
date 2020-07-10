@@ -6195,7 +6195,7 @@ paths:
                     type: array
                     items:
                       type: object
-                    $ref: '#/components/schemas/LKECluster'
+                      $ref: '#/components/schemas/LKECluster'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
