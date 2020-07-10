@@ -4070,6 +4070,10 @@ paths:
                 "memory_limit": 2048,
                 "run_level": "default",
                 "virt_mode": "paravirt",
+                "interfaces": {
+                  "slot": "eth1",
+                  "interface_id": 1,
+                },
                 "helpers": {
                   "updatedb_disabled": true,
                   "distro": true,
@@ -4180,6 +4184,20 @@ paths:
                   $ref: '#/components/schemas/LinodeConfig/properties/helpers'
                 label:
                   $ref: '#/components/schemas/LinodeConfig/properties/label'
+                interfaces:
+                  type: array
+                  description: An array of all network interfaces attached to a Linode.
+                  items:
+                  properties:
+                    slot:
+                      type: string
+                      description: The interface slot type. Must be an Ethernet Interface or "eth" followed by an integer between 1 and 9.
+                      example: eth1
+                    interface_id:
+                      type: integer
+                      description: The ID of the interface. Must be provided to edit the interface.
+                      example: 1
+                      readOnly: true
                 devices:
                   type: object
                   description: >
@@ -4232,6 +4250,10 @@ paths:
                 "memory_limit": 2048,
                 "run_level": "default",
                 "virt_mode": "paravirt",
+                "interfaces": {
+                  "slot": "eth1",
+                  "interface_id": 1,
+                },
                 "helpers": {
                   "updatedb_disabled": true,
                   "distro": true,
@@ -15560,6 +15582,20 @@ components:
           - paravirt
           - fullvirt
           example: paravirt
+        interfaces:
+          type: array
+          description: An array of all network interfaces attached to a Linode.
+          items:
+          properties:
+            slot:
+              type: string
+              description: The interface slot type. Must be an Ethernet Interface or "eth" followed by an integer between 1 and 9.
+              example: eth1
+            interface_id:
+              type: integer
+              description: The ID of the interface. Must be provided to edit the interface.
+              example: 1
+              readOnly: true
         helpers:
           type: object
           description: Helpers enabled when booting to this Linode Config.
