@@ -322,6 +322,22 @@ info:
         }'
     ```
 
+    # Rate Limiting
+
+    With the Linode API, you can make up to 1600 general API requests every two minutes per user as
+    determined by IP adddress or by OAuth token.
+
+    If a user has multiple OAuth tokens, the quota of requests per user is shared amongst all tokens
+    for the user.
+
+    Further, /stats endpoints have their own dedicated limits of 100 requests per minute per user.
+    These endpoints are:
+
+    * [View Linode Statistics] (https://api.linode.com/v4/linode/instances/{linodeId}/stats)
+    * [View Linode Statistics (year/month)] (https://api.linode.com/v4/linode/instances/{linodeId}/stats/{year}/{month})
+    * [View NodeBalancer Statistics] (https://api.linode.com/v4/nodebalancers/{nodeBalancerId}/stats)
+    * [List Managed Stats] (https://api.linode.com/v4/managed/stats)
+
     # CLI (Command Line Interface)
 
     The <a href="https://github.com/linode/linode-cli" target="_top">Linode CLI</a> allows you to easily
