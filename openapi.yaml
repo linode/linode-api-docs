@@ -4072,7 +4072,7 @@ paths:
                 "virt_mode": "paravirt",
                 "interfaces": {
                   "slot": "eth1",
-                  "interface_id": 1,
+                  "interface_id": 1
                 },
                 "helpers": {
                   "updatedb_disabled": true,
@@ -4185,8 +4185,8 @@ paths:
                 label:
                   $ref: '#/components/schemas/LinodeConfig/properties/label'
                 interfaces:
-                  type: array
-                  description: An array of all network interfaces attached to a Linode.
+                  type: object
+                  description: Information related to all network interfaces attached to a Linode.
                   items:
                   properties:
                     slot:
@@ -4252,7 +4252,7 @@ paths:
                 "virt_mode": "paravirt",
                 "interfaces": {
                   "slot": "eth1",
-                  "interface_id": 1,
+                  "interface_id": 1
                 },
                 "helpers": {
                   "updatedb_disabled": true,
@@ -15583,8 +15583,8 @@ components:
           - fullvirt
           example: paravirt
         interfaces:
-          type: array
-          description: An array of all network interfaces attached to a Linode.
+          type: object
+          description: Information related to all network interfaces attached to a Linode.
           items:
           properties:
             slot:
