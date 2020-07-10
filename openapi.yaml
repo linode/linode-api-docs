@@ -4071,8 +4071,12 @@ paths:
                 "run_level": "default",
                 "virt_mode": "paravirt",
                 "interfaces": {
-                  "slot": "eth1",
-                  "interface_id": 1
+                  "eth5" {
+                    "id": 1
+                  },
+                  "eth6" {
+                    "id": 2
+                  }
                 },
                 "helpers": {
                   "updatedb_disabled": true,
@@ -4099,7 +4103,9 @@ paths:
           linode-cli linodes config-create 7590910 \
             --label "My Config" \
             --devices.sda.disk_id 123456 \
-            --devices.sdb.disk_id 123457
+            --devices.sdb.disk_id 123457 \
+            --interfaces.eth5.id 1 \
+            --interfaces.eth6.id 2
   /linode/instances/{linodeId}/configs/{configId}:
     parameters:
     - name: linodeId
@@ -4239,8 +4245,12 @@ paths:
                 "run_level": "default",
                 "virt_mode": "paravirt",
                 "interfaces": {
-                  "slot": "eth1",
-                  "interface_id": 1
+                  "eth5" {
+                    "id": 1
+                  },
+                  "eth6" {
+                    "id": 2
+                  }
                 },
                 "helpers": {
                   "updatedb_disabled": true,
@@ -4277,7 +4287,9 @@ paths:
             --helpers.devtmpfs_automount false \
             --label "My Config" \
             --devices.sda.disk_id 123456 \
-            --devices.sdb.disk_id 123457
+            --devices.sdb.disk_id 123457 \
+            --interfaces.eth5.id 1 \
+            --interfaces.eth6.id 2
       responses:
         '200':
           description: Configuration profile successfully updated.
