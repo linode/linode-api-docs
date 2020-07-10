@@ -14703,6 +14703,39 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+    Interface:
+      type: object
+      description: >
+        The network interface slot to apply to a Linode.
+      properties:
+        id:
+          type: integer
+          description: The ID of the Interface.
+          example: 1
+    Interfaces:
+      type: object
+      description: A dictionary of network interface slots to apply to a Linode.
+      properties:
+        eth0:
+          $ref: '#/components/schemas/Interface'
+        eth1:
+          $ref: '#/components/schemas/Interface'
+        eth2:
+          $ref: '#/components/schemas/Interface'
+        eth3:
+          $ref: '#/components/schemas/Interface'
+        eth4:
+          $ref: '#/components/schemas/Interface'
+        eth5:
+          $ref: '#/components/schemas/Interface'
+        eth6:
+          $ref: '#/components/schemas/Interface'
+        eth7:
+          $ref: '#/components/schemas/Interface'
+        eth8:
+          $ref: '#/components/schemas/Interface'
+        eth9:
+          $ref: '#/components/schemas/Interface'
     Invoice:
       type: object
       description: Account Invoice object
@@ -15583,19 +15616,7 @@ components:
           - fullvirt
           example: paravirt
         interfaces:
-          type: object
-          description: Information related to all network interfaces attached to a Linode.
-          items:
-          properties:
-            slot:
-              type: string
-              description: The interface slot type. Must be an Ethernet Interface or "eth" followed by an integer between 1 and 9.
-              example: eth1
-            interface_id:
-              type: integer
-              description: The ID of the interface. Must be provided to edit the interface.
-              example: 1
-              readOnly: true
+          $ref: '#/components/schemas/Interfaces'
         helpers:
           type: object
           description: Helpers enabled when booting to this Linode Config.
