@@ -6241,13 +6241,19 @@ paths:
               - region
               - k8s_version
               - node_pools
-              allOf:
-              - $ref: '#/components/schemas/LKEClusterRequestBody'
-              - properties:
-                  node_pools:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/LKENodePoolRequestBody'
+              properties:
+                label:
+                  $ref: '#/components/schemas/LKECluster/properties/label'
+                region:
+                  $ref: '#/components/schemas/LKECluster/properties/region'
+                k8s_version:
+                  $ref: '#/components/schemas/LKECluster/properties/k8s_version'
+                tags:
+                  $ref: '#/components/schemas/LKECluster/properties/tags'
+                node_pools:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Kubernetes cluster creation has started.
@@ -6351,7 +6357,7 @@ paths:
             schema:
               properties:
                 label:
-                  $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+                  $ref: '#/components/schemas/LKECluster/properties/label'
                 tags:
                     type: array
                     items:
@@ -6374,7 +6380,6 @@ paths:
                   label:
                     $ref: '#/components/schemas/LKECluster/properties/label'
                   tags:
-                    x-linode-filterable: true
                     type: array
                     items:
                       type: string
@@ -15976,55 +15981,9 @@ components:
             The number of GPUs this Linode Type offers.
           example: 0
           x-linode-cli-display: 11
-    LKEClusterRequestBody:
-      type: object
-      description: A Kubernetes cluster.
-      properties:
-        label:
-          type: string
-          description: >
-            This Kubernetes cluster's unique label for display purposes only.
-
-            Labels have the following constraints:
-
-              * Must start with an alpha character
-              * Must only consist of alphanumeric characters and dashes (`-`)
-              * Must not contain two dashes in a row
-          minLength: 3
-          maxLength: 32
-          # Kubernetes does NOT allow underscores in resource names and we are
-          # passing this name to Kubernetes. Thus the following pattern:
-          pattern: '[a-zA-Z0-9-]{3, 32}'
-          example: lkecluster12345
-        region:
-          type: string
-          description: This Kubernetes cluster's location.
-          example: us-central
-        k8s_version:
-          type: string
-          description: >
-            The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
-            and the latest supported patch version will be deployed.
-          example: "1.16"
-        tags:
-          type: array
-          description: >
-            An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
-          items:
-            type: string
-          example:
-          - ecomm
-          - blogs
-      required:
-      - label
-      - region
-      - k8s_version
     LKECluster:
       type: object
-      # Note that LKECluster inherits all properties of
-      # LKEClusterRequestBody and then overrides some of the sub-properties
-      allOf:
-      - $ref: '#/components/schemas/LKEClusterRequestBody'
+      description: A Kubernetes cluster.
       properties:
         id:
           type: integer
@@ -16044,19 +16003,42 @@ components:
           description: When this Kubernetes cluster was updated.
           example: "2019-09-13T21:24:16Z"
           readOnly: true
-        # Note that these properties override some of the sub-properties from
-        # LKEClusterRequestBody but otherwise inherit all of the original
-        # sub-properties.
         label:
+          type: string
+          description: >
+            This Kubernetes cluster's unique label for display purposes only.
+
+            Labels have the following constraints:
+
+              * Must start with an alpha character
+              * Must only consist of alphanumeric characters and dashes (`-`)
+              * Must not contain two dashes in a row
+          minLength: 3
+          maxLength: 32
+          # Kubernetes does NOT allow underscores in resource names and we are
+          # passing this name to Kubernetes. Thus the following pattern:
+          pattern: '[a-zA-Z0-9-]{3, 32}'
           x-linode-cli-display: 2
           example: lkecluster12345
         region:
-          readOnly: true
+          type: string
+          description: This Kubernetes cluster's location.
           x-linode-cli-display: 3
           example: us-central
         k8s_version:
+          type: string
+          description: >
+            The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
+            and the latest supported patch version will be deployed.
           example: "1.16"
         tags:
+          x-linode-filterable: true
+          type: array
+          description: >
+            An array of tags applied to the Kubernetes cluster.
+            Tags are for organizational purposes only.
+          items:
+            type: string
           example:
           - ecomm
           - blogs
