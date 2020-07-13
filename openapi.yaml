@@ -16023,9 +16023,6 @@ components:
                 characters.
           minLength: 1
           maxLength: 32
-          # Kubernetes does NOT allow underscores in resource names and we are
-          # passing this name to Kubernetes. Thus the following pattern:
-          pattern: '[a-zA-Z0-9-]{3, 32}'
           x-linode-cli-display: 2
           example: lkecluster12345
         region:
