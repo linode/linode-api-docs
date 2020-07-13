@@ -14714,7 +14714,7 @@ components:
           example: 1
     Interfaces:
       type: object
-      description: A dictionary of network interface slots to apply to a Linode.
+      description: A dictionary of network interface to apply to a Linode.
       properties:
         eth0:
           $ref: '#/components/schemas/Interface'
