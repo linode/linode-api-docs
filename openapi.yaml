@@ -16011,12 +16011,12 @@ components:
             Labels have the following constraints:
 
               * UTF-8 characters will be returned by the API using escape
-                sequences of their Unicode code points. As an example, the
-                Japanese character 'か' is 3 bytes in UTF-8 (0xE382AB). Its
-                Unicode code point is 2 bytes (0x30AB). APIv4 supports this
+                sequences of their Unicode code points. For example, the
+                Japanese character *か* is 3 bytes in UTF-8 (`0xE382AB`). Its
+                Unicode code point is 2 bytes (`0x30AB`). APIv4 supports this
                 character and the API will return it as the escape sequence
                 using six 1 byte characters which represent 2 bytes of Unicode
-                code point ("\u30ab").
+                code point (`"\u30ab"`).
               * 4 byte UTF-8 characters are not supported.
               * If the label is entirely composed of UTF-8 characters, the API
                 response will return the code points using up to 193 1 byte
