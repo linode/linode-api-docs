@@ -6807,8 +6807,7 @@ paths:
                   data:
                     type: array
                     items:
-                      type: object
-                    $ref: '#/components/schemas/LKEVersion'
+                      $ref: '#/components/schemas/LKEVersion'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
