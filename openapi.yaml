@@ -14212,6 +14212,7 @@ components:
             The action that caused this Event. New actions may be added in the future.
           example: ticket_create
           x-linode-cli-display: 3
+          x-linode-filterable: true
         created:
           type: string
           readOnly: true
