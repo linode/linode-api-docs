@@ -15971,7 +15971,6 @@ components:
           description: This Kubernetes cluster's location.
           x-linode-cli-display: 3
           example: us-central
-          readOnly: true
         k8s_version:
           type: string
           description: >
