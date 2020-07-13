@@ -1,5 +1,7 @@
 # Linode OpenAPI 3
 
+[![Build Status](https://travis-ci.com/linode/linode-api-docs.svg?branch=master)](https://travis-ci.com/linode/linode-api-docs)
+
 This is the Linode API OpenAPI 3 Schema
 
 ## Requirements

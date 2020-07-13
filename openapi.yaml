@@ -6241,13 +6241,19 @@ paths:
               - region
               - k8s_version
               - node_pools
-              allOf:
-              - $ref: '#/components/schemas/LKEClusterRequestBody'
-              - properties:
-                  node_pools:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/LKENodePoolRequestBody'
+              properties:
+                label:
+                  $ref: '#/components/schemas/LKECluster/properties/label'
+                region:
+                  $ref: '#/components/schemas/LKECluster/properties/region'
+                k8s_version:
+                  $ref: '#/components/schemas/LKECluster/properties/k8s_version'
+                tags:
+                  $ref: '#/components/schemas/LKECluster/properties/tags'
+                node_pools:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
         '200':
           description: Kubernetes cluster creation has started.
@@ -6268,8 +6274,20 @@ paths:
                   "k8s_version": "1.16",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
-                    { "type": "g6-standard-4", "count": 6},
-                    { "type": "g6-standard-8", "count": 3}
+                    {
+                      "type": "g6-standard-4",
+                      "count": 6,
+                      "disks": [
+                        {
+                          "size": 1028,
+                          "type": "ext4"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "g6-standard-8",
+                      "count": 3
+                    }
                   ]
                 }' \
                 https://api.linode.com/v4/lke/clusters
@@ -6279,7 +6297,7 @@ paths:
             --label cluster12345 \
             --region us-central \
             --k8s_version 1.16 \
-            --node_pools.type g6-standard-4 --node_pools.count 6 \
+            --node_pools.type g6-standard-4 --node_pools.count 6 --node_pools.disks '[{"size": 1028, "type": "ext4"}]' \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
   /lke/clusters/{clusterId}:
@@ -6339,7 +6357,7 @@ paths:
             schema:
               properties:
                 label:
-                  $ref: '#/components/schemas/LKEClusterRequestBody/properties/label'
+                  $ref: '#/components/schemas/LKECluster/properties/label'
                 tags:
                     type: array
                     items:
@@ -6362,7 +6380,6 @@ paths:
                   label:
                     $ref: '#/components/schemas/LKECluster/properties/label'
                   tags:
-                    x-linode-filterable: true
                     type: array
                     items:
                       type: string
@@ -6533,7 +6550,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKENodePool'
+                type: object
+                properties:
+                  type:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
+                  count:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                  disks:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
+                  id:
+                    $ref: '#/components/schemas/LKENodePool/properties/id'
+                  nodes:
+                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -6543,7 +6571,13 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                   "type": "g6-standard-4",
-                  "count": 6
+                  "count": 6,
+                  "disks": [
+                        {
+                          "size": 1028,
+                          "type": "ext4"
+                        }
+                      ]
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
@@ -6551,6 +6585,7 @@ paths:
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
             --count 6 \
+            --disks '[{"size": 1028, "type": "ext4"}]'
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
@@ -6584,7 +6619,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKENodePool'
+                type: object
+                properties:
+                  type:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
+                  count:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                  disks:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
+                  id:
+                    $ref: '#/components/schemas/LKENodePool/properties/id'
+                  nodes:
+                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
       x-code-samples:
       - lang: Shell
         source: >
@@ -6621,7 +6667,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LKENodePool'
+                type: object
+                properties:
+                  type:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
+                  count:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                  disks:
+                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
+                  id:
+                    $ref: '#/components/schemas/LKENodePool/properties/id'
+                  nodes:
+                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
       x-code-samples:
       - lang: Shell
         source: >
@@ -14001,6 +14058,7 @@ components:
             The tag portion of a CAA record. It is invalid to set this on
             other record types.
           example: null
+          x-linode-filterable: true
         created:
           type: string
           format: date-time
@@ -14159,6 +14217,7 @@ components:
             The action that caused this Event. New actions may be added in the future.
           example: ticket_create
           x-linode-cli-display: 3
+          x-linode-filterable: true
         created:
           type: string
           readOnly: true
@@ -15922,10 +15981,28 @@ components:
             The number of GPUs this Linode Type offers.
           example: 0
           x-linode-cli-display: 11
-    LKEClusterRequestBody:
+    LKECluster:
       type: object
       description: A Kubernetes cluster.
       properties:
+        id:
+          type: integer
+          description: This Kubernetes cluster's unique ID.
+          readOnly: true
+          x-linode-cli-display: 1
+          example: 1234
+        created:
+          type: string
+          format: date-time
+          description: When this Kubernetes cluster was created.
+          example: "2019-09-12T21:25:30Z"
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          description: When this Kubernetes cluster was updated.
+          example: "2019-09-13T21:24:16Z"
+          readOnly: true
         label:
           type: string
           description: >
@@ -15949,10 +16026,12 @@ components:
           # Kubernetes does NOT allow underscores in resource names and we are
           # passing this name to Kubernetes. Thus the following pattern:
           pattern: '[a-zA-Z0-9-]{3, 32}'
+          x-linode-cli-display: 2
           example: lkecluster12345
         region:
           type: string
           description: This Kubernetes cluster's location.
+          x-linode-cli-display: 3
           example: us-central
         k8s_version:
           type: string
@@ -15961,56 +16040,13 @@ components:
             and the latest supported patch version will be deployed.
           example: "1.16"
         tags:
+          x-linode-filterable: true
           type: array
           description: >
-            An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
+            An array of tags applied to the Kubernetes cluster.
+            Tags are for organizational purposes only.
           items:
             type: string
-          example:
-          - ecomm
-          - blogs
-      required:
-      - label
-      - region
-      - k8s_version
-    LKECluster:
-      type: object
-      # Note that LKECluster inherits all properties of
-      # LKEClusterRequestBody and then overrides some of the sub-properties
-      allOf:
-      - $ref: '#/components/schemas/LKEClusterRequestBody'
-      properties:
-        id:
-          type: integer
-          description: This Kubernetes cluster's unique ID.
-          readOnly: true
-          x-linode-cli-display: 1
-          example: 1234
-        created:
-          type: string
-          format: date-time
-          description: When this Kubernetes cluster was created.
-          example: "2019-09-12T21:25:30Z"
-          readOnly: true
-        updated:
-          type: string
-          format: date-time
-          description: When this Kubernetes cluster was updated.
-          example: "2019-09-13T21:24:16Z"
-          readOnly: true
-        # Note that these properties override some of the sub-properties from
-        # LKEClusterRequestBody but otherwise inherit all of the original
-        # sub-properties.
-        label:
-          x-linode-cli-display: 2
-          example: lkecluster12345
-        region:
-          readOnly: true
-          x-linode-cli-display: 3
-          example: us-central
-        k8s_version:
-          example: "1.16"
-        tags:
           example:
           - ecomm
           - blogs
@@ -16023,19 +16059,53 @@ components:
         type:
           type: string
           description: A Linode Type for all of the nodes in the Node Pool.
-          example: "g6-standard-4"
+          example: g6-standard-4
         count:
           type: integer
           description: The number of nodes in the Node Pool.
           minimum: 1
           maximum: 100
           example: 6
+        disks:
+          type: array
+          description: >
+            This Node Pool's custom disk layout. Each item in this array will create a new disk
+            partition for each node in this Node Pool.
+
+              * The custom disk layout is applied to each node in this Node Pool.
+              * The maximum number of custom disk partitions that can be configured is 7.
+              * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
+              * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
+
+            **Note**: If this field is omitted, the node will have a default disk layout consisting of a single partition.
+            A custom layout is only required for specific use cases.
+          items:
+            type: object
+            description: >
+              The values to assign to each partition in this Node Pool's custom disk layout.
+            properties:
+              size:
+                description: >
+                  The size of this custom disk partition in MB.
+
+                    * The size of this disk partition must not exceed the capacity of the node's plan type.
+                type: integer
+                example: 1024
+              type:
+                description: >
+                  This custom disk partition's filesystem type.
+                type: string
+                enum:
+                - raw
+                - ext4
+                example: ext-4
     LKENodePool:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
       type: object
       allOf:
       - $ref: '#/components/schemas/LKENodePoolRequestBody'
+      - type: object
       description: >
         The set of Node Pools which are members of the Kubernetes cluster.
         Node Pools consist of a Linode type, the number of Linodes to
