@@ -964,7 +964,7 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       tags:
-      - Maintenance
+      - Account
       summary: List Maintenance
       description: >
         Returns a collection of Maintenance objects for any entity
