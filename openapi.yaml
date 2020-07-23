@@ -11058,7 +11058,7 @@ paths:
                     format: date-time
                     description: >
                       When this Two Factor secret expires.
-                    example: 2018-03-01T00:01:01
+                    example: 2018-03-01T00:01:01Z
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -13224,7 +13224,7 @@ components:
                 type: string
                 description: >
                   When this promotion's credits expire.
-                example: '2018-01-31T23:59:59'
+                example: 2018-01-31T23:59:59Z
               image_url:
                 type: string
                 description: >
@@ -13244,7 +13244,7 @@ components:
           type: string
           format: date-time
           description: The datetime of when the account was activated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         address_1:
           type: string
@@ -13298,7 +13298,7 @@ components:
               description: >
                 The last four digits of the credit card associated with this
                 Account.
-              example: 1111
+              example: "1111"
             expiry:
               type: string
               description: The expiration month and year of the credit card.
@@ -13366,7 +13366,7 @@ components:
           type: string
           description: The zip code of this Account's billing address.
           maxLength: 16
-          example: 19102
+          example: "19102"
     AccountSettings:
       type: object
       description: Account Settings object
@@ -13459,7 +13459,7 @@ components:
           type: string
           format: date-time
           description: When this app was authorized.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
           x-linode-filterable: true
           x-linode-cli-display: 5
@@ -13469,7 +13469,7 @@ components:
           description: >
             When this app's access token expires.  Please note that apps may still have active
             refresh tokens after this time passes.
-          example: '2018-01-15T00:01:01'
+          example: 2018-01-15T00:01:01Z
           readOnly: true
           x-linode-cli-display: 6
         website:
@@ -13477,7 +13477,7 @@ components:
           format: url
           description: >
             The website where you can get more information about this app.
-          example: example.org
+          example: http://example.org
           readOnly: true
           x-linode-cli-display: 4
     Backup:
@@ -13527,20 +13527,20 @@ components:
           format: date-time
           readOnly: true
           description: The date the Backup was taken.
-          example: '2018-01-15T00:01:01'
+          example: 2018-01-15T00:01:01Z
           x-linode-cli-display: 4
         updated:
           type: string
           format: date-time
           readOnly: true
           description: The date the Backup was most recently updated.
-          example: '2018-01-15T00:01:01'
+          example: 2018-01-15T00:01:01Z
         finished:
           type: string
           format: date-time
           readOnly: true
           description: The date the Backup completed.
-          example: '2018-01-15T00:01:01'
+          example: 2018-01-15T00:01:01Z
         label:
           type: string
           description: A label for Backups that are of type `snapshot`.
@@ -13587,7 +13587,7 @@ components:
           description: Your credit card number. No spaces or dashes allowed.
           minLength: 13
           maxLength: 23
-          example: 4111111111111111
+          example: "4111111111111111"
         expiry_month:
           type: integer
           description: >
@@ -13716,13 +13716,13 @@ components:
           type: string
           format: date-time
           description: When this Linode was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Linode was last updated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
     DiskRequest:
       type: object
@@ -14063,13 +14063,13 @@ components:
           type: string
           format: date-time
           description: When this Domain Record was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Domain Record was last updated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
     ErrorObject:
       type: object
@@ -14223,7 +14223,7 @@ components:
           readOnly: true
           format: date-time
           description: When this Event was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           x-linode-cli-display: 6
           x-linode-filterable: true
         duration:
@@ -14555,13 +14555,13 @@ components:
           type: string
           format: date-time
           description: When this Image was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Image was last updated.
-          example: '2019-01-02T00:01:01'
+          example: 2019-01-02T00:01:01Z
           readOnly: true
         created_by:
           type: string
@@ -14615,7 +14615,7 @@ components:
           format: date-time
           description: >
             Only Images created automatically (from a deleted Linode; type=automatic) will expire.
-          example: '2018-08-01T00:01:01'
+          example: 2018-08-01T00:01:01Z
           readOnly: true
         eol:
           type: string
@@ -14623,7 +14623,7 @@ components:
           description: >
             The date of the image's planned end of life. Some images, like custom private images,
             will not have an end of life date. In that case this field will be `None`.
-          example: '2200-10-23T00:00:00'
+          example: 2200-10-23T00:00:00Z
           readOnly: true
         vendor:
           x-linode-filterable: true
@@ -14658,13 +14658,13 @@ components:
           type: string
           format: date-time
           description: When this Image was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Image was last updated.
-          example: '2019-01-02T00:01:01'
+          example: 2019-01-02T00:01:01Z
           readOnly: true
         created_by:
           type: string
@@ -14727,7 +14727,7 @@ components:
           description: >
             The date of the image's planned end of life. Some images, like custom private images,
             will not have an end of life date. In that case this field will be `None`.
-          example: '2200-10-23T00:00:00'
+          example: 2200-10-23T00:00:00Z
           readOnly: true
         vendor:
           x-linode-filterable: true
@@ -14755,7 +14755,7 @@ components:
           readOnly: true
           format: date-time
           description: When this Invoice was generated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           x-linode-cli-display: 2
         label:
           type: string
@@ -14808,7 +14808,7 @@ components:
           readOnly: true
           format: date-time
           description: The date the Invoice Item started, based on month.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           x-linode-cli-display: 2
         label:
           type: string
@@ -14826,7 +14826,7 @@ components:
           readOnly: true
           format: date-time
           description: The date the Invoice Item ended, based on month.
-          example: '2018-01-31T11:59:59'
+          example: 2018-01-31T11:59:59Z
           x-linode-cli-display: 3
         type:
           type: string
@@ -14840,7 +14840,7 @@ components:
           type: string
           readOnly: true
           description: The monthly service fee in US Dollars for this Item.
-          example: 5.05
+          example: "5.05"
     IPAddress:
       type: object
       description: >
@@ -15331,13 +15331,13 @@ components:
           type: string
           format: date-time
           description: When this Linode was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Linode was last updated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         ipv4:
           type: array
@@ -15528,7 +15528,7 @@ components:
               format: date-time
               description: The last successful backup date. 'null' if there was no previous backup.
               readOnly: true
-              example: '2018-01-01T00:01:01'
+              example: 2018-01-01T00:01:01Z
         watchdog_enabled:
           type: boolean
           description: >
@@ -15564,7 +15564,7 @@ components:
           x-linode-filterable: true
           description: >
             A deprecated property denoting a group label for this Linode.
-          example: "Linode-Group"
+          example: Linode-Group
         type:
           $ref: '#/components/schemas/LinodeType/properties/id'
         region:
@@ -15896,7 +15896,7 @@ components:
             Cost in US dollars, broken down into hourly and monthly charges.
           properties:
             hourly:
-              type: integer
+              type: number
               description: Cost (in US dollars) per hour.
               example: 0.03
               x-linode-cli-display: 9
@@ -15923,7 +15923,7 @@ components:
                   description: Cost of enabling Backups for this Linode Type.
                   properties:
                     hourly:
-                      type: integer
+                      type: number
                       description: >
                         The cost (in US dollars) per hour to add Backups service.
                       example: 0.008
@@ -16095,7 +16095,7 @@ components:
                 enum:
                 - raw
                 - ext4
-                example: ext-4
+                example: ext4
     LKENodePool:
       # Note that LKENodePool inherits all properties of
       # LKENodePoolRequestBody and then overrides some of the sub-properties
@@ -16139,7 +16139,7 @@ components:
           description: >
             The Linode's ID. When no Linode is currently provisioned for this
             Node, this will be null.
-          example: 123458
+          example: "123458"
         status:
           type: string
           description: >
@@ -16233,7 +16233,7 @@ components:
           format: date-time
           description: >
             When this Longview Client was created.
-          example: 2018-01-01T00:01:01
+          example: 2018-01-01T00:01:01Z
           readOnly: true
           x-linode-cli-display: 3
         updated:
@@ -16241,7 +16241,7 @@ components:
           format: date-time
           description: >
             When this Longview Client was last updated.
-          example: 2018-01-01T00:01:01
+          example: 2018-01-01T00:01:01Z
           readOnly: true
     Login:
       type: object
@@ -16260,7 +16260,7 @@ components:
           format: date-time
           description: >
             When the login was initiated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
           x-linode-cli-display: 2
         ip:
@@ -16413,7 +16413,7 @@ components:
           format: date-time
           description: >
             When this Contact was last updated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
     ManagedCredential:
       type: object
@@ -16445,7 +16445,7 @@ components:
             The date this Credential was last decrypted by a member of Linode
             special forces.
           readOnly: true
-          example: "2018-01-01T00:01:01"
+          example: 2018-01-01T00:01:01Z
           x-linode-cli-display: 3
     ManagedIssue:
       type: object
@@ -16466,7 +16466,7 @@ components:
             When this Issue was created. Issues are created in response to issues
             detected with Managed Services, so this is also when the Issue was
             detected.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
           x-linode-cli-display: 2
         services:
@@ -16683,13 +16683,13 @@ components:
           type: string
           format: date-time
           description: When this Managed Service was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Managed Service was last updated.
-          example: '2018-03-01T00:01:01'
+          example: 2018-03-01T00:01:01Z
           readOnly: true
     NodeBalancer:
       type: object
@@ -16755,14 +16755,14 @@ components:
           format: date-time
           description: >
             When this NodeBalancer was created.
-          example: 2018-01-01T00:01:01
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: >
             When this NodeBalancer was last updated.
-          example: 2018-03-01T00:01:01
+          example: 2018-03-01T00:01:01Z
           readOnly: true
         client_conn_throttle:
           type: integer
@@ -17385,7 +17385,7 @@ components:
           type: string
           format: date-time
           description: When this bucket was created.
-          example: 2019-01-01T01:23:45
+          example: 2019-01-01T01:23:45Z
         cluster:
           type: string
           description: The ID of the Object Storage Cluster this bucket is in.
@@ -17422,7 +17422,7 @@ components:
           description: >
             The date and time this object was last modified. `null` if this object
             represents a prefix.
-          example: 2019-01-01T01:23:45
+          example: 2019-01-01T01:23:45Z
         owner:
           type: string
           description: >
@@ -17539,13 +17539,13 @@ components:
           readOnly: true
           format: date-time
           description: When the Payment was made.
-          example: '2018-01-15T00:01:01'
+          example: 2018-01-15T00:01:01Z
           x-linode-cli-display: 2
         usd:
-          type: integer
+          type: number
           readOnly: true
           description: The amount, in US dollars, of the Payment.
-          example: '120.50'
+          example: 120.50
           x-linode-cli-display: 3
     PaymentRequest:
       type: object
@@ -17644,7 +17644,7 @@ components:
           description: >
             The date and time this token was created.
           x-linode-filterable: true
-          example: 2018-01-01T00:01:01
+          example: 2018-01-01T00:01:01Z
           readOnly: true
           x-linode-cli-display: 4
         label:
@@ -17674,7 +17674,7 @@ components:
             need to be generated.  Tokens may be created with "null" as their expiry
             and will never expire unless revoked.
           x-linode-cli-display: 6
-          example: '2018-01-01T13:46:32'
+          example: 2018-01-01T13:46:32Z
           readOnly: true
     Profile:
       type: object
@@ -17976,7 +17976,7 @@ components:
           description: >
             The date this StackScript was created.
           readOnly: true
-          example: "2018-01-01T00:01:01"
+          example: 2018-01-01T00:01:01Z
           x-linode-cli-display: 6
         updated:
           type: string
@@ -17984,7 +17984,7 @@ components:
           description: >
             The date this StackScript was last updated.
           readOnly: true
-          example: "2018-01-01T00:01:01"
+          example: 2018-01-01T00:01:01Z
           x-linode-cli-display: 7
         rev_note:
           x-linode-filterable: true
@@ -18063,7 +18063,7 @@ components:
             A stats graph data point.
           example: 11513761600000
         y:
-          type: integer
+          type: number
           readOnly: true
           description: >
             A stats graph data point.
@@ -18099,7 +18099,7 @@ components:
           readOnly: true
           description: >
             The date and time this Ticket was closed.
-          example: '2015-06-04T16:07:03'
+          example: 2015-06-04T16:07:03Z
         closable:
           type: boolean
           description: >
@@ -18165,7 +18165,7 @@ components:
           readOnly: true
           description: >
             The date and time this Ticket was created.
-          example: '2015-06-04T14:16:44'
+          example: 2015-06-04T14:16:44Z
           x-linode-cli-display: 4
         opened_by:
           type: string
@@ -18200,7 +18200,7 @@ components:
           readOnly: true
           description: >
             The date and time this Ticket was last updated.
-          example: '2015-06-04T16:07:03'
+          example: 2015-06-04T16:07:03Z
         updated_by:
           type: string
           nullable: true
@@ -18219,7 +18219,7 @@ components:
           readOnly: true
           description: >
             The date and time this Ticket reply was created.
-          example: '2015-06-02T14:31:41'
+          example: 2015-06-02T14:31:41Z
           x-linode-cli-display: 3
         created_by:
           type: string
@@ -18485,14 +18485,14 @@ components:
           description: >
             When this Remember Me session was started.  This corresponds to the time of login
             with the "Remember Me" box checked.
-          example: "2018-01-01T01:01:01"
+          example: 2018-01-01T01:01:01Z
           readOnly: true
         expiry:
           type: string
           format: date-time
           description: >
             When this TrustedDevice session expires.  Sessions typically last 30 days.
-          example: "2018-01-31T01:01:01"
+          example: 2018-01-31T01:01:01Z
           readOnly: true
         user_agent:
           type: string
@@ -18508,7 +18508,7 @@ components:
           description: >
             The last time this TrustedDevice was successfully used to authenticate to
             <a target="_top" href="https://login.linode.com">login.linode.com</a>.
-          example: "2018-01-05T12:57:12"
+          example: 2018-01-05T12:57:12Z
           readOnly: true
         last_remote_addr:
           type: string
@@ -18546,7 +18546,7 @@ components:
           format: date-time
           description: >
             The date this key was added.
-          example: "2018-01-01T00:01:01"
+          example: 2018-01-01T00:01:01Z
           readOnly: true
     SSHKeyRequest:
       type: object
@@ -18652,13 +18652,13 @@ components:
           type: string
           format: date-time
           description: When this Volume was created.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Volume was last updated.
-          example: '2018-01-01T00:01:01'
+          example: 2018-01-01T00:01:01Z
           readOnly: true
         tags:
           x-linode-filterable: true
