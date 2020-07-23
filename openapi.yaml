@@ -6726,6 +6726,48 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke pool-delete 12345 456
+  /lke/clusters/{clusterId}/pools/{poolId}/recycle:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to this Node Pool is attached to.
+      required: true
+      schema:
+        type: integer
+    - name: poolId
+      in: path
+      description: ID of the Kubernetes pool to be recycled.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: lke
+    post:
+      operationId: postLKEClusterPoolsRecycle
+      x-linode-cli-action: cluster-recycle
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Recycle Node Pool
+      description: >
+        Recycles a Node Pool for the designated Kubernetes Cluster.
+      responses:
+        '200':
+          description: Node Pool has been recycled.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST \
+                https://api.linode.com/v4/lke/clusters/12345/pools/456/recycle
+      - lang: CLI
+        source: >
+          linode-cli lke cluster-recycle 12345 456
   /lke/clusters/{clusterId}/api-endpoints:
     parameters:
     - name: clusterId
