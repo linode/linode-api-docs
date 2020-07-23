@@ -6730,20 +6730,20 @@ paths:
     parameters:
     - name: clusterId
       in: path
-      description: ID of the Kubernetes cluster to this Node Pool is attached to.
+      description: ID of the Kubernetes cluster this Node Pool is attached to.
       required: true
       schema:
         type: integer
     - name: poolId
       in: path
-      description: ID of the Kubernetes pool to be recycled.
+      description: ID of the Node Pool to be recycled.
       required: true
       schema:
         type: integer
     x-linode-cli-command: lke
     post:
-      operationId: postLKEClusterPoolsRecycle
-      x-linode-cli-action: cluster-recycle
+      operationId: postLKEClusterPoolRecycle
+      x-linode-cli-action: pool-recycle
       security:
       - personalAccessToken: []
       - oauth:
@@ -6767,7 +6767,7 @@ paths:
                 https://api.linode.com/v4/lke/clusters/12345/pools/456/recycle
       - lang: CLI
         source: >
-          linode-cli lke cluster-recycle 12345 456
+          linode-cli lke pool-recycle 12345 456
   /lke/clusters/{clusterId}/api-endpoints:
     parameters:
     - name: clusterId
