@@ -9718,6 +9718,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
+               -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4beta/networking/firewalls/123/devices/456
       - lang: CLI
