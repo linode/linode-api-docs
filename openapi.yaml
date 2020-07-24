@@ -18671,3 +18671,38 @@ components:
           example:
           - example tag
           - another example
+tags:
+  - name: Account
+    description: Endpoints relating to user accounts including but not limited to user settings, billing, and payments. Users can also initiate and maintain OAuth client application authentication, enable the Linode Managed service, and create new users for their account.
+  - name: Domains
+    description: Endpoints relating to domains including but not limited to creating, viewing, and updating domains. Users can also create, edit, and remove domain records.
+  - name: Images
+    description: Endpoints relating to images including but not limited to create and maintain images.
+  - name: Linode Instances
+    description: Endpoints relating to Linode Instances including but not limited to creating and maintaining Linode Instances. Users can also manage the Linode Backup service; maintain and manage configuration profiles; create and maintain disks, intitite a host migration; view Linode statistics; and more.
+  - name: Linode Types
+    description: Endpoints relating to Linode Types including but not limited to listing and viewing types of Linodes.
+  - name: Linode Kubernetes Engine (LKE)
+    description: Endpoints relating to the Linode Kubernetes Engine (LKE) including but not limited to creating and maintaining clusters; creating and maintaining Node Pools; and viewing the kubeconfig file.
+  - name: Longview
+    description: Endpoints relating to the Linodes Longview service including but not limited to creating and maintaining Longview clients and viewing your plan and subscription.
+  - name: Managed
+    description: Endpoints relating to the Linode Managed service including but not limited to creating and maintaining services; creating and maintaining contacts; and creating and maintaining credentials. Users can also manage their SSH keys, view issues, and manage their settings.
+  - name: Networking
+    description: Endpoints relating to networking including but not limited to viewing and assigning IP addresses, updating RDNS, and configuring IP sharing.
+  - name: NodeBalancers
+    description: Endpoints relating to Linode NodeBalancers including but not limited to creating and maintaining NodeBalancers. Users can also create and maintain configurations; create and maintain nodes, and view statistics.
+  - name: Object Storage
+    description: Endpoints relating to Linode Object Storage including but not limited to creating and maintaining buckets, adding and removing objects from buckets, creating and maintaning Object Storage keys, and cancelling the Object Storage service.
+  - name: Profile
+    description: Endpoints relating to a Linode user's profile preferences and security including but not limited to creating and maintaining personal access tokens, creating and maintaining SSH keys, confirming and enabling two-factor authentication, and updating user and profile preferences.
+  - name: Regions
+    description: Endpoints relating to Linode regions including but not limited to listing and viewing where Linode services are avalible.
+  - name: StackScripts
+    description: Endpoints relating to Linode StackScripts including but not limited to creating and maintaining StackScripts.
+  - name: Support
+    description: Endpoints relating to Linode support tickets including but not limited to opening, viewing, and closing support tickets. Users can also list and create replies.
+  - name: Tags
+    description: Endpoints relating to Linode Tags including but not limied to creating and deleting tags.
+  - name: Volumes
+    description: Endpoints relating to the Linode Block Storage Volume service including but not limited to creating and maintaing volumes.
