@@ -9617,7 +9617,7 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "type": "linode",
-                "id": "123"
+                "id": 123
               }' \
               https://api.linode.com/v4beta/networking/firewalls/123/devices
       - lang: CLI
