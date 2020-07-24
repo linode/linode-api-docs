@@ -9247,6 +9247,17 @@ paths:
                   description: >
                     A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
                     can only be assigned to Linode instances.
+
+                    * A Firewall can be assigned to multiple Linode services, and up to three active Firewalls can
+                    be assigned to a single Linode service.
+
+                    * Additional disabled Firewalls can be assigned to a service, but they cannot be enabled if three other active Firewalls
+                    are already assigned to the same service.
+
+
+                    **Note:** When a Firewall is assigned to a Linode and you attempt
+                    to [migrate the Linode to a data center](/api/v4/linode-instances-linode-id-migrate/#post) that does not support Cloud Firewalls, the migration will fail.
+                    Use the [List Regions](/api/v4/regions) endpoint to view a list of a data center's capabilities.
                   properties:
                     linodes:
                       description: >
@@ -9564,6 +9575,10 @@ paths:
 
         Creating a Firewall Device will apply the Rules from a Firewall to a Linode service.
         A `firewall_device_add` Event is generated when the Firewall Device is added successfully.
+
+        **Note:** When a Firewall is assigned to a Linode and you attempt
+        to [migrate the Linode to a data center](/api/v4/linode-instances-linode-id-migrate/#post) that does not support Cloud Firewalls, the migration will fail.
+        Use the [List Regions](/api/v4/regions) endpoint to view a list of a data center's capabilities.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
