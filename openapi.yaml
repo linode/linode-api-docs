@@ -4630,15 +4630,7 @@ paths:
                   description: >
                     The new root password for the OS installed on this Disk.
 
-                    The password must contain at least two of these four
-                    character classes:
-
-                      * lowercase letters
-                      * uppercase letters
-                      * numbers
-                      * punctuation
-                  minLength: 6
-                  maxLength: 128
+                    The password must meet the complexity strength validation requirements for a strong password.
                   example: another@complex^Password123
       responses:
         '200':
@@ -7593,8 +7585,6 @@ paths:
                     example: johndoe
                   password:
                     type: string
-                    minLength: 0
-                    maxLength: 5000
                     description: >
                       The password to use when accessing the Managed Service.
                     example: s3cur3P@ssw0rd
@@ -7750,8 +7740,6 @@ paths:
                   example: johndoe
                 password:
                   type: string
-                  minLength: 0
-                  maxLength: 5000
                   description: >
                     The password to use when accessing the Managed Service.
                   example: s3cur3P@ssw0rd
@@ -13780,20 +13768,10 @@ components:
           writeOnly: true
           example: aComplexP@ssword
           description: |
-            This will set the root user's password on the newly-created Linode.
-            The root password must conform to the following constraints:
+            This will set the root user's password on the newly-created Linode. Linode passwords have the following constraints:
 
-              * May only use alphanumerics, punctuation, spaces, and tabs.
-              * Must contain at least two of the following characters classes:
-                * Upper-case letters
-                * Lower-case letters
-                * Digits
-                * Punctuation
               * Must meet a password strength score requirement that is calculated internally by the API.
                 If the strength requirement is not met, you will receive a `Password does not meet strength requirement` error.
-          minLength: 6
-          maxLength: 128
-          pattern: ^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\]))|((?=.*[A-Z])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\]))|((?=.*[0-9])(?=.*[!"#$%&'()*+,-.\/:;<=>?@\[\]^_`{|}~\\])))
         stackscript_id:
           type: integer
           example: 10079
