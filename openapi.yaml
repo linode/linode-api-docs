@@ -6654,7 +6654,7 @@ paths:
 
         Linodes will be created or deleted to match changes to the Node Pool's count.
 
-        **Any local storage on deleted Linodes (such as "hostPath" volumes) will be erased.**
+        **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       requestBody:
         description: The fields to update
         content:
