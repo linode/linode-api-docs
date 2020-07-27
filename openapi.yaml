@@ -6650,10 +6650,12 @@ paths:
       tags:
       - Linode Kubernetes Engine (LKE)
       summary: Update Node Pool
-      description: >
-        Updates a Node Pool. When a Node Pool's count are
-        changed, the nodes in that pool will be replaced in a rolling
-        fashion.
+      description: |
+        Updates a Node Pool's count.
+
+        Linodes will be created or deleted to match changes to the Node Pool's count.
+
+        **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       requestBody:
         description: The fields to update
         content:
