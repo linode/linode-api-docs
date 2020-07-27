@@ -6756,7 +6756,7 @@ paths:
         and replaced with new Linodes on a rolling basis, which may take several minutes. Replacement Nodes are
         installed with the latest available patch for the Cluster's Kubernetes Version.
 
-        **Any local storage on deleted Linodes (such as "hostPath" volumes) will be erased.**
+        **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       responses:
         '200':
           description: Node Pool has been recycled.
