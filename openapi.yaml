@@ -5096,7 +5096,7 @@ paths:
     x-linode-cli-command: linodes
     post:
       x-linode-grant: read_write
-      summary: Initiate Pending Host Migration/DC Migration
+      summary: Initiate DC Migration/Pending Host Migration
       description: >
         Initiate a pending host migration that has been scheduled by Linode or
         initiate a cross data center (DC) migration.  A list of pending migrations,
