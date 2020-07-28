@@ -6755,6 +6755,10 @@ paths:
       responses:
         '200':
           description: Node Pool has been recycled.
+          content:
+            application/json:
+              schema:
+                type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
