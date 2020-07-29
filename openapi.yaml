@@ -17431,6 +17431,10 @@ components:
             The hostname where this bucket can be accessed. This hostname
             can be accessed through a browser if the bucket is made public.
           example: example-bucket.us-east-1.linodeobjects.com
+        size:
+          type: integer
+          description: The size of the bucket in bytes.
+          example: 188318981
     ObjectStorageObject:
       type: object
       description: >
