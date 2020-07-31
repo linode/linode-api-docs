@@ -1669,7 +1669,7 @@ paths:
         - lang: CLI
           source: >
             linode-cli account settings-update \
-              --longview_subscription longview-30 \
+              --longview_subscription longview-3 \
               --network_helper false
   /account/settings/managed-enable:
     x-linode-cli-command: account
@@ -7184,8 +7184,11 @@ paths:
       - Longview
       summary: View Longview Plan
       description: >
-        Returns the Longview subscription plan for this account. You can send a request to the
-        [View Longview Subscription](/api/v4/longview-subscriptions-subscription-id) endpoint for details on each particular subscription plan.
+        Get the details of your current Longview plan. This returns a LongviewSubscription object
+        for your current Longview Pro plan, or an empty set `{}` if your current plan is Longview Free.
+
+
+        To update your subscription plan, send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
       operationId: getLongviewPlan
       x-linode-cli-action: plan-view
       security:
@@ -7194,11 +7197,11 @@ paths:
         - longview:read_only
       responses:
         '200':
-          description: The Longview Subscription plan for this account.
+          description: The Longview plan details for this account.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LongviewPlan'
+                $ref: '#/components/schemas/LongviewSubscription'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7214,8 +7217,12 @@ paths:
       - Longview
       summary: Update Longview Plan
       description: >
-        Updates the Longview subscription plan for this account. You can send a request to the
-        [View Longview Subscription](/api/v4/longview-subscriptions-subscription-id) endpoint for details on each particular subscription plan.
+        Update your Longview plan to that of the given subcription ID. This returns a LongviewSubscription object for
+        the updated Longview Pro plan, or an empty set `{}` if the updated plan is Longview Free.
+
+
+        You can send a request to the [List Longview Subscriptions](/api/v4/longview-subscriptions/)
+        endpoint to receive the details, including `id`'s, of each plan.
       operationId: updateLongviewPlan
       x-linode-cli-action: plan-update
       security:
@@ -7231,22 +7238,11 @@ paths:
               $ref: '#/components/schemas/LongviewPlan'
       responses:
         '200':
-          description: The requested Longview Subscription.
+          description: The updated Longview plan details for this account.
           content:
             application/json:
               schema:
-                properties:
-                  longview_subscription:
-                    type: string
-                    description: >
-                      The Longview subscription plan you are currently subscribed to.
-
-
-
-                      To update your subscription plan send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
-                      The value must be a [Longview Subscription ID](/api/v4/longview-subscriptions) or `null`. Note that a value of `null` will cancel the longview subscription.
-                    example: longview-10
-                    x-linode-cli-display: 1
+                $ref: '#/components/schemas/LongviewSubscription'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7271,8 +7267,8 @@ paths:
       - Longview
       summary: List Longview Subscriptions
       description: >
-        Returns a paginated list of available Longview Subscriptions. This is
-        a public endpoint and requires no authentication.
+        Get the details of all available Longview Subscriptions as a paginated list of
+        LongviewSubscriptions objects. This is a public endpoint and requires no authentication.
       operationId: getLongviewSubscriptions
       x-linode-cli-action: subscriptions-list
       responses:
@@ -7317,13 +7313,13 @@ paths:
       - Longview
       summary: View Longview Subscription
       description: >
-        Returns a single LongviewSubscription object.  This is a public
-        endpoint and requires no authentication.
+        Get the Longview plan details as a single LongviewSubscription object for the provided subscription ID. This is a public endpoint
+        and requires no authentication.
       operationId: getLongviewSubscription
       x-linode-cli-action: subscription-view
       responses:
         '200':
-          description: The requested Longview Subscription.
+          description: The requested Longview Subscription details.
           content:
             application/json:
               schema:
@@ -13427,10 +13423,10 @@ components:
         longview_subscription:
           type: string
           description: >
-            The Longview Pro tier you are currently subscribed to. The value must
+            The Longview Pro tier you are currently subscribed to. The value must be
             a [Longview Subscription](/api/v4/longview-subscriptions)
-            ID or `null`.
-          example: longview-30
+            ID or `null` for Longview Free.
+          example: longview-3
           x-linode-cli-display: 2
         network_helper:
           type: boolean
@@ -16319,7 +16315,7 @@ components:
     LongviewSubscription:
       type: object
       description: >
-        A Longview Subscriptions represents a tier of Longview service you
+        A Longview Subscription represents a tier of Longview service you
         can subscribe to.
       properties:
         id:
@@ -16354,7 +16350,7 @@ components:
           type: string
           description: >
             A display name for this Subscription tier.
-          example: Longivew Pro 10 pack
+          example: Longview Pro 10 pack
           readOnly: true
           x-linode-cli-display: 2
         clients_included:
@@ -16372,13 +16368,12 @@ components:
         longview_subscription:
           type: string
           description: >
-            The Longview subscription plan you are currently subscribed to.
+            The LongviewSubscription object `id` for a particular Longview plan. `null` corresponds to Longview Free.
 
 
-
-            To update your subscription plan send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
-            The value must be a [Longview Subscription ID](/api/v4/longview-subscriptions) or `null`. Note that a value of `null` will cancel the Longview subscription.
-          example: longview-30
+            You can send a request to the [List Longview Subscriptions](/api/v4/longview-subscriptions/)
+            endpoint to receive the details, including `id`'s, of each plan.
+          example: longview-10
           x-linode-cli-display: 1
     ManagedContact:
       type: object
