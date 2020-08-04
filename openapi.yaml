@@ -13222,7 +13222,7 @@ components:
                 type: string
                 description: >
                   When this promotion's credits expire.
-                example: 2018-01-31T23:59:59Z
+                example: 2018-01-31T23:59:59
               image_url:
                 type: string
                 description: >
@@ -14209,7 +14209,7 @@ components:
         created:
           type: string
           readOnly: true
-          description: The daetime when this Event was created.
+          description: The datetime when this Event was created.
           example: 2018-01-01T00:01:01
           x-linode-cli-display: 6
           x-linode-filterable: true
