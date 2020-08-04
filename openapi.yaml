@@ -11056,7 +11056,7 @@ paths:
                   expiry:
                     type: string
                     description: >
-                      The datetime when this Two Factor secret expires.
+                      The date and time when this Two Factor secret expires.
                     example: 2018-03-01T00:01:01
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -16427,12 +16427,11 @@ components:
           x-linode-cli-display: 1
         created:
           type: string
-          format: date-time
           description: >
-            When this Issue was created. Issues are created in response to issues
+            The datetime when this Issue was created. Issues are created in response to issues
             detected with Managed Services, so this is also when the Issue was
             detected.
-          example: 2018-01-01T00:01:01Z
+          example: 2018-01-01T00:01:01
           readOnly: true
           x-linode-cli-display: 2
         services:
@@ -16647,15 +16646,13 @@ components:
             resolve issues with this Service.
         created:
           type: string
-          format: date-time
-          description: When this Managed Service was created.
-          example: 2018-01-01T00:01:01Z
+          description: The datetime when this Managed Service was created.
+          example: 2018-01-01T00:01:01
           readOnly: true
         updated:
           type: string
-          format: date-time
-          description: When this Managed Service was last updated.
-          example: 2018-03-01T00:01:01Z
+          description: The datetime when this Managed Service was last updated.
+          example: 2018-03-01T00:01:01
           readOnly: true
     NodeBalancer:
       type: object
@@ -16718,17 +16715,15 @@ components:
           x-linode-cli-display: 6
         created:
           type: string
-          format: date-time
           description: >
-            When this NodeBalancer was created.
-          example: 2018-01-01T00:01:01Z
+            The datetime when this NodeBalancer was created.
+          example: 2018-01-01T00:01:01
           readOnly: true
         updated:
           type: string
-          format: date-time
           description: >
-            When this NodeBalancer was last updated.
-          example: 2018-03-01T00:01:01Z
+            The datetime when this NodeBalancer was last updated.
+          example: 2018-03-01T00:01:01
           readOnly: true
         client_conn_throttle:
           type: integer
@@ -17237,12 +17232,11 @@ components:
         when:
           type: string
           readOnly: true
-          format: date-time
           description: >
             If this Notification is of an Event that will happen at a fixed,
-            future time, this is when the named action will be taken. For
+            future time, this is the datetime when the named action will be taken. For
             example, if a Linode is to be migrated in response to a
-            Security Advisory, this field will contain the approximate time the
+            Security Advisory, this field will contain the approximate datetime when the
             Linode will be taken offline for migration.
           example: null
           x-linode-cli-display: 4
@@ -17251,9 +17245,8 @@ components:
             default_: white
         until:
           type: string
-          format: date-time
           description: >
-            If this Notification has a duration, this will be the ending time
+            If this Notification has a duration, this will be the ending datetime
             for the Event/action. For example, if there is scheduled
             maintenance for one of our systems, `until` would be set to the end
             of the maintenance window.
@@ -17349,9 +17342,8 @@ components:
       properties:
         created:
           type: string
-          format: date-time
-          description: When this bucket was created.
-          example: 2019-01-01T01:23:45Z
+          description: The datetime when this bucket was created.
+          example: 2019-01-01T01:23:45
         cluster:
           type: string
           description: The ID of the Object Storage Cluster this bucket is in.
@@ -17384,11 +17376,10 @@ components:
           example: 9f254c71e28e033bf9e0e5262e3e72ab
         last_modified:
           type: string
-          format: date-time
           description: >
             The date and time this object was last modified. `null` if this object
             represents a prefix.
-          example: 2019-01-01T01:23:45Z
+          example: 2019-01-01T01:23:45
         owner:
           type: string
           description: >
@@ -17503,9 +17494,8 @@ components:
         date:
           type: string
           readOnly: true
-          format: date-time
-          description: When the Payment was made.
-          example: 2018-01-15T00:01:01Z
+          description: The datetime when the Payment was made.
+          example: 2018-01-15T00:01:01
           x-linode-cli-display: 2
         usd:
           type: number
@@ -17606,11 +17596,10 @@ components:
           x-linode-cli-display: 3
         created:
           type: string
-          format: date-time
           description: >
             The date and time this token was created.
           x-linode-filterable: true
-          example: 2018-01-01T00:01:01Z
+          example: 2018-01-01T00:01:01
           readOnly: true
           x-linode-cli-display: 4
         label:
@@ -17633,14 +17622,13 @@ components:
           x-linode-cli-display: 5
         expiry:
           type: string
-          format: date-time
           description: >
-            When this token will expire.  Personal Access Tokens cannot be renewed, so
-            after this time the token will be completely unusable and a new token will
+            The datetime when this token will expire.  Personal Access Tokens cannot be renewed, so
+            after this datetime the token will be completely unusable and a new token will
             need to be generated.  Tokens may be created with "null" as their expiry
             and will never expire unless revoked.
           x-linode-cli-display: 6
-          example: 2018-01-01T13:46:32Z
+          example: 2018-01-01T13:46:32
           readOnly: true
     Profile:
       type: object
@@ -17938,19 +17926,17 @@ components:
           x-linode-cli-display: 5
         created:
           type: string
-          format: date-time
           description: >
-            The date this StackScript was created.
+            The datetime this StackScript was created.
           readOnly: true
-          example: 2018-01-01T00:01:01Z
+          example: 2018-01-01T00:01:01
           x-linode-cli-display: 6
         updated:
           type: string
-          format: date-time
           description: >
-            The date this StackScript was last updated.
+            The datetime this StackScript was last updated.
           readOnly: true
-          example: 2018-01-01T00:01:01Z
+          example: 2018-01-01T00:01:01
           x-linode-cli-display: 7
         rev_note:
           x-linode-filterable: true
@@ -18061,11 +18047,10 @@ components:
           x-linode-filterable: true
           type: string
           nullable: true
-          format: date-time
           readOnly: true
           description: >
             The date and time this Ticket was closed.
-          example: 2015-06-04T16:07:03Z
+          example: 2015-06-04T16:07:03
         closable:
           type: boolean
           description: >
@@ -18127,11 +18112,10 @@ components:
         opened:
           x-linode-filterable: true
           type: string
-          format: date-time
           readOnly: true
           description: >
             The date and time this Ticket was created.
-          example: 2015-06-04T14:16:44Z
+          example: 2015-06-04T14:16:44
           x-linode-cli-display: 4
         opened_by:
           type: string
@@ -18162,11 +18146,10 @@ components:
         updated:
           x-linode-filterable: true
           type: string
-          format: date-time
           readOnly: true
           description: >
             The date and time this Ticket was last updated.
-          example: 2015-06-04T16:07:03Z
+          example: 2015-06-04T16:07:03
         updated_by:
           type: string
           nullable: true
@@ -18181,11 +18164,10 @@ components:
       properties:
         created:
           type: string
-          format: date-time
           readOnly: true
           description: >
             The date and time this Ticket reply was created.
-          example: 2015-06-02T14:31:41Z
+          example: 2015-06-02T14:31:41
           x-linode-cli-display: 3
         created_by:
           type: string
@@ -18447,18 +18429,16 @@ components:
           readOnly: true
         created:
           type: string
-          format: date-time
           description: >
-            When this Remember Me session was started.  This corresponds to the time of login
+            The datetime when this Remember Me session was started.  This corresponds to the time of login
             with the "Remember Me" box checked.
-          example: 2018-01-01T01:01:01Z
+          example: 2018-01-01T01:01:01
           readOnly: true
         expiry:
           type: string
-          format: date-time
           description: >
-            When this TrustedDevice session expires.  Sessions typically last 30 days.
-          example: 2018-01-31T01:01:01Z
+            The datetime when this TrustedDevice session expires.  Sessions typically last 30 days.
+          example: 2018-01-31T01:01:01
           readOnly: true
         user_agent:
           type: string
@@ -18470,11 +18450,10 @@ components:
           readOnly: true
         last_authenticated:
           type: string
-          format: date-time
           description: >
-            The last time this TrustedDevice was successfully used to authenticate to
+            The last datetime this TrustedDevice was successfully used to authenticate to
             <a target="_top" href="https://login.linode.com">login.linode.com</a>.
-          example: 2018-01-05T12:57:12Z
+          example: 2018-01-05T12:57:12
           readOnly: true
         last_remote_addr:
           type: string
@@ -18509,10 +18488,9 @@ components:
           readOnly: true
         created:
           type: string
-          format: date-time
           description: >
-            The date this key was added.
-          example: 2018-01-01T00:01:01Z
+            The datetime this key was added.
+          example: 2018-01-01T00:01:01
           readOnly: true
     SSHKeyRequest:
       type: object
@@ -18616,15 +18594,13 @@ components:
           readOnly: true
         created:
           type: string
-          format: date-time
-          description: When this Volume was created.
-          example: 2018-01-01T00:01:01Z
+          description: The datetime when this Volume was created.
+          example: 2018-01-01T00:01:01
           readOnly: true
         updated:
           type: string
-          format: date-time
-          description: When this Volume was last updated.
-          example: 2018-01-01T00:01:01Z
+          description: The datetime when this Volume was last updated.
+          example: 2018-01-01T00:01:01
           readOnly: true
         tags:
           x-linode-filterable: true
