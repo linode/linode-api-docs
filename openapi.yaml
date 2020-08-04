@@ -330,6 +330,8 @@ info:
     If a user has multiple OAuth tokens, the quota of requests per user is shared amongst all tokens
     for the user.
 
+    **Note:** There may be rate limiting applied at other levels outside of the API, for example, at the load balancer.
+
     `/stats` endpoints have their own dedicated limits of 100 requests per minute per user.
     These endpoints are:
 
@@ -340,6 +342,7 @@ info:
 
     Object Storage endpoints have a dedicated limit of 750 requests per second per user.
     These endpoints are:
+
     * [List and Create Object Storage Buckets](https://developers.linode.com/api/v4/object-storage-buckets)
     * [View and Remove Object Storage Buckets](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket)
     * [List Object Storage Buckets in Cluster](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id)
