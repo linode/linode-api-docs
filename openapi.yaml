@@ -330,13 +330,27 @@ info:
     If a user has multiple OAuth tokens, the quota of requests per user is shared amongst all tokens
     for the user.
 
-    Further, /stats endpoints have their own dedicated limits of 100 requests per minute per user.
+    `/stats` endpoints have their own dedicated limits of 100 requests per minute per user.
     These endpoints are:
 
-    * [View Linode Statistics] (https://api.linode.com/v4/linode/instances/{linodeId}/stats)
-    * [View Linode Statistics (year/month)] (https://api.linode.com/v4/linode/instances/{linodeId}/stats/{year}/{month})
-    * [View NodeBalancer Statistics] (https://api.linode.com/v4/nodebalancers/{nodeBalancerId}/stats)
-    * [List Managed Stats] (https://api.linode.com/v4/managed/stats)
+    * [View Linode Statistics](https://api.linode.com/v4/linode/instances/{linodeId}/stats)
+    * [View Linode Statistics (year/month)](https://api.linode.com/v4/linode/instances/{linodeId}/stats/{year}/{month})
+    * [View NodeBalancer Statistics](https://api.linode.com/v4/nodebalancers/{nodeBalancerId}/stats)
+    * [List Managed Stats](https://api.linode.com/v4/managed/stats)
+
+    Object Storage endpoints have a dedicated limit of 750 requests per second per user.
+    These endpoints are:
+    * [List and Create Object Storage Buckets](https://developers.linode.com/api/v4/object-storage-buckets)
+    * [View and Remove Object Storage Buckets](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket)
+    * [List Object Storage Buckets in Cluster](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id)
+    * [Modify Object Storage Bucket Access](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket-access/#post)
+    * [List Object Storage Bucket Contents](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket-object-list)
+    * [Create Object Storage Object URL](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket-object-url/#post)
+    * [List Clusters](https://developers.linode.com/api/v4/object-storage-clusters)
+    * [View Cluster](https://developers.linode.com/api/v4/object-storage-clusters-cluster-id)
+    * [List and Create Object Storage Keys](https://developers.linode.com/api/v4/object-storage-keys)
+    * [View, Update, and Revoke an Object Storage Key](https://developers.linode.com/api/v4/object-storage-keys-key-id)
+    * [Cancel Object Storage](https://developers.linode.com/api/v4/object-storage-cancel/#post)
 
     # CLI (Command Line Interface)
 
