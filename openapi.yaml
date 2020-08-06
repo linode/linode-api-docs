@@ -16320,6 +16320,7 @@ components:
       properties:
         id:
           type: string
+          enum: ['longview-3', 'longview-10', 'longview-40', 'longview-100']
           description: >
             The unique ID of this Subscription tier.
           example: longview-10
@@ -16367,6 +16368,8 @@ components:
       properties:
         longview_subscription:
           type: string
+          enum: ['longview-3', 'longview-10', 'longview-40', 'longview-100']
+          nullable: True
           description: >
             The LongviewSubscription object `id` for a particular Longview plan. `null` corresponds to Longview Free.
 
