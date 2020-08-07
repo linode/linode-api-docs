@@ -7267,8 +7267,8 @@ paths:
       - Longview
       summary: List Longview Subscriptions
       description: >
-        Get the details of all available Longview Subscriptions as a paginated list of
-        LongviewSubscriptions objects. This is a public endpoint and requires no authentication.
+        Returns a paginated list of available Longview Subscriptions. This is
+        a public endpoint and requires no authentication.
       operationId: getLongviewSubscriptions
       x-linode-cli-action: subscriptions-list
       responses:
