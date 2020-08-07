@@ -4729,6 +4729,121 @@ paths:
         source: >
           linode-cli linodes disk-resize 123 25674 \
             --size 2048
+  /linode/instances/{linodeId}/interfaces:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode to lookup associated Intefaces for.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Linode Instances
+      summary: List Interfaces
+      description: |
+        Returns a list of Interfaces associated with this Linode.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: listLinodeInterfaces
+      x-linode-cli-action: interfaces-list
+      responses:
+        '200':
+          description: |
+            A paginated list of Interfaces associated with this Linode.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Interface'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/linode/instances/{linode_Id}/interfaces
+        - lang: CLI
+          source: >
+            linode-cli linodes interfaces-list
+    post:
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Linode Instances
+      summary: Create Interface
+      description: >
+        Add an Interface to this Linode.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: addLinodeInterface
+      x-linode-cli-action: interface-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        description: >
+          The parameters to set when creating the Configuration profile.
+
+          This determines which kernel, devices, how much memory, etc. a Linode boots with.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Interface'
+      responses:
+        '200':
+          description: |
+            A Configuration profile was created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interface'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "type": "additional",
+                "vlan_id": 789,
+                "description": "my example Interface"
+            ' \
+              https://api.linode.com/v4beta/linode/instances/123/interfaces
+      - lang: CLI
+        source: >
+          linode-cli linodes interface-create 123 \
+            --type "additional" \
+            --vlan_id 789 \
+            --description "my example Interface"
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
@@ -14771,6 +14886,63 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+    Interface:
+      type: object
+      description: The Network Interface to apply to this Linode.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: This Interface's unique ID.
+          example: 123
+          x-linode-cli-display: 1
+        description:
+          type: string
+          description: Information about this Interface.
+          example: My example interface.
+          x-linode-cli-display: 8
+        type:
+          type: string
+          description: |
+            The Interface type to create.
+          example: 'additional'
+          enum:
+          - default
+          - additional
+          x-linode-cli-display: 2
+        name:
+          type: string
+          description: |
+           The human-readable name for this Interface.
+          example: example-interface
+          x-linode-cli-display: 3
+        linode_id:
+          type: integer
+          readOnly: true
+          description: The ID of the Linode this Interface is assigned to.
+          example: 456
+          x-linode-cli-display: 4
+        vlan_id:
+          type: integer
+          description: |
+            The unique ID of the VLAN this Interface is assigned to. A VLAN ID of `0`
+            indicates that this Interface is not assigned to a VLAN.
+          example: 789
+          x-linode-cli-display: 5
+        mac_address:
+          type: string
+          readOnly: true
+          description: |
+           This Interface's Media Access Control (MAC) address.
+          example: f2:3c:92:8d:bc:00
+          x-linode-cli-display: 6
+        ip_address:
+          type: string
+          readOnly: true
+          description: |
+           This Interface's private IP address. If the Interface's type is `Public`, it will not have an assigned Private IP address.
+          example: f2:3c:92:8d:bc:00
+          x-linode-cli-display: 7
     Invoice:
       type: object
       description: Account Invoice object
