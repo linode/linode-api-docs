@@ -1663,13 +1663,11 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
                     "network_helper": true,
-                    "longview_subscription": "longview-10"
                 }' \
                 https://api.linode.com/v4/account/settings
         - lang: CLI
           source: >
             linode-cli account settings-update \
-              --longview_subscription longview-3 \
               --network_helper false
   /account/settings/managed-enable:
     x-linode-cli-command: account
@@ -13422,6 +13420,7 @@ components:
           x-linode-cli-display: 3
         longview_subscription:
           type: string
+          readOnly: true
           description: >
             The Longview Pro tier you are currently subscribed to. The value must be
             a [Longview Subscription](/api/v4/longview-subscriptions)
