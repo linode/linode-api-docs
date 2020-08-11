@@ -15616,7 +15616,7 @@ components:
           - fullvirt
           example: paravirt
         interfaces:
-          $ref: '#/components/schemas/Interfaces'
+          $ref: '#/components/schemas/LinodeConfigInterfaces'
         helpers:
           type: object
           description: Helpers enabled when booting to this Linode Config.
