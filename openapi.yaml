@@ -4733,7 +4733,7 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: ID of the Linode to lookup associated Intefaces for.
+      description: The ID of the Linode for which to lookup its Interfaces.
       required: true
       schema:
         type: integer
@@ -4758,6 +4758,10 @@ paths:
         beta.
       operationId: listLinodeInterfaces
       x-linode-cli-action: interfaces-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_only
       responses:
         '200':
           description: |
@@ -4783,7 +4787,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/linode/instances/{linode_Id}/interfaces
+                https://api.linode.com/v4beta/linode/instances/123/interfaces
         - lang: CLI
           source: >
             linode-cli linodes interfaces-list
@@ -4794,7 +4798,11 @@ paths:
       - Linode Instances
       summary: Create Interface
       description: >
-        Add an Interface to this Linode.
+        Add an Interface to this Linode. Use this endpoint to assign an Interface to an existing Linode.
+
+
+        Once the Interface is assigned to this Linode, [update this Linode's configuration profile](/api/v4/linode-instances-linode-id-configs-config-id/#put)
+        with the new Interface(s).
 
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
@@ -4843,7 +4851,91 @@ paths:
           linode-cli linodes interface-create 123 \
             --type "additional" \
             --vlan_id 789 \
-            --description "my example Interface"
+            --name "my-interface"
+  /linode/instances/{linodeId}/interfaces/{interfaceId}:
+    parameters:
+    - name: linodeId
+      in: path
+      description: >
+        The ID of the Linode for which to lookup this Interface.
+      required: true
+      schema:
+        type: integer
+    - name: interfaceId
+      in: path
+      description: The ID of the Interface to lookup.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    get:
+      tags:
+      - Linode Instances
+      x-linode-grant: read_only
+      summary: View Interface
+      description: >
+        Returns an object with information about this Interface.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getLinodeInterface
+      x-linode-cli-action: interface-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_only
+      responses:
+        '200':
+          description: An Interface object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Interface'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/linode/instances/123/interfaces/23456
+      - lang: CLI
+        source: >
+          linode-cli linodes interface-view 123 23456
+    delete:
+      summary: Delete Interface
+      description: >
+        Deletes the specified Interface from the specified Linode.
+      x-linode-grant: read_write
+      tags:
+      - Linode Instances
+      operationId: deleteLinodeInterface
+      x-linode-cli-action: interface-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      responses:
+        '200':
+          description: >
+            An empty object is returned and the Interface is successfully deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4beta/linode/instances/123/interfaces/23456
+      - lang: CLI
+        source: >
+          linode-cli linodes interface-delete 123 23456
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
@@ -14889,6 +14981,8 @@ components:
     Interface:
       type: object
       description: The Network Interface to apply to this Linode.
+      required:
+      - type
       properties:
         id:
           type: integer
@@ -14896,11 +14990,6 @@ components:
           description: This Interface's unique ID.
           example: 123
           x-linode-cli-display: 1
-        description:
-          type: string
-          description: Information about this Interface.
-          example: My example interface.
-          x-linode-cli-display: 8
         type:
           type: string
           description: |
@@ -14925,7 +15014,7 @@ components:
         vlan_id:
           type: integer
           description: |
-            The unique ID of the VLAN this Interface is assigned to. A VLAN ID of `0`
+            The unique ID of the VLAN this Interface is assigned to. Passing a `vlan_id` value of `0`
             indicates that this Interface is not assigned to a VLAN.
           example: 789
           x-linode-cli-display: 5
