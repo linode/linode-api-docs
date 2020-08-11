@@ -4191,7 +4191,7 @@ paths:
                 label:
                   $ref: '#/components/schemas/LinodeConfig/properties/label'
                 interfaces:
-                  $ref: '#/components/schemas/Interfaces'
+                  $ref: '#/components/schemas/LinodeConfigInterfaces'
                 devices:
                   type: object
                   description: >
@@ -14703,7 +14703,7 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
-    Interface:
+    LinodeConfigInterface:
       type: object
       description: >
         The network interface slot to apply to a Linode.
@@ -14712,30 +14712,30 @@ components:
           type: integer
           description: The ID of the Interface.
           example: 1
-    Interfaces:
+    LinodeConfigInterfaces:
       type: object
       description: A dictionary of network interface to apply to a Linode.
       properties:
         eth0:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth1:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth2:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth3:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth4:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth5:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth6:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth7:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth8:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
         eth9:
-          $ref: '#/components/schemas/Interface'
+          $ref: '#/components/schemas/LinodeConfigInterface'
     Invoice:
       type: object
       description: Account Invoice object
