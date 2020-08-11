@@ -17910,6 +17910,20 @@ components:
           - outage
           readOnly: true
           x-linode-cli-display: 4
+        resolvers:
+          type: object
+          readOnly: true
+          properties:
+            ipv4:
+              type: string
+              description: >
+                The IPv4 addresses for this region's resolvers, separated by commas.
+              readOnly: true
+            ipv6:
+              type: string
+              description: >
+                The IPv6 addresses for this region's resolvers, separated by commas.
+              readOnly: true
     RescueDevices:
       type: object
       properties:
