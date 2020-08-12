@@ -1634,6 +1634,9 @@ paths:
       summary: Update Account Settings
       description: >
         Updates your Account settings.
+
+
+        To update your Longview subscription plan, send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
       operationId: updateAccountSettings
       x-linode-cli-action: settings-update
       security:
@@ -1649,7 +1652,8 @@ paths:
               $ref: '#/components/schemas/AccountSettings'
       responses:
         '200':
-          description: The updated Account settings.
+          description: >
+            The updated Account settings.
           content:
             application/json:
               schema:
