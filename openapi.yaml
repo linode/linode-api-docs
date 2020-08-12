@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.70.0
+  version: 4.72.0
 
   title: Linode API
   description: |
