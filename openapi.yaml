@@ -1652,8 +1652,7 @@ paths:
               $ref: '#/components/schemas/AccountSettings'
       responses:
         '200':
-          description: >
-            The updated Account settings.
+          description: The updated Account settings.
           content:
             application/json:
               schema:
