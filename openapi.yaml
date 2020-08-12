@@ -7229,7 +7229,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - account:read_write
+        - longview:read_write
       requestBody:
         description: Update your Longview subscription plan.
         required: true
