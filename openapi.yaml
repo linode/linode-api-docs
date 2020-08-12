@@ -17910,6 +17910,23 @@ components:
           - outage
           readOnly: true
           x-linode-cli-display: 4
+        resolvers:
+          type: object
+          readOnly: true
+          x-linode-cli-display: 5
+          properties:
+            ipv4:
+              type: string
+              description: >
+                The IPv4 addresses for this region's DNS resolvers, separated by commas.
+              example: "192.0.2.0,192.0.2.1"
+              readOnly: true
+            ipv6:
+              type: string
+              description: >
+                The IPv6 addresses for this region's DNS resolvers, separated by commas.
+              example: "2001:0db8::,2001:0db8::1"
+              readOnly: true
     RescueDevices:
       type: object
       properties:
