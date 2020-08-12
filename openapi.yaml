@@ -4071,11 +4071,11 @@ paths:
                 "run_level": "default",
                 "virt_mode": "paravirt",
                 "interfaces": {
-                  "eth5" {
-                    "id": 1
+                  "eth0" {
+                    "id": 678
                   },
-                  "eth6" {
-                    "id": 2
+                  "eth1" {
+                    "id": 679
                   }
                 },
                 "helpers": {
@@ -4245,11 +4245,11 @@ paths:
                 "run_level": "default",
                 "virt_mode": "paravirt",
                 "interfaces": {
-                  "eth5" {
-                    "id": 1
+                  "eth0" {
+                    "id": 678
                   },
-                  "eth6" {
-                    "id": 2
+                  "eth1" {
+                    "id": 679
                   }
                 },
                 "helpers": {
@@ -14706,15 +14706,24 @@ components:
     LinodeConfigInterface:
       type: object
       description: >
-        The network interface slot to apply to a Linode.
+        The Network Interface to apply to this Linode's configuration profile.
       properties:
         id:
           type: integer
-          description: The ID of the Interface.
-          example: 1
+          description: >
+            The ID of the Interface to add to this Linode's configuraiton profile.
+            Use the List Interface endpoint to retrieve the Interface ID(s) assigned to this Linode.
+          example: 678
     LinodeConfigInterfaces:
       type: object
-      description: A dictionary of network interface to apply to a Linode.
+      description: >
+        A dictionary of Network Interfaces to add to this Linode's
+        configuration profile.
+
+
+         **Note:** You must create an Interface prior to updating your configuration profile
+        with a Network Interface. If you assigned Network Interfaces when you initially created
+        your Linode, the Interface(s) is automatically added to your Linode's configuration profile.
       properties:
         eth0:
           $ref: '#/components/schemas/LinodeConfigInterface'
