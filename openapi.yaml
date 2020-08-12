@@ -7189,6 +7189,15 @@ paths:
         for your current Longview Pro plan, or an empty set `{}` if your current plan is Longview Free.
 
 
+        You must have at least one of the following `global` [User Grants](/api/v4/account-users-username-grants/)
+        in order to access this endpoint:
+
+          - `"account_access": read_write`
+          - `"account_access": read_only`
+          - `"longview_subscription": true`
+          - `"add_longview": true`
+
+
         To update your subscription plan, send a request to [Update Longview Plan](/api/v4/longview-plan/#put).
       operationId: getLongviewPlan
       x-linode-cli-action: plan-view
@@ -7220,6 +7229,10 @@ paths:
       description: >
         Update your Longview plan to that of the given subcription ID. This returns a `LongviewSubscription` object for
         the updated Longview Pro plan, or an empty set `{}` if the updated plan is Longview Free.
+
+
+        You must have `"longview_subscription": true` configured as a `global`
+        [User Grant](/api/v4/account-users-username-grants/) in order to access this endpoint.
 
 
         You can send a request to the [List Longview Subscriptions](/api/v4/longview-subscriptions/)
