@@ -7185,7 +7185,7 @@ paths:
       - Longview
       summary: View Longview Plan
       description: >
-        Get the details of your current Longview plan. This returns a LongviewSubscription object
+        Get the details of your current Longview plan. This returns a `LongviewSubscription` object
         for your current Longview Pro plan, or an empty set `{}` if your current plan is Longview Free.
 
 
@@ -7218,7 +7218,7 @@ paths:
       - Longview
       summary: Update Longview Plan
       description: >
-        Update your Longview plan to that of the given subcription ID. This returns a LongviewSubscription object for
+        Update your Longview plan to that of the given subcription ID. This returns a `LongviewSubscription` object for
         the updated Longview Pro plan, or an empty set `{}` if the updated plan is Longview Free.
 
 
@@ -7314,7 +7314,7 @@ paths:
       - Longview
       summary: View Longview Subscription
       description: >
-        Get the Longview plan details as a single LongviewSubscription object for the provided subscription ID. This is a public endpoint
+        Get the Longview plan details as a single `LongviewSubscription` object for the provided subscription ID. This is a public endpoint
         and requires no authentication.
       operationId: getLongviewSubscription
       x-linode-cli-action: subscription-view
