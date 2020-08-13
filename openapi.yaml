@@ -3197,6 +3197,107 @@ paths:
                       `~/.ssh/authorized_keys` file automatically.
                     items:
                       type: string
+                  interfaces:
+                    type: object
+                    description: >
+                      The Network Interface(s) to add to this Linode.
+                      You can add up to 10 Interfaces, `eth0` - `eth9`.
+
+
+
+                      **Note:** Once this Linode is created, you can view this Linode's Network Interfaces by
+                      sending a request to the [List Interfaces](/api/v4/linode-instances-linode-id-interfaces) endpoint.
+                    properties:
+                      eth0:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth1:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth2:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth3:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth4:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth5:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth6:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth7:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth8:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                      eth9:
+                        type: object
+                        description: >
+                          The Network Interface to add to this Linode.
+                        properties:
+                          type:
+                            $ref: '#/components/schemas/Interface/properties/type'
+                          vlan_id:
+                            $ref: '#/components/schemas/Interface/properties/vlan_id'
       responses:
         '200':
           description: >
@@ -3218,6 +3319,15 @@ paths:
                 "swap_size": 512,
                 "image": "linode/debian9",
                 "root_pass": "aComplexP@ssword",
+                “interfaces”: {
+                  “eth0”: {
+                    “type”: “default”,
+                  },
+                  "eth1”: {
+                    “type”: “additional”,
+                    “vlan_id”: 5432
+                  }
+                },
                 "stackscript_id": 10079,
                 "stackscript_data": {
                   "gh_username": "linode"
@@ -14994,6 +15104,14 @@ components:
           type: string
           description: |
             The Interface type to create.
+
+            An Interface of type:
+
+            * `default` creates a public Interface that accepts external Network traffic. If your Linode
+            does not have a public Interface it will not receive a public IP address.
+
+            * `additional` creates a private Interface that accepts traffic from a private
+            virtual local area network (VLAN).
           example: 'additional'
           enum:
           - default
@@ -15016,6 +15134,8 @@ components:
           description: |
             The unique ID of the VLAN this Interface is assigned to. Passing a `vlan_id` value of `0`
             indicates that this Interface is not assigned to a VLAN.
+
+            Use the List VLANs endpoint to view all your VLAN IDs.
           example: 789
           x-linode-cli-display: 5
         mac_address:
