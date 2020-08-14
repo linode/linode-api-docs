@@ -324,8 +324,8 @@ info:
 
     # Rate Limiting
 
-    With the Linode API, you can make up to 1600 general API requests every two minutes per user as
-    determined by IP adddress or by OAuth token.
+    With the Linode API, you can make up to 1,600 general API requests every two minutes per user as
+    determined by IP adddress or by OAuth token. Additionally, there are endpoint specfic limits defined below.
 
     **Note:** There may be rate limiting applied at other levels outside of the API, for example, at the load balancer.
 
@@ -351,6 +351,11 @@ info:
     * [List and Create Object Storage Keys](https://developers.linode.com/api/v4/object-storage-keys)
     * [View, Update, and Revoke an Object Storage Key](https://developers.linode.com/api/v4/object-storage-keys-key-id)
     * [Cancel Object Storage](https://developers.linode.com/api/v4/object-storage-cancel/#post)
+
+    Opening Support Tickets has a dedicated limit of 2 requests per minute per user.
+    That endpoint is:
+
+    * [Open Support Ticket](https://developers.linode.com/api/v4/support-tickets/#post)
 
     # CLI (Command Line Interface)
 
