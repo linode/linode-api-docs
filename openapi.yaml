@@ -18064,6 +18064,7 @@ components:
             The script to execute when provisioning a new Linode with this StackScript.
           example: >
             "#!/bin/bash"
+          x-linode-cli-format: file
         user_defined_fields:
           type: array
           description: >
