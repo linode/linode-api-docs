@@ -9113,10 +9113,10 @@ paths:
                 ],
                 "cidr_block": "10.0.0.0/24"
               }' \
-              https://api.linode.com/v4/networking/vlans
+              https://api.linode.com/v4beta/networking/vlans
       - lang: CLI
         source: >
-          linode-cli vlan-create \
+          linode-cli networking vlan-create \
             --region us-east \
             --description "My example VLAN" \
             --linodes [123, 456, 789]
