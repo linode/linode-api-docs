@@ -52,3 +52,4 @@ Attribute | Location | Type | Supported By | Explanation
 `x-linode-cli-rows`| media type | array | A list of JSON paths where the CLI can find the value it should treat as table rows.  Only needed for irregular endpoints.
 `x-linode-cli-use-schema` | media type | schema or $ref | The schema the CLI should use when showing a row for this response.  Use with `x-linode-cli-rows`.
 `x-linode-cli-nested-list` | media type | string | The name of the property defined by this response body's schema that is a nested list.  Items in the list will be broken out into rows in the CLI's output.
+`x-linode-cli-format` | schema properties | string | Overrides the value of the "format" field for this property, but for the CLI only.  Currently, the only valid value is `file`.
