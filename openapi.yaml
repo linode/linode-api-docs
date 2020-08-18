@@ -4,7 +4,7 @@ info:
 
   title: Linode API
   description: |
-    # Introduction
+    ## Introduction
     The Linode API provides the ability to programmatically manage the full
     range of Linode products and services.
 
@@ -20,19 +20,19 @@ info:
     <a target="_top" href="https://developers.linode.com/api/docs/v4/openapi.yaml">Download the Linode OpenAPI Specification</a>.
 
 
-    # Changelog
+    ## Changelog
 
     <a target="_top" href="https://developers.linode.com/changelog">View our Changelog</a> to see release
     notes on all changes made to our API.
 
-    # Access and Authentication
+    ## Access and Authentication
 
     Some endpoints are publicly accessible without requiring authentication.
     All endpoints affecting your Account, however, require either a Personal
     Access Token or OAuth authentication (when using third-party
     applications).
 
-    ## Personal Access Token
+    ### Personal Access Token
 
     The easiest way to access the API is with a Personal Access Token (PAT)
     generated from the
@@ -42,13 +42,13 @@ info:
     All scopes for the OAuth security model ([defined below](#o-auth)) apply to this
     security model as well.
 
-    ### Authentication
+    #### Authentication
 
     | Security Scheme Type: | HTTP |
     |-----------------------|------|
     | **HTTP Authorization Scheme** | bearer |
 
-    ## OAuth
+    ### OAuth
     If you only need to access the Linode API for personal use,
     we recommend that you create a [personal access token](#personal-access-token).
     If you're designing an application that can authenticate with an arbitrary Linode user, then
@@ -65,7 +65,7 @@ info:
         - A public client is used with applications where the client secret is not guaranteed to be secure. For example, a native app running on a user's computer may not be able to keep the client secret safe, as a user could potentially inspect the source of the application. So, native apps or apps that run in a user's browser should use a public client.
         - Public and private clients follow different workflows, as described below.
 
-    ### OAuth Workflow
+    #### OAuth Workflow
 
     The OAuth workflow is a series of exchanges between your third-party app and Linode. The workflow is used
     to authenticate a user before an application can start making API calls on the user's behalf.
@@ -86,7 +86,7 @@ info:
     | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in two hours. | |
     | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, `grant_type`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another two hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
 
-    ### OAuth Private Workflow - Additional Details
+    #### OAuth Private Workflow - Additional Details
 
     The following information expands on steps 5 through 7 of the private workflow:
 
@@ -126,7 +126,7 @@ info:
     Authorization: Bearer 03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c
     ```
 
-    ### OAuth Reference
+    #### OAuth Reference
 
     | Security Scheme Type | OAuth 2.0 |
     |-----------------------|--------|
@@ -134,7 +134,7 @@ info:
     | **Token URL** | https://login.linode.com/oauth/token |
     | **Scopes** | <ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`lke:read_only` - Allows access to GET LKE Clusters on your Account.</li><li>`lke:read_write` - Allows access to all endpoints related to LKE Clusters on your Account.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br />|
 
-    # Requests
+    ## Requests
 
     Requests must be made over HTTPS to ensure transactions are encrypted. The
     following Request methods are supported:
@@ -147,7 +147,7 @@ info:
     | DELETE | Deletes a resource. This is a destructive action. |
 
 
-    # Responses
+    ## Responses
 
     Actions will return one following HTTP response status codes:
 
@@ -162,7 +162,7 @@ info:
     | 429 Too Many Requests | You've hit a rate limit. |
     | 500 Internal Server Error | Please [open a Support Ticket](/api/v4/support-tickets/#post). |
 
-    # Errors
+    ## Errors
 
     Success is indicated via <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_top">Standard HTTP status codes</a>.
     `2xx` codes indicate success, `4xx` codes indicate a request error, and
@@ -186,7 +186,7 @@ info:
     omitted if there is no relevant field. The `reason` is a human-readable
     explanation of the error, and will always be included.
 
-    # Pagination
+    ## Pagination
 
     Resource lists are always paginated. The response will look similar to this:
 
@@ -323,7 +323,7 @@ info:
         }'
     ```
 
-    # CLI (Command Line Interface)
+    ## CLI (Command Line Interface)
 
     The <a href="https://github.com/linode/linode-cli" target="_top">Linode CLI</a> allows you to easily
     work with the API using intuitive and simple syntax. It requires a
