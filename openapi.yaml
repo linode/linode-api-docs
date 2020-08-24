@@ -958,6 +958,55 @@ paths:
       - lang: CLI
         source: >
           linode-cli account login-view 1234
+  /account/maintenance:
+    x-linode-cli-command: maintenance
+    get:
+      x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Account
+      summary: List Maintenance
+      description: >
+        Returns a collection of Maintenance objects for any entity
+        a user has permissions to view.
+
+
+        Currently, Linodes are the only entities available for viewing.
+      operationId: getMaintenance
+      x-linode-cli-action: maintenance-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - maintenance:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of Maintenance objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Maintenance'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/account/maintenance
+        - lang: CLI
+          source: >
+            linode-cli account maintenance-list
   /account/notifications:
     x-linode-cli-command: account
     get:
@@ -16393,6 +16442,68 @@ components:
             endpoint to receive the details of each plan.
           example: longview-10
           x-linode-cli-display: 1
+    Maintenance:
+      type: object
+      description: >
+        Information about maintenance affecting an entity.
+      properties:
+        type:
+          x-linode-filterable: true
+          type: string
+          enum:
+          - reboot
+          - cold_migration
+          - live_migration
+          description: >
+            The type of maintenance.
+          example: reboot
+        status:
+          x-linode-filterable: true
+          type: string
+          enum:
+          - pending
+          - ready
+          - started
+          - completed
+          description: >
+            The maintenance status.
+          example: started
+        reason:
+          type: string
+          description: >
+            The reason maintenance is being performed.
+          example: This maintenance will allow us to update the BIOS on the host’s motherboard.
+        when:
+          type: string
+          description: >
+            When the maintenance will begin.
+          format: date-time
+          example: 2020-07-09T00:01:01
+        entity:
+          type: object
+          description: >
+            The entity being affected by maintenance.
+          properties:
+            label:
+              type: string
+              description: >
+                The label of the entity being affected by maintenance.
+              example: demo-linode
+            id:
+              type: number
+              description: >
+                The id of the entity being affected by maintenance.
+              example: 1234
+            type:
+              type: string
+              description: >
+                The type of entity.
+              example: Linode
+            url:
+              type: string
+              description: >
+                The API endpoint prefix to use in combination with the entity id to find specific information about the entity.
+              example: https://api.linode.com/v4/linode/instances/{linodeId}
     ManagedContact:
       type: object
       description: >
