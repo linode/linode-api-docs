@@ -1,10 +1,10 @@
 openapi: 3.0.1
 info:
-  version: 4.72.0
+  version: 4.73.0
 
   title: Linode API
   description: |
-    # Introduction
+    ## Introduction
     The Linode API provides the ability to programmatically manage the full
     range of Linode products and services.
 
@@ -20,19 +20,19 @@ info:
     <a target="_top" href="https://developers.linode.com/api/docs/v4/openapi.yaml">Download the Linode OpenAPI Specification</a>.
 
 
-    # Changelog
+    ## Changelog
 
     <a target="_top" href="https://developers.linode.com/changelog">View our Changelog</a> to see release
     notes on all changes made to our API.
 
-    # Access and Authentication
+    ## Access and Authentication
 
     Some endpoints are publicly accessible without requiring authentication.
     All endpoints affecting your Account, however, require either a Personal
     Access Token or OAuth authentication (when using third-party
     applications).
 
-    ## Personal Access Token
+    ### Personal Access Token
 
     The easiest way to access the API is with a Personal Access Token (PAT)
     generated from the
@@ -42,13 +42,13 @@ info:
     All scopes for the OAuth security model ([defined below](#o-auth)) apply to this
     security model as well.
 
-    ### Authentication
+    #### Authentication
 
     | Security Scheme Type: | HTTP |
     |-----------------------|------|
     | **HTTP Authorization Scheme** | bearer |
 
-    ## OAuth
+    ### OAuth
     If you only need to access the Linode API for personal use,
     we recommend that you create a [personal access token](#personal-access-token).
     If you're designing an application that can authenticate with an arbitrary Linode user, then
@@ -65,7 +65,7 @@ info:
         - A public client is used with applications where the client secret is not guaranteed to be secure. For example, a native app running on a user's computer may not be able to keep the client secret safe, as a user could potentially inspect the source of the application. So, native apps or apps that run in a user's browser should use a public client.
         - Public and private clients follow different workflows, as described below.
 
-    ### OAuth Workflow
+    #### OAuth Workflow
 
     The OAuth workflow is a series of exchanges between your third-party app and Linode. The workflow is used
     to authenticate a user before an application can start making API calls on the user's behalf.
@@ -86,7 +86,7 @@ info:
     | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in two hours. | |
     | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, `grant_type`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another two hours, and the new `refresh_token`, can be used to extend the session again by this same method. | |
 
-    ### OAuth Private Workflow - Additional Details
+    #### OAuth Private Workflow - Additional Details
 
     The following information expands on steps 5 through 7 of the private workflow:
 
@@ -126,7 +126,7 @@ info:
     Authorization: Bearer 03d084436a6c91fbafd5c4b20c82e5056a2e9ce1635920c30dc8d81dc7a6665c
     ```
 
-    ### OAuth Reference
+    #### OAuth Reference
 
     | Security Scheme Type | OAuth 2.0 |
     |-----------------------|--------|
@@ -134,7 +134,7 @@ info:
     | **Token URL** | https://login.linode.com/oauth/token |
     | **Scopes** | <ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`lke:read_only` - Allows access to GET LKE Clusters on your Account.</li><li>`lke:read_write` - Allows access to all endpoints related to LKE Clusters on your Account.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br />|
 
-    # Requests
+    ## Requests
 
     Requests must be made over HTTPS to ensure transactions are encrypted. The
     following Request methods are supported:
@@ -147,7 +147,7 @@ info:
     | DELETE | Deletes a resource. This is a destructive action. |
 
 
-    # Responses
+    ## Responses
 
     Actions will return one following HTTP response status codes:
 
@@ -162,7 +162,7 @@ info:
     | 429 Too Many Requests | You've hit a rate limit. |
     | 500 Internal Server Error | Please [open a Support Ticket](/api/v4/support-tickets/#post). |
 
-    # Errors
+    ## Errors
 
     Success is indicated via <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_top">Standard HTTP status codes</a>.
     `2xx` codes indicate success, `4xx` codes indicate a request error, and
@@ -186,7 +186,7 @@ info:
     omitted if there is no relevant field. The `reason` is a human-readable
     explanation of the error, and will always be included.
 
-    # Pagination
+    ## Pagination
 
     Resource lists are always paginated. The response will look similar to this:
 
@@ -208,7 +208,7 @@ info:
     and can be set to return between 25 and 500. Page size can be set using
     `?page_size=x`.
 
-    # Filtering and Sorting
+    ## Filtering and Sorting
 
     Collections are searchable by fields they include, marked in the spec as
     `x-linode-filterable: true`. Filters are passed
@@ -323,7 +323,42 @@ info:
         }'
     ```
 
-    # CLI (Command Line Interface)
+    ## Rate Limiting
+
+    With the Linode API, you can make up to 1,600 general API requests every two minutes per user as
+    determined by IP adddress or by OAuth token. Additionally, there are endpoint specfic limits defined below.
+
+    **Note:** There may be rate limiting applied at other levels outside of the API, for example, at the load balancer.
+
+    `/stats` endpoints have their own dedicated limits of 100 requests per minute per user.
+    These endpoints are:
+
+    * [View Linode Statistics](https://api.linode.com/v4/linode/instances/{linodeId}/stats)
+    * [View Linode Statistics (year/month)](https://api.linode.com/v4/linode/instances/{linodeId}/stats/{year}/{month})
+    * [View NodeBalancer Statistics](https://api.linode.com/v4/nodebalancers/{nodeBalancerId}/stats)
+    * [List Managed Stats](https://api.linode.com/v4/managed/stats)
+
+    Object Storage endpoints have a dedicated limit of 750 requests per second per user.
+    These endpoints are:
+
+    * [List and Create Object Storage Buckets](https://developers.linode.com/api/v4/object-storage-buckets)
+    * [View and Remove Object Storage Buckets](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket)
+    * [List Object Storage Buckets in Cluster](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id)
+    * [Modify Object Storage Bucket Access](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket-access/#post)
+    * [List Object Storage Bucket Contents](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket-object-list)
+    * [Create Object Storage Object URL](https://developers.linode.com/api/v4/object-storage-buckets-cluster-id-bucket-object-url/#post)
+    * [List Clusters](https://developers.linode.com/api/v4/object-storage-clusters)
+    * [View Cluster](https://developers.linode.com/api/v4/object-storage-clusters-cluster-id)
+    * [List and Create Object Storage Keys](https://developers.linode.com/api/v4/object-storage-keys)
+    * [View, Update, and Revoke an Object Storage Key](https://developers.linode.com/api/v4/object-storage-keys-key-id)
+    * [Cancel Object Storage](https://developers.linode.com/api/v4/object-storage-cancel/#post)
+
+    Opening Support Tickets has a dedicated limit of 2 requests per minute per user.
+    That endpoint is:
+
+    * [Open Support Ticket](https://developers.linode.com/api/v4/support-tickets/#post)
+
+    ## CLI (Command Line Interface)
 
     The <a href="https://github.com/linode/linode-cli" target="_top">Linode CLI</a> allows you to easily
     work with the API using intuitive and simple syntax. It requires a
@@ -958,6 +993,61 @@ paths:
       - lang: CLI
         source: >
           linode-cli account login-view 1234
+  /account/maintenance:
+    x-linode-cli-command: maintenance
+    get:
+      x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Account
+      summary: List Maintenance
+      description: >
+        Returns a collection of Maintenance objects for any entity
+        a user has permissions to view.
+
+
+        Currently, Linodes are the only entities available for viewing.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getMaintenance
+      x-linode-cli-action: maintenance-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - maintenance:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of Maintenance objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Maintenance'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/account/maintenance
+        - lang: CLI
+          source: >
+            linode-cli account maintenance-list
   /account/notifications:
     x-linode-cli-command: account
     get:
@@ -16393,6 +16483,68 @@ components:
             endpoint to receive the details of each plan.
           example: longview-10
           x-linode-cli-display: 1
+    Maintenance:
+      type: object
+      description: >
+        Information about maintenance affecting an entity.
+      properties:
+        type:
+          x-linode-filterable: true
+          type: string
+          enum:
+          - reboot
+          - cold_migration
+          - live_migration
+          description: >
+            The type of maintenance.
+          example: reboot
+        status:
+          x-linode-filterable: true
+          type: string
+          enum:
+          - pending
+          - ready
+          - started
+          - completed
+          description: >
+            The maintenance status.
+          example: started
+        reason:
+          type: string
+          description: >
+            The reason maintenance is being performed.
+          example: This maintenance will allow us to update the BIOS on the host’s motherboard.
+        when:
+          type: string
+          description: >
+            When the maintenance will begin.
+          format: date-time
+          example: 2020-07-09T00:01:01
+        entity:
+          type: object
+          description: >
+            The entity being affected by maintenance.
+          properties:
+            label:
+              type: string
+              description: >
+                The label of the entity being affected by maintenance.
+              example: demo-linode
+            id:
+              type: number
+              description: >
+                The id of the entity being affected by maintenance.
+              example: 1234
+            type:
+              type: string
+              description: >
+                The type of entity.
+              example: Linode
+            url:
+              type: string
+              description: >
+                The API endpoint prefix to use in combination with the entity id to find specific information about the entity.
+              example: https://api.linode.com/v4/linode/instances/{linodeId}
     ManagedContact:
       type: object
       description: >
@@ -18736,3 +18888,38 @@ components:
           example:
           - example tag
           - another example
+tags:
+  - name: Account
+    description: Use the Account endpoints to manage user settings, billing, and payments. You can also initiate and maintain OAuth client application authentication, enable the Linode Managed service, and create new users on your account.
+  - name: Domains
+    description: Use the Domains endpoints to create and manage domains and domain records on your account.
+  - name: Images
+    description: Use the Images endpoints to capture, store, and manage custom Linode images.
+  - name: Linode Instances
+    description: Use the Linode Instances endpoints to create, configure, and manage your Linode instances. You can also manage the Linode Backup service; maintain and manage configuration profiles; create and maintain disks, intiate a host migration; view Linode Instance statistics; and more.
+  - name: Linode Types
+    description: Use the Linode Types endpoints to retrieve information about Linode plan types, including pricing information, hardware resources, and network transfer allotment.
+  - name: Linode Kubernetes Engine (LKE)
+    description: Linode Kubernetes Engine (LKE) is Linode’s managed Kubernetes service. Use the LKE endpoints to create and manage Kubernetes clusters and their associated Node Pools.
+  - name: Longview
+    description: Longview is Linode’s system-level monitoring and graphing service. Use the Longview endpoints to manage your Longview subscription and plan and to create and maintain Longview clients.
+  - name: Managed
+    description: Managed is Linode’s incident response service. Use the Managed endpoints to register a service to be monitored by the Managed Service team, provide secure access to your managed services,  view information about detected issues, and more.
+  - name: Networking
+    description: Use the Networking endpoints to view all IP addresses on your account, reorganize assigned IPv4 addresses, update RDNS, and configure IP sharing.
+  - name: NodeBalancers
+    description: NodeBalancers is Linode’s load balancing service. Use the NodeBalancers endpoints to create and manage NodeBalancers. You can also create and maintain configurations; create and maintain nodes, and view statistics.
+  - name: Object Storage
+    description: Object Storage is Linode’s S3-compatible data storage service. Use the Object Storage endpoints to create and maintaining buckets, add and remove objects from buckets, create and maintain Object Storage keys, and cancel the Object Storage service.
+  - name: Profile
+    description: Use the Profile endpoints to manage your Linode user profile preferences and security settings. This includes creating and maintaining personal access tokens, creating and maintaining SSH keys, confirming and enabling two-factor authentication, and updating user and profile preferences.
+  - name: Regions
+    description: Use the Regions endpoints to view information about the various Linode data center regions, including the service capabilities for each region, country, status, and more.
+  - name: StackScripts
+    description: Linode StackScripts allow you to create reusable scripts to configure new Linode instances. Use the StackScripts endpoints to create and manage StackScripts on your account.
+  - name: Support
+    description: Use the Support endpoints to open, view, and close Linode Support tickets. You can also create and manage your Support ticket replies.
+  - name: Tags
+    description: Tags allow you to organize and group your various Linode services. Use the Tags endpoints to create, assign, and delete your account tags.
+  - name: Volumes
+    description: Volumes is Linode’s block storage service. Use the Volumes endpoints to create, attach, and manage your account Volumes.
