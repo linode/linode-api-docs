@@ -6659,7 +6659,7 @@ paths:
         source: >
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
-            --count 6'
+            --count 6
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
