@@ -6336,6 +6336,9 @@ paths:
                   $ref: '#/components/schemas/LKECluster/properties/tags'
                 node_pools:
                   type: array
+                  required:
+                  - type
+                  - count
                   items:
                     $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
@@ -6360,13 +6363,7 @@ paths:
                   "node_pools": [
                     {
                       "type": "g6-standard-4",
-                      "count": 6,
-                      "disks": [
-                        {
-                          "size": 1028,
-                          "type": "ext4"
-                        }
-                      ]
+                      "count": 6
                     },
                     {
                       "type": "g6-standard-8",
@@ -6655,13 +6652,7 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                   "type": "g6-standard-4",
-                  "count": 6,
-                  "disks": [
-                        {
-                          "size": 1028,
-                          "type": "ext4"
-                        }
-                      ]
+                  "count": 6
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
@@ -16198,6 +16189,11 @@ components:
         disks:
           type: array
           description: >
+            **Note**: This field should be omitted except for special use cases. The disks specified here are
+            partitions in *addition* to the primary partition and reduce the size of the primary partition,
+            which can lead to stability problems for the Node.
+
+
             This Node Pool's custom disk layout. Each item in this array will create a new disk
             partition for each node in this Node Pool.
 
@@ -16205,9 +16201,6 @@ components:
               * The maximum number of custom disk partitions that can be configured is 7.
               * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
               * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
-
-            **Note**: If this field is omitted, the node will have a default disk layout consisting of a single partition.
-            A custom layout is only required for specific use cases.
           items:
             type: object
             description: >
