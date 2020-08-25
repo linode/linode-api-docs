@@ -6378,7 +6378,7 @@ paths:
             --label cluster12345 \
             --region us-central \
             --k8s_version 1.16 \
-            --node_pools.type g6-standard-4 --node_pools.count 6 --node_pools.disks '[{"size": 1028, "type": "ext4"}]' \
+            --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
   /lke/clusters/{clusterId}:
@@ -6659,8 +6659,7 @@ paths:
         source: >
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
-            --count 6 \
-            --disks '[{"size": 1028, "type": "ext4"}]'
+            --count 6'
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
