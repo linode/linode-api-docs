@@ -16107,6 +16107,7 @@ components:
           example: 6
         disks:
           type: array
+          x-linode-cli-format: json
           description: >
             This Node Pool's custom disk layout. Each item in this array will create a new disk
             partition for each node in this Node Pool.
