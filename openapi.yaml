@@ -9437,6 +9437,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs
@@ -9454,6 +9455,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
@@ -9548,6 +9550,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
@@ -9566,6 +9569,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
     delete:
       x-linode-grant: read_write
@@ -9697,6 +9701,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended",
                 "nodes": [
                   {
@@ -9730,6 +9735,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
@@ -17139,6 +17145,13 @@ components:
             enough for it to be considered unhealthy and taken out of rotation.
           example: true
           x-linode-cli-display: 6
+        proxy_protocol:
+          type: string
+          enum:
+          - v1
+          - v2
+          nullable: true
+          example: v1
         cipher_suite:
           type: string
           enum:
