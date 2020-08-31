@@ -15300,13 +15300,26 @@ components:
           example: '2600:3c01::02:5000::'
           readOnly: true
           x-linode-cli-display: 1
+        prefix:
+          type: integer
+          description: >
+            The prefix length of the address, denoting how many addresses can be
+            assigned from this range calculated as 2 <sup>128-prefix</sup>.
+          example: 64
+          x-linode-cli-display: 2
         region:
           type: string
           description: >
             The region for this range of IPv6 addresses.
           example: us-east
           readOnly: true
-          x-linode-cli-display: 2
+          x-linode-cli-display: 3
+        route_target:
+          type: string
+          description: >
+            The last address in this block of IPv6 addresses.
+          example: '2600:3c01::02:5000::ca72'
+          nullable: true
     Kernel:
       type: object
       description: Linux kernel object
