@@ -17150,7 +17150,7 @@ components:
           enum:
           - v1
           - v2
-          nullable: true
+          - none
           example: v1
         cipher_suite:
           type: string
