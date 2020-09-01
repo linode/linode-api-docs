@@ -17146,12 +17146,24 @@ components:
           example: true
           x-linode-cli-display: 6
         proxy_protocol:
+          description: >
+            ProxyProtocol is an internet protocol that sends information as a header on a
+            TCP connection without losing client data. When used with a NodeBalancer, it
+            enables the termination of TCP connections.
+
+
+            Linode NodeBalancers supports two versions, `v1` and `v2`. `v1` is human readable
+            text while `v2` makes use of a binary signature.
+
+
+            If ommited from the configuration, the default is `none`.
           type: string
           enum:
           - v1
           - v2
           - none
-          example: v1
+          example: none
+          default: none
         cipher_suite:
           type: string
           enum:
