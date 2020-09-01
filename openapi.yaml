@@ -17155,8 +17155,10 @@ components:
 
             * If ommited, or set to `none`, the NodeBalancer doesn't send any auxilary
             data over TCP connections. This is the default.
-            * If set to `v1`, the human-readable header format (Version 1), is used.
-            * If set to `v2`, the binary header format (Version 2), is used.
+
+            * If set to `v1`, the human-readable header format (Version 1) is used.
+
+            * If set to `v2`, the binary header format (Version 2) is used.
           type: string
           enum:
           - none
