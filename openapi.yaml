@@ -10692,6 +10692,22 @@ paths:
                   type: string
                   description: The label for this keypair, for display purposes only.
                   example: my-key
+                bucket_access:
+                  type: object
+                  description: Defines this key as a limited access key, and contains values pertaining to permissions. Limited Access Keys block access to all buckets except for those specified within the object.
+                  properties:
+                    cluster:
+                      type: string
+                      description: The datacenter where a bucket with limited access is hosted.
+                      example: ap-south-1
+                    bucket_name:
+                      type: string
+                      description: The unique label of the bucket with limited access.
+                      example: example-bucket
+                    permissions:
+                      type: string
+                      description: The permissions for the selected key. Can be `read_write` or `read_only`.
+                      example: read_only
       responses:
         '200':
           description: The new keypair.  **This is the only time** the secret key is returned.
@@ -10712,7 +10728,15 @@ paths:
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
-                "label": "my-object-storage-key"
+                "label": "my-object-storage-key",
+                "bucket_access": [{
+                  "cluster": "ap-south-1",
+                  "bucket_name": "bucket-test1",
+                  "permissions": "read_write"},
+                {
+                  "cluster": "us-east-1",
+                  "bucket_name": "bucket-test2",
+                  "permissions": "read_only"}]
             }' \
             https://api.linode.com/v4/object-storage/keys
       - lang: CLI
@@ -17697,6 +17721,26 @@ components:
           description: This keypair's secret key. **Only returned on key creation**.
           example: '[REDACTED]'
           readOnly: true
+        limited:
+          type: boolean
+          description: Whether or not this key is a limited access key. Will return `false` if this key grants full access to all buckets on the user's account.
+          example: true
+        bucket_access:
+          type: object
+          description: Defines this key as a limited access key, and contains values pertaining to permissions. Limited Access Keys block access to all buckets except for those specified within the object.
+          properties:
+            cluster:
+              type: string
+              description: The datacenter where a bucket with limited access is hosted.
+              example: ap-south-1
+            bucket_name:
+              type: string
+              description: The unique label of the bucket with limited access.
+              example: example-bucket
+            permissions:
+              type: string
+              description: The permissions for the selected key. Can be `read_write` or `read_only`.
+              example: read_only
     PaginationEnvelope:
       type: object
       description: >
