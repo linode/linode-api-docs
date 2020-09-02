@@ -10729,14 +10729,18 @@ paths:
           -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
                 "label": "my-object-storage-key",
-                "bucket_access": [{
+                "bucket_access": [
+                  {
                   "cluster": "ap-south-1",
                   "bucket_name": "bucket-test1",
-                  "permissions": "read_write"},
+                  "permissions": "read_write"
+                  },
                 {
                   "cluster": "us-east-1",
                   "bucket_name": "bucket-test2",
-                  "permissions": "read_only"}]
+                  "permissions": "read_only"
+                  }
+                  ]
             }' \
             https://api.linode.com/v4/object-storage/keys
       - lang: CLI
@@ -10803,7 +10807,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ObjectStorageKey'
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: The label for this keypair, for display purposes only.
+                  example: my-key
       responses:
         '200':
           description: Update Successful
