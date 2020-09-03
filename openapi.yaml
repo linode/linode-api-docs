@@ -5346,7 +5346,7 @@ paths:
         [Reset Disk Root Password](/api/v4/linode-instances-linode-id-disks-disk-id-password/#post) endpoint to update a specific disk's root password.
 
 
-        A `reset_root_password` event is generated when a root password reset is successful.
+        A `password_reset` event is generated when a root password reset is successful.
       tags:
       - Linode Instances
       operationId: resetLinodePassword
@@ -14384,7 +14384,6 @@ components:
           - password_reset
           - payment_submitted
           - profile_update
-          - reset_root_password
           - stackscript_create
           - stackscript_delete
           - stackscript_update
