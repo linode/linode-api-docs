@@ -10693,20 +10693,22 @@ paths:
                   description: The label for this keypair, for display purposes only.
                   example: my-key
                 bucket_access:
-                  type: object
+                  type: array
+                  items:
+                    type: object
                   description: Defines this key as a limited access key, and contains values pertaining to permissions. Limited Access Keys block access to all buckets except for those specified within the object.
                   properties:
                     cluster:
                       type: string
-                      description: The datacenter where a bucket with limited access is hosted.
+                      description: The Object Storage cluster where a bucket to which the key is granting access is hosted.
                       example: ap-south-1
                     bucket_name:
                       type: string
-                      description: The unique label of the bucket with limited access.
+                      description: The unique label of the bucket to which the key will grant access.
                       example: example-bucket
                     permissions:
                       type: string
-                      description: The permissions for the selected key. Can be `read_write` or `read_only`.
+                      description: The permissions of the key for the selected bucket. Can be `read_write` or `read_only`.
                       example: read_only
       responses:
         '200':
@@ -10827,7 +10829,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
-            -x PUT -d '{
+            -X PUT -d '{
               "label": "my-object-storage-key"
             }' \
             https://api.linode.com/v4/object-storage/keys/12345
@@ -10863,7 +10865,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-            -x DELETE \
+            -X DELETE \
             https://api.linode.com/v4/object-storage/keys/12345
       - lang: CLI
         source: >
@@ -17735,20 +17737,22 @@ components:
           description: Whether or not this key is a limited access key. Will return `false` if this key grants full access to all buckets on the user's account.
           example: true
         bucket_access:
-          type: object
+          type: array
+          items:
+            type: object
           description: Defines this key as a limited access key, and contains values pertaining to permissions. Limited Access Keys block access to all buckets except for those specified within the object.
           properties:
             cluster:
               type: string
-              description: The datacenter where a bucket with limited access is hosted.
+              description: The Object Storage cluster where a bucket to which the key is granting access is hosted.
               example: ap-south-1
             bucket_name:
               type: string
-              description: The unique label of the bucket with limited access.
+              description: The unique label of the bucket to which the key will grant limited access.
               example: example-bucket
             permissions:
               type: string
-              description: The permissions for the selected key. Can be `read_write` or `read_only`.
+              description: The permissions of the key for the selected bucket. Can be `read_write` or `read_only`.
               example: read_only
     PaginationEnvelope:
       type: object
