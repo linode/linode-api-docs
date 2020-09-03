@@ -5329,7 +5329,7 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: ID of the linode to reboot.
+      description: ID of the Linode for which to reset it's root password.
       required: true
       schema:
         type: integer
@@ -5338,11 +5338,12 @@ paths:
       x-linode-grant: read_write
       summary: Reset Linode Root Password
       description: >
-        Resets the root password for a Linode.
+        Resets the root password for this Linode.
 
 
-        **Note:** A root password can only be reset using this method
-        if it has only one non-swap disk.
+
+        **Note:** If your Linode has more than one disk (not counting its swap disk), use the
+        [Reset Disk Root Password](/api/v4/linode-instances-linode-id-disks-disk-id-password/#post) endpoint to update a specific disk's root password.
       tags:
       - Linode Instances
       operationId: resetLinodePassword
@@ -5352,7 +5353,7 @@ paths:
       - oauth:
         - linodes:read_write
       requestBody:
-        description: The new root password.
+        description: This Linode's new root password.
         content:
           'application/json':
             schema:
@@ -5362,7 +5363,7 @@ paths:
                 root_pass:
                   type: string
                   description: >
-                    The root user's password on the Linode. Linode passwords
+                    The root user's password on this Linode. Linode passwords
                     have the following constraints:
 
 
