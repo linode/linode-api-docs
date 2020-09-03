@@ -2089,8 +2089,8 @@ paths:
       summary: View User's grants
       description: >
         Returns the full grants structure for the specified account User
-        (other than the account owner, see below). This includes all entities
-        on the Account alongside what level of access this User has to each of them.
+        (other than the account owner, see below for details). This includes all entities
+        on the Account alongside the level of access this User has to each of them.
 
 
         The current authenticated User, including the account owner, may view their
