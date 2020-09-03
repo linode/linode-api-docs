@@ -5344,6 +5344,9 @@ paths:
 
         **Note:** If your Linode has more than one disk (not counting its swap disk), use the
         [Reset Disk Root Password](/api/v4/linode-instances-linode-id-disks-disk-id-password/#post) endpoint to update a specific disk's root password.
+
+
+        A `reset_root_password` event is generated when a root password reset is successful.
       tags:
       - Linode Instances
       operationId: resetLinodePassword
