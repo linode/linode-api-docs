@@ -14381,6 +14381,7 @@ components:
           - password_reset
           - payment_submitted
           - profile_update
+          - reset_root_password
           - stackscript_create
           - stackscript_delete
           - stackscript_update
