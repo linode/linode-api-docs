@@ -10734,12 +10734,12 @@ paths:
             "bucket_access": [
               {
                 "cluster": "ap-south-1",
-                "bucket_name": "bucket-test1",
+                "bucket_name": "bucket-example-1",
                 "permissions": "read_write"
               },
               {
                 "cluster": "us-east-1",
-                "bucket_name": "bucket-test2",
+                "bucket_name": "bucket-example-2",
                 "permissions": "read_only"
               }
             ]
@@ -10748,7 +10748,8 @@ paths:
       - lang: CLI
         source: >
           linode-cli object-storage keys-create \
-            --label "my-object-storage-key"
+            --label "my-object-storage-key" \
+            --bucket_access '[{"cluster": "ap-south-1", "bucket_name": "bucket-example-1", "permissions": "read_write" }]'
   /object-storage/keys/{keyId}:
     x-linode-cli-command: object-storage
     parameters:
