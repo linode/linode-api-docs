@@ -17716,7 +17716,15 @@ components:
           type: array
           items:
             type: object
-          description: Defines this key as a limited access key, and contains values pertaining to permissions. Limited Access Keys block access to all buckets except for those specified within the object.
+          description: >
+           Limited Access Keys restrict this Object Storage key's access to only the bucket(s) declared in this array and define their bucket-level permissions.
+
+
+            Limited Access Keys can:
+
+              * [list all buckets](/api/v4/object-storage-buckets/) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
+
+              * [create new buckets](/api/v4/object-storage-buckets/#post), but do not have any access to the buckets created, unless explicitly given access to it.
           properties:
             cluster:
               type: string
@@ -17728,7 +17736,10 @@ components:
               example: example-bucket
             permissions:
               type: string
-              description: The permissions of the key for the selected bucket. Can be `read_write` or `read_only`.
+              enum:
+              - read_write
+              - read_only
+              description: This Limited Access Key's permissions for the selected bucket.
               example: read_only
     PaginationEnvelope:
       type: object
