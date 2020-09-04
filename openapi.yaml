@@ -10686,30 +10686,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                label:
-                  type: string
-                  description: The label for this keypair, for display purposes only.
-                  example: my-key
-                bucket_access:
-                  type: array
-                  items:
-                    type: object
-                  description: Defines this key as a limited access key, and contains values pertaining to permissions. Limited Access Keys block access to all buckets except for those specified within the object.
-                  properties:
-                    cluster:
-                      type: string
-                      description: The Object Storage cluster where a bucket to which the key is granting access is hosted.
-                      example: ap-south-1
-                    bucket_name:
-                      type: string
-                      description: The unique label of the bucket to which the key will grant access.
-                      example: example-bucket
-                    permissions:
-                      type: string
-                      description: The permissions of the key for the selected bucket. Can be `read_write` or `read_only`.
-                      example: read_only
+              $ref: '#/components/schemas/ObjectStorageKey'
       responses:
         '200':
           description: The new keypair.  **This is the only time** the secret key is returned.
@@ -10717,11 +10694,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/ObjectStorageKey'
-                  - type: object
-                    properties:
-                      secret_key:
-                        example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                - $ref: '#/components/schemas/ObjectStorageKey'
+                - type: object
+                  properties:
+                    secret_key:
+                      type: string
+                      description: This keypair’s secret key. **Only returned on key creation**.
+                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -17728,15 +17707,11 @@ components:
           description: This keypair's access key. This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
           readOnly: true
-        secret_key:
-          type: string
-          description: This keypair's secret key. **Only returned on key creation**.
-          example: '[REDACTED]'
-          readOnly: true
         limited:
           type: boolean
           description: Whether or not this key is a limited access key. Will return `false` if this key grants full access to all buckets on the user's account.
           example: true
+          readOnly: true
         bucket_access:
           type: array
           items:
