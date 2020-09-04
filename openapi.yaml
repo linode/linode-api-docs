@@ -17717,14 +17717,14 @@ components:
           items:
             type: object
           description: >
-           Limited Access Keys restrict this Object Storage key's access to only the bucket(s) declared in this array and define their bucket-level permissions.
+           Defines this key as a Limited Access Key. Limited Access Keys restrict this Object Storage key's access to only the bucket(s) declared in this array and define their bucket-level permissions.
 
 
             Limited Access Keys can:
 
               * [list all buckets](/api/v4/object-storage-buckets/) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
 
-              * [create new buckets](/api/v4/object-storage-buckets/#post), but do not have any access to the buckets created, unless explicitly given access to it.
+              * [create new buckets](/api/v4/object-storage-buckets/#post), but do not have any access to the buckets it creates, unless explicitly given access to them.
           properties:
             cluster:
               type: string
