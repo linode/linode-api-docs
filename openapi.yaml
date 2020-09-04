@@ -10679,7 +10679,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - object_storage:read_only
+        - object_storage:read_write
       requestBody:
         description: >
           The label of the key to create. This is used to identify the created key.
