@@ -5340,13 +5340,12 @@ paths:
       description: >
         Resets the root password for this Linode.
 
+        * Your Linode must be [shut down](/api/v4/linode-instances-linode-id-shutdown/#post) for a password reset to complete.
 
-
-        **Note:** If your Linode has more than one disk (not counting its swap disk), use the
+        * If your Linode has more than one disk (not counting its swap disk), use the
         [Reset Disk Root Password](/api/v4/linode-instances-linode-id-disks-disk-id-password/#post) endpoint to update a specific disk's root password.
 
-
-        A `password_reset` event is generated when a root password reset is successful.
+        * A `password_reset` event is generated when a root password reset is successful.
       tags:
       - Linode Instances
       operationId: resetLinodePassword
