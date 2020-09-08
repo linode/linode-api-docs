@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.73.0
+  version: 4.74.0
 
   title: Linode API
   description: |
@@ -2088,11 +2088,14 @@ paths:
       - Account
       summary: View User's grants
       description: >
-        Returns the full grants structure for this User. This includes all
-        entities on the Account alongside what level of access this User has
-        to each of them. Individual users may view their own grants at the
-        [/profile/grants](/api/v4/profile-grants)
-        endpoint, but will not see entities that they have no access to.
+        Returns the full grants structure for the specified account User
+        (other than the account owner, see below for details). This includes all entities
+        on the Account alongside the level of access this User has to each of them.
+
+
+        The current authenticated User, including the account owner, may view their
+        own grants at the [/profile/grants](/api/v4/profile-grants)
+        endpoint, but will not see entities that they do not have access to.
       operationId: getUserGrants
       x-linode-cli-action: grants
       x-linode-cli-skip: true
@@ -5325,6 +5328,72 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes upgrade 123
+  /linode/instances/{linodeId}/password:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode for which to reset its root password.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    post:
+      x-linode-grant: read_write
+      summary: Reset Linode Root Password
+      description: >
+        Resets the root password for this Linode.
+
+        * Your Linode must be [shut down](/api/v4/linode-instances-linode-id-shutdown/#post) for a password reset to complete.
+
+        * If your Linode has more than one disk (not counting its swap disk), use the
+        [Reset Disk Root Password](/api/v4/linode-instances-linode-id-disks-disk-id-password/#post) endpoint to update a specific disk's root password.
+
+        * A `password_reset` event is generated when a root password reset is successful.
+      tags:
+      - Linode Instances
+      operationId: resetLinodePassword
+      x-linode-cli-action: linode-reset-password
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        description: This Linode's new root password.
+        content:
+          'application/json':
+            schema:
+              required:
+                - root_pass
+              properties:
+                root_pass:
+                  type: string
+                  description: >
+                    The root user's password on this Linode. Linode passwords
+                    must meet a password strength score requirement that is calculated internally
+                    by the API. If the strength requirement is not met, you will receive a
+                    Password does not meet strength requirement error.
+                  example: a$eCure4assw0rd!43v51
+      responses:
+        '200':
+          description: Password Reset.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "root_pass": "a$eCure4assw0rd!43v51"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/password
+      - lang: CLI
+        source: >
+          linode-cli linodes linode-reset-password 123 a$eCure4assw0rd!43v51
   /linode/instances/{linodeId}/reboot:
     parameters:
     - name: linodeId
@@ -6336,6 +6405,9 @@ paths:
                   $ref: '#/components/schemas/LKECluster/properties/tags'
                 node_pools:
                   type: array
+                  required:
+                  - type
+                  - count
                   items:
                     $ref: '#/components/schemas/LKENodePoolRequestBody'
       responses:
@@ -6360,13 +6432,7 @@ paths:
                   "node_pools": [
                     {
                       "type": "g6-standard-4",
-                      "count": 6,
-                      "disks": [
-                        {
-                          "size": 1028,
-                          "type": "ext4"
-                        }
-                      ]
+                      "count": 6
                     },
                     {
                       "type": "g6-standard-8",
@@ -6381,7 +6447,7 @@ paths:
             --label cluster12345 \
             --region us-central \
             --k8s_version 1.16 \
-            --node_pools.type g6-standard-4 --node_pools.count 6 --node_pools.disks '[{"size": 1028, "type": "ext4"}]' \
+            --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
   /lke/clusters/{clusterId}:
@@ -6655,21 +6721,14 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                   "type": "g6-standard-4",
-                  "count": 6,
-                  "disks": [
-                        {
-                          "size": 1028,
-                          "type": "ext4"
-                        }
-                      ]
+                  "count": 6
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
         source: >
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
-            --count 6 \
-            --disks '[{"size": 1028, "type": "ext4"}]'
+            --count 6
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
@@ -9048,9 +9107,14 @@ paths:
       - Networking
       summary: List IPv6 Ranges
       description: >
-        Displays the IPv6 ranges on your Account. A range of IPv6 addresses is routed to a single
-        Linode in a given [Region](https://developers.linode.com/api/v4/regions). Your Linode is responsible for routing individual addresses in
-        the range, or handling traffic for all the addresses in the range.
+        Displays the IPv6 ranges on your Account.
+
+
+          * An IPv6 range is a `/64` block of IPv6 addresses routed to a single Linode in a given [Region](https://developers.linode.com/api/v4/regions).
+
+          * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
+
+          * You must [open a support ticket](/api/v4/support-tickets/#post) to request a `/64` block of IPv6 addresses to be added to your account.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
       security:
@@ -9437,6 +9501,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs
@@ -9454,6 +9519,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
@@ -9548,6 +9614,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
@@ -9566,6 +9633,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
     delete:
       x-linode-grant: read_write
@@ -9697,6 +9765,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended",
                 "nodes": [
                   {
@@ -9730,6 +9799,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
@@ -10679,19 +10749,14 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - object_storage:read_only
+        - object_storage:read_write
       requestBody:
         description: >
           The label of the key to create. This is used to identify the created key.
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                label:
-                  type: string
-                  description: The label for this keypair, for display purposes only.
-                  example: my-key
+              $ref: '#/components/schemas/ObjectStorageKey'
       responses:
         '200':
           description: The new keypair.  **This is the only time** the secret key is returned.
@@ -10699,11 +10764,13 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/ObjectStorageKey'
-                  - type: object
-                    properties:
-                      secret_key:
-                        example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                - $ref: '#/components/schemas/ObjectStorageKey'
+                - type: object
+                  properties:
+                    secret_key:
+                      type: string
+                      description: This keypair’s secret key. **Only returned on key creation**.
+                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -10712,13 +10779,26 @@ paths:
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
-                "label": "my-object-storage-key"
-            }' \
-            https://api.linode.com/v4/object-storage/keys
+            "label": "my-object-storage-key",
+            "bucket_access": [
+              {
+                "cluster": "ap-south-1",
+                "bucket_name": "bucket-example-1",
+                "permissions": "read_write"
+              },
+              {
+                "cluster": "us-east-1",
+                "bucket_name": "bucket-example-2",
+                "permissions": "read_only"
+              }
+            ]
+          }' \
+          https://api.linode.com/v4/object-storage/keys
       - lang: CLI
         source: >
           linode-cli object-storage keys-create \
-            --label "my-object-storage-key"
+            --label "my-object-storage-key" \
+            --bucket_access '[{"cluster": "ap-south-1", "bucket_name": "bucket-example-1", "permissions": "read_write" }]'
   /object-storage/keys/{keyId}:
     x-linode-cli-command: object-storage
     parameters:
@@ -10779,7 +10859,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ObjectStorageKey'
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: The label for this keypair, for display purposes only.
+                  example: my-key
       responses:
         '200':
           description: Update Successful
@@ -10794,7 +10879,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
-            -x PUT -d '{
+            -X PUT -d '{
               "label": "my-object-storage-key"
             }' \
             https://api.linode.com/v4/object-storage/keys/12345
@@ -10830,7 +10915,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-            -x DELETE \
+            -X DELETE \
             https://api.linode.com/v4/object-storage/keys/12345
       - lang: CLI
         source: >
@@ -15264,7 +15349,7 @@ components:
           type: string
           description: >
             The IPv6 range of addresses in this pool.
-          example: '2600:3c01::02:5000::'
+          example: '2600:3c01::2:5000:0'
           readOnly: true
           x-linode-cli-display: 1
         prefix:
@@ -15286,7 +15371,7 @@ components:
           type: string
           description: >
             The last address in this block of IPv6 addresses.
-          example: '2600:3c01::02:5000::ca72'
+          example: '2600:3c01::2:5000:f'
           nullable: true
     IPv6Range:
       type: object
@@ -15297,16 +15382,29 @@ components:
           type: string
           description: >
             The IPv6 range of addresses in this pool.
-          example: '2600:3c01::02:5000::'
+          example: '2600:3c01::'
           readOnly: true
           x-linode-cli-display: 1
+        prefix:
+          type: integer
+          description: >
+            The prefix length of the address, denoting how many addresses can be
+            assigned from this range calculated as 2 <sup>128-prefix</sup>.
+          example: 64
+          x-linode-cli-display: 2
         region:
           type: string
           description: >
             The region for this range of IPv6 addresses.
           example: us-east
           readOnly: true
-          x-linode-cli-display: 2
+          x-linode-cli-display: 3
+        route_target:
+          type: string
+          description: >
+            The last address in this block of IPv6 addresses.
+          example: '2600:3c01::ffff:ffff:ffff:ffff'
+          nullable: true
     Kernel:
       type: object
       description: Linux kernel object
@@ -16197,7 +16295,13 @@ components:
           example: 6
         disks:
           type: array
+          x-linode-cli-format: json
           description: >
+            **Note**: This field should be omitted except for special use cases. The disks specified here are
+            partitions in *addition* to the primary partition and reduce the size of the primary partition,
+            which can lead to stability problems for the Node.
+
+
             This Node Pool's custom disk layout. Each item in this array will create a new disk
             partition for each node in this Node Pool.
 
@@ -16205,9 +16309,6 @@ components:
               * The maximum number of custom disk partitions that can be configured is 7.
               * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
               * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
-
-            **Note**: If this field is omitted, the node will have a default disk layout consisting of a single partition.
-            A custom layout is only required for specific use cases.
           items:
             type: object
             description: >
@@ -17138,6 +17239,27 @@ components:
             enough for it to be considered unhealthy and taken out of rotation.
           example: true
           x-linode-cli-display: 6
+        proxy_protocol:
+          description: >
+            ProxyProtocol is a TCP extension that sends initial TCP connection
+            information such as source/destination IPs and ports to backend devices.
+            This information would be lost otherwise. Backend devices must be
+            configured to work with ProxyProtocol if enabled.
+
+
+            * If ommited, or set to `none`, the NodeBalancer doesn't send any auxilary
+            data over TCP connections. This is the default.
+
+            * If set to `v1`, the human-readable header format (Version 1) is used.
+
+            * If set to `v2`, the binary header format (Version 2) is used.
+          type: string
+          enum:
+          - none
+          - v1
+          - v2
+          example: none
+          default: none
         cipher_suite:
           type: string
           enum:
@@ -17691,11 +17813,40 @@ components:
           description: This keypair's access key. This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
           readOnly: true
-        secret_key:
-          type: string
-          description: This keypair's secret key. **Only returned on key creation**.
-          example: '[REDACTED]'
+        limited:
+          type: boolean
+          description: Whether or not this key is a limited access key. Will return `false` if this key grants full access to all buckets on the user's account.
+          example: true
           readOnly: true
+        bucket_access:
+          type: array
+          description: >
+            Defines this key as a Limited Access Key. Limited Access Keys restrict this Object Storage key's access to only the bucket(s) declared in this array and define their bucket-level permissions.
+
+
+              Limited Access Keys can:
+
+              * [list all buckets](/api/v4/object-storage-buckets/) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
+
+              * [create new buckets](/api/v4/object-storage-buckets/#post), but do not have any access to the buckets it creates, unless explicitly given access to them.
+          items:
+            type: object
+            properties:
+              cluster:
+                type: string
+                description: The Object Storage cluster where a bucket to which the key is granting access is hosted.
+                example: ap-south-1
+              bucket_name:
+                type: string
+                description: The unique label of the bucket to which the key will grant limited access.
+                example: example-bucket
+              permissions:
+                type: string
+                enum:
+                - read_write
+                - read_only
+                description: This Limited Access Key's permissions for the selected bucket.
+                example: read_only
     PaginationEnvelope:
       type: object
       description: >
@@ -18216,6 +18367,7 @@ components:
             The script to execute when provisioning a new Linode with this StackScript.
           example: >
             "#!/bin/bash"
+          x-linode-cli-format: file
         user_defined_fields:
           type: array
           description: >
