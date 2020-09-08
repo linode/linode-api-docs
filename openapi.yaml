@@ -5328,6 +5328,75 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes upgrade 123
+  /linode/instances/{linodeId}/password:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode for which to reset it's root password.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    post:
+      x-linode-grant: read_write
+      summary: Reset Linode Root Password
+      description: >
+        Resets the root password for this Linode.
+
+        * Your Linode must be [shut down](/api/v4/linode-instances-linode-id-shutdown/#post) for a password reset to complete.
+
+        * If your Linode has more than one disk (not counting its swap disk), use the
+        [Reset Disk Root Password](/api/v4/linode-instances-linode-id-disks-disk-id-password/#post) endpoint to update a specific disk's root password.
+
+        * A `password_reset` event is generated when a root password reset is successful.
+      tags:
+      - Linode Instances
+      operationId: resetLinodePassword
+      x-linode-cli-action: linode-reset-password
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        description: This Linode's new root password.
+        content:
+          'application/json':
+            schema:
+              required:
+                - root_pass
+              properties:
+                root_pass:
+                  type: string
+                  description: >
+                    The root user's password on this Linode. Linode passwords
+                    have the following constraints:
+
+
+                    Must meet a password strength score requirement that is calculated internally
+                    by the API. If the strength requirement is not met, you will receive a
+                    Password does not meet strength requirement error.
+                  example: a$eCure4assw0rd!43v51
+      responses:
+        '200':
+          description: Password Reset.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "root_pass": "a$eCure4assw0rd!43v51"
+              }' \
+              https://api.linode.com/v4/linode/instances/123/password
+      - lang: CLI
+        source: >
+          linode-cli linodes linode-reset-password 123 a$eCure4assw0rd!43v51
   /linode/instances/{linodeId}/reboot:
     parameters:
     - name: linodeId
