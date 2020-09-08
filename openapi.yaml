@@ -9110,9 +9110,14 @@ paths:
       - Networking
       summary: List IPv6 Ranges
       description: >
-        Displays the IPv6 ranges on your Account. A range of IPv6 addresses is routed to a single
-        Linode in a given [Region](https://developers.linode.com/api/v4/regions). Your Linode is responsible for routing individual addresses in
-        the range, or handling traffic for all the addresses in the range.
+        Displays the IPv6 ranges on your Account.
+
+
+          * An IPv6 range is a `/64` block of IPv6 addresses routed to a single Linode in a given [Region](https://developers.linode.com/api/v4/regions).
+
+          * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
+
+          * You must [open a support ticket](/api/v4/support-tickets/#post) to request a `/64` block of IPv6 addresses to be added to your account.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
       security:
@@ -15347,7 +15352,7 @@ components:
           type: string
           description: >
             The IPv6 range of addresses in this pool.
-          example: '2600:3c01::02:5000::'
+          example: '2600:3c01::2:5000:0'
           readOnly: true
           x-linode-cli-display: 1
         prefix:
@@ -15369,7 +15374,7 @@ components:
           type: string
           description: >
             The last address in this block of IPv6 addresses.
-          example: '2600:3c01::02:5000::ca72'
+          example: '2600:3c01::2:5000:f'
           nullable: true
     IPv6Range:
       type: object
@@ -15380,16 +15385,29 @@ components:
           type: string
           description: >
             The IPv6 range of addresses in this pool.
-          example: '2600:3c01::02:5000::'
+          example: '2600:3c01::'
           readOnly: true
           x-linode-cli-display: 1
+        prefix:
+          type: integer
+          description: >
+            The prefix length of the address, denoting how many addresses can be
+            assigned from this range calculated as 2 <sup>128-prefix</sup>.
+          example: 64
+          x-linode-cli-display: 2
         region:
           type: string
           description: >
             The region for this range of IPv6 addresses.
           example: us-east
           readOnly: true
-          x-linode-cli-display: 2
+          x-linode-cli-display: 3
+        route_target:
+          type: string
+          description: >
+            The last address in this block of IPv6 addresses.
+          example: '2600:3c01::ffff:ffff:ffff:ffff'
+          nullable: true
     Kernel:
       type: object
       description: Linux kernel object
