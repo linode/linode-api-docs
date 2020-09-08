@@ -9499,6 +9499,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs
@@ -9516,6 +9517,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
@@ -9610,6 +9612,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
@@ -9628,6 +9631,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
     delete:
       x-linode-grant: read_write
@@ -9759,6 +9763,7 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
+                "proxy_protocol": "v1",
                 "cipher_suite": "recommended",
                 "nodes": [
                   {
@@ -9792,6 +9797,7 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
+            --proxy_protocol "v1" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
@@ -17218,6 +17224,27 @@ components:
             enough for it to be considered unhealthy and taken out of rotation.
           example: true
           x-linode-cli-display: 6
+        proxy_protocol:
+          description: >
+            ProxyProtocol is a TCP extension that sends initial TCP connection
+            information such as source/destination IPs and ports to backend devices.
+            This information would be lost otherwise. Backend devices must be
+            configured to work with ProxyProtocol if enabled.
+
+
+            * If ommited, or set to `none`, the NodeBalancer doesn't send any auxilary
+            data over TCP connections. This is the default.
+
+            * If set to `v1`, the human-readable header format (Version 1) is used.
+
+            * If set to `v2`, the binary header format (Version 2) is used.
+          type: string
+          enum:
+          - none
+          - v1
+          - v2
+          example: none
+          default: none
         cipher_suite:
           type: string
           enum:
