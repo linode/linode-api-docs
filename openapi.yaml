@@ -10763,14 +10763,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ObjectStorageKey'
-                - type: object
-                  properties:
-                    secret_key:
-                      type: string
-                      description: This keypair’s secret key. **Only returned on key creation**.
-                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                $ref: '#/components/schemas/ObjectStorageKey'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -17812,6 +17805,11 @@ components:
           type: string
           description: This keypair's access key. This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
+          readOnly: true
+        secret_key:
+          type: string
+          description: This keypair's secret key. Only returned on key creation.
+          example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
           readOnly: true
         limited:
           type: boolean
