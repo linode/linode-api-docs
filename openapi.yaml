@@ -9164,7 +9164,7 @@ paths:
       description: |
         Returns a paginated list of your Firewalls.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9225,7 +9225,7 @@ paths:
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9374,7 +9374,7 @@ paths:
         [List Firewall Devices](http://developers.linode.com/api/v4/networking-firewalls-firewall-id-devices/#get)
         endpoint to review them.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9429,7 +9429,7 @@ paths:
         If a Firewall's status is changed with this endpoint, a corresponding `firewall_enable` or
         `firewall_disable` Event will be generated.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9498,7 +9498,7 @@ paths:
 
         A `firewall_delete` Event is generated when this endpoint returns successfully.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9549,7 +9549,7 @@ paths:
         Firewall to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9614,7 +9614,7 @@ paths:
         to [migrate the Linode to a data center](/api/v4/linode-instances-linode-id-migrate/#post) that does not support Cloud Firewalls, the migration will fail.
         Use the [List Regions](/api/v4/regions) endpoint to view a list of a data center's capabilities.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9690,7 +9690,7 @@ paths:
         to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9744,7 +9744,7 @@ paths:
 
         A `firewall_device_remove` Event is generated when the Firewall Device is removed successfully.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9790,7 +9790,7 @@ paths:
       description: |
         Returns the inbound and outbound Rules for a Firewall.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
@@ -9833,7 +9833,7 @@ paths:
         Updates the inbound and outbound Rules for a Firewall. Using this endpoint will
         replace all of a Firewall's ruleset with the Rules specified in your request.
 
-        **Beta**: This endpoint is in beta.
+        This endpoint is in **beta**.
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
