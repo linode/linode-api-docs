@@ -18983,8 +18983,9 @@ components:
         timezone:
           type: string
           description: >
-            The timezone you prefer to see times in.  This is not used by the API, and is
-            for the benefit of clients only.  All times the API returns are in UTC.
+            The timezone you prefer to see times in. This is not used by the API directly.
+            It is provided for the benefit of clients such as the Linode Cloud Manager and
+            other clients built on the API. All times returned by the API are in UTC.
           example: US/Eastern
         email_notifications:
           type: boolean
