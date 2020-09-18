@@ -14450,8 +14450,8 @@ components:
           type: string
           format: date-time
           description: >
-            When this app's access token expires.  Please note that apps may still have active
-            refresh tokens after this time passes.
+            When the app's access to your account expires. If `null`, the app's
+            access must be revoked manually.
           example: '2018-01-15T00:01:01'
           readOnly: true
           x-linode-cli-display: 6
