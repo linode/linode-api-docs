@@ -11787,7 +11787,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ObjectStorageSSL'
+              $ref: '#/components/schemas/ObjectStorageSSLResponse'
       responses:
         '200':
           description: Returns whether this bucket has a corresponding SSL certificate that was uploaded by a user.
