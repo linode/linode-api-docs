@@ -11795,6 +11795,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectStorageSSLResponse'
+        default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
