@@ -11717,6 +11717,134 @@ paths:
         - lang: CLI
           source: >
             linode-cli object-storage cancel
+  /object-storage/buckets/{clusterId}/{bucket}/ssl:
+    x-linode-cli-command: object-storage
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageSSL
+      x-linode-cli-action: ssl-view
+      servers:
+      - url: https://api.linode.com/v4
+      summary: View Object Storage SSL Cert
+      description: |
+        Returns whether this bucket has a corresponding SSL certificate that was
+        uploaded by a user.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: >
+            Returns whether this bucket has a corresponding SSL certificate
+            that was uploaded by a user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageSSLResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+      - lang: CLI
+        source: >
+          linode-cli object-storage ssl-view \
+            us-east-1 example-bucket
+    post:
+      operationId: createObjectStorageSSL
+      x-linode-cli-action: ssl-upload
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Upload Object Storage SSL Cert
+      description: |
+        Upload an SSL certificate to be served when you visit your Object Storage bucket via HTTPS.
+        Your SSL certificate and private key are stored encrypted at rest.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: Upload this SSL certificate with its corresponding secret key.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectStorageSSL'
+      responses:
+        '200':
+          description: Returns whether this bucket has a corresponding SSL certificate that was uploaded by a user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageSSLResponse'
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
+            -X POST -d ‘{
+                "certificate": "-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----",
+                "private_key": "RwtqMlXveYH531g770BBNluAk9s"
+              }’ \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+      - lang: CLI
+        source: >
+          linode-cli object-storage ssl-upload \
+            us-east-1 example-bucket \
+            --certificate "-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----" \
+            --private_key "RwtqMlXveYH531g770BBNluAk9s"
+    delete:
+      operationId: getObjectStorageSSL
+      x-linode-cli-action: ssl-delete
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Delete Object Storage SSL Cert
+      description: |
+        Deletes this Object Storage buckets user uploaded SSL certificate.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      responses:
+        '200':
+          description: Deletes this Object Storage bucket's user uploaded SSL certificate and private key.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -X DELETE \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+      - lang: CLI
+        source: >
+          linode-cli object-storage ssl-delete \
+            us-east-1 example-bucket
   /profile:
     x-linode-cli-command: profile
     get:
@@ -18838,6 +18966,37 @@ components:
                 - read_only
                 description: This Limited Access Key's permissions for the selected bucket.
                 example: read_only
+    ObjectStorageSSL:
+      type: object
+      description: >
+        An Object in Object Storage, or a "prefix" that contains one
+        or more objects when a `delimiter` is used.
+      properties:
+        certificate:
+          type: string
+          description: >
+            Your Base64 encoded and PEM formatted SSL certificate.
+          example: >
+            "-----BEGIN CERTIFICATE-----
+            MIIFTTCCAzWgAwIBAgIURwtqMlXveYH531g770BBNluAk9swDQYJKoZIhvcNAQEL
+            D79A2svTqSsN+bDIVWoUd14=
+            -----END CERTIFICATE-----"
+        private_key:
+          type: string
+          description: >
+            The private key associated with this SSL certificate.
+          example: RwtqMlXveYH531g770BBNluAk9s
+    ObjectStorageSSLResponse:
+      type: object
+      description: >
+        If this Object Storage bucket has a corresponding SSL Certificate.
+      properties:
+        ssl:
+          type: boolean
+          description: >
+            If this Bucket has a corresponding SSL certificate that was uploaded by a user.
+          example: true
+          readOnly: true
     PaginationEnvelope:
       type: object
       description: >
