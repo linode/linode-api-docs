@@ -18816,6 +18816,10 @@ components:
               * [list all buckets](/api/v4/object-storage-buckets/) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
 
               * [create new buckets](/api/v4/object-storage-buckets/#post), but do not have any access to the buckets it creates, unless explicitly given access to them.
+
+
+              **Note:** You can create an Object Storage Limited Access Key without access to any buckets.
+              This is achieved by sending a request with an empty `bucket_access` array.
           items:
             type: object
             properties:
