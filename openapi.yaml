@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.75.0
+  version: 4.76.0
 
   title: Linode API
   description: |
@@ -9538,6 +9538,8 @@ paths:
     x-linode-cli-command: firewalls
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       parameters:
@@ -9682,6 +9684,8 @@ paths:
     x-linode-cli-command: firewalls
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       summary: View Firewall Device
@@ -9784,6 +9788,8 @@ paths:
     x-linode-cli-command: firewalls
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       summary: List Firewall Rules
@@ -11520,14 +11526,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ObjectStorageKey'
-                - type: object
-                  properties:
-                    secret_key:
-                      type: string
-                      description: This keypair’s secret key. **Only returned on key creation**.
-                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                $ref: '#/components/schemas/ObjectStorageKey'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -14451,8 +14450,8 @@ components:
           type: string
           format: date-time
           description: >
-            When this app's access token expires.  Please note that apps may still have active
-            refresh tokens after this time passes.
+            When the app's access to your account expires. If `null`, the app's
+            access must be revoked manually.
           example: '2018-01-15T00:01:01'
           readOnly: true
           x-linode-cli-display: 6
@@ -14699,13 +14698,13 @@ components:
         created:
           type: string
           format: date-time
-          description: When this Linode was created.
+          description: When this Disk was created.
           example: '2018-01-01T00:01:01'
           readOnly: true
         updated:
           type: string
           format: date-time
-          description: When this Linode was last updated.
+          description: When this Disk was last updated.
           example: '2018-01-01T00:01:01'
           readOnly: true
     DiskRequest:
@@ -18796,6 +18795,11 @@ components:
           description: This keypair's access key. This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
           readOnly: true
+        secret_key:
+          type: string
+          description: This keypair's secret key. Only returned on key creation.
+          example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+          readOnly: true
         limited:
           type: boolean
           description: Whether or not this key is a limited access key. Will return `false` if this key grants full access to all buckets on the user's account.
@@ -18812,6 +18816,10 @@ components:
               * [list all buckets](/api/v4/object-storage-buckets/) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
 
               * [create new buckets](/api/v4/object-storage-buckets/#post), but do not have any access to the buckets it creates, unless explicitly given access to them.
+
+
+              **Note:** You can create an Object Storage Limited Access Key without access to any buckets.
+              This is achieved by sending a request with an empty `bucket_access` array.
           items:
             type: object
             properties:
@@ -19043,8 +19051,9 @@ components:
         timezone:
           type: string
           description: >
-            The timezone you prefer to see times in.  This is not used by the API, and is
-            for the benefit of clients only.  All times the API returns are in UTC.
+            The timezone you prefer to see times in. This is not used by the API directly.
+            It is provided for the benefit of clients such as the Linode Cloud Manager and
+            other clients built on the API. All times returned by the API are in UTC.
           example: US/Eastern
         email_notifications:
           type: boolean
