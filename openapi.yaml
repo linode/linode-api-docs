@@ -11803,8 +11803,8 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d ‘{
-                  "certificate": """-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----""",
-                  "private_key": "RwtqMlXveYH531g770BBNluAk9s"
+                  "certificate": "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----",
+                  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
                 }’ \
               https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
       - lang: CLI
