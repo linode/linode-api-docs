@@ -11762,7 +11762,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+              https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
       - lang: CLI
         source: >
           linode-cli object-storage ssl-view \
@@ -11801,12 +11801,12 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $TOKEN" \
-            -X POST -d ‘{
-                "certificate": """-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----""",
-                "private_key": "RwtqMlXveYH531g770BBNluAk9s"
-              }’ \
-            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d ‘{
+                  "certificate": """-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----""",
+                  "private_key": "RwtqMlXveYH531g770BBNluAk9s"
+                }’ \
+              https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
       - lang: CLI
         source: >
           linode-cli object-storage ssl-upload \
@@ -11840,8 +11840,8 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-            -X DELETE \
-            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+              -X DELETE \
+              https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
       - lang: CLI
         source: >
           linode-cli object-storage ssl-delete \
