@@ -11811,7 +11811,7 @@ paths:
         source: >
           linode-cli object-storage ssl-upload \
             us-east-1 example-bucket \
-            --certificate "-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----" \
+            --certificate """-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----""" \
             --private_key "RwtqMlXveYH531g770BBNluAk9s"
     delete:
       operationId: getObjectStorageSSL
@@ -18980,10 +18980,10 @@ components:
           description: >
             Your Base64 encoded and PEM formatted SSL certificate.
           example: >
-            "-----BEGIN CERTIFICATE-----
+            """-----BEGIN CERTIFICATE-----
             MIIFTTCCAzWgAwIBAgIURwtqMlXveYH531g770BBNluAk9swDQYJKoZIhvcNAQEL
             D79A2svTqSsN+bDIVWoUd14=
-            -----END CERTIFICATE-----"
+            -----END CERTIFICATE-----"""
         private_key:
           type: string
           description: >
