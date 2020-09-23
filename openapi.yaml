@@ -11803,7 +11803,7 @@ paths:
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
             -X POST -d ‘{
-                "certificate": "-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----",
+                "certificate": """-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----""",
                 "private_key": "RwtqMlXveYH531g770BBNluAk9s"
               }’ \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
@@ -11811,7 +11811,7 @@ paths:
         source: >
           linode-cli object-storage ssl-upload \
             us-east-1 example-bucket \
-            --certificate "-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----" \
+            --certificate """-----BEGIN CERTIFICATE-----MIIDbDCCAlQCCQCl-----END CERTIFICATE-----""" \
             --private_key "RwtqMlXveYH531g770BBNluAk9s"
     delete:
       operationId: getObjectStorageSSL
@@ -18974,12 +18974,13 @@ components:
         certificate:
           type: string
           description: >
-            Your Base64 encoded and PEM formatted SSL certificate.
+            Your Base64 encoded and PEM formatted SSL certificate. Upload your
+            certificate as a JSON string or as a `.crt` file.
           example: >
-            "-----BEGIN CERTIFICATE-----
+            """-----BEGIN CERTIFICATE-----
             MIIFTTCCAzWgAwIBAgIURwtqMlXveYH531g770BBNluAk9swDQYJKoZIhvcNAQEL
             D79A2svTqSsN+bDIVWoUd14=
-            -----END CERTIFICATE-----"
+            -----END CERTIFICATE-----"""
         private_key:
           type: string
           description: >
