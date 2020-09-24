@@ -11737,9 +11737,9 @@ paths:
       x-linode-cli-action: ssl-view
       servers:
       - url: https://api.linode.com/v4
-      summary: View Object Storage SSL Cert
+      summary: View Object Storage TLS/SSL Cert
       description: |
-        Returns a boolean value indicating if this bucket has a corresponding SSL certificate that was
+        Returns a boolean value indicating if this bucket has a corresponding TLS/SSL certificate that was
         uploaded by an Account user.
       tags:
       - Object Storage
@@ -11750,7 +11750,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns a boolean value indicating if this bucket has a corresponding SSL certificate that was
+            Returns a boolean value indicating if this bucket has a corresponding TLS/SSL certificate that was
             uploaded by an Account user.
           content:
             application/json:
@@ -11772,10 +11772,14 @@ paths:
       x-linode-cli-action: ssl-upload
       servers:
       - url: https://api.linode.com/v4
-      summary: Upload Object Storage SSL Cert
+      summary: Upload Object Storage TLS/SSL Cert
       description: |
-        Upload an SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
-        Your SSL certificate and private key are stored encrypted at rest.
+        Upload a TLS/SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
+        Your TLS/SSL certificate and private key are stored encrypted at rest.
+
+
+        To replace an expired certificate, [delete your current certificate](/api/v4/object-storage-buckets-cluster-id-bucket-ssl/#delete)
+        and upload a new one.
       tags:
       - Object Storage
       security:
@@ -11783,14 +11787,14 @@ paths:
       - oauth:
         - object_storage:read_write
       requestBody:
-        description: Upload this SSL certificate with its corresponding secret key.
+        description: Upload this TLS/SSL certificate with its corresponding secret key.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ObjectStorageSSL'
       responses:
         '200':
-          description: Returns whether this bucket has a corresponding SSL certificate that was uploaded by a user.
+          description: Returns whether this bucket has a corresponding TLS/SSL certificate that was uploaded by a user.
           content:
             application/json:
               schema:
@@ -11818,9 +11822,9 @@ paths:
       x-linode-cli-action: ssl-delete
       servers:
       - url: https://api.linode.com/v4
-      summary: Delete Object Storage SSL Cert
+      summary: Delete Object Storage TLS/SSL Cert
       description: |
-        Deletes this Object Storage bucket's user uploaded SSL certificate and private key.
+        Deletes this Object Storage bucket's user uploaded TLS/SSL certificate and private key.
       tags:
       - Object Storage
       security:
@@ -11829,7 +11833,7 @@ paths:
         - object_storage:read_write
       responses:
         '200':
-          description: Deletes this Object Storage bucket's user uploaded SSL certificate and private key.
+          description: Deletes this Object Storage bucket's user uploaded TLS/SSL certificate and private key.
           content:
             application/json:
               schema:
@@ -18973,7 +18977,7 @@ components:
       - certificate
       - private_key
       description: >
-        Upload an SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
+        Upload a TLS/SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
       properties:
         certificate:
           type: string
@@ -18987,7 +18991,7 @@ components:
         private_key:
           type: string
           description: >
-            The private key associated with this SSL certificate.
+            The private key associated with this TLS/SSL certificate.
           example: >
             "-----BEGIN PRIVATE KEY-----
             MIIEvgIBADANBgkqhkiG9w0BAQE
@@ -18996,12 +19000,12 @@ components:
     ObjectStorageSSLResponse:
       type: object
       description: >
-        If this Object Storage bucket has a corresponding SSL Certificate.
+        If this Object Storage bucket has a corresponding TLS/SSL Certificate.
       properties:
         ssl:
           type: boolean
           description: >
-            A boolean indicating if this Bucket has a corresponding SSL certificate that was uploaded by an Account user.
+            A boolean indicating if this Bucket has a corresponding TLS/SSL certificate that was uploaded by an Account user.
           example: true
           readOnly: true
     PaginationEnvelope:
