@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.76.0
+  version: 4.76.1
 
   title: Linode API
   description: |
@@ -11717,6 +11717,139 @@ paths:
         - lang: CLI
           source: >
             linode-cli object-storage cancel
+  /object-storage/buckets/{clusterId}/{bucket}/ssl:
+    x-linode-cli-command: object-storage
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: getObjectStorageSSL
+      x-linode-cli-action: ssl-view
+      servers:
+      - url: https://api.linode.com/v4
+      summary: View Object Storage TLS/SSL Cert
+      description: |
+        Returns a boolean value indicating if this bucket has a corresponding TLS/SSL certificate that was
+        uploaded by an Account user.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: >
+            Returns a boolean value indicating if this bucket has a corresponding TLS/SSL certificate that was
+            uploaded by an Account user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageSSLResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+      - lang: CLI
+        source: >
+          linode-cli object-storage ssl-view \
+            us-east-1 example-bucket
+    post:
+      operationId: createObjectStorageSSL
+      x-linode-cli-action: ssl-upload
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Upload Object Storage TLS/SSL Cert
+      description: |
+        Upload a TLS/SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
+        Your TLS/SSL certificate and private key are stored encrypted at rest.
+
+
+        To replace an expired certificate, [delete your current certificate](/api/v4/object-storage-buckets-cluster-id-bucket-ssl/#delete)
+        and upload a new one.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: Upload this TLS/SSL certificate with its corresponding secret key.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ObjectStorageSSL'
+      responses:
+        '200':
+          description: Returns whether this bucket has a corresponding TLS/SSL certificate that was uploaded by a user.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectStorageSSLResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d ‘{
+                  "certificate": "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----",
+                  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
+                }’ \
+              https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+      - lang: CLI
+        source: >
+          linode-cli object-storage ssl-upload \
+            us-east-1 example-bucket \
+            --certificate "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----" \
+            --private_key "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
+    delete:
+      operationId: getObjectStorageSSL
+      x-linode-cli-action: ssl-delete
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Delete Object Storage TLS/SSL Cert
+      description: |
+        Deletes this Object Storage bucket's user uploaded TLS/SSL certificate and private key.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      responses:
+        '200':
+          description: Deletes this Object Storage bucket's user uploaded TLS/SSL certificate and private key.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
+      - lang: CLI
+        source: >
+          linode-cli object-storage ssl-delete \
+            us-east-1 example-bucket
   /profile:
     x-linode-cli-command: profile
     get:
@@ -18838,6 +18971,43 @@ components:
                 - read_only
                 description: This Limited Access Key's permissions for the selected bucket.
                 example: read_only
+    ObjectStorageSSL:
+      type: object
+      required:
+      - certificate
+      - private_key
+      description: >
+        Upload a TLS/SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
+      properties:
+        certificate:
+          type: string
+          description: >
+            Your Base64 encoded and PEM formatted SSL certificate.
+          example: >
+            "-----BEGIN CERTIFICATE-----
+            MIIFTTCCAzWgAwIBAgIURwtqMl
+            ...
+            -----END CERTIFICATE-----"
+        private_key:
+          type: string
+          description: >
+            The private key associated with this TLS/SSL certificate.
+          example: >
+            "-----BEGIN PRIVATE KEY-----
+            MIIEvgIBADANBgkqhkiG9w0BAQE
+            ...
+            -----END PRIVATE KEY-----"
+    ObjectStorageSSLResponse:
+      type: object
+      description: >
+        If this Object Storage bucket has a corresponding TLS/SSL Certificate.
+      properties:
+        ssl:
+          type: boolean
+          description: >
+            A boolean indicating if this Bucket has a corresponding TLS/SSL certificate that was uploaded by an Account user.
+          example: true
+          readOnly: true
     PaginationEnvelope:
       type: object
       description: >
