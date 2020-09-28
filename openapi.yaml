@@ -11737,7 +11737,7 @@ paths:
       x-linode-cli-action: ssl-view
       servers:
       - url: https://api.linode.com/v4
-      summary: View Object Storage TLS/SSL Cert
+      summary: Object Storage TLS/SSL Cert View
       description: |
         Returns a boolean value indicating if this bucket has a corresponding TLS/SSL certificate that was
         uploaded by an Account user.
@@ -11772,7 +11772,7 @@ paths:
       x-linode-cli-action: ssl-upload
       servers:
       - url: https://api.linode.com/v4
-      summary: Upload Object Storage TLS/SSL Cert
+      summary: Object Storage TLS/SSL Cert Upload
       description: |
         Upload a TLS/SSL certificate and private key to be served when you visit your Object Storage bucket via HTTPS.
         Your TLS/SSL certificate and private key are stored encrypted at rest.
@@ -11822,7 +11822,7 @@ paths:
       x-linode-cli-action: ssl-delete
       servers:
       - url: https://api.linode.com/v4
-      summary: Delete Object Storage TLS/SSL Cert
+      summary: Object Storage TLS/SSL Cert Delete
       description: |
         Deletes this Object Storage bucket's user uploaded TLS/SSL certificate and private key.
       tags:
