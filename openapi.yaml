@@ -10668,6 +10668,374 @@ paths:
           linode-cli firewalls rules-update 123 \
             --inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
             --outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
+  /networking/vlans:
+    x-linode-cli-command: networking
+    get:
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: List VLANs
+      description: >
+        Returns a list of all Virtual Local Area Networks (VLANs) on your Account. VLANs provide
+        a mechanism for secure communication between two or more Linodes that are assigned to the same
+        VLAN and are both within the same Layer 2 broadcast domain.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getVLANs
+      x-linode-cli-action: vlans-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - vlans:read_only
+      responses:
+        '200':
+          description: The VLANs available on this Account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Vlans'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/networking/vlans/
+      - lang: CLI
+        source: >
+          linode-cli networking vlans-list
+    post:
+      x-linode-grant: add_vlans
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: Create VLAN
+      description: >
+        Creates a Virtual Local Area Network (VLAN) in the specified data center region. VLANs provide
+        a mechanism for secure communication between two or more Linodes that are assigned to the same
+        VLAN and are both within the same Layer 2 broadcast domain.
+
+        * You can create up to 10 VLANs within each data center region.
+
+        * Use the [Create Linode](/api/v4/linode-instances/#post) endpoint to deploy a new Linode with a Network Interface that is attached
+        to an existing VLAN.
+
+        * To add a Network Interface to an existing Linode, use the Create Interface endpoint. This endpoint
+        will allow you to assign a private Interface to an existing VLAN. See the Create Interface endpoint
+        for more details.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: createVlan
+      x-linode-cli-action: vlan-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - vlans:read_write
+      requestBody:
+        description: Information about the domain you are registering.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vlans'
+      responses:
+        '200':
+          description: NodeBalancer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vlans'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "My example VLAN",
+                "region": "us-east",
+                "linodes": [
+                  123,
+                  456,
+                  789
+                ],
+                "cidr_block": "10.0.0.0/24"
+              }' \
+              https://api.linode.com/v4beta/networking/vlans
+      - lang: CLI
+        source: >
+          linode-cli networking vlan-create \
+            --region us-east \
+            --description "My example VLAN" \
+            --linodes [123, 456, 789]
+  /networking/vlans/{vlanId}:
+    parameters:
+    - name: vlanId
+      in: path
+      description: ID of the VLAN to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: networking
+    get:
+      servers:
+      - url: https://api.linode.com/v4beta
+      operationId: getVlan
+      x-linode-cli-action: vlan-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - vlans:read_only
+      tags:
+      - Networking
+      summary: View VLAN
+      description: >
+        Lookup the details of a specific VLAN by its ID.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      responses:
+        '200':
+          description: Returns a single VLAN.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vlans'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/networking/vlans/12345
+      - lang: CLI
+        source:
+          linode-cli networking vlan-view 12345
+    delete:
+      servers:
+      - url: https://api.linode.com/v4beta
+      operationId: deleteVlan
+      x-linode-cli-action: vlan-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - vlan:read_write
+      tags:
+      - Networking
+      summary: Delete VLAN
+      description: |
+        Deletes a VLAN you have permission to `read_write`. **Deleting a VLAN is a destructive action and cannot be undone.**
+        If the VLAN has any Linodes assigned to it, deleting the VLAN removes all Linodes from the VLAN.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      responses:
+        '200':
+          description: Delete successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4beta/networking/vlans/12345
+      - lang: CLI
+        source: >
+          linode-cli networking vlan-delete 12345
+  /networking/vlans/{vlanId}/attach:
+    parameters:
+    - name: vlanId
+      in: path
+      description: ID of the VLAN to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: networking
+    post:
+      x-linode-grant: add_vlans
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: VLAN Attach
+      description: >
+        Creates a Virtual Local Area Network (VLAN) in the specified data center region. VLANs provide
+        a mechanism for secure communication between two or more Linodes that are assigned to the same
+        VLAN and are both within the same Layer 2 broadcast domain.
+
+        * You can create up to 10 VLANs within each data center region.
+
+        * Use the [Create Linode](/api/v4/linode-instances/#post) endpoint to deploy a new Linode with a Network Interface that is attached
+        to an existing VLAN.
+
+        * To add a Network Interface to an existing Linode, use the Create Interface endpoint. This endpoint
+        will allow you to assign a private Interface to an existing VLAN. See the Create Interface endpoint
+        for more details.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: createVlan
+      x-linode-cli-action: vlan-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - vlans:read_write
+      requestBody:
+        description: Information about the domain you are registering.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vlans'
+      responses:
+        '200':
+          description: NodeBalancer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vlans'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "My example VLAN",
+                "region": "us-east",
+                "linodes": [
+                  123,
+                  456,
+                  789
+                ],
+                "cidr_block": "10.0.0.0/24"
+              }' \
+              https://api.linode.com/v4beta/networking/vlans
+      - lang: CLI
+        source: >
+          linode-cli networking vlan-create \
+            --region us-east \
+            --description "My example VLAN" \
+            --linodes [123, 456, 789]
+  /networking/vlans/{vlanId}/detach:
+    parameters:
+    - name: vlanId
+      in: path
+      description: ID of the VLAN to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: networking
+    post:
+      x-linode-grant: add_vlans
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Networking
+      summary: VLAN Detach
+      description: >
+        Creates a Virtual Local Area Network (VLAN) in the specified data center region. VLANs provide
+        a mechanism for secure communication between two or more Linodes that are assigned to the same
+        VLAN and are both within the same Layer 2 broadcast domain.
+
+        * You can create up to 10 VLANs within each data center region.
+
+        * Use the [Create Linode](/api/v4/linode-instances/#post) endpoint to deploy a new Linode with a Network Interface that is attached
+        to an existing VLAN.
+
+        * To add a Network Interface to an existing Linode, use the Create Interface endpoint. This endpoint
+        will allow you to assign a private Interface to an existing VLAN. See the Create Interface endpoint
+        for more details.
+
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: createVlan
+      x-linode-cli-action: vlan-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - vlans:read_write
+      requestBody:
+        description: Information about the domain you are registering.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vlans'
+      responses:
+        '200':
+          description: NodeBalancer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vlans'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "My example VLAN",
+                "region": "us-east",
+                "linodes": [
+                  123,
+                  456,
+                  789
+                ],
+                "cidr_block": "10.0.0.0/24"
+              }' \
+              https://api.linode.com/v4beta/networking/vlans
+      - lang: CLI
+        source: >
+          linode-cli networking vlan-create \
+            --region us-east \
+            --description "My example VLAN" \
+            --linodes [123, 456, 789]
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -21442,6 +21810,60 @@ components:
           description: >
             The public SSH Key, which is used to authenticate to the root user
             of the Linodes you deploy.
+    Vlans:
+      type: object
+      required:
+      - region
+      description: >
+       A virtual local area network (VLAN) associated with your Account.
+      properties:
+        id:
+          type: integer
+          description: The unique ID of this Volume.
+          example: 12345
+          readOnly: true
+          x-linode-cli-display: 1
+        description:
+          type: string
+          description: >
+            Information about this VLAN for your own reference.
+          example: "My example VLAN"
+          minLength: 1
+          maxLength: 255
+          x-linode-cli-display: 2
+        region:
+          type: string
+          description: >
+            This VLAN's data center region.
+
+
+            **Note:** Currently, a VLAN can only be assigned to a Linode
+            within the same data center region.
+          example: us-east
+          x-linode-cli-display: 3
+        linodes:
+          type: array
+          description: >
+            An array of Linode IDs to assign to this VLAN.
+
+
+            Use the [List Linodes](/api/v4/linode-instances) endpoint to view all Linode IDs associated
+            with this Account.
+
+
+            **Note:** Currently, a VLAN can only be assigned to a Linode
+            within the same data center region.
+          items:
+            type: integer
+          example: [123, 456, 789]
+        cidr_block:
+          type: string
+          description: >
+            A Classles Inter-Domain Routing (CIDIR) block allows for simple IP Address Management (IPAM)
+            for this VLAN. If specified, new Interfaces associated with this VLAN
+            are assigned a private IPv4 address from within the `cidr_block` range.
+          example: 10.0.0.0/24
+          x-linode-cli-display: 4
     Volume:
       type: object
       required:
