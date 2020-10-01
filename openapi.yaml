@@ -4678,6 +4678,14 @@ paths:
                 "memory_limit": 2048,
                 "run_level": "default",
                 "virt_mode": "paravirt",
+                "interfaces": {
+                  "eth0" {
+                    "id": 678
+                  },
+                  "eth1" {
+                    "id": 679
+                  }
+                },
                 "helpers": {
                   "updatedb_disabled": true,
                   "distro": true,
@@ -4703,7 +4711,9 @@ paths:
           linode-cli linodes config-create 7590910 \
             --label "My Config" \
             --devices.sda.disk_id 123456 \
-            --devices.sdb.disk_id 123457
+            --devices.sdb.disk_id 123457 \
+            --interfaces.eth0.id 678 \
+            --interfaces.eth1.id 679
   /linode/instances/{linodeId}/configs/{configId}:
     parameters:
     - name: linodeId
@@ -17673,6 +17683,46 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+    LinodeConfigInterface:
+      type: object
+      description: >
+        The Network Interface to apply to this Linode's configuration profile.
+      properties:
+        id:
+          type: integer
+          description: >
+            The ID of the Interface to add to this Linode's configuraiton profile.
+            Use the List Interface endpoint to retrieve the Interface ID(s) assigned to this Linode.
+          example: 678
+    LinodeConfigInterfaces:
+      type: object
+      description: >
+        A dictionary of Network Interfaces to add to this Linode's
+        configuration profile.
+         **Note:** You must create an Interface prior to updating your configuration profile
+        with a Network Interface. If you assigned Network Interfaces when you initially created
+        your Linode, the Interface(s) is automatically added to your Linode's configuration profile.
+      properties:
+        eth0:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth1:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth2:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth3:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth4:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth5:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth6:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth7:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth8:
+          $ref: '#/components/schemas/LinodeConfigInterface'
+        eth9:
+          $ref: '#/components/schemas/LinodeConfigInterface'
     Invoice:
       type: object
       description: Account Invoice object
@@ -18575,6 +18625,8 @@ components:
           - paravirt
           - fullvirt
           example: paravirt
+        interfaces:
+          $ref: '#/components/schemas/LinodeConfigInterfaces'
         helpers:
           type: object
           description: Helpers enabled when booting to this Linode Config.
