@@ -11507,6 +11507,15 @@ paths:
       summary: Create an Object Storage Key
       description: |
         Provisions a new Object Storage Key on your account.
+
+        * To create a Limited Access Key with specific permissions, send a `bucket_access`
+        array.
+
+        * To create a Limited Access Key without access to any buckets, send an empty
+        `bucket_access` array.
+
+        * To create an Access Key with unlimited access to all clusters and all buckets,
+        omit the `bucket_access` array.
       tags:
       - Object Storage
       security:
@@ -18953,6 +18962,9 @@ components:
 
               **Note:** You can create an Object Storage Limited Access Key without access to any buckets.
               This is achieved by sending a request with an empty `bucket_access` array.
+
+
+              **Note:** If this field is ommited, a regular unlimited access key is issued.
           items:
             type: object
             properties:
