@@ -18964,7 +18964,7 @@ components:
               This is achieved by sending a request with an empty `bucket_access` array.
 
 
-              **Note:** If this field is ommited, a regular unlimited access key is issued.
+              **Note:** If this field is omitted, a regular unlimited access key is issued.
           items:
             type: object
             properties:
