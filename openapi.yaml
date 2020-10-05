@@ -15509,6 +15509,14 @@ components:
             The username of the User who caused the Event.
           example: exampleUser
           x-linode-cli-display: 2
+        message:
+          type: string
+          nullable: true
+          description: >
+            Provides additional information about the event. Additional
+            information may include, but is not limited to, a more detailed
+            representation of events which can help diagnose non-obvious failures.
+          example: None
     Firewall:
       type: object
       description: >
