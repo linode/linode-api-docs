@@ -16572,6 +16572,13 @@ components:
           description: If this Kernel is suitable for paravirtualized operations.
           example: false
           readOnly: true
+        deprecated:
+          x-linode-filterable: true
+          type: boolean
+          description: If this Kernel is marked as deprecated, this field has a value of true;
+            otherwise, this field is false.
+          example: false
+          readOnly: true
     Linode:
       type: object
       allOf:
