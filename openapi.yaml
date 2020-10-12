@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.74.0
+  version: 4.75.0
 
   title: Linode API
   description: |
@@ -37,7 +37,7 @@ info:
     The easiest way to access the API is with a Personal Access Token (PAT)
     generated from the
     <a target="_top" href="https://cloud.linode.com/profile/tokens">Linode Cloud Manager</a> or
-    the [Create Personal Access Token](/docs/api/profile/#create-personal-access-token) endpoint.
+    the [Create Personal Access Token](/docs/api/profile/#personal-access-token-create) endpoint.
 
     All scopes for the OAuth security model ([defined below](#o-auth)) apply to this
     security model as well.
@@ -56,7 +56,7 @@ info:
 
     For a more detailed example of an OAuth 2.0 implementation, see our guide on [How to Create an OAuth App with the Linode Python API Library](/docs/platform/api/how-to-create-an-oauth-app-with-the-linode-python-api-library/#oauth-2-authentication-exchange).
 
-    Before you implement OAuth in your application, you first need to create an OAuth client. You can do this [with the Linode API](/docs/api/account/#create-oauth-client) or [via the Cloud Manager](https://cloud.linode.com/profile/clients):
+    Before you implement OAuth in your application, you first need to create an OAuth client. You can do this [with the Linode API](/docs/api/account/#oauth-client-create) or [via the Cloud Manager](https://cloud.linode.com/profile/clients):
 
       - When creating the client, you'll supply a `label` and a `redirect_uri` (referred to as the Callback URL in the Cloud Manager).
       - The response from this endpoint will give you a `client_id` and a `secret`.
@@ -160,7 +160,7 @@ info:
     | 403 Forbidden | You are authenticated, but don't have permission to do this. |
     | 404 Not Found | The resource you're requesting does not exist. |
     | 429 Too Many Requests | You've hit a rate limit. |
-    | 500 Internal Server Error | Please [open a Support Ticket](/docs/api/support/#open-support-ticket). |
+    | 500 Internal Server Error | Please [open a Support Ticket](/docs/api/support/#support-ticket-open). |
 
     ## Errors
 
@@ -170,7 +170,7 @@ info:
     request error might be an invalid input, a required parameter being omitted,
     or a malformed request. A server error means something went wrong processing
     your request. If this occurs, please
-    [open a Support Ticket](/docs/api/support/#open-support-ticket)
+    [open a Support Ticket](/docs/api/support/#support-ticket-open)
     and let us know. Though errors are logged and we work quickly to resolve issues,
     opening a ticket and providing us with reproducable steps and data is always helpful.
 
@@ -333,10 +333,10 @@ info:
     `/stats` endpoints have their own dedicated limits of 100 requests per minute per user.
     These endpoints are:
 
-    * [View Linode Statistics](/docs/api/linode-instances/#view-linode-statistics)
-    * [View Linode Statistics (year/month)](/docs/api/linode-instances/#view-statistics-yearmonth)
-    * [View NodeBalancer Statistics](/docs/api/nodebalancers/#view-nodebalancer-statistics)
-    * [List Managed Stats](/docs/api/managed/#list-managed-stats)
+    * [View Linode Statistics](/docs/api/linode-instances/#linode-statistics-view)
+    * [View Linode Statistics (year/month)](/docs/api/linode-instances/#statistics-yearmonth-view)
+    * [View NodeBalancer Statistics](/docs/api/nodebalancers/#nodebalancer-statistics-view)
+    * [List Managed Stats](/docs/api/managed/#managed-stats-list)
 
     Object Storage endpoints have a dedicated limit of 750 requests per second per user.
     The Object Storage endpoints are:
@@ -346,7 +346,7 @@ info:
     Opening Support Tickets has a dedicated limit of 2 requests per minute per user.
     That endpoint is:
 
-    * [Open Support Ticket](/docs/api/support/#open-support-ticket)
+    * [Open Support Ticket](/docs/api/support/#support-ticket-open)
 
     ## CLI (Command Line Interface)
 
@@ -1571,7 +1571,7 @@ paths:
         This begins the process of submitting a Payment via PayPal. After calling
         this endpoint, you must take the resulting `payment_id` along with
         the `payer_id` from your PayPal account and
-        [POST /account/payments/paypal-execute](/docs/api/account/#execute-stagedapproved-paypal-payment)
+        [POST /account/payments/paypal-execute](/docs/api/account/#stagedapproved-paypal-payment-execute)
         to complete the Payment.
       operationId: createPayPalPayment
       x-linode-cli-action: paypal-start
@@ -1716,7 +1716,7 @@ paths:
         Updates your Account settings.
 
 
-        To update your Longview subscription plan, send a request to [Update Longview Plan](/docs/api/longview/#update-longview-plan).
+        To update your Longview subscription plan, send a request to [Update Longview Plan](/docs/api/longview/#longview-plan-update).
       operationId: updateAccountSettings
       x-linode-cli-action: settings-update
       security:
@@ -1917,7 +1917,7 @@ paths:
                   description: >
                     If true, the new User must be granted access to perform actions or access
                     entities on this Account. See
-                    [/account/users/{username}/grants](/docs/api/account/#view-users-grants)
+                    [/account/users/{username}/grants](/docs/api/account/#users-grants-view)
                     for details on how to configure grants for a restricted User.
                   example: true
       responses:
@@ -2084,7 +2084,7 @@ paths:
 
 
         The current authenticated User, including the account owner, may view their
-        own grants at the [/profile/grants](/docs/api/profile/#list-grants)
+        own grants at the [/profile/grants](/docs/api/profile/#grants-list)
         endpoint, but will not see entities that they do not have access to.
       operationId: getUserGrants
       x-linode-cli-action: grants
@@ -3114,11 +3114,11 @@ paths:
         new Linode will incur a charge on your Account.
 
         Linodes can be created using one of the available Types. See
-        [GET /linode/types](/docs/api/linode-types/#list-types) to get more
+        [GET /linode/types](/docs/api/linode-types/#types-list) to get more
         information about each Type's specs and cost.
 
         Linodes can be created in any one of our available
-        [Regions](/docs/api/regions/#list-regions) for a list
+        [Regions](/docs/api/regions/#regions-list) for a list
         of available Regions you can deploy your Linode in.
 
         In an effort to fight spam, Linode restricts outbound connections on ports 25, 465, and 587
@@ -3134,18 +3134,18 @@ paths:
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
           * You may also supply a list of usernames via the `authorized_users` field.
-            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/docs/api/profile/#add-ssh-key) for more information.
+            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/docs/api/profile/#ssh-key-add) for more information.
 
         * Using a StackScript.
-          * See [/linode/stackscripts](/docs/api/stackscripts/#list-stackscripts) for
+          * See [/linode/stackscripts](/docs/api/stackscripts/#stackscripts-list) for
             a list of available StackScripts.
           * The Linode will be `running` after it completes `provisioning`.
           * Requires a compatible Image to be supplied.
-            * See [/linode/stackscript/{stackscriptId}](/docs/api/stackscripts/#view-stackscript) for compatible Images.
+            * See [/linode/stackscript/{stackscriptId}](/docs/api/stackscripts/#stackscript-view) for compatible Images.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
           * You may also supply a list of usernames via the `authorized_users` field.
-            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/docs/api/profile/#add-ssh-key) for more information.
+            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/docs/api/profile/#ssh-key-add) for more information.
 
         * Using one of your other Linode's backups.
           * You must create a Linode large enough to accommodate the Backup's size.
@@ -3154,7 +3154,7 @@ paths:
 
         * Create an empty Linode.
           * The Linode will remain `offline` and must be manually started.
-            * See [POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#boot-linode).
+            * See [POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#linode-boot).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
 
@@ -3187,7 +3187,7 @@ paths:
                       A Backup ID from another Linode's available backups. Your User must have
                       `read_write` access to that Linode, the Backup must have a `status` of
                       `successful`, and the Linode must be deployed to the same `region` as the Backup.
-                      See [/linode/instances/{linodeId}/backups](/docs/api/linode-instances/#list-backups)
+                      See [/linode/instances/{linodeId}/backups](/docs/api/linode-instances/#backups-list)
                       for a Linode's available backups.
 
                       This field and the `image` field are mutually exclusive.
@@ -3202,7 +3202,7 @@ paths:
                       setting is `true`.  See [account settings](#operaton/getAccountSettings)
                       for more information.
 
-                      Backup pricing is included in the response from [/linodes/types](/docs/api/linode-types/#list-types)
+                      Backup pricing is included in the response from [/linodes/types](/docs/api/linode-types/#types-list)
                   swap_size:
                     type: integer
                     example: 512
@@ -3213,13 +3213,13 @@ paths:
                   type:
                     type: string
                     description: >
-                      The [Linode Type](/docs/api/linode-types/#list-types) of the Linode
+                      The [Linode Type](/docs/api/linode-types/#types-list) of the Linode
                       you are creating.
                     example: g6-standard-2
                   region:
                     type: string
                     description: >
-                      The [Region](/docs/api/regions/#list-regions) where the Linode
+                      The [Region](/docs/api/regions/#regions-list) where the Linode
                       will be located.
                     example: us-east
                   image:
@@ -3908,7 +3908,7 @@ paths:
         If more concurrent clones are attempted, an HTTP 400 error will be
         returned by this endpoint.
 
-        Any [tags](/docs/api/tags/#list-tags) existing on the source Linode will be cloned to the target Linode.
+        Any [tags](/docs/api/tags/#tags-list) existing on the source Linode will be cloned to the target Linode.
       tags:
       - Linode Instances
       operationId: cloneLinodeInstance
@@ -3934,7 +3934,7 @@ paths:
                     This is the Region where the Linode will be deployed.
 
                     To view all available Regions you can deploy to see
-                    [/regions](/docs/api/regions/#list-regions).
+                    [/regions](/docs/api/regions/#regions-list).
 
                     * Region can only be provided when cloning to a new Linode.
                   example: us-east
@@ -3947,7 +3947,7 @@ paths:
                     `specs` on the Linode object.
 
                     To view all available Linode Types you can deploy with
-                    see [/linode/types](/docs/api/linode-types/#list-types).
+                    see [/linode/types](/docs/api/linode-types/#types-list).
 
                     * Type can only be provided when cloning to a new Linode.
                   example: g6-standard-2
@@ -3980,7 +3980,7 @@ paths:
                     automatically be enrolled in the Linode Backup service. This
                     will incur an additional charge. Pricing is included in the
                     response from
-                    [/linodes/types](/docs/api/linode-types/#list-types).
+                    [/linodes/types](/docs/api/linode-types/#types-list).
 
                     * Can only be included when cloning to a new Linode.
                   example: true
@@ -4453,7 +4453,7 @@ paths:
       summary: Create Disk
       description: >
         Adds a new Disk to a Linode. You can optionally create a Disk
-        from an Image (see [/images](/docs/api/images/#list-images) for a list of available public images,
+        from an Image (see [/images](/docs/api/images/#images-list) for a list of available public images,
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
       operationId: addLinodeDisk
@@ -4908,7 +4908,7 @@ paths:
         Public IP Addresses, after the one included with each Linode,
         incur an additional monthly charge. If you need an additional public
         IP Address you must request one - please
-        [open a support ticket](/docs/api/support/#open-support-ticket).
+        [open a support ticket](/docs/api/support/#support-ticket-open).
         You may not add more than one private IPv4 address to a single Linode.
       operationId: addLinodeIP
       x-linode-cli-action: ip-add
@@ -5176,7 +5176,7 @@ paths:
       description: >
         Initiate a pending host migration that has been scheduled by Linode or
         initiate a cross data center (DC) migration.  A list of pending migrations,
-        if any, can be accessed from [GET /account/notifications](/docs/api/account/#list-notifications).
+        if any, can be accessed from [GET /account/notifications](/docs/api/account/#notifications-list).
         When the migration begins, your Linode will be shutdown if not already off.
         If the migration initiated the shutdown, it will reboot the Linode when completed.
 
@@ -5184,7 +5184,7 @@ paths:
         To initiate a cross DC migration, you must pass a `region` parameter to the
         request body specifying the target data center region.
         You can view a list of all available regions and their feature capabilities
-        from [GET /regions](/docs/api/regions/#list-regions). If your Linode has a DC migration already queued
+        from [GET /regions](/docs/api/regions/#regions-list). If your Linode has a DC migration already queued
         or you have initiated a previously scheduled migration, you will not be able to initiate
         a DC migration until it has completed.
 
@@ -5211,7 +5211,7 @@ paths:
                   description: >
                     The region to which the Linode will be migrated.
                     Must be a valid region slug. A list of regions can be viewed
-                    by using the [GET /regions](/docs/api/regions/#list-regions) endpoint.
+                    by using the [GET /regions](/docs/api/regions/#regions-list) endpoint.
                     A cross data center migration will cancel a pending migration
                     that has not yet been initiated.
 
@@ -5333,10 +5333,10 @@ paths:
       description: >
         Resets the root password for this Linode.
 
-        * Your Linode must be [shut down](/docs/api/linode-instances/#shut-down-linode) for a password reset to complete.
+        * Your Linode must be [shut down](/docs/api/linode-instances/#linode-shut-down) for a password reset to complete.
 
         * If your Linode has more than one disk (not counting its swap disk), use the
-        [Reset Disk Root Password](/docs/api/linode-instances/#reset-disk-root-password) endpoint to update a specific disk's root password.
+        [Reset Disk Root Password](/docs/api/linode-instances/#disk-root-password-reset) endpoint to update a specific disk's root password.
 
         * A `password_reset` event is generated when a root password reset is successful.
       tags:
@@ -6005,8 +6005,7 @@ paths:
         If the request is not authenticated, only public StackScripts are returned.
 
 
-        For more information on StackScripts, please read our guide:
-        <a target="_top" href="/docs/platform/stackscripts/">Automate Deployment with StackScripts</a>.
+        For more information on StackScripts, please read our [StackScripts guides](/docs/platform/stackscripts/).
       operationId: getStackScripts
       x-linode-cli-action: list
       security:
@@ -6241,8 +6240,8 @@ paths:
       description: >
         Returns collection of Linode Types, including pricing and
         specifications for each Type. These are used when
-        [creating](/docs/api/linode-instances/#create-linode)
-        or [resizing](/docs/api/linode-instances/#resize-linode)
+        [creating](/docs/api/linode-instances/#linode-create)
+        or [resizing](/docs/api/linode-instances/#linode-resize)
         Linodes.
       x-linode-redoc-load-ids: true
       operationId: getLinodeTypes
@@ -6290,8 +6289,8 @@ paths:
       description: >
         Returns information about a specific Linode Type, including pricing and
         specifications. This is used when
-        [creating](/docs/api/linode-instances/#create-linode)
-        or [resizing](/docs/api/linode-instances/#resize-linode)
+        [creating](/docs/api/linode-instances/#linode-create)
+        or [resizing](/docs/api/linode-instances/#linode-resize)
         Linodes.
       operationId: getLinodeType
       x-linode-cli-action: type-view
@@ -6370,8 +6369,8 @@ paths:
         Creates a Kubernetes cluster. The Kubernetes cluster will be created
         asynchronously. You can use the events system to determine when the
         Kubernetes cluster is ready to use. Please note that it often takes 2-5 minutes before the
-        [Kubernetes API server endpoint](/docs/api/linode-kubernetes-engine-lke/#list-kubernetes-api-endpoints) and
-        the [Kubeconfig file](/docs/api/linode-kubernetes-engine-lke/#view-kubeconfig) for the new cluster
+        [Kubernetes API server endpoint](/docs/api/linode-kubernetes-engine-lke/#kubernetes-api-endpoints-list) and
+        the [Kubeconfig file](/docs/api/linode-kubernetes-engine-lke/#kubeconfig-view) for the new cluster
         are ready.
       requestBody:
         description: Configuration for the Kubernetes cluster
@@ -6932,7 +6931,7 @@ paths:
       summary: List Kubernetes API Endpoints
       description: >
         List the Kubernetes API server endpoints for this cluster. Please note that it often takes
-        2-5 minutes before the endpoint is ready after first [creating a new cluster](/docs/api/linode-kubernetes-engine-lke/#create-kubernetes-cluster).
+        2-5 minutes before the endpoint is ready after first [creating a new cluster](/docs/api/linode-kubernetes-engine-lke/#kubernetes-cluster-create).
       responses:
         '200':
           description: Returns the Kubernetes API server endpoints for this cluster.
@@ -6991,7 +6990,7 @@ paths:
       summary: View Kubeconfig
       description: |
         Get the Kubeconfig file for a Cluster. Please note that it often takes 2-5 minutes before
-        the Kubeconfig file is ready after first [creating a new cluster](/docs/api/linode-kubernetes-engine-lke/#create-kubernetes-cluster).
+        the Kubeconfig file is ready after first [creating a new cluster](/docs/api/linode-kubernetes-engine-lke/#kubernetes-cluster-create).
       responses:
         '200':
           description: Returns the Base64-encoded Kubeconfig file for this Kubernetes cluster.
@@ -7328,7 +7327,7 @@ paths:
         for your current Longview Pro plan, or an empty set `{}` if your current plan is Longview Free.
 
 
-        You must have at least one of the following `global` [User Grants](/docs/api/account/#view-users-grants)
+        You must have at least one of the following `global` [User Grants](/docs/api/account/#users-grants-view)
         in order to access this endpoint:
 
           - `"account_access": read_write`
@@ -7337,7 +7336,7 @@ paths:
           - `"add_longview": true`
 
 
-        To update your subscription plan, send a request to [Update Longview Plan](/docs/api/longview/#update-longview-plan).
+        To update your subscription plan, send a request to [Update Longview Plan](/docs/api/longview/#longview-plan-update).
       operationId: getLongviewPlan
       x-linode-cli-action: plan-view
       security:
@@ -7371,10 +7370,10 @@ paths:
 
 
         You must have `"longview_subscription": true` configured as a `global`
-        [User Grant](/docs/api/account/#view-users-grants) in order to access this endpoint.
+        [User Grant](/docs/api/account/#users-grants-view) in order to access this endpoint.
 
 
-        You can send a request to the [List Longview Subscriptions](/docs/api/longview/#list-longview-subscriptions)
+        You can send a request to the [List Longview Subscriptions](/docs/api/longview/#longview-subscriptions-list)
         endpoint to receive the details, including `id`'s, of each plan.
       operationId: updateLongviewPlan
       x-linode-cli-action: plan-update
@@ -8711,7 +8710,7 @@ paths:
       description: >
         Allocates a new IPv4 Address on your Account. The Linode must be
         configured to support additional addresses - please
-        [open a support ticket](/docs/api/support/#open-support-ticket) requesting additional
+        [open a support ticket](/docs/api/support/#support-ticket-open) requesting additional
         addresses before attempting allocation.
       operationId: allocateIP
       x-linode-cli-action: ip-add
@@ -9051,7 +9050,7 @@ paths:
       summary: List IPv6 Pools
       description: >
         Displays the IPv6 pools on your Account. A pool of IPv6 addresses are routed to all of your
-        Linodes in a single [Region](/docs/api/regions/#list-regions). Any Linode on your Account may bring up any address in this
+        Linodes in a single [Region](/docs/api/regions/#regions-list). Any Linode on your Account may bring up any address in this
         pool at any time, with no external configuration required.
       operationId: getIPv6Pools
       x-linode-cli-action: v6-pools
@@ -9100,11 +9099,11 @@ paths:
         Displays the IPv6 ranges on your Account.
 
 
-          * An IPv6 range is a `/64` block of IPv6 addresses routed to a single Linode in a given [Region](/docs/api/regions/#list-regions).
+          * An IPv6 range is a `/64` block of IPv6 addresses routed to a single Linode in a given [Region](/docs/api/regions/#regions-list).
 
           * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
 
-          * You must [open a support ticket](/docs/api/support/#open-support-ticket) to request a `/64` block of IPv6 addresses to be added to your account.
+          * You must [open a support ticket](/docs/api/support/#support-ticket-open) to request a `/64` block of IPv6 addresses to be added to your account.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
       security:
@@ -9153,6 +9152,16 @@ paths:
       summary: List Firewalls
       description: |
         Returns a paginated list of your Firewalls.
+
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future.  This notice will be removed when this endpoint is out of
+        beta.
       operationId: getFirewalls
       x-linode-cli-action: list
       security:
@@ -9205,7 +9214,12 @@ paths:
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9244,8 +9258,8 @@ paths:
 
 
                     **Note:** When a Firewall is assigned to a Linode and you attempt
-                    to [migrate the Linode to a data center](/docs/api/linode-instances/#initiate-dc-migrationpending-host-migration) that does not support Cloud Firewalls, the migration will fail.
-                    Use the [List Regions](/docs/api/regions/#list-regions) endpoint to view a list of a data center's capabilities.
+                    to [migrate the Linode to a data center](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate) that does not support Cloud Firewalls, the migration will fail.
+                    Use the [List Regions](/docs/api/regions/#regions-list) endpoint to view a list of a data center's capabilities.
                   properties:
                     linodes:
                       description: >
@@ -9346,10 +9360,15 @@ paths:
       description: |
         Get a specific Firewall resource by its ID. The Firewall's Devices will not be
         returned in the response. Instead, use the
-        [List Firewall Devices](/docs/api/networking/#list-firewall-devices)
+        [List Firewall Devices](/docs/api/networking/#firewall-devices-list)
         endpoint to review them.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9383,23 +9402,28 @@ paths:
         be manipulated by this endpoint:
 
         - A Firewall's Devices cannot be set with this endpoint. Instead, use the
-        [Create Firewall Device](/docs/api/networking/#create-firewall-device)
-        and [Delete Firewall Device](/docs/api/networking/#delete-firewall-device)
+        [Create Firewall Device](/docs/api/networking/#firewall-device-create)
+        and [Delete Firewall Device](/docs/api/networking/#firewall-device-delete)
         endpoints to assign and remove this Firewall from Linode services.
 
         - A Firewall's Rules cannot be changed with this endpoint. Instead, use the
-        [Update Firewall Rules](/docs/api/networking/#update-firewall-rules)
+        [Update Firewall Rules](/docs/api/networking/#firewall-rules-update)
         endpoint to update your Rules.
 
         - A Firewall's status can be set to `enabled` or `disabled` by this endpoint, but it cannot be
         set to `deleted`. Instead, use the
-        [Delete Firewall](/docs/api/networking/#delete-firewall)
+        [Delete Firewall](/docs/api/networking/#firewall-delete)
         endpoint to delete a Firewall.
 
         If a Firewall's status is changed with this endpoint, a corresponding `firewall_enable` or
         `firewall_disable` Event will be generated.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9463,7 +9487,12 @@ paths:
 
         A `firewall_delete` Event is generated when this endpoint returns successfully.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9498,6 +9527,8 @@ paths:
     x-linode-cli-command: firewalls
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       parameters:
@@ -9509,7 +9540,12 @@ paths:
         Firewall to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9566,10 +9602,15 @@ paths:
         A `firewall_device_add` Event is generated when the Firewall Device is added successfully.
 
         **Note:** When a Firewall is assigned to a Linode and you attempt
-        to [migrate the Linode to a data center](/docs/api/linode-instances/#initiate-dc-migrationpending-host-migration) that does not support Cloud Firewalls, the migration will fail.
-        Use the [List Regions](/docs/api/regions/#list-regions) endpoint to view a list of a data center's capabilities.
+        to [migrate the Linode to a data center](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate) that does not support Cloud Firewalls, the migration will fail.
+        Use the [List Regions](/docs/api/regions/#regions-list) endpoint to view a list of a data center's capabilities.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9632,6 +9673,8 @@ paths:
     x-linode-cli-command: firewalls
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       summary: View Firewall Device
@@ -9640,7 +9683,12 @@ paths:
         to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9689,7 +9737,12 @@ paths:
 
         A `firewall_device_remove` Event is generated when the Firewall Device is removed successfully.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9724,13 +9777,20 @@ paths:
     x-linode-cli-command: firewalls
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       summary: List Firewall Rules
       description: |
         Returns the inbound and outbound Rules for a Firewall.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -9768,7 +9828,12 @@ paths:
         Updates the inbound and outbound Rules for a Firewall. Using this endpoint will
         replace all of a Firewall's ruleset with the Rules specified in your request.
 
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        This endpoint is in **beta**.
+
+
+        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
         beta.
@@ -11450,14 +11515,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ObjectStorageKey'
-                - type: object
-                  properties:
-                    secret_key:
-                      type: string
-                      description: This keypair’s secret key. **Only returned on key creation**.
-                      example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+                $ref: '#/components/schemas/ObjectStorageKey'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11943,7 +12001,7 @@ paths:
       description: >
         Generates a Two Factor secret for your User. TFA will
         not be enabled until you have successfully confirmed the code you
-        were given with [tfa-enable-confirm](/docs/api/profile/#create-two-factor-secret) (see below).
+        were given with [tfa-enable-confirm](/docs/api/profile/#two-factor-secret-create) (see below).
         Once enabled, logins from untrusted computers will be required to provide
         a TFA code before they are successful.
       operationId: tfaEnable
@@ -14301,7 +14359,7 @@ components:
           readOnly: true
           description: >
             The Longview Pro tier you are currently subscribed to. The value must be
-            a [Longview Subscription](/docs/api/longview/#list-longview-subscriptions)
+            a [Longview Subscription](/docs/api/longview/#longview-subscriptions-list)
             ID or `null` for Longview Free.
           example: longview-3
           x-linode-cli-display: 2
@@ -14664,7 +14722,7 @@ components:
             An Image ID to deploy the Disk from. Official Linode Images start with
             `linode/ `, while your Images start with `private/`.
 
-            See [/images](/docs/api/images/#list-images) for more information on the Images available for you to use.
+            See [/images](/docs/api/images/#images-list) for more information on the Images available for you to use.
           example: linode/debian9
         authorized_keys:
           type: array
@@ -14705,7 +14763,7 @@ components:
             A StackScript ID that will cause the referenced StackScript to be run during
             deployment of this Linode. A compatible `image` is required to use a
             StackScript. To get a list of available StackScript and their permitted Images
-            see [/stackscripts](/docs/api/stackscripts/#list-stackscripts).
+            see [/stackscripts](/docs/api/stackscripts/#stackscripts-list).
             This field cannot be used when deploying from a Backup or a private Image.
         stackscript_data:
           type: object
@@ -14985,7 +15043,7 @@ components:
           description: >
             What happened to cause this error. In most cases, this can be fixed immediately by
             changing the data you sent in the request, but in some cases you will be instructed to
-            [open a Support Ticket](/docs/api/support/#open-support-ticket) or perform some
+            [open a Support Ticket](/docs/api/support/#support-ticket-open) or perform some
             other action before you can complete the request successfully.
           example: fieldname must be a valid value
         field:
@@ -15312,7 +15370,7 @@ components:
       description: >
         A resource that controls incoming and outgoing network traffic to a Linode service. A Firewall can
         be assigned to multiple Linode services, and up to three active Firewalls can be assigned to a single Linode service.
-        [Create a Firewall Device](/docs/api/networking/#create-firewall)
+        [Create a Firewall Device](/docs/api/networking/#firewall-create)
         to assign a Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode instances.
       properties:
         id:
@@ -15365,8 +15423,8 @@ components:
            The status of this Firewall.
 
              * When a Firewall is first created its status is `enabled`.
-             * Use the [Update Firewall](/docs/api/networking/#update-firewall) endpoint to set a Firewall's status to `enbaled` or `disabled`.
-             * Use the [Delete Firewall](/docs/api/networking/#delete-firewall) endpoint to delete a Firewall.
+             * Use the [Update Firewall](/docs/api/networking/#firewall-update) endpoint to set a Firewall's status to `enbaled` or `disabled`.
+             * Use the [Delete Firewall](/docs/api/networking/#firewall-delete) endpoint to delete a Firewall.
           enum:
           - enabled
           - disabled
@@ -16038,7 +16096,7 @@ components:
             The ID of the Linode this address currently belongs to. For IPv4
             addresses, this is by default the Linode that this address was
             assigned to on creation, and these addresses my be moved using the
-            [/networking/ipv4/assign](/docs/api/networking/#assign-ips-to-linodes)
+            [/networking/ipv4/assign](/docs/api/networking/#ips-to-linodes-assign)
             endpoint. For SLAAC and link-local addresses, this value may not be changed.
           example: 123
           readOnly: true
@@ -16392,7 +16450,7 @@ components:
           readOnly: true
           description: >
             This is the location where the Linode was deployed. A Linode's region can only be changed by
-            initiating a [cross data center migration](/docs/api/linode-instances/#initiate-dc-migrationpending-host-migration).
+            initiating a [cross data center migration](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate).
           x-linode-cli-display: 4
         image:
           x-linode-filterable: true
@@ -16404,11 +16462,11 @@ components:
         type:
           readOnly: true
           description: >
-            This is the [Linode Type](/docs/api/linode-types/#list-types) that this
+            This is the [Linode Type](/docs/api/linode-types/#types-list) that this
             Linode was deployed with.
 
             To change a Linode's Type, use
-            [POST /linode/instances/{linodeId}/resize](/docs/api/linode-instances/#resize-linode).
+            [POST /linode/instances/{linodeId}/resize](/docs/api/linode-instances/#linode-resize).
           x-linode-cli-display: 5
         group:
           deprecated: true
@@ -16492,7 +16550,7 @@ components:
           description: |
             This Linode's IPv4 Addresses. Each Linode is assigned a single public IPv4 address
             upon creation, and may get a single private IPv4 address if needed. You may need to
-            [open a support ticket](/docs/api/support/#open-support-ticket)
+            [open a support ticket](/docs/api/support/#support-ticket-open)
             to get additional IPv4 addresses.
 
             IPv4 addresses may be reassigned between your Linodes, or shared with other Linodes.
@@ -16518,10 +16576,10 @@ components:
                 will divide this space between a primary disk with an `image` deployed to it, and
                 a swap disk, usually 512 MB. This is the default configuration created when
                 deploying a Linode with an `image` through
-                [POST /linode/instances](/docs/api/linode-instances/#create-linode).
+                [POST /linode/instances](/docs/api/linode-instances/#linode-create).
                 While this configuration is suitable for 99% of use cases, if you need finer control over
                 your Linode's disks, see the
-                [/linode/instances/{linodeId}/disks](/docs/api/linode-instances/#list-disks)
+                [/linode/instances/{linodeId}/disks](/docs/api/linode-instances/#disks-list)
                 endpoints.
               example: 81920
               readOnly: true
@@ -16531,7 +16589,7 @@ components:
                 The amount of RAM, in MB, this Linode has access to. Typically a Linode will
                 choose to boot with all of its available RAM, but this can be configured in a
                 Config profile, see the
-                [/linode/instances/{linodeId}/configs](/docs/api/linode-instances/#list-configuration-profiles)
+                [/linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profiles-list)
                 endpoints and the LinodeConfig object for more information.
               example: 4096
               readOnly: true
@@ -16542,7 +16600,7 @@ components:
                 Typically a Linode will choose to
                 boot with all of its available vcpus, but this can be configured in a Config
                 Profile, see the
-                [/linode/instances/{linodeId}/configs](/docs/api/linode-instances/#list-configuration-profiles)
+                [/linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profiles-list)
                 endpoints and the LinodeConfig object for more information.
               example: 2
               readOnly: true
@@ -16601,13 +16659,13 @@ components:
           type: object
           description: >
             Information about this Linode's backups status. For information about available
-            backups, see [/linode/instances/{linodeId}/backups](/docs/api/linode-instances/#list-backups).
+            backups, see [/linode/instances/{linodeId}/backups](/docs/api/linode-instances/#backups-list).
           properties:
             enabled:
               type: boolean
               description: >
                 If this Linode has the Backup service enabled. To enable backups, see
-                [POST /linode/instances/{linodeId}/backups/enable](/docs/api/linode-instances/#enable-backups).
+                [POST /linode/instances/{linodeId}/backups/enable](/docs/api/linode-instances/#backups-enable).
               example: true
               readOnly: true
             schedule:
@@ -16976,8 +17034,8 @@ components:
       description: >
         Returns collection of Linode types, including pricing and specifications
         for each type. These are used when
-        [creating](/docs/api/linode-instances/#create-linode)
-        or [resizing](/docs/api/linode-instances/#resize-linode)
+        [creating](/docs/api/linode-instances/#linode-create)
+        or [resizing](/docs/api/linode-instances/#linode-resize)
         Linodes.
       properties:
         id:
@@ -17096,7 +17154,7 @@ components:
           readOnly: true
           nullable: true
           description: >
-            The Linode Type that a [mutate](/docs/api/linode-instances/#upgrade-linode)
+            The Linode Type that a [mutate](/docs/api/linode-instances/#linode-upgrade)
             will upgrade to for a Linode of this type.  If "null", a Linode of this type
             may not mutate.
           example: null
@@ -17493,7 +17551,7 @@ components:
             The subscription ID for a particular Longview plan. A value of `null` corresponds to Longview Free.
 
 
-            You can send a request to the [List Longview Subscriptions](/docs/api/longview/#list-longview-subscriptions)
+            You can send a request to the [List Longview Subscriptions](/docs/api/longview/#longview-subscriptions-list)
             endpoint to receive the details of each plan.
           example: longview-10
           x-linode-cli-display: 1
@@ -18726,6 +18784,11 @@ components:
           description: This keypair's access key. This is not secret.
           example: KVAKUTGBA4WTR2NSJQ81
           readOnly: true
+        secret_key:
+          type: string
+          description: This keypair's secret key. Only returned on key creation.
+          example: OiA6F5r0niLs3QA2stbyq7mY5VCV7KqOzcmitmHw
+          readOnly: true
         limited:
           type: boolean
           description: Whether or not this key is a limited access key. Will return `false` if this key grants full access to all buckets on the user's account.
@@ -18739,9 +18802,9 @@ components:
 
               Limited Access Keys can:
 
-              * [list all buckets](/docs/api/object-storage/#list-object-storage-buckets) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
+              * [list all buckets](/docs/api/object-storage/#object-storage-buckets-list) available on this Account, but cannot perform any actions on a bucket unless it has access to the bucket.
 
-              * [create new buckets](/docs/api/object-storage/#create-object-storage-bucket), but do not have any access to the buckets it creates, unless explicitly given access to them.
+              * [create new buckets](/docs/api/object-storage/#object-storage-bucket-create), but do not have any access to the buckets it creates, unless explicitly given access to them.
           items:
             type: object
             properties:
@@ -18871,7 +18934,7 @@ components:
           type: string
           description: >
             The PaymentID returned from
-            [POST /account/payments/paypal](/account-payments-paypal/#post) that has
+            [POST /account/payments/paypal](/docs/api/account/#paypal-payment-stage) that has
             been approved with PayPal.
           example: PAY-1234567890ABCDEFGHIJKLMN
     PersonalAccessToken:
@@ -19056,7 +19119,7 @@ components:
 
             * If this account's Cloud Manager authentication type is set to a Third-Party Authentication method, `password_keys` cannot
             be used as your Lish authentication method. To view this account's Cloud Manager `authentication_type` field, send a request
-            to the [View Profile](/docs/api/profile/#view-profile) endpoint.
+            to the [View Profile](/docs/api/profile/#profile-view) endpoint.
           example: keys_only
         authorized_keys:
           type: array
@@ -19072,7 +19135,7 @@ components:
           type: boolean
           description: >
             If true, logins from untrusted computers will require Two Factor
-            Authentication.  See [/profile/tfa-enable](/docs/api/profile/#create-two-factor-secret) to
+            Authentication.  See [/profile/tfa-enable](/docs/api/profile/#two-factor-secret-create) to
             enable Two Factor Authentication.
           example: true
           x-linode-cli-display: 4
@@ -19081,7 +19144,7 @@ components:
           description: >
             If true, your User has restrictions on what can be accessed on your
             Account. To get details on what entities/actions you can
-            access/perform, see [/profile/grants](/docs/api/profile/#list-grants).
+            access/perform, see [/profile/grants](/docs/api/profile/#grants-list).
           example: false
           x-linode-cli-display: 3
         authentication_type:
@@ -19602,7 +19665,7 @@ components:
             * No ID attributes (i.e. `linode_id`, `domain_id`, etc.) should be provided with this
             request.
 
-            * Your account must have a [Managed service enabled](/docs/api/managed/#enable-managed-service).
+            * Your account must have a [Managed service enabled](/docs/api/managed/#managed-service-enable).
           example: false
         volume_id:
           type: integer
@@ -19680,7 +19743,7 @@ components:
           description: >
             If true, this User must be granted access to perform actions or access
             entities on this Account. See
-            [/account/users/{username}/grants](/docs/api/account/#view-users-grants)
+            [/account/users/{username}/grants](/docs/api/account/#users-grants-view)
             for details on how to configure grants for a restricted User.
           example: true
           x-linode-cli-display: 3
@@ -19691,9 +19754,9 @@ components:
           description: >
             A list of SSH Key labels added by this User. These are the keys
             that will be deployed if this User is included in the `authorized_users`
-            field of a [create Linode](/docs/api/linode-instances/#create-linode),
-            [rebuild Linode](/docs/api/linode-instances/#rebuild-linode),
-            or [create Disk](/docs/api/linode-instances/#create-disk) request.
+            field of a [create Linode](/docs/api/linode-instances/#linode-create),
+            [rebuild Linode](/docs/api/linode-instances/#linode-rebuild),
+            or [create Disk](/docs/api/linode-instances/#disk-create) request.
           example:
           - home-pc
           - laptop
@@ -19702,7 +19765,7 @@ components:
           readOnly: true
           description: >
             A boolean value indicating if the User has Two Factor Authentication (TFA)
-            enabled. See the Create Two Factor Secret ([/profile/tfa-enable](/docs/api/profile/#create-two-factor-secret))
+            enabled. See the Create Two Factor Secret ([/profile/tfa-enable](/docs/api/profile/#two-factor-secret-create))
             endpoint to enable TFA.
     UserDefinedField:
       type: object
@@ -19890,7 +19953,7 @@ components:
               * `resizing` - the Volume is in the process of upgrading
                 its current capacity.
               * `contact_support` - there is a problem with your Volume. Please
-                [open a Support Ticket](/docs/api/support/#open-support-ticket) to resolve the issue.
+                [open a Support Ticket](/docs/api/support/#support-ticket-open) to resolve the issue.
           enum:
           - creating
           - active
