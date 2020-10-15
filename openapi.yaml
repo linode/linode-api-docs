@@ -19091,6 +19091,7 @@ components:
       description: Payment object request.
       required:
       - usd
+      - cvv
       properties:
         cvv:
           type: string
