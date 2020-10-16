@@ -3811,12 +3811,22 @@ paths:
                       a Linode that is attached to a Virtual Local Area Network (VLAN). **Note**: You must create
                       the VLAN prior to attaching a Linode to it.
 
-                      * You can add up to 3 Network Interfaces, `eth0` - `eth2`.
-
                       * A Linode can only have one Network Interface of `type: default`. This is the Linode's
                       public Network Interface, which allows the Linode to communicate across public networks.
 
-                      * The Network Interfaces created by this field are also added to this Linode's
+                      * If a single Network Interface of `type:additional` is added to a Linode, the Linode
+                      does not have access to any public networks and is completely private.
+
+                      * You can add up to 3 Network Interfaces, `eth0` - `eth2`.
+
+                      * The Network Interfaces created by this field are also added to this Linode's [Configuration Profile(s)](/docs/api/linode-instances/#configuration-profiles-list).
+                      If needed, you can add an additional Network Interface to a Linode later, by:
+
+                        * [Creating a new Configuration Profile](/docs/api/linode-instances/#configuration-profile-create) or by
+                        [updating an existing Configuration Profile](/docs/api/linode-instances/#configuration-profile-update)
+                        with the additional Network Interface(s)
+
+                        * Then,[booting the Linode](/docs/api/linode-instances/#linode-boot) into the Configuration Profile.
 
                       * You can omit this field in your POST request and attach this Linode to a VLAN at a
                       later time by using the VLANs Attach endpoint.
@@ -5574,7 +5584,7 @@ paths:
       responses:
         '200':
           description: |
-            A Configuration profile was created.
+            An Interface was created.
           content:
             application/json:
               schema:
@@ -10964,7 +10974,7 @@ paths:
       - oauth:
         - vlans:read_write
       requestBody:
-        description: Information about the domain you are registering.
+        description: Information about the VLAN to create.
         required: true
         content:
           application/json:
@@ -10972,7 +10982,7 @@ paths:
               $ref: '#/components/schemas/Vlans'
       responses:
         '200':
-          description: NodeBalancer created successfully.
+          description: VLAN created successfully.
           content:
             application/json:
               schema:
@@ -17914,8 +17924,7 @@ components:
           description: |
             The Network Interface type to create. A Network Interface of type:
 
-            * `default` creates a public Network Interface that accepts external Network traffic. If your Linode
-            does not have a public Network Interface it will not receive a public IP address.
+            * `default` creates a public Network Interface that accepts external Network traffic.
 
             * `additional` creates a private Network Interface that accepts traffic from a private
             virtual local area network (VLAN). You must include the `vlan_id` field when creating
@@ -17959,7 +17968,7 @@ components:
           readOnly: true
           description: |
            This Network Interface's private IP address. If the Network Interface's type is `Public`, it does not receive an assigned Private IP address.
-          example: f2:3c:92:8d:bc:00
+          example: 10.0.0.123/24
           x-linode-cli-display: 7
     Invoice:
       type: object
