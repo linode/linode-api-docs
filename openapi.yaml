@@ -598,7 +598,8 @@ paths:
                 -X POST -d '{
                   "card_number": "4111111111111111",
                   "expiry_month": 11,
-                  "expiry_year": 2020
+                  "expiry_year": 2020,
+                  "cvv": "111"
                 }' \
                 https://api.linode.com/v4/account/credit-card
         - lang: CLI
@@ -606,7 +607,8 @@ paths:
             linode-cli account update-card \
               --card_number 4111111111111111 \
               --expiry_month 11 \
-              --expiry_year 2025
+              --expiry_year 2025 \
+              --cvv 111
   /account/events:
     x-linode-cli-command: events
     get:
@@ -14706,6 +14708,7 @@ components:
       - card_number
       - expiry_month
       - expiry_year
+      - cvv
       properties:
         card_number:
           type: string
@@ -19088,10 +19091,9 @@ components:
           x-linode-cli-display: 3
     PaymentRequest:
       type: object
-      description: Payment object request.
       required:
       - usd
-      - cvv
+      description: Payment object request.
       properties:
         cvv:
           type: string
