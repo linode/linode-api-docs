@@ -39,7 +39,7 @@ info:
     <a target="_top" href="https://cloud.linode.com/profile/tokens">Linode Cloud Manager</a> or
     the [Create Personal Access Token](/docs/api/profile/#personal-access-token-create) endpoint.
 
-    All scopes for the OAuth security model ([defined below](#o-auth)) apply to this
+    All scopes for the OAuth security model ([defined below](/docs/api/profile/#oauth)) apply to this
     security model as well.
 
     #### Authentication
@@ -50,7 +50,7 @@ info:
 
     ### OAuth
     If you only need to access the Linode API for personal use,
-    we recommend that you create a [personal access token](#personal-access-token).
+    we recommend that you create a [personal access token](/docs/api/#personal-access-token).
     If you're designing an application that can authenticate with an arbitrary Linode user, then
     you should use the OAuth 2.0 workflows presented in this section.
 
@@ -352,7 +352,7 @@ info:
 
     The <a href="https://github.com/linode/linode-cli" target="_top">Linode CLI</a> allows you to easily
     work with the API using intuitive and simple syntax. It requires a
-    [Personal Access Token](#section/Personal-Access-Token)
+    [Personal Access Token](/docs/api/#personal-access-token)
     for authentication, and gives you access to all of the features and functionality
     of the Linode API that are documented here with CLI examples.
 
@@ -3199,7 +3199,7 @@ paths:
                       The cost for the Backup service is dependent on the Type of Linode deployed.
 
                       This option is always treated as `true` if the account-wide `backups_enabled`
-                      setting is `true`.  See [account settings](#operaton/getAccountSettings)
+                      setting is `true`.  See [account settings](/docs/api/account/#account-settings-view)
                       for more information.
 
                       Backup pricing is included in the response from [/linodes/types](/docs/api/linode-types/#types-list)
@@ -9157,7 +9157,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api//regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9218,7 +9218,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9367,7 +9367,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9422,7 +9422,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9491,7 +9491,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9544,7 +9544,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9609,7 +9609,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9687,7 +9687,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9741,7 +9741,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9789,7 +9789,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -9832,7 +9832,7 @@ paths:
 
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/api/v4/regions).
+        * During the beta, Cloud Firewall is only available in the [Sydney data center region](/docs/api/regions).
         * Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future.  This notice will be removed when this endpoint is out of
@@ -11776,7 +11776,7 @@ paths:
         Your TLS/SSL certificate and private key are stored encrypted at rest.
 
 
-        To replace an expired certificate, [delete your current certificate](/api/v4/object-storage-buckets-cluster-id-bucket-ssl/#delete)
+        To replace an expired certificate, [delete your current certificate](/docs/api/object-storage/#object-storage-tlsssl-cert-delete)
         and upload a new one.
       tags:
       - Object Storage
@@ -16711,7 +16711,7 @@ components:
             to get additional IPv4 addresses.
 
             IPv4 addresses may be reassigned between your Linodes, or shared with other Linodes.
-            See the [/networking](#tag/networking) endpoints for details.
+            See the [/networking](/docs/api/networking/) endpoints for details.
           x-linode-cli-display: 10
         ipv6:
           type: string
