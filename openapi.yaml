@@ -10979,7 +10979,38 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Vlans'
+              type: object
+              required:
+              - region
+              properties:
+                region:
+                  $ref: '#/components/schemas/Vlans/properties/region'
+                description:
+                  $ref: '#/components/schemas/Vlans/properties/description'
+                cidr_block:
+                  $ref: '#/components/schemas/Vlans/properties/cidr_block'
+                linodes:
+                  type: array
+                  description: >
+                    An array of Linode IDs to attach to this VLAN. When you attach Linodes to a VLAN using this field, each Linode's
+                    Configuration Profile(s) is updated with a private Network Interface and a public Network Interface if one does not already exist.
+                    Use the Interfaces List endpoint to view all Network Interfaces associated with a Linode.
+
+
+                    * For more fine-grained control, use the Create Interface endpoint to assign a public Network Interface and a private Network Interface to a Linode
+                    and use the Update Configuration Profile endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
+
+                    * If you do not wish to attach any Linodes to this VLAN, you can omit this field in your POST request.
+
+                    * Use the [List Linodes](/api/v4/linode-instances) endpoint to view all Linode IDs associated
+                    with this Account.
+
+
+                    **Note:** Currently, a VLAN can only be assigned to a Linode
+                    within the same data center region.
+                  items:
+                    type: integer
+                  example: [123, 456, 789]
       responses:
         '200':
           description: VLAN created successfully.
@@ -17967,7 +17998,7 @@ components:
           type: string
           readOnly: true
           description: |
-           This Network Interface's private IP address. If the Network Interface's type is `Public`, it does not receive an assigned Private IP address.
+           This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
           example: 10.0.0.123/24
           x-linode-cli-display: 7
     Invoice:
@@ -22118,7 +22149,7 @@ components:
       properties:
         id:
           type: integer
-          description: The unique ID of this Volume.
+          description: The unique ID of this VLAN.
           example: 12345
           readOnly: true
           x-linode-cli-display: 1
@@ -22162,9 +22193,25 @@ components:
             **Note:** Currently, a VLAN can only be assigned to a Linode
             within the same data center region.
           items:
-            type: integer
-          example: [123, 456, 789]
-          x-linode-cli-display: 6
+            type: object
+            properties:
+              id:
+                description: >
+                  The unique ID of this Linode.
+                type: integer
+                example: 123
+              mac_address:
+                type: string
+                description: >
+                  This Linode's Media Access Control (MAC) address.
+                example: f2:3c:92:8d:bc:00
+              ipv4_address:
+                type: string
+                description: >
+                  This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
+                example: 10.0.0.123/24
+          x-linode-cli-display: 5
+          readOnly: true
         cidr_block:
           type: string
           description: >
@@ -22182,6 +22229,14 @@ components:
             and the Linode's Network Interfaces file.
           example: 10.0.0.0/24
           x-linode-cli-display: 4
+        created:
+          type: string
+          format: date-time
+          description: >
+            The date this VLAN was created.
+          example: "2020-01-01T00:01:01"
+          readOnly: true
+          x-linode-cli-display: 6
     Volume:
       type: object
       required:
