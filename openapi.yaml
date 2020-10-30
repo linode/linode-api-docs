@@ -11121,12 +11121,12 @@ paths:
       required: true
       schema:
         type: string
-    post:
+    put:
       operationId: modifyObjectStorageBucketAccess
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4
-      summary: Object Storage Bucket Access Modify
+      summary: Object Storage Bucket Access Update
       description: |
         Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
         Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
@@ -11178,7 +11178,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
-            -X POST -d '{
+            -X PUT -d '{
                 "cors_enabled": true,
                 "acl": "private"
               }' \
