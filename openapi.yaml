@@ -11850,6 +11850,47 @@ paths:
         source: >
           linode-cli object-storage ssl-delete \
             us-east-1 example-bucket
+  /object-storage/transfer:
+    get:
+      operationId: getObjectStorageTransfer
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Object Storage Transfer View
+      description: |
+        The amount of outbound data transfer used by your account's Object Storage buckets.
+        Object Storage adds 1 terabyte of outbound data transfer to your data transfer pool.
+        See the [Object Storage Pricing and Limitations](/docs/guides/pricing-and-limitations/)
+        guide for details on Object Storage transfer quotas.
+
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      responses:
+        '200':
+          description: >
+           Returns the amount of outbound data transfer used by your account's Object Storage buckets.
+          content:
+            application/json:
+              schema:
+                properties:
+                  used:
+                    type: integer
+                    description: >
+                      The amount of outbound data transfer used by your account's Object Storage buckets,
+                      in GB, for the current month’s billing cycle.
+                    example: 12956600198
+                    readOnly: true
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/object-storage/transfer/
   /profile:
     x-linode-cli-command: profile
     get:
