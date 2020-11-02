@@ -11868,10 +11868,11 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - object_storage:read_write
+        - object_storage:read_only
       responses:
         '200':
-          description: A paginated list of buckets you own.
+          description: >
+           Returns the amount of outbound data transfer used by your account's Object Storage buckets.
           content:
             application/json:
               schema:
