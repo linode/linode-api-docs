@@ -11121,6 +11121,69 @@ paths:
       required: true
       schema:
         type: string
+    post:
+      operationId: modifyObjectStorageBucketAccess
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Object Storage Bucket Access Modify
+      description: |
+        Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
+        Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
+        For more fine-grained control of both systems, please use the S3 API directly.
+
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      requestBody:
+        description: The changes to make to the bucket's access controls.
+        content:
+          application/json:
+            schema:
+              properties:
+                cors_enabled:
+                  type: boolean
+                  description: >
+                    If true, the bucket will be created with CORS enabled for all
+                    origins. For more fine-grained controls of CORS, use the S3
+                    API directly.
+                  example: true
+                acl:
+                  type: string
+                  enum:
+                  - private
+                  - public-read
+                  - authenticated-read
+                  description: >
+                    The Access Control Level of the bucket, as a canned ACL string.
+                    For more fine-grained control of ACLs, use the S3 API directly.
+                  example: private
+      responses:
+        '200':
+          description: Access controls updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+                "cors_enabled": true,
+                "acl": "private"
+              }' \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/access
     put:
       operationId: modifyObjectStorageBucketAccess
       x-linode-cli-skip: true
