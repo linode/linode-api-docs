@@ -18894,6 +18894,11 @@ components:
           type: integer
           description: The size of the bucket in bytes.
           example: 188318981
+        objects:
+          type: integer
+          description: >
+            The number of objects stored in this bucket.
+          example: 4
     ObjectStorageObject:
       type: object
       description: >
