@@ -11161,6 +11161,8 @@ paths:
                   - private
                   - public-read
                   - authenticated-read
+                  - public-read-write
+                  - custom
                   description: >
                     The Access Control Level of the bucket, as a canned ACL string.
                     For more fine-grained control of ACLs, use the S3 API directly.
@@ -11223,6 +11225,8 @@ paths:
                   - private
                   - public-read
                   - authenticated-read
+                  - public-read-write
+                  - custom
                   description: >
                     The Access Control Level of the bucket, as a canned ACL string.
                     For more fine-grained control of ACLs, use the S3 API directly.
@@ -11304,6 +11308,8 @@ paths:
                     - private
                     - public-read
                     - authenticated-read
+                    - public-read-write
+                    - custom
                     description: >
                       The Access Control Level of the bucket, as a canned ACL string.
                       For more fine-grained control of ACLs, use the S3 API directly.
