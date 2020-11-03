@@ -13347,7 +13347,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X POST \
-              -F 'file=/Users/LinodeGuy/pictures/screen_shot.jpg' \
+              -F 'file=@/Users/LinodeGuy/pictures/screen_shot.jpg' \
               https://api.linode.com/v4/support/tickets/11223344/attachments
   /support/tickets/{ticketId}/close:
     parameters:
