@@ -11280,6 +11280,16 @@ paths:
       - personalAccessToken: []
       - oauth:
         - object_storage:read_only
+      parameters:
+      - name: name
+        in: query
+        required: true
+        description: >
+          The `name` of the object for which to retrieve its Access Control List (ACL).
+          Use the [Object Storage Bucket Contents List](/docs/api/object-storage/#object-storage-bucket-contents-list)
+          endpoint to access all object names in a bucket.
+        schema:
+          type: string
       responses:
         '200':
           description: The Object's canned ACL and policy.
@@ -11309,7 +11319,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
   /object-storage/buckets/{clusterId}/{bucket}/object-list:
     parameters:
     - name: clusterId
