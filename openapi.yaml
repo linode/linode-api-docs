@@ -11161,6 +11161,8 @@ paths:
                   - private
                   - public-read
                   - authenticated-read
+                  - public-read-write
+                  - custom
                   description: >
                     The Access Control Level of the bucket, as a canned ACL string.
                     For more fine-grained control of ACLs, use the S3 API directly.
@@ -11223,6 +11225,8 @@ paths:
                   - private
                   - public-read
                   - authenticated-read
+                  - public-read-write
+                  - custom
                   description: >
                     The Access Control Level of the bucket, as a canned ACL string.
                     For more fine-grained control of ACLs, use the S3 API directly.
@@ -11246,6 +11250,82 @@ paths:
                 "acl": "private"
               }' \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/access
+  /object-storage/buckets/{clusterId}/{bucket}/object-acl:
+    parameters:
+    - name: clusterId
+      in: path
+      description: The ID of the cluster this bucket exists in.
+      required: true
+      schema:
+        type: string
+    - name: bucket
+      in: path
+      description: The bucket name.
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: viewObjectStorageBucketAccess
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Object Storage Object ACL Config View
+      description: |
+        This Object Storage bucket's currently configured Access Control List (ACL).
+          ACLs define who can access your buckets and objects and specify the level of access
+          granted to those users.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_only
+      parameters:
+      - name: name
+        in: query
+        required: true
+        description: >
+          The `name` of the object for which to retrieve its Access Control List (ACL).
+          Use the [Object Storage Bucket Contents List](/docs/api/object-storage/#object-storage-bucket-contents-list)
+          endpoint to access all object names in a bucket.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The Object's canned ACL and policy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  acl:
+                    type: string
+                    enum:
+                    - private
+                    - public-read
+                    - authenticated-read
+                    - public-read-write
+                    - custom
+                    description: >
+                      The Access Control Level of the bucket, as a canned ACL string.
+                      For more fine-grained control of ACLs, use the S3 API directly.
+                    example: public-read
+                  acl_xml:
+                    type: string
+                    description: >
+                      The full XML of the object's ACL policy.
+                    example: "<AccessControlPolicy>...</AccessControlPolicy>"
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
   /object-storage/buckets/{clusterId}/{bucket}/object-list:
     parameters:
     - name: clusterId
