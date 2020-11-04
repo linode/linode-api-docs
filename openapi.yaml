@@ -11277,7 +11277,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
+        use the more more [fully-featured S3 API](https://docs.aws.amazon.com/cli/latest/reference/s3api/get-object-acl.html) directly.
       tags:
       - Object Storage
       security:
@@ -11325,6 +11325,90 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
+    put:
+      operationId: viewObjectStorageBucketAccess
+      x-linode-cli-skip: true
+      servers:
+      - url: https://api.linode.com/v4
+      summary: Object Storage Object ACL Config Update
+      description: |
+        Update an Object's configured Access Control List (ACL) in this Object Storage bucket.
+        ACLs define who can access your buckets and objects and specify the level of access
+        granted to those users.
+
+
+        This endpoint is available for convenience. It is recommended that instead you
+        use the more more [fully-featured S3 API](https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object-acl.html) directly.
+      tags:
+      - Object Storage
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - object_storage:read_write
+      parameters:
+      - name: name
+        in: query
+        required: true
+        description: >
+          The `name` of the object for which to update its Access Control List (ACL).
+          Use the [Object Storage Bucket Contents List](/docs/api/object-storage/#object-storage-bucket-contents-list)
+          endpoint to access all object names in a bucket.
+        schema:
+          type: string
+      requestBody:
+        description: The changes to make to this Object's access controls.
+        content:
+          application/json:
+            schema:
+              properties:
+                acl:
+                  type: string
+                  enum:
+                  - private
+                  - public-read
+                  - authenticated-read
+                  - public-read-write
+                  - custom
+                  description: >
+                    The Access Control Level of the bucket, as a canned ACL string.
+                    For more fine-grained control of ACLs, use the S3 API directly.
+                  example: public-read
+      responses:
+        '200':
+          description: The Object's canned ACL and policy.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  acl:
+                    type: string
+                    enum:
+                    - private
+                    - public-read
+                    - authenticated-read
+                    - public-read-write
+                    - custom
+                    description: >
+                      The Access Control Level of the bucket, as a canned ACL string.
+                      For more fine-grained control of ACLs, use the S3 API directly.
+                    example: public-read
+                  acl_xml:
+                    type: string
+                    description: >
+                      The full XML of the object's ACL policy.
+                    example: "<AccessControlPolicy>...</AccessControlPolicy>"
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $TOKEN" \
+            -X PUT -d '{
+              "acl": "public-read"
+            }' \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
   /object-storage/buckets/{clusterId}/{bucket}/object-list:
     parameters:
