@@ -3808,8 +3808,8 @@ paths:
                     type: object
                     description: >
                       The Network Interface(s) to add to this Linode. This field is only required when creating
-                      a Linode that is attached to a Virtual Local Area Network (VLAN). **Note**: You must create
-                      the VLAN prior to attaching a Linode to it.
+                      a Linode that is attached to a Virtual Local Area Network (VLAN). **Note**: You must [create
+                      the VLAN](/docs/api/networking/#vlan-create) prior to attaching a Linode to it.
 
                       * A Linode can only have one Network Interface of `type: default`. This is the Linode's
                       public Network Interface, which allows the Linode to communicate across public networks.
@@ -3833,7 +3833,7 @@ paths:
 
 
                       **Note:** Once this Linode is created, you can view this Linode's Network Interfaces by
-                      sending a request to the Interfaces List endpoint.
+                      sending a request to the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint.
                     properties:
                       eth0:
                         type: object
@@ -10994,11 +10994,11 @@ paths:
                   description: >
                     An array of Linode IDs to attach to this VLAN. When you attach Linodes to a VLAN using this field, each Linode's
                     Configuration Profile(s) is updated with a private Network Interface and a public Network Interface if one does not already exist.
-                    Use the Interfaces List endpoint to view all Network Interfaces associated with a Linode.
+                    Use the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint to view all Network Interfaces associated with a Linode.
 
 
-                    * For more fine-grained control, use the Create Interface endpoint to assign a public Network Interface and a private Network Interface to a Linode
-                    and use the Update Configuration Profile endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
+                    * For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign a public Network Interface and a private Network Interface to a Linode
+                    and use the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
 
                     * If you do not wish to attach any Linodes to this VLAN, you can omit this field in your POST request.
 
@@ -11103,7 +11103,7 @@ paths:
       summary: VLAN Delete
       description: |
         Deletes a VLAN you have permission to `read_write`. **Deleting a VLAN is a destructive action and cannot be undone.**
-        All Linodes must be detached from the VLAN prior to deletion. Use the VLAN Detach endpoint to detach a Linode from
+        All Linodes must be detached from the VLAN prior to deletion. Use the [VLAN Detach](/docs/api/networking/#vlan-detach) endpoint to detach a Linode from
         a VLAN.
 
 
@@ -11151,8 +11151,8 @@ paths:
         belonging to the Linode.
 
 
-        For more fine-grained control, use the Create Interface endpoint to assign Network Interfaces to a Linode
-        and the Update Configuration Profile endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
+        For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign Network Interfaces to a Linode
+        and the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -17918,7 +17918,7 @@ components:
           type: integer
           description: >
             The ID of the Interface to add to this Linode's configuraiton profile.
-            Use the Interfaces List endpoint to retrieve the Interface ID(s) assigned to this Linode.
+            Use the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint to retrieve the Interface ID(s) assigned to this Linode.
           example: 678
     LinodeConfigInterfaces:
       type: object
@@ -17927,7 +17927,7 @@ components:
         configuration profile.
 
 
-        **Note:** You must create a Network Interface using the Interface Create endpoint prior to updating your configuration profile
+        **Note:** You must create a Network Interface using the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint prior to updating your configuration profile
         with a Network Interface. If you assigned Network Interfaces to your Lionde when you initially created
         it, the Network Interface(s) is automatically added to your Linode's configuration profile and you are not required
         to add the Network Interface with this field.
@@ -17958,7 +17958,7 @@ components:
             * `default` creates a public Network Interface that accepts external Network traffic.
 
             * `additional` creates a private Network Interface that accepts traffic from a private
-            virtual local area network (VLAN). You must include the `vlan_id` field when creating
+            [virtual local area network (VLAN)](/docs/api/networking/#vlan-create). You must include the `vlan_id` field when creating
             a private Network Interface.
           example: 'additional'
           enum:
@@ -17984,7 +17984,7 @@ components:
           description: |
             The unique ID of the VLAN this Network Interface is assigned to.
 
-            Use the VLANs List endpoint to view all your VLAN IDs.
+            Use the [VLANs List](/docs/api/networking/#vlans-list) endpoint to view all your VLAN IDs.
           example: 789
           x-linode-cli-display: 5
         mac_address:
@@ -22178,11 +22178,11 @@ components:
           description: >
             An array of Linode IDs to attach to this VLAN. When you attach Linodes to a VLAN using this field, each Linode's
             Configuration Profile(s) is updated with a private Network Interface and a public Network Interface if one does not already exist.
-            Use the Interfaces List endpoint to view all Network Interfaces associated with a Linode.
+            Use the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint to view all Network Interfaces associated with a Linode.
 
 
-            * For more fine-grained control, use the Create Interface endpoint to assign a public Network Interface and a private Network Interface to a Linode
-            and use the Update Configuration Profile endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
+            * For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign a public Network Interface and a private Network Interface to a Linode
+            and use the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
 
             * If you do not wish to attach any Linodes to this VLAN, you can omit this field in your POST request.
 
