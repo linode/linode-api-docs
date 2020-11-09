@@ -3808,8 +3808,12 @@ paths:
                     type: object
                     description: >
                       The Network Interface(s) to add to this Linode. This field is only required when creating
-                      a Linode that is attached to a Virtual Local Area Network (VLAN). **Note**: You must [create
-                      the VLAN](/docs/api/networking/#vlan-create) prior to attaching a Linode to it.
+                      a Linode that is attached to a Virtual Local Area Network (VLAN).
+
+
+                      **Note**: You must [create the VLAN](/docs/api/networking/#vlan-create) prior to attaching a Linode to it. Linode VLAN is available in Next Generation Network (NGN) [data centers](https://www.linode.com/global-infrastructure/).
+                      This includes Toronto (`ca-central`), Mumbai (`ap-west`), and Sydney (`ap-southeast`). A Linode can only be attached
+                      to a VLAN that resides within the same data center region as the Linode.
 
                       * A Linode can only have one Network Interface of `type: default`. This is the Linode's
                       public Network Interface, which allows the Linode to communicate across public networks.
@@ -3829,7 +3833,7 @@ paths:
                         * Then,[booting the Linode](/docs/api/linode-instances/#linode-boot) into the Configuration Profile.
 
                       * You can omit this field in your POST request and attach this Linode to a VLAN at a
-                      later time by using the VLANs Attach endpoint.
+                      later time by using the [VLAN Attach](/docs/api/networking/#vlan-attach) endpoint.
 
 
                       **Note:** Once this Linode is created, you can view this Linode's Network Interfaces by
@@ -10962,6 +10966,9 @@ paths:
         * To attach an existing Linode to this VLAN, use this endpoint's `linodes` array when creating your VLAN
         or use the VLANs Attach endpoint.
 
+        * Linode VLAN is available in Next Generation Network (NGN) [data centers](https://www.linode.com/global-infrastructure/).
+        This includes Toronto (`ca-central`), Mumbai (`ap-west`), and Sydney (`ap-southeast`).
+
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -11027,7 +11034,7 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "description": "My example VLAN",
-                "region": "us-east",
+                "region": "ca-central",
                 "linodes": [
                   123,
                   456,
@@ -11039,7 +11046,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli networking vlan-create \
-            --region us-east \
+            --region ca-central \
             --description "My example VLAN" \
             --linodes [123, 456, 789] \
             --cidr_block "10.0.0.0/24"
@@ -11151,8 +11158,14 @@ paths:
         belonging to the Linode.
 
 
+        **Note**: Linode VLAN is available in Next Generation Network (NGN) [data centers](https://www.linode.com/global-infrastructure/).
+        This includes Toronto (`ca-central`), Mumbai (`ap-west`), and Sydney (`ap-southeast`). A Linode can only be attached
+        to a VLAN that resides within the same data center region as the Linode.
+
+
         For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign Network Interfaces to a Linode
         and the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
+
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -22170,7 +22183,7 @@ components:
 
             **Note:** Currently, a VLAN can only be assigned to a Linode
             within the same data center region.
-          example: us-east
+          example: ca-central
           x-linode-cli-display: 3
           x-linode-filterable: true
         linodes:
