@@ -15378,6 +15378,10 @@ components:
             The target for this Record. This field's actual usage depends on
             the type of record this represents. For A and AAAA records, this
             is the address the named Domain should resolve to.
+
+
+            With the exception of A and AAAA records, this field accepts
+            a trailing period.
           example: 12.34.56.78
           x-linode-cli-display: 4
         priority:
