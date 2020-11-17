@@ -14856,6 +14856,8 @@ components:
           example: '2018-01-15T00:01:01'
           readOnly: true
           x-linode-cli-display: 6
+          x-linode-filterable: true
+          nullable: true
         website:
           type: string
           format: url
