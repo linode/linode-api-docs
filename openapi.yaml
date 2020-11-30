@@ -6055,7 +6055,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-         - stackscripts:read_write
+        - stackscripts:read_write
       requestBody:
         description: The properties to set for the new StackScript.
         required: true
@@ -8073,9 +8073,9 @@ paths:
       operationId: getManagedIssues
       x-linode-cli-action: issues-list
       security:
-        - personalAccessToken: []
-        - oauth:
-            - account:read_only
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
       responses:
         '200':
           description: >
@@ -8161,9 +8161,9 @@ paths:
       operationId: getManagedLinodeSettings
       x-linode-cli-action: linode-settings-list
       security:
-        - personalAccessToken: []
-        - oauth:
-            - account:read_only
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
       responses:
         '200':
           description: >
@@ -12223,9 +12223,9 @@ paths:
       operationId: getProfileApps
       x-linode-cli-action: apps-list
       security:
-        - personalAccessToken: []
-        - oauth:
-            - account:read_only
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
       responses:
         '200':
           description: |
