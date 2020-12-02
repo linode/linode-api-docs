@@ -18330,6 +18330,10 @@ components:
           minLength: 3
           description: >
             The URL at which this Service is monitored.
+
+            URL parameters such as `?no-cache=1` are preserved.
+
+            URL fragments/anchors such as `#monitor` are **not** preserved.
           example: https://example.org
           x-linode-cli-display: 5
         timeout:
