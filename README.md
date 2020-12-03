@@ -17,10 +17,10 @@ pip install -r requirements.txt
 
 ## Development
 
-The spec can be linted using the `./bin/lint` helper.
+The spec can be linted using the `openapi3` module.
 
 ```
-python3 ./bin/lint openapi.yaml
+python -m openapi3 openapi.yaml
 ```
 
 ### Versioning
