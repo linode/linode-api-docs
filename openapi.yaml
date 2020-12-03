@@ -698,7 +698,7 @@ paths:
         schema:
           type: integer
     post:
-      x-linode-grant: read_write
+      x-linode-grant: read_only
       tags:
       - Account
       summary: Event Mark as Read
@@ -708,7 +708,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - events:read_write
+        - events:read_only
       responses:
         '200':
           description: Event read.
@@ -749,7 +749,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - events:read_write
+        - events:read_only
       responses:
         '200':
           description: Events seen.
