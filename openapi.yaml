@@ -11346,21 +11346,14 @@ paths:
       - personalAccessToken: []
       - oauth:
         - object_storage:read_write
-      parameters:
-      - name: name
-        in: query
-        required: true
-        description: >
-          The `name` of the object for which to update its Access Control List (ACL).
-          Use the [Object Storage Bucket Contents List](/docs/api/object-storage/#object-storage-bucket-contents-list)
-          endpoint to access all object names in a bucket.
-        schema:
-          type: string
       requestBody:
         description: The changes to make to this Object's access controls.
         content:
           application/json:
             schema:
+              required:
+                - acl
+                - name
               properties:
                 acl:
                   type: string
@@ -11374,6 +11367,12 @@ paths:
                     The Access Control Level of the bucket, as a canned ACL string.
                     For more fine-grained control of ACLs, use the S3 API directly.
                   example: public-read
+                name:
+                  type: string
+                  description: >
+                    The `name` of the object for which to update its Access Control List (ACL).
+                    Use the [Object Storage Bucket Contents List](/docs/api/object-storage/#object-storage-bucket-contents-list)
+                    endpoint to access all object names in a bucket.
       responses:
         '200':
           description: The Object's canned ACL and policy.
@@ -11407,9 +11406,10 @@ paths:
           curl -H "Content-Type: application/json" \
           -H "Authorization: Bearer $TOKEN" \
             -X PUT -d '{
-              "acl": "public-read"
+              "acl": "public-read",
+              "name": "example.txt"
             }' \
-            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
+            https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl
   /object-storage/buckets/{clusterId}/{bucket}/object-list:
     parameters:
     - name: clusterId
