@@ -1,6 +1,0 @@
-sudo: false
-language: python
-python:
-  - 3.7
-script:
-  - python -m openapi3 openapi.yaml
