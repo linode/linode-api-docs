@@ -6517,6 +6517,10 @@ paths:
                     description: >
                       An array of tags applied to the Kubernetes cluster. Tags are for organizational purposes only.
                       To delete a tag, exclude it from your `tags` array.
+                k8s_version:
+                    type: string
+                    description: >
+                      The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version will be deployed. When updating the kubernetes version, only the next latest version can be deployed following the currently deployed version. The k8s_version can not be downgraded.
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6554,6 +6558,7 @@ paths:
                 -X PUT -d '{
                   "label": "lkecluster54321"
                   "tags" : ["ecomm", "blog", "prod", "monitoring"]
+                  "k8s_version": "1.17"
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345
       - lang: CLI
