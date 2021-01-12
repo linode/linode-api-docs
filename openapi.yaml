@@ -6520,7 +6520,14 @@ paths:
                 k8s_version:
                     type: string
                     description: >
-                      The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version will be deployed. When updating the kubernetes version, only the next latest version can be deployed following the currently deployed version. The k8s_version can not be downgraded.
+                      The desired upgraded Kubernetes version for this Kubernetes cluster in the format of
+                      &lt;major&gt;.&lt;minor&gt;. New and recycled Nodes in this cluster will be installed with the
+                      latest available patch for the Cluster's upgraded Kubernetes version.
+
+                      When updating the Kubernetes version, only the next latest minor version can be deployed
+                      following the currently deployed version. For example, a cluster with Kubernetes version
+                      1.16 can be upgraded to version 1.17, but not directly to 1.18. The k8s_version can not be
+                      downgraded.
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6971,16 +6978,16 @@ paths:
     parameters:
     - name: clusterId
       in: path
-      description: ID of the Kubernetes cluster to look up.
+      description: ID of the Kubernetes cluster containing the Node.
       required: true
       schema:
         type: integer
     - name: nodeId
       in: path
-      description: ID of the Node in the pool to look up.
+      description: ID of the Node to look up.
       required: true
       schema:
-        type: integer
+        type: string
     x-linode-cli-command: lke
     get:
       operationId: getLKEClusterNode
@@ -7012,12 +7019,12 @@ paths:
                         readOnly: true
                         description: >
                           The Node's ID.
-                        example: "123456"
-                      instance_id:
-                        type: string
-                        description: >
-                          The Linode's ID. When no Linode is currently provisioned for this Node, this will be null.
                         example: "12345-6aa78910bc"
+                      instance_id:
+                        type: integer
+                        description: >
+                          The Linode's ID. If no Linode is currently provisioned for this Node, this is `null`.
+                        example: 123456
                       status:
                         type: string
                         description: >
@@ -7040,20 +7047,20 @@ paths:
     parameters:
     - name: clusterId
       in: path
-      description: ID of the Kubernetes cluster this Node Pool is attached to.
+      description: ID of the Kubernetes cluster containing the Node.
       required: true
       schema:
         type: integer
     - name: nodeId
       in: path
-      description: ID of the Node in the Pool to be recycled.
+      description: ID of the Node to be recycled.
       required: true
       schema:
-        type: integer
+        type: string
     x-linode-cli-command: lke
     post:
       operationId: postLKEClusterNodeRecycle
-      x-linode-cli-action: pool-recycle
+      x-linode-cli-action: node-recycle
       security:
       - personalAccessToken: []
       - oauth:
@@ -7062,7 +7069,7 @@ paths:
       - Linode Kubernetes Engine (LKE)
       summary: Node Recycle
       description: |
-        Recycles an individual Node for the designated node pool in the Kubernetes Cluster. The Node within the Node Pool will be deleted
+        Recycles an individual Node in the designated Kubernetes Cluster. The Node will be deleted
         and replaced with a new Linode, which may take a few minutes. Replacement Nodes are
         installed with the latest available patch for the Cluster's Kubernetes Version.
 
@@ -7144,7 +7151,7 @@ paths:
                 https://api.linode.com/v4/lke/clusters/12345/api-endpoints
       - lang: CLI
         source: >
-          linode-cli lke api-endpoints-list
+          linode-cli lke api-endpoints-list 12345
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
     - name: clusterId
