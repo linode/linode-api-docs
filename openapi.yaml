@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.83.0
+  version: 4.82.0
 
   title: Linode API
   description: |
@@ -6987,7 +6987,7 @@ paths:
       description: ID of the Node to look up.
       required: true
       schema:
-        type: string
+        type: integer
     x-linode-cli-command: lke
     get:
       operationId: getLKEClusterNode
@@ -7056,11 +7056,11 @@ paths:
       description: ID of the Node to be recycled.
       required: true
       schema:
-        type: string
+        type: integer
     x-linode-cli-command: lke
     post:
       operationId: postLKEClusterNodeRecycle
-      x-linode-cli-action: node-recycle
+      x-linode-cli-action: pool-recycle
       security:
       - personalAccessToken: []
       - oauth:
@@ -7151,7 +7151,7 @@ paths:
                 https://api.linode.com/v4/lke/clusters/12345/api-endpoints
       - lang: CLI
         source: >
-          linode-cli lke api-endpoints-list 12345
+          linode-cli lke api-endpoints-list
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
     - name: clusterId
@@ -14521,7 +14521,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
+              -X PUT -d '{
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345/clone
