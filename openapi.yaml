@@ -7083,7 +7083,7 @@ paths:
         **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       responses:
         '200':
-          description: Node has been recycled.
+          description: Recycle request succeeded and is in progress.
           content:
             application/json:
               schema:
