@@ -6520,11 +6520,11 @@ paths:
                 k8s_version:
                     type: string
                     description: >
-                      The desired upgraded Kubernetes version for this Kubernetes cluster in the format of
+                      The desired Kubernetes version for this Kubernetes cluster in the format of
                       &lt;major&gt;.&lt;minor&gt;. New and recycled Nodes in this cluster will be installed with the
-                      latest available patch for the Cluster's upgraded Kubernetes version.
+                      latest available patch for the Cluster's Kubernetes version.
 
-                      When updating the Kubernetes version, only the next latest minor version can be deployed
+                      When upgrading the Kubernetes version, only the next latest minor version can be deployed
                       following the currently deployed version. For example, a cluster with Kubernetes version
                       1.16 can be upgraded to version 1.17, but not directly to 1.18. The k8s_version can not be
                       downgraded.
