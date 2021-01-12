@@ -14346,7 +14346,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X PUT -d '{
+              -X POST -d '{
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345/clone
