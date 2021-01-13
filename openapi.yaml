@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.82.0
+  version: 4.83.0
 
   title: Linode API
   description: |
@@ -6520,14 +6520,17 @@ paths:
                 k8s_version:
                     type: string
                     description: >
-                      The desired upgraded Kubernetes version for this Kubernetes cluster in the format of
+                      The desired Kubernetes version for this Kubernetes cluster in the format of
                       &lt;major&gt;.&lt;minor&gt;. New and recycled Nodes in this cluster will be installed with the
-                      latest available patch for the Cluster's upgraded Kubernetes version.
+                      latest available patch for the Cluster's Kubernetes version.
 
-                      When updating the Kubernetes version, only the next latest minor version can be deployed
-                      following the currently deployed version. For example, a cluster with Kubernetes version
-                      1.16 can be upgraded to version 1.17, but not directly to 1.18. The k8s_version can not be
-                      downgraded.
+
+                      When upgrading the Kubernetes version, only the next latest minor version following the current
+                      version can be deployed. For example, a cluster with Kubernetes version 1.16 can be upgraded to
+                      version 1.17, but not directly to 1.18.
+
+
+                      The Kubernetes version of a cluster can not be downgraded.
       responses:
         '200':
           description: Returns a single Kubernetes cluster.
@@ -6765,7 +6768,7 @@ paths:
         **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       responses:
         '200':
-          description: Cluster has been recycled.
+          description: Recycle request succeeded and is in progress.
           content:
             application/json:
               schema:
@@ -6957,7 +6960,7 @@ paths:
         **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       responses:
         '200':
-          description: Node Pool has been recycled.
+          description: Recycle request succeeded and is in progress.
           content:
             application/json:
               schema:
@@ -7028,7 +7031,14 @@ paths:
                       status:
                         type: string
                         description: >
-                          The Node's status as it pertains to being a Kubernetes node.
+                          The creation status of this Node. This status is distinct from this Node's readiness as a
+                          Kubernetes Node Object as determined by the command `kubectl get nodes`.
+
+
+                          `not_ready` indicates that the Linode is still being created.
+
+
+                          `ready` indicates that the Linode has successfully been created and is running Kubernetes software.
                         enum:
                         - ready
                         - not_ready
@@ -7060,7 +7070,7 @@ paths:
     x-linode-cli-command: lke
     post:
       operationId: postLKEClusterNodeRecycle
-      x-linode-cli-action: node-recycle
+      x-linode-cli-action: pool-recycle
       security:
       - personalAccessToken: []
       - oauth:
@@ -7076,7 +7086,7 @@ paths:
         **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       responses:
         '200':
-          description: Node has been recycled.
+          description: Recycle request succeeded and is in progress.
           content:
             application/json:
               schema:
@@ -14342,7 +14352,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X PUT -d '{
+              -X POST -d '{
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345
@@ -14521,7 +14531,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
+              -X PUT -d '{
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345/clone
