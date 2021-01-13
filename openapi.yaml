@@ -7070,7 +7070,7 @@ paths:
     x-linode-cli-command: lke
     post:
       operationId: postLKEClusterNodeRecycle
-      x-linode-cli-action: pool-recycle
+      x-linode-cli-action: node-recycle
       security:
       - personalAccessToken: []
       - oauth:
@@ -14352,7 +14352,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
+              -X PUT -d '{
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345
@@ -14531,7 +14531,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X PUT -d '{
+              -X POST -d '{
                 "label": "my-volume"
               }' \
               https://api.linode.com/v4/volumes/12345/clone
