@@ -1885,10 +1885,10 @@ paths:
       - Account
       summary: User Create
       description: >
-        Creates a User on your Account. Once created, the User will be
-        able to log in and access portions of your Account. Access is
-        determined by whether or not they are restricted, and what grants they
-        have been given.
+        Creates a User on your Account. Once created, the User receives a confirmation
+        message at the specified `email` with password creation and login instructions.
+        The User's account access is determined by whether or not they are `restricted`,
+        and what grants they have been given.
       operationId: createUser
       x-linode-cli-action: create
       security:
