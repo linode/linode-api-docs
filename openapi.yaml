@@ -11046,7 +11046,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/serviceops/) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/serviceops/#list-buckets) directly.
       tags:
       - Object Storage
       security:
@@ -11091,7 +11091,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#put-bucket) directly.
       tags:
       - Object Storage
       security:
@@ -11191,7 +11191,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#get-bucket) directly.
       tags:
       - Object Storage
       security:
@@ -11222,12 +11222,12 @@ paths:
         Removes a single bucket. While buckets containing objects _may_ be
         deleted by including the `force` option in the request, such operations
         will fail if the bucket contains too many objects. The recommended
-        way to empty large buckets is to use the [S3 API to configure lifecycle policies](https://docs.ceph.com/docs/master/radosgw/bucketpolicy/#) that
+        way to empty large buckets is to use the [S3 API to configure lifecycle policies](https://docs.ceph.com/en/latest/radosgw/bucketpolicy/#) that
         remove all objects, then delete the bucket.
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully- featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#delete-bucket) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#delete-bucket) directly.
       tags:
       - Object Storage
       security:
@@ -11268,7 +11268,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#get-bucket) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#get-bucket) directly.
       tags:
       - Object Storage
       security:
@@ -11323,12 +11323,9 @@ paths:
       description: |
         Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
         Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
-        For more fine-grained control of both systems, please use the S3 API directly.
 
 
-
-        This endpoint is available for convenience. It is recommended that instead you
-        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
+        For more fine-grained control of both systems, please use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#put-bucket-acl) directly.
       tags:
       - Object Storage
       security:
@@ -11388,11 +11385,9 @@ paths:
       description: |
         Allows changing basic Cross-origin Resource Sharing (CORS) and Access Control Level (ACL) settings.
         Only allows enabling/disabling CORS for all origins, and/or setting canned ACLs.
-        For more fine-grained control of both systems, please use the S3 API directly.
 
 
-        This endpoint is available for convenience. It is recommended that instead you
-        use the more more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/bucketops/#put-bucket-acl) directly.
+        For more fine-grained control of both systems, please use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#put-bucket-acl) directly.
       tags:
       - Object Storage
       security:
@@ -11464,13 +11459,13 @@ paths:
       - url: https://api.linode.com/v4
       summary: Object Storage Object ACL Config View
       description: |
-        This Object Storage bucket's currently configured Access Control List (ACL).
-          ACLs define who can access your buckets and objects and specify the level of access
-          granted to those users.
+        View an Object’s configured Access Control List (ACL) in this Object Storage bucket.
+        ACLs define who can access your buckets and objects and specify the level of access
+        granted to those users.
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more more [fully-featured S3 API](https://docs.aws.amazon.com/cli/latest/reference/s3api/get-object-acl.html) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/objectops/#get-object-acl) directly.
       tags:
       - Object Storage
       security:
@@ -11532,7 +11527,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more more [fully-featured S3 API](https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object-acl.html) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/objectops/#set-object-acl) directly.
       tags:
       - Object Storage
       security:
@@ -11631,7 +11626,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully-featured S3 API](https://docs.ceph.com/docs/luminous/radosgw/s3/bucketops/#get-bucket) directly.
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/objectops/#get-object) directly.
       tags:
       - Object Storage
       security:
@@ -11716,7 +11711,7 @@ paths:
 
 
         This endpoint is available for convenience. It is recommended that instead you
-        use the more [fully-featured S3 API](https://docs.ceph.com/docs/mimic/radosgw/s3/)
+        use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/)
         directly.
       tags:
       - Object Storage
@@ -19312,7 +19307,7 @@ components:
       type: object
       description: >
         An Object Storage Bucket. This should be accessed primarily through the
-        S3 API; [click here for more information](https://docs.ceph.com/docs/mimic/radosgw/s3/#api).
+        S3 API; [click here for more information](https://docs.ceph.com/en/latest/radosgw/s3/#api).
       properties:
         created:
           type: string
