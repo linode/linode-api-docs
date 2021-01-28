@@ -9402,7 +9402,7 @@ paths:
         Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode
         instances.
 
-        A Firewall can be assigned to multiple Linode services, and up to three active Firewalls
+        A Firewall can be assigned to multiple Linode services, and up to five active Firewalls
         can be assigned to a single Linode service.
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
@@ -9443,10 +9443,10 @@ paths:
                     A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
                     can only be assigned to Linode instances.
 
-                    * A Firewall can be assigned to multiple Linode services, and up to three active Firewalls can
+                    * A Firewall can be assigned to multiple Linode services, and up to five active Firewalls can
                     be assigned to a single Linode service.
 
-                    * Additional disabled Firewalls can be assigned to a service, but they cannot be enabled if three other active Firewalls
+                    * Additional disabled Firewalls can be assigned to a service, but they cannot be enabled if five other active Firewalls
                     are already assigned to the same service.
 
 
@@ -9786,9 +9786,9 @@ paths:
       description: |
         Creates a Firewall Device, which assigns a Firewall to a Linode service (referred to
         as the Device's `entity`). Currently, only Devices with an entity of type `linode` are accepted.
-        A Firewall can be assigned to multiple Linode services, and up to three active Firewalls can
+        A Firewall can be assigned to multiple Linode services, and up to five active Firewalls can
         be assigned to a single Linode service. Additional disabled Firewalls can be
-        assigned to a service, but they cannot be enabled if three other active Firewalls
+        assigned to a service, but they cannot be enabled if five other active Firewalls
         are already assigned to the same service.
 
         Creating a Firewall Device will apply the Rules from a Firewall to a Linode service.
@@ -15998,7 +15998,7 @@ components:
       type: object
       description: >
         A resource that controls incoming and outgoing network traffic to a Linode service. A Firewall can
-        be assigned to multiple Linode services, and up to three active Firewalls can be assigned to a single Linode service.
+        be assigned to multiple Linode services, and up to five active Firewalls can be assigned to a single Linode service.
         [Create a Firewall Device](/docs/api/networking/#firewall-create)
         to assign a Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode instances.
       properties:
@@ -16154,9 +16154,9 @@ components:
       type: object
       description: >
         Associates a Firewall with a Linode service. A Firewall can be assigned
-        to multiple Linode services, and up to three active Firewalls can
+        to multiple Linode services, and up to five active Firewalls can
         be assigned to a single Linode service. Additional disabled Firewalls can be
-        assigned to a service, but they cannot be enabled if three other active Firewalls
+        assigned to a service, but they cannot be enabled if five other active Firewalls
         are already assigned to the same service.
       properties:
         id:
