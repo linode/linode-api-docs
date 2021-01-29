@@ -6747,25 +6747,25 @@ paths:
     parameters:
     - name: clusterId
       in: path
-      description: ID of the Kubernetes cluster to be recycled.
+      description: ID of the Kubernetes cluster which contains nodes to be recycled.
       required: true
       schema:
         type: integer
     x-linode-cli-command: lke
     post:
       operationId: postLKEClusterRecycle
-      x-linode-cli-action: cluster-recycle
+      x-linode-cli-action: cluster-nodes-recycle
       security:
       - personalAccessToken: []
       - oauth:
         - lke:read_write
       tags:
       - Linode Kubernetes Engine (LKE)
-      summary: Kubernetes Cluster Recycle
+      summary: Cluster Nodes Recycle
       description: |
-        Recycles a designated Kubernetes Cluster. All Linodes within the Cluster will be deleted
+        Recycles all nodes in all pools of a designated Kubernetes Cluster. All Linodes within the Cluster will be deleted
         and replaced with new Linodes on a rolling basis, which may take several minutes. Replacement Nodes are
-        installed with the latest available patch for the Cluster's Kubernetes Version.
+        installed with the latest available [patch version](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/release/versioning.md#kubernetes-release-versioning) for the Cluster's current Kubernetes minor release.
 
         **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
       responses:
@@ -6786,7 +6786,7 @@ paths:
                 https://api.linode.com/v4/lke/clusters/12345/recycle
       - lang: CLI
         source: >
-          linode-cli lke cluster-recycle 12345
+          linode-cli lke cluster-nodes-recycle 12345
   /lke/clusters/{clusterId}/pools/{poolId}:
     parameters:
     - name: clusterId
