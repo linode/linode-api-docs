@@ -14465,7 +14465,7 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X PUT -d '{
+              -X POST -d '{
                 "linode_id": 12346,
                 "config_id": 23456
               }' \
