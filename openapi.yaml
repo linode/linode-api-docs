@@ -599,6 +599,273 @@ paths:
               --expiry_month 11 \
               --expiry_year 2025 \
               --cvv 111
+  /account/entity-transfers:
+    x-linode-cli-command: entity-transfers
+    get:
+      x-linode-grant: unrestricted only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - Account
+      summary: Entity Transfers List
+      description: >
+        Returns a collection of all created and accepted Entity Transfers for this account, regardless of the user
+        that created or accepted the transfer.
+
+
+        This command can only be accessed by the unrestricted users of an account.
+      operationId: getEntityTransfers
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: >
+            Returns a paginated list of Entity Transfer objects containing the details of all transfers that have been
+            created and accepted by this account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EntityTransfer'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/account/entity-transfers
+      - lang: CLI
+        source: >
+          linode-cli account entity-transfers \
+            list
+    post:
+      x-linode-grant: unrestricted only
+      tags:
+      - Account
+      summary: Entity Transfer Create
+      description: >
+        Creates a transfer request for the specified entities. A request can contain any of the specified entity types
+        and any number of each entity type. When created successfully, a confirmation email is sent to the account
+        that created this transfer with instructions on completing the transfer. When completed, a transfer will move
+        the requested entities from the sending account to the receiving account.
+
+
+        This command can only be accessed by the unrestricted users of an account.
+
+
+        There are several conditions that must be met in order to successfully create a transfer request:
+
+          1. The account creating the transfer must not have a past due balance.
+
+          1. The entity must be owned by the account that is creating the transfer and must not be assigned to another
+          Entity Transfer or have any active Terms of Service violations.
+
+          1. Linodes must not be assigned to a NodeBalancer, Firewall, or Managed Service, have any attached Block
+          Storage Volumes, shared IP addresses, /116 IPv6 pools, or /56 or /64 ranges associated with their IPv6 SLAAC/
+          mac addresses.
+      operationId: createEntityTransfer
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: The entities to include in this transfer request.
+        content:
+          application/json:
+            schema:
+              required:
+              - entities
+              type: object
+              properties:
+                entities:
+                  $ref: '#/components/schemas/EntityTransfer/properties/entities'
+      responses:
+        '200':
+          description: >
+            Returns an Entity Transfer object for the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityTransfer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+              "entities": {
+                "linodes": [
+                  111,
+                  222
+                ]
+              }
+            }' \
+            https://api.linode.com/v4/account/entity-transfers
+      - lang: CLI
+        source: >
+          linode-cli account entity-transfers \
+            create --linodes 111,222
+  /account/entity-transfers/{token}:
+    x-linode-cli-command: entity-transfers
+    parameters:
+      - name: token
+        in: path
+        description: The UUID of the Entity Transfer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      x-linode-grant: unrestricted only
+      tags:
+      - Account
+      summary: Entity Transfer View
+      description: >
+        Returns the details of the Entity Transfer for the provided token.
+
+
+        This command can only be accessed by the unrestricted users of the accounts that created and accepted this
+        transfer.
+      operationId: getEntityTransfer
+      x-linode-cli-action: view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: >
+            Returns an Entity Transfer object containing the details of the transfer for the specified token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityTransfer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000
+      - lang: CLI
+        source: >
+          linode-cli account entity-transfers \
+            view 123E4567-E89B-12D3-A456-426614174000
+    delete:
+      x-linode-grant: unrestricted only
+      tags:
+      - account
+      summary: Entity Transfer Cancel
+      description: >
+        Cancels the Entity Transfer for the provided token. An email notification is sent to the account that created
+        this transfer. Transfers can not be canceled if they are expired or have been accepted.
+
+
+        This command can only be accessed by the unrestricted users of the accounts that created this transfer.
+      operationId: deleteEntityTransfer
+      x-linode-cli-action: delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: >
+            Entity Transfer canceled.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -X DELETE \
+            https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000
+      - lang: CLI
+        source: >
+          linode-cli account entity-transfers \
+            delete 123E4567-E89B-12D3-A456-426614174000
+  /account/entity-transfers/{token}/accept:
+    x-linode-cli-command: entity-transfers
+    parameters:
+      - name: token
+        in: path
+        description: The UUID of the Entity Transfer.
+        required: true
+        schema:
+          type: string
+          format: uuid
+    post:
+      x-linode-grant: unrestricted only
+      tags:
+      - Account
+      summary: Entity Transfer Accept
+      description: >
+        Accept an Entity Transfer for the provided token to receive the resources included in the transfer to your
+        account. A transfer must have a `pending` status in order to be accepted. Transfers can take several hours to
+        complete. Email notifications are sent to the accounts that created and accepted this transfer.
+
+
+        This command can only be accessed by the unrestricted users of the account that receives the transfer. Users
+        of the same account that created a transfer cannot accept the transfer.
+
+
+        There are several conditions that must be met in order to successfully create a transfer request:
+          1. The account accepting the transfer must have a registered payment method and must not have a past due
+          balance or other account limitations for the entities to be transferred.
+
+          1. The entity must be owned by the account that created the transfer and must not be assigned to another
+          Entity Transfer or have any active Terms of Service violations.
+
+          1. Linodes must not be assigned to a NodeBalancer, Firewall, or Managed Service, have any attached Block
+          Storage Volumes, shared IP addresses, /116 IPv6 pools, or /56 or /64 ranges associated with their IPv6 SLAAC/
+          mac addresses.
+      operationId: acceptEntityTransfer
+      x-linode-cli-action: accept
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      responses:
+        '200':
+          description: >
+            Entity Transfer accepted.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+            -X POST \
+            https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000/accept
+      - lang: CLI
+        source: >
+          linode-cli account entity-transfers \
+            accept 123E4567-E89B-12D3-A456-426614174000
   /account/events:
     x-linode-cli-command: events
     get:
@@ -15651,6 +15918,85 @@ components:
           description: When this Domain Record was last updated.
           example: '2018-01-01T00:01:01'
           readOnly: true
+    EntityTransfer:
+      type: object
+      description: >
+        An object representing an Entity Transfer.
+      properties:
+        token:
+          x-linode-cli-display: 1
+          type: string
+          format: uuid
+          description: >
+            The token used to identify and accept this transfer.
+          example: "123E4567-E89B-12D3-A456-426614174000"
+        status:
+          x-linode-filterable: true
+          type: string
+          enum:
+          - accepted
+          - cancelled
+          - completed
+          - failed
+          - pending
+          - stale
+          description: >
+            The status of the transfer request.
+
+
+            `accepted`: The transfer has been accepted by another user and is currently in progress. Transfers can take several hours to complete.
+
+
+            `canceled`: The transfer has been canceled by the sender.
+
+
+            `completed`: The transfer has completed successfully.
+
+
+            `failed`: The transfer has failed after initiation.
+
+
+            `pending`: The transfer is ready to be accepted.
+
+
+            `stale`: The transfer has exceeded its expiration date. It can no longer be accepted or canceled.
+          example: 'pending'
+        created:
+          type: string
+          format: date-time
+          description: >
+            When this transfer was created.
+          example: '2021-02-11T16:37:03'
+        updated:
+          type: string
+          format: date-time
+          description: >
+            When this transfer was last updated.
+          example: '2021-02-11T16:37:03'
+        is_sender:
+          x-linode-filterable: true
+          type: boolean
+          description: >
+            If the requesting account created this transfer.
+          example: true
+        expiry:
+          type: string
+          format: date-time
+          description: >
+            When this transfer expires. Transfers will automatically expire 24 hours after creation.
+          example: '2021-02-12T16:37:03'
+        entities:
+          type: object
+          description: >
+            A collection of the entities to include in this transfer request, separated by type.
+          properties:
+            linodes:
+              type: array
+              items:
+                type: integer
+              description: >
+                An array containing the IDs of each of the Linodes included in this transfer.
+              example: [111, 222]
     ErrorObject:
       type: object
       description: >
