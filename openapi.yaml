@@ -15560,43 +15560,70 @@ components:
           description: >
             The type of Record this is in the DNS system. For example, A
             records associate a domain name with an IPv4 address, and AAAA
-            records associate a domain name with an IPv6 address.
+            records associate a domain name with an IPv6 address. For more information, see our guide on
+            [DNS Records](/docs/guides/dns-records-an-introduction).
           example: A
           x-linode-cli-display: 2
         name:
           type: string
-          description: >
-            The name of this Record. This field's actual usage depends on the
-            type of record this represents. For A and AAAA records, this is
-            the subdomain being associated with an IP address.
+          description: |
+            The name of this Record. This property's actual usage and whether it is required depends on the type of record this represents:
+
+            `A` and `AAAA`: The hostname or FQDN of the Record.
+
+            `NS`: The subdomain, if any, to use with the Domain of the Record.
+
+            `MX`: The subdomain.
+
+            `CNAME`: The hostname. Must be unique. Required.
+
+            `TXT`: The hostname.
+
+            `SRV`: Unused. Use the `service` property to set the service name for this record.
+
+            `CAA`: The subdomain. Omit or enter an empty string ("") to apply to the entire Domain.
+
+            `PTR`: See our guide on how to [Configure Your Linode for Reverse DNS (rDNS)](/docs/guides/configure-your-linode-for-reverse-dns).
           minLength: 1
           maxLength: 100
           example: test
           x-linode-cli-display: 3
         target:
           type: string
-          description: >
-            The target for this Record. This field's actual usage depends on
-            the type of record this represents. For A and AAAA records, this
-            is the address the named Domain should resolve to.
+          description: |
+            The target for this Record. This property's actual usage and whether it is required depends on the type of record this represents:
 
+            `A` and `AAAA`: The IP address. Use "[remote_addr]" to submit the IPv4 address of the request. Required.
 
-            With the exception of A and AAAA records, this field accepts
-            a trailing period.
-          example: 12.34.56.78
+            `NS`: The name server. Must be a valid domain. Required.
+
+            `MX`: The mail server. Must be a valid domain. Required.
+
+            `CNAME`: The alias. Must be a valid domain. Required.
+
+            `TXT`: The value. Required.
+
+            `SRV`: The target domain or subdomain. Entering a subdomains are automatically used with the Domain. To configure for a different domain, enter a valid FQDN. Required.
+
+            `CAA`: The value. For `issue` or `issuewild` tags, the domain of your certificate issuer. For the `iodef` tag, a contact or submission URL (http or mailto).
+
+            `PTR`: See our guide on how to [Configure Your Linode for Reverse DNS (rDNS)](/docs/guides/configure-your-linode-for-reverse-dns).
+
+            With the exception of A and AAAA records, this field accepts a trailing period.
+          example: 192.0.2.0
           x-linode-cli-display: 4
         priority:
           type: integer
           minimum: 0
           maximum: 255
           description: >
-            The priority of the target host. Lower values are preferred.
+            The priority of the target host for this Record. Lower values are preferred. Only valid and required for SRV records.
           example: 50
           x-linode-cli-display: 6
         weight:
           type: integer
           description: >
-            The relative weight of this Record. Higher values are preferred.
+            The relative weight of this Record. Higher values are preferred. Only valid and required for SRV records.
           example: 50
           minimum: 0
           maximum: 65535
@@ -15604,7 +15631,7 @@ components:
         port:
           type: integer
           description: >
-            The port this Record points to.
+            The port this Record points to. Only valid and required for SRV records.
           example: 80
           minimum: 0
           maximum: 65535
@@ -15612,13 +15639,14 @@ components:
           type: string
           nullable: true
           description: >
-            The service this Record identified. Only valid for SRV records.
+            The name of the service. An underscore (_) is prepended and a period (.) is appended automatically to the submitted value for this property. Only valid and required for SRV records.
           example: null
         protocol:
           type: string
           nullable: true
           description: >
-            The protocol this Record's service communicates with. Only valid
+            The protocol this Record's service communicates with. An underscore (_) is prepended
+            automatically to the submitted value for this property. Only valid
             for SRV records.
           example: null
         ttl_sec:
@@ -15633,10 +15661,13 @@ components:
           x-linode-cli-display: 5
         tag:
           type: string
+          enum:
+          - issue
+          - issuewild
+          - iodef
           nullable: true
           description: >
-            The tag portion of a CAA record. It is invalid to set this on
-            other record types.
+            The tag portion of a CAA record. Only valid and required for CAA records.
           example: null
           x-linode-filterable: true
         created:
