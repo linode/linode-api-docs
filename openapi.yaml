@@ -659,9 +659,16 @@ paths:
       summary: Entity Transfer Create
       description: >
         Creates a transfer request for the specified entities. A request can contain any of the specified entity types
-        and any number of each entity type. When created successfully, a confirmation email is sent to the account
-        that created this transfer with instructions on completing the transfer. When completed, a transfer will move
-        the requested entities from the sending account to the receiving account.
+        and any number of each entity type. At this time, only Linodes can be transferred.
+
+
+        When created successfully, a confirmation email is sent to the account that created this transfer containing a
+        transfer token and instructions on completing the transfer.
+
+
+        When a transfer is [accepted](/docs/api/account/#entity-transfer-accept), the requested entities are moved to
+        the receiving account. A transfer can take up to three hours to complete once accepted. When a transfer is
+        completed, billing for transferred entities ends for the sending account and begins for the receiving account.
 
 
         This command can only be accessed by the unrestricted users of an account.
@@ -669,14 +676,22 @@ paths:
 
         There are several conditions that must be met in order to successfully create a transfer request:
 
-          1. The account creating the transfer must not have a past due balance.
+        1. The account creating the transfer must not have a past due balance or active Terms of Service violation.
 
-          1. The entity must be owned by the account that is creating the transfer and must not be assigned to another
-          Entity Transfer or have any active Terms of Service violations.
+        1. The entity must be owned by the account that is creating the transfer.
 
-          1. Linodes must not be assigned to a NodeBalancer, Firewall, or Managed Service, have any attached Block
-          Storage Volumes, shared IP addresses, /116 IPv6 pools, or /56 or /64 ranges associated with their IPv6 SLAAC/
-          mac addresses.
+        1. The entity must not be assigned to another Entity Transfer that is pending or that has been accepted and is
+        incomplete.
+
+        1. Linodes must not:
+
+            * be assigned to a NodeBalancer, Firewall, or Managed Service.
+
+            * have any attached Block Storage Volumes.
+
+            * have any shared IP addresses.
+
+            * have any assigned /56, /64, or /116 IPv6 ranges.
       operationId: createEntityTransfer
       x-linode-cli-action: create
       security:
@@ -741,7 +756,7 @@ paths:
         Returns the details of the Entity Transfer for the provided token.
 
 
-        This command can only be accessed by the unrestricted users of the accounts that created and accepted this
+        This command can only be accessed by the unrestricted users of the accounts that created or accepted this
         transfer.
       operationId: getEntityTransfer
       x-linode-cli-action: view
@@ -774,11 +789,16 @@ paths:
       - account
       summary: Entity Transfer Cancel
       description: >
-        Cancels the Entity Transfer for the provided token. An email notification is sent to the account that created
-        this transfer. Transfers can not be canceled if they are expired or have been accepted.
+        Cancels the Entity Transfer for the provided token. Once cancelled, a transfer cannot be accepted or otherwise
+        acted on in any way. If cancelled in error, the transfer must be
+        [created](/docs/api/account/#entity-transfer-create) again.
 
 
-        This command can only be accessed by the unrestricted users of the accounts that created this transfer.
+        When cancelled, an email notification for the cancellation is sent to the account that created
+        this transfer. Transfers can not be cancelled if they are expired or have been accepted.
+
+
+        This command can only be accessed by the unrestricted users of the account that created this transfer.
       operationId: deleteEntityTransfer
       x-linode-cli-action: delete
       security:
@@ -788,7 +808,7 @@ paths:
       responses:
         '200':
           description: >
-            Entity Transfer canceled.
+            Entity Transfer cancelled.
           content:
             application/json:
               schema:
@@ -821,25 +841,40 @@ paths:
       - Account
       summary: Entity Transfer Accept
       description: >
-        Accept an Entity Transfer for the provided token to receive the resources included in the transfer to your
-        account. A transfer must have a `pending` status in order to be accepted. Transfers can take several hours to
-        complete. Email notifications are sent to the accounts that created and accepted this transfer.
+        Accept an Entity Transfer for the provided token to receive the entities included in the transfer to your
+        account. At this time, only Linodes can be transferred.
+
+
+        When accepted, email confirmations are sent to the accounts that created and accepted the transfer. A transfer
+        can take up to three hours to complete once accepted. Once a transfer is completed, billing for transferred
+        entities ends for the sending account and begins for the receiving account.
 
 
         This command can only be accessed by the unrestricted users of the account that receives the transfer. Users
         of the same account that created a transfer cannot accept the transfer.
 
 
-        There are several conditions that must be met in order to successfully create a transfer request:
-          1. The account accepting the transfer must have a registered payment method and must not have a past due
+        There are several conditions that must be met in order to accept a transfer request:
+
+        1. Only transfers with a `pending` status can be accepted.
+
+        1. The account accepting the transfer must have a registered payment method and must not have a past due
           balance or other account limitations for the entities to be transferred.
 
-          1. The entity must be owned by the account that created the transfer and must not be assigned to another
-          Entity Transfer or have any active Terms of Service violations.
+        1. Both the account that created the transfer and the account that is accepting the transfer must not have any
+        active Terms of Service violations.
 
-          1. Linodes must not be assigned to a NodeBalancer, Firewall, or Managed Service, have any attached Block
-          Storage Volumes, shared IP addresses, /116 IPv6 pools, or /56 or /64 ranges associated with their IPv6 SLAAC/
-          mac addresses.
+        1. The entity must still be owned by the account that created the transfer.
+
+        1. Linodes must not:
+
+            * be assigned to a NodeBalancer, Firewall, or Managed Service.
+
+            * have any attached Block Storage Volumes.
+
+            * have any shared IP addresses.
+
+            * have any assigned /56, /64, or /116 IPv6 ranges.
       operationId: acceptEntityTransfer
       x-linode-cli-action: accept
       security:
@@ -15928,7 +15963,7 @@ components:
           type: string
           format: uuid
           description: >
-            The token used to identify and accept this transfer.
+            The token used to identify and accept or cancel this transfer.
           example: "123E4567-E89B-12D3-A456-426614174000"
         status:
           x-linode-filterable: true
@@ -15944,10 +15979,11 @@ components:
             The status of the transfer request.
 
 
-            `accepted`: The transfer has been accepted by another user and is currently in progress. Transfers can take several hours to complete.
+            `accepted`: The transfer has been accepted by another user and is currently in progress.
+            Transfers can take several hours to complete.
 
 
-            `canceled`: The transfer has been canceled by the sender.
+            `cancelled`: The transfer has been cancelled by the sender.
 
 
             `completed`: The transfer has completed successfully.
@@ -15959,7 +15995,8 @@ components:
             `pending`: The transfer is ready to be accepted.
 
 
-            `stale`: The transfer has exceeded its expiration date. It can no longer be accepted or canceled.
+            `stale`: The transfer has exceeded its expiration date. It can no longer be accepted or
+            cancelled.
           example: 'pending'
         created:
           type: string
@@ -16057,6 +16094,11 @@ components:
           - dns_zone_delete
           - dns_zone_import
           - dns_zone_update
+          - entity_transfer_accept
+          - entity_transfer_cancel
+          - entity_transfer_create
+          - entity_transfer_fail
+          - entity_transfer_stale
           - firewall_create
           - firewall_delete
           - firewall_disable
@@ -16210,6 +16252,7 @@ components:
               - community
               - disks
               - domain
+              - entity_transfer
               - firewall
               - image
               - ipaddress
