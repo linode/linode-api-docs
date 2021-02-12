@@ -348,6 +348,11 @@ info:
 
     * [Open Support Ticket](/docs/api/support/#support-ticket-open)
 
+    Accepting Entity Transfers has a dedicated limit of 2 requests per minute per user.
+    That endpoint is:
+
+    * [Entity Transfer Accept](/docs/api/account/#entity-transfer-accept)
+
     ## CLI (Command Line Interface)
 
     The <a href="https://github.com/linode/linode-cli" target="_top">Linode CLI</a> allows you to easily
