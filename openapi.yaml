@@ -875,6 +875,9 @@ paths:
             * have any shared IP addresses.
 
             * have any assigned /56, /64, or /116 IPv6 ranges.
+
+        Any and all of the above conditions must be cured and maintained by the relevant account prior to the
+        transfer's expiration to allow the transfer to be accepted by the receiving account.
       operationId: acceptEntityTransfer
       x-linode-cli-action: accept
       security:
