@@ -9431,6 +9431,7 @@ paths:
             schema:
               type: object
               required:
+                - label
                 - rules
               properties:
                 label:
@@ -16011,8 +16012,7 @@ components:
           x-linode-filterable: true
           type: string
           description: >
-            The Firewall's label, for display purposes only. If no label is provided for a Firewall,
-            a default will be assigned.
+            The Firewall's label, for display purposes only.
 
             Firewall labels have the following constraints:
 
@@ -16020,6 +16020,7 @@ components:
               * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
               * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
               * Must be between 3 and 32 characters.
+              * Must be unique.
           example: firewall123
           minLength: 3
           maxLength: 32
