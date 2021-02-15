@@ -5133,6 +5133,59 @@ paths:
         source: >
           linode-cli linodes disk-resize 123 25674 \
             --size 2048
+  /linode/instances/{linodeId}/firewalls:
+    parameters:
+    - name: linodeId
+      in: path
+      description: ID of the Linode to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: linodes
+    get:
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      tags:
+      - Linode Instances
+      summary: Firewalls List
+      description: >
+        View Firewall information for Firewalls associated with this Linode.
+      operationId: getLinodeFirewalls
+      x-linode-cli-action: firewalls-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of Firewalls associated with this Linode.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Firewall'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/linode/instances/123/firewalls
+      - lang: CLI
+        source: >
+          linode-cli linodes firewalls-list 123
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
