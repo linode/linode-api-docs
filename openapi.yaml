@@ -672,7 +672,18 @@ paths:
 
 
         When a transfer is [accepted](/docs/api/account/#entity-transfer-accept), the requested entities are moved to
-        the receiving account. A transfer can take up to three hours to complete once accepted. When a transfer is
+        the receiving account. Linode services will not experience interruptions due to the transfer process, but
+        please take note of the following:
+
+
+        - If any of the Linodes included in the request have Backups enabled, that data and associated costs will be
+        removed/cancelled.
+
+        - DNS records will not be transferred or updated. Please ensure that DNS records have been updated or
+        communicated to the recipient prior to the transfer.
+
+
+        A transfer can take up to three hours to complete once accepted. When a transfer is
         completed, billing for transferred entities ends for the sending account and begins for the receiving account.
 
 
