@@ -655,7 +655,7 @@ paths:
             https://api.linode.com/v4/account/entity-transfers
       - lang: CLI
         source: >
-          linode-cli account entity-transfers \
+          linode-cli entity-transfers \
             list
     post:
       x-linode-grant: unrestricted only
@@ -740,8 +740,10 @@ paths:
             https://api.linode.com/v4/account/entity-transfers
       - lang: CLI
         source: >
-          linode-cli account entity-transfers \
-            create --linodes 111,222
+          linode-cli entity-transfers \
+            create \
+            --entities.linodes 111 \
+            --entities.linodes 222
   /account/entity-transfers/{token}:
     x-linode-cli-command: entity-transfers
     parameters:
@@ -786,7 +788,7 @@ paths:
             https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000
       - lang: CLI
         source: >
-          linode-cli account entity-transfers \
+          linode-cli entity-transfers \
             view 123E4567-E89B-12D3-A456-426614174000
     delete:
       x-linode-grant: unrestricted only
@@ -828,7 +830,7 @@ paths:
             https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000
       - lang: CLI
         source: >
-          linode-cli account entity-transfers \
+          linode-cli entity-transfers \
             delete 123E4567-E89B-12D3-A456-426614174000
   /account/entity-transfers/{token}/accept:
     x-linode-cli-command: entity-transfers
@@ -907,7 +909,7 @@ paths:
             https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000/accept
       - lang: CLI
         source: >
-          linode-cli account entity-transfers \
+          linode-cli entity-transfers \
             accept 123E4567-E89B-12D3-A456-426614174000
   /account/events:
     x-linode-cli-command: events
