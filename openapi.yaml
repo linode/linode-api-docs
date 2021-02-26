@@ -2734,7 +2734,6 @@ paths:
           content:
             application/json:
               schema:
-                required: domain
                 $ref: '#/components/schemas/Domain'
         default:
           $ref: '#/components/responses/ErrorResponse'
