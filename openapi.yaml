@@ -7355,7 +7355,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke pool-recycle 12345 456
-  /lke/clusters/{clusterID}/nodes/{nodeId}:
+  /lke/clusters/{clusterId}/nodes/{nodeId}:
     parameters:
     - name: clusterId
       in: path
@@ -11754,7 +11754,7 @@ paths:
               }' \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/access
     put:
-      operationId: modifyObjectStorageBucketAccess
+      operationId: updateObjectStorageBucketAccess
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4
@@ -11830,7 +11830,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: viewObjectStorageBucketAccess
+      operationId: viewObjectStorageBucketACL
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4
@@ -11892,7 +11892,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
     put:
-      operationId: viewObjectStorageBucketAccess
+      operationId: updateObjectStorageBucketACL
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4
@@ -12610,7 +12610,7 @@ paths:
             --certificate "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----" \
             --private_key "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
     delete:
-      operationId: getObjectStorageSSL
+      operationId: deleteObjectStorageSSL
       x-linode-cli-action: ssl-delete
       servers:
       - url: https://api.linode.com/v4
