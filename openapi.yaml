@@ -2657,7 +2657,8 @@ paths:
                     "status": "active",
                     "master_ips": ["127.0.0.1","255.255.255.1","123.123.123.7"],
                     "axfr_ips": ["44.55.66.77"],
-                    "display_group": "Example Display Group"
+                    "group": "Example Display Group",
+                    "tags": ["tag1","tag2"]
                 }' \
                 https://api.linode.com/v4/domains
         - lang: CLI
@@ -2754,7 +2755,8 @@ paths:
                   "status": "active",
                   "master_ips": ["127.0.0.1","255.255.255.1","123.123.123.7"],
                   "axfr_ips": ["44.55.66.77"],
-                  "display_group": "Example Display Group"
+                  "group": "Example Display Group",
+                  "tags": ["tag1","tag2"]
               }' \
               https://api.linode.com/v4/domains/123
       - lang: CLI
