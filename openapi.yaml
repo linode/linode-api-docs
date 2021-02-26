@@ -11830,7 +11830,7 @@ paths:
       schema:
         type: string
     get:
-      operationId: viewObjectStorageBucketAccess
+      operationId: viewObjectStorageBucketACL
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4
@@ -11892,7 +11892,7 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
             https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/object-acl?name=example.txt
     put:
-      operationId: updateObjectStorageBucketAccess
+      operationId: updateObjectStorageBucketACL
       x-linode-cli-skip: true
       servers:
       - url: https://api.linode.com/v4
