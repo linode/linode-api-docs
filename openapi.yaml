@@ -366,7 +366,8 @@ info:
 
   contact:
     name: Linode
-    url: /
+    url: https://linode.com
+    email: support@linode.com
 servers:
 - url: https://api.linode.com/v4
 - url: https://api.linode.com/v4beta
