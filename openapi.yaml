@@ -14815,7 +14815,8 @@ paths:
               - linode_id
               properties:
                 linode_id:
-                  $ref: '#/components/schemas/Volume/properties/linode_id'
+                  type: integer
+                  description: The ID of the Linode to attach the volume to.
                 config_id:
                   type: integer
                   description: >
