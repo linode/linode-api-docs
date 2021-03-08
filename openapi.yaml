@@ -2057,7 +2057,7 @@ paths:
       responses:
         '200':
           description: >
-            Returns an Service Transfer object containing the details of the transfer for the specified token.
+            Returns a Service Transfer object containing the details of the transfer for the specified token.
           content:
             application/json:
               schema:
