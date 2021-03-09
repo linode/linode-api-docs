@@ -9787,13 +9787,11 @@ paths:
         Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode
         instances.
 
-        A Firewall can be assigned to multiple Linode services, and up to five active Firewalls
-        can be assigned to a single Linode service.
+        A Firewall can be assigned to a single Linode service at a time.
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
         This endpoint is in **beta**.
-
 
         * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
         * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
@@ -9812,25 +9810,21 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              allOf:
+              - $ref: '#/components/schemas/Firewall'
               required:
-                - label
-                - rules
+              - label
+              - rules
+              - inbound_policy
+              - outbound_policy
               properties:
-                label:
-                  $ref: '#/components/schemas/Firewall/properties/label'
-                rules:
-                  $ref: '#/components/schemas/Firewall/properties/rules'
-                tags:
-                  $ref: '#/components/schemas/Firewall/properties/tags'
                 devices:
                   type: object
                   description: >
                     A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
                     can only be assigned to Linode instances.
 
-                    * A Firewall can be assigned to multiple Linode services, and up to five active Firewalls can
-                    be assigned to a single Linode service.
+                    * A Firewall can be assigned to a single Linode service at a time.
 
                     * Additional disabled Firewalls can be assigned to a service, but they cannot be enabled if five other active Firewalls
                     are already assigned to the same service.
@@ -9866,41 +9860,46 @@ paths:
               -X POST -d '{
                 "label": "firewall123",
                 "rules": {
+                  "inbound_policy": "DROP",
                   "inbound": [
                     {
                       "protocol": "TCP",
                       "ports": "22, 80, 443",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.1",
                           "192.0.2.0/24"
                         ],
                         "ipv6": [
                           "2001:DB8::/32"
                         ]
-                      }
+                      },
+                    "action": "ACCEPT",
+                    "label": "inbound-rule123",
+                    "description": "An example inbound rule description."
                     }
                   ],
+                  "outbound_policy": "DROP"
                   "outbound": [
                     {
                       "protocol": "TCP",
                       "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.1",
                           "192.0.2.0/24"
                         ],
                         "ipv6": [
                           "2001:DB8::/32"
                         ]
-                      }
+                      },
+                      "action": "ACCEPT",
+                      "label": "outbound-rule123",
+                      "description": "An example outbound rule description."
                     }
                   ]
                 },
                 "devices": {
                   "linodes": [
-                    123,
-                    456
+                    123
                     ]
                 },
                 "tags": [
@@ -10172,10 +10171,9 @@ paths:
       description: |
         Creates a Firewall Device, which assigns a Firewall to a Linode service (referred to
         as the Device's `entity`). Currently, only Devices with an entity of type `linode` are accepted.
-        A Firewall can be assigned to multiple Linode services, and up to five active Firewalls can
-        be assigned to a single Linode service. Additional disabled Firewalls can be
-        assigned to a service, but they cannot be enabled if five other active Firewalls
-        are already assigned to the same service.
+        A Firewall can be assigned a single Linode service at a time. Additional disabled Firewalls can be
+        assigned to a service, but they cannot be enabled if another active Firewall
+        is already assigned to the same service.
 
         Creating a Firewall Device will apply the Rules from a Firewall to a Linode service.
         A `firewall_device_add` Event is generated when the Firewall Device is added successfully.
@@ -10443,34 +10441,40 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
+                  "inbound_policy": "DROP",
                   "inbound": [
                     {
                       "protocol": "TCP",
                       "ports": "22, 80, 443",
-                        "addresses": {
+                      "addresses": {
                         "ipv4": [
-                          "192.0.2.1",
                           "192.0.2.0/24"
                         ],
                         "ipv6": [
                           "2001:DB8::/32"
                         ]
-                      }
+                      },
+                    "action": "ACCEPT",
+                    "label": "inbound-rule123",
+                    "description": "An example inbound rule description."
                     }
                   ],
+                  "outbound_policy": "DROP"
                   "outbound": [
                     {
                       "protocol": "TCP",
                       "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.1",
                           "192.0.2.0/24"
                         ],
                         "ipv6": [
                           "2001:DB8::/32"
                         ]
-                      }
+                      },
+                      "action": "ACCEPT",
+                      "label": "outbound-rule123",
+                      "description": "An example outbound rule description."
                     }
                   ]
               }' \
@@ -16521,8 +16525,7 @@ components:
     Firewall:
       type: object
       description: >
-        A resource that controls incoming and outgoing network traffic to a Linode service. A Firewall can
-        be assigned to multiple Linode services, and up to five active Firewalls can be assigned to a single Linode service.
+        A resource that controls incoming and outgoing network traffic to a Linode service. Only one Firewall can be attached to a Linode at any given time.
         [Create a Firewall Device](/docs/api/networking/#firewall-create)
         to assign a Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode instances.
       properties:
@@ -16537,7 +16540,7 @@ components:
         label:
           x-linode-filterable: true
           type: string
-          description: >
+          description: |
             The Firewall's label, for display purposes only.
 
             Firewall labels have the following constraints:
@@ -16576,7 +16579,7 @@ components:
            The status of this Firewall.
 
              * When a Firewall is first created its status is `enabled`.
-             * Use the [Update Firewall](/docs/api/networking/#firewall-update) endpoint to set a Firewall's status to `enbaled` or `disabled`.
+             * Use the [Update Firewall](/docs/api/networking/#firewall-update) endpoint to set a Firewall's status to `enabled` or `disabled`.
              * Use the [Delete Firewall](/docs/api/networking/#firewall-delete) endpoint to delete a Firewall.
           enum:
           - enabled
@@ -16589,12 +16592,7 @@ components:
           description: |
             The inbound and outbound access rules to apply to the Firewall.
 
-              * A minimum of one open inbound rule is required. Any inbound
-                traffic that is not permitted by your rules will be blocked.
-              * Outbound rules are optional. When no outbound rules are specified,
-                all outbound traffic is allowed. If one or more outbound rules are
-                specified, all outbound traffic that is not permitted by your rules
-                will be blocked.
+            `inbound_policy` and `outbound_policy` are required when creating a new Firewall.
 
             A Firewall may have up to 25 rules across its inbound and outbound rulesets.
           properties:
@@ -16606,8 +16604,22 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/FirewallRuleConfig'
-          required:
-            - inbound
+            inbound_policy:
+              type: string
+              enum:
+              - ACCEPT
+              - DROP
+              description: |
+                The default behavior for inbound traffic. This setting can be overridden by [updating](/docs/api/networking/#firewall-rules-update) the `inbound.action` property of the Firewall Rule.
+              example: DROP
+            outbound_policy:
+              type: string
+              enum:
+              - ACCEPT
+              - DROP
+              description: |
+                The default behavior for outbound traffic. This setting can be overridden by [updating](/docs/api/networking/#firewall-rules-update) the `action` property for an individual Firewall Rule.
+              example: DROP
         tags:
           x-linode-filterable: true
           description: >
@@ -16660,28 +16672,48 @@ components:
             are treated as equivalent when accounting for this limit.
           properties:
             ipv4:
-              description: A list of IPv4 addresses or networks.
+              description: A list of IPv4 addresses or networks. Must be in IP/mask format.
               type: array
               items:
                 type: string
               example:
-              - 192.0.2.1
               - 192.0.2.0/24
             ipv6:
-              description: A list of IPv6 addresses or networks.
+              description: A list of IPv6 addresses or networks. Must be in IP/mask format.
               type: array
               items:
                 type: string
               example:
               - 2001:DB8::/32
+        action:
+          type: string
+          enum:
+          - ACCEPT
+          - DROP
+          description: |
+            The behavior for this rule. Overrides the `inbound_policy` or `outbound_policy` for the Firewall.
+          example: ACCEPT
+        label:
+          type: string
+          description: |
+            Used to identify this rule. For display purposes only.
+          example: firewallrule123
+          minLength: 3
+          maxLength: 32
+        description:
+          type: string
+          description: |
+            Used to describe this rule. For display purposes only.
+          example: 'An example firewall rule description.'
+          minLength: 1
+          maxLength: 100
     FirewallDevices:
       type: object
       description: >
         Associates a Firewall with a Linode service. A Firewall can be assigned
-        to multiple Linode services, and up to five active Firewalls can
-        be assigned to a single Linode service. Additional disabled Firewalls can be
-        assigned to a service, but they cannot be enabled if five other active Firewalls
-        are already assigned to the same service.
+        to a single Linode service at a time. Additional disabled Firewalls can be
+        assigned to a service, but they cannot be enabled if another active Firewall
+        is already assigned to the same service.
       properties:
         id:
           x-linode-filterable: true
