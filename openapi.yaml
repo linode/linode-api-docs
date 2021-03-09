@@ -2046,8 +2046,7 @@ paths:
       description: |
         Returns the details of the Service Transfer for the provided token.
 
-        This command can only be accessed by the unrestricted users of the accounts that created or accepted this
-        transfer.
+        Until a transfer is accepted, only unrestricted users of the account that created it can view it. After a transfer has been accepted, it can also be viewed by any unrestricted user of the account that accepted the transfer.
       operationId: getServiceTransfer
       x-linode-cli-action: view
       security:
