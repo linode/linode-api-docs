@@ -2046,7 +2046,10 @@ paths:
       description: |
         Returns the details of the Service Transfer for the provided token.
 
-        Until a transfer is accepted, only unrestricted users of the account that created it can view it. After a transfer has been accepted, it can also be viewed by any unrestricted user of the account that accepted the transfer.
+        While a transfer is pending, any unrestricted user *of any account* can access this command. After a
+        transfer has been accepted, it can only be viewed by unrestricted users of the accounts that created and
+        accepted the transfer. If cancelled or expired, only unrestricted users of the account that created the
+        transfer can view it.
       operationId: getServiceTransfer
       x-linode-cli-action: view
       security:
