@@ -11240,7 +11240,7 @@ paths:
                 properties:
                   nodes:
                     type: array
-                    description: >
+                    description: |
                       The NodeBalancer Node(s) that serve this port.
                       At least one Node is required per configured port.
 
@@ -11249,9 +11249,7 @@ paths:
                         * Current Nodes (identified by their ID) will be updated.
                         * New Nodes (included without an ID) will be created.
                     items:
-                      type: object
-                      allOf:
-                      - $ref: '#/components/schemas/NodeBalancerNode'
+                      $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -11314,7 +11312,7 @@ paths:
             --proxy_protocol "v1" \
             --cipher_suite recommended \
             --nodes '{"address":"192.168.210.120:80","label":"node1","weight":50,"mode":"accept"}' \
-            --nodes  '{"address":"192.168.210.122:80","label":"node2","weight":50,"mode":"accept"}'
+            --nodes '{"address":"192.168.210.122:80","label":"node2","weight":50,"mode":"accept"}'
   /nodebalancers/{nodeBalancerId}/configs/{configId}/nodes:
     parameters:
     - name: nodeBalancerId
