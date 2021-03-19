@@ -15388,6 +15388,25 @@ components:
                 description: >
                   The amount of credit left for this month for this promotion.
                 example:  "10.00"
+              service_type:
+                type: string
+                enum:
+                  - all
+                  - backup
+                  - blockstorage
+                  - db_mysql
+                  - ip_v4
+                  - linode
+                  - linode_disk
+                  - linode_memory
+                  - longview
+                  - managed
+                  - nodebalancer
+                  - objectstorage
+                  - transfer_tx
+                description: >
+                  The service to which this promotion applies.
+                example: "all"
         active_since:
           type: string
           format: date-time
