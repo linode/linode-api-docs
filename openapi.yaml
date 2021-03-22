@@ -1950,7 +1950,7 @@ paths:
 
         When a transfer is [accepted](/docs/api/account/#service-transfer-accept), the requested services are moved to
         the receiving account. Linode services will not experience interruptions due to the transfer process. Backups
-        for Linodes and are transferred as well.
+        for Linodes are transferred as well.
 
         DNS records that are associated with requested services will not be transferred or updated. Please ensure that
         associated DNS records have been updated or communicated to the recipient prior to the transfer.
