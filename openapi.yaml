@@ -17910,6 +17910,7 @@ components:
           readOnly: true
         ipv4:
           type: array
+          format: ipv4
           items:
             type: string
           example:
@@ -17926,11 +17927,13 @@ components:
           x-linode-cli-display: 10
         ipv6:
           type: string
+          format: ipv6/128
+          nullable: true
           description: >
-            This Linode's IPv6 SLAAC addresses. This address is specific to a Linode, and may not
+            This Linode's IPv6 SLAAC address. This address is specific to a Linode, and may not
             be shared. If the Linode has not been assigned an IPv6 address, the return value will
             be `null`.
-          example: 'c001:d00d::1234'
+          example: 'c001:d00d::1337/128'
           readOnly: true
         specs:
           type: object
