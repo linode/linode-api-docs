@@ -3701,6 +3701,7 @@ paths:
               required:
               - type
               - region
+              - purpose
               type: object
               properties:
                   backup_id:
@@ -3805,67 +3806,7 @@ paths:
                     items:
                       type: string
                   interfaces:
-                    type: object
-                    description: >
-                      The Network Interface(s) to add to this Linode. This field is only required when creating
-                      a Linode that is attached to a Virtual Local Area Network (VLAN).
-
-
-                      **Note**: You must [create the VLAN](/docs/api/networking/#vlan-create) prior to attaching a Linode to it. Linode VLAN is available in Next Generation Network (NGN) [data centers](https://www.linode.com/global-infrastructure/).
-                      This includes Toronto (`ca-central`), Mumbai (`ap-west`), and Sydney (`ap-southeast`). A Linode can only be attached
-                      to a VLAN that resides within the same data center region as the Linode.
-
-                      * A Linode can only have one Network Interface of `type: default`. This is the Linode's
-                      public Network Interface, which allows the Linode to communicate across public networks.
-
-                      * If a single Network Interface of `type:additional` is added to a Linode, the Linode
-                      does not have access to any public networks and is completely private.
-
-                      * You can add up to 3 Network Interfaces, `eth0` - `eth2`.
-
-                      * The Network Interfaces created by this field are also added to this Linode's [Configuration Profile(s)](/docs/api/linode-instances/#configuration-profiles-list).
-                      If needed, you can add an additional Network Interface to a Linode later, by:
-
-                        * [Creating a new Configuration Profile](/docs/api/linode-instances/#configuration-profile-create) or by
-                        [updating an existing Configuration Profile](/docs/api/linode-instances/#configuration-profile-update)
-                        with the additional Network Interface(s)
-
-                        * Then,[booting the Linode](/docs/api/linode-instances/#linode-boot) into the Configuration Profile.
-
-                      * You can omit this field in your POST request and attach this Linode to a VLAN at a
-                      later time by using the [VLAN Attach](/docs/api/networking/#vlan-attach) endpoint.
-
-
-                      **Note:** Once this Linode is created, you can view this Linode's Network Interfaces by
-                      sending a request to the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint.
-                    properties:
-                      eth0:
-                        type: object
-                        description: >
-                          The Network Interface to add to this Linode.
-                        properties:
-                          type:
-                            $ref: '#/components/schemas/Interface/properties/type'
-                          vlan_id:
-                            $ref: '#/components/schemas/Interface/properties/vlan_id'
-                      eth1:
-                        type: object
-                        description: >
-                          The Network Interface to add to this Linode.
-                        properties:
-                          type:
-                            $ref: '#/components/schemas/Interface/properties/type'
-                          vlan_id:
-                            $ref: '#/components/schemas/Interface/properties/vlan_id'
-                      eth2:
-                        type: object
-                        description: >
-                          The Network Interface to add to this Linode.
-                        properties:
-                          type:
-                            $ref: '#/components/schemas/Interface/properties/type'
-                          vlan_id:
-                            $ref: '#/components/schemas/Interface/properties/vlan_id'
+                    $ref: '#/components/schemas/LinodeConfigInterfaces'
       responses:
         '200':
           description: >
@@ -3891,15 +3832,18 @@ paths:
                 "stackscript_data": {
                   "gh_username": "linode"
                 },
-                "interfaces": {
-                  "eth0": {
-                    “type”: “default”,
+                "interfaces": [
+                  {
+                    "purpose":"public",
+                    "label":"",
+                    "ipam_address":""
                   },
-                  "eth1": {
-                    "type": "additional",
-                    "vlan_id": 5432
+                  {
+                    "purpose":"vlan",
+                    "label":"vlan-1",
+                    "ipam_address":"10.0.0.1/24"
                   }
-                },
+                ],
                 "authorized_keys": [
                   "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                 ],
@@ -4749,14 +4693,18 @@ paths:
                 "memory_limit": 2048,
                 "run_level": "default",
                 "virt_mode": "paravirt",
-                "interfaces": {
-                  "eth0" {
-                    "id": 678
+                "interfaces": [
+                  {
+                    "purpose":"public",
+                    "label":"",
+                    "ipam_address":""
                   },
-                  "eth1" {
-                    "id": 679
+                  {
+                    "purpose":"vlan",
+                    "label":"vlan-1",
+                    "ipam_address":"10.0.0.1/24"
                   }
-                },
+                ],
                 "helpers": {
                   "updatedb_disabled": true,
                   "distro": true,
@@ -4782,9 +4730,7 @@ paths:
           linode-cli linodes config-create 7590910 \
             --label "My Config" \
             --devices.sda.disk_id 123456 \
-            --devices.sdb.disk_id 123457 \
-            --interfaces.eth0.id 678 \
-            --interfaces.eth1.id 679
+            --devices.sdb.disk_id 123457
   /linode/instances/{linodeId}/configs/{configId}:
     parameters:
     - name: linodeId
@@ -4923,14 +4869,18 @@ paths:
                 "memory_limit": 2048,
                 "run_level": "default",
                 "virt_mode": "paravirt",
-                "interfaces": {
-                  "eth0" {
-                    "id": 678
+                "interfaces": [
+                  {
+                    "purpose":"public",
+                    "label":"",
+                    "ipam_address":""
                   },
-                  "eth1" {
-                    "id": 679
+                  {
+                    "purpose":"vlan",
+                    "label":"vlan-1",
+                    "ipam_address":"10.0.0.1/24"
                   }
-                },
+                ],
                 "helpers": {
                   "updatedb_disabled": true,
                   "distro": true,
@@ -4966,9 +4916,7 @@ paths:
             --helpers.devtmpfs_automount false \
             --label "My Config" \
             --devices.sda.disk_id 123456 \
-            --devices.sdb.disk_id 123457 \
-            --interfaces.eth0.id 1 \
-            --interfaces.eth1.id 2
+            --devices.sdb.disk_id 123457
       responses:
         '200':
           description: Configuration profile successfully updated.
@@ -5482,136 +5430,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes firewalls-list 123
-  /linode/instances/{linodeId}/interfaces:
-    parameters:
-    - name: linodeId
-      in: path
-      description: The ID of the Linode for which to lookup its Interfaces.
-      required: true
-      schema:
-        type: integer
-    x-linode-cli-command: linodes
-    get:
-      x-linode-grant: read_only
-      parameters:
-      - $ref: '#/components/parameters/pageOffset'
-      - $ref: '#/components/parameters/pageSize'
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Linode Instances
-      summary: Interfaces List
-      description: |
-        Returns a list of Network Interfaces associated with this Linode.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      operationId: listLinodeInterfaces
-      x-linode-cli-action: interfaces-list
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - linodes:read_only
-      responses:
-        '200':
-          description: |
-            A paginated list of Interfaces associated with this Linode.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Interface'
-                  page:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/linode/instances/123/interfaces
-        - lang: CLI
-          source: >
-            linode-cli linodes interfaces-list
-    post:
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Linode Instances
-      summary: Interface Create
-      description: >
-        Add a public and/or private Network Interface to this Linode. Once the Network Interface(s) is assigned to
-        this Linode, update this Linode's configuration profile with the new Network Interface(s).
-
-
-        This endpoint allows you to manually create Network Interfaces that are attached to virtual local area networks (VLANs)
-        via this Linode's private Network Interface(s).
-
-
-        **Note**: Most users can bypass this endpoint and use the VLAN Create or
-        VLAN Attach endpoints. The VLAN Create and VLAN Attach endpoints automatically create the required public and private Network Interfaces for a Linode, add the Network Interfaces
-        to all of a Linode's Configuration Profiles, and attach a Linode to a VLAN. This endpoint should be used only if the default
-        behavior of the VLAN Create and VLAN Attach endpoints do not work with your Linode's existing Network configurations. See
-        each endpoint for details on their default behavior.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      operationId: addLinodeInterface
-      x-linode-cli-action: interface-create
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - linodes:read_write
-      requestBody:
-        description: >
-          The parameters to set when creating the Configuration profile.
-          This determines which kernel, devices, how much memory, etc. a Linode boots with.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Interface'
-      responses:
-        '200':
-          description: |
-            An Interface was created.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Interface'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "type": "additional",
-                "vlan_id": 789,
-                "description": "example interface"
-            ' \
-              https://api.linode.com/v4beta/linode/instances/123/interfaces
-      - lang: CLI
-        source: >
-          linode-cli linodes interface-create 123 \
-            --type "additional" \
-            --vlan_id 789 \
-            --description "example interface"
   /linode/instances/{linodeId}/ips:
     parameters:
     - name: linodeId
@@ -10902,11 +10720,16 @@ paths:
       tags:
       - Networking
       summary: VLANs List
-      description: >
+      description: |
         Returns a list of all Virtual Local Area Networks (VLANs) on your Account. VLANs provide
         a mechanism for secure communication between two or more Linodes that are assigned to the same
         VLAN and are both within the same Layer 2 broadcast domain.
 
+        VLANs are created and attached to Linodes using the interfaces property for the following endpoints:
+
+        - Linode Create ([POST /linode/instances](/docs/api/linode-instances/#linode-create))
+        - Configuration Profile Create ([POST /linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profile-create))
+        - Configuration Profile Update ([PUT /linode/instances/{linodeId}/configs/{configId}](/docs/api/linode-instances/#configuration-profile-update))
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -10918,6 +10741,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - vlans:read_only
+        - linodes:read_only
       responses:
         '200':
           description: The VLANs available on this Account.
@@ -10946,110 +10770,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli networking vlans-list
-    post:
-      x-linode-grant: add_vlans
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Networking
-      summary: VLAN Create
-      description: >
-        Creates a Virtual Local Area Network (VLAN) in the specified data center region. VLANs provide
-        a mechanism for secure communication between two or more Linodes that are attached to the same
-        VLAN and are both within the same Layer 2 broadcast domain.
-
-        * You can create up to 10 VLANs within each data center region.
-
-        * Use the [Create Linode](/api/v4/linode-instances/#post) endpoint to deploy a new Linode with a Network Interface that is attached
-        to an existing VLAN.
-
-        * To attach an existing Linode to this VLAN, use this endpoint's `linodes` array when creating your VLAN
-        or use the VLANs Attach endpoint.
-
-        * Linode VLAN is available in Next Generation Network (NGN) [data centers](https://www.linode.com/global-infrastructure/).
-        This includes Toronto (`ca-central`), Mumbai (`ap-west`), and Sydney (`ap-southeast`).
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      operationId: createVlan
-      x-linode-cli-action: vlan-create
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - vlans:read_write
-      requestBody:
-        description: Information about the VLAN to create.
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - region
-              properties:
-                region:
-                  $ref: '#/components/schemas/Vlans/properties/region'
-                description:
-                  $ref: '#/components/schemas/Vlans/properties/description'
-                cidr_block:
-                  $ref: '#/components/schemas/Vlans/properties/cidr_block'
-                linodes:
-                  type: array
-                  description: >
-                    An array of Linode IDs to attach to this VLAN. When you attach Linodes to a VLAN using this field, each Linode's
-                    Configuration Profile(s) is updated with a private Network Interface and a public Network Interface if one does not already exist.
-                    Use the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint to view all Network Interfaces associated with a Linode.
-
-
-                    * For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign a public Network Interface and a private Network Interface to a Linode
-                    and use the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
-
-                    * If you do not wish to attach any Linodes to this VLAN, you can omit this field in your POST request.
-
-                    * Use the [List Linodes](/api/v4/linode-instances) endpoint to view all Linode IDs associated
-                    with this Account.
-
-
-                    **Note:** Currently, a VLAN can only be assigned to a Linode
-                    within the same data center region.
-                  items:
-                    type: integer
-                  example: [123, 456, 789]
-      responses:
-        '200':
-          description: VLAN created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Vlans'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "description": "My example VLAN",
-                "region": "ca-central",
-                "linodes": [
-                  123,
-                  456,
-                  789
-                ],
-                "cidr_block": "10.0.0.0/24"
-              }' \
-              https://api.linode.com/v4beta/networking/vlans
-      - lang: CLI
-        source: >
-          linode-cli networking vlan-create \
-            --region ca-central \
-            --description "My example VLAN" \
-            --linodes [123, 456, 789] \
-            --cidr_block "10.0.0.0/24"
   /networking/vlans/{vlanId}:
     parameters:
     - name: vlanId
@@ -11068,12 +10788,18 @@ paths:
       - personalAccessToken: []
       - oauth:
         - vlans:read_only
+        - linodes:read_only
       tags:
       - Networking
       summary: VLAN View
-      description: >
+      description: |
         Lookup the details of a specific VLAN by its ID.
 
+        VLANs are created and attached to Linodes using the interfaces property for the following endpoints:
+
+        - Linode Create ([POST /linode/instances](/docs/api/linode-instances/#linode-create))
+        - Configuration Profile Create ([POST /linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profile-create))
+        - Configuration Profile Update ([PUT /linode/instances/{linodeId}/configs/{configId}](/docs/api/linode-instances/#configuration-profile-update))
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
@@ -11096,195 +10822,6 @@ paths:
       - lang: CLI
         source:
           linode-cli networking vlan-view 12345
-    delete:
-      servers:
-      - url: https://api.linode.com/v4beta
-      operationId: deleteVlan
-      x-linode-cli-action: vlan-delete
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - vlan:read_write
-      tags:
-      - Networking
-      summary: VLAN Delete
-      description: |
-        Deletes a VLAN you have permission to `read_write`. **Deleting a VLAN is a destructive action and cannot be undone.**
-        All Linodes must be detached from the VLAN prior to deletion. Use the [VLAN Detach](/docs/api/networking/#vlan-detach) endpoint to detach a Linode from
-        a VLAN.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      responses:
-        '200':
-          description: Delete successful
-          content:
-            application/json:
-              schema:
-                type: object
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-                -X DELETE \
-                https://api.linode.com/v4beta/networking/vlans/12345
-      - lang: CLI
-        source: >
-          linode-cli networking vlan-delete 12345
-  /networking/vlans/{vlanId}/attach:
-    parameters:
-    - name: vlanId
-      in: path
-      description: ID of the VLAN to look up.
-      required: true
-      schema:
-        type: integer
-    x-linode-cli-command: networking
-    post:
-      x-linode-grant: add_linodes
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Networking
-      summary: VLAN Attach
-      description: >
-        Attach Linodes to an existing VLAN. Attaching a Linode to a VLAN creates a private Network Interface and
-        a public Network Interface if one does not already exist. The Network Interfaces are added to every Configuration Profile
-        belonging to the Linode.
-
-
-        **Note**: Linode VLAN is available in Next Generation Network (NGN) [data centers](https://www.linode.com/global-infrastructure/).
-        This includes Toronto (`ca-central`), Mumbai (`ap-west`), and Sydney (`ap-southeast`). A Linode can only be attached
-        to a VLAN that resides within the same data center region as the Linode.
-
-
-        For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign Network Interfaces to a Linode
-        and the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      operationId: attachVlan
-      x-linode-cli-action: vlan-attach
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - linodes:read_write
-      requestBody:
-        description: Information about which Linodes to attach to this VLAN.
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-              - linodes
-              properties:
-                linodes:
-                  $ref: '#/components/schemas/Vlans/properties/linodes'
-      responses:
-        '200':
-          description: Returns information about this VLAN including the Linodes attached to it.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Vlans'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "linodes": [
-                  123,
-                  456,
-                  789
-                ]
-              }' \
-              https://api.linode.com/v4beta/networking/vlans/12345/attach
-      - lang: CLI
-        source: >
-          linode-cli networking vlan-attach \
-            --linodes [123, 456, 789]
-  /networking/vlans/{vlanId}/detach:
-    parameters:
-    - name: vlanId
-      in: path
-      description: ID of the VLAN to look up.
-      required: true
-      schema:
-        type: integer
-    x-linode-cli-command: networking
-    post:
-      x-linode-grant: add_linodes
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Networking
-      summary: VLAN Detach
-      description: >
-        Detaches a Linode from a VLAN. Detaching a Linode from a VLAN also deletes its corresponding
-        private Network Interface and removes it from the Linode's Configuration Profile(s).
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      operationId: detachVlan
-      x-linode-cli-action: vlan-detach
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - linodes:read_write
-      requestBody:
-        description: Information about which Linodes to detach from to this VLAN.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                linodes:
-                  type: array
-                  description: >
-                    An array of Linode IDs to detach from this VLAN.
-                  items:
-                    type: integer
-                  example: [123, 456, 789]
-      responses:
-        '200':
-          description: Returns information about this VLAN including the Linodes currently attached to it.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Vlans'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST -d '{
-                "linodes": [
-                  123,
-                  456,
-                  789
-                ]
-              }' \
-              https://api.linode.com/v4beta/networking/vlans/12345/detach
-      - lang: CLI
-        source: >
-          linode-cli networking vlan-detach \
-            --linodes [123, 456, 789]
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -17927,93 +17464,63 @@ components:
       description: >
         The Network Interface to apply to this Linode's configuration profile.
       properties:
-        id:
-          type: integer
-          description: >
-            The ID of the Interface to add to this Linode's configuraiton profile.
-            Use the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint to retrieve the Interface ID(s) assigned to this Linode.
-          example: 678
-    LinodeConfigInterfaces:
-      type: object
-      description: >
-        A dictionary of Network Interfaces to add to this Linode's
-        configuration profile.
-
-
-        **Note:** You must create a Network Interface using the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint prior to updating your configuration profile
-        with a Network Interface. If you assigned Network Interfaces to your Lionde when you initially created
-        it, the Network Interface(s) is automatically added to your Linode's configuration profile and you are not required
-        to add the Network Interface with this field.
-      properties:
-        eth0:
-          $ref: '#/components/schemas/LinodeConfigInterface'
-        eth1:
-          $ref: '#/components/schemas/LinodeConfigInterface'
-        eth2:
-          $ref: '#/components/schemas/LinodeConfigInterface'
-    Interface:
-      type: object
-      description: The Network Interface to apply to this Linode.
-      required:
-      - type
-      properties:
-        id:
-          type: integer
-          readOnly: true
-          description: This Interface's unique ID.
-          example: 123
-          x-linode-cli-display: 1
-        type:
+        label:
           type: string
+          minLength: 0
+          maxLength: 64
+          pattern: '/[a-z0-9-]+/'
           description: |
-            The Network Interface type to create. A Network Interface of type:
+            The name of this interface.
 
-            * `default` creates a public Network Interface that accepts external Network traffic.
+            Only used for type `vlan` interfaces. Enter an empty string for type `public` interfaces.
 
-            * `additional` creates a private Network Interface that accepts traffic from a private
-            [virtual local area network (VLAN)](/docs/api/networking/#vlan-create). You must include the `vlan_id` field when creating
-            a private Network Interface.
-          example: 'additional'
-          enum:
-          - default
-          - additional
-          x-linode-cli-display: 2
-        description:
-          type: string
-          description: |
-           The human-readable name for this Network Interface.
+            Interface labels must be unique within the data center region.
           example: example-interface
-          minLength: 1
-          maxLength: 15
-          x-linode-cli-display: 3
-        linode_id:
-          type: integer
-          readOnly: true
-          description: The ID of the Linode this Network Interface is assigned to.
-          example: 456
-          x-linode-cli-display: 4
-        vlan_id:
-          type: integer
+        ipam_address:
+          type: string
+          format: ip/netmask
           description: |
-            The unique ID of the VLAN this Network Interface is assigned to.
+            This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
 
-            Use the [VLANs List](/docs/api/networking/#vlans-list) endpoint to view all your VLAN IDs.
-          example: 789
-          x-linode-cli-display: 5
-        mac_address:
+            Only used for type `vlan` interfaces. Enter an empty string for type `public` interfaces.
+
+            Configuring an IPAM address within the 10.0.0.0/8 block allows for automatic configuration with Network Helper. Addresses outside of this range must be configured manually.
+          example: '10.0.0.1/24'
+        purpose:
           type: string
-          readOnly: true
+          enum:
+            - public
+            - vlan
           description: |
-           This Network Interface's Media Access Control (MAC) address.
-          example: f2:3c:92:8d:bc:00
-          x-linode-cli-display: 6
-        ip_address:
-          type: string
-          readOnly: true
-          description: |
-           This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
-          example: 10.0.0.123/24
-          x-linode-cli-display: 7
+            The type of interface.
+          example: vlan
+    LinodeConfigInterfaces:
+      type: array
+      items:
+        $ref: '#/components/schemas/LinodeConfigInterface'
+      description: |
+        An array of Network Interfaces to add to this Linode's configuration profile.
+
+        **Changes to Linode interface configurations can be enabled by rebooting the Linode with Network Helper enabled.**
+
+        Up to three interfaces can be entered. The position in the array determines the interface to which the settings apply:
+
+        - First/0:  eth0
+        - Second/1: eth1
+        - Third/2:  eth2
+
+        A public interface in the first/eth0 position is automatically assigned the Linode's default public IPv4 address. Only one public interface per Linode can be defined. If no public interface is defined, the Linode will not be reachable via the public internet. Access can only be established via LISH or other Linodes connected by VLAN.
+
+        Adding a type `vlan` interface attaches this Linode to the labelled VLAN. If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. You can view your active VLANs using the [/networking/vlans](/docs/api/networking/#vlans-list) endpoint. Only one interface can be assigned to a particular VLAN for each configuration.
+
+        When updating a Linode's interfaces, each interface must be redefined. An empty array results in a default public interface configuration only.
+
+        To detach a Linode from a VLAN, remove the associated interface from the Linode's configuration, delete the configuration, or delete the Linode.
+
+        **Note:** Only Next Generation Network (NGN) data centers support VLANs.
+        If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
+        the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
+        you will be prompted to select a different data center or contact support.
     Invoice:
       type: object
       description: Account Invoice object
@@ -18871,6 +18378,7 @@ components:
       required:
       - label
       - devices
+      - purpose
       properties:
         id:
           type: integer
@@ -22155,93 +21663,37 @@ components:
             of the Linodes you deploy.
     Vlans:
       type: object
-      required:
-      - region
       description: >
        A virtual local area network (VLAN) associated with your Account.
       properties:
-        id:
-          type: integer
-          description: The unique ID of this VLAN.
-          example: 12345
-          readOnly: true
-          x-linode-cli-display: 1
-          x-linode-filterable: true
-        description:
+        label:
           type: string
-          description: >
-            Information about this VLAN for your own organizational purposes.
-          example: "My example VLAN"
-          minLength: 1
-          maxLength: 64
+          description: The name of this VLAN. Labels must be unique within each data center region.
+          example: vlan-example
+          readOnly: true
           x-linode-cli-display: 2
+          x-linode-filterable: true
         region:
           type: string
-          description: >
+          description: |
             This VLAN's data center region.
-
 
             **Note:** Currently, a VLAN can only be assigned to a Linode
             within the same data center region.
-          example: ca-central
-          x-linode-cli-display: 3
+          example:  ap-west
+          x-linode-cli-display: 1
           x-linode-filterable: true
         linodes:
           type: array
           description: >
-            An array of Linode IDs to attach to this VLAN. When you attach Linodes to a VLAN using this field, each Linode's
-            Configuration Profile(s) is updated with a private Network Interface and a public Network Interface if one does not already exist.
-            Use the [Interfaces List](/docs/api/linode-instances/#interfaces-list) endpoint to view all Network Interfaces associated with a Linode.
-
-
-            * For more fine-grained control, use the [Interface Create](/docs/api/linode-instances/#interface-create) endpoint to assign a public Network Interface and a private Network Interface to a Linode
-            and use the [Configuration Profile Update](/docs/api/linode-instances/#configuration-profile-update) endpoint to add the Network Interface(s) to a specific Configuration Profile belonging to a Linode.
-
-            * If you do not wish to attach any Linodes to this VLAN, you can omit this field in your POST request.
-
-            * Use the [List Linodes](/api/v4/linode-instances) endpoint to view all Linode IDs associated
-            with this Account.
-
-
-            **Note:** Currently, a VLAN can only be assigned to a Linode
-            within the same data center region.
+            An array of Linode IDs attached to this VLAN.
           items:
-            type: object
-            properties:
-              id:
-                description: >
-                  The unique ID of this Linode.
-                type: integer
-                example: 123
-              mac_address:
-                type: string
-                description: >
-                  This Linode's Media Access Control (MAC) address.
-                example: f2:3c:92:8d:bc:00
-              ipv4_address:
-                type: string
-                description: >
-                  This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
-                example: 10.0.0.123/24
-          x-linode-cli-display: 5
+            type: integer
+          x-linode-cli-display: 3
           readOnly: true
-        cidr_block:
-          type: string
-          description: >
-            A Classless Inter-Domain Routing (CIDR) block allows for simple IP Address Management (IPAM)
-            for this VLAN.
-
-            * This value must be within the IPv4 private range, `10.0.0.0/8` to `10.0.0.0/24`.
-
-            * If a value is specified, Linodes that are attached to this VLAN are assigned
-            a private IPv4 address from within the `cidr_block` range.
-
-            * If no value is passed to this field when creating your VLAN, your Linode does
-            not receive an assigned IPv4 address and the  `/8` to `/24` range restrictions are not applied.
-            In this case, any networking configurations should be done manually using the Create Interface endpoint
-            and the Linode's Network Interfaces file.
-          example: 10.0.0.0/24
-          x-linode-cli-display: 4
+          example:
+            - 111
+            - 222
         created:
           type: string
           format: date-time
@@ -22249,7 +21701,6 @@ components:
             The date this VLAN was created.
           example: "2020-01-01T00:01:01"
           readOnly: true
-          x-linode-cli-display: 6
     Volume:
       type: object
       required:
