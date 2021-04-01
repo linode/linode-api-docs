@@ -18343,6 +18343,8 @@ components:
             To prevent a loop, Lassie will give up if there have been more than 5 boot
             jobs issued within 15 minutes.
           example: true
+        interfaces:
+          $ref: '#/components/schemas/LinodeConfigInterfaces'
     LinodeBase:
       type: object
       description: Common properties for Linode Request and Response objects.
