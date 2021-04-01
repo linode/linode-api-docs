@@ -3834,14 +3834,14 @@ paths:
                 },
                 "interfaces": [
                   {
-                    "purpose":"public",
-                    "label":"",
-                    "ipam_address":""
+                    "purpose": "public",
+                    "label": null,
+                    "ipam_address": null
                   },
                   {
-                    "purpose":"vlan",
-                    "label":"vlan-1",
-                    "ipam_address":"10.0.0.1/24"
+                    "purpose": "vlan",
+                    "label": "vlan-1",
+                    "ipam_address": "10.0.0.1/24"
                   }
                 ],
                 "authorized_keys": [
@@ -4695,14 +4695,14 @@ paths:
                 "virt_mode": "paravirt",
                 "interfaces": [
                   {
-                    "purpose":"public",
-                    "label":"",
-                    "ipam_address":""
+                    "purpose": "public",
+                    "label": null,
+                    "ipam_address": null
                   },
                   {
-                    "purpose":"vlan",
-                    "label":"vlan-1",
-                    "ipam_address":"10.0.0.1/24"
+                    "purpose": "vlan",
+                    "label": "vlan-1",
+                    "ipam_address": "10.0.0.1/24"
                   }
                 ],
                 "helpers": {
@@ -4871,14 +4871,14 @@ paths:
                 "virt_mode": "paravirt",
                 "interfaces": [
                   {
-                    "purpose":"public",
-                    "label":"",
-                    "ipam_address":""
+                    "purpose": "public",
+                    "label": null,
+                    "ipam_address": null
                   },
                   {
-                    "purpose":"vlan",
-                    "label":"vlan-1",
-                    "ipam_address":"10.0.0.1/24"
+                    "purpose": "vlan",
+                    "label": "vlan-1",
+                    "ipam_address": "10.0.0.1/24"
                   }
                 ],
                 "helpers": {
@@ -17469,20 +17469,22 @@ components:
           minLength: 0
           maxLength: 64
           pattern: '/[a-z0-9-]+/'
+          nullable: true
           description: |
             The name of this interface.
 
-            Only used for type `vlan` interfaces. Enter an empty string for type `public` interfaces.
+            Only used for type `vlan` interfaces. Enter `null` for type `public` interfaces.
 
             Interface labels must be unique within the data center region.
           example: example-interface
         ipam_address:
           type: string
           format: ip/netmask
+          nullable: true
           description: |
             This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
 
-            Only used for type `vlan` interfaces. Enter an empty string for type `public` interfaces.
+            Only used for type `vlan` interfaces. Enter `null` for type `public` interfaces.
 
             Configuring an IPAM address within the 10.0.0.0/8 block allows for automatic configuration with Network Helper. Addresses outside of this range must be configured manually.
           example: '10.0.0.1/24'
