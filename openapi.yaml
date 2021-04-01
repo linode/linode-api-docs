@@ -10728,6 +10728,7 @@ paths:
         VLANs are created and attached to Linodes using the interfaces property for the following endpoints:
 
         - Linode Create ([POST /linode/instances](/docs/api/linode-instances/#linode-create))
+        - Linode Update ([PUT /linode/instances/{linodeId}](/docs/api/linode-instances/#linode-update))
         - Configuration Profile Create ([POST /linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profile-create))
         - Configuration Profile Update ([PUT /linode/instances/{linodeId}/configs/{configId}](/docs/api/linode-instances/#configuration-profile-update))
 
@@ -10770,58 +10771,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli networking vlans-list
-  /networking/vlans/{vlanId}:
-    parameters:
-    - name: vlanId
-      in: path
-      description: ID of the VLAN to look up.
-      required: true
-      schema:
-        type: integer
-    x-linode-cli-command: networking
-    get:
-      servers:
-      - url: https://api.linode.com/v4beta
-      operationId: getVlan
-      x-linode-cli-action: vlan-view
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - vlans:read_only
-        - linodes:read_only
-      tags:
-      - Networking
-      summary: VLAN View
-      description: |
-        Lookup the details of a specific VLAN by its ID.
-
-        VLANs are created and attached to Linodes using the interfaces property for the following endpoints:
-
-        - Linode Create ([POST /linode/instances](/docs/api/linode-instances/#linode-create))
-        - Configuration Profile Create ([POST /linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profile-create))
-        - Configuration Profile Update ([PUT /linode/instances/{linodeId}/configs/{configId}](/docs/api/linode-instances/#configuration-profile-update))
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      responses:
-        '200':
-          description: Returns a single VLAN.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Vlans'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/networking/vlans/12345
-      - lang: CLI
-        source:
-          linode-cli networking vlan-view 12345
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -17466,10 +17415,11 @@ components:
       properties:
         label:
           type: string
-          minLength: 0
+          minLength: 1
           maxLength: 64
           pattern: '/[a-z0-9-]+/'
           nullable: true
+          x-linode-filterable: true
           description: |
             The name of this interface.
 
