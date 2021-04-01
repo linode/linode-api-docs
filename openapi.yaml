@@ -17436,6 +17436,8 @@ components:
 
             Only used for type `vlan` interfaces. Enter `null` for type `public` interfaces.
 
+            Must be unique among all interfaces in the data center region.
+
             Configuring an IPAM address within the 10.0.0.0/8 block allows for automatic configuration with Network Helper. Addresses outside of this range must be configured manually.
           example: '10.0.0.1/24'
         purpose:
