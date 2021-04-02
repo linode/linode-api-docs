@@ -17982,36 +17982,41 @@ components:
           readOnly: true
     Linode:
       type: object
-      allOf:
-      - $ref: '#/components/schemas/LinodeBase'
       properties:
         label:
           x-linode-filterable: true
           x-linode-cli-display: 2
-          description: >
+          type: string
+          description: |
             The Linode's label is for display purposes only. If no label is provided for a Linode,
             a default will be assigned.
 
             Linode labels have the following constraints:
 
-              * Must start with an alpha character.
+              * Must begin and end with an alphanumeric character.
               * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
               * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
+          example: linode123
+          minLength: 3
+          maxLength: 32
+          pattern: '^[a-zA-Z]((?!--|__|..)[a-zA-Z0-9-_.])+$'
         region:
+          type: string
           x-linode-filterable: true
           readOnly: true
           description: >
-            This is the location where the Linode was deployed. A Linode's region can only be changed by
+            This is the [Region](/docs/api/regions/#regions-list) where the Linode was deployed. A Linode's region can only be changed by
             initiating a [cross data center migration](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate).
-          x-linode-cli-display: 4
+          x-linode-cli-display: 3
         image:
           x-linode-filterable: true
           readOnly: true
           nullable: true
           allOf:
           - $ref: '#/components/schemas/DiskRequest/properties/image'
-          x-linode-cli-display: 6
+          x-linode-cli-display: 5
         type:
+          type: string
           readOnly: true
           description: >
             This is the [Linode Type](/docs/api/linode-types/#types-list) that this
@@ -18019,7 +18024,7 @@ components:
 
             To change a Linode's Type, use
             [POST /linode/instances/{linodeId}/resize](/docs/api/linode-instances/#linode-resize).
-          x-linode-cli-display: 5
+          x-linode-cli-display: 4
         group:
           deprecated: true
           type: string
@@ -18067,7 +18072,7 @@ components:
           - cloning
           - restoring
           - stopped
-          x-linode-cli-display: 7
+          x-linode-cli-display: 6
           x-linode-cli-color:
               running: green
               offline: red
@@ -18108,7 +18113,7 @@ components:
 
             IPv4 addresses may be reassigned between your Linodes, or shared with other Linodes.
             See the [/networking](/docs/api/networking/) endpoints for details.
-          x-linode-cli-display: 10
+          x-linode-cli-display: 7
         ipv6:
           type: string
           format: ipv6/128
@@ -18295,36 +18300,6 @@ components:
             To prevent a loop, Lassie will give up if there have been more than 5 boot
             jobs issued within 15 minutes.
           example: true
-    LinodeBase:
-      type: object
-      description: Common properties for Linode Request and Response objects.
-      properties:
-        label:
-          type: string
-          description: >
-            The Linode's label is for display purposes only. If no label is provided for a Linode,
-            a default will be assigned.
-
-            Linode labels have the following constraints:
-
-              * Must begin and end with an alphanumeric character.
-              * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
-              * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
-          example: linode123
-          minLength: 3
-          maxLength: 32
-          pattern: '^[a-zA-Z]((?!--|__|..)[a-zA-Z0-9-_.])+$'
-        group:
-          deprecated: true
-          type: string
-          x-linode-filterable: true
-          description: >
-            A deprecated property denoting a group label for this Linode.
-          example: "Linode-Group"
-        type:
-          $ref: '#/components/schemas/LinodeType/properties/id'
-        region:
-          $ref: '#/components/schemas/Region/properties/id'
     LinodeConfig:
       type: object
       required:
