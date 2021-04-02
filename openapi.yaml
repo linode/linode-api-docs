@@ -3835,8 +3835,8 @@ paths:
                 "interfaces": [
                   {
                     "purpose": "public",
-                    "label": null,
-                    "ipam_address": null
+                    "label": "",
+                    "ipam_address": ""
                   },
                   {
                     "purpose": "vlan",
@@ -4696,8 +4696,8 @@ paths:
                 "interfaces": [
                   {
                     "purpose": "public",
-                    "label": null,
-                    "ipam_address": null
+                    "label": "",
+                    "ipam_address": ""
                   },
                   {
                     "purpose": "vlan",
@@ -4872,8 +4872,8 @@ paths:
                 "interfaces": [
                   {
                     "purpose": "public",
-                    "label": null,
-                    "ipam_address": null
+                    "label": "",
+                    "ipam_address": ""
                   },
                   {
                     "purpose": "vlan",
@@ -17418,27 +17418,25 @@ components:
           minLength: 1
           maxLength: 64
           pattern: '/[a-z0-9-]+/'
-          nullable: true
           x-linode-filterable: true
           description: |
             The name of this interface.
 
-            Only used for type `vlan` interfaces. Enter `null` for type `public` interfaces.
+            Required for purpose `vlan` interfaces. Enter an empty string for purpose `public` interfaces.
 
-            Interface labels must be unique within the data center region.
+            Must include only ASCII letters, numbers, and dashes.
+
+            Must be unique among a Linode's interfaces.
           example: example-interface
         ipam_address:
           type: string
           format: ip/netmask
-          nullable: true
           description: |
             This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
 
-            Only used for type `vlan` interfaces. Enter `null` for type `public` interfaces.
+            Only used for type `vlan` interfaces. Enter an empty string for type `public` interfaces.
 
-            Must be unique among all interfaces in the data center region.
-
-            Configuring an IPAM address within the 10.0.0.0/8 block allows for automatic configuration with Network Helper. Addresses outside of this range must be configured manually.
+            Must be unique among a Linode's interfaces.
           example: '10.0.0.1/24'
         purpose:
           type: string
@@ -18297,8 +18295,6 @@ components:
             To prevent a loop, Lassie will give up if there have been more than 5 boot
             jobs issued within 15 minutes.
           example: true
-        interfaces:
-          $ref: '#/components/schemas/LinodeConfigInterfaces'
     LinodeBase:
       type: object
       description: Common properties for Linode Request and Response objects.
