@@ -18777,16 +18777,20 @@ components:
           x-linode-cli-display: 2
         api_key:
           type: string
-          description: >
+          description: |
             The API key for this Client, used when configuring the Longview
             Client application on your Linode.
+
+            Returns as `[REDACTED]` if you do not have read-write access to this client.
           example: BD1B4B54-D752-A76D-5A9BD8A17F39DB61
           readOnly: true
         install_code:
           type: string
-          description: >
+          description: |
             The install code for this Client, used when configuring the Longview
             Client application on your Linode.
+
+            Returns as `[REDACTED]` if you do not have read-write access to this client.
           example: BD1B5605-BF5E-D385-BA07AD518BE7F321
           readOnly: true
           x-linode-cli-display: 4
