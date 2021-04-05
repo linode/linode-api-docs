@@ -10687,9 +10687,9 @@ paths:
 
         To detach a Linode from a VLAN, [update](/docs/api/linode-instances/#configuration-profile-update) the Configuration Profile to remove the associated interface or [delete](/docs/api/linode-instances/#configuration-profile-delete) the Configuration Profile, then reboot the Linode. Alternatively, you can [delete](/docs/api/linode-instances/#linode-delete) the Linode.
 
-        **Note:** Only Next Generation Network (NGN) data centers support VLANs.
+        **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
-        the migration or cloning will not initiate. If a Linode cannot be migrated or cloned because of an incompatibility,
+        the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
@@ -10701,7 +10701,6 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - vlans:read_only
         - linodes:read_only
       responses:
         '200':
@@ -17378,10 +17377,11 @@ components:
           maxLength: 64
           pattern: '/[a-z0-9-]+/'
           x-linode-filterable: true
+          nullable: true
           description: |
             The name of this interface.
 
-            Required for `vlan` purpose interfaces. An empty string is required for `public` purpose interfaces.
+            Required for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
 
             If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. To view your active VLANs, use the [VLANs List](/docs/api/networking/#vlans-list) endpoint.
 
@@ -17392,10 +17392,13 @@ components:
         ipam_address:
           type: string
           format: ip/netmask
+          nullable: true
           description: |
             This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
 
-            Only used for `vlan` purpose interfaces. An empty string is required for `public` purpose interfaces.
+            Only used for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
+
+            The Linode is configured to use this address for the associated interface upon reboot if Network Helper is enabled. If Network Helper is disabled, the address can be enabled with [manual static IP configuration](/docs/guides/linux-static-ip-configuration/).
 
             Must be unique among the Linode's interfaces.
           example: '10.0.0.1/24'
@@ -17407,9 +17410,15 @@ components:
           description: |
             The type of interface.
 
-            A `public` purpose interface in the first/eth0 position is automatically configured with the Linode's default public IPv4 address. Only one `public` interface per Linode can be defined, and only a `public` interface in the first/eth0 position is automatically configured. If no `public` interface is defined, the Linode is not reachable via the public internet; access can only be established via LISH or other Linodes connected to the same VLAN.
+            * `public`
+              * Only one `public` interface per Linode can be defined.
+              * The Linode's default public IPv4 address is assigned to the `public` interface.
+              * A Linode must have a `public` interface in the first/eth0 position to be reachable via the public internet upon boot without additional required configuration.
+              * If no `public` interface is defined, the Linode is not reachable via the public internet; access can only be established via LISH or other Linodes connected to the same VLAN.
 
-            Configuring a `vlan` purpose interface attaches this Linode to the labeled VLAN.
+            * `vlan`
+              * Configuring a `vlan` purpose interface attaches this Linode to the VLAN with the specified `label`.
+              * The Linode is configured to use the specified `ipam_address`, if any.
           example: vlan
     LinodeConfigInterfaces:
       type: array
@@ -17426,9 +17435,9 @@ components:
 
         When updating a Linode's interfaces, *each interface must be redefined*. An empty interfaces array results in a default public interface configuration only.
 
-        **Note:** Changes to Linode interface configurations can be enabled by rebooting the Linode with Network Helper enabled. If Network Helper is disabled or an incompatible configuration is used, the configuration can be enabled with [manual static IP configuration](/docs/guides/linux-static-ip-configuration/).
+        **Note:** Changes to Linode interface configurations can be enabled by rebooting the Linode.
 
-        **Note:** Only Next Generation Network (NGN) data centers support VLANs.
+        **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
@@ -21561,7 +21570,7 @@ components:
       properties:
         label:
           type: string
-          description: The name of this VLAN. Labels must be unique within each data center region.
+          description: The name of this VLAN.
           example: vlan-example
           readOnly: true
           x-linode-cli-display: 2
