@@ -10692,7 +10692,7 @@ paths:
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
 
-        **Beta**: This endpoint is in beta. Gain access to use VLANs by signing up for our [Green Light Beta Program](https://www.linode.com/green-light/). Please make sure to prepend all requests with
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
         updates in the future. This notice will be removed when this endpoint is out of
         beta.
@@ -17442,7 +17442,7 @@ components:
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
 
-        **Beta**: The VLAN feature is in beta. Gain access to use VLANs by signing up for our [Green Light Beta Program](https://www.linode.com/green-light/). Please make be aware that this feature may receive breaking updates in
+        **Beta**: The VLAN feature is in beta. Please make be aware that this feature may receive breaking updates in
         the future. This notice will be removed when this feature is out of beta.
     Invoice:
       type: object
