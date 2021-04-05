@@ -1971,7 +1971,7 @@ paths:
 
         1. Linodes must not:
 
-            * be assigned to a NodeBalancer, Firewall, or Managed Service.
+            * be assigned to a NodeBalancer, Firewall, VLAN, or Managed Service.
 
             * have any attached Block Storage Volumes.
 
@@ -2152,7 +2152,7 @@ paths:
 
         1. Linodes must not:
 
-            * be assigned to a NodeBalancer, Firewall, or Managed Service.
+            * be assigned to a NodeBalancer, Firewall, VLAN, or Managed Service.
 
             * have any attached Block Storage Volumes.
 
