@@ -15537,7 +15537,7 @@ components:
 
             - May only consist of letters, numbers, spaces, and hyphens.
             - Must not contain more than 9 letter or number characters.
-          example: 19102
+          example: 19102-1234
     AccountSettings:
       type: object
       description: Account Settings object
