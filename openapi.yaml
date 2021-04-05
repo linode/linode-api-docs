@@ -17420,7 +17420,6 @@ components:
             * `public`
               * Only one `public` interface per Linode can be defined.
               * The Linode's default public IPv4 address is assigned to the `public` interface.
-              * A Linode must have a `public` interface in the first/eth0 position to be reachable via the public internet upon boot without additional required configuration.
               * If no `public` interface is defined, the Linode is not reachable via the public internet; access can only be established via LISH or other Linodes connected to the same VLAN.
 
             * `vlan`
