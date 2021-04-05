@@ -550,12 +550,16 @@ paths:
       tags:
       - Account
       summary: Credit Card Add/Edit
-      description: >
+      description: |
         Adds/edit credit card information to your Account.
 
         Only one credit card can be associated with your Account, so using this
         endpoint will overwrite your currently active card information with the
         new credit card.
+
+        To use this endpoint, you must have a valid `zip` entered for your Account.
+        Use the Account Update ([PUT /account](/docs/api/account/#account-update))
+        endpoint to enter a new zip code.
       operationId: createCreditCard
       x-linode-cli-action: update-card
       security:
@@ -15590,9 +15594,12 @@ components:
           example: E1AF5EEC-526F-487D-B317EBEB34C87D71
         zip:
           type: string
-          description: The zip code of this Account's billing address.
-          maxLength: 16
-          example: 19102
+          description: |
+            The zip code of this Account's billing address. The following restrictions apply:
+
+            - May only consist of letters, numbers, spaces, and hyphens.
+            - Must not contain more than 9 letter or number characters.
+          example: 19102-1234
     AccountSettings:
       type: object
       description: Account Settings object
@@ -15803,7 +15810,7 @@ components:
             A list of the disks that are part of the Backup.
     CreditCard:
       type: object
-      description: >
+      description: |
         An object representing the credit card information you have on file with
         Linode to make Payments against your Account.
       required:
