@@ -4754,8 +4754,7 @@ paths:
           application/json:
             schema:
               required:
-              - label
-              - devices
+              - purpose
               properties:
                 id:
                   $ref: '#/components/schemas/LinodeConfig/properties/id'
