@@ -10688,7 +10688,15 @@ paths:
         - Configuration Profile Create ([POST /linode/instances/{linodeId}/configs](/docs/api/linode-instances/#configuration-profile-create))
         - Configuration Profile Update ([PUT /linode/instances/{linodeId}/configs/{configId}](/docs/api/linode-instances/#configuration-profile-update))
 
-        To detach a Linode from a VLAN, [update](/docs/api/linode-instances/#configuration-profile-update) the Configuration Profile to remove the associated interface or [delete](/docs/api/linode-instances/#configuration-profile-delete) the Configuration Profile, then reboot the Linode. Alternatively, you can [delete](/docs/api/linode-instances/#linode-delete) the Linode.
+        There are several ways to detach a VLAN from a Linode:
+
+        - [Update](/docs/api/linode-instances/#configuration-profile-update) the active Configuration Profile to remove the VLAN interface, then [reboot](/docs/api/linode-instances/#linode-reboot) the Linode.
+        - [Create](/docs/api/linode-instances/#configuration-profile-create) a new Configuration Profile without the VLAN interface, then [reboot](/docs/apilinode-instances/#linode-reboot) the Linode into the new Configuration Profile.
+        - [Delete](/docs/api/linode-instances/#linode-delete) the Linode.
+
+        **VLANs cannot be manually renamed.** If a VLAN's label must be changed, create a new VLAN and attach all required Linodes to it.
+
+        **VLANs cannot be manually deleted.** There is no need to manually delete a VLAN. If a VLAN is no longer needed, detach it from all Linodes. A VLANs that are not attached to any Linodes are automatically deleted within a short timeframe.
 
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
