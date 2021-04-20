@@ -3474,7 +3474,8 @@ paths:
   /images/upload:
     x-linode-cli-command: images
     post:
-      tags: Images
+      tags:
+      - Images
       summary: Upload Image
       description: >
         Initiates a Machine Image upload.
@@ -3527,7 +3528,7 @@ paths:
                     type: string
                     description: The URL to upload the image to.
                   image:
-                    $ref: '#/components/schemas/Image'
+                    $ref: '#/components/schemas/ImagePrivate'
         default:
           $ref: '#/components/responses/ErrorResponse'
   /images/{imageId}:
