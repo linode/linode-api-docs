@@ -3474,6 +3474,8 @@ paths:
   /images/upload:
     x-linode-cli-command: images
     post:
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Images
       summary: Upload Image
