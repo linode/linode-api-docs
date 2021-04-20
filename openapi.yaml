@@ -17330,6 +17330,20 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+        status:
+          x-linode-cli-display: 7
+          type: string
+          enum:
+          - creating
+          - pending_upload
+          - available
+          description: |
+            The current status of this Image.  Only images in an "available" status
+            can be deployed.  Images in a "creating" status are being created from
+            a Linode Disk, and will become "available" shortly.  Images in a
+            "pending_upload" status are waiting for data to be uploaded for the
+            image, and will become "available" after the upload is complete and
+            processing occurs.
     ImagePublic:
       type: object
       description: Public Image object
@@ -17433,6 +17447,16 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+        status:
+          x-linode-cli-display: 7
+          type: string
+          enum:
+          - creating
+          - pending_upload
+          - available
+          description: |
+            The current status of this Image.  Only images in an "available" status
+            can be deployed.
     LinodeConfigInterface:
       type: object
       description: >
