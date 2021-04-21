@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.90.0
+  version: 4.90.1
 
   title: Linode API
   description: |
@@ -3478,33 +3478,37 @@ paths:
       - url: https://api.linode.com/v4beta
       tags:
       - Images
-      summary: Upload Image
-      description: >
+      summary: Machine Image Upload
+      description: |
         Initiates a Machine Image upload.
 
         This endpoint creates a new private Image object and returns it, along
-        with the URL the image data should be uploaded to.  Images must be uploaded
-        within 24 hours of creation or the upload will be cancelled.  Image uploads
-        should be made as an HTTP PUT request to the returned URL, with a
+        with the URL the image data should be uploaded to.
+
+        - Machine Images must be uploaded within 24 hours of creation or the upload will be cancelled.
+
+        - Machine Image uploads should be made as an HTTP PUT request to the returned URL, with a
         `Content-type: application/octet-stream` header included in the request.
-        Uploaded image data should be in gzip format.  A maximum file size of
+
+        - Uploaded image data should be in gzip format. A maximum file size of
         5GB is supported for upload at this time.
 
-        *NOTE* This endpoint is currently in beta, and is only available to users
-        who are a part of the beta.  You may see a 404 error returned from this
-        endpoint if you are not currently enrolled - open a support ticket to
-        sign up to join the beta when space becomes available.
+        This endpoint is currently in **alpha** and not publicly accessible. This notice will be updated when this endpoint placed in
+        beta.
       x-linode-cli-action: upload
       security:
       - personalAccessToken: []
       - oauth:
         - images:read_write
       requestBody:
-        description: The data
+        description: The Machine Image details.
         content:
           application/json:
             schema:
               type: object
+              required:
+                - label
+                - region
               properties:
                 region:
                   type: string
@@ -3512,15 +3516,15 @@ paths:
                   example: eu-central
                 label:
                   type: string
-                  description: Label for the new image.
+                  description: Label for the new Machine Image.
                   example: my-image-label
                 description:
                   type: string
-                  description: Description for the image.
+                  description: Description for the Machine Image.
                   example: This is an example image in the docs.
       responses:
         '200':
-          description: The new image and upload url.
+          description: The new Machine Image upload URL.
           content:
             application/json:
               schema:
@@ -3528,11 +3532,28 @@ paths:
                 properties:
                   upload_url:
                     type: string
-                    description: The URL to upload the image to.
+                    description: The URL to upload the Machine Image to.
                   image:
                     $ref: '#/components/schemas/ImagePrivate'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "This is an example Machine Image.",
+                "label": "example-machine-image-label",
+                "region": "us-east"
+              }' \
+              https://api.linode.com/v4/images
+      - lang: CLI
+        source: >
+          linode-cli images upload \
+            --label example-machine-image-label \
+            --description "This is an example Machine Image."
+            --region us-east
   /images/{imageId}:
     x-linode-cli-command: images
     parameters:
