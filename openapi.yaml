@@ -3501,7 +3501,7 @@ paths:
       - oauth:
         - images:read_write
       requestBody:
-        description: The data
+        description: The Machine Image details.
         content:
           application/json:
             schema:
@@ -3524,7 +3524,7 @@ paths:
                   example: This is an example image in the docs.
       responses:
         '200':
-          description: The new image and upload url.
+          description: The new Machine Image upload URL.
           content:
             application/json:
               schema:
@@ -3532,11 +3532,28 @@ paths:
                 properties:
                   upload_url:
                     type: string
-                    description: The URL to upload the image to.
+                    description: The URL to upload the Machine Image to.
                   image:
                     $ref: '#/components/schemas/ImagePrivate'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "This is an example Machine Image.",
+                "label": "example-machine-image-label",
+                "region": "us-east"
+              }' \
+              https://api.linode.com/v4/images
+      - lang: CLI
+        source: >
+          linode-cli images upload \
+            --label example-machine-image-label \
+            --description "This is an example Machine Image."
+            --region us-east
   /images/{imageId}:
     x-linode-cli-command: images
     parameters:
