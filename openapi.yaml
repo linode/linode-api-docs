@@ -3471,6 +3471,89 @@ paths:
             --description "A longer description \
               of the image" \
             --disk_id 123
+  /images/upload:
+    x-linode-cli-command: images
+    post:
+      servers:
+      - url: https://api.linode.com/v4beta
+      tags:
+      - Images
+      summary: Machine Image Upload
+      description: |
+        Initiates a Machine Image upload.
+
+        This endpoint creates a new private Image object and returns it, along
+        with the URL the image data should be uploaded to.
+
+        - Machine Images must be uploaded within 24 hours of creation or the upload will be cancelled.
+
+        - Machine Image uploads should be made as an HTTP PUT request to the returned URL, with a
+        `Content-type: application/octet-stream` header included in the request.
+
+        - Uploaded image data should be in gzip format. A maximum file size of
+        5GB is supported for upload at this time.
+
+        This endpoint is currently in **alpha** and not publicly accessible. This notice will be updated when this endpoint placed in
+        beta.
+      x-linode-cli-action: upload
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - images:read_write
+      requestBody:
+        description: The Machine Image details.
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - label
+                - region
+              properties:
+                region:
+                  type: string
+                  description: The region to upload to.
+                  example: eu-central
+                label:
+                  type: string
+                  description: Label for the new Machine Image.
+                  example: my-image-label
+                description:
+                  type: string
+                  description: Description for the Machine Image.
+                  example: This is an example image in the docs.
+      responses:
+        '200':
+          description: The new Machine Image upload URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  upload_url:
+                    type: string
+                    description: The URL to upload the Machine Image to.
+                  image:
+                    $ref: '#/components/schemas/ImagePrivate'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "description": "This is an example Machine Image.",
+                "label": "example-machine-image-label",
+                "region": "us-east"
+              }' \
+              https://api.linode.com/v4/images
+      - lang: CLI
+        source: >
+          linode-cli images upload \
+            --label example-machine-image-label \
+            --description "This is an example Machine Image."
+            --region us-east
   /images/{imageId}:
     x-linode-cli-command: images
     parameters:
@@ -17277,6 +17360,20 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+        status:
+          x-linode-cli-display: 7
+          type: string
+          enum:
+          - creating
+          - pending_upload
+          - available
+          description: |
+            The current status of this Image.  Only images in an "available" status
+            can be deployed.  Images in a "creating" status are being created from
+            a Linode Disk, and will become "available" shortly.  Images in a
+            "pending_upload" status are waiting for data to be uploaded for the
+            image, and will become "available" after the upload is complete and
+            processing occurs.
     ImagePublic:
       type: object
       description: Public Image object
@@ -17380,6 +17477,16 @@ components:
           x-linode-cli-color:
             None: black
             default_: white
+        status:
+          x-linode-cli-display: 7
+          type: string
+          enum:
+          - creating
+          - pending_upload
+          - available
+          description: |
+            The current status of this Image.  Only images in an "available" status
+            can be deployed.
     LinodeConfigInterface:
       type: object
       description: >
