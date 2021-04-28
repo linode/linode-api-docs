@@ -3554,7 +3554,7 @@ paths:
         source: >
           linode-cli images upload \
             --label example-machine-image-label \
-            --description "This is an example Machine Image."
+            --description "This is an example Machine Image." \
             --region us-east
   /images/{imageId}:
     x-linode-cli-command: images
