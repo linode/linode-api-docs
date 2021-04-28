@@ -3493,7 +3493,9 @@ paths:
         - Uploaded image data should be in gzip format. A maximum file size of
         5GB is supported for upload at this time.
 
-        This endpoint is currently in **alpha** and not publicly accessible. This notice will be updated when this endpoint placed in
+        This endpoint is currently in **beta**. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
         beta.
       x-linode-cli-action: upload
       security:
