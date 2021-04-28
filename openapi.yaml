@@ -3549,12 +3549,12 @@ paths:
                 "label": "example-machine-image-label",
                 "region": "us-east"
               }' \
-              https://api.linode.com/v4/images
+              https://api.linode.com/v4/images/upload
       - lang: CLI
         source: >
           linode-cli images upload \
             --label example-machine-image-label \
-            --description "This is an example Machine Image."
+            --description "This is an example Machine Image." \
             --region us-east
   /images/{imageId}:
     x-linode-cli-command: images
