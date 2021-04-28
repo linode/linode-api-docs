@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.90.1
+  version: 4.90.3
 
   title: Linode API
   description: |
@@ -3493,7 +3493,9 @@ paths:
         - Uploaded image data should be in gzip format. A maximum file size of
         5GB is supported for upload at this time.
 
-        This endpoint is currently in **alpha** and not publicly accessible. This notice will be updated when this endpoint placed in
+        This endpoint is currently in **beta**. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
         beta.
       x-linode-cli-action: upload
       security:
@@ -16603,6 +16605,7 @@ components:
           - host_reboot
           - image_delete
           - image_update
+          - image_upload
           - ipaddress_update
           - lassie_reboot
           - lish_boot
@@ -16701,14 +16704,13 @@ components:
           description: >
             The total duration in seconds that it takes for the Event to complete.
           example: 300.56
-          x-linode-cli-display: 10
+          x-linode-cli-display: 7
         entity:
           type: object
           readOnly: true
           description: >
             Detailed information about the Event's entity, including ID, type,
             label, and URL used to access it.
-          x-linode-cli-display: 4
           properties:
             id:
               type: integer
@@ -16738,6 +16740,7 @@ components:
                 The current label of this object. The label may reflect changes
                 that occur with this Event.
               example: Problem booting my Linode
+              x-linode-cli-display: 5
             type:
               type: string
               enum:
@@ -16781,7 +16784,6 @@ components:
           description: |
             Detailed information about the Event's secondary entity, which provides additional information
             for events such as, but not limited to, `linode_boot`, `linode_reboot`, `linode_create`, and `linode_clone` Event actions.
-          x-linode-cli-display: 5
           properties:
             id:
               type: string
@@ -16826,13 +16828,11 @@ components:
           readOnly: true
           description: If this Event has been read.
           example: true
-          x-linode-cli-display: 9
         seen:
           type: boolean
           readOnly: true
           description: If this Event has been seen.
           example: true
-          x-linode-cli-display: 8
         status:
           type: string
           readOnly: true
@@ -16843,7 +16843,7 @@ components:
           - notification
           - scheduled
           - started
-          x-linode-cli-display: 7
+          x-linode-cli-display: 8
           x-linode-cli-color:
             failed: red
             finished: green
@@ -16874,6 +16874,7 @@ components:
             information may include, but is not limited to, a more detailed
             representation of events which can help diagnose non-obvious failures.
           example: None
+          x-linode-cli-display: 9
     Firewall:
       type: object
       description: >
