@@ -1198,7 +1198,7 @@ paths:
         source: >
           linode-cli account login-view 1234
   /account/maintenance:
-    x-linode-cli-command: maintenance
+    x-linode-cli-command: account
     get:
       x-linode-grant: read_only
       servers:
