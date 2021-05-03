@@ -3414,9 +3414,15 @@ paths:
       tags:
       - Images
       summary: Image Create
-      description: >
-        Captures a private gold-master Image from a Linode Disk. There is no
-        additional charge to store Images for Linode users.
+      description: |
+        Captures a private gold-master Image from a Linode Disk.
+
+        **Pricing change:** Images will transition to a paid service with a
+        cost of $0.10/GB per month for each manual Custom Image stored on an
+        account. This change will be communicated to customers in advance.
+        Recovery Images, which are generated automatically after a Linode is
+        deleted and available for a finite period of time, are provided at no
+        cost.
       operationId: createImage
       x-linode-cli-action: create
       security:
@@ -3497,7 +3503,7 @@ paths:
               curl -v \
                 -H "Content-Type: application/octet-stream" \
                 --upload-file example.img.gz \
-                "upload_url" \
+                $UPLOAD_URL \
                 --progress-bar \
                 --output /dev/null
 
