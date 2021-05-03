@@ -10757,8 +10757,6 @@ paths:
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
-      servers:
-      - url: https://api.linode.com/v4beta
       tags:
       - Networking
       summary: VLANs List
@@ -10787,11 +10785,6 @@ paths:
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       operationId: getVLANs
       x-linode-cli-action: vlans-list
       security:
@@ -17562,9 +17555,6 @@ components:
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
-
-        **Beta**: The VLAN feature is in beta. Please make be aware that this feature may receive breaking updates in
-        the future. This notice will be removed when this feature is out of beta.
     Invoice:
       type: object
       description: Account Invoice object
