@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.91.0
+  version: 4.92.0
 
   title: Linode API
   description: |
@@ -10005,22 +10005,14 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewalls List
       description: |
         Returns a paginated list of your Firewalls.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: getFirewalls
       x-linode-cli-action: list
       security:
@@ -10051,14 +10043,14 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/firewalls
+              https://api.linode.com/v4/networking/firewalls
       - lang: CLI
         source: >
           linode-cli firewalls list
     post:
       x-linode-grant: read_write
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Create
@@ -10072,13 +10064,7 @@ paths:
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
-        This endpoint is in **beta**.
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).notice will be removed when this endpoint is out of
         beta.
       operationId: createFirewalls
       x-linode-cli-action: create
@@ -10189,7 +10175,7 @@ paths:
                   "another example"
                 ]
               }' \
-              https://api.linode.com/v4beta/networking/firewalls
+              https://api.linode.com/v4/networking/firewalls
       - lang: CLI
         source: >
           linode-cli firewalls create \
@@ -10207,7 +10193,7 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall View
@@ -10223,15 +10209,7 @@ paths:
         [List Firewall Devices](/docs/api/networking/#firewall-devices-list)
         endpoint to review them.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       responses:
         '200':
           description: Returns information about this Firewall.
@@ -10246,14 +10224,14 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/firewalls/123
+              https://api.linode.com/v4/networking/firewalls/123
       - lang: CLI
         source: >
           linode-cli firewalls view 123
     put:
       x-linode-grant: read_write
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Update
@@ -10278,15 +10256,7 @@ paths:
         If a Firewall's status is changed with this endpoint, a corresponding `firewall_enable` or
         `firewall_disable` Event will be generated.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: updateFirewall
       x-linode-cli-action: update
       security:
@@ -10323,7 +10293,7 @@ paths:
               -X PUT -d '{
                 "status": "disabled"
               }' \
-              https://api.linode.com/v4beta/networking/firewalls/123
+              https://api.linode.com/v4/networking/firewalls/123
       - lang: CLI
         source: >
           linode-cli firewalls update 123 \
@@ -10331,7 +10301,7 @@ paths:
     delete:
       x-linode-grant: read_write
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Delete
@@ -10347,15 +10317,7 @@ paths:
 
         A `firewall_delete` Event is generated when this endpoint returns successfully.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       responses:
         '200':
           description: Delete Successful.
@@ -10371,7 +10333,7 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4beta/networking/firewalls/123
+              https://api.linode.com/v4/networking/firewalls/123
       - lang: CLI
         source: >
           linode-cli firewalls delete 123
@@ -10388,7 +10350,7 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       parameters:
@@ -10400,15 +10362,7 @@ paths:
         Firewall to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: getFirewallDevices
       x-linode-cli-action: devices-list
       security:
@@ -10439,14 +10393,14 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/firewalls/123/devices
+              https://api.linode.com/v4/networking/firewalls/123/devices
       - lang: CLI
         source: >
           linode-cli firewalls devices-list 123
     post:
       x-linode-grant: read_write
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Device Create
@@ -10464,15 +10418,7 @@ paths:
         to [migrate the Linode to a data center](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate) that does not support Cloud Firewalls, the migration will fail.
         Use the [List Regions](/docs/api/regions/#regions-list) endpoint to view a list of a data center's capabilities.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: createFirewallDevice
       x-linode-cli-action: device-create
       security:
@@ -10507,7 +10453,7 @@ paths:
                 "type": "linode",
                 "id": 123
               }' \
-              https://api.linode.com/v4beta/networking/firewalls/123/devices
+              https://api.linode.com/v4/networking/firewalls/123/devices
       - lang: CLI
         source: >
           linode-cli firewalls device-create 123 \
@@ -10533,7 +10479,7 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Device View
@@ -10542,15 +10488,7 @@ paths:
         to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: getFirewallDevice
       x-linode-cli-action: device-view
       security:
@@ -10570,7 +10508,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/firewalls/123/devices/456
+              https://api.linode.com/v4/networking/firewalls/123/devices/456
       - lang: CLI
         source: >
           linode-cli firewalls device-view \
@@ -10578,7 +10516,7 @@ paths:
     delete:
       x-linode-grant: read_write
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Device Delete
@@ -10596,15 +10534,7 @@ paths:
 
         A `firewall_device_remove` Event is generated when the Firewall Device is removed successfully.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       responses:
         '200':
           description: Delete Successful.
@@ -10620,7 +10550,7 @@ paths:
           curl -H "Content-Type: application/json" \
                -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4beta/networking/firewalls/123/devices/456
+              https://api.linode.com/v4/networking/firewalls/123/devices/456
       - lang: CLI
         source: >
           linode-cli firewalls device-delete 123 456
@@ -10637,7 +10567,7 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Rules List
@@ -10672,14 +10602,14 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/firewalls/123/rules
+              https://api.linode.com/v4/networking/firewalls/123/rules
       - lang: CLI
         source: >
           linode-cli firewalls rules-list 123
     put:
       x-linode-grant: read_write
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       tags:
       - Networking
       summary: Firewall Rules Update
@@ -10687,15 +10617,7 @@ paths:
         Updates the inbound and outbound Rules for a Firewall. Using this endpoint will
         replace all of a Firewall's ruleset with the Rules specified in your request.
 
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: updateFirewallRules
       x-linode-cli-action: rules-update
       security:
@@ -10760,15 +10682,18 @@ paths:
                     }
                   ]
               }' \
-              https://api.linode.com/v4beta/networking/firewalls/123/rules
+              https://api.linode.com/v4/networking/firewalls/123/rules
       - lang: CLI
         source: >
           linode-cli firewalls rules-update 123 \
             --inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
             --outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
   /networking/vlans:
-    x-linode-cli-command: networking
+    x-linode-cli-command: vlans
     get:
+      x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4beta
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -10801,7 +10726,7 @@ paths:
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
       operationId: getVLANs
-      x-linode-cli-action: vlans-list
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
