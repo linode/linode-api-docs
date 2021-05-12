@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.91.0
+  version: 4.92.0
 
   title: Linode API
   description: |
@@ -3356,7 +3356,6 @@ paths:
   /images:
     x-linode-cli-command: images
     get:
-      x-linode-grant: read_only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -3375,8 +3374,6 @@ paths:
       x-linode-redoc-load-ids: true
       operationId: getImages
       x-linode-cli-action: list
-      security:
-      - personalAccessToken: []
       responses:
         '200':
           description: A paginated list of Images.
