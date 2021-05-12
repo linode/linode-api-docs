@@ -10692,11 +10692,11 @@ paths:
             --inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
             --outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
   /networking/vlans:
-    x-linode-cli-command: networking
+    x-linode-cli-command: vlans
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4
+      - url: https://api.linode.com/v4beta
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -10729,7 +10729,7 @@ paths:
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
       operationId: getVLANs
-      x-linode-cli-action: vlans-list
+      x-linode-cli-action: list
       security:
       - personalAccessToken: []
       - oauth:
@@ -10758,7 +10758,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/networking/vlans/
+              https://api.linode.com/v4beta/networking/vlans/
       - lang: CLI
         source: >
           linode-cli networking vlans-list
