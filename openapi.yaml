@@ -16053,11 +16053,6 @@ components:
           $ref: '#/components/schemas/Disk/properties/label'
         filesystem:
           $ref: '#/components/schemas/Disk/properties/filesystem'
-        read_only:
-          type: boolean
-          description: >
-            If true, this Disk is read-only.
-          example: false
         image:
           type: string
           description: >
