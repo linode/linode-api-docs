@@ -17380,7 +17380,7 @@ components:
           type: string
           x-linode-filterable: true
           description: >
-            How the Image was created. Manual Images can be created at any time.
+            How the Image was created. "Manual" Images can be created at any time.
             "Automatic" Images are created automatically from a deleted Linode.
           enum:
           - manual
