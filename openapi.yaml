@@ -17259,6 +17259,7 @@ components:
           x-linode-cli-display: 6
         type:
           type: string
+          x-linode-filterable: true
           description: >
             How the Image was created. "Manual" Images can be created at any time.
             "Automatic" images are created automatically from a deleted Linode.
@@ -17377,6 +17378,7 @@ components:
           x-linode-cli-display: 6
         type:
           type: string
+          x-linode-filterable: true
           description: >
             How the Image was created. Manual Images can be created at any time.
             "Automatic" Images are created automatically from a deleted Linode.
