@@ -20982,7 +20982,8 @@ components:
           type: boolean
           x-linode-filterable: true
           description: |
-            Whether this StackScript was created by the user making the request.
+            Returns `true` if this StackScript is owned by the account of the user making the request, and the user
+            making the request is unrestricted or has access to this StackScript.
           readOnly: true
           example: true
     StatsDataAvailable:
