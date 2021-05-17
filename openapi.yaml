@@ -21033,6 +21033,14 @@ components:
             label: Enter the DB password
             name: DB_PASSWORD
             example: hunter2
+        mine:
+          type: boolean
+          x-linode-filterable: true
+          description: |
+            Returns `true` if this StackScript is owned by the account of the user making the request, and the user
+            making the request is unrestricted or has access to this StackScript.
+          readOnly: true
+          example: true
     StatsDataAvailable:
       type: object
       description: >
