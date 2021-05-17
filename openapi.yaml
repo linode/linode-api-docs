@@ -20978,6 +20978,13 @@ components:
             label: Enter the DB password
             name: DB_PASSWORD
             example: hunter2
+        mine:
+          type: boolean
+          x-linode-filterable: true
+          description: |
+            Whether this StackScript was created by the user making the request.
+          readOnly: true
+          example: true
     StatsDataAvailable:
       type: object
       description: >
