@@ -3010,7 +3010,7 @@ paths:
       responses:
         '200':
           description: |
-            The domain zone file.
+            An array containing the lines of the domain zone file.
           content:
             application/json:
               schema:
