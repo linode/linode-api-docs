@@ -18123,6 +18123,7 @@ components:
           example: '2018-01-01T00:01:01'
           readOnly: true
         ipv4:
+          x-linode-filterable: true
           type: array
           format: ipv4
           items:
@@ -19571,6 +19572,7 @@ components:
           readOnly: true
           x-linode-cli-display: 4
         ipv4:
+          x-linode-filterable: true
           type: string
           format: ip
           description: >
