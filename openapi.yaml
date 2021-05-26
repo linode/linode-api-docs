@@ -3602,7 +3602,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  upload_url:
+                  upload_to:
                     type: string
                     description: The URL to upload the Image to.
                   image:
