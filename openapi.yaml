@@ -3549,8 +3549,9 @@ paths:
         - Image data must be uploaded within 24 hours of creation or the
         upload will be cancelled and the image deleted.
 
-        - Image uploads should be made as an HTTP PUT request to the returned `upload_url`, with a
-        `Content-type: application/octet-stream` header included in the request. For example:
+        - Image uploads should be made as an HTTP PUT request to the URL returned in the `upload_to`
+        response parameter, with a `Content-type: application/octet-stream` header included in the
+        request. For example:
 
               curl -v \
                 -H "Content-Type: application/octet-stream" \
