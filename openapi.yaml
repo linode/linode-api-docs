@@ -10749,6 +10749,7 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -10811,7 +10812,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/vlans/
+              https://api.linode.com/v4/networking/vlans/
       - lang: CLI
         source: >
           linode-cli networking vlans-list
