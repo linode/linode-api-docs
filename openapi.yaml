@@ -1686,9 +1686,11 @@ paths:
                         is_default:
                           type: integer
                           description: |
-                            Whether this Payment Method is the default method for processing service charges.
+                            Whether this Payment Method is the default method for automatically processing service charges.
 
-                            `0` corresponds to "no", while any other value corresponds to "yes".
+                            `0`: False
+
+                            `1`: True
                           example: 1
                           x-linode-cli-display: 2
                         created:
@@ -1699,7 +1701,7 @@ paths:
                           example: '2018-01-15T00:01:01'
                         data:
                           type: object
-                          description: Credit card information
+                          description: Credit card information.
                           properties:
                             card_type:
                               type: string
