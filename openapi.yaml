@@ -17546,6 +17546,8 @@ components:
 
         When updating a Linode's interfaces, *each interface must be redefined*. An empty interfaces array results in a default public interface configuration only.
 
+        If no public interface is configured, public IP addresses are still assigned to the Linode but will not be usable without manual configuration.
+
         **Note:** Changes to Linode interface configurations can be enabled by rebooting the Linode.
 
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
