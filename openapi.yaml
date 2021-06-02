@@ -1644,6 +1644,102 @@ paths:
               -X PUT \
               --data-binary "/path/to/image"
               https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
+  /account/payment-methods:
+    x-linode-cli-command: account
+    get:
+      servers:
+        - url: https://api.linode.com/v4beta
+      parameters:
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageSize'
+      x-linode-grant: read_only
+      tags:
+        - Account
+      summary: Payment Methods List
+      description: |
+        Returns a paginated list of Payment Methods for this Account.
+
+        This endpoint is currently in **beta**. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: getPaymentMethods
+      x-linode-cli-action: payment-methods-list
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - account:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of Payment Method objects.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      description: Payment Method object response.
+                      properties:
+                        method:
+                          type: string
+                          description: The type of Payment Method.
+                          example: 'credit_card'
+                          x-linode-cli-display: 1
+                        is_default:
+                          type: integer
+                          description: |
+                            Whether this Payment Method is the default method for automatically processing service charges.
+
+                            `0`: False
+
+                            `1`: True
+                          example: 1
+                          x-linode-cli-display: 2
+                        created:
+                          type: string
+                          readOnly: true
+                          format: date-time
+                          description: When the Payment Method was added to the Account.
+                          example: '2018-01-15T00:01:01'
+                        data:
+                          type: object
+                          description: Credit card information.
+                          properties:
+                            card_type:
+                              type: string
+                              description: The type of credit card.
+                              example: ""
+                              x-linode-cli-display: 8
+                            last_four:
+                              type: string
+                              description: The last four digits of the credit card number.
+                              example: "1234"
+                              x-linode-cli-display: 9
+                            expiry:
+                              type: string
+                              format: MM/YYYY
+                              description: The expiration month and year of the credit card.
+                              example: 06/2022
+                              x-linode-cli-display: 10
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/account/payment-methods
+        - lang: CLI
+          source: >
+            linode-cli account payment-methods-list
   /account/payments:
     x-linode-cli-command: account
     get:
