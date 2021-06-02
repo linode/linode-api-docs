@@ -5128,11 +5128,14 @@ paths:
       tags:
       - Linode Instances
       summary: Disk Create
-      description: >
+      description: |
         Adds a new Disk to a Linode. You can optionally create a Disk
         from an Image (see [/images](/docs/api/images/#images-list) for a list of available public images,
         or use one of your own), and optionally provide a StackScript to deploy
         with this Disk.
+
+        The default filesystem for new Disks is `ext4`. If creating a Disk from an Image, the filesystem
+        of the Image is used unless otherwise specified.
       operationId: addLinodeDisk
       x-linode-cli-action: disk-create
       security:
