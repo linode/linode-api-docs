@@ -16159,13 +16159,11 @@ components:
           description: |
             An Image ID to deploy the Disk from.
 
-            Requires read access to the Image.
-
-            Access the Images List ([GET /images](/docs/api/images/#images-list))
-            endpoint with authentication to view all available Images. Official Linode Images start with `linode/`,
-            while your account's Images start with `private/`. To give a user permission to use an account Image,
-            access the User's Grant Update
-            ([PUT /account/users/{username}/grants](/docs/api/account/#users-grants-update)) endpoint.
+            Access the Images List ([GET /images](/docs/api/images/#images-list)) endpoint with authentication to view
+            all available Images. Official Linode Images start with `linode/`, while your Account's Images start with `private/`. Creating
+            a disk from an Account Image requires `read_only` or `read_write` permissions for that Image. Access the User's
+            Grant Update ([PUT /account/users/{username}/grants](/docs/api/account/#users-grants-update)) endpoint to
+            adjust permissions for an Account Image.
           example: linode/debian9
         authorized_keys:
           type: array
