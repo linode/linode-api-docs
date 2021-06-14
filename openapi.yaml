@@ -19306,9 +19306,17 @@ components:
             The reason maintenance is being performed.
           example: This maintenance will allow us to update the BIOS on the host’s motherboard.
         when:
+          x-linode-filterable: true
           type: string
-          description: >
+          description: |
             When the maintenance will begin.
+
+            [Filterable](/docs/api/#filtering-and-sorting) with the following parameters:
+
+            * A single value in date-time string format ("%Y-%m-%dT%H:%M:%S"), which returns only matches to that value.
+
+            * A dictionary containing pairs of inequality operator string  ("+or", "+gt", "+gte", "+lt", "+lte", or "+neq") keys and date-time string format ("%Y-%m-%dT%H:%M:%S")
+            values. "+or" accepts an array of values that may consist of single date-time strings or dictionaries of inequality operator pairs.
           format: date-time
           example: 2020-07-09T00:01:01
         entity:
