@@ -3632,6 +3632,7 @@ paths:
     x-linode-cli-command: images
     post:
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       tags:
       - Images
@@ -3658,11 +3659,6 @@ paths:
 
         - Uploaded image data should be compressed in gzip (`.gz`) format. The uncompressed disk should be in raw
         disk image (`.img`) format. A maximum compressed file size of 5GB is supported for upload at this time.
-
-        This endpoint is currently in **beta**. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       x-linode-cli-action: upload
       security:
       - personalAccessToken: []
