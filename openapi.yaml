@@ -543,45 +543,6 @@ paths:
         source: >
           linode-cli account cancel \
             --comments "I'm consolidating my accounts"
-  /account/client-token:
-    x-linode-cli-command: account
-    get:
-      servers:
-        - url: https://api.linode.com/v4
-      x-linode-grant: read_only
-      tags:
-        - Account
-      summary: Payment Client Token View
-      description: |
-        Generates a Payment Client Token.
-      operationId: getClientToken
-      x-linode-cli-action: client-token
-      security:
-        - personalAccessToken: []
-        - oauth:
-          - account:read_only
-      responses:
-        '200':
-          description: Client Token generated.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  client_token:
-                    type: string
-                    description: The Payment Client Token.
-                    example: 1234
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-        - lang: Shell
-          source: >
-            curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4/account/client-token
-        - lang: CLI
-          source: >
-            linode-cli account client-token
   /account/credit-card:
     x-linode-cli-command: account
     post:
@@ -20780,14 +20741,6 @@ components:
             The amount in US Dollars of the Payment. The maximum credit card
             payment that can be made is $50,000 dollars.
           example: '120.50'
-        payment_method_id:
-          type: integer
-          description: |
-            Only one of `nonce` or `payment_method_id` can be submitted for payment processing.
-        nonce:
-          type: string
-          description: |
-            Only one of `nonce` or `payment_method_id` can be submitted for payment processing.
     PayPal:
       type: object
       required:
