@@ -1975,6 +1975,68 @@ paths:
         - lang: CLI
           source: >
             linode-cli account paypal-execute
+  /account/promo-codes:
+    x-linode-cli-command: account
+    post:
+      x-linode-grant: unrestricted only
+      tags:
+        - Account
+      summary: Promo Credit Add
+      description: |
+        Adds an expiring Promo Credit to your account.
+
+        The following restrictions apply:
+
+        * Your account must be less than 90 days old.
+        * There must not be an existing Promo Credit already on your account.
+        * The requesting User must be unrestricted. Use the User Update
+          ([PUT /account/users/{username}](/docs/api/account/#user-update)) to change a User's restricted status.
+        * The `promo_code` must be valid and unexpired.
+      operationId: createPromoCredit
+      x-linode-cli-command: promo-code
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - account:read_only
+      requestBody:
+        description: Enter a Promo Code to add its associated credit to your Account.
+        content:
+          application/json:
+            schema:
+              required:
+              - promo_code
+              type: object
+              properties:
+                promo_code:
+                  type: string
+                  minLength: 1
+                  maxLength: 32
+                  description: |
+                    The Promo Code.
+      responses:
+        '200':
+          description: >
+            Promo Credit successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Promotion'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+              "promo_code": "abcdefABCDEF1234567890"
+            }' \
+            https://api.linode.com/v4/account/promo-codes
+      - lang: CLI
+        source: >
+          linode-cli account \
+            promo-add \
+            --promo-code abcdefABCDEF1234567890
   /account/service-transfers:
     x-linode-cli-command: service-transfers
     get:
@@ -15573,72 +15635,7 @@ components:
         active_promotions:
           type: array
           items:
-            type: object
-            readOnly: true
-            description: |
-              A list of active promotions on your account. Promotions generally
-              offer a set amount of credit that can be used toward your Linode
-              services, and the promotion expires after a specified date. As well,
-              a monthly cap on the promotional offer is set.
-
-              Simply put, a promotion offers a certain amount of credit every
-              month, until either the expiration date is passed, or until the total
-              promotional credit is used, whichever comes first.
-            properties:
-              credit_monthly_cap:
-                type: string
-                description: >
-                  The amount available to spend per month.
-                example: "10.00"
-              credit_remaining:
-                type: string
-                description: >
-                  The total amount of credit left for this promotion.
-                example: "50.00"
-              description:
-                type: string
-                description: >
-                  A detailed description of this promotion.
-                example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
-              expire_dt:
-                type: string
-                description: >
-                  When this promotion's credits expire.
-                example: '2018-01-31T23:59:59'
-              image_url:
-                type: string
-                description: >
-                  The location of an image for this promotion.
-                example: "https://linode.com/10_a_month_promotion.svg"
-              summary:
-                type: string
-                description: >
-                  Short details of this promotion.
-                example: "$10 off your Linode a month!"
-              this_month_credit_remaining:
-                type: string
-                description: >
-                  The amount of credit left for this month for this promotion.
-                example:  "10.00"
-              service_type:
-                type: string
-                enum:
-                  - all
-                  - backup
-                  - blockstorage
-                  - db_mysql
-                  - ip_v4
-                  - linode
-                  - linode_disk
-                  - linode_memory
-                  - longview
-                  - managed
-                  - nodebalancer
-                  - objectstorage
-                  - transfer_tx
-                description: >
-                  The service to which this promotion applies.
-                example: "all"
+            $ref: '#/components/schemas/Promotion'
         active_since:
           type: string
           format: date-time
@@ -20935,6 +20932,73 @@ components:
             See the [Cloud Manager Changelog](/changelog/cloud-manager/) for the latest updates.
           example: password
           readOnly: true
+    Promotion:
+      type: object
+      readOnly: true
+      description: |
+        Promotions generally
+        offer a set amount of credit that can be used toward your Linode
+        services, and the promotion expires after a specified date. As well,
+        a monthly cap on the promotional offer is set.
+
+        Simply put, a promotion offers a certain amount of credit every
+        month, until either the expiration date is passed, or until the total
+        promotional credit is used, whichever comes first.
+      properties:
+        credit_monthly_cap:
+          type: string
+          description: >
+            The amount available to spend per month.
+          example: "10.00"
+        credit_remaining:
+          type: string
+          description: >
+            The total amount of credit left for this promotion.
+          example: "50.00"
+        description:
+          type: string
+          description: >
+            A detailed description of this promotion.
+          example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
+        expire_dt:
+          type: string
+          description: >
+            When this promotion's credits expire.
+          example: '2018-01-31T23:59:59'
+        image_url:
+          type: string
+          description: >
+            The location of an image for this promotion.
+          example: "https://linode.com/10_a_month_promotion.svg"
+        summary:
+          type: string
+          description: >
+            Short details of this promotion.
+          example: "$10 off your Linode a month!"
+        this_month_credit_remaining:
+          type: string
+          description: >
+            The amount of credit left for this month for this promotion.
+          example:  "10.00"
+        service_type:
+          type: string
+          enum:
+            - all
+            - backup
+            - blockstorage
+            - db_mysql
+            - ip_v4
+            - linode
+            - linode_disk
+            - linode_memory
+            - longview
+            - managed
+            - nodebalancer
+            - objectstorage
+            - transfer_tx
+          description: >
+            The service to which this promotion applies.
+          example: "all"
     Region:
       type: object
       description: An area where Linode services are available.
