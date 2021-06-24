@@ -1993,7 +1993,7 @@ paths:
           ([PUT /account/users/{username}](/docs/api/account/#user-update)) to change a User's restricted status.
         * The `promo_code` must be valid and unexpired.
       operationId: createPromoCredit
-      x-linode-cli-command: promo-code
+      x-linode-cli-action: promo-add
       security:
         - personalAccessToken: []
         - oauth:
@@ -20946,11 +20946,13 @@ components:
         promotional credit is used, whichever comes first.
       properties:
         credit_monthly_cap:
+          x-linode-cli-display: 5
           type: string
           description: >
             The amount available to spend per month.
           example: "10.00"
         credit_remaining:
+          x-linode-cli-display: 3
           type: string
           description: >
             The total amount of credit left for this promotion.
@@ -20961,6 +20963,7 @@ components:
             A detailed description of this promotion.
           example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
         expire_dt:
+          x-linode-cli-display: 2
           type: string
           description: >
             When this promotion's credits expire.
@@ -20971,16 +20974,19 @@ components:
             The location of an image for this promotion.
           example: "https://linode.com/10_a_month_promotion.svg"
         summary:
+          x-linode-cli-display: 10
           type: string
           description: >
             Short details of this promotion.
           example: "$10 off your Linode a month!"
         this_month_credit_remaining:
+          x-linode-cli-display: 4
           type: string
           description: >
             The amount of credit left for this month for this promotion.
           example:  "10.00"
         service_type:
+          x-linode-cli-display: 1
           type: string
           enum:
             - all
