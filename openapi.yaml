@@ -1689,8 +1689,8 @@ paths:
       description: |
         Adds a Payment Method to your Account with the option to set it as the default method.
 
-        Prior to adding a Payment Method, ensure that your billing address information is up-to-date by using the
-        Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
+        Prior to adding a Payment Method, ensure that your billing address information is up-to-date
+        with a valid `zip` by using the Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
       operationId: createPaymentMethod
       x-linode-cli-action: payment-method-add
       x-linode-cli-skip: true
