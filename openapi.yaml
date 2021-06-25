@@ -20815,8 +20815,10 @@ components:
           example: true
         referrals:
           type: object
-          description: >
+          description: |
             Information about your status in our referral program.
+
+            This data contained in this object becomes accessible after a billing history has been established.
           readOnly: true
           properties:
             code:
