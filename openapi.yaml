@@ -10210,9 +10210,10 @@ paths:
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
-        Cloud Firewall is not available in every data center region. For the current list
-        of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list))
+        Cloud Firewall is not fully available in every data center region. For the current list
+        of locations with full availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list))
         endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
+        Certain Regions have partial Firewall availability
       operationId: createFirewalls
       x-linode-cli-action: create
       security:
