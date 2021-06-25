@@ -20818,7 +20818,7 @@ components:
           description: |
             Information about your status in our referral program.
 
-            This data contained in this object becomes accessible after a billing history has been established.
+            The data contained in this object becomes accessible after a billing history has been established.
           readOnly: true
           properties:
             code:
