@@ -7521,7 +7521,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/LKENodePool'
         default:
           $ref: '#/components/responses/ErrorResponse'
