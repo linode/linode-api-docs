@@ -18953,8 +18953,6 @@ components:
         tags:
             $ref: '#/components/schemas/LKENodePool/properties/tags'
     LKENodePool:
-      # Note that LKENodePool inherits all properties of
-      # LKENodePoolRequestBody and then overrides some of the sub-properties
       type: object
       description: >
         The set of Node Pools which are members of the Kubernetes cluster.
