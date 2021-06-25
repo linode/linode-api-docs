@@ -16048,7 +16048,7 @@ components:
           maxLength: 4
           format: digits
           description: >
-            CVV (Card Verification Value) of the credit card, typically found on the back of the card. **** 
+            CVV (Card Verification Value) of the credit card, typically found on the back of the card.
           example: '123'
     Device:
       type: object
