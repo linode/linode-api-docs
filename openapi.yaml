@@ -20818,7 +20818,8 @@ components:
           description: |
             Information about your status in our referral program.
 
-            The data contained in this object becomes accessible after a billing history has been established.
+            This information becomes accessible after this Profile's Account has established at
+            least $25.00 USD of total payments.
           readOnly: true
           properties:
             code:
