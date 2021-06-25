@@ -10200,15 +10200,19 @@ paths:
       description: |
         Creates a Firewall to filter network traffic. Use the `rules` property to
         create inbound and outbound access rules. Use the `devices` property to assign the
-        Firewall to a Linode service. Currently, Firewalls can only be assigned to Linode
+        Firewall to a service. Currently, Firewalls can only be assigned to Linode
         instances.
 
-        A Firewall can be assigned to a single Linode service at a time.
+        A Firewall can be assigned to multiple Linode instances at a time.
+
+        A Linode instance can have one active, assigned Firewall at a time.
+        Additional disabled Firewalls can still be added to a Linode instance.
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
 
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).notice will be removed when this endpoint is out of
-        beta.
+        Cloud Firewall is not available in every data center region. For the current list
+        of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list))
+        endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: createFirewalls
       x-linode-cli-action: create
       security:
@@ -10231,23 +10235,14 @@ paths:
               properties:
                 devices:
                   type: object
-                  description: >
-                    A Firewall Device assigns a Firewall to a Linode service. Currently, Firewalls
-                    can only be assigned to Linode instances.
-
-                    * A Firewall can be assigned to a single Linode service at a time.
-
-                    * Additional disabled Firewalls can be assigned to a service, but they cannot be enabled if five other active Firewalls
-                    are already assigned to the same service.
-
-
-                    **Note:** When a Firewall is assigned to a Linode and you attempt
-                    to [migrate the Linode to a data center](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate) that does not support Cloud Firewalls, the migration will fail.
-                    Use the [List Regions](/docs/api/regions/#regions-list) endpoint to view a list of a data center's capabilities.
+                  description: |
+                    Devices to create for this Firewall.
+                    When a Device is created, the Firewall is assigned to its associated service.
+                    Currently, Devices can only be created for Linode instances.
                   properties:
                     linodes:
                       description: >
-                        An array of Linode IDs. A Firewall Device will be created for each ID.
+                        An array of Linode IDs. A Firewall Device is created for each ID.
                       type: array
                       items:
                         type: integer
@@ -17003,6 +16998,7 @@ components:
           x-linode-cli-display: 5
         status:
           type: string
+          readOnly: true
           description: >
            The status of this Firewall.
 
@@ -20815,8 +20811,10 @@ components:
           example: true
         referrals:
           type: object
-          description: >
+          description: |
             Information about your status in our referral program.
+
+            This information becomes accessible after this Profile's Account has established at least $25.00 USD of total payments.
           readOnly: true
           properties:
             code:
