@@ -20937,8 +20937,11 @@ components:
           example: true
         referrals:
           type: object
-          description: >
+          description: |
             Information about your status in our referral program.
+
+            This information becomes accessible after this Profile's Account has established at
+            least $25.00 USD of total payments.
           readOnly: true
           properties:
             code:
