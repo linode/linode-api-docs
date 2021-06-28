@@ -7606,18 +7606,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  type:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
-                  count:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
-                  disks:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
-                  id:
-                    $ref: '#/components/schemas/LKENodePool/properties/id'
-                  nodes:
-                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
+                $ref: '#/components/schemas/LKENodePool'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -7627,14 +7616,16 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                   "type": "g6-standard-4",
-                  "count": 6
+                  "count": 6,
+                  "tags": ["example-tag"]
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
         source: >
           linode-cli lke pool-create 12345 \
             --type g6-standard-4 \
-            --count 6
+            --count 6 \
+            --tags example-tag
   /lke/clusters/{clusterId}/recycle:
     parameters:
     - name: clusterId
@@ -7712,18 +7703,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  type:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
-                  count:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
-                  disks:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
-                  id:
-                    $ref: '#/components/schemas/LKENodePool/properties/id'
-                  nodes:
-                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
+                $ref: '#/components/schemas/LKENodePool'
       x-code-samples:
       - lang: Shell
         source: >
@@ -7762,18 +7742,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  type:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/type'
-                  count:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
-                  disks:
-                    $ref: '#/components/schemas/LKENodePoolRequestBody/properties/disks'
-                  id:
-                    $ref: '#/components/schemas/LKENodePool/properties/id'
-                  nodes:
-                    $ref: '#/components/schemas/LKENodePool/properties/nodes'
+                $ref: '#/components/schemas/LKENodePool'
       x-code-samples:
       - lang: Shell
         source: >
@@ -19028,8 +18997,38 @@ components:
         cluster.
       properties:
         type:
+          $ref: '#/components/schemas/LKENodePool/properties/type'
+        count:
+          $ref: '#/components/schemas/LKENodePool/properties/count'
+        disks:
+          type: array
+          x-linode-cli-format: json
+          description: |
+            **Note**: This field should be omitted except for special use cases. The disks specified here are
+            partitions in *addition* to the primary partition and reduce the size of the primary partition,
+            which can lead to stability problems for the Node.
+
+            This Node Pool's custom disk layout. Each item in this array will create a new disk
+            partition for each node in this Node Pool.
+
+              * The custom disk layout is applied to each node in this Node Pool.
+              * The maximum number of custom disk partitions that can be configured is 7.
+              * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
+              * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
+          items:
+            $ref: '#/components/schemas/LKENodePool/properties/disks/items'
+        tags:
+            $ref: '#/components/schemas/LKENodePool/properties/tags'
+    LKENodePool:
+      type: object
+      description: >
+        The set of Node Pools which are members of the Kubernetes cluster.
+        Node Pools consist of a Linode type, the number of Linodes to
+        deploy of that type, and additional status information.
+      properties:
+        type:
           type: string
-          description: A Linode Type for all of the nodes in the Node Pool.
+          description: The Linode Type for all of the nodes in the Node Pool.
           example: g6-standard-4
         count:
           type: integer
@@ -19040,19 +19039,8 @@ components:
         disks:
           type: array
           x-linode-cli-format: json
-          description: >
-            **Note**: This field should be omitted except for special use cases. The disks specified here are
-            partitions in *addition* to the primary partition and reduce the size of the primary partition,
-            which can lead to stability problems for the Node.
-
-
-            This Node Pool's custom disk layout. Each item in this array will create a new disk
-            partition for each node in this Node Pool.
-
-              * The custom disk layout is applied to each node in this Node Pool.
-              * The maximum number of custom disk partitions that can be configured is 7.
-              * Once the requested disk paritions are allocated, the remaining disk space is allocated to the node's boot disk.
-              * A Node Pool's custom disk layout is immutable over the lifetime of the Node Pool.
+          description: |
+            This Node Pool's custom disk layout.
           items:
             type: object
             description: >
@@ -19073,18 +19061,6 @@ components:
                 - raw
                 - ext4
                 example: ext-4
-    LKENodePool:
-      # Note that LKENodePool inherits all properties of
-      # LKENodePoolRequestBody and then overrides some of the sub-properties
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/LKENodePoolRequestBody'
-      - type: object
-      description: >
-        The set of Node Pools which are members of the Kubernetes cluster.
-        Node Pools consist of a Linode type, the number of Linodes to
-        deploy of that type, and additional status information.
-      properties:
         id:
           type: integer
           description: >
@@ -19099,6 +19075,17 @@ components:
             the instance_id will be returned as null.
           items:
             $ref: '#/components/schemas/LKENodeStatus'
+        tags:
+          x-linode-filterable: true
+          description: >
+            An array of tags applied to this object. Tags are for organizational
+            purposes only.
+          type: array
+          items:
+            type: string
+          example:
+          - example tag
+          - another example
     LKENodeStatus:
       type: object
       description: >
