@@ -7862,6 +7862,40 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke node-view 123456 12345-6aa78910bc
+    delete:
+      operationId: deleteLKEClusterNode
+      x-linode-cli-action: node-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Node Delete
+      description: |
+        Deletes a specific Node from a Node Pool.
+
+        **Deleting a Node is a destructive action and cannot be undone.**
+
+        Deleting a Node will reduce the size of the Node Pool it belongs to.
+      responses:
+        '200':
+          description: Delete successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/lke/clusters/12345/nodes/12345-6aa78910bc
+      - lang: CLI
+        source: >
+          linode-cli lke node-delete 12345 12345-6aa78910bc
   /lke/clusters/{clusterId}/nodes/{nodeId}/recycle:
     parameters:
     - name: clusterId
