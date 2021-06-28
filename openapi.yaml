@@ -551,15 +551,9 @@ paths:
       - Account
       summary: Credit Card Add/Edit
       description: |
-        Adds/edit credit card information to your Account.
+        **DEPRECATED**. Please use Payment Method Add ([POST /account/payment-methods](/docs/api/account/#payment-method-add)).
 
-        Only one credit card can be associated with your Account, so using this
-        endpoint will overwrite your currently active card information with the
-        new credit card.
-
-        To use this endpoint, you must have a valid `zip` entered for your Account.
-        Use the Account Update ([PUT /account](/docs/api/account/#account-update))
-        endpoint to enter a new zip code.
+        Adds a credit card Payment Method to your account and sets it as the default method.
       operationId: createCreditCard
       x-linode-cli-action: update-card
       security:
@@ -572,15 +566,7 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/CreditCard'
-              - type: object
-                properties:
-                  cvv:
-                    type: string
-                    description: >
-                      The Card Verification Value on the back of the card.
-                    example: '123'
+              $ref: '#/components/schemas/CreditCard'
       responses:
         '200':
           description: Credit Card updated.
@@ -1676,46 +1662,7 @@ paths:
                   data:
                     type: array
                     items:
-                      type: object
-                      description: Payment Method object response.
-                      properties:
-                        type:
-                          type: string
-                          description: The type of Payment Method.
-                          example: 'credit_card'
-                          x-linode-cli-display: 1
-                        is_default:
-                          type: boolean
-                          description: |
-                            Whether this Payment Method is the default method for automatically processing service charges.
-                          example: true
-                          x-linode-cli-display: 2
-                        created:
-                          type: string
-                          readOnly: true
-                          format: date-time
-                          description: When the Payment Method was added to the Account.
-                          example: '2018-01-15T00:01:01'
-                        data:
-                          type: object
-                          description: Credit card information.
-                          properties:
-                            card_type:
-                              type: string
-                              description: The type of credit card.
-                              example: ""
-                              x-linode-cli-display: 8
-                            last_four:
-                              type: string
-                              description: The last four digits of the credit card number.
-                              example: "1234"
-                              x-linode-cli-display: 9
-                            expiry:
-                              type: string
-                              format: MM/YYYY
-                              description: The expiration month and year of the credit card.
-                              example: 06/2022
-                              x-linode-cli-display: 10
+                      $ref: '#/components/schemas/PaymentMethod'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
@@ -1732,6 +1679,82 @@ paths:
         - lang: CLI
           source: >
             linode-cli account payment-methods-list
+    post:
+      servers:
+        - url: https://api.linode.com/v4
+      x-linode-grant: read_write
+      tags:
+        - Account
+      summary: Payment Method Add
+      description: |
+        Adds a Payment Method to your Account with the option to set it as the default method.
+
+        Prior to adding a Payment Method, ensure that your billing address information is up-to-date
+        with a valid `zip` by using the Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
+      operationId: createPaymentMethod
+      x-linode-cli-action: payment-method-add
+      x-linode-cli-skip: true
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - account:read_write
+      requestBody:
+        description: The details of the Payment Method to add.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Payment Method Request Object.
+              required:
+                - type
+                - data
+                - is_default
+                - card_number
+                - expiry_month
+                - expiry_year
+                - cvv
+              properties:
+                type:
+                  $ref: '#/components/schemas/PaymentMethod/properties/type'
+                is_default:
+                  $ref: '#/components/schemas/PaymentMethod/properties/is_default'
+                data:
+                  type: object
+                  properties:
+                    card_number:
+                      $ref: '#/components/schemas/CreditCard/properties/card_number'
+                    expiry_month:
+                      $ref: '#/components/schemas/CreditCard/properties/expiry_month'
+                    expiry_year:
+                      $ref: '#/components/schemas/CreditCard/properties/expiry_year'
+                    cvv:
+                      $ref: '#/components/schemas/CreditCard/properties/cvv'
+      responses:
+        '200':
+          description: Payment Method added.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "type": "credit_card",
+                  "is_default": true,
+                  "data": {
+                    "card_number": "4111111111111111",
+                    "expiry_month": 11,
+                    "expiry_year": 2020,
+                    "cvv": "111"
+                  }
+                }' \
+                https://api.linode.com/v4/account/payment-method
   /account/payments:
     x-linode-cli-command: account
     get:
@@ -1975,6 +1998,68 @@ paths:
         - lang: CLI
           source: >
             linode-cli account paypal-execute
+  /account/promo-codes:
+    x-linode-cli-command: account
+    post:
+      x-linode-grant: unrestricted only
+      tags:
+        - Account
+      summary: Promo Credit Add
+      description: |
+        Adds an expiring Promo Credit to your account.
+
+        The following restrictions apply:
+
+        * Your account must be less than 90 days old.
+        * There must not be an existing Promo Credit already on your account.
+        * The requesting User must be unrestricted. Use the User Update
+          ([PUT /account/users/{username}](/docs/api/account/#user-update)) to change a User's restricted status.
+        * The `promo_code` must be valid and unexpired.
+      operationId: createPromoCredit
+      x-linode-cli-action: promo-add
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - account:read_only
+      requestBody:
+        description: Enter a Promo Code to add its associated credit to your Account.
+        content:
+          application/json:
+            schema:
+              required:
+              - promo_code
+              type: object
+              properties:
+                promo_code:
+                  type: string
+                  minLength: 1
+                  maxLength: 32
+                  description: |
+                    The Promo Code.
+      responses:
+        '200':
+          description: >
+            Promo Credit successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Promotion'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $TOKEN" \
+            -X POST -d '{
+              "promo_code": "abcdefABCDEF1234567890"
+            }' \
+            https://api.linode.com/v4/account/promo-codes
+      - lang: CLI
+        source: >
+          linode-cli account \
+            promo-add \
+            --promo-code abcdefABCDEF1234567890
   /account/service-transfers:
     x-linode-cli-command: service-transfers
     get:
@@ -7862,6 +7947,40 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke node-view 123456 12345-6aa78910bc
+    delete:
+      operationId: deleteLKEClusterNode
+      x-linode-cli-action: node-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Node Delete
+      description: |
+        Deletes a specific Node from a Node Pool.
+
+        **Deleting a Node is a destructive action and cannot be undone.**
+
+        Deleting a Node will reduce the size of the Node Pool it belongs to.
+      responses:
+        '200':
+          description: Delete successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/lke/clusters/12345/nodes/12345-6aa78910bc
+      - lang: CLI
+        source: >
+          linode-cli lke node-delete 12345 12345-6aa78910bc
   /lke/clusters/{clusterId}/nodes/{nodeId}/recycle:
     parameters:
     - name: clusterId
@@ -15569,72 +15688,7 @@ components:
         active_promotions:
           type: array
           items:
-            type: object
-            readOnly: true
-            description: |
-              A list of active promotions on your account. Promotions generally
-              offer a set amount of credit that can be used toward your Linode
-              services, and the promotion expires after a specified date. As well,
-              a monthly cap on the promotional offer is set.
-
-              Simply put, a promotion offers a certain amount of credit every
-              month, until either the expiration date is passed, or until the total
-              promotional credit is used, whichever comes first.
-            properties:
-              credit_monthly_cap:
-                type: string
-                description: >
-                  The amount available to spend per month.
-                example: "10.00"
-              credit_remaining:
-                type: string
-                description: >
-                  The total amount of credit left for this promotion.
-                example: "50.00"
-              description:
-                type: string
-                description: >
-                  A detailed description of this promotion.
-                example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
-              expire_dt:
-                type: string
-                description: >
-                  When this promotion's credits expire.
-                example: '2018-01-31T23:59:59'
-              image_url:
-                type: string
-                description: >
-                  The location of an image for this promotion.
-                example: "https://linode.com/10_a_month_promotion.svg"
-              summary:
-                type: string
-                description: >
-                  Short details of this promotion.
-                example: "$10 off your Linode a month!"
-              this_month_credit_remaining:
-                type: string
-                description: >
-                  The amount of credit left for this month for this promotion.
-                example:  "10.00"
-              service_type:
-                type: string
-                enum:
-                  - all
-                  - backup
-                  - blockstorage
-                  - db_mysql
-                  - ip_v4
-                  - linode
-                  - linode_disk
-                  - linode_memory
-                  - longview
-                  - managed
-                  - nodebalancer
-                  - objectstorage
-                  - transfer_tx
-                description: >
-                  The service to which this promotion applies.
-                example: "all"
+            $ref: '#/components/schemas/Promotion'
         active_since:
           type: string
           format: date-time
@@ -15987,11 +16041,14 @@ components:
         card_number:
           type: string
           description: Your credit card number. No spaces or dashes allowed.
-          minLength: 13
-          maxLength: 23
+          minLength: 14
+          maxLength: 24
+          format: digits
           example: 4111111111111111
         expiry_month:
           type: integer
+          minimum: 1
+          maximum: 12
           description: >
             A value from 1-12 representing the expiration month of your credit card.
 
@@ -16002,7 +16059,9 @@ components:
           example: 12
         expiry_year:
           type: integer
-          description: >
+          minLength: 4
+          maxLength: 4
+          description: |
             A four-digit integer representing the expiration year of
             your credit card.
 
@@ -16010,6 +16069,14 @@ components:
             must result in a month/year combination of the current month or in
             the future. An expiration date set in the past is invalid.
           example: 2020
+        cvv:
+          type: string
+          minLength: 3
+          maxLength: 4
+          format: digits
+          description: >
+            CVV (Card Verification Value) of the credit card, typically found on the back of the card.
+          example: '123'
     Device:
       type: object
       description: >
@@ -19294,9 +19361,18 @@ components:
             The reason maintenance is being performed.
           example: This maintenance will allow us to update the BIOS on the host’s motherboard.
         when:
+          x-linode-filterable: true
           type: string
-          description: >
+          description: |
             When the maintenance will begin.
+
+            [Filterable](/docs/api/#filtering-and-sorting) with the following parameters:
+
+            * A single value in date-time string format ("%Y-%m-%dT%H:%M:%S"), which returns only matches to that value.
+
+            * A dictionary containing pairs of inequality operator string keys ("+or", "+gt", "+gte", "+lt", "+lte",
+            or "+neq") and single date-time string format values ("%Y-%m-%dT%H:%M:%S"). "+or" accepts an array of values that
+            may consist of single date-time strings or dictionaries of inequality operator pairs.
           format: date-time
           example: 2020-07-09T00:01:01
         entity:
@@ -20638,6 +20714,52 @@ components:
           description: The amount, in US dollars, of the Payment.
           example: '120.50'
           x-linode-cli-display: 3
+    PaymentMethod:
+      type: object
+      description: Payment Method Response Object.
+      properties:
+        type:
+          type: string
+          enum:
+            - credit_card
+          description: The type of Payment Method.
+          example: 'credit_card'
+          x-linode-cli-display: 1
+        is_default:
+          type: boolean
+          description: |
+            Whether this Payment Method is the default method for automatically processing service charges.
+          example: true
+          x-linode-cli-display: 2
+        created:
+          type: string
+          readOnly: true
+          format: date-time
+          description: When the Payment Method was added to the Account.
+          example: '2018-01-15T00:01:01'
+        data:
+          type: object
+          description: Credit card information.
+          properties:
+            card_type:
+              type: string
+              readOnly: true
+              description: The type of credit card.
+              example: ""
+              x-linode-cli-display: 8
+            last_four:
+              type: string
+              readOnly: true
+              description: The last four digits of the credit card number.
+              example: "1234"
+              x-linode-cli-display: 9
+            expiry:
+              type: string
+              readOnly: true
+              format: MM/YYYY
+              description: The expiration month and year of the credit card.
+              example: 06/2022
+              x-linode-cli-display: 10
     PaymentRequest:
       type: object
       required:
@@ -20648,7 +20770,7 @@ components:
           type: string
           description: >
             CVV (Card Verification Value) of the credit card to be used for
-            the Payment.
+            the Payment. Required if paying by credit card.
           example: '123'
         usd:
           type: string
@@ -20934,6 +21056,79 @@ components:
             See the [Cloud Manager Changelog](/changelog/cloud-manager/) for the latest updates.
           example: password
           readOnly: true
+    Promotion:
+      type: object
+      readOnly: true
+      description: |
+        Promotions generally
+        offer a set amount of credit that can be used toward your Linode
+        services, and the promotion expires after a specified date. As well,
+        a monthly cap on the promotional offer is set.
+
+        Simply put, a promotion offers a certain amount of credit every
+        month, until either the expiration date is passed, or until the total
+        promotional credit is used, whichever comes first.
+      properties:
+        credit_monthly_cap:
+          x-linode-cli-display: 5
+          type: string
+          description: >
+            The amount available to spend per month.
+          example: "10.00"
+        credit_remaining:
+          x-linode-cli-display: 3
+          type: string
+          description: >
+            The total amount of credit left for this promotion.
+          example: "50.00"
+        description:
+          type: string
+          description: >
+            A detailed description of this promotion.
+          example: "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends."
+        expire_dt:
+          x-linode-cli-display: 2
+          type: string
+          description: >
+            When this promotion's credits expire.
+          example: '2018-01-31T23:59:59'
+        image_url:
+          type: string
+          description: >
+            The location of an image for this promotion.
+          example: "https://linode.com/10_a_month_promotion.svg"
+        summary:
+          x-linode-cli-display: 10
+          type: string
+          description: >
+            Short details of this promotion.
+          example: "$10 off your Linode a month!"
+        this_month_credit_remaining:
+          x-linode-cli-display: 4
+          type: string
+          description: >
+            The amount of credit left for this month for this promotion.
+          example:  "10.00"
+        service_type:
+          x-linode-cli-display: 1
+          type: string
+          enum:
+            - all
+            - backup
+            - blockstorage
+            - db_mysql
+            - ip_v4
+            - linode
+            - linode_disk
+            - linode_memory
+            - longview
+            - managed
+            - nodebalancer
+            - objectstorage
+            - transfer_tx
+          description: >
+            The service to which this promotion applies.
+          example: "all"
     Region:
       type: object
       description: An area where Linode services are available.
