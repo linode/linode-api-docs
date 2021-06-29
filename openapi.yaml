@@ -566,7 +566,8 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreditCard'
+              allOf:
+              - $ref: '#/components/schemas/CreditCard'
       responses:
         '200':
           description: Credit Card updated.
