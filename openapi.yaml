@@ -19337,9 +19337,7 @@ components:
           type: string
           enum:
           - pending
-          - ready
           - started
-          - completed
           description: >
             The maintenance status.
           example: started
