@@ -17064,14 +17064,14 @@ components:
               type: array
               x-linode-cli-format: json
               description: |
-                The inbound rules for the firewall, in JSON format.
+                The inbound rules for the firewall, as a JSON array.
               items:
                 $ref: '#/components/schemas/FirewallRuleConfig'
             outbound:
               type: array
               x-linode-cli-format: json
               description: |
-                The outbound rules for the firewall, in JSON format.
+                The outbound rules for the firewall, as a JSON array.
               items:
                 $ref: '#/components/schemas/FirewallRuleConfig'
             inbound_policy:
