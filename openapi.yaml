@@ -16438,7 +16438,7 @@ components:
 
             `NS`: The subdomain, if any, to use with the Domain of the Record.
 
-            `MX`: The mail server subdomain. To create a [Null MX record](https://datatracker.ietf.org/doc/html/rfc7505),
+            `MX`: The mail server subdomain. To create a [Null MX record](https://datatracker.ietf.org/doc/html/rfc7505), first remove any additional MX records, then enter an empty string for this property.
             enter an empty string (`""`) for this property after [removing](/docs/api/domains/#domain-record-delete) any
             additional MX records. If a Domain has a Null MX record, new MX records cannot be created.
 
