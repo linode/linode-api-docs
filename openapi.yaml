@@ -16494,7 +16494,7 @@ components:
             The priority of the target host for this Record. Lower values are preferred. Only valid for
             MX and SRV record requests. Required for SRV record requests.
 
-            Defaults to `0` if omitted/null for MX record requests.
+            Defaults to `0` for MX record requests. Must be `0` for Null MX records.
           example: 50
           x-linode-cli-display: 6
         weight:
