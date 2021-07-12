@@ -10946,14 +10946,12 @@ paths:
         - [Create](/docs/api/linode-instances/#configuration-profile-create) a new Configuration Profile without the VLAN interface, then [reboot](/docs/apilinode-instances/#linode-reboot) the Linode into the new Configuration Profile.
         - [Delete](/docs/api/linode-instances/#linode-delete) the Linode.
 
-        **VLANs cannot be manually renamed.** If a VLAN's label must be changed, create a new VLAN and attach all required Linodes to it.
-
-        **VLANs cannot be manually deleted.** There is no need to manually delete a VLAN. If a VLAN is no longer needed, detach it from all Linodes. A VLANs that are not attached to any Linodes are automatically deleted within a short timeframe.
-
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
+
+        **Note:** See our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/) to view additional [limitations](/docs/guides/getting-started-with-vlans/#limitations).
       operationId: getVLANs
       x-linode-cli-action: list
       security:
@@ -17675,6 +17673,8 @@ components:
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
+
+        **Note:** See our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/) to view additional [limitations](/docs/guides/getting-started-with-vlans/#limitations).
     Invoice:
       type: object
       description: Account Invoice object
