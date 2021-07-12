@@ -16265,7 +16265,7 @@ components:
           x-linode-cli-display: 3
         domain:
           type: string
-          pattern: ([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+\.?)
+          pattern: \A(\*\.)?([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)\Z
           minLength: 1
           maxLength: 255
           description: >
