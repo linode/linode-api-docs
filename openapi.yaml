@@ -15577,6 +15577,17 @@ components:
                 type: array
                 items:
                   $ref: '#/components/schemas/ErrorObject'
+    WarningResponse:
+      description: Warning
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              warnings:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WarningObject'
   parameters:
     pageOffset:
       name: page
@@ -22140,6 +22151,21 @@ components:
           example:
           - example tag
           - another example
+    WarningObject:
+      type: object
+      description: >
+        An object for describing a single warning for incomplete processing associated with an accepted request.
+      properties:
+        title:
+          type: string
+          description: >
+            The general warning message.
+          example: Unable to reboot Linode.
+        details:
+          type: string
+          description: >
+            Specific information related to the warning.
+          example: Linode 123 could not be rebooted.
 tags:
   - name: Account
     description: Use the Account endpoints to manage user settings, billing, and payments. You can also initiate and maintain OAuth client application authentication, enable the Linode Managed service, and create new users on your account.
