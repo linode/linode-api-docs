@@ -20730,19 +20730,24 @@ components:
       type: object
       description: Payment Method Response Object.
       properties:
+        id:
+          type: integer
+          description: The unique ID of this Payment Method.
+          example: 123
+          x-linode-cli-display: 1
         type:
           type: string
           enum:
             - credit_card
           description: The type of Payment Method.
           example: 'credit_card'
-          x-linode-cli-display: 1
+          x-linode-cli-display: 2
         is_default:
           type: boolean
           description: |
             Whether this Payment Method is the default method for automatically processing service charges.
           example: true
-          x-linode-cli-display: 2
+          x-linode-cli-display: 3
         created:
           type: string
           readOnly: true
@@ -20757,7 +20762,7 @@ components:
               type: string
               readOnly: true
               description: The type of credit card.
-              example: ""
+              example: "Discover"
               x-linode-cli-display: 8
             last_four:
               type: string
