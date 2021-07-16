@@ -1818,12 +1818,12 @@ paths:
         Make the specified Payment Method the default method for automatically processing payments.
 
         Removes the default status from any other Payment Method.
-      operationId: makePaymentMethodDefault 
+      operationId: makePaymentMethodDefault
       x-linode-cli-action: payment-method-make-default
       security:
         - personalAccessToken: []
         - oauth:
-          - account:read_only
+          - account:read_write
       responses:
         '200':
           description: Payment Method successfully set as the default method.
