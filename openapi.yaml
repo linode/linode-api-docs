@@ -1756,6 +1756,50 @@ paths:
                   }
                 }' \
                 https://api.linode.com/v4/account/payment-method
+  /account/payment-methods/{paymentMethodId}:
+    x-linode-cli-command: account
+    parameters:
+    - name: paymentMethodId
+      in: path
+      description: The ID of the Payment Method to look up.
+      required: true
+      schema:
+        type: integer
+    get:
+      servers:
+        - url: https://api.linode.com/v4
+      parameters:
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageSize'
+      x-linode-grant: read_only
+      tags:
+        - Account
+      summary: Payment Method View
+      description: |
+        View the details of the specified Payment Method.
+      operationId: getPaymentMethods
+      x-linode-cli-action: payment-method-view
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - account:read_only
+      responses:
+        '200':
+          description: Returns a Payment Method Object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentMethod'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/account/payment-methods/123
+        - lang: CLI
+          source: >
+            linode-cli account payment-method-view 123
   /account/payments:
     x-linode-cli-command: account
     get:
