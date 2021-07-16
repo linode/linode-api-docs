@@ -1756,7 +1756,7 @@ paths:
                     "cvv": "111"
                   }
                 }' \
-                https://api.linode.com/v4/account/payment-method
+                https://api.linode.com/v4/account/payment-methods
   /account/payment-methods/{paymentMethodId}:
     x-linode-cli-command: account
     parameters:
