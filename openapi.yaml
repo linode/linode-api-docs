@@ -10494,8 +10494,8 @@ paths:
         source: >
           linode-cli firewalls create \
             --label example-firewall \
-            --outbound_policy ACCEPT \
-            --inbound_policy DROP \
+            --rules.outbound_policy ACCEPT \
+            --rules.inbound_policy DROP \
             --rules.inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}, "action": "ACCEPT"}]' \
             --rules.outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.0/24"],"ipv6": ["2001:DB8::/32"]}, "action": "DROP", "label": "outbound-rule123", "description": "An example outbound rule description."}]'
   /networking/firewalls/{firewallId}:
