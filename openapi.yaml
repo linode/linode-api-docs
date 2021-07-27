@@ -15170,6 +15170,7 @@ paths:
                   minLength: 1
                   maxLength: 32
                   pattern: '^[a-zA-Z]((?!--|__)[a-zA-Z0-9-_])+$'
+                  required: true
                 config_id:
                   type: integer
                   description: >
