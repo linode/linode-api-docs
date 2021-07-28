@@ -2940,6 +2940,7 @@ paths:
                       "longview_subscription": true,
                       "add_images": true,
                       "add_volumes": true,
+                      "add_firewalls": true,
                       "account_access": "read_only",
                       "cancel_account": false
                     },
@@ -17425,6 +17426,10 @@ components:
             add_volumes:
               type: boolean
               description: If true, this User may add Volumes.
+              example: true
+            add_firewalls:
+              type: boolean
+              description: If true, this User may add Firewalls.
               example: true
         linode:
           type: array
