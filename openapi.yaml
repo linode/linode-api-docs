@@ -536,7 +536,6 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
                 "comments": "I am consolidating my accounts."
-                }
               }' \
               https://api.linode.com/v4/account/cancel
       - lang: CLI
