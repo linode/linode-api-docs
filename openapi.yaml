@@ -534,8 +534,8 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X PUT -d '{
-                "comments": "I'm consolidating my accounts."
+              -X POST -d '{
+                "comments": "I am consolidating my accounts."
                 }
               }' \
               https://api.linode.com/v4/account/cancel
