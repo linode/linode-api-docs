@@ -20851,6 +20851,7 @@ components:
           type: string
           enum:
             - credit_card
+            - google_pay
           description: The type of Payment Method.
           example: 'credit_card'
           x-linode-cli-display: 2
