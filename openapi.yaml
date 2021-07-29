@@ -1831,6 +1831,8 @@ paths:
             application/json:
               schema:
                   $ref: '#/components/schemas/Payment'
+        '202':
+          $ref: '#/components/responses/WarningResponse'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -1985,6 +1987,8 @@ paths:
             application/json:
              schema:
                type: object
+        '202':
+          $ref: '#/components/responses/WarningResponse'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -15578,7 +15582,10 @@ components:
                 items:
                   $ref: '#/components/schemas/ErrorObject'
     WarningResponse:
-      description: Warning
+      description: |
+        Accepted with warning.
+
+        A warning object is included with the standard 200 response.
       content:
         application/json:
           schema:
