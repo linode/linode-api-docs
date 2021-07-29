@@ -15146,6 +15146,8 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - label
               properties:
                 region:
                   type: string
