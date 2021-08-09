@@ -7452,7 +7452,13 @@ paths:
                   "node_pools": [
                     {
                       "type": "g6-standard-4",
-                      "count": 6
+                      "count": 6,
+                      "autoscaler": {
+                        "enabled": true,
+                        "max": 12,
+                        "min": 3
+                      }
+                  }
                     },
                     {
                       "type": "g6-standard-8",
@@ -7746,7 +7752,12 @@ paths:
                 -X POST -d '{
                   "type": "g6-standard-4",
                   "count": 6,
-                  "tags": ["example-tag"]
+                  "tags": ["example-tag"],
+                  "autoscaler": {
+                    "enabled": true,
+                    "max": 12,
+                    "min": 3 
+                  }
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
       - lang: CLI
@@ -19168,6 +19179,30 @@ components:
         Specifies a collection of Linodes which will be members of a Kubernetes
         cluster.
       properties:
+        autoscaler:
+          type: object
+          description: |
+            When enabled, the number of nodes autoscales within the defined minimum and maximum values.
+
+            When making a request, `max` and `min` require each other.
+          properties:
+            enabled:
+              type: boolean
+              description: Whether autoscaling is enabled for this Node Pool. Defaults to `false`.
+              example: true
+            max:
+              type: integer
+              minimum: 1
+              maximum: 100
+              description: |
+                The maximum number of nodes to autoscale to. Defaults to the Node Pool's `count`.
+              example: 12
+            min:
+              type: integer
+              minimum: 1
+              maximum: 100
+              description: The minimum number of nodes to autoscale to. Defaults to the Node Pool's `count`.
+              example: 3
         type:
           $ref: '#/components/schemas/LKENodePool/properties/type'
         count:
@@ -19198,6 +19233,27 @@ components:
         Node Pools consist of a Linode type, the number of Linodes to
         deploy of that type, and additional status information.
       properties:
+        autoscaler:
+          type: object
+          description: |
+            When enabled, the number of nodes autoscales within the defined minimum and maximum values.
+          properties:
+            enabled:
+              type: boolean
+              description: Whether autoscaling is enabled for this Node Pool.
+              example: true
+            max:
+              type: integer
+              minimum: 1
+              maximum: 100
+              description: The maximum number of nodes to autoscale to.
+              example: 12
+            min:
+              type: integer
+              minimum: 1
+              maximum: 100
+              description: The minimum number of nodes to autoscale to.
+              example: 3
         type:
           type: string
           description: The Linode Type for all of the nodes in the Node Pool.
