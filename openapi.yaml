@@ -1798,6 +1798,43 @@ paths:
         - lang: CLI
           source: >
             linode-cli account payment-method-view 123
+    delete:
+      x-linode-grant: read_write
+      tags:
+        - Account
+      summary: Payment Method Delete
+      description: |
+        Deactivate the specified Payment Method.
+
+        The default Payment Method can not be deleted. To add a new default Payment Method, access the Payment Method
+        Add ([POST /account/payment-methods](/docs/api/account/#payment-method-add)) endpoint. To designate an existing
+        Payment Method as the default method, access the Payment Method Make Default
+        ([POST /account/payment-methods/{paymentMethodId}/make-default](/docs/api/account/#payment-method-make-default))
+        endpoint.
+      operationId: deletePaymentMethod
+      x-linode-cli-action: payment-method-delete
+      security:
+        - personalAccessToken: []
+        - oauth:
+          - account:read_only
+      responses:
+        '200':
+          description: Payment Method deactivated.
+          content:
+            application/json: 
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/account/payment-methods/123
+        - lang: CLI
+          source: >
+            linode-cli account payment-method-delete 123
   /account/payment-methods/{paymentMethodId}/make-default:
     x-linode-cli-command: account
     parameters:
