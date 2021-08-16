@@ -4153,6 +4153,10 @@ paths:
       requestBody:
         description: The requested initial state of a new Linode.
         required: true
+        x-linode-cli-allowed-defaults:
+        - region
+        - image
+        - type
         content:
           application/json:
             schema:
@@ -4870,6 +4874,9 @@ paths:
       requestBody:
         description: The requested state your Linode will be cloned into.
         required: true
+        x-linode-cli-allowed-defaults:
+        - region
+        - type
         content:
           application/json:
             schema:
@@ -7405,6 +7412,8 @@ paths:
         are ready.
       requestBody:
         description: Configuration for the Kubernetes cluster
+        x-linode-cli-allowed-defaults:
+        - region
         content:
           application/json:
             schema:
@@ -11192,6 +11201,8 @@ paths:
       requestBody:
         description: Information about the NodeBalancer to create.
         required: true
+        x-linode-cli-allowed-defaults:
+        - region
         content:
           application/json:
             schema:
@@ -15190,6 +15201,8 @@ paths:
       requestBody:
         description: The requested initial state of a new Volume.
         required: true
+        x-linode-cli-allowed-defaults:
+        - region
         content:
           application/json:
             schema:
