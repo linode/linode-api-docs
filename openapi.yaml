@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.100.1
+  version: 4.101.0
 
   title: Linode API
   description: |
@@ -1821,7 +1821,7 @@ paths:
         '200':
           description: Payment Method deactivated.
           content:
-            application/json: 
+            application/json:
               schema:
                 type: object
         default:
@@ -7756,7 +7756,7 @@ paths:
                   "autoscaler": {
                     "enabled": true,
                     "max": 12,
-                    "min": 3 
+                    "min": 3
                   }
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools
@@ -19195,7 +19195,7 @@ components:
               minimum: 1
               maximum: 100
               description: |
-                The maximum number of nodes to autoscale to. Defaults to the Node Pool's `count`.
+                The maximum number of nodes to autoscale to. Defaults to the Node Pool's `count`. Defaults to the value provided by the `count` field.
               example: 12
             min:
               type: integer
@@ -19240,19 +19240,19 @@ components:
           properties:
             enabled:
               type: boolean
-              description: Whether autoscaling is enabled for this Node Pool.
+              description: Whether autoscaling is enabled for this Node Pool. Defaults to `false`.
               example: true
             max:
               type: integer
               minimum: 1
               maximum: 100
-              description: The maximum number of nodes to autoscale to.
+              description: The maximum number of nodes to autoscale to. Defaults to the Node Pool's `count`.
               example: 12
             min:
               type: integer
               minimum: 1
               maximum: 100
-              description: The minimum number of nodes to autoscale to.
+              description: The minimum number of nodes to autoscale to. Defaults to the Node Pool's `count`.
               example: 3
         type:
           type: string
