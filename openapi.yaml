@@ -14544,8 +14544,6 @@ paths:
           linode-cli regions view us-east
   /regions/{regionId}/migrations:
     x-linode-cli-command: regions
-    servers:
-    - url: https://api.linode.com/v4beta
     parameters:
     - name: regionId
       in: path
@@ -14554,6 +14552,8 @@ paths:
       schema:
         type: string
     get:
+      servers:
+      - url: https://api.linode.com/v4beta
       tags:
       - Regions
       summary: Region Migrations List
