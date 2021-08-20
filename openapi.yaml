@@ -8253,6 +8253,36 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke kubeconfig-view 12345
+    delete:
+      operationId: deleteLKEClusterKubeconfig
+      x-linode-cli-action: kubeconfig-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Kubeconfig Delete
+      description: |
+        Delete and regenerate the Kubeconfig file for a Cluster.
+      responses:
+        '200':
+          description: Kubeconfig file deleted and regenerated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/lke/clusters/12345/kubeconfig
+      - lang: CLI
+        source: >
+          linode-cli lke kubeconfig-delete 12345
   /lke/versions:
     x-linode-cli-command: lke
     get:
