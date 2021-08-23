@@ -15619,6 +15619,52 @@ paths:
       - lang: CLI
         source: >
           linode-cli volumes detach 12345
+  /volumes/{volumeId}/migration-cancel:
+    parameters:
+    - name: volumeId
+      in: path
+      description: ID of the Volume to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: volumes
+    post:
+      x-linode-grant: read_write
+      tags:
+      - Volumes
+      summary: Volume Migration Cancel
+      description: |
+        Cancels the migration for the Volume and removes it from the migration queue.
+
+        A Volume migration cannot be cancelled in the following cases:
+          * The migration is already in progress.
+          * The migration was automatically scheduled. Only customer-elected Volume migrations can be cancelled with this endpoint.
+      operationId: cancelVolumeMigration
+      x-linode-cli-action: migration-cancel
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - volumes:read_write
+        - linodes:read_write
+      responses:
+        '200':
+          description: Migration cancelled successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST \
+              https://api.linode.com/v4/volumes/12345/migration-cancel
+      - lang: CLI
+        source: >
+          linode-cli volumes migration-cancel 12345
   /volumes/{volumeId}/resize:
     parameters:
     - name: volumeId
