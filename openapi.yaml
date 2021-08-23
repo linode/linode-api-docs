@@ -6370,7 +6370,11 @@ paths:
       tags:
       - Linode Instances
       summary: Linode NodeBalancers View
-      description: Returns a list of NodeBalancers that are assigned to this Linode.
+      description: |
+        Returns a list of NodeBalancers that are assigned to this Linode and readable by the requesting User.
+
+        Read permission to a NodeBalancer can be given to a User by accessing the User's Grants Update
+        ([PUT /account/users/{username}/grants](https://www.linode.com/docs/api/account/#users-grants-update)) endpoint.
       operationId: getLinodeNodeBalancers
       x-linode-cli-action: nodebalancers
       security:
