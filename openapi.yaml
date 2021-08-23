@@ -14564,7 +14564,8 @@ paths:
 
         **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
         `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
       operationId: getRegionMigrations
       x-linode-cli-action: migrations
       responses:
