@@ -1691,6 +1691,8 @@ paths:
         Adds a Payment Method to your Account with the option to set it as the default method. Adding a default
         Payment Method removes the default status from any other Payment Method.
 
+        An Account can have up to 6 active Payment Methods.
+
         Prior to adding a Payment Method, ensure that your billing address information is up-to-date
         with a valid `zip` by using the Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
       operationId: createPaymentMethod
