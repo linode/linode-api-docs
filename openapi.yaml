@@ -10390,9 +10390,7 @@ paths:
       - Networking
       summary: Firewalls List
       description: |
-        Returns a paginated list of your Firewalls.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
+        Returns a paginated list of accessible Firewalls.
       operationId: getFirewalls
       x-linode-cli-action: list
       security:
@@ -10446,11 +10444,6 @@ paths:
         Additional disabled Firewalls can still be added to a Linode instance.
 
         A `firewall_create` Event is generated when this endpoint returns successfully.
-
-        Cloud Firewall is not fully available in every data center region. For the current list
-        of locations with full availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list))
-        endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        Certain Regions have partial Firewall availability
       operationId: createFirewalls
       x-linode-cli-action: create
       security:
@@ -10588,8 +10581,6 @@ paths:
         returned in the response. Instead, use the
         [List Firewall Devices](/docs/api/networking/#firewall-devices-list)
         endpoint to review them.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       responses:
         '200':
           description: Returns information about this Firewall.
@@ -10635,8 +10626,6 @@ paths:
 
         If a Firewall's status is changed with this endpoint, a corresponding `firewall_enable` or
         `firewall_disable` Event will be generated.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: updateFirewall
       x-linode-cli-action: update
       security:
@@ -10696,8 +10685,6 @@ paths:
         from any Linode services that the Firewall was assigned to.
 
         A `firewall_delete` Event is generated when this endpoint returns successfully.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       responses:
         '200':
           description: Delete Successful.
@@ -10741,8 +10728,6 @@ paths:
         Returns a paginated list of a Firewall's Devices. A Firewall Device assigns a
         Firewall to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: getFirewallDevices
       x-linode-cli-action: devices-list
       security:
@@ -10797,8 +10782,6 @@ paths:
         **Note:** When a Firewall is assigned to a Linode and you attempt
         to [migrate the Linode to a data center](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate) that does not support Cloud Firewalls, the migration will fail.
         Use the [List Regions](/docs/api/regions/#regions-list) endpoint to view a list of a data center's capabilities.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: createFirewallDevice
       x-linode-cli-action: device-create
       security:
@@ -10867,8 +10850,6 @@ paths:
         Returns information for a Firewall Device, which assigns a Firewall
         to a Linode service (referred to as the Device's `entity`). Currently,
         only Devices with an entity of type `linode` are accepted.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: getFirewallDevice
       x-linode-cli-action: device-view
       security:
@@ -10913,8 +10894,6 @@ paths:
         will remain in effect.
 
         A `firewall_device_remove` Event is generated when the Firewall Device is removed successfully.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       responses:
         '200':
           description: Delete Successful.
@@ -10953,16 +10932,6 @@ paths:
       summary: Firewall Rules List
       description: |
         Returns the inbound and outbound Rules for a Firewall.
-
-        This endpoint is in **beta**.
-
-
-        * Gain access to [Linode Cloud Firewall](https://www.linode.com/products/firewall/) by signing up for our [Greenlight Beta program](https://www.linode.com/green-light/#sign-up-form).
-        * During the beta, Cloud Firewall is not available in every [data center region](/docs/api/regions). For the current list of availability, see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
-        * Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future.  This notice will be removed when this endpoint is out of
-        beta.
       operationId: getFirewallRules
       x-linode-cli-action: rules-list
       security:
@@ -10996,8 +10965,6 @@ paths:
       description: |
         Updates the inbound and outbound Rules for a Firewall. Using this endpoint will
         replace all of a Firewall's ruleset with the Rules specified in your request.
-
-        Cloud Firewall is not available in every data center region. For the current list of availability, access the Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint or see the [Cloud Firewall Product Documentation](https://www.linode.com/docs/products/networking/cloud-firewall/).
       operationId: updateFirewallRules
       x-linode-cli-action: rules-update
       security:
