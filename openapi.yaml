@@ -14558,7 +14558,8 @@ paths:
       - Regions
       summary: Region Migrations List
       description: |
-        Returns the migration queue sizes for the Region.
+        Returns the number of queued migrations for the Region. Scheduled migrations that have not been placed on the
+        queue are not included in this count.
 
         Only the Block Storage Volumes migration queue size is returned at this time.
 
