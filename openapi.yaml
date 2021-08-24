@@ -15636,7 +15636,7 @@ paths:
       description: |
         Cancels the customer-initiated migration for the Volume.
 
-        Cancelled migrations are removed from the migration queue, then reset to occur on the scheduled migration date.
+        Cancelled migrations are removed from the migration queue, then reset to occur on the original scheduled migration date.
 
         A Volume migration cannot be cancelled in the following cases:
           * The migration is already in progress.
