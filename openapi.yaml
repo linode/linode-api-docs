@@ -15634,11 +15634,13 @@ paths:
       - Volumes
       summary: Volume Migration Cancel
       description: |
-        Cancels the migration for the Volume and removes it from the migration queue.
+        Cancels the customer-initiated migration for the Volume.
+
+        Cancelled migrations are removed from the migration queue, then reset to occur on the scheduled migration date.
 
         A Volume migration cannot be cancelled in the following cases:
           * The migration is already in progress.
-          * The migration was automatically scheduled. Only customer-elected Volume migrations can be cancelled with this endpoint.
+          * The migration was automatically queued on the scheduled date.
       operationId: cancelVolumeMigration
       x-linode-cli-action: migration-cancel
       security:
