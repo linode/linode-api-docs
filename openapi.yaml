@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.101.1
+  version: 4.102.0
 
   title: Linode API
   description: |
@@ -14592,54 +14592,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli regions view us-east
-  /regions/{regionId}/migrations:
-    x-linode-cli-command: regions
-    parameters:
-    - name: regionId
-      in: path
-      description: ID of the Region to look up.
-      required: true
-      schema:
-        type: string
-    get:
-      servers:
-      - url: https://api.linode.com/v4beta
-      tags:
-      - Regions
-      summary: Region Migrations List
-      description: |
-        Returns the number of queued migrations for the Region. Scheduled migrations that have not been placed on the
-        queue are not included in this count.
-
-        Only the Block Storage Volumes migration queue size is returned at this time.
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
-      operationId: getRegionMigrations
-      x-linode-cli-action: migrations
-      responses:
-        '200':
-          description: A Region Migrations object.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  volumes:
-                    type: integer
-                    description: The size of the Block Storage Volumes migration queue for the Region.
-                    example: 42
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl https://api.linode.com/v4/regions/us-east/migrations
-      - lang: CLI
-        source: >
-          linode-cli regions migrations us-east
   /support/tickets:
     x-linode-cli-command: tickets
     get:
@@ -15717,54 +15669,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli volumes detach 12345
-  /volumes/{volumeId}/migration-cancel:
-    parameters:
-    - name: volumeId
-      in: path
-      description: ID of the Volume to look up.
-      required: true
-      schema:
-        type: integer
-    x-linode-cli-command: volumes
-    post:
-      x-linode-grant: read_write
-      tags:
-      - Volumes
-      summary: Volume Migration Cancel
-      description: |
-        Cancels the customer-initiated migration for the Volume.
-
-        Cancelled migrations are removed from the migration queue, then reset to occur on the original scheduled migration date.
-
-        A Volume migration cannot be cancelled in the following cases:
-          * The migration is already in progress.
-          * The migration was automatically queued on the scheduled date.
-      operationId: cancelVolumeMigration
-      x-linode-cli-action: migration-cancel
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - volumes:read_write
-        - linodes:read_write
-      responses:
-        '200':
-          description: Migration cancelled successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X POST \
-              https://api.linode.com/v4/volumes/12345/migration-cancel
-      - lang: CLI
-        source: >
-          linode-cli volumes migration-cancel 12345
   /volumes/{volumeId}/resize:
     parameters:
     - name: volumeId
