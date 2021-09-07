@@ -1688,13 +1688,16 @@ paths:
         - Account
       summary: Payment Method Add
       description: |
-        Adds a Payment Method to your Account with the option to set it as the default method. Adding a default
-        Payment Method removes the default status from any other Payment Method.
+        Adds a Payment Method to your Account with the option to set it as the default method.
 
-        An Account can have up to 6 active Payment Methods.
+        * Adding a default Payment Method removes the default status from any other Payment Method.
 
-        Prior to adding a Payment Method, ensure that your billing address information is up-to-date
+        * An Account can have up to 6 active Payment Methods.
+
+        * Prior to adding a Payment Method, ensure that your billing address information is up-to-date
         with a valid `zip` by using the Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
+
+        * A `payment_method_add` event is generated when a payment is successfully submitted.
       operationId: createPaymentMethod
       x-linode-cli-action: add
       security:
@@ -1952,7 +1955,9 @@ paths:
       description: |
         Makes a Payment to your Account.
 
-        The requested amount is charged to the default Payment Method if no `payment_method_id` is specified.
+        * The requested amount is charged to the default Payment Method if no `payment_method_id` is specified.
+
+        * A `payment_submitted` event is generated when a payment is successfully submitted.
       operationId: createPayment
       x-linode-cli-action: payment-create
       security:
@@ -1968,7 +1973,7 @@ paths:
               $ref: '#/components/schemas/PaymentRequest'
       responses:
         '200':
-          description: Payment made.
+          description: Payment submitted successfully.
           content:
             application/json:
               schema:
@@ -17016,6 +17021,7 @@ components:
           - oauth_client_secret_reset
           - oauth_client_update
           - password_reset
+          - payment_method_add
           - payment_submitted
           - profile_update
           - stackscript_create
