@@ -1949,9 +1949,10 @@ paths:
       tags:
       - Account
       summary: Payment Make
-      description: >
-        Makes a Payment to your Account via credit card. This will charge your
-        credit card the requested amount.
+      description: |
+        Makes a Payment to your Account.
+
+        The requested amount is charged to the default Payment Method if no `payment_method_id` is specified.
       operationId: createPayment
       x-linode-cli-action: payment-create
       security:
@@ -1971,7 +1972,7 @@ paths:
           content:
             application/json:
               schema:
-                  $ref: '#/components/schemas/Payment'
+                $ref: '#/components/schemas/Payment'
         '202':
           $ref: '#/components/responses/WarningResponse'
         default:
@@ -1983,14 +1984,16 @@ paths:
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
                     "cvv": "123",
-                    "usd": "120.50"
+                    "usd": "120.50",
+                    "payment_method_id": 123
                 }' \
                 https://api.linode.com/v4/account/payments
         - lang: CLI
           source: >
             linode-cli account payment-create \
               --cvv 123 \
-              --usd 120.50
+              --usd 120.50 \
+              --payment_method_id 123
   /account/payments/{paymentId}:
     x-linode-cli-command: account
     parameters:
@@ -21080,6 +21083,11 @@ components:
             The amount in US Dollars of the Payment. The maximum credit card
             payment that can be made is $50,000 dollars.
           example: '120.50'
+        payment_method_id:
+          type: integer
+          description: >
+            The ID of the Payment Method to apply to the Payment.
+          example: 123
     PayPal:
       type: object
       required:
