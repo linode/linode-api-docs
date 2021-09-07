@@ -10546,6 +10546,8 @@ paths:
               - inbound_policy
               - outbound_policy
               - action
+              - protocol
+              - addresses
               properties:
                 devices:
                   type: object
@@ -11059,7 +11061,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Firewall/properties/rules'
+              required:
+                - action
+                - addresses
+                - protocol
+              allOf:
+                - $ref: '#/components/schemas/Firewall/properties/rules'
       responses:
         '200':
           description: Firewall Rules updated successfully.
