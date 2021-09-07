@@ -1632,7 +1632,7 @@ paths:
               --data-binary "/path/to/image"
               https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
   /account/payment-methods:
-    x-linode-cli-command: account
+    x-linode-cli-command: payment-methods
     get:
       servers:
         - url: https://api.linode.com/v4
@@ -1647,7 +1647,7 @@ paths:
       description: |
         Returns a paginated list of Payment Methods for this Account.
       operationId: getPaymentMethods
-      x-linode-cli-action: payment-methods-list
+      x-linode-cli-action: list
       security:
         - personalAccessToken: []
         - oauth:
@@ -1679,7 +1679,7 @@ paths:
                 https://api.linode.com/v4/account/payment-methods
         - lang: CLI
           source: >
-            linode-cli account payment-methods-list
+            linode-cli payment-methods list
     post:
       servers:
         - url: https://api.linode.com/v4
@@ -1696,8 +1696,7 @@ paths:
         Prior to adding a Payment Method, ensure that your billing address information is up-to-date
         with a valid `zip` by using the Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
       operationId: createPaymentMethod
-      x-linode-cli-action: payment-method-add
-      x-linode-cli-skip: true
+      x-linode-cli-action: add
       security:
         - personalAccessToken: []
         - oauth:
@@ -1768,8 +1767,17 @@ paths:
                   }
                 }' \
                 https://api.linode.com/v4/account/payment-methods
+        - lang: CLI
+          source: >
+            linode-cli payment-methods add \
+              --type credit_card \
+              --is_default true \
+              --data.card_number 4111111111111111 \
+              --data.expiry_month 11 \
+              --data.expiry_year 2020 \
+              --data.cvv 111
   /account/payment-methods/{paymentMethodId}:
-    x-linode-cli-command: account
+    x-linode-cli-command: payment-methods
     parameters:
     - name: paymentMethodId
       in: path
@@ -1787,7 +1795,7 @@ paths:
       description: |
         View the details of the specified Payment Method.
       operationId: getPaymentMethod
-      x-linode-cli-action: payment-method-view
+      x-linode-cli-action: view
       security:
         - personalAccessToken: []
         - oauth:
@@ -1808,7 +1816,7 @@ paths:
                 https://api.linode.com/v4/account/payment-methods/123
         - lang: CLI
           source: >
-            linode-cli account payment-method-view 123
+            linode-cli payment-methods view 123
     delete:
       x-linode-grant: read_write
       tags:
@@ -1823,7 +1831,7 @@ paths:
         ([POST /account/payment-methods/{paymentMethodId}/make-default](/docs/api/account/#payment-method-make-default))
         endpoint.
       operationId: deletePaymentMethod
-      x-linode-cli-action: payment-method-delete
+      x-linode-cli-action: delete
       security:
         - personalAccessToken: []
         - oauth:
@@ -1845,9 +1853,9 @@ paths:
                 https://api.linode.com/v4/account/payment-methods/123
         - lang: CLI
           source: >
-            linode-cli account payment-method-delete 123
+            linode-cli payment-methods delete 123
   /account/payment-methods/{paymentMethodId}/make-default:
-    x-linode-cli-command: account
+    x-linode-cli-command: payment-methods
     parameters:
     - name: paymentMethodId
       in: path
@@ -1867,7 +1875,7 @@ paths:
 
         Removes the default status from any other Payment Method.
       operationId: makePaymentMethodDefault
-      x-linode-cli-action: payment-method-make-default
+      x-linode-cli-action: default
       security:
         - personalAccessToken: []
         - oauth:
@@ -1889,7 +1897,7 @@ paths:
                 https://api.linode.com/v4/account/payment-methods/123/make-default
         - lang: CLI
           source: >
-            linode-cli account payment-method-make-default 123
+            linode-cli payment-methods default 123
   /account/payments:
     x-linode-cli-command: account
     get:
