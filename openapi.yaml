@@ -1720,7 +1720,16 @@ paths:
                 - cvv
               properties:
                 type:
-                  $ref: '#/components/schemas/PaymentMethod/properties/type'
+                  type: string
+                  enum:
+                    - credit_card
+                  description: |
+                    The type of Payment Method.
+
+                    Alternative Payment Methods including Google Pay can be added using Linode Cloud Manager. See our
+                    guide on [Managing Billing in the Cloud Manager](/docs/guides/manage-billing-in-cloud-manager/)
+                    for details and instructions.
+                  example: 'credit_card'
                 is_default:
                   $ref: '#/components/schemas/PaymentMethod/properties/is_default'
                 data:
