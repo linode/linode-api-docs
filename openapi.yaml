@@ -9950,8 +9950,6 @@ paths:
         source: >
           linode-cli managed service-enable 9994
   /managed/stats:
-    description: |
-      A collection of managed stats.
     x-linode-cli-command: managed
     get:
       x-linode-grant: unrestricted only
@@ -10004,8 +10002,6 @@ paths:
         source: >
           linode-cli managed stats-list
   /networking/ips:
-    description: >
-      A collection of IP Addresses on your Account. Excludes private addresses.
     x-linode-cli-command: networking
     get:
       x-linode-grant: read_only
@@ -10209,11 +10205,6 @@ paths:
             97.107.143.141 \
             --rdns "test.example.org"
   /networking/ipv4/assign:
-    description: >
-      Allows redistribution of IPv4 Addresses within a Region. Any number
-      of IPs may be assigned in one request, as long as all Linodes end up
-      with at least one public and no more than one private IP Address at the
-      end of the assignment.
     x-linode-cli-command: networking
     post:
       x-linode-grant: read_write
@@ -10311,10 +10302,6 @@ paths:
             --assignments \
               '{"23.45.67.200", "linode_id": 234}'
   /networking/ipv4/share:
-    description: >
-      Configure shared IPs.  A shared IP may be brought up on a Linode other
-      than the one it lists in its response.  This can be used to allow one
-      Linode to begin serving requests should another become unresponsive.
     x-linode-cli-command: networking
     post:
       x-linode-grant: read_write
@@ -13511,8 +13498,6 @@ paths:
             --two_factor_auth true \
             --restricted false
   /profile/apps:
-    description: >
-      Returns information about OAuth Apps you have authorized to access your Account.
     x-linode-cli-command: profile
     get:
       parameters:
@@ -13819,8 +13804,6 @@ paths:
             --tfa_code 213456
   /profile/tokens:
     x-linode-cli-command: profile
-    description: >
-      A collection of Personal Access Tokens you've created.
     get:
       tags:
       - Profile
@@ -13930,7 +13913,6 @@ paths:
             --expiry '2018-01-01T13:46:32' \
             --label linode-cli
   /profile/tokens/{tokenId}:
-    description: View or revoke a single token.
     parameters:
     - name: tokenId
       in: path
@@ -14044,9 +14026,6 @@ paths:
         source: >
           linode-cli profile token-delete 123
   /profile/logins:
-    description: >
-      Returns a collection of successful account logins for this user during the last
-      90 days.
     x-linode-cli-command: profile
     get:
       tags:
@@ -14092,9 +14071,6 @@ paths:
         source: >
           linode-cli profile logins-list
   /profile/logins/{loginId}:
-    description: >
-      A login object that displays information about a successful
-      account login from this user.
     parameters:
     - name: loginId
       in: path
@@ -14135,8 +14111,6 @@ paths:
           linode-cli profile login-view 1234
   /profile/devices:
     x-linode-cli-command: profile
-    description: >
-      A collection of active TrustedDevices for your user.
     get:
       tags:
       - Profile
@@ -14182,8 +14156,6 @@ paths:
           linode-cli profile devices-list
   /profile/devices/{deviceId}:
     x-linode-cli-command: profile
-    description: >
-      View or revoke individual TrustedDevices for your User.
     parameters:
     - name: deviceId
       in: path
@@ -14255,8 +14227,6 @@ paths:
           linode-cli profile device-revoke 123
   /profile/sshkeys:
     x-linode-cli-command: sshkeys
-    description: >
-      A collection of SSH Keys added by you.
     get:
       x-linode-grant: read_only
       parameters:
