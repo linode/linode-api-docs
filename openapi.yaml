@@ -3943,10 +3943,11 @@ paths:
               https://api.linode.com/v4/images/upload
       - lang: CLI
         source: >
-          linode-cli images upload \
-            --label example-machine-image-label \
-            --description "This is an example Machine Image." \
-            --region us-east
+          linode-cli image-upload \
+            --label "Example Image" \
+            --description "Some details about the image" \
+            --region us-east \
+            ~/Downloads/image-file.img.gz
   /images/{imageId}:
     x-linode-cli-command: images
     parameters:
