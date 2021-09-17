@@ -3769,7 +3769,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ImagePublic'
+                      $ref: '#/components/schemas/Image'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
@@ -3833,7 +3833,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ImagePrivate'
+                $ref: '#/components/schemas/Image'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -3927,7 +3927,7 @@ paths:
                     type: string
                     description: The URL to upload the Image to.
                   image:
-                    $ref: '#/components/schemas/ImagePrivate'
+                    $ref: '#/components/schemas/Image'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -3970,7 +3970,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ImagePrivate'
+                $ref: '#/components/schemas/Image'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -4001,14 +4001,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ImagePrivate'
+              $ref: '#/components/schemas/Image'
       responses:
         '200':
           description: The updated image.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ImagePrivate'
+                $ref: '#/components/schemas/Image'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -17610,133 +17610,14 @@ components:
           description: >
             The grants this User has pertaining to Volumes on this Account.
             There will be one entry per Volume on the Account.
-    ImagePrivate:
+    Image:
       type: object
-      description: Private Image object
+      description: Image object
       properties:
         id:
           type: string
           description: The unique ID of this Image.
-          example: private/67848373
-          readOnly: true
-          x-linode-cli-display: 1
-        label:
-          x-linode-filterable: true
-          type: string
-          description: >
-            A short description of the Image. Labels cannot contain
-            special characters.
-          example: My gold-master image
-          x-linode-cli-display: 2
-        created:
-          type: string
-          format: date-time
-          description: When this Image was created.
-          example: '2018-01-01T00:01:01'
-          readOnly: true
-        updated:
-          type: string
-          format: date-time
-          description: When this Image was last updated.
-          example: '2019-01-02T00:01:01'
-          readOnly: true
-        created_by:
-          type: string
-          description: >
-            The name of the User who created this Image.
-          example: somename
-          readOnly: true
-        deprecated:
-          x-linode-filterable: true
-          type: boolean
-          description: >
-            Whether or not this Image is deprecated. Will only be True for
-            deprecated public Images.
-          example: false
-          readOnly: true
-        description:
-          type: string
-          description: A detailed description of this Image.
-          example: The detailed description of my Image.
-          x-linode-cli-display: 4
-          x-linode-cli-color:
-            None: black
-            default_: white
-        is_public:
-          x-linode-filterable: true
-          description: True if the Image is public.
-          type: boolean
-          example: false
-          readOnly: true
-          x-linode-cli-display: 5
-        size:
-          x-linode-filterable: true
-          type: integer
-          description: >
-            The minimum size this Image needs to deploy. Size is in MB.
-          example: 2500
-          readOnly: true
-          x-linode-cli-display: 6
-        type:
-          type: string
-          x-linode-filterable: true
-          description: >
-            How the Image was created. "Manual" Images can be created at any time.
-            "Automatic" images are created automatically from a deleted Linode.
-          enum:
-          - manual
-          - automatic
-          example: manual
-          readOnly: true
-        expiry:
-          type: string
-          format: date-time
-          description: >
-            Only Images created automatically (from a deleted Linode; type=automatic) will expire.
-          example: '2018-08-01T00:01:01'
-          readOnly: true
-        eol:
-          type: string
-          format: date-time
-          description: >
-            The date of the image's planned end of life. Some images, like custom private images,
-            will not have an end of life date. In that case this field will be `None`.
-          example: '2200-10-23T00:00:00'
-          readOnly: true
-        vendor:
-          x-linode-filterable: true
-          type: string
-          nullable: true
-          description: >
-            The upstream distribution vendor. `None` for private Images.
-          example: null
-          readOnly: true
-          x-linode-cli-display: 3
-          x-linode-cli-color:
-            None: black
-            default_: white
-        status:
-          x-linode-cli-display: 7
-          type: string
-          enum:
-          - creating
-          - pending_upload
-          - available
-          description: |
-            The current status of this Image.  Only images in an "available" status
-            can be deployed.  Images in a "creating" status are being created from
-            a Linode Disk, and will become "available" shortly.  Images in a
-            "pending_upload" status are waiting for data to be uploaded for the
-            image, and will become "available" after the upload is complete and
-            processing occurs.
-    ImagePublic:
-      type: object
-      description: Public Image object
-      properties:
-        id:
-          type: string
-          description: The unique ID of this Image.
-          example: linode/ubuntu17.10
+          example: linode/debian11
           readOnly: true
           x-linode-cli-display: 1
         label:
@@ -17744,7 +17625,7 @@ components:
           type: string
           description: >
             A short description of the Image.
-          example: Ubuntu 17.10
+          example: Debian 11
           x-linode-cli-display: 2
         created:
           type: string
@@ -17762,7 +17643,7 @@ components:
           type: string
           description: >
             The name of the User who created this Image, or "linode" for
-            official Images.
+            public Images.
           example: linode
           readOnly: true
         deprecated:
@@ -17776,14 +17657,16 @@ components:
         description:
           type: string
           description: A detailed description of this Image.
-          example: null
+          example: The detailed description of my Image.
+          minLength: 1
+          maxLength: 65000
           x-linode-cli-display: 4
           x-linode-cli-color:
             None: black
             default_: white
         is_public:
           x-linode-filterable: true
-          description: True if the Image is public.
+          description: True if the Image is a public distribution image. False if Image is private Account-specific Image.
           type: boolean
           example: true
           readOnly: true
@@ -17842,7 +17725,11 @@ components:
           - available
           description: |
             The current status of this Image.  Only images in an "available" status
-            can be deployed.
+            can be deployed.  Images in a "creating" status are being created from
+            a Linode Disk, and will become "available" shortly.  Images in a
+            "pending_upload" status are waiting for data to be [uploaded](/docs/api/images/#image-upload) for the
+            image, and will become "available" after the upload is complete and
+            processing occurs.
     LinodeConfigInterface:
       type: object
       description: >
