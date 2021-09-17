@@ -3885,6 +3885,8 @@ paths:
 
         - Uploaded image data should be compressed in gzip (`.gz`) format. The uncompressed disk should be in raw
         disk image (`.img`) format. A maximum compressed file size of 5GB is supported for upload at this time.
+
+        - To initiate and complete and upload in a single step, see our guide on how to [Upload an Image](/docs/products/tools/images/guides/upload-an-image/) using Cloud Manager or the Linode CLI.
       x-linode-cli-action: upload
       security:
       - personalAccessToken: []
