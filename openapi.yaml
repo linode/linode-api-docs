@@ -3791,7 +3791,7 @@ paths:
         source: >
           linode-cli images list
     post:
-      x-linode-grant: read_write
+      x-linode-grant: add_images
       tags:
       - Images
       summary: Image Create
@@ -3857,6 +3857,7 @@ paths:
   /images/upload:
     x-linode-cli-command: images
     post:
+      x-linode-grant: add_images
       servers:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
