@@ -3888,6 +3888,7 @@ paths:
 
         - To initiate and complete and upload in a single step, see our guide on how to [Upload an Image](/docs/products/tools/images/guides/upload-an-image/) using Cloud Manager or the Linode CLI.
       x-linode-cli-action: upload
+      x-linode-cli-skip: true
       security:
       - personalAccessToken: []
       - oauth:
