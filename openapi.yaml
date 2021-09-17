@@ -18433,6 +18433,12 @@ components:
             otherwise, this field is false.
           example: false
           readOnly: true
+        built:
+          type: string
+          format: date-time
+          description: The date on which this Kernel was built.
+          example: '2018-01-01T00:01:01'
+          readOnly: true
     Linode:
       type: object
       properties:
