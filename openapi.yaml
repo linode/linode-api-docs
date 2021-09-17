@@ -17684,8 +17684,11 @@ components:
         type:
           type: string
           x-linode-filterable: true
-          description: >
-            How the Image was created. "Manual" Images can be created at any time.
+          description: |
+            How the Image was created.
+
+            "Manual" Images can be created at any time.
+
             "Automatic" Images are created automatically from a deleted Linode.
           enum:
           - manual
@@ -17696,15 +17699,14 @@ components:
           type: string
           format: date-time
           description: >
-            Only Images created automatically (from a deleted Linode; type=automatic) will expire.
+            Only Images created automatically from a deleted Linode (type=automatic) will expire.
           example: null
           readOnly: true
         eol:
           type: string
           format: date-time
           description: >
-            The date of the image's planned end of life. Some images, like custom private images,
-            will not have an end of life date. In that case this field will be `None`.
+            The date of the public Image's planned end of life. `None` for private Images.
           example: '2200-10-23T00:00:00'
           readOnly: true
         vendor:
@@ -17726,12 +17728,11 @@ components:
           - pending_upload
           - available
           description: |
-            The current status of this Image.  Only images in an "available" status
+            The current status of this Image.  Only Images in an "available" status
             can be deployed.  Images in a "creating" status are being created from
             a Linode Disk, and will become "available" shortly.  Images in a
-            "pending_upload" status are waiting for data to be [uploaded](/docs/api/images/#image-upload) for the
-            image, and will become "available" after the upload is complete and
-            processing occurs.
+            "pending_upload" status are waiting for data to be [uploaded](/docs/api/images/#image-upload),
+            and become "available" after the upload and processing are complete.
     LinodeConfigInterface:
       type: object
       description: >
