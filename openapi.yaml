@@ -22318,8 +22318,6 @@ components:
           readOnly: true
     Volume:
       type: object
-      required:
-      - label
       description: >
         A Block Storage Volume associated with your Account.
       properties:
