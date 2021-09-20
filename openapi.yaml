@@ -3750,14 +3750,17 @@ paths:
         Returns a paginated list of Images.
 
         * **Public** Images have IDs that begin with "linode/". These distribution images are generally available to
-        all users. To view only public Images, call this endpoint without authentication.
+        all users. To view only public Images, call this endpoint with or without authentication.
 
         * **Private** Images have IDs that begin with "private/". These images are account-specific and only
-        accessible to users with `images:read_only` authorization. To view private Images you have access to in
-        addition to public images, call this endpoint with authentication.
+        accessible to users with `images:read_only` authorization. To view private Images, call this endpoint with authentication.
       x-linode-redoc-load-ids: true
       operationId: getImages
       x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - images:read_only
       responses:
         '200':
           description: A paginated list of Images.
@@ -3963,10 +3966,20 @@ paths:
       tags:
       - Images
       summary: Image View
-      description: >
+      description: |
         Get information about a single Image.
+
+        * **Public** Images have IDs that begin with "linode/". These distribution images are generally available to
+        all users. To view a public Image, call this endpoint with or without authentication.
+
+        * **Private** Images have IDs that begin with "private/". These images are account-specific and only
+        accessible to users with `images:read_only` authorization. To view a private Image, call this endpoint with authentication.
       operationId: getImage
       x-linode-cli-action: view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - images:read_only
       responses:
         '200':
           description: A single Image object.
@@ -3978,8 +3991,13 @@ paths:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
-        source: >
-          curl https://api.linode.com/v4/images/linode/debian9
+        source: |
+          # Public Image
+          curl https://api.linode.com/v4/images/linode/debian11
+
+          # Private Image
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/images/private/12345
       - lang: CLI
         source: >
           linode-cli images view linode/debian9
@@ -17661,6 +17679,7 @@ components:
           type: string
           description: A detailed description of this Image.
           example: The detailed description of my Image.
+          nullable: true
           minLength: 1
           maxLength: 65000
           x-linode-cli-display: 4
@@ -17699,6 +17718,7 @@ components:
         expiry:
           type: string
           format: date-time
+          nullable: true
           description: >
             Only Images created automatically from a deleted Linode (type=automatic) will expire.
           example: null
