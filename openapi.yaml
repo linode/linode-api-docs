@@ -22424,6 +22424,14 @@ components:
           example:
           - example tag
           - another example
+        hardware_type:
+          type: string
+          enum:
+          - hdd
+          - nvme
+          description: The storage type of this Volume.
+          example: nvme
+          readOnly: true
     WarningObject:
       type: object
       description: >
