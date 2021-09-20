@@ -7536,7 +7536,7 @@ paths:
                 -X POST -d '{
                   "label": "cluster12345",
                   "region": "us-central",
-                  "k8s_version": "1.16",
+                  "k8s_version": "1.21",
                   "tags": ["ecomm", "blogs"],
                   "node_pools": [
                     {
@@ -7561,7 +7561,7 @@ paths:
           linode-cli lke cluster-create \
             --label cluster12345 \
             --region us-central \
-            --k8s_version 1.16 \
+            --k8s_version 1.21 \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
             --tags ecomm
@@ -7644,8 +7644,8 @@ paths:
 
 
                       When upgrading the Kubernetes version, only the next latest minor version following the current
-                      version can be deployed. For example, a cluster with Kubernetes version 1.16 can be upgraded to
-                      version 1.17, but not directly to 1.18.
+                      version can be deployed. For example, a cluster with Kubernetes version 1.19 can be upgraded to
+                      version 1.20, but not directly to 1.21.
 
 
                       The Kubernetes version of a cluster can not be downgraded.
@@ -8447,10 +8447,10 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4/lke/versions/1.16
+                https://api.linode.com/v4/lke/versions/1.21
       - lang: CLI
         source: >
-          linode-cli lke version-view 1.16
+          linode-cli lke version-view 1.21
   /longview/clients:
     x-linode-cli-command: longview
     get:
@@ -19236,7 +19236,7 @@ components:
           description: >
             The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
             and the latest supported patch version will be deployed.
-          example: "1.16"
+          example: "1.21"
         tags:
           x-linode-filterable: true
           type: array
@@ -19427,7 +19427,7 @@ components:
             A Kubernetes version number available for deployment
             to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
             and the latest supported patch version.
-          example: "1.16"
+          example: "1.21"
     LongviewClient:
       type: object
       description: >
