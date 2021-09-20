@@ -4041,10 +4041,10 @@ paths:
                 "label": "My gold-master image",
                 "description": "The detailed description of my Image."
               }' \
-              https://api.linode.com/v4/images/private/67848373
+              https://api.linode.com/v4/images/private/12345
       - lang: CLI
         source: >
-          linode-cli images update private/67848373 \
+          linode-cli images update private/12345 \
             --label "My gold-master image" \
             --description "The detailed description \
               of my Image."
@@ -4078,10 +4078,10 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4/images/private/67848373
+              https://api.linode.com/v4/images/private/12345
       - lang: CLI
         source: >
-          linode-cli images delete 67848373
+          linode-cli images delete 12345
   /linode/instances:
     x-linode-cli-command: linodes
     get:
@@ -17652,13 +17652,13 @@ components:
           type: string
           format: date-time
           description: When this Image was created.
-          example: '2018-01-01T00:01:01'
+          example: '2021-08-14T22:44:02'
           readOnly: true
         updated:
           type: string
           format: date-time
           description: When this Image was last updated.
-          example: '2019-01-02T00:01:01'
+          example: '2021-08-14T22:44:02'
           readOnly: true
         created_by:
           type: string
@@ -17678,7 +17678,7 @@ components:
         description:
           type: string
           description: A detailed description of this Image.
-          example: The detailed description of my Image.
+          example: Example Image description.
           nullable: true
           minLength: 1
           maxLength: 65000
@@ -17728,14 +17728,14 @@ components:
           format: date-time
           description: >
             The date of the public Image's planned end of life. `None` for private Images.
-          example: '2200-10-23T00:00:00'
+          example: '2026-07-01T04:00:00'
           readOnly: true
         vendor:
           x-linode-filterable: true
           type: string
           description: >
             The upstream distribution vendor. `None` for private Images.
-          example: Ubuntu
+          example: Debian
           readOnly: true
           x-linode-cli-display: 3
           x-linode-cli-color:
