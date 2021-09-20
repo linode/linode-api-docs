@@ -3750,10 +3750,12 @@ paths:
         Returns a paginated list of Images.
 
         * **Public** Images have IDs that begin with "linode/". These distribution images are generally available to
-        all users. To view only public Images, call this endpoint with or without authentication.
+        all users.
 
-        * **Private** Images have IDs that begin with "private/". These images are account-specific and only
-        accessible to users with `images:read_only` authorization. To view private Images, call this endpoint with authentication.
+        * **Private** Images have IDs that begin with "private/". These Images are Account-specific and only
+        accessible Users with appropriate [Grants](https://www.linode.com/docs/api/account/#users-grants-view).
+
+        * To view only public Images, call this endpoint with or without authentication. To view private Images as well, call this endpoint with authentication.
       x-linode-redoc-load-ids: true
       operationId: getImages
       x-linode-cli-action: list
@@ -3970,10 +3972,12 @@ paths:
         Get information about a single Image.
 
         * **Public** Images have IDs that begin with "linode/". These distribution images are generally available to
-        all users. To view a public Image, call this endpoint with or without authentication.
+        all users.
 
-        * **Private** Images have IDs that begin with "private/". These images are account-specific and only
-        accessible to users with `images:read_only` authorization. To view a private Image, call this endpoint with authentication.
+        * **Private** Images have IDs that begin with "private/". These Images are Account-specific and only
+        accessible Users with appropriate [Grants](https://www.linode.com/docs/api/account/#users-grants-view).
+
+        * To view a public Image, call this endpoint with or without authentication. To view a private Image, call this endpoint with authentication.
       operationId: getImage
       x-linode-cli-action: view
       security:
