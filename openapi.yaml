@@ -1694,6 +1694,8 @@ paths:
 
         * An Account can have up to 6 active Payment Methods.
 
+        * Up to 60 Payment Methods can be added each day.
+
         * Prior to adding a Payment Method, ensure that your billing address information is up-to-date
         with a valid `zip` by using the Account Update ([PUT /account](/docs/api/account/#account-update)) endpoint.
 
