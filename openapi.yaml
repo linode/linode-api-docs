@@ -1706,10 +1706,6 @@ paths:
                 - type
                 - data
                 - is_default
-                - card_number
-                - expiry_month
-                - expiry_year
-                - cvv
               properties:
                 type:
                   type: string
@@ -1726,6 +1722,11 @@ paths:
                   $ref: '#/components/schemas/PaymentMethod/properties/is_default'
                 data:
                   type: object
+                  required:
+                  - card_number
+                  - expiry_month
+                  - expiry_year
+                  - cvv
                   properties:
                     card_number:
                       $ref: '#/components/schemas/CreditCard/properties/card_number'
@@ -2731,34 +2732,11 @@ paths:
         content:
           application/json:
             schema:
+              allOf:
+              - $ref: '#/components/schemas/User'
               required:
               - username
               - email
-              properties:
-                username:
-                  type: string
-                  pattern: ^[a-zA-Z0-9]((?![_-]{2,})[a-zA-Z0-9-_])+[a-zA-Z0-9]$
-                  minLength: 3
-                  maxLength: 32
-                  description: >
-                    The new User's username. This is used for logging in, and may also be
-                    displayed alongside actions the User performs (for example, in Events
-                    or public StackScripts).
-                  example: example_user
-                email:
-                  type: string
-                  format: email
-                  description: >
-                    The new User's email address.
-                  example: example_user@linode.com
-                restricted:
-                  type: boolean
-                  description: >
-                    If true, the new User must be granted access to perform actions or access
-                    entities on this Account. See
-                    [/account/users/{username}/grants](/docs/api/account/#users-grants-view)
-                    for details on how to configure grants for a restricted User.
-                  example: true
       responses:
         '200':
           description: New User created successfully.
@@ -2783,7 +2761,8 @@ paths:
           source: >
             linode-cli users create \
               --username example_user \
-              --email example_user@linode.com
+              --email example_user@linode.com \
+              --restricted true
   /account/users/{username}:
     x-linode-cli-command: users
     parameters:
@@ -2860,7 +2839,8 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
-                    "username": example_user
+                    "username": example_user,
+                    "email": example@linode.com,
                     "restricted": true
                 }' \
                 https://api.linode.com/v4/account/users/example_user
@@ -2868,6 +2848,7 @@ paths:
           source: >
             linode-cli users update example_user \
               --username example_user \
+              --email example@linode.com \
               --restricted true
     delete:
       x-linode-grant: unrestricted only
@@ -21919,7 +21900,7 @@ components:
           minLength: 3
           maxLength: 32
           description: >
-            This User's username. This is used for logging in, and may also be
+            The User's username. This is used for logging in, and may also be
             displayed alongside actions the User performs (for example, in Events
             or public StackScripts).
           x-linode-filterable: true
@@ -21929,30 +21910,33 @@ components:
           type: string
           format: email
           description: >
-            The email address for this User, for account management
-            communications, and may be used for other communications as configured.
+            The email address for the User. Linode sends emails to this address for account management
+            communications. May be used for other communications as configured.
           example: example_user@linode.com
-          readOnly: true
           x-linode-cli-display: 2
         restricted:
           type: boolean
           description: >
-            If true, this User must be granted access to perform actions or access
-            entities on this Account. See
-            [/account/users/{username}/grants](/docs/api/account/#users-grants-view)
+            If true, the User must be granted access to perform actions or access
+            entities on this Account. See User Grants View ([GET /account/users/{username}/grants](/docs/api/account/#users-grants-view))
             for details on how to configure grants for a restricted User.
           example: true
           x-linode-cli-display: 3
         ssh_keys:
           type: array
+          readOnly: true
           items:
             type: string
-          description: >
-            A list of SSH Key labels added by this User. These are the keys
-            that will be deployed if this User is included in the `authorized_users`
-            field of a [create Linode](/docs/api/linode-instances/#linode-create),
-            [rebuild Linode](/docs/api/linode-instances/#linode-rebuild),
-            or [create Disk](/docs/api/linode-instances/#disk-create) request.
+          description: |
+            A list of SSH Key labels added by this User.
+
+            Users can add keys with the SSH Key Add ([POST /profile/sshkeys](/docs/api/profile/#ssh-key-add)) command.
+
+            These keys are deployed when this User is included in the `authorized_users`
+            field of the following requests:
+            - Linode Create ([POST /linode/instances](/docs/api/linode-instances/#linode-create))
+            - Linode Rebuild ([POST /linode/instances/{linodeId}/rebuild](/docs/api/linode-instances/#linode-rebuild))
+            - Disk Create ([POST /linode/instances/{linodeId}/disks](/docs/api/linode-instances/#disk-create))
           example:
           - home-pc
           - laptop
@@ -21961,7 +21945,7 @@ components:
           readOnly: true
           description: >
             A boolean value indicating if the User has Two Factor Authentication (TFA)
-            enabled. See the Create Two Factor Secret ([/profile/tfa-enable](/docs/api/profile/#two-factor-secret-create))
+            enabled. See the Create Two Factor Secret ([POST /profile/tfa-enable](/docs/api/profile/#two-factor-secret-create))
             endpoint to enable TFA.
     UserDefinedField:
       type: object
