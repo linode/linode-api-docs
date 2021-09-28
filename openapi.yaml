@@ -10574,11 +10574,6 @@ paths:
               required:
               - label
               - rules
-              - inbound_policy
-              - outbound_policy
-              - action
-              - protocol
-              - addresses
               properties:
                 devices:
                   type: object
@@ -10596,6 +10591,21 @@ paths:
                       example:
                         - 123
                         - 456
+                rules:
+                  required:
+                  - inbound_policy
+                  - outbound_policy
+                  properties:
+                    inbound:
+                      required:
+                      - action
+                      - addresses
+                      - protocol
+                    outbound:
+                      required:
+                      - action
+                      - addresses
+                      - protocol
       responses:
         '200':
           description: Returns information about the created Firewall.
@@ -17347,7 +17357,7 @@ components:
               - ACCEPT
               - DROP
               description: |
-                The default behavior for outbound traffic. This setting can be overridden by [updating](/docs/api/networking/#firewall-rules-update) the `action` property for an individual Firewall Rule.
+                The default behavior for outbound traffic. This setting can be overridden by [updating](/docs/api/networking/#firewall-rules-update) the `outbound.action` property of the Firewall Rule.
               example: DROP
         tags:
           x-linode-filterable: true
