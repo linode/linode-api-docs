@@ -1351,18 +1351,11 @@ paths:
         content:
           application/json:
             schema:
+              allOf:
+              - $ref: '#/components/schemas/OAuthClient'
               required:
               - label
               - redirect_uri
-              allOf:
-              - $ref: '#/components/schemas/OAuthClient'
-              - type: object
-                properties:
-                  public:
-                    type: boolean
-                    description: Whether to create a public or private client.
-                    example: false
-                    readOnly: false
       responses:
         '200':
           description: Client created successfully.
@@ -20661,12 +20654,12 @@ components:
         public:
           x-linode-filterable: true
           type: boolean
+          default: false
           description: >
             If this is a public or private OAuth Client.  Public clients have a slightly
             different authentication workflow than private clients.  See the
             <a target="_top" href="https://oauth.net/2/">OAuth spec</a> for more details.
           example: false
-          readOnly: true
           x-linode-cli-display: 4
     ObjectStorageBucket:
       type: object
