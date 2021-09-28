@@ -3439,8 +3439,16 @@ paths:
               properties:
                 domain:
                   type: string
-                  description: The new domain being created.
-                  example: example.com
+                  pattern: \A(\*\.)?([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)\Z
+                  minLength: 1
+                  maxLength: 255
+                  description: >
+                    The new domain for the clone. Domain labels cannot be longer than
+                    63 characters and must conform to [RFC1035](https://tools.ietf.org/html/rfc1035).
+                    Domains must be unique on Linode's platform, including across different Linode
+                    accounts; there cannot be two Domains representing the same domain.
+                  example: example.org
+                  x-linode-filterable: true
       responses:
         '200':
           description: |
