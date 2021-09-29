@@ -11025,12 +11025,7 @@ paths:
         content:
           application/json:
             schema:
-              required:
-                - action
-                - addresses
-                - protocol
-              allOf:
-                - $ref: '#/components/schemas/Firewall/properties/rules'
+              $ref: '#/components/schemas/Firewall/properties/rules'
       responses:
         '200':
           description: Firewall Rules updated successfully.
@@ -17298,8 +17293,6 @@ components:
       description: >
         One of a Firewall's inbound or outbound access rules. The `ports` property
         can be used to allow traffic on a comma-separated list of different ports.
-      required:
-      - protocol
       properties:
         protocol:
           type: string
