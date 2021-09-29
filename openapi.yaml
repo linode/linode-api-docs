@@ -5736,7 +5736,7 @@ paths:
           application/json:
             schema:
               required:
-              - password
+              - size
               properties:
                 size:
                   type: integer
