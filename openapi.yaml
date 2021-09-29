@@ -546,6 +546,8 @@ paths:
   /account/credit-card:
     x-linode-cli-command: account
     post:
+      deprecated: true
+      x-linode-cli-skip: true
       x-linode-grant: read_write
       tags:
       - Account
@@ -566,8 +568,7 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/CreditCard'
+              $ref: '#/components/schemas/CreditCard'
       responses:
         '200':
           description: Credit Card updated.
@@ -1721,21 +1722,7 @@ paths:
                 is_default:
                   $ref: '#/components/schemas/PaymentMethod/properties/is_default'
                 data:
-                  type: object
-                  required:
-                  - card_number
-                  - expiry_month
-                  - expiry_year
-                  - cvv
-                  properties:
-                    card_number:
-                      $ref: '#/components/schemas/CreditCard/properties/card_number'
-                    expiry_month:
-                      $ref: '#/components/schemas/CreditCard/properties/expiry_month'
-                    expiry_year:
-                      $ref: '#/components/schemas/CreditCard/properties/expiry_year'
-                    cvv:
-                      $ref: '#/components/schemas/CreditCard/properties/cvv'
+                  $ref: '#/components/schemas/CreditCard'
       responses:
         '200':
           description: Payment Method added.
