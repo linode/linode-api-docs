@@ -13417,7 +13417,7 @@ paths:
                     type: integer
                     description: >
                       The amount of outbound data transfer used by your account's Object Storage buckets,
-                      in GB, for the current month’s billing cycle.
+                      in bytes, for the current month’s billing cycle.
                     example: 12956600198
                     readOnly: true
         default:
