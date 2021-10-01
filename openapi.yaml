@@ -4108,12 +4108,11 @@ paths:
         new Linode will incur a charge on your Account.
 
         Linodes can be created using one of the available Types. See
-        [GET /linode/types](/docs/api/linode-types/#types-list) to get more
+        Types List ([GET /linode/types](/docs/api/linode-types/#types-list)) to get more
         information about each Type's specs and cost.
 
-        Linodes can be created in any one of our available
-        [Regions](/docs/api/regions/#regions-list) for a list
-        of available Regions you can deploy your Linode in.
+        Linodes can be created in any one of our available Regions, which are accessible from the
+        Regions List ([GET /regions](/docs/api/regions/#regions-list)) endpoint.
 
         In an effort to fight spam, Linode restricts outbound connections on ports 25, 465, and 587
         on all Linodes for new accounts created after November 5th, 2019. For more information,
@@ -4121,25 +4120,27 @@ paths:
 
         Linodes can be created in a number of ways:
 
-        * Using a Linode Linux Distribution image or an Image you created based on another Linode.
+        * Using a Linode Public Image distribution or a Private Image you created based on another Linode.
+          * Access the Images List ([GET /images](/docs/api/images/#images-list)) endpoint with authentication to view
+            all available Images.
           * The Linode will be `running` after it completes `provisioning`.
           * A default config with two Disks, one being a 512 swap disk, is created.
             * `swap_size` can be used to customize the swap disk size.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
           * You may also supply a list of usernames via the `authorized_users` field.
-            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/docs/api/profile/#ssh-key-add) for more information.
+            * These users must have an SSH Key associated with your Profile first. See SSH Key Add ([POST /profile/sshkeys](/docs/api/profile/#ssh-key-add)) for more information.
 
         * Using a StackScript.
-          * See [/linode/stackscripts](/docs/api/stackscripts/#stackscripts-list) for
+          * See StackScripts List ([GET /linode/stackscripts](/docs/api/stackscripts/#stackscripts-list)) for
             a list of available StackScripts.
           * The Linode will be `running` after it completes `provisioning`.
           * Requires a compatible Image to be supplied.
-            * See [/linode/stackscript/{stackscriptId}](/docs/api/stackscripts/#stackscript-view) for compatible Images.
+            * See StackScript View ([GET /linode/stackscript/{stackscriptId}](/docs/api/stackscripts/#stackscript-view)) for compatible Images.
           * Requires a `root_pass` be supplied to use for the root User's Account.
           * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
           * You may also supply a list of usernames via the `authorized_users` field.
-            * These users must have an SSH Key associated with your Profile first. See [/profile/sshkeys](/docs/api/profile/#ssh-key-add) for more information.
+            * These users must have an SSH Key associated with your Profile first. See SSH Key Add ([POST /profile/sshkeys](/docs/api/profile/#ssh-key-add)) for more information.
 
         * Using one of your other Linode's backups.
           * You must create a Linode large enough to accommodate the Backup's size.
@@ -4148,7 +4149,7 @@ paths:
 
         * Create an empty Linode.
           * The Linode will remain `offline` and must be manually started.
-            * See [POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#linode-boot).
+            * See Linode Boot ([POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#linode-boot)).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
 
@@ -4533,11 +4534,11 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Snapshot Create
-      description: >
+      description: |
         Creates a snapshot Backup of a Linode.
 
-        ** If you already have a snapshot of this Linode, this is a destructive
-        action. The previous snapshot will be deleted.**
+        **Important:** If you already have a snapshot of this Linode, this is a destructive
+        action. The previous snapshot will be deleted.
       tags:
       - Linode Instances
       operationId: createSnapshot
@@ -4547,7 +4548,6 @@ paths:
       - oauth:
         - linodes:read_write
       requestBody:
-        description: The label for the new snapshot.
         required: true
         content:
           application/json:
@@ -4560,10 +4560,11 @@ paths:
                   type: string
                   minLength: 1
                   maxLength: 255
+                  description: The label for the new snapshot.
                   example: SnapshotLabel
       responses:
         '200':
-          description: Snapshot was successfully taken.
+          description: Snapshot request successful.
           content:
             application/json:
               schema:
@@ -4826,8 +4827,7 @@ paths:
                 config_id:
                   type: integer
                   description: >
-                    The Linode Config ID to boot into. If omitted, we will attempt to select a
-                    config to use. (This will do the right thing in most cases.)
+                    The Linode Config ID to boot into.
                   example: null
       responses:
         '200':
@@ -4893,9 +4893,6 @@ paths:
           application/json:
             schema:
               type: object
-              required:
-              - region
-              - type
               properties:
                 region:
                   type: string
@@ -4905,7 +4902,7 @@ paths:
                     To view all available Regions you can deploy to see
                     [/regions](/docs/api/regions/#regions-list).
 
-                    * Region can only be provided when cloning to a new Linode.
+                    * Region can only be provided and is required when cloning to a new Linode.
                   example: us-east
                 type:
                   type: string
@@ -4918,12 +4915,12 @@ paths:
                     To view all available Linode Types you can deploy with
                     see [/linode/types](/docs/api/linode-types/#types-list).
 
-                    * Type can only be provided when cloning to a new Linode.
+                    * Type can only be provided and is required when cloning to a new Linode.
                   example: g6-standard-2
                 linode_id:
                   type: integer
                   description: >
-                    If an existing Linode is to be the target for the clone,
+                    If an existing Linode is the target for the clone,
                     the ID of that Linode. The existing Linode must have enough
                     resources to accept the clone.
                   example: 124
@@ -5389,13 +5386,27 @@ paths:
       - Linode Instances
       summary: Disk Create
       description: |
-        Adds a new Disk to a Linode. You can optionally create a Disk
-        from an Image (see [/images](/docs/api/images/#images-list) for a list of available public images,
-        or use one of your own), and optionally provide a StackScript to deploy
-        with this Disk.
+        Adds a new Disk to a Linode.
 
-        The default filesystem for new Disks is `ext4`. If creating a Disk from an Image, the filesystem
+        * You can optionally create a Disk from an Image or an Empty Disk if no Image is provided with a request.
+
+        * When creating an Empty Disk, providing a `label` is required.
+
+        * If no `label` is provided, an `image` is required instead.
+
+        * When creating a Disk from an Image, `root_pass` is required.
+
+        * The default filesystem for new Disks is `ext4`. If creating a Disk from an Image, the filesystem
         of the Image is used unless otherwise specified.
+
+        * When deploying a StackScript on a Disk:
+          * See StackScripts List ([GET /linode/stackscripts](/docs/api/stackscripts/#stackscripts-list)) for
+            a list of available StackScripts.
+          * Requires a compatible Image to be supplied.
+            * See StackScript View ([GET /linode/stackscript/{stackscriptId}](/docs/api/stackscripts/#stackscript-view)) for compatible Images.
+          * It is recommended to supply SSH keys for the root User using the `authorized_keys` field.
+          * You may also supply a list of usernames via the `authorized_users` field.
+            * These users must have an SSH Key associated with their Profiles first. See SSH Key Add ([POST /profile/sshkeys](/docs/api/profile/#ssh-key-add)) for more information.
       operationId: addLinodeDisk
       x-linode-cli-action: disk-create
       security:
@@ -5409,7 +5420,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DiskRequest'
+              required:
+              - size
+              allOf:
+              - $ref: '#/components/schemas/DiskRequest'
       responses:
         '200':
           description: Disk created.
@@ -16326,12 +16340,15 @@ components:
     DiskRequest:
       type: object
       description: Disk object request.
-      required:
-      - size
-      - label
       properties:
         size:
-          $ref: '#/components/schemas/Disk/properties/size'
+          x-linode-filterable: true
+          type: integer
+          description: |
+            The size of the Disk in MB.
+
+            Images require a minimum size. Access the Image View ([GET /images/{imageID}](/docs/api/images/#image-view)) endpoint to view its size.
+          example: 48640
         label:
           $ref: '#/components/schemas/Disk/properties/label'
         filesystem:
@@ -16339,11 +16356,11 @@ components:
         image:
           type: string
           description: |
-            An Image ID to deploy the Disk from.
+            An Image ID to deploy the Linode Disk from.
 
             Access the Images List ([GET /images](/docs/api/images/#images-list)) endpoint with authentication to view
             all available Images. Official Linode Images start with `linode/`, while your Account's Images start with `private/`. Creating
-            a disk from an Account Image requires `read_only` or `read_write` permissions for that Image. Access the User's
+            a disk from a Private Image requires `read_only` or `read_write` permissions for that Image. Access the User's
             Grant Update ([PUT /account/users/{username}/grants](/docs/api/account/#users-grants-update)) endpoint to
             adjust permissions for an Account Image.
           example: linode/debian9
@@ -16356,9 +16373,7 @@ components:
           - ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer
           description: |
             A list of public SSH keys that will be automatically appended
-            to the root user's `~/.ssh/authorized_keys` file.
-
-            Only accepted if `image` is provided.
+            to the root user's `~/.ssh/authorized_keys` file when deploying from an Image.
         authorized_users:
           type: array
           items:
@@ -16370,17 +16385,19 @@ components:
           description: >
             A list of usernames. If the usernames have associated
             SSH keys, the keys will be appended to the root users
-            `~/.ssh/authorized_keys` file automatically.
+            `~/.ssh/authorized_keys` file automatically when deploying from an Image.
         root_pass:
           type: string
           format: password
           writeOnly: true
           example: aComplexP@ssword
+          minLength: 7
+          maxLength: 128
           description: |
-            This will set the root user's password on the newly-created Linode. Linode passwords have the following constraints:
+            This sets the root user's password on a newly-created Linode Disk when deploying from an Image.
 
-              * Must meet a password strength score requirement that is calculated internally by the API.
-                If the strength requirement is not met, you will receive a `Password does not meet strength requirement` error.
+            * Must meet a password strength score requirement that is calculated internally by the API.
+            If the strength requirement is not met, you will receive a `Password does not meet strength requirement` error.
         stackscript_id:
           type: integer
           example: 10079
@@ -16389,7 +16406,7 @@ components:
             deployment of this Linode. A compatible `image` is required to use a
             StackScript. To get a list of available StackScript and their permitted Images
             see [/stackscripts](/docs/api/stackscripts/#stackscripts-list).
-            This field cannot be used when deploying from a Backup or a private Image.
+            This field cannot be used when deploying from a Backup or a Private Image.
         stackscript_data:
           type: object
           example:
@@ -18715,6 +18732,7 @@ components:
 
             If it is deployed from an Image or a Backup and you wish it to remain `offline`
             after deployment, set this to `false`.
+          default: true
     LinodeStats:
       type: object
       description: >
