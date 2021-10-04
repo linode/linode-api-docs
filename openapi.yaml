@@ -20978,10 +20978,16 @@ components:
           example: '123'
         usd:
           type: string
-          description: >
-            The amount in US Dollars of the Payment. The maximum credit card
-            payment that can be made is $50,000 dollars.
-          example: '120.50'
+          pattern: ^\$?\d+\.\d{2}$
+          description: |
+            The amount in US Dollars of the Payment.
+
+            * Can begin with or without `$`.
+            * Commas (`,`) are not accepted.
+            * Must end with a decimal expression, such as `.00` or `.99`.
+            * Minimum: `$5.00` or the Account balance, whichever is lower.
+            * Maximum: `$2000.00` or the Account balance up to `$50000.00`, whichever is greater.
+          example: '$120.50'
         payment_method_id:
           type: integer
           description: >
