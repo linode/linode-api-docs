@@ -20982,7 +20982,7 @@ components:
           description: |
             The amount in US Dollars of the Payment.
 
-            * Can begin with or without `?`.
+            * Can begin with or without `$`.
             * Commas (`,`) are not accepted.
             * Must end with a decimal expression, such as `.00` or `.99`.
             * Minimum: `$5.00` or the Account balance, whichever is lower.
