@@ -3918,14 +3918,14 @@ paths:
               https://api.linode.com/v4/images/upload
       - lang: CLI
         source: |
-          # Use the image-upload plugin to upload the Image file in a single step
+          # Upload the Image file in a single step
           linode-cli image-upload \
             --description "Optional details about the Image" \
             --label "Example Image" \
             --region us-east \
             /path/to/image-file.img.gz
 
-          # Returns an upload URL and requires uploading the Image file with a second step
+          # Returns the upload_to URL
           linode-cli images upload \
             --description "Optional details about the Image" \
             --label "Example Image" \
