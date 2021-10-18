@@ -11069,7 +11069,7 @@ paths:
                     "description": "An example inbound rule description."
                     }
                   ],
-                  "outbound_policy": "DROP"
+                  "outbound_policy": "DROP",
                   "outbound": [
                     {
                       "protocol": "TCP",
