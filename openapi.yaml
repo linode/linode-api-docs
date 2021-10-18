@@ -11107,8 +11107,8 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls rules-update 123 \
-            --inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
-            --outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
+            --inbound '[{"action":"ACCEPT", "protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
+            --outbound '[{"action":"DROP","protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
   /networking/vlans:
     x-linode-cli-command: vlans
     get:
