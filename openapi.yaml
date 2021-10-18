@@ -11099,7 +11099,6 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       parameters:
       - $ref: '#/components/parameters/pageOffset'
