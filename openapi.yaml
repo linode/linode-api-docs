@@ -4156,15 +4156,15 @@ paths:
           * The Disks and Config will match that of the Linode that was backed up.
           * The `root_pass` will match that of the Linode that was backed up.
 
+        * Attached to a private VLAN.
+          * Review the `interfaces` property of the [Request Body Schema](/docs/api/linode-instances/#linode-create__request-body-schema) for details.
+          * For more information, see our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/).
+
         * Create an empty Linode.
           * The Linode will remain `offline` and must be manually started.
             * See Linode Boot ([POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#linode-boot)).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
-
-        * Attached to a private VLAN.
-          * Review the `interfaces` property of the [Request Body Schema](/docs/api/linode-instances/#linode-create__request-body-schema) for details.
-          * For more information, see our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/).
 
         **Important**: You must be an unrestricted User in order to add or modify
         tags on Linodes.
