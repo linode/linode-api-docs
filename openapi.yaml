@@ -7496,7 +7496,6 @@ paths:
                         "max": 12,
                         "min": 3
                       }
-                  }
                     },
                     {
                       "type": "g6-standard-8",
