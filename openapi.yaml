@@ -4156,12 +4156,15 @@ paths:
           * The Disks and Config will match that of the Linode that was backed up.
           * The `root_pass` will match that of the Linode that was backed up.
 
+        * Attached to a private VLAN.
+          * Review the `interfaces` property of the [Request Body Schema](/docs/api/linode-instances/#linode-create__request-body-schema) for details.
+          * For more information, see our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/).
+
         * Create an empty Linode.
           * The Linode will remain `offline` and must be manually started.
             * See Linode Boot ([POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#linode-boot)).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
-
 
         **Important**: You must be an unrestricted User in order to add or modify
         tags on Linodes.
@@ -18682,7 +18685,7 @@ components:
             * `public`
               * Only one `public` interface per Linode can be defined.
               * The Linode's default public IPv4 address is assigned to the `public` interface.
-              * If no `public` interface is defined, the Linode is not reachable via the public internet; access can only be established via LISH or other Linodes connected to the same VLAN.
+              * A Linode must have a public interface in the first/eth0 position to be reachable via the public internet upon boot without additional system configuration. If no `public` interface is configured, the Linode is not directly reachable via the public internet. In this case, access can only be established via LISH or other Linodes connected to the same VLAN.
 
             * `vlan`
               * Configuring a `vlan` purpose interface attaches this Linode to the VLAN with the specified `label`.
