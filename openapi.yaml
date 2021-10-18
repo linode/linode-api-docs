@@ -11022,8 +11022,9 @@ paths:
       - Networking
       summary: Firewall Rules Update
       description: |
-        Updates the inbound and outbound Rules for a Firewall. Using this endpoint will
-        replace all of a Firewall's ruleset with the Rules specified in your request.
+        Updates the inbound and outbound Rules for a Firewall.
+
+        **Note:** This command replaces all of a Firewall's `inbound` and/or `outbound` rulesets with the values specified in your request.
       operationId: updateFirewallRules
       x-linode-cli-action: rules-update
       security:
@@ -11035,7 +11036,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Firewall/properties/rules'
+              allOf:
+              - $ref: '#/components/schemas/Firewall/properties/rules'
+              properties:
+                inbound:
+                  required:
+                  - action
+                  - addresses
+                  - protocol
+                outbound:
+                  required:
+                  - action
+                  - addresses
+                  - protocol
       responses:
         '200':
           description: Firewall Rules updated successfully.
