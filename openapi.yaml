@@ -21773,6 +21773,11 @@ components:
           description: >
             The ID of the Linode this ticket is regarding, if relevant.
           example: 123
+        lkecluster_id:
+          type: integer
+          description: >
+            The ID of the Kubernetes cluster this ticket is regarding, if relevant.
+          example: 123
         longviewclient_id:
           type: integer
           description: >
