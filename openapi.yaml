@@ -16447,6 +16447,8 @@ components:
           description: |
             This sets the root user's password on a newly-created Linode Disk when deploying from an Image.
 
+            * **Required** when creating a Linode Disk from an Image, including when using a StackScript.
+
             * Must meet a password strength score requirement that is calculated internally by the API.
             If the strength requirement is not met, you will receive a `Password does not meet strength requirement` error.
         stackscript_id:
