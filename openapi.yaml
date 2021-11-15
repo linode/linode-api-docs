@@ -10298,7 +10298,7 @@ paths:
         at least one public IPv4 and no more than one private IPv4.
 
         To assign IPv6 ranges or to use the CLI, see the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) endpoint.
-      operationId: assignIPs
+      operationId: assignIPv4s
       x-linode-cli-skip: true
       security:
       - personalAccessToken: []
@@ -10507,11 +10507,11 @@ paths:
         Displays the IPv6 ranges on your Account.
 
 
-          * An IPv6 range is a `/64` block of IPv6 addresses routed to a single Linode in a given [Region](/docs/api/regions/#regions-list).
+          * An IPv6 range is a `/64` or `/54` block of IPv6 addresses routed to a single Linode in a given [Region](/docs/api/regions/#regions-list).
 
           * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
 
-          * You must [open a support ticket](/docs/api/support/#support-ticket-open) to request a `/64` block of IPv6 addresses to be added to your account.
+          * Access the IPv6 Range Create ([POST /networking/ipv6/ranges](/docs/api/networking/#ipv6-range-create)) endpoint to add a `/64` or `/56` block of IPv6 addresses to your account.
       operationId: getIPv6Ranges
       x-linode-cli-action: v6-ranges
       security:
@@ -10546,6 +10546,102 @@ paths:
       - lang: CLI
         source: >
           linode-cli networking v6-ranges
+    post:
+      tags:
+      - Networking
+      summary: IPv6 Range Create
+      description: |
+        Creates an IPv6 Range and assigns it based on the provided Linode or route target IPv6 SLAAC address. See the `ipv6` property when accessing the Linode View ([GET /linode/instances/{linodeId}](/docs/api/linode-instances/#linode-view)) endpoint to view a Linode's IPv6 SLAAC address.
+
+          * Either `linode_id` or `route_target` is required in a request.
+
+          * `linode_id` and `route_target` are mutually exclusive. Submitting values for both properties in a request results in an error.
+
+          * Upon a successful request, an IPv6 range is created in the [Region](/docs/api/regions/#regions-list) that corresponds to the provided `linode_id` or `route_target`.
+
+          * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
+
+          * Access the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) endpoint to re-assign IPv6 Ranges to your Linodes.
+      operationId: postIPv6Range
+      x-linode-cli-action: v6-range-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - ips:read_write
+      requestBody:
+        description: >
+          Information about the IPv6 range to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - prefix_length
+              properties:
+                linode_id:
+                  type: integer
+                  description: |
+                    The ID of the Linode to assign this range to. The SLAAC address for the provided Linode is used as the range's `route_target`.
+
+                    * **Required** if `route_target` is omitted from the request.
+
+                    * Mutually exclusive with `route_target`. Submitting values for both properties in a request results in an error.
+                  example: 123
+                prefix_length:
+                  type: integer
+                  enum:
+                  - 56
+                  - 64
+                  description: >
+                    The prefix length of the IPv6 range.
+                route_target:
+                  type: string
+                  format: ipv6
+                  description: |
+                    The IPv6 SLAAC address to assign this range to.
+
+                    * **Required** if `linode_id` is omitted from the request.
+
+                    * Mutually exclusive with `linode_id`. Submitting values for both properties in a request results in an error.
+
+                    * **Note**: Omit the `/128` prefix length of the SLAAC address when using this property.
+                  example: 2001:0db8::1
+      responses:
+        '200':
+          description: The IPv6 ranges on your Account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  range:
+                    type: string
+                    format: ipv6/prefix_length
+                    description: >
+                      The IPv6 network range, including subnet and prefix length.
+                    example: 2001:0db8::/64
+                  route_target:
+                    type: string
+                    format: ipv6
+                    description: >
+                      The route target IPV6 SLAAC address for this range. Does not include the prefix length.
+                    example: 2001:0db8::1
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "linode_id": 123,
+                  "prefix_length": 64
+              }' \
+              https://api.linode.com/v4/networking/ipv6/ranges
+      - lang: CLI
+        source: >
+          linode-cli networking v6-range-create \
+            --linode_id 123 \
+            --prefix_length 64
   /networking/firewalls:
     x-linode-cli-command: firewalls
     get:
