@@ -10200,6 +10200,7 @@ paths:
         * All Linodes involved must have at least one public IPv4 address after assignment.
         * Linodes may have no more than one assigned private IPv4 address.
         * Linodes may have no more than one assigned IPv6 range.
+        * [Open a Support Ticket](/docs/api/support/#support-ticket-open) to request expansion of these restrictions.
       operationId: assignIPs
       x-linode-cli-action: ip-assign
       security:
@@ -10230,16 +10231,20 @@ paths:
                     The list of assignments to make. You must have read_write
                     access to all IPs being assigned and all Linodes being
                     assigned to in order for the assignments to succeed.
+                  required:
+                    - address
+                    - linode_id
                   items:
                     type: object
                     properties:
                       address:
                         type: string
-                        format: ip
+                        format: ipv4|ipv6/prefix_length
                         description: |
                           The IPv4 address or IPv6 range for this assignment.
                           * Must be an IPv4 address or an IPv6 range you can access in the Region specified.
-                          * IPv6 ranges must include a subnet prefix and prefix length of `/56` or `/64`, for example: `2001:db8:3c4d:15::/64`.
+                          * IPv6 ranges must include a prefix length of `/56` or `/64`, for example: `2001:db8:3c4d:15::/64`.
+                          * Assignment of an IPv6 range to a Linode updates the route target of the range to the assigned Linode's SLAAC address.
                           * May be a public or private address.
                         example: 12.34.56.78
                       linode_id:
@@ -10297,7 +10302,7 @@ paths:
         Linodes.  When the assignment is finished, all Linodes must end up with
         at least one public IPv4 and no more than one private IPv4.
 
-        To assign IPv6 ranges or to use the CLI, see the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) endpoint.
+        To assign IPv6 ranges or to use the CLI, see the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) command.
       operationId: assignIPv4s
       x-linode-cli-skip: true
       security:
@@ -10328,6 +10333,9 @@ paths:
                     The list of assignments to make.  You must have read_write
                     access to all IPs being assigned and all Linodes being
                     assigned to in order for the assignments to succeed.
+                  required:
+                  - address
+                  - linode_id
                   items:
                     type: object
                     properties:
@@ -10552,22 +10560,23 @@ paths:
       summary: IPv6 Range Create
       description: |
         Creates an IPv6 Range and assigns it based on the provided Linode or route target IPv6 SLAAC address. See the `ipv6` property when accessing the Linode View ([GET /linode/instances/{linodeId}](/docs/api/linode-instances/#linode-view)) endpoint to view a Linode's IPv6 SLAAC address.
-
           * Either `linode_id` or `route_target` is required in a request.
-
           * `linode_id` and `route_target` are mutually exclusive. Submitting values for both properties in a request results in an error.
-
           * Upon a successful request, an IPv6 range is created in the [Region](/docs/api/regions/#regions-list) that corresponds to the provided `linode_id` or `route_target`.
-
           * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
-
           * Access the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) endpoint to re-assign IPv6 Ranges to your Linodes.
+
+        **Note**: The following restrictions apply:
+          * A Linode can only have one IPv6 range targeting its SLAAC address.
+          * An account can only have one IPv6 range in each [Region](/docs/api/regions/#regions-list).
+          * [Open a Support Ticket](/docs/api/support/#support-ticket-open) to request expansion of these restrictions.
       operationId: postIPv6Range
       x-linode-cli-action: v6-range-create
       security:
       - personalAccessToken: []
       - oauth:
         - ips:read_write
+        - linodes:read_write
       requestBody:
         description: >
           Information about the IPv6 range to create.
@@ -10608,7 +10617,7 @@ paths:
                   example: 2001:0db8::1
       responses:
         '200':
-          description: The IPv6 ranges on your Account.
+          description: IPv6 range created successfully.
           content:
             application/json:
               schema:
@@ -10642,6 +10651,49 @@ paths:
           linode-cli networking v6-range-create \
             --linode_id 123 \
             --prefix_length 64
+  /networking/ipv6/ranges/<range>:
+    parameters:
+      - name: range
+        in: path
+        description: |
+          The IPv6 range to access. Corresponds to the `range` property of objects returned from the IPv6 Ranges List ([GET /networking/ipv6/ranges](/docs/api/networking/#ipv6-ranges-list)) command.
+
+          **Note**: Omit the prefix length of the IPv6 range.
+        required: true
+        schema:
+          type: string
+          format: ipv6
+    x-linode-cli-command: networking
+    delete:
+      tags:
+      - Networking
+      summary: IPv6 Range Delete
+      description: |
+        Removes this IPv6 range from your account and disconnects the range from any assigned Linodes.
+      operationId: deleteIPv6Range
+      x-linode-cli-action: v6-range-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - ips:read_write
+      responses:
+        '200':
+          description: IPv6 Range deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              'https://api.linode.com/v4/networking/ipv6/ranges/2001:0db8::'
+      - lang: CLI
+        source: >
+          linode-cli networking v6-range-delete "2001:0db8::"
   /networking/firewalls:
     x-linode-cli-command: firewalls
     get:
