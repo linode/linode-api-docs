@@ -10651,7 +10651,7 @@ paths:
           linode-cli networking v6-range-create \
             --linode_id 123 \
             --prefix_length 64
-  /networking/ipv6/ranges/<range>:
+  /networking/ipv6/ranges/{range}:
     parameters:
       - name: range
         in: path
