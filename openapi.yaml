@@ -9190,8 +9190,8 @@ paths:
       description: >
         Updates the label of a Managed Credential. This endpoint
         does not update the username and password for a Managed Credential.
-        To do this, use the Update Managed Credential Username and Password
-        ([POST /managed/credentials/{credentialId}/update](https://developers.linode.com/api/docs/v4#operation/updateManagedCredentialUsernamePassword))
+        To do this, use the Managed Credential Username and Password Update
+        ([POST /managed/credentials/{credentialId}/update](/docs/api/managed/#managed-credential-username-and-password-update))
         endpoint instead.
       operationId: updateManagedCredential
       x-linode-cli-action: credential-update
