@@ -10690,10 +10690,10 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              'https://api.linode.com/v4/networking/ipv6/ranges/2001:0db8::'
+              https://api.linode.com/v4/networking/ipv6/ranges/2001:0db8::
       - lang: CLI
         source: >
-          linode-cli networking v6-range-delete "2001:0db8::"
+          linode-cli networking v6-range-delete 2001:0db8::
   /networking/firewalls:
     x-linode-cli-command: firewalls
     get:
