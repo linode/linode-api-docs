@@ -327,7 +327,7 @@ info:
     ## Rate Limiting
 
     With the Linode API, you can make up to 1,600 general API requests every two minutes per user as
-    determined by IP adddress or by OAuth token. Additionally, there are endpoint specfic limits defined below.
+    determined by IP address or by OAuth token. Additionally, there are endpoint specific limits defined below.
 
     **Note:** There may be rate limiting applied at other levels outside of the API, for example, at the load balancer.
 
