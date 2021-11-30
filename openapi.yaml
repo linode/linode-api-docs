@@ -18517,7 +18517,7 @@ components:
               * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
           example: linode123
           minLength: 3
-          maxLength: 32
+          maxLength: 64
           pattern: '^[a-zA-Z]((?!--|__|..)[a-zA-Z0-9-_.])+$'
         region:
           type: string
