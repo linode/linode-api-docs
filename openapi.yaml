@@ -156,6 +156,7 @@ info:
     | 200 OK  | The request was successful. |
     | 202 Accepted | The request was successful, but processing has not been completed. The response body includes a "warnings" array containing the details of incomplete processes. |
     | 204 No Content | The server successfully fulfilled the request and there is no additional content to send. |
+    | 299 Warning | The request was successful, but includes a warning such as usage of a deprecated endpoint. The response body includes a "warnings" array containing the details of any warnings. |
     | 400 Bad Request | You submitted an invalid request (missing parameters, etc.). |
     | 401 Unauthorized | You failed to authenticate for this resource. |
     | 403 Forbidden | You are authenticated, but don't have permission to do this. |
