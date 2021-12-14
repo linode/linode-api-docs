@@ -10385,7 +10385,7 @@ paths:
                 "linode_id": 123,
                 "ips": [
                   "192.0.2.1",
-                  "192.0.2.2"
+                  "2001:db8:3c4d:15::"
                 ]
               }' \
               https://api.linode.com/v4beta2/networking/ips/share
@@ -10829,7 +10829,7 @@ paths:
               https://api.linode.com/v4/networking/ipv6/ranges/2001:0db8::
       - lang: CLI
         source: >
-          linode-cli networking v6-range-delete 2001:0db8::
+          linode-cli networking v6-range-view 2001:0db8::
   /networking/firewalls:
     x-linode-cli-command: firewalls
     get:
@@ -18611,6 +18611,7 @@ components:
           description: >
             Whether this IPv6 range is shared.
           example: false
+          readOnly: true
         linodes:
           type: array
           items:
@@ -18619,6 +18620,8 @@ components:
           - 123
           description: >
             A list of Linodes targeted by this IPv6 range. Includes Linodes with IP sharing.
+          readOnly: true
+          x-linode-cli-display: 4
     Kernel:
       type: object
       description: Linux kernel object
