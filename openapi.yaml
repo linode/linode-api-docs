@@ -3738,6 +3738,8 @@ paths:
         accessible to Users with appropriate [Grants](/docs/api/account/#users-grants-view).
 
         * To view only public Images, call this endpoint with or without authentication. To view private Images as well, call this endpoint with authentication.
+      
+        **Linode Public Image distributions that are deprecated are not supported for Bare Metal Instances.**
       x-linode-redoc-load-ids: true
       operationId: getImages
       x-linode-cli-action: list
@@ -4189,6 +4191,7 @@ paths:
         **Bare Metal Beta**
           * Are restricted to users in the Beta.
           * Are restricted to the Beta region.
+          * Are restricted to non-deprecated images when using a Linode Public Image distribution
           * May have restrictions on additional services including but not limited to Backups, Disks and Configs, Cloning, Networking and Volumes.
       tags:
       - Linode Instances
