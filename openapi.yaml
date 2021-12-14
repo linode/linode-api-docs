@@ -10307,6 +10307,94 @@ paths:
             --region us-east \
             --assignments.address 2001:db8:3c4d:15::/64 \
             --assignments.linode_id 123
+  /networking/ips/share:
+    x-linode-cli-command: networking
+    post:
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-grant: read_write
+      tags:
+      - Networking
+      summary: IP Addresses Share
+      description: |
+        Configure shared IPs.
+
+        IP sharing allows IP address reassignment (also referred to as IP failover) from one Linode to another if
+        the primary Linode becomes unresponsive. This means that requests to the primary Linode's IP address can be
+        automatically rerouted to secondary Linodes at the configured shared IP addresses.
+
+        IP failover requires configuration of a failover service (such as [Keepalived](/docs/guides/ip-failover-keepalived#configuring-ip-sharing))
+        within the internal system of the primary Linode.
+
+        **Note**: IPv6 range sharing has limited availability in certain regions. Please contact customer support for
+        assistance in enabling IPv6 range sharing for your Linodes.
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      operationId: shareIPs
+      x-linode-cli-action: ip-share
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - ips:read_write
+        - linodes:read_write
+      requestBody:
+        description: Information about what IPs to share with which Linode.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - linode_id
+              - ips
+              properties:
+                linode_id:
+                  type: integer
+                  description: >
+                    The ID of the primary Linode that the addresses will be shared with.
+                  example: 123
+                ips:
+                  type: array
+                  items:
+                    type: string
+                    format: ip
+                    example: 192.0.2.1
+                  description: |
+                    A list of secondary Linode IPs to share with the primary Linode.
+                    * Can include both IPv4 addresses and IPv6 ranges (omit /56 and /64 prefix lengths)
+                    * Can include both private and public IPv4 addresses.
+                    * You must have access to all of these addresses and they must be in the same Region as the primary
+                    Linode.
+      responses:
+        '200':
+          description: IP Address allocated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPAddress'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "linode_id": 123,
+                "ips": [
+                  "192.0.2.1",
+                  "192.0.2.2"
+                ]
+              }' \
+              https://api.linode.com/v4/networking/ips/share
+      - lang: CLI
+        source: >
+          linode-cli networking ip-share \
+            --linode_id 123 \
+            --ips 192.0.2.1 \
+            --ips 2001:db8:3c4d:15::
   /networking/ipv4/assign:
     x-linode-cli-command: networking
     post:
@@ -10412,7 +10500,7 @@ paths:
         Configure shared IPs.  A shared IP may be brought up on a Linode other
         than the one it lists in its response.  This can be used to allow one
         Linode to begin serving requests should another become unresponsive.
-      operationId: shareIPs
+      operationId: shareIPv4s
       x-linode-cli-action: ip-share
       security:
       - personalAccessToken: []
