@@ -16227,8 +16227,6 @@ components:
           type: string
           description: >
             The two-letter country code of this Account's billing address.
-          minLength: 2
-          maxLength: 2
           example: US
         email:
           type: string
