@@ -10312,6 +10312,7 @@ paths:
     post:
       servers:
       - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       x-linode-grant: read_write
       tags:
       - Networking
@@ -10328,11 +10329,6 @@ paths:
 
         **Note**: IPv6 range sharing has limited availability in certain regions. Please contact customer support for
         assistance in enabling IPv6 range sharing for your Linodes.
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       operationId: shareIPs
       x-linode-cli-action: ip-share
       security:
@@ -10501,7 +10497,7 @@ paths:
         than the one it lists in its response.  This can be used to allow one
         Linode to begin serving requests should another become unresponsive.
       operationId: shareIPv4s
-      x-linode-cli-action: ip-share
+      x-linode-cli-skip: true
       security:
       - personalAccessToken: []
       - oauth:
