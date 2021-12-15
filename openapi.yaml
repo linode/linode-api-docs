@@ -20248,8 +20248,8 @@ components:
         hostname:
           type: string
           description: >
-            This NodeBalancer's hostname, ending with _.ip.linodeusercontent.com_
-          example: 123-456-789-00.ip.linodeusercontent.com
+            This NodeBalancer's hostname, beginning with its IP address and ending with _.ip.linodeusercontent.com_.
+          example: 192.0.2.1.ip.linodeusercontent.com
           readOnly: true
           x-linode-cli-display: 4
         ipv4:
