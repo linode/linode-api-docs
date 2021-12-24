@@ -598,9 +598,11 @@ paths:
               --expiry_year 2025 \
               --cvv 111
   /account/entity-transfers:
+    x-linode-cli-command: account
     get:
       deprecated: true
       x-linode-grant: unrestricted only
+      x-linode-cli-action: entity-transfers-list
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -639,6 +641,7 @@ paths:
     post:
       deprecated: true
       x-linode-grant: unrestricted only
+      x-linode-cli-action: entity-transfer-create
       tags:
       - Account
       summary: Entity Transfer Create
@@ -685,6 +688,7 @@ paths:
             }' \
             https://api.linode.com/v4/account/entity-transfers
   /account/entity-transfers/{token}:
+    x-linode-cli-command: account
     parameters:
       - name: token
         in: path
@@ -696,6 +700,7 @@ paths:
     get:
       deprecated: true
       x-linode-grant: unrestricted only
+      x-linode-cli-action: entity-transfer-view
       tags:
       - Account
       summary: Entity Transfer View
@@ -724,6 +729,7 @@ paths:
     delete:
       deprecated: true
       x-linode-grant: unrestricted only
+      x-linode-cli-action: entity-transfer-cancel
       tags:
       - Account
       summary: Entity Transfer Cancel
@@ -751,6 +757,7 @@ paths:
             -X DELETE \
             https://api.linode.com/v4/account/entity-transfers/123E4567-E89B-12D3-A456-426614174000
   /account/entity-transfers/{token}/accept:
+    x-linode-cli-command: account
     parameters:
       - name: token
         in: path
@@ -762,6 +769,7 @@ paths:
     post:
       deprecated: true
       x-linode-grant: unrestricted only
+      x-linode-cli-action: entity-transfer-accept
       tags:
       - Account
       summary: Entity Transfer Accept
@@ -3344,6 +3352,7 @@ paths:
         source: >
           linode-cli domains zone-file 123
   /domains/import:
+    x-linode-cli-command: domains
     post:
       x-linode-grant: read_write
       x-linode-cli-command: domains
