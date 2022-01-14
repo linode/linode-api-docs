@@ -103,7 +103,7 @@ info:
 
     | PARAMETER | DESCRIPTION |
     |-----------|-------------|
-    | grant_type | The grant type you're using for renewal.  Currently only the string "refresh_token" is accepted. |
+    | grant_type | The grant type you're using for renewal.  Optional, only "authorization_code" is accepted for OAuth Exchanges. |
     | client_id | Your app's client ID. |
     | client_secret | Your app's client secret. |
     | code | The code you just received from the redirect. |
