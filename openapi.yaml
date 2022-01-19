@@ -7646,7 +7646,7 @@ paths:
 
                       When upgrading pre-existing LKE clusters to use the HA Conrol Plane, the following changes will additionally occur.
 
-                      - All nodes will be deleted and new nodes wil be created to replace them.
+                      - All nodes will be deleted and new nodes will be created to replace them.
 
                       - Any local storage (such as `hostPath` volumes) will be erased.
 
