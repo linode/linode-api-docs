@@ -7498,7 +7498,7 @@ paths:
                 control_plane:
                   type: object
                   description: >
-                    Defines settings for the Kubernetes Control Plane. Allows for the enabling of High Availability (HA) for Control Plane Components. Enabling High Availability for LKE is an **irreversible** change. The High Availability feature is in a **closed beta** and is not currently available to all customers. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
+                    Defines settings for the Kubernetes Control Plane. Allows for the enabling of High Availability (HA) for Control Plane Components. Enabling High Availability for LKE is an **irreversible** change.
                   properties:
                     high_availability:
                       type: boolean
@@ -7639,10 +7639,18 @@ paths:
                       The Kubernetes version of a cluster can not be downgraded.
                 control_plane:
                     type: object
-                    description: >
+                    description: |
                       Defines settings for the Kubernetes Control Plane. Allows for the enabling of High Availability (HA) for Control Plane Components.
 
-                      Enabling High Availability for LKE is an **irreversible** change. The High Availability feature is in a **closed beta** and is not currently available to all customers. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
+                      Enabling High Availability for LKE is an **irreversible** change.
+
+                      When upgrading pre-existing LKE clusters to use the HA Control Plane, the following changes will additionally occur:
+
+                      - All nodes will be deleted and new nodes will be created to replace them.
+
+                      - Any local storage (such as `hostPath` volumes) will be erased.
+
+                      - The upgrade process may take several minutes to complete, as nodes will be replaced on a rolling basis.
                     properties:
                       high_availability:
                         type: boolean
@@ -19562,7 +19570,7 @@ components:
         control_plane:
           type: object
           description: >
-            Defines settings for the Kubernetes Control Plane. Allows for the enabling of High Availability (HA) for Control Plane Components. Enabling High Avaialability for LKE is an **irreversible** change. The High Availability feature is in a **closed beta** and is not currently available to all customers. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
+            Defines settings for the Kubernetes Control Plane. Allows for the enabling of High Availability (HA) for Control Plane Components. Enabling High Avaialability for LKE is an **irreversible** change.
           properties:
             high_availability:
               type: boolean
