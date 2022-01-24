@@ -7639,12 +7639,12 @@ paths:
                       The Kubernetes version of a cluster can not be downgraded.
                 control_plane:
                     type: object
-                    description: >
+                    description: |
                       Defines settings for the Kubernetes Control Plane. Allows for the enabling of High Availability (HA) for Control Plane Components.
 
                       Enabling High Availability for LKE is an **irreversible** change.
 
-                      When upgrading pre-existing LKE clusters to use the HA Conrol Plane, the following changes will additionally occur.
+                      When upgrading pre-existing LKE clusters to use the HA Control Plane, the following changes will additionally occur:
 
                       - All nodes will be deleted and new nodes will be created to replace them.
 
