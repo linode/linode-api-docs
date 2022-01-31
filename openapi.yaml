@@ -16393,7 +16393,7 @@ components:
         state:
           type: string
           description: >
-            If billing address is in the United States or Canada, only the two-letter
+            If billing address is in the US or CA, only the two-letter
             ISO 3166 State or Province code are accepted. If the address is outside
             the US, this is the Province associated with the Account's billing
             address.
