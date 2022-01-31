@@ -16395,7 +16395,7 @@ components:
           description: >
             If billing address is in the United States (US) or Canada (CA), only the two-letter
             ISO 3166 State or Province code are accepted. If the address is outside
-            the US, this is the Province associated with the Account's billing
+            the US or CA, this is the Province associated with the Account's billing
             address.
           maxLength: 24
           example: PA
