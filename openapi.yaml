@@ -17523,18 +17523,18 @@ components:
         hosts:
           type: object
           readOnly: true
-          description: The primary and secondary hosts for the Managed Database. These are only defined for high availability clusters.
+          description: The primary and secondary hosts for the Managed Database. These are assigned after provisioning is complete.
           properties:
             primary:
               type: string
               nullable: true
-              description: The primary node hostname, if any.
+              description: The primary host for the Managed Database.
               example: lin-123-456-mysql-master.servers.staging.linodedb.net
             secondary:
               type: string
               nullable: true
-              description: The secondary node hostname, if any.
-              example: lin-456-789-mysql-master.servers.staging.linodedb.net
+              description: The secondary/private network host for the Managed Database.
+              example: lin-123-456-mysql-master-private.servers.staging.linodedb.net
         created:
           type: string
           format: date-time
