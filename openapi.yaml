@@ -17672,8 +17672,6 @@ components:
           $ref: '#/components/schemas/Database/properties/created'
         updated:
           $ref: '#/components/schemas/Database/properties/updated'
-        instance_uri:
-          $ref: '#/components/schemas/Database/properties/instance_uri'
         engine:
           type: string
           readOnly: true
