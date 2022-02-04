@@ -3163,6 +3163,8 @@ paths:
       description: |
         Returns a paginated list of all Managed Databases you have permission to view, regardless of engine type.
 
+        Only unrestricted Users can access this command.
+
         For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
       security:
       - personalAccessToken: []
@@ -3203,7 +3205,10 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-list
       x-linode-grant: unrestricted only
-      description: List all accessible MySQL Database instances.
+      description: |
+        Returns a paginated list of all accessible MySQL Database instances.
+
+        Only unrestricted Users can access this command.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3243,6 +3248,8 @@ paths:
       x-linode-grant: unrestricted only
       description: |
         Create MySQL Database instance.
+
+        Only unrestricted Users can access this command.
 
         New instances can approximately 15 to 30 minutes to provision.
       security:
@@ -3332,7 +3339,10 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Returns details of a single MySQL Database instance.
+          description: |
+            Returns details of a single MySQL Database instance.
+
+            Only unrestricted Users can access this command.
           content:
             application/json:
               schema:
@@ -3356,7 +3366,10 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-delete
       x-linode-grant: unrestricted only
-      description: Delete a MySQL Database instance.
+      description: |
+        Delete a MySQL Database instance.
+
+        Only unrestricted Users can access this command.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3390,6 +3403,8 @@ paths:
       x-linode-grant: unrestricted only
       description: |
         Update a MySQL Database instance.
+
+        Only unrestricted Users can access this command.
 
         The Managed Database instance must but in an `active` status in order to perform this operation.
 
@@ -3460,6 +3475,8 @@ paths:
       description: |
         View a list of backups for an accessible MySQL Database instance.
 
+        Only unrestricted Users can access this command.
+
         At this time, only automatically scheduled backups (type `auto`) are available.
 
         Database backups are created every 24 hours at 0:00 UTC and each backup is retained for 7 days.
@@ -3515,7 +3532,10 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-view
       x-linode-grant: unrestricted only
-      description: View a single backup for an accessible MySQL Database instance.
+      description: |
+        View a single backup for an accessible MySQL Database instance.
+
+        Only unrestricted Users can access this command.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3564,6 +3584,8 @@ paths:
       description: |
         Restores a backup to the MySQL Database instance.
 
+        Only unrestricted Users can access this command.
+
         **Note**: Restoring from a backup will erase all existing data on the database instance.
       security:
       - personalAccessToken: []
@@ -3606,6 +3628,8 @@ paths:
       x-linode-grant: unrestricted only
       description: |
         View the the root username and password for a MySQL Database instance.
+
+        Only unrestricted Users can access this command.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3649,6 +3673,8 @@ paths:
         Resets the root password for a MySQL Database instance.
 
         A new root password is randomly generated and accessible with the **MySQL Database Credentials View** ([POST /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#mysql-database-credentials-view)) command.
+
+        Only unrestricted Users can access this command.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3688,7 +3714,10 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-ssl-cert
       x-linode-grant: unrestricted only
-      description: View the SSL CA certificate for an accessible MySQL Database instance.
+      description: |
+        View the SSL CA certificate for an accessible MySQL Database instance.
+
+        Only unrestricted Users can access this command.
       security:
       - personalAccessToken: []
       - oauth:
