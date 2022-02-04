@@ -3079,6 +3079,12 @@ paths:
         Returns a paginated list of all Managed Databases you have permission to view, regardless of engine type.
 
         For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        endpoint is out of beta.
       responses:
         '200':
           description: Returns an array of all Managed Database engines that are available for deployment.
@@ -3130,6 +3136,11 @@ paths:
         Returns a paginated list of all Managed Databases you have permission to view, regardless of engine type.
 
         For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       responses:
         '200':
           description: Returns information for a single Managed Database engine.
@@ -3166,6 +3177,12 @@ paths:
         Only unrestricted Users can access this command.
 
         For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3209,6 +3226,11 @@ paths:
         Returns a paginated list of all accessible MySQL Database instances.
 
         Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3252,6 +3274,11 @@ paths:
         Only unrestricted Users can access this command.
 
         New instances can approximately 15 to 30 minutes to provision.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3332,17 +3359,22 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-view
       x-linode-grant: unrestricted only
-      description: View an accessible MySQL Database instance.
+      description: |
+        View an accessible MySQL Database instance.
+
+        Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
         - databases:read_write
       responses:
         '200':
-          description: |
-            Returns details of a single MySQL Database instance.
-
-            Only unrestricted Users can access this command.
+          description: Returns details of a single MySQL Database instance.
           content:
             application/json:
               schema:
@@ -3370,6 +3402,11 @@ paths:
         Delete a MySQL Database instance.
 
         Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3409,6 +3446,11 @@ paths:
         The Managed Database instance must but in an `active` status in order to perform this operation.
 
         The provided addresses in `allow_list` overwrite any existing addresses upon successful update.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3480,6 +3522,11 @@ paths:
         At this time, only automatically scheduled backups (type `auto`) are available.
 
         Database backups are created every 24 hours at 0:00 UTC and each backup is retained for 7 days.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3536,6 +3583,11 @@ paths:
         View a single backup for an accessible MySQL Database instance.
 
         Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3587,6 +3639,11 @@ paths:
         Only unrestricted Users can access this command.
 
         **Note**: Restoring from a backup will erase all existing data on the database instance.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3630,6 +3687,11 @@ paths:
         View the the root username and password for a MySQL Database instance.
 
         Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3675,6 +3737,11 @@ paths:
         A new root password is randomly generated and accessible with the **MySQL Database Credentials View** ([POST /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#mysql-database-credentials-view)) command.
 
         Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3718,6 +3785,11 @@ paths:
         View the SSL CA certificate for an accessible MySQL Database instance.
 
         Only unrestricted Users can access this command.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       security:
       - personalAccessToken: []
       - oauth:
@@ -3754,6 +3826,11 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       description: |
         Returns a paginated list of all Managed Database types.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       responses:
         '200':
           description: Returns an array of all Managed Database types.
@@ -3817,6 +3894,11 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       description: |
         Returns details of the Managed Database type.
+
+        **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
+        hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
+        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
+        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       responses:
         '200':
           description: Returns a single Managed Database type.
