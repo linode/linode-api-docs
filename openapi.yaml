@@ -3457,7 +3457,12 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backups-list
       x-linode-grant: unrestricted only
-      description: View a list of backups for an accessible MySQL Database instance.
+      description: |
+        View a list of backups for an accessible MySQL Database instance.
+
+        At this time, only automatically scheduled backups (type `auto`) are available.
+
+        Database backups are created every 24 hours at 0:00 UTC and each backup is retained for 7 days.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3556,7 +3561,10 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-restore
       x-linode-grant: unrestricted only
-      description: Restores a backup to the MySQL Database instance.
+      description: |
+        Restores a backup to the MySQL Database instance.
+
+        **Note**: Restoring from a backup will erase all existing data on the database instance.
       security:
       - personalAccessToken: []
       - oauth:
@@ -17580,7 +17588,7 @@ components:
         label:
           type: string
           description: The database backup's label, for display purposes only.
-          example: mysql-backup-123
+          example: Scheduled - 02/04/22 11:11 UTC-XcCRmI
           x-linode-cli-display: 2
         created:
           type: string
