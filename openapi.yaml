@@ -11600,7 +11600,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/networking/vlans/
+              https://api.linode.com/v4beta/networking/vlans/
       - lang: CLI
         source: >
           linode-cli networking vlans-list
