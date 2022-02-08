@@ -3076,7 +3076,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        View a list of all available Managed Database engine types. These are used when creating new Managed Database instances.
+        Display all available Managed Database engine types. Engine IDs are used when creating new Managed Databases.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3085,7 +3085,7 @@ paths:
         endpoint is out of beta.
       responses:
         '200':
-          description: Returns a paginated list of all Managed Database engines that are available for deployment.
+          description: Returns a paginated list of all Managed Database engines.
           content:
             application/json:
               schema:
@@ -3127,7 +3127,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        View information for a single Managed Database engine type.
+        Display information for a single Managed Database engine type.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3164,11 +3164,11 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Returns a paginated list of all Managed Databases you have permission to view, regardless of engine type.
+        Display all accessible Managed Databases on your Account, regardless of engine type.
 
         Only unrestricted Users can access this command.
 
-        For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
+        For more detailed information on a particular Database instance, make a request to its `instance_uri`.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3181,7 +3181,7 @@ paths:
         - databases:read_only
       responses:
         '200':
-          description: Returns an array of all Managed Databases on your Account.
+          description: Returns a paginated list of all accessible Managed Databases on your Account.
           content:
             application/json:
               schema:
@@ -3208,14 +3208,14 @@ paths:
     get:
       tags:
       - Databases
-      summary: MySQL Databases List
+      summary: Managed MySQL Databases List
       operationId: getDatabasesMySQLInstances
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-list
       x-linode-grant: unrestricted only
       description: |
-        Returns a paginated list of all accessible MySQL Database instances.
+        Display all accessible Managed MySQL Databases on your Account.
 
         Only unrestricted Users can access this command.
 
@@ -3229,7 +3229,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Returns a paginated list of all accessible MySQL Database instances.
+          description: Returns a paginated list of all accessible Managed MySQL Databases on your Account.
           content:
             application/json:
               schema:
@@ -3254,18 +3254,20 @@ paths:
     post:
       tags:
       - Databases
-      summary: MySQL Database Create
+      summary: Managed MySQL Database Create
       operationId: postDatabasesMySQLInstances
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-create
       x-linode-grant: unrestricted only
       description: |
-        Create MySQL Database instance.
+        Provision a Managed MySQL Database.
 
         Only unrestricted Users can access this command.
 
         New instances can approximately 15 to 30 minutes to provision.
+
+        All Managed Databases include automatic, daily backups.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3276,7 +3278,7 @@ paths:
       - oauth:
         - databases:read_write
       requestBody:
-        description: Information about the MySQL database you are creating.
+        description: Information about the Managed MySQL Database you are creating.
         x-linode-cli-allowed-defaults:
         - region
         - type
@@ -3287,7 +3289,7 @@ paths:
               $ref: '#/components/schemas/DatabaseMySQLRequest'
       responses:
         '200':
-          description: Returns an array of all Managed Databases on your Account.
+          description: A new Managed MySQL Database is provisioning.
           content:
             application/json:
               schema:
@@ -3332,21 +3334,21 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
     get:
       tags:
       - Databases
-      summary: MySQL Database View
+      summary: Managed MySQL Database View
       operationId: getDatabasesMySQLInstance
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-view
       x-linode-grant: unrestricted only
       description: |
-        View an accessible MySQL Database instance.
+        Display information for a single, accessible Managed MySQL Database on your Account.
 
         Only unrestricted Users can access this command.
 
@@ -3360,7 +3362,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Returns details of a single MySQL Database instance.
+          description: Returns information for a single Managed MySQL Database.
           content:
             application/json:
               schema:
@@ -3378,14 +3380,14 @@ paths:
     delete:
       tags:
       - Databases
-      summary: MySQL Database Delete
+      summary: Managed MySQL Database Delete
       operationId: deleteDatabasesMySQLInstance
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-delete
       x-linode-grant: unrestricted only
       description: |
-        Delete a MySQL Database instance.
+        Remove a Managed MySQL Database from your Account.
 
         Only unrestricted Users can access this command.
 
@@ -3399,7 +3401,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Deletion successful.
+          description: Managed MySQL Database successfully deleted.
           content:
             application/json:
               schema:
@@ -3418,20 +3420,18 @@ paths:
     put:
       tags:
       - Databases
-      summary: MySQL Database Update
+      summary: Managed MySQL Database Update
       operationId: putDatabasesMySQLInstance
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-update
       x-linode-grant: unrestricted only
       description: |
-        Update a MySQL Database instance.
+        Update an active Managed MySQL Database.
 
         Only unrestricted Users can access this command.
 
-        The Managed Database instance must but in an `active` status in order to perform this operation.
-
-        The provided addresses in `allow_list` overwrite any existing addresses upon successful update.
+        Updating addresses in the `allow_list` overwrites any existing addresses.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3442,13 +3442,13 @@ paths:
       - oauth:
         - databases:read_write
       requestBody:
-        description: Updated information for the MySQL Database instance.
+        description: Updated information for the Managed MySQL Database.
         required: true
         content:
           application/json:
             schema:
               type: object
-              description: Updated information for the MySQL Database instance.
+              description: Updated information for the Managed MySQL Database.
               properties:
                 label:
                   $ref: '#/components/schemas/DatabaseMySQLRequest/properties/label'
@@ -3487,27 +3487,27 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
     get:
       tags:
       - Databases
-      summary: MySQL Database Backups List
+      summary: Managed MySQL Database Backups List
       operationId: getDatabasesMySQLInstanceBackups
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backups-list
       x-linode-grant: unrestricted only
       description: |
-        View a list of backups for an accessible MySQL Database instance.
+        Display all backups for an accessible Managed MySQL Database on your Account.
 
         Only unrestricted Users can access this command.
 
         At this time, only automatically scheduled backups (type `auto`) are available.
 
-        Database backups are created every 24 hours at 0:00 UTC and each backup is retained for 7 days.
+        Database backups are created every 24 hours at 0:00 UTC. Each backup is retained for 7 days.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3519,7 +3519,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Returns a paginated list of backups for the MySQL Database instance.
+          description: Returns a paginated list of backups for the Managed MySQL Database.
           content:
             application/json:
               schema:
@@ -3546,27 +3546,27 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
       - name: backupId
         in: path
-        description: The ID of the MySQL Database instance backup.
+        description: The ID of the Managed MySQL Database backup.
         required: true
         schema:
           type: integer
     get:
       tags:
       - Databases
-      summary: MySQL Database Backup View
+      summary: Managed MySQL Database Backup View
       operationId: getDatabasesMySQLInstanceBackup
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-view
       x-linode-grant: unrestricted only
       description: |
-        View a single backup for an accessible MySQL Database instance.
+        Display information for a single backup for an accessible Managed MySQL Database on your Account.
 
         Only unrestricted Users can access this command.
 
@@ -3580,7 +3580,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Returns a single backup for the MySQL Database instance.
+          description: Returns a single backup for the Managed MySQL Database.
           content:
             application/json:
               schema:
@@ -3600,31 +3600,31 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
       - name: backupId
         in: path
-        description: The ID of the MySQL Database instance backup.
+        description: The ID of the Managed MySQL Database backup.
         required: true
         schema:
           type: integer
     post:
       tags:
       - Databases
-      summary: MySQL Database Backup Restore
+      summary: Managed MySQL Database Backup Restore
       operationId: postDatabasesMySQLInstanceBackupRestore
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-restore
       x-linode-grant: unrestricted only
       description: |
-        Restores a backup to the MySQL Database instance.
+        Restore a backup to a Managed MySQL Database on your Account.
 
         Only unrestricted Users can access this command.
 
-        **Note**: Restoring from a backup will erase all existing data on the database instance.
+        **Note**: Restoring from a backup will erase all existing data on the database instance and replace it with backup data.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3656,21 +3656,21 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
     get:
       tags:
       - Databases
-      summary: MySQL Database Credentials View
+      summary: Managed MySQL Database Credentials View
       operationId: getDatabasesMySQLInstanceCredentials
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-creds-view
       x-linode-grant: unrestricted only
       description: |
-        View the the root username and password for a MySQL Database instance.
+        Display the the root username and password for a Managed MySQL Database.
 
         Only unrestricted Users can access this command.
 
@@ -3684,7 +3684,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Managed Database instance root username and password.
+          description: Managed Database root username and password.
           content:
             application/json:
               schema:
@@ -3704,23 +3704,23 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
     post:
       tags:
       - Databases
-      summary: MySQL Database Credentials Reset
+      summary: Managed MySQL Database Credentials Reset
       operationId: postDatabasesMySQLInstanceCredentialsReset
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-creds-reset
       x-linode-grant: unrestricted only
       description: |
-        Resets the root password for a MySQL Database instance.
+        Reset the root password for a Managed MySQL Database.
 
-        A new root password is randomly generated and accessible with the **MySQL Database Credentials View** ([POST /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#mysql-database-credentials-view)) command.
+        A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command.
 
         Only unrestricted Users can access this command.
 
@@ -3754,21 +3754,21 @@ paths:
     parameters:
       - name: instanceId
         in: path
-        description: The ID of the MySQL Database instance.
+        description: The ID of the Managed MySQL Database.
         required: true
         schema:
           type: integer
     get:
       tags:
       - Databases
-      summary: MySQL Database SSL Certificate View
+      summary: Managed MySQL Database SSL Certificate View
       operationId: getDatabasesMySQLInstanceSSL
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-ssl-cert
       x-linode-grant: unrestricted only
       description: |
-        View the SSL CA certificate for an accessible MySQL Database instance.
+        Display the SSL CA certificate for an accessible Managed MySQL Database.
 
         Only unrestricted Users can access this command.
 
@@ -3782,7 +3782,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Returns the SSL CA certificate of a single MySQL Database instance.
+          description: Returns the SSL CA certificate of a single Managed MySQL Database.
           content:
             application/json:
               schema:
@@ -17740,7 +17740,7 @@ components:
           x-linode-cli-display: 4
     DatabaseMySQL:
       type: object
-      description: Managed Database object for MySQL databases.
+      description: Managed MySQL Databases object.
       properties:
         id:
           $ref: '#/components/schemas/Database/properties/id'
@@ -17787,7 +17787,7 @@ components:
           description: |
             Whether to require SSL credentials to establish a connection to the Managed Database. Defaults to `false`.
 
-            Use the **MySQL Database SSL View** ([GET /databases/mysql/instances/{instanceId}/ssl](/docs/api/databases/#mysql-database-credentials-view)) command to view SSL credentials for a MySQL Database.
+            Use the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command for access information.
         replication_type:
           type: string
           enum:
@@ -17810,7 +17810,7 @@ components:
           $ref: '#/components/schemas/Database/properties/updated'
     DatabaseMySQLRequest:
       type: object
-      description: Managed Database request object for MySQL databases.
+      description: Managed MySQL Database request object.
       required:
         - label
         - type
