@@ -3076,9 +3076,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Returns a paginated list of all Managed Databases you have permission to view, regardless of engine type.
-
-        For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
+        View a list of all available Managed Database engine types. These are used when creating new Managed Database instances.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3087,22 +3085,18 @@ paths:
         endpoint is out of beta.
       responses:
         '200':
-          description: Returns an array of all Managed Database engines that are available for deployment.
+          description: Returns a paginated list of all Managed Database engines that are available for deployment.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DatabaseEngine'
-                  page:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/DatabaseEngine'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -3133,9 +3127,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Returns a paginated list of all Managed Databases you have permission to view, regardless of engine type.
-
-        For more detailed information on a particular Database instance, make a request to the `instance_uri` for that instance.
+        View information for a single Managed Database engine type.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
