@@ -3793,7 +3793,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/216/ssl
+              https://api.linode.com/v4beta/databases/mysql/instances/123/ssl
       - lang: CLI
         source: >
           linode-cli databases mysql-ssl-cert 123
@@ -3811,7 +3811,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Returns a paginated list of all Managed Database types.
+        Display all Managed Database types. The type determines the resources and price of a Managed Database instance.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3819,7 +3819,7 @@ paths:
         aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
       responses:
         '200':
-          description: Returns an array of all Managed Database types.
+          description: Returns a paginated list of all Managed Database types.
           content:
             application/json:
               x-linode-cli-nested-list: cluster_size
@@ -3837,18 +3837,14 @@ paths:
                   cluster_size.price.monthly:
                     x-linode-cli-display: 5
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/DatabaseType'
-                  page:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/DatabaseType'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -3879,7 +3875,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Returns details of the Managed Database type.
+        Display the details of a single Managed Database type. The type determines the resources and price of a Managed Database instance.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3911,10 +3907,10 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/databases/types/g6-standard-2
+          curl https://api.linode.com/v4beta/databases/types/g6-nanode-1
       - lang: CLI
         source: >
-          linode-cli databases type-view g6-standard-2
+          linode-cli databases type-view g6-nanode-1
   /domains:
     x-linode-cli-command: domains
     get:
