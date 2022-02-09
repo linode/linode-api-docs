@@ -3478,7 +3478,7 @@ paths:
               https://api.linode.com/v4beta/databases/mysql/instances/123
       - lang: CLI
         source: >
-          linode-cli databases mysql-update \
+          linode-cli databases mysql-update 123 \
             --label example-db \
             --allow_list 203.0.113.1 \
             --allow_list 192.0.1.0/24
@@ -17728,12 +17728,6 @@ components:
           description: The Managed Database engine version.
           x-linode-filterable: true
           x-linode-cli-display: 3
-        active:
-          type: boolean
-          example: true
-          description: Whether this Manage Database engine is active.
-          x-linode-filterable: true
-          x-linode-cli-display: 4
     DatabaseMySQL:
       type: object
       description: Managed MySQL Databases object.
@@ -17767,6 +17761,13 @@ components:
         status:
           $ref: '#/components/schemas/Database/properties/status'
           x-linode-cli-display: 100
+          x-linode-cli-color:
+            provisioning: yellow
+            active: green
+            resuming: yellow
+            restoring: yellow
+            failed: red
+            degraded: red
         encrypted:
           $ref: '#/components/schemas/Database/properties/encrypted'
         allow_list:
