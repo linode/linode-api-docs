@@ -3387,7 +3387,7 @@ paths:
       x-linode-cli-action: mysql-delete
       x-linode-grant: unrestricted only
       description: |
-        Remove a Managed MySQL Database from your Account.
+        Remove an active Managed MySQL Database from your Account.
 
         Only unrestricted Users can access this command.
 
@@ -3620,7 +3620,7 @@ paths:
       x-linode-cli-action: mysql-backup-restore
       x-linode-grant: unrestricted only
       description: |
-        Restore a backup to a Managed MySQL Database on your Account.
+        Restore a backup to an active Managed MySQL Database on your Account.
 
         Only unrestricted Users can access this command.
 
@@ -3670,7 +3670,7 @@ paths:
       x-linode-cli-action: mysql-creds-view
       x-linode-grant: unrestricted only
       description: |
-        Display the the root username and password for a Managed MySQL Database.
+        Display the the root username and password for an active Managed MySQL Database.
 
         Only unrestricted Users can access this command.
 
@@ -3718,7 +3718,7 @@ paths:
       x-linode-cli-action: mysql-creds-reset
       x-linode-grant: unrestricted only
       description: |
-        Reset the root password for a Managed MySQL Database.
+        Reset the root password for an active Managed MySQL Database.
 
         A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command.
 
