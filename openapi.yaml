@@ -3228,7 +3228,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - databases:read_write
+        - databases:read_only
       responses:
         '200':
           description: Returns a paginated list of all accessible Managed MySQL Databases on your Account.
@@ -3363,7 +3363,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - databases:read_write
+        - databases:read_only
       responses:
         '200':
           description: Returns information for a single Managed MySQL Database.
@@ -3527,7 +3527,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - databases:read_write
+        - databases:read_only
       responses:
         '200':
           description: Returns a paginated list of backups for the Managed MySQL Database.
@@ -3589,7 +3589,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - databases:read_write
+        - databases:read_only
       responses:
         '200':
           description: Returns a single backup for the Managed MySQL Database.
@@ -3699,7 +3699,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - databases:read_write
+        - databases:read_only
       responses:
         '200':
           description: Managed Database root username and password.
@@ -3740,7 +3740,7 @@ paths:
 
         The Database must have an `active` status to perform this command.
 
-        A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command.
+        A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command. Note that it may take several seconds for credentials to reset.
 
         Only unrestricted Users can access this command.
 
@@ -3801,7 +3801,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - databases:read_write
+        - databases:read_only
       responses:
         '200':
           description: Returns the SSL CA certificate of a single Managed MySQL Database.
@@ -3833,7 +3833,9 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Display all Managed Database types. The type determines the resources and price of a Managed Database instance.
+        Display all Managed Database node types. The type determines the resources and price of a Managed Database instance.
+
+        Each Managed Database can have one node type. In the case of a high availabilty Database, all nodes are provisioned according to the chosen type.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -17017,7 +17019,8 @@ components:
           scopes:
             'account:read_only': Allows access to GET information about your Account.
             'account:read_write': Allows access to all endpoints related to your Account.
-            'databases:read_write': Allows access to all endpoints related to your Databases.
+            'databases:read_only': Allows access to GET information about your Managed Databases.
+            'databases:read_write': Allows access to all endpoints related to your Managed Databases.
             'domains:read_only': Allows access to GET Domains on your Account.
             'domains:read_write': Allows access to all Domain endpoints.
             'events:read_only': Allows access to GET your Events.
