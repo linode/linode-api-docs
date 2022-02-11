@@ -3391,7 +3391,9 @@ paths:
       x-linode-cli-action: mysql-delete
       x-linode-grant: unrestricted only
       description: |
-        Remove an active Managed MySQL Database from your Account.
+        Remove a Managed MySQL Database from your Account.
+
+        The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command.
 
@@ -3432,7 +3434,9 @@ paths:
       x-linode-cli-action: mysql-update
       x-linode-grant: unrestricted only
       description: |
-        Update an active Managed MySQL Database.
+        Update a Managed MySQL Database.
+
+        The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command.
 
@@ -3628,7 +3632,9 @@ paths:
       x-linode-cli-action: mysql-backup-restore
       x-linode-grant: unrestricted only
       description: |
-        Restore a backup to an active Managed MySQL Database on your Account.
+        Restore a backup to a Managed MySQL Database on your Account.
+
+        The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command.
 
@@ -3679,7 +3685,9 @@ paths:
       x-linode-cli-action: mysql-creds-view
       x-linode-grant: unrestricted only
       description: |
-        Display the the root username and password for an active Managed MySQL Database.
+        Display the the root username and password for a Managed MySQL Database.
+
+        The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command.
 
@@ -3728,7 +3736,9 @@ paths:
       x-linode-cli-action: mysql-creds-reset
       x-linode-grant: unrestricted only
       description: |
-        Reset the root password for an active Managed MySQL Database.
+        Reset the root password for a Managed MySQL Database.
+
+        The Database must have an `active` status to perform this command.
 
         A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command.
 
