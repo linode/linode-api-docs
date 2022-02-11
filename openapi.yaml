@@ -3132,7 +3132,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       responses:
         '200':
           description: Returns information for a single Managed Database engine.
@@ -3222,7 +3223,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3272,7 +3274,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3355,7 +3358,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3394,7 +3398,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3436,7 +3441,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3512,7 +3518,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3573,7 +3580,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3629,7 +3637,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3677,7 +3686,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3727,7 +3737,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3775,7 +3786,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3816,7 +3828,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       responses:
         '200':
           description: Returns a paginated list of all Managed Database types.
@@ -3880,7 +3893,8 @@ paths:
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future.  This notice will be removed when this
+        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this out of
+        beta.
       responses:
         '200':
           description: Returns a single Managed Database type.
