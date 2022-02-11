@@ -3076,7 +3076,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Display all available Managed Database engine types. Engine IDs are used when creating new Managed Databases.
+        Display all available Managed Database engine types and versions. Engine IDs are used when creating new Managed Databases.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3085,7 +3085,7 @@ paths:
         endpoint is out of beta.
       responses:
         '200':
-          description: Returns a paginated list of all Managed Database engines.
+          description: Returns a paginated list of all available Managed Database engines and versions.
           content:
             application/json:
               schema:
@@ -3267,9 +3267,9 @@ paths:
 
         Only unrestricted Users can access this command.
 
-        New instances can approximately 15 to 30 minutes to provision.
+        New instances can take approximately 15 to 30 minutes to provision.
 
-        All Managed Databases include automatic, daily backups.
+        All Managed Databases include automatic, daily backups. Up to seven backups are stored for each Managed Database, providing restore points for each day of the past week.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
