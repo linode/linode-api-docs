@@ -3809,7 +3809,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Display all Managed Database node types. The type determines the resources and price of a Managed Database instance.
+        Display all Managed Database node types. The type and number of nodes determine the resources and price of a Managed Database instance.
 
         Each Managed Database can have one node type. In the case of a high availabilty Database, all nodes are provisioned according to the chosen type.
 
@@ -3876,7 +3876,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Display the details of a single Managed Database type. The type determines the resources and price of a Managed Database instance.
+        Display the details of a single Managed Database type. The type and number of nodes determine the resources and price of a Managed Database instance.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
