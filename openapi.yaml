@@ -17613,7 +17613,9 @@ components:
           description: |
             A list of IP addresses that can access the Managed Database. Each item can be a single IP address or a range in CIDR format.
 
-            By default, all connections (both public and private) to the Managed Database are blocked unless their IP address is included on this list.
+            By default, this is an empty array, which blocks all connections (both public and private) to the Managed Database.
+
+            Entering a value of `0.0.0.0/0` allows all connections to the Managed Database.
           items:
             type: string
             format: ipv4/prefix_length
