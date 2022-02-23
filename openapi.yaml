@@ -17643,7 +17643,12 @@ components:
               nullable: true
             secondary:
               type: string
-              description: The secondary/private network host for the Managed Database.
+              description: |
+                The secondary/private network host for the Managed Database.
+
+                A private network host and a private IP can only be used to access a Database Cluster from Linodes in the same data center and will not incur transfer costs.
+
+                **Note**: The secondary hostname is publicly viewable and accessible.
               example: lin-123-456-mysql-master-private.servers.staging.linodedb.net
               nullable: true
         created:
