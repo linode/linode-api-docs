@@ -11208,6 +11208,8 @@ paths:
       - Networking
       summary: IP Addresses Share
       description: |
+        **This command is currently disabled. Please use IPv4 Sharing Configure ([POST /networking/ipv4/share](/docs/api/networking/#ipv4-sharing-configure))**
+
         Configure shared IPs.
 
         IP sharing allows IP address reassignment (also referred to as IP failover) from one Linode to another if
@@ -11274,7 +11276,7 @@ paths:
                   "2001:db8:3c4d:15::"
                 ]
               }' \
-              https://api.linode.com/v4beta2/networking/ips/share
+              https://api.linode.com/v4beta/networking/ips/share
       - lang: CLI
         source: >
           linode-cli networking ip-share \
