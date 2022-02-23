@@ -3127,7 +3127,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Display information for a single Managed Database engine type.
+        Display information for a single Managed Database engine type and version.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3136,7 +3136,7 @@ paths:
         beta.
       responses:
         '200':
-          description: Returns information for a single Managed Database engine.
+          description: Returns information for a single Managed Database engine type and version.
           content:
             application/json:
               schema:
@@ -3264,6 +3264,12 @@ paths:
         Only unrestricted Users can access this command.
 
         New instances can take approximately 15 to 30 minutes to provision.
+
+        The `allow_list` is used to control access to the Managed Database.
+
+        * IP addresses on this list can access the Managed Database. All other sources are blocked.
+        * Entering an empty array (`[]`) blocks all connections (both public and private) to the Managed Database.
+        * **Note**: Updates to the `allow_list` may take a short period of time to complete, making this command inappropriate for rapid successive updates to this property.
 
         All Managed Databases include automatic, daily backups. Up to seven backups are stored for each Managed Database, providing restore points for each day of the past week.
 
@@ -3431,6 +3437,10 @@ paths:
         Only unrestricted Users can access this command.
 
         Updating addresses in the `allow_list` overwrites any existing addresses.
+
+        * IP addresses on this list can access the Managed Database. All other sources are blocked.
+        * Entering an empty array (`[]`) blocks all connections (both public and private) to the Managed Database.
+        * **Note**: Updates to the `allow_list` may take a short period of time to complete, making this command inappropriate for rapid successive updates to this property.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -17613,9 +17623,7 @@ components:
           description: |
             A list of IP addresses that can access the Managed Database. Each item can be a single IP address or a range in CIDR format.
 
-            By default, this is an empty array, which blocks all connections (both public and private) to the Managed Database.
-
-            Entering a value of `0.0.0.0/0` allows all connections to the Managed Database.
+            By default, this is an empty array (`[]`), which blocks all connections (both public and private) to the Managed Database.
           items:
             type: string
             format: ipv4/prefix_length
