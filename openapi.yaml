@@ -3634,6 +3634,8 @@ paths:
 
         **Note**: Restoring from a backup will erase all existing data on the database instance and replace it with backup data.
 
+        **Note**: Currently, restoring a backup after resetting Managed Database credentials results in a failed cluster. Please contact Customer Support if this occurs.
+
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
@@ -17647,7 +17649,7 @@ components:
             primary:
               type: string
               description: The primary host for the Managed Database.
-              example: lin-123-456-mysql-master.servers.staging.linodedb.net
+              example: lin-123-456-mysql-mysql-primary.servers.linodedb.net
               nullable: true
             secondary:
               type: string
@@ -17657,7 +17659,7 @@ components:
                 A private network host and a private IP can only be used to access a Database Cluster from Linodes in the same data center and will not incur transfer costs.
 
                 **Note**: The secondary hostname is publicly viewable and accessible.
-              example: lin-123-456-mysql-master-private.servers.staging.linodedb.net
+              example: lin-123-456-mysql-primary-private.servers.linodedb.net
               nullable: true
         created:
           type: string
