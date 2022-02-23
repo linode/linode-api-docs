@@ -17594,8 +17594,6 @@ components:
           enum:
           - provisioning
           - active
-          - deleting
-          - deleted
           - suspending
           - suspended
           - resuming
