@@ -3732,9 +3732,11 @@ paths:
 
         The Database must have an `active` status to perform this command.
 
-        A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command. Note that it may take several seconds for credentials to reset.
+        A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command.
 
         Only unrestricted Users can access this command.
+
+        **Note**: Note that it may take several seconds for credentials to reset.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
