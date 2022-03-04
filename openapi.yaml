@@ -3178,6 +3178,7 @@ paths:
         endpoint is out of beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns a paginated list of all accessible Managed Databases on your Account.
@@ -3225,6 +3226,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns a paginated list of all accessible Managed MySQL Databases on your Account.
@@ -3280,6 +3282,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       requestBody:
         description: Information about the Managed MySQL Database you are creating.
         x-linode-cli-allowed-defaults:
@@ -3362,6 +3365,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns information for a single Managed MySQL Database.
@@ -3402,6 +3406,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Managed MySQL Database successfully deleted.
@@ -3449,6 +3454,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       requestBody:
         description: Updated information for the Managed MySQL Database.
         required: true
@@ -3524,6 +3530,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns a paginated list of backups for the Managed MySQL Database.
@@ -3584,6 +3591,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns a single backup for the Managed MySQL Database.
@@ -3643,6 +3651,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Request to restore backup successful.
@@ -3692,6 +3701,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Managed Database root username and password.
@@ -3745,6 +3755,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Managed Database instance credentials successfully reset.
@@ -3792,6 +3803,7 @@ paths:
         beta.
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns the SSL CA certificate of a single Managed MySQL Database.
