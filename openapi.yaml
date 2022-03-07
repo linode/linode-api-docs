@@ -3169,6 +3169,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         For more detailed information on a particular Database instance, make a request to its `instance_uri`.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
@@ -3219,6 +3221,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
@@ -3264,6 +3268,8 @@ paths:
         Provision a Managed MySQL Database.
 
         Only unrestricted Users can access this command.
+
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
 
         New instances can take approximately 15 to 30 minutes to provision.
 
@@ -3358,6 +3364,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
@@ -3398,6 +3406,8 @@ paths:
         The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command.
+
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
@@ -3440,6 +3450,8 @@ paths:
         The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command.
+
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
 
         Updating addresses in the `allow_list` overwrites any existing addresses.
 
@@ -3519,6 +3531,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         At this time, only automatically scheduled backups (type `auto`) are available.
 
         Database backups are created every 24 hours at 0:00 UTC. Each backup is retained for 7 days.
@@ -3584,6 +3598,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
@@ -3640,6 +3656,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         **Note**: Restoring from a backup will erase all existing data on the database instance and replace it with backup data.
 
         **Note**: Currently, restoring a backup after resetting Managed Database credentials results in a failed cluster. Please contact Customer Support if this occurs.
@@ -3694,6 +3712,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
         When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
@@ -3746,6 +3766,8 @@ paths:
 
         Only unrestricted Users can access this command.
 
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
+
         **Note**: Note that it may take several seconds for credentials to reset.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
@@ -3795,6 +3817,8 @@ paths:
         Display the SSL CA certificate for an accessible Managed MySQL Database.
 
         Only unrestricted Users can access this command.
+
+        This endpoint is always accessible, no matter what OAuth scopes the acting token has.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
         hit the market, join the [Linode Green Light](https://www.linode.com/green-light/) program.
