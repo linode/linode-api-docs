@@ -3783,6 +3783,8 @@ paths:
       description: |
         Display the SSL CA certificate for an accessible Managed MySQL Database.
 
+        The Database must have an `active` status to perform this command.
+
         Only unrestricted Users can access this command.
 
         **Beta**: This endpoint is in **closed** beta. To get early access and test new Linode products before they
