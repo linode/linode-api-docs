@@ -9205,6 +9205,55 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke api-endpoints-list 12345
+  /lke/clusters/{clusterId}/dashboard:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the Kubernetes cluster to look up.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: lke
+    get:
+      operationId: getLKEClusterDashboard
+      x-linode-cli-action: cluster-dashboard-url
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_only
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Kubernetes Cluster Dashboard URL View
+      description: |
+        Get a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) access URL for this Cluster.
+
+        Dashboards are installed for Clusters by default.
+
+        To access the Cluster Dashboard login prompt, enter the URL in a web browser. Select either **Token** or **Kubeconfig** authentication, then select **Sign in**.
+
+        For additional guidance on using the Clust Dashboard, see the [Navigating the Cluster Dashboard](/docs/guides/using-the-kubernetes-dashboard-on-lke/#navigating-the-cluster-dashboard) section of our guide on [Using the Kubernetes Dashboard on LKE](/docs/guides/using-the-kubernetes-dashboard-on-lke/).
+      responses:
+        '200':
+          description: Returns a Kubernetes Cluster Dashboard URL.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    example: https://example.dashboard.linodelke.net
+                    description: The Cluster Dashboard access URL.
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4/lke/clusters/12345/dashboard
+      - lang: CLI
+        source:
+          linode-cli lke cluster-dashboard-url 12345
   /lke/clusters/{clusterId}/kubeconfig:
     parameters:
     - name: clusterId
