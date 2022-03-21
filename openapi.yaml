@@ -9225,13 +9225,13 @@ paths:
       - Linode Kubernetes Engine (LKE)
       summary: Kubernetes Cluster Dashboard URL View
       description: |
-        Get a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) access URL for this Cluster.
+        Get a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard) access URL for this Cluster, which enables performance of administrative tasks through a web interface.
 
         Dashboards are installed for Clusters by default.
 
         To access the Cluster Dashboard login prompt, enter the URL in a web browser. Select either **Token** or **Kubeconfig** authentication, then select **Sign in**.
 
-        For additional guidance on using the Clust Dashboard, see the [Navigating the Cluster Dashboard](/docs/guides/using-the-kubernetes-dashboard-on-lke/#navigating-the-cluster-dashboard) section of our guide on [Using the Kubernetes Dashboard on LKE](/docs/guides/using-the-kubernetes-dashboard-on-lke/).
+        For additional guidance on using the Cluster Dashboard, see the [Navigating the Cluster Dashboard](/docs/guides/using-the-kubernetes-dashboard-on-lke/#navigating-the-cluster-dashboard) section of our guide on [Using the Kubernetes Dashboard on LKE](/docs/guides/using-the-kubernetes-dashboard-on-lke/).
       responses:
         '200':
           description: Returns a Kubernetes Cluster Dashboard URL.
