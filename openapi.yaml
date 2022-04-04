@@ -17080,6 +17080,80 @@ paths:
         source: >
           linode-cli volumes resize 12345 \
             --size 30
+  /volumes/migrate:
+    x-linode-cli-command: volumes
+    post:
+      summary: Volumes Migrate
+      servers:
+      - url: https://api.linode.com/v4beta
+      description: |
+        Initiates scheduled migrations for the requested list of eligible Volumes.
+
+        * Migration upgrades a Volume's "hardware_type" from `hdd` to `nvme`, providing a 10-20x increase in throughput and up to 2000x improvement in IOPS at no additional cost.
+
+        * A Volume is eligible for migration with this command if a migration has been automatically scheduled for the Volume.
+
+        * If a migration has not yet been automatically scheduled for a Volume in an [eligible region](/docs/products/storage/block-storage/guides/nvme-upgrade/#availability), you can perform a [Manual Migration to NVMe Block Storage](/docs/products/storage/block-storage/guides/nvme-upgrade/#manually-upgrading-a-volume-to-nvme-block-storage).
+
+        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
+        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
+        updates in the future. This notice will be removed when this endpoint is out of
+        beta.
+      tags:
+      - Volumes
+      operationId: migrateVolumes
+      x-linode-cli-action: migrate
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+        - volumes:read_write
+      requestBody:
+        description: The requested Volumes for migration.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - volumes
+              properties:
+                volumes:
+                  type: array
+                  description: >
+                    An array of the requested Volumes IDs for scheduled migration initiation.
+                  items:
+                    type: integer
+                  example:
+                  - 123
+                  - 456
+      responses:
+        '200':
+          description: >
+            Migration request successful.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "volumes": [
+                  123,
+                  456
+                ]
+              }' \
+              https://api.linode.com/v4beta/volumes/migrate
+      - lang: CLI
+        source: >
+          linode-cli volumes migrate \
+            --volumes 123 \
+            --volumes 456
 components:
   securitySchemes:
     personalAccessToken:
