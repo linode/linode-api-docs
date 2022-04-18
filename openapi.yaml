@@ -3290,7 +3290,7 @@ paths:
 
         * If your database cluster is configured with a single node, you will experience downtime during this maintenance window when any updates occur. It's recommended that you adjust this window to match a time that will be the least disruptive for your application and users. You may also want to consider upgrading to a high availability plan to avoid any downtime due to maintenance.
 
-        * Currently, these automatic updates do not include major releases for the database engine software (DBMS). To upgrade to a new minor version (such as upgrading MySQL 8.0.26 to 9.0.0), consider deploying a new Managed Database with your preferred version. Then, once it's deployed, you can [migrate your database](/docs/products/databases/managed-databases/guides/migrate-mysql/).
+        * Currently, these automatic updates do not include major releases for the database engine software (DBMS). To upgrade to a new major version (such as upgrading MySQL 8.0.26 to 9.0.0), consider deploying a new Managed Database with your preferred version. Then, once it's deployed, you can [migrate your database](/docs/products/databases/managed-databases/guides/migrate-mysql/).
 
         * To modify update the maintenance window for a Database, use the **Managed MySQL Database Update** ([PUT /databases/mysql/instances/{instanceId}](/docs/api/databases/#managed-mysql-database-update)) command.
 
@@ -3475,7 +3475,7 @@ paths:
 
         * If your database cluster is configured with a single node, you will experience downtime during this maintenance window when any updates occur. It's recommended that you adjust this window to match a time that will be the least disruptive for your application and users. You may also want to consider upgrading to a high availability plan to avoid any downtime due to maintenance.
 
-        * Currently, these automatic updates do not include major releases for the database engine software (DBMS). To upgrade to a new minor version (such as upgrading MySQL 8.0.26 to 9.0.0), consider deploying a new Managed Database with your preferred version. Then, once it's deployed, you can [migrate your database](/docs/products/databases/managed-databases/guides/migrate-mysql/).
+        * Currently, these automatic updates do not include major releases for the database engine software (DBMS). To upgrade to a new major version (such as upgrading MySQL 8.0.26 to 9.0.0), consider deploying a new Managed Database with your preferred version. Then, once it's deployed, you can [migrate your database](/docs/products/databases/managed-databases/guides/migrate-mysql/).
 
         **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
         If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
