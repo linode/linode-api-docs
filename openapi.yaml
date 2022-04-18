@@ -3534,9 +3534,9 @@ paths:
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
 
-        At this time, only automatically scheduled backups (type `auto`) are available.
+        Database `auto` type backups are created every 24 hours at 0:00 UTC. Each `auto` backup is retained for 7 days.
 
-        Database backups are created every 24 hours at 0:00 UTC. Each backup is retained for 7 days.
+        Database `snapshot` type backups are created by accessing the **Managed MySQL Database Backup Snapshot Create** ([POST /databases/mysql/instances/{instanceId}/backups](/docs/api/databases/#managed-mysql-database-backup-snapshot-create)) command.
 
         **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
         If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
