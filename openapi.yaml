@@ -17779,6 +17779,7 @@ components:
           - restoring
           - failed
           - degraded
+          - updating
           description: The operating status of the Managed Database.
           example: active
           x-linode-filterable: true
@@ -17790,6 +17791,8 @@ components:
             restoring: yellow
             failed: red
             degraded: red
+            updating: yellow
+            default_: white
           readOnly: true
         encrypted:
           type: boolean
