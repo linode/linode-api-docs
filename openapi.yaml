@@ -3897,7 +3897,7 @@ paths:
       x-linode-cli-action: mysql-patch
       x-linode-grant: unrestricted only
       description: |
-        Update the major patch version of the Managed MySQL Database.
+        Update the minor patch version of the Managed MySQL Database.
 
         The Database must have an `active` status to perform this command.
 
@@ -3907,7 +3907,7 @@ paths:
 
         * If your database cluster is configured with a single node, you will experience downtime during this maintenance. Consider upgrading to a high availability plan to avoid any downtime due to maintenance.
 
-        * Currently, patching does not include minor releases for the database engine software (DBMS). To patch to a new minor version (such as upgrading MySQL 8.0.26 to 8.0.27), consider deploying a new Managed Database with your preferred version. Then, once it's deployed, you can [migrate your database](/docs/products/databases/managed-databases/guides/migrate-mysql/).
+        * Currently, patching does not include major releases for the database engine software (DBMS). To patch to a new major version (such as upgrading MySQL 8.0.26 to 9.0.0), consider deploying a new Managed Database with your preferred version. Then, once it's deployed, you can [migrate your database](/docs/products/databases/managed-databases/guides/migrate-mysql/).
 
         **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
         If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
