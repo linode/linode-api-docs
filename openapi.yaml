@@ -9051,6 +9051,8 @@ paths:
               properties:
                 count:
                   $ref: '#/components/schemas/LKENodePoolRequestBody/properties/count'
+                autoscaler:
+                  $ref: '#/components/schemas/LKENodePoolRequestBody/properties/autoscaler'
       responses:
         '200':
           description: Node Pool was successfully modified.
