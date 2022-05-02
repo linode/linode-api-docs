@@ -3065,6 +3065,7 @@ paths:
       summary: Managed Database Engines List
       operationId: getDatabasesEngines
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: engines
       parameters:
@@ -3072,13 +3073,6 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       description: |
         Display all available Managed Database engine types and versions. Engine IDs are used when creating new Managed Databases.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       responses:
         '200':
           description: Returns a paginated list of all available Managed Database engines and versions.
@@ -3098,7 +3092,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/databases/engines/
+          curl https://api.linode.com/v4/databases/engines/
       - lang: CLI
         source: >
           linode-cli databases engines
@@ -3117,6 +3111,7 @@ paths:
       summary: Managed Database Engine View
       operationId: getDatabasesEngine
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: engine-view
       parameters:
@@ -3124,13 +3119,6 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       description: |
         Display information for a single Managed Database engine type and version.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       responses:
         '200':
           description: Returns information for a single Managed Database engine type and version.
@@ -3143,7 +3131,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/databases/engines/mysql/5.7.30
+          curl https://api.linode.com/v4/databases/engines/mysql/5.7.30
       - lang: CLI
         source: >
           linode-cli databases engine-view mysql/5.7.30
@@ -3155,6 +3143,7 @@ paths:
       summary: Managed Databases List
       operationId: getDatabasesInstances
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: list
       x-linode-grant: read_only
@@ -3167,13 +3156,6 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
 
         For more detailed information on a particular Database instance, make a request to its `instance_uri`.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3197,7 +3179,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/instances
+              https://api.linode.com/v4/databases/instances
       - lang: CLI
         source: >
           linode-cli databases list
@@ -3209,6 +3191,7 @@ paths:
       summary: Managed MySQL Databases List
       operationId: getDatabasesMySQLInstances
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-list
       x-linode-grant: unrestricted only
@@ -3216,13 +3199,6 @@ paths:
         Display all accessible Managed MySQL Databases on your Account.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3246,7 +3222,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/
+              https://api.linode.com/v4/databases/mysql/instances/
       - lang: CLI
         source: >
           linode-cli databases mysql-list
@@ -3256,6 +3232,7 @@ paths:
       summary: Managed MySQL Database Create
       operationId: postDatabasesMySQLInstances
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-create
       x-linode-grant: unrestricted only
@@ -3283,13 +3260,6 @@ paths:
         * **The database software is not updated automatically.** To upgrade to a new database engine version, consider deploying a new Managed Database with your preferred version. You can then [migrate your databases](/docs/products/databases/managed-databases/guides/migrate-mysql/) from the original Managed Database cluster to the new one.
 
         * To modify update the maintenance window for a Database, use the **Managed MySQL Database Update** ([PUT /databases/mysql/instances/{instanceId}](/docs/api/databases/#managed-mysql-database-update)) command.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3331,7 +3301,7 @@ paths:
                     "192.0.1.0/24"
                   ]
               }' \
-              https://api.linode.com/v4beta/databases/mysql/instances
+              https://api.linode.com/v4/databases/mysql/instances
       - lang: CLI
         source: >
           linode-cli databases mysql-create \
@@ -3360,6 +3330,7 @@ paths:
       summary: Managed MySQL Database View
       operationId: getDatabasesMySQLInstance
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-view
       x-linode-grant: unrestricted only
@@ -3367,13 +3338,6 @@ paths:
         Display information for a single, accessible Managed MySQL Database on your Account.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3390,7 +3354,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/123
+              https://api.linode.com/v4/databases/mysql/instances/123
       - lang: CLI
         source: >
           linode-cli databases mysql-view 123
@@ -3400,6 +3364,7 @@ paths:
       summary: Managed MySQL Database Delete
       operationId: deleteDatabasesMySQLInstance
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-delete
       x-linode-grant: unrestricted only
@@ -3409,13 +3374,6 @@ paths:
         The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3433,7 +3391,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4beta/databases/mysql/instances/123
+              https://api.linode.com/v4/databases/mysql/instances/123
       - lang: CLI
         source: >
           linode-cli databases mysql-delete 123
@@ -3443,6 +3401,7 @@ paths:
       summary: Managed MySQL Database Update
       operationId: putDatabasesMySQLInstance
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-update
       x-linode-grant: unrestricted only
@@ -3466,13 +3425,6 @@ paths:
         * If your database cluster is configured with a single node, you will experience downtime during this maintenance window when any updates occur. It's recommended that you adjust this window to match a time that will be the least disruptive for your application and users. You may also want to consider upgrading to a high availability plan to avoid any downtime due to maintenance.
 
         * **The database software is not updated automatically.** To upgrade to a new database engine version, consider deploying a new Managed Database with your preferred version. You can then [migrate your databases](/docs/products/databases/managed-databases/guides/migrate-mysql/) from the original Managed Database cluster to the new one.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3519,7 +3471,7 @@ paths:
                     "week_of_month": 3,
                   }
               }' \
-              https://api.linode.com/v4beta/databases/mysql/instances/123
+              https://api.linode.com/v4/databases/mysql/instances/123
       - lang: CLI
         source: >
           linode-cli databases mysql-update 123 \
@@ -3546,6 +3498,7 @@ paths:
       summary: Managed MySQL Database Backups List
       operationId: getDatabasesMySQLInstanceBackups
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backups-list
       x-linode-grant: unrestricted only
@@ -3559,13 +3512,6 @@ paths:
         Database `auto` type backups are created every 24 hours at 0:00 UTC. Each `auto` backup is retained for 7 days.
 
         Database `snapshot` type backups are created by accessing the **Managed MySQL Database Backup Snapshot Create** ([POST /databases/mysql/instances/{instanceId}/backups](/docs/api/databases/#managed-mysql-database-backup-snapshot-create)) command.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3589,7 +3535,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/123/backups
+              https://api.linode.com/v4/databases/mysql/instances/123/backups
       - lang: CLI
         source: >
           linode-cli databases mysql-backups-list 123
@@ -3599,6 +3545,7 @@ paths:
       summary: Managed MySQL Database Backup Snapshot Create
       operationId: postDatabasesMySQLInstanceBackup
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-snapshot
       x-linode-grant: unrestricted only
@@ -3610,13 +3557,6 @@ paths:
         The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3668,7 +3608,7 @@ paths:
                   "label": "db-snapshot",
                   "target": "primary"
               }' \
-              https://api.linode.com/v4beta/databases/mysql/instances/123/backups/
+              https://api.linode.com/v4/databases/mysql/instances/123/backups/
       - lang: CLI
         source: >
           linode-cli databases mysql-backup-snapshot 123 \
@@ -3695,6 +3635,7 @@ paths:
       summary: Managed MySQL Database Backup View
       operationId: getDatabasesMySQLInstanceBackup
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-view
       x-linode-grant: unrestricted only
@@ -3704,13 +3645,6 @@ paths:
         The Database must not be provisioning to perform this command.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3727,7 +3661,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/123/backups/456
+              https://api.linode.com/v4/databases/mysql/instances/123/backups/456
       - lang: CLI
         source: >
           linode-cli databases mysql-backup-view 123 456
@@ -3752,6 +3686,7 @@ paths:
       summary: Managed MySQL Database Backup Restore
       operationId: postDatabasesMySQLInstanceBackupRestore
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-restore
       x-linode-grant: unrestricted only
@@ -3765,13 +3700,6 @@ paths:
         **Note**: Restoring from a backup will erase all existing data on the database instance and replace it with backup data.
 
         **Note**: Currently, restoring a backup after resetting Managed Database credentials results in a failed cluster. Please contact Customer Support if this occurs.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3788,7 +3716,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              -X POST https://api.linode.com/v4beta/databases/mysql/instances/123/backups/456/restore
+              -X POST https://api.linode.com/v4/databases/mysql/instances/123/backups/456/restore
       - lang: CLI
         source: >
           linode-cli databases mysql-backup-restore 123 456
@@ -3807,6 +3735,7 @@ paths:
       summary: Managed MySQL Database Credentials View
       operationId: getDatabasesMySQLInstanceCredentials
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-creds-view
       x-linode-grant: unrestricted only
@@ -3816,13 +3745,6 @@ paths:
         The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3839,7 +3761,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/123/credentials/
+              https://api.linode.com/v4/databases/mysql/instances/123/credentials/
       - lang: CLI
         source: >
           linode-cli databases mysql-creds-view 123
@@ -3858,6 +3780,7 @@ paths:
       summary: Managed MySQL Database Credentials Reset
       operationId: postDatabasesMySQLInstanceCredentialsReset
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-creds-reset
       x-linode-grant: unrestricted only
@@ -3871,13 +3794,6 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
 
         **Note**: Note that it may take several seconds for credentials to reset.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3894,7 +3810,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              -X POST https://api.linode.com/v4beta/databases/mysql/instances/123/credentials/reset
+              -X POST https://api.linode.com/v4/databases/mysql/instances/123/credentials/reset
       - lang: CLI
         source: >
           linode-cli databases mysql-creds-reset 123
@@ -3913,6 +3829,7 @@ paths:
       summary: Managed MySQL Database SSL Certificate View
       operationId: getDatabasesMySQLInstanceSSL
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-ssl-cert
       x-linode-grant: unrestricted only
@@ -3922,13 +3839,6 @@ paths:
         The Database must have an `active` status to perform this command.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -3945,7 +3855,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/databases/mysql/instances/123/ssl
+              https://api.linode.com/v4/databases/mysql/instances/123/ssl
       - lang: CLI
         source: >
           linode-cli databases mysql-ssl-cert 123
@@ -3964,6 +3874,7 @@ paths:
       summary: Managed MySQL Database Patch
       operationId: postDatabasesMySQLInstancePatch
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-patch
       x-linode-grant: unrestricted only
@@ -3979,13 +3890,6 @@ paths:
         * If your database cluster is configured with a single node, you will experience downtime during this maintenance. Consider upgrading to a high availability plan to avoid any downtime due to maintenance.
 
         * **The database software is not updated automatically.** To upgrade to a new database engine version, consider deploying a new Managed Database with your preferred version. You can then [migrate your databases](/docs/products/databases/managed-databases/guides/migrate-mysql/) from the original Managed Database cluster to the new one.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       security:
       - personalAccessToken: []
       - oauth: []
@@ -4002,7 +3906,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              -X POST https://api.linode.com/v4beta/databases/mysql/instances/123/patch
+              -X POST https://api.linode.com/v4/databases/mysql/instances/123/patch
       - lang: CLI
         source: >
           linode-cli databases mysql-patch 123
@@ -4014,6 +3918,7 @@ paths:
       summary: Managed Database Types List
       operationId: getDatabasesTypes
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: types
       parameters:
@@ -4023,13 +3928,6 @@ paths:
         Display all Managed Database node types. The type and number of nodes determine the resources and price of a Managed Database instance.
 
         Each Managed Database can have one node type. In the case of a high availabilty Database, all nodes are provisioned according to the chosen type.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       responses:
         '200':
           description: Returns a paginated list of all Managed Database types.
@@ -4063,7 +3961,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/databases/types
+          curl https://api.linode.com/v4/databases/types
       - lang: CLI
         source: >
           linode-cli databases types
@@ -4082,6 +3980,7 @@ paths:
       summary: Managed Database Type View
       operationId: getDatabasesType
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: type-view
       parameters:
@@ -4089,13 +3988,6 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       description: |
         Display the details of a single Managed Database type. The type and number of nodes determine the resources and price of a Managed Database instance.
-
-        **Beta**: This endpoint is in **open** beta. During the beta period, Managed Databases will not incur any charges.
-        If you deploy a Managed Database during this time, you will receive a notice with pricing details in advance of the
-        GA (general availability) release.
-        When accessing this endpoint, please make sure to prepend all requests with `/v4beta` instead of `/v4`, and be
-        aware that this endpoint may receive breaking updates in the future. This notice will be removed when this
-        endpoint is out of beta.
       responses:
         '200':
           description: Returns a single Managed Database type.
@@ -4122,7 +4014,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/databases/types/g6-nanode-1
+          curl https://api.linode.com/v4/databases/types/g6-nanode-1
       - lang: CLI
         source: >
           linode-cli databases type-view g6-nanode-1
