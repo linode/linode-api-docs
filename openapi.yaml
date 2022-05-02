@@ -3371,7 +3371,7 @@ paths:
       description: |
         Remove a Managed MySQL Database from your Account.
 
-        The Database must have an `active` status to perform this command.
+        The Database must have an `active`, `failed`, or `degraded` status to perform this command.
 
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
