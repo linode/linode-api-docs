@@ -18174,7 +18174,7 @@ components:
           type: string
           description: A human-readable string that describes each plan type. For display purposes only.
           readOnly: true
-          example: DBaaS Cluster - Nanode 1GB
+          example: DBaaS - Nanode 1GB
           x-linode-cli-display: 2
         engines:
           type: object
