@@ -18184,6 +18184,16 @@ components:
               description: Pricing details for MySQL Managed Databases.
               items:
                 $ref: '#/components/schemas/DatabaseTypeEngine'
+            postgresql:
+              type: array
+              description: Pricing details for PostgreSQL Managed Databases.
+              items:
+                $ref: '#/components/schemas/DatabaseTypeEngine'
+            mongodb:
+              type: array
+              description: Pricing details for MongoDB Managed Databases.
+              items:
+                $ref: '#/components/schemas/DatabaseTypeEngine'
         memory:
           type: integer
           description: The amount of RAM allocated to Database created of this plan type. The value is represented in megabytes.
