@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.120.1
+  version: 4.122.0
 
   title: Linode API
   description: |
@@ -8939,7 +8939,7 @@ paths:
       - Linode Kubernetes Engine (LKE)
       summary: Node Pool Update
       description: |
-        Updates a Node Pool's count.
+        Updates a Node Pool's count and autoscaler configuration.
 
         Linodes will be created or deleted to match changes to the Node Pool's count.
 
@@ -9496,6 +9496,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke version-view 1.23
+  /longview/clients:
     x-linode-cli-command: longview
     get:
       x-linode-grant: read_only
