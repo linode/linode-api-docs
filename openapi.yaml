@@ -9496,6 +9496,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke version-view 1.23
+  /longview/clients:
     x-linode-cli-command: longview
     get:
       x-linode-grant: read_only
