@@ -18083,30 +18083,26 @@ components:
           type: string
           description: A human-readable string that describes each plan type. For display purposes only.
           readOnly: true
-          example: DBaaS MySQL - Nanode 1GB
+          example: DBaaS - Nanode 1GB
           x-linode-cli-display: 2
-        cluster_size:
-          type: array
-          description: A pricing list depending on the number of nodes.
-          items:
-            type: object
-            properties:
-              quantity:
-                type: integer
-                description: The number of nodes.
-                example: 1
-              price:
-                type: object
-                description: Cost in US dollars, broken down into hourly and monthly charges.
-                properties:
-                  hourly:
-                    type: number
-                    description: Cost (in US dollars) per hour.
-                    example: 0.03
-                  monthly:
-                    type: number
-                    description: Cost (in US dollars) per month.
-                    example: 20
+        engines:
+          type: object
+          properties:
+            mysql:
+              type: array
+              description: Pricing details for MySQL Managed Databases.
+              items:
+                $ref: '#/components/schemas/DatabaseTypeEngine'
+            postgresql:
+              type: array
+              description: Pricing details for PostgreSQL Managed Databases.
+              items:
+                $ref: '#/components/schemas/DatabaseTypeEngine'
+            mongodb:
+              type: array
+              description: Pricing details for MongoDB Managed Databases.
+              items:
+                $ref: '#/components/schemas/DatabaseTypeEngine'
         memory:
           type: integer
           description: The amount of RAM allocated to Database created of this plan type. The value is represented in megabytes.
@@ -18132,6 +18128,29 @@ components:
           type: string
           description: The compute class category.
           example: nanode
+    DatabaseTypeEngine:
+      type: object
+      properties:
+        quantity:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          description: The number of nodes for the Managed Database cluster for this subscription tier.
+          example: 1
+        price:
+          type: object
+          description: Cost in US dollars, broken down into hourly and monthly charges.
+          properties:
+            hourly:
+              type: number
+              description: Cost (in US dollars) per hour for this subscription tier.
+              example: 0.03
+            monthly:
+              type: number
+              description: Maximum cost (in US dollars) per month for this subscription tier.
+              example: 20
     Device:
       type: object
       description: >
