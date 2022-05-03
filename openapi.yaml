@@ -3158,7 +3158,8 @@ paths:
         For more detailed information on a particular Database instance, make a request to its `instance_uri`.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_only
       responses:
         '200':
           description: Returns a paginated list of all accessible Managed Databases on your Account.
@@ -3201,7 +3202,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_only
       responses:
         '200':
           description: Returns a paginated list of all accessible Managed MySQL Databases on your Account.
@@ -3262,7 +3264,8 @@ paths:
         * To modify update the maintenance window for a Database, use the **Managed MySQL Database Update** ([PUT /databases/mysql/instances/{instanceId}](/docs/api/databases/#managed-mysql-database-update)) command.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       requestBody:
         description: Information about the Managed MySQL Database you are creating.
         x-linode-cli-allowed-defaults:
@@ -3340,7 +3343,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_only
       responses:
         '200':
           description: Returns information for a single Managed MySQL Database.
@@ -3376,7 +3380,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       responses:
         '200':
           description: Managed MySQL Database successfully deleted.
@@ -3427,7 +3432,8 @@ paths:
         * **The database software is not updated automatically.** To upgrade to a new database engine version, consider deploying a new Managed Database with your preferred version. You can then [migrate your databases](/docs/products/databases/managed-databases/guides/migrate-mysql/) from the original Managed Database cluster to the new one.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       requestBody:
         description: Updated information for the Managed MySQL Database.
         required: true
@@ -3514,7 +3520,8 @@ paths:
         Database `snapshot` type backups are created by accessing the **Managed MySQL Database Backup Snapshot Create** ([POST /databases/mysql/instances/{instanceId}/backups](/docs/api/databases/#managed-mysql-database-backup-snapshot-create)) command.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       responses:
         '200':
           description: Returns a paginated list of backups for the Managed MySQL Database.
@@ -3559,7 +3566,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       requestBody:
         description: Information about the snapshot backup to create.
         content:
@@ -3647,7 +3655,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       responses:
         '200':
           description: Returns a single backup for the Managed MySQL Database.
@@ -3702,7 +3711,8 @@ paths:
         **Note**: Currently, restoring a backup after resetting Managed Database credentials results in a failed cluster. Please contact Customer Support if this occurs.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       responses:
         '200':
           description: Request to restore backup successful.
@@ -3747,7 +3757,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_only
       responses:
         '200':
           description: Managed Database root username and password.
@@ -3796,7 +3807,8 @@ paths:
         **Note**: Note that it may take several seconds for credentials to reset.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       responses:
         '200':
           description: Managed Database instance credentials successfully reset.
@@ -3841,7 +3853,8 @@ paths:
         Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_only
       responses:
         '200':
           description: Returns the SSL CA certificate of a single Managed MySQL Database.
@@ -3892,7 +3905,8 @@ paths:
         * **The database software is not updated automatically.** To upgrade to a new database engine version, consider deploying a new Managed Database with your preferred version. You can then [migrate your databases](/docs/products/databases/managed-databases/guides/migrate-mysql/) from the original Managed Database cluster to the new one.
       security:
       - personalAccessToken: []
-      - oauth: []
+      - oauth:
+        - databases:read_write
       responses:
         '200':
           description: Managed Database instance patch request successful.
