@@ -19671,6 +19671,21 @@ components:
           description: The amount of tax levied on the Invoice in US Dollars.
           example: 12.25
           x-linode-cli-display: 5
+        tax_summary:
+          type: array
+          readOnly: true
+          description: The amount of tax broken down into subtotals by source.
+          items:
+            type: object
+            properties:
+              tax:
+                type: number
+                description: The amount of tax subtotal attributable to this source.
+                example: 12.25
+              name:
+                type: string
+                description: The source of this tax subtotal.
+                example: PA STATE TAX
         total:
           type: number
           readOnly: true
