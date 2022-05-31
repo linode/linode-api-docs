@@ -24252,13 +24252,10 @@ components:
               * `active` - the Volume is online and available for use.
               * `resizing` - the Volume is in the process of upgrading
                 its current capacity.
-              * `contact_support` - there is a problem with your Volume. Please
-                [open a Support Ticket](/docs/api/support/#support-ticket-open) to resolve the issue.
           enum:
           - creating
           - active
           - resizing
-          - contact_support
           example: active
           readOnly: true
           x-linode-cli-display: 3
