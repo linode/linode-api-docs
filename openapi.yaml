@@ -2987,6 +2987,7 @@ paths:
                     "global": {
                       "add_linodes": true,
                       "add_nodebalancers": false,
+                      "add_databases": true;
                       "add_domains": true,
                       "add_longview": false,
                       "add_stackscripts": true,
@@ -3214,9 +3215,7 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Display all accessible Managed Databases on your Account, regardless of engine type.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        Display all Managed Databases that are accessible by your User, regardless of engine type.
 
         For more detailed information on a particular Database instance, make a request to its `instance_uri`.
       security:
@@ -3258,11 +3257,9 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-list
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_only
       description: |
-        Display all accessible Managed MySQL Databases on your Account.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        Display all accessible Managed MySQL Databases.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3300,11 +3297,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-create
-      x-linode-grant: unrestricted only
+      x-linode-grant: add_databases
       description: |
         Provision a Managed MySQL Database.
 
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        Restricted Users must have the `add_databases` grant to use this command.
 
         New instances can take approximately 15 to 30 minutes to provision.
 
@@ -3399,11 +3396,9 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-view
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_only
       description: |
-        Display information for a single, accessible Managed MySQL Database on your Account.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        Display information for a single, accessible Managed MySQL Database.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3434,9 +3429,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-delete
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_write
       description: |
         Remove a Managed MySQL Database from your Account.
+
+        Requires `read_write` access to the Database.
 
         The Database must have an `active`, `failed`, or `degraded` status to perform this command.
 
@@ -3472,13 +3469,13 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-update
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_write
       description: |
         Update a Managed MySQL Database.
 
-        The Database must have an `active` status to perform this command.
+        Requires `read_write` access to the Database.
 
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        The Database must have an `active` status to perform this command.
 
         Updating addresses in the `allow_list` overwrites any existing addresses.
 
@@ -3570,13 +3567,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backups-list
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_only
       description: |
-        Display all backups for an accessible Managed MySQL Database on your Account.
+        Display all backups for an accessible Managed MySQL Database.
 
         The Database must not be provisioning to perform this command.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
 
         Database `auto` type backups are created every 24 hours at 0:00 UTC. Each `auto` backup is retained for 7 days.
 
@@ -3618,15 +3613,15 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-snapshot
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_write
       description: |
         Creates a snapshot backup of a Managed MySQL Database.
+
+        Requires `read_write` access to the Database.
 
         Backups generated by this command have the type `snapshot`. Snapshot backups may take several minutes to complete, after which they will be accessible to view or restore.
 
         The Database must have an `active` status to perform this command.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3709,13 +3704,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-view
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_only
       description: |
-        Display information for a single backup for an accessible Managed MySQL Database on your Account.
+        Display information for a single backup for an accessible Managed MySQL Database.
 
         The Database must not be provisioning to perform this command.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3799,13 +3792,13 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-restore
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_write
       description: |
         Restore a backup to a Managed MySQL Database on your Account.
 
-        The Database must have an `active` status to perform this command.
+        Requires `read_write` access to the Database.
 
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        The Database must have an `active` status to perform this command.
 
         **Note**: Restoring from a backup will erase all existing data on the database instance and replace it with backup data.
 
@@ -3849,13 +3842,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-creds-view
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_only
       description: |
-        Display the the root username and password for a Managed MySQL Database.
+        Display the the root username and password for an accessible Managed MySQL Database.
 
         The Database must have an `active` status to perform this command.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3895,11 +3886,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-creds-reset
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_write
       description: |
         Reset the root password for a Managed MySQL Database.
 
-        The Database must have an `active` status to perform this command.
+        Requires `read_write` access to the Database.
 
         A new root password is randomly generated and accessible with the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command.
 
@@ -3945,13 +3936,11 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-ssl-cert
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_only
       description: |
         Display the SSL CA certificate for an accessible Managed MySQL Database.
 
         The Database must have an `active` status to perform this command.
-
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
       security:
       - personalAccessToken: []
       - oauth:
@@ -3991,13 +3980,13 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-patch
-      x-linode-grant: unrestricted only
+      x-linode-grant: read_write
       description: |
         Apply security patches and updates to the underlying operating system of the Managed MySQL Database. This function runs during regular maintenance windows, which are configurable with the **Managed MySQL Database Update** ([PUT /databases/mysql/instances/{instanceId}](/docs/api/databases/#managed-mysql-database-update)) command.
 
-        The Database must have an `active` status to perform this command.
+        Requires `read_write` access to the Database.
 
-        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+        The Database must have an `active` status to perform this command.
 
         **Note**
 
@@ -19697,6 +19686,10 @@ components:
             add_firewalls:
               type: boolean
               description: If true, this User may add Firewalls.
+              example: true
+            add_databases:
+              type: boolean
+              description: if true, this User may add Managed Databases.
               example: true
         linode:
           type: array
