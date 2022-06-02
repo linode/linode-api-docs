@@ -3057,6 +3057,69 @@ paths:
                     ]
                 }' \
                 https://api.linode.com/v4/account/users/example_user/grants
+  /databases/{engine}/instances:
+    parameters:
+      - name: engine
+        in: path
+        description: The Managed Databases List by Engine.
+        required: true
+        schema:
+          type: string
+          enum:
+          - mongodb
+          - mysql
+          - postgresql
+    x-linode-cli-command: databases
+    get:
+      tags:
+      - Databases
+      summary: Managed Databases List by Engine
+      operationId: getDatabasesMySQLInstances
+      servers:
+      - url: https://api.linode.com/v4
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: mysql-list
+      x-linode-grant: unrestricted only
+      description: |
+        Display all accessible Managed MySQL Databases on your Account.
+
+        Only unrestricted Users can access this command, and have access regardless of the acting token's OAuth scopes.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - databases:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of all accessible Managed Databases for the specified engine.
+          content:
+            application/json:
+              schema:
+                x-linode-ref-meta:
+                    '#/components/schemas/DatabaseMongoDBData':
+                      name: MongoDB
+                    '#/components/schemas/DatabaseMySQLData':
+                      name: MySQL
+                type: object
+                properties:
+                  pages:
+                    type: integer
+                    readOnly: true
+                    description: The total number of [pages](/docs/api/#pagination).
+                    example: 1
+                  page:
+                    type: integer
+                    readOnly: true
+                    description: The current [page](/docs/api/#pagination).
+                    example: 1
+                  results:
+                    type: integer
+                    readOnly: true
+                    description: The total number of results.
+                    example: 1
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/DatabaseMongoDBData'
+                      - $ref: '#/components/schemas/DatabaseMySQLData'
   /databases/engines:
     x-linode-cli-command: databases
     get:
@@ -3140,7 +3203,7 @@ paths:
     get:
       tags:
       - Databases
-      summary: Managed Databases List
+      summary: Managed Databases List All
       operationId: getDatabasesInstances
       servers:
       - url: https://api.linode.com/v4
@@ -3674,6 +3737,44 @@ paths:
       - lang: CLI
         source: >
           linode-cli databases mysql-backup-view 123 456
+    delete:
+      tags:
+      - Databases
+      summary: Managed MySQL Database Backup Delete
+      operationId: deleteDatabaseMySQLInstanceBackup
+      servers:
+      - url: https://api.linode.com/v4
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: mysql-backup-delete
+      x-linode-grant: unrestricted only
+      description: |
+        Delete a single backup for an accessible Managed MySQL Database.
+
+        Requires `read_write` access to the Database.
+
+        The Database must not be provisioning to perform this command.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - databases:read_write
+      responses:
+        '200':
+          description: Request to delete Databse backup successful.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/databases/mysql/instances/123/backups/456
+      - lang: CLI
+        source: >
+          linode-cli databases mysql-backup-delete 123 456
   /databases/mysql/instances/{instanceId}/backups/{backupId}/restore:
     x-linode-cli-command: databases
     parameters:
@@ -17922,6 +18023,133 @@ components:
           description: The Managed Database engine version.
           x-linode-filterable: true
           x-linode-cli-display: 3
+    DatabaseMongoDB:
+      type: object
+      description: Managed MongoDB Databases object.
+      properties:
+        id:
+          $ref: '#/components/schemas/Database/properties/id'
+          x-linode-cli-display: 1
+        label:
+          $ref: '#/components/schemas/Database/properties/label'
+          x-linode-cli-display: 2
+        type:
+          $ref: '#/components/schemas/Database/properties/type'
+          x-linode-cli-display: 4
+        engine:
+          type: string
+          description: The Managed Database engine type.
+          example: mysql
+          x-linode-filterable: true
+          x-linode-cli-display: 6
+          readOnly: true
+        version:
+          type: string
+          description: The Managed Database engine version.
+          example: "8.0.26"
+          x-linode-filterable: true
+          x-linode-cli-display: 7
+          readOnly: true
+        region:
+          $ref: '#/components/schemas/Database/properties/region'
+          x-linode-cli-display: 3
+        status:
+          $ref: '#/components/schemas/Database/properties/status'
+          x-linode-cli-display: 100
+          x-linode-cli-color:
+            provisioning: yellow
+            active: green
+            resuming: yellow
+            restoring: yellow
+            failed: red
+            degraded: red
+            default_: white
+        encrypted:
+          $ref: '#/components/schemas/Database/properties/encrypted'
+        allow_list:
+          $ref: '#/components/schemas/Database/properties/allow_list'
+        cluster_size:
+          $ref: '#/components/schemas/Database/properties/cluster_size'
+          x-linode-cli-display: 5
+        hosts:
+          $ref: '#/components/schemas/Database/properties/hosts'
+        ssl_connection:
+          type: boolean
+          default: false
+          example: true
+          description: |
+            Whether to require SSL credentials to establish a connection to the Managed Database. Defaults to `false`.
+
+            Use the **Managed MySQL Database Credentials View** ([GET /databases/mysql/instances/{instanceId}/credentials](/docs/api/databases/#managed-mysql-database-credentials-view)) command for access information.
+        replication_type:
+          type: string
+          enum:
+          - none
+          - asynch
+          - semi_synch
+          example: semi_synch
+          description: |
+            The replication method used for the Managed Database.
+
+            Defaults to `none` for a single cluster and `semi_synch` for a high availability cluster.
+
+            Must be `none` for a single node cluster.
+
+            Must be `asynch` or `semi_synch` for a high availability cluster.
+          x-linode-cli-display: 99
+        port:
+          type: integer
+          description: The access port for this Managed Database.
+          example: 3306
+          x-linode-cli-display: 98
+        created:
+          $ref: '#/components/schemas/Database/properties/created'
+        updated:
+          $ref: '#/components/schemas/Database/properties/updated'
+        updates:
+          type: object
+          description: Configuration settings for automated patch update maintenance for the Managed Database.
+          properties:
+            frequency:
+              type: string
+              enum:
+              - weekly
+              - monthly
+              description: Whether maintenance occurs on a weekly or monthly basis.
+              example:
+            duration:
+              type: integer
+              minimum: 1
+              maximum: 3
+              description: The maximum maintenance window time in hours.
+              example: 3
+            hour_of_day:
+              type: integer
+              minimum: 0
+              maximum: 23
+              description: The hour to begin maintenance based in UTC time.
+              example: 0
+            day_of_week:
+              type: integer
+              minimum: 1
+              maximum: 7
+              description: The day to perform maintenance. 1=Monday, 2=Tuesday, etc.
+              example: 1
+            week_of_month:
+              type: integer
+              minimum: 1
+              maximum: 4
+              description: |
+                The week of the month to perform `monthly` frequency updates.
+
+                * Required for `monthly` frequency updates.
+
+                * Must be `null` for `weekly` frequency updates.
+              example: 1
+    DatabaseMongoDBData:
+      type: array
+      items:
+        $ref: '#/components/schemas/DatabaseMongoDB'
     DatabaseMySQL:
       type: object
       description: Managed MySQL Databases object.
@@ -18045,6 +18273,10 @@ components:
 
                 * Must be `null` for `weekly` frequency updates.
               example: 1
+    DatabaseMySQLData:
+      type: array
+      items:
+        $ref: '#/components/schemas/DatabaseMySQL'
     DatabaseMySQLRequest:
       type: object
       description: Managed MySQL Database request object.
