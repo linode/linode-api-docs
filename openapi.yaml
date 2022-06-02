@@ -3674,6 +3674,44 @@ paths:
       - lang: CLI
         source: >
           linode-cli databases mysql-backup-view 123 456
+    delete:
+      tags:
+      - Databases
+      summary: Managed MySQL Database Backup Delete
+      operationId: deleteDatabaseMySQLInstanceBackup
+      servers:
+      - url: https://api.linode.com/v4
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: mysql-backup-delete
+      x-linode-grant: unrestricted only
+      description: |
+        Delete a single backup for an accessible Managed MySQL Database.
+
+        Requires `read_write` access to the Database.
+
+        The Database must not be provisioning to perform this command.
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - databases:read_write
+      responses:
+        '200':
+          description: Request to delete Databse backup successful.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/databases/mysql/instances/123/backups/456
+      - lang: CLI
+        source: >
+          linode-cli databases mysql-backup-delete 123 456
   /databases/mysql/instances/{instanceId}/backups/{backupId}/restore:
     x-linode-cli-command: databases
     parameters:
