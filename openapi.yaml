@@ -3701,7 +3701,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Request to delete Databse backup successful.
+          description: Request to delete Database backup successful.
           content:
             application/json:
               schema:
@@ -4475,7 +4475,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Request to delete Databse backup successful.
+          description: Request to delete Database backup successful.
           content:
             application/json:
               schema:
@@ -5251,7 +5251,7 @@ paths:
         - databases:read_write
       responses:
         '200':
-          description: Request to delete Databse backup successful.
+          description: Request to delete Database backup successful.
           content:
             application/json:
               schema:
@@ -19920,17 +19920,17 @@ components:
           type: string
           enum:
           - none
-          - synch
           - asynch
+          - semi_synch
           example: semi_synch
           description: |
             The replication method used for the Managed Database.
 
-            Defaults to `none` for a single node cluster and `asynch` for a high availability cluster.
+            Defaults to `none` for a single cluster and `semi_synch` for a high availability cluster.
 
             Must be `none` for a single node cluster.
 
-            Must be `asynch` or `synch` for a high availability cluster.
+            Must be `asynch` or `semi_synch` for a high availability cluster.
           x-linode-cli-display: 99
         replication_commit_type:
           type: string
@@ -19947,7 +19947,7 @@ components:
 
             Must be `local` or `off` for the `asynch` replication type.
 
-            Must be `on`, `remote_write`, or `remote_apply` for the `synch` replication type.
+            Must be `on`, `remote_write`, or `remote_apply` for the `semi_synch` replication type.
           x-linode-cli-display: 100
         port:
           type: integer
