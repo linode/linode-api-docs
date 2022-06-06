@@ -19680,7 +19680,7 @@ components:
           description: |
             The type of storage engine for this Database.
 
-            **Note:** MMAPV1 is deprecated from MongoDB version 4.0.
+            **Note:** MMAPV1 is not available for MongoDB versions 4.0 and above.
         port:
           type: integer
           description: The access port for this Managed Database.
