@@ -3195,6 +3195,9 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mongodb-list
       x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
       description: |
         Display all accessible Managed MongoDB Databases.
       security:
@@ -3511,6 +3514,9 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mongodb-backups-list
       x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
       description: |
         Display all backups for an accessible Managed MongoDB Database.
 
@@ -3969,6 +3975,9 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-list
       x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
       description: |
         Display all accessible Managed MySQL Databases.
       security:
@@ -4279,6 +4288,9 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backups-list
       x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
       description: |
         Display all backups for an accessible Managed MySQL Database.
 
@@ -4737,6 +4749,9 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: postgresql-list
       x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
       description: |
         Display all accessible Managed PostgreSQL Databases.
       security:
@@ -5049,6 +5064,9 @@ paths:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: postgresql-backups-list
       x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
       description: |
         Display all backups for an accessible Managed PostgreSQL Database.
 
