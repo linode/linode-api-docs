@@ -469,8 +469,7 @@ paths:
                 "last_name": "Smith",
                 "phone": "555-555-1212",
                 "state": "PA",
-                "zip": 19102,
-                }
+                "zip": "19102",
               }' \
               https://api.linode.com/v4/account
       - lang: CLI
