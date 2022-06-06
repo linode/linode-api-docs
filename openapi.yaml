@@ -11362,7 +11362,7 @@ paths:
                   }
                 ]
               }' \
-              https://api.linode.com/v4/networking/ipvs/assign
+              https://api.linode.com/v4/networking/ips/assign
       - lang: CLI
         source: >
           linode-cli networking ip-assign \
