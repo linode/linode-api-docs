@@ -19478,9 +19478,8 @@ components:
               minimum: 1
               maximum: 4
               nullable: true
-              default: "null"
               description: |
-                The week of the month to perform `monthly` frequency updates.
+                The week of the month to perform `monthly` frequency updates. Defaults to `null`.
 
                 * Required for `monthly` frequency updates.
 
