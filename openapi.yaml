@@ -469,8 +469,7 @@ paths:
                 "last_name": "Smith",
                 "phone": "555-555-1212",
                 "state": "PA",
-                "zip": 19102,
-                }
+                "zip": "19102",
               }' \
               https://api.linode.com/v4/account
       - lang: CLI
@@ -12951,7 +12950,7 @@ paths:
                   }
                 ]
               }' \
-              https://api.linode.com/v4/networking/ipvs/assign
+              https://api.linode.com/v4/networking/ips/assign
       - lang: CLI
         source: >
           linode-cli networking ip-assign \
@@ -21595,6 +21594,21 @@ components:
           description: The amount of tax levied on the Invoice in US Dollars.
           example: 12.25
           x-linode-cli-display: 5
+        tax_summary:
+          type: array
+          readOnly: true
+          description: The amount of tax broken down into subtotals by source.
+          items:
+            type: object
+            properties:
+              tax:
+                type: number
+                description: The amount of tax subtotal attributable to this source.
+                example: 12.25
+              name:
+                type: string
+                description: The source of this tax subtotal.
+                example: PA STATE TAX
         total:
           type: number
           readOnly: true
@@ -26177,13 +26191,10 @@ components:
               * `active` - the Volume is online and available for use.
               * `resizing` - the Volume is in the process of upgrading
                 its current capacity.
-              * `contact_support` - there is a problem with your Volume. Please
-                [open a Support Ticket](/docs/api/support/#support-ticket-open) to resolve the issue.
           enum:
           - creating
           - active
           - resizing
-          - contact_support
           example: active
           readOnly: true
           x-linode-cli-display: 3
