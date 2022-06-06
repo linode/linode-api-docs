@@ -3248,7 +3248,6 @@ paths:
 
         * IP addresses on this list can access the Managed Database. All other sources are blocked.
         * Entering an empty array (`[]`) blocks all connections (both public and private) to the Managed Database.
-        * **Note**: Updates to the `allow_list` may take a short period of time to complete, making this command inappropriate for rapid successive updates to this property.
 
         All Managed Databases include automatic, daily backups. Up to seven backups are automatically stored for each Managed Database, providing restore points for each day of the past week.
 
@@ -4028,7 +4027,6 @@ paths:
 
         * IP addresses on this list can access the Managed Database. All other sources are blocked.
         * Entering an empty array (`[]`) blocks all connections (both public and private) to the Managed Database.
-        * **Note**: Updates to the `allow_list` may take a short period of time to complete, making this command inappropriate for rapid successive updates to this property.
 
         All Managed Databases include automatic, daily backups. Up to seven backups are automatically stored for each Managed Database, providing restore points for each day of the past week.
 
@@ -4802,7 +4800,6 @@ paths:
 
         * IP addresses on this list can access the Managed Database. All other sources are blocked.
         * Entering an empty array (`[]`) blocks all connections (both public and private) to the Managed Database.
-        * **Note**: Updates to the `allow_list` may take a short period of time to complete, making this command inappropriate for rapid successive updates to this property.
 
         All Managed Databases include automatic, daily backups. Up to seven backups are automatically stored for each Managed Database, providing restore points for each day of the past week.
 
