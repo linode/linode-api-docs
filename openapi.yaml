@@ -17810,6 +17810,7 @@ components:
           - failed
           - degraded
           - updating
+          - backing_up
           description: The operating status of the Managed Database.
           example: active
           x-linode-filterable: true
@@ -17998,6 +17999,7 @@ components:
             restoring: yellow
             failed: red
             degraded: red
+            default_: white
         encrypted:
           $ref: '#/components/schemas/Database/properties/encrypted'
         allow_list:
@@ -18743,6 +18745,7 @@ components:
             failed: red
             pending: yellow
             stale: red
+            default_: white
           type: string
           enum:
           - accepted
@@ -24110,6 +24113,7 @@ components:
             failed: red
             pending: yellow
             stale: red
+            default_: white
           type: string
           enum:
           - accepted
