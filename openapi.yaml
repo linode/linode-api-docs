@@ -469,14 +469,25 @@ paths:
                 "last_name": "Smith",
                 "phone": "555-555-1212",
                 "state": "PA",
+                "tax_id": "ATU99999999",
                 "zip": "19102",
               }' \
               https://api.linode.com/v4/account
       - lang: CLI
         source: >
           linode-cli account update \
+            --address_1 "123 Main St." \
+            --address_2 "Suite 101" \
+            --city Philadelphia \
+            --company My Company \ LLC \
+            --country US \
+            --email jsmith@mycompany.com \
             --first_name John \
-            --last_name Smith
+            --last_name Smith \
+            --phone 555-555-1212 \
+            --state PA \
+            --tax_id ATU99999999 \
+            --zip 19102
   /account/cancel:
     x-linode-cli-command: account
     post:
