@@ -475,7 +475,7 @@ paths:
                 "phone": "555-555-1212",
                 "state": "PA",
                 "tax_id": "ATU99999999",
-                "zip": "19102",
+                "zip": "19102"
               }' \
               https://api.linode.com/v4/account
       - lang: CLI
