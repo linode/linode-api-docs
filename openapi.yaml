@@ -19524,7 +19524,11 @@ components:
           x-linode-cli-display: 3
         label:
           type: string
-          description: The database backup's label, for display purposes only.
+          maxLength: 30
+          description: |
+            The database backup's label, for display purposes only.
+
+            Must include only ASCII letters or numbers.
           example: Scheduled - 02/04/22 11:11 UTC-XcCRmI
           x-linode-cli-display: 2
         created:
