@@ -19026,7 +19026,7 @@ components:
           description: >
             The tax identification number associated with this Account,
             for tax calculations in some countries.
-            If you do not live in a country that collects tax, this should be `null`.
+            If you do not live in a country that collects tax, this should be an empty string (`""`).
           maxLength: 25
           example: ATU99999999
         euuid:
