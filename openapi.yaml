@@ -438,7 +438,12 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: Update contact and billing information.
+        description: |
+          Update contact and billing information.
+
+          Account properties that are excluded from a request remain unchanged.
+
+          When updating an Account's `country` to "US", an error is returned if the Account's `zip` is not a valid US zip code.
         required: true
         content:
           application/json:
