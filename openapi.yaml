@@ -438,7 +438,12 @@ paths:
       - oauth:
         - account:read_write
       requestBody:
-        description: Update contact and billing information.
+        description: |
+          Update contact and billing information.
+
+          Account properties that are excluded from a request remain unchanged.
+
+          When updating an Account's `country` to "US", an error is returned if the Account's `zip` is not a valid US zip code.
         required: true
         content:
           application/json:
@@ -469,14 +474,25 @@ paths:
                 "last_name": "Smith",
                 "phone": "555-555-1212",
                 "state": "PA",
-                "zip": "19102",
+                "tax_id": "ATU99999999",
+                "zip": "19102"
               }' \
               https://api.linode.com/v4/account
       - lang: CLI
         source: >
           linode-cli account update \
+            --address_1 "123 Main St." \
+            --address_2 "Suite 101" \
+            --city Philadelphia \
+            --company My Company \ LLC \
+            --country US \
+            --email jsmith@mycompany.com \
             --first_name John \
-            --last_name Smith
+            --last_name Smith \
+            --phone 555-555-1212 \
+            --state PA \
+            --tax_id ATU99999999 \
+            --zip 19102
   /account/cancel:
     x-linode-cli-command: account
     post:
@@ -18914,6 +18930,7 @@ components:
       properties:
         active_promotions:
           type: array
+          readOnly: true
           items:
             $ref: '#/components/schemas/Promotion'
         active_since:
