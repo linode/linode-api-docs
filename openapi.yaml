@@ -19484,7 +19484,7 @@ components:
               type: integer
               minimum: 1
               maximum: 7
-              description: The day to perform maintenance. 1=Monday, 2=Tuesday, etc.
+              description: The day to perform maintenance. 1=Sunday, 2=Monday, etc.
               example: 1
             week_of_month:
               type: integer
