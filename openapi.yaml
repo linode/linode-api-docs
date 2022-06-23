@@ -17474,7 +17474,7 @@ paths:
         Delete the verified phone number for the User making this request.
 
         Use this command to opt out of SMS messages for the requesting User after a phone number has been verified with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
-      operationId: deleteProfilePhone
+      operationId: deleteProfilePhoneNumber
       x-linode-cli-command: phone-delete
       security:
       - personalAccessToken: []
@@ -17515,7 +17515,7 @@ paths:
         * Subsequent requests made prior to code expiration result in sending the same code.
 
         Once a verification code is received, verify your phone number with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
-      operationId: sendProfilePhoneVerificationCode
+      operationId: postProfilePhoneNumber
       x-linode-cli-command: phone-code-send
       security:
       - personalAccessToken: []
@@ -17580,7 +17580,7 @@ paths:
         * Only the same User that made the verification code request can use that code with this command.
 
         Once completed, the verified phone number is assigned to the User making the request. To change the verified phone number for a User, first use the **Phone Number Delete** ([DELETE /profile/phone-number](/docs/api/profile/#phone-number-delete)) command, then begin the verification process again with the **Phone Verification Code Send** ([POST /profile/phone-number](/docs/api/profile/#phone-number-verification-code-send)) command.
-      operationId: checkProfilePhoneVerificationCode
+      operationId: postProfilePhoneNumberVerify
       x-linode-cli-command: phone-verify
       security:
       - personalAccessToken: []
