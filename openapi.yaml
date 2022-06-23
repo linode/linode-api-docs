@@ -17256,6 +17256,93 @@ paths:
       - lang: CLI
         source: >
           linode-cli profile device-revoke 123
+  /profile/security-questions:
+    x-linode-cli-command: security-questions
+    get:
+      x-linode-grant: read_only
+      tags:
+      - Profile
+      summary: Security Questions List
+      description: >
+        Returns a collection of security questions and their responses, if any, for your User Profile.
+      operationId: getSecurityQuestions
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a list of security questions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityQuestionsGet'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/security-questions
+      - lang: CLI
+        source: >
+          linode-cli security-questions list
+    post:
+      tags:
+      - Profile
+      summary: Security Questions Answer
+      description: |
+        Adds security question responses for your User Profile.
+
+        Requires exactly three unique questions.
+
+        Previous responses are overwritten if answered or reset to `null` if unanswered.
+      operationId: postSecurityQuestions
+      x-linode-cli-action: answer
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: Answer Security Questions
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityQuestionsPost'
+      responses:
+        '200':
+          description: Security Questions answered successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityQuestionsPost'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "security_questions": [
+                      {
+                          "question_id": 1,
+                          "response": "Gotham City"
+                      },
+                      {
+                          "question_id": 2,
+                          "response": "Gotham City"
+                      },
+                      {
+                          "question_id": 11,
+                          "response": "Gotham City"
+                      }
+                  ]
+              }' \
+              https://api.linode.com/v4/profile/security-questions
   /profile/sshkeys:
     x-linode-cli-command: sshkeys
     get:
@@ -25992,6 +26079,63 @@ components:
             The last IP Address to successfully authenticate with this TrustedDevice.
           example: 12.34.56.78
           readOnly: true
+    SecurityQuestion:
+      type: object
+      description: Single security question and response object.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: The ID representing the security question.
+          example: 1
+        question:
+          type: string
+          readOnly: true
+          description: The security question.
+          example: "In what city were you born?"
+        question_id:
+          type: integer
+          description: The ID representing the security question.
+          example: 1
+        response:
+          type: string
+          minLength: 3
+          maxLength: 17
+          description: |
+            The security question response.
+          example: "Gotham City"
+    SecurityQuestionsGet:
+      type: object
+      description: Security questions and responses object for GET operation.
+      properties:
+        security_questions:
+          type: array
+          items:
+            type: object
+            description: Single security question and response object for GET operation.
+            properties:
+              id:
+                $ref: '#/components/schemas/SecurityQuestion/properties/id'
+              question:
+                $ref: '#/components/schemas/SecurityQuestion/properties/question'
+              response:
+                $ref: '#/components/schemas/SecurityQuestion/properties/response'
+    SecurityQuestionsPost:
+      type: object
+      description: Security questions and responses object for POST operation.
+      properties:
+        security_questions:
+          type: array
+          items:
+            type: object
+            description: Single security question and response object for POST operation.
+            properties:
+              question_id:
+                $ref: '#/components/schemas/SecurityQuestion/properties/question_id'
+              response:
+                $ref: '#/components/schemas/SecurityQuestion/properties/response'
+              security_question:
+                $ref: '#/components/schemas/SecurityQuestion/properties/question'
     ServiceTransfer:
       type: object
       description: >
