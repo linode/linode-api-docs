@@ -17464,7 +17464,7 @@ paths:
         source: >
           linode-cli sshkey delete 42
   /profile/phone-number:
-    x-linode-cli-command: profile
+    x-linode-cli-command: phone
     delete:
       x-linode-grant: read_write
       tags:
@@ -17475,7 +17475,7 @@ paths:
 
         Use this command to opt out of SMS messages for the requesting User after a phone number has been verified with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
       operationId: deleteProfilePhoneNumber
-      x-linode-cli-command: phone-delete
+      x-linode-cli-command: delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -17499,7 +17499,7 @@ paths:
             https://api.linode.com/v4/profile/phone-number
       - lang: CLI
         source: >
-          linode-cli profile phone-delete
+          linode-cli phone delete
     post:
       x-linode-grant: read_write
       tags:
@@ -17516,7 +17516,7 @@ paths:
 
         Once a verification code is received, verify your phone number with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
       operationId: postProfilePhoneNumber
-      x-linode-cli-command: phone-code-send
+      x-linode-cli-command: sms-code-send
       security:
       - personalAccessToken: []
       - oauth:
@@ -17562,11 +17562,11 @@ paths:
             https://api.linode.com/v4/profile/phone-number
       - lang: CLI
         source: >
-          linode-cli profile phone-code-send \
+          linode-cli phone sms-code-send \
             --iso-code US \
             --phone-number 555-555-5555
   /profile/phone-number/verify:
-    x-linode-cli-command: profile
+    x-linode-cli-command: phone
     post:
       x-linode-grant: read_write
       tags:
@@ -17581,7 +17581,7 @@ paths:
 
         Once completed, the verified phone number is assigned to the User making the request. To change the verified phone number for a User, first use the **Phone Number Delete** ([DELETE /profile/phone-number](/docs/api/profile/#phone-number-delete)) command, then begin the verification process again with the **Phone Verification Code Send** ([POST /profile/phone-number](/docs/api/profile/#phone-number-verification-code-send)) command.
       operationId: postProfilePhoneNumberVerify
-      x-linode-cli-command: phone-verify
+      x-linode-cli-command: verify
       security:
       - personalAccessToken: []
       - oauth:
@@ -17620,7 +17620,7 @@ paths:
             https://api.linode.com/v4/profile/phone-number/verify
       - lang: CLI
         source: >
-          linode-cli profile phone-verify \
+          linode-cli phone verify \
             --otp_code 123456
   /profile/preferences:
     x-linode-cli-command: profile
