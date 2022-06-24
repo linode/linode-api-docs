@@ -16730,12 +16730,12 @@ paths:
       tags:
       - Profile
       summary: Two Factor Secret Create
-      description: >
-        Generates a Two Factor secret for your User. TFA will
-        not be enabled until you have successfully confirmed the code you
-        were given with [tfa-enable-confirm](/docs/api/profile/#two-factor-secret-create) (see below).
-        Once enabled, logins from untrusted computers will be required to provide
+      description: |
+        Generates a Two Factor secret for your User. To enable TFA for your User, enter the secret obtained from this command with the **Two Factor Authentication Confirm/Enable** ([POST /profile/tfa-enable-confirm](/docs/api/profile/#two-factor-authentication-confirmenable)) command.
+        Once enabled, logins from untrusted computers are required to provide
         a TFA code before they are successful.
+
+        **Note**: Before you can enable TFA, security questions must be answered for your User by accessing the **Security Questions Answer** ([POST /profile/security-questions](/docs/api/profile/#security-questions-answer)) command.
       operationId: tfaEnable
       x-linode-cli-action: tfa-enable
       security:
@@ -17294,11 +17294,13 @@ paths:
       - Profile
       summary: Security Questions Answer
       description: |
-        Adds security question responses for your User Profile.
+        Adds security question responses for your User.
 
         Requires exactly three unique questions.
 
         Previous responses are overwritten if answered or reset to `null` if unanswered.
+
+        **Note**: Security questions must be answered for your User prior to accessing the **Two Factor Secret Create** ([POST /profile/tfa-enable](/docs/api/profile/#two-factor-secret-create)) command.
       operationId: postSecurityQuestions
       x-linode-cli-action: answer
       x-linode-cli-skip: true
