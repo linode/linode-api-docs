@@ -17260,6 +17260,8 @@ paths:
     x-linode-cli-command: security-questions
     get:
       x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4
       tags:
       - Profile
       summary: Security Questions List
@@ -17276,6 +17278,16 @@ paths:
           description: Returns a list of security questions.
           content:
             application/json:
+              x-linode-cli-nested-list: security_questions
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  security_questions.id:
+                    x-linode-cli-display: 1
+                  security_questions.question:
+                    x-linode-cli-display: 2
+                  security_questions.response:
+                    x-linode-cli-display: 3
               schema:
                 $ref: '#/components/schemas/SecurityQuestionsGet'
         default:
@@ -17332,15 +17344,15 @@ paths:
                   "security_questions": [
                       {
                           "question_id": 1,
-                          "response": "Gotham City"
+                          "response": "secret answer 1"
                       },
                       {
                           "question_id": 2,
-                          "response": "Gotham City"
+                          "response": "secret answer 2"
                       },
                       {
                           "question_id": 11,
-                          "response": "Gotham City"
+                          "response": "secret answer 3"
                       }
                   ]
               }' \
