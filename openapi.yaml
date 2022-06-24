@@ -16730,12 +16730,12 @@ paths:
       tags:
       - Profile
       summary: Two Factor Secret Create
-      description: >
-        Generates a Two Factor secret for your User. TFA will
-        not be enabled until you have successfully confirmed the code you
-        were given with [tfa-enable-confirm](/docs/api/profile/#two-factor-secret-create) (see below).
-        Once enabled, logins from untrusted computers will be required to provide
+      description: |
+        Generates a Two Factor secret for your User. To enable TFA for your User, enter the secret obtained from this command with the **Two Factor Authentication Confirm/Enable** ([POST /profile/tfa-enable-confirm](/docs/api/profile/#two-factor-authentication-confirmenable)) command.
+        Once enabled, logins from untrusted computers are required to provide
         a TFA code before they are successful.
+
+        **Note**: Before you can enable TFA, security questions must be answered for your User by accessing the **Security Questions Answer** ([POST /profile/security-questions](/docs/api/profile/#security-questions-answer)) command.
       operationId: tfaEnable
       x-linode-cli-action: tfa-enable
       security:
@@ -17256,6 +17256,107 @@ paths:
       - lang: CLI
         source: >
           linode-cli profile device-revoke 123
+  /profile/security-questions:
+    x-linode-cli-command: security-questions
+    get:
+      x-linode-grant: read_only
+      servers:
+      - url: https://api.linode.com/v4
+      tags:
+      - Profile
+      summary: Security Questions List
+      description: >
+        Returns a collection of security questions and their responses, if any, for your User Profile.
+      operationId: getSecurityQuestions
+      x-linode-cli-action: list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      responses:
+        '200':
+          description: Returns a list of security questions.
+          content:
+            application/json:
+              x-linode-cli-nested-list: security_questions
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  security_questions.id:
+                    x-linode-cli-display: 1
+                  security_questions.question:
+                    x-linode-cli-display: 2
+                  security_questions.response:
+                    x-linode-cli-display: 3
+              schema:
+                $ref: '#/components/schemas/SecurityQuestionsGet'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/profile/security-questions
+      - lang: CLI
+        source: >
+          linode-cli security-questions list
+    post:
+      tags:
+      - Profile
+      summary: Security Questions Answer
+      description: |
+        Adds security question responses for your User.
+
+        Requires exactly three unique questions.
+
+        Previous responses are overwritten if answered or reset to `null` if unanswered.
+
+        **Note**: Security questions must be answered for your User prior to accessing the **Two Factor Secret Create** ([POST /profile/tfa-enable](/docs/api/profile/#two-factor-secret-create)) command.
+      operationId: postSecurityQuestions
+      x-linode-cli-action: answer
+      x-linode-cli-skip: true
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      requestBody:
+        description: Answer Security Questions
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SecurityQuestionsPost'
+      responses:
+        '200':
+          description: Security Questions answered successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SecurityQuestionsPost'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "security_questions": [
+                      {
+                          "question_id": 1,
+                          "response": "secret answer 1"
+                      },
+                      {
+                          "question_id": 2,
+                          "response": "secret answer 2"
+                      },
+                      {
+                          "question_id": 11,
+                          "response": "secret answer 3"
+                      }
+                  ]
+              }' \
+              https://api.linode.com/v4/profile/security-questions
   /profile/sshkeys:
     x-linode-cli-command: sshkeys
     get:
@@ -25992,6 +26093,58 @@ components:
             The last IP Address to successfully authenticate with this TrustedDevice.
           example: 12.34.56.78
           readOnly: true
+    SecurityQuestion:
+      type: object
+      description: Single security question and response object.
+      properties:
+        id:
+          type: integer
+          description: The ID representing the security question.
+          example: 1
+        question:
+          type: string
+          readOnly: true
+          description: The security question.
+          example: "In what city were you born?"
+        response:
+          type: string
+          minLength: 3
+          maxLength: 17
+          description: |
+            The security question response.
+          example: "Gotham City"
+    SecurityQuestionsGet:
+      type: object
+      description: Security questions and responses object for GET operation.
+      properties:
+        security_questions:
+          type: array
+          items:
+            type: object
+            description: Single security question and response object for GET operation.
+            properties:
+              id:
+                $ref: '#/components/schemas/SecurityQuestion/properties/id'
+              question:
+                $ref: '#/components/schemas/SecurityQuestion/properties/question'
+              response:
+                $ref: '#/components/schemas/SecurityQuestion/properties/response'
+    SecurityQuestionsPost:
+      type: object
+      description: Security questions and responses object for POST operation.
+      properties:
+        security_questions:
+          type: array
+          items:
+            type: object
+            description: Single security question and response object for POST operation.
+            properties:
+              question_id:
+                $ref: '#/components/schemas/SecurityQuestion/properties/id'
+              response:
+                $ref: '#/components/schemas/SecurityQuestion/properties/response'
+              security_question:
+                $ref: '#/components/schemas/SecurityQuestion/properties/question'
     ServiceTransfer:
       type: object
       description: >
