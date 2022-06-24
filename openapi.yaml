@@ -17494,9 +17494,9 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $TOKEN" \
+            -H "Authorization: Bearer $TOKEN_BBIGGER_DEV" \
             -X DELETE \
-            https://api.linode.com/v4/profile/phone-number
+            https://api.dev.linode.com/v4/profile/phone-number
       - lang: CLI
         source: >
           linode-cli phone delete
@@ -17554,12 +17554,12 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $TOKEN" \
+            -H "Authorization: Bearer $TOKEN_BBIGGER_DEV" \
             -X POST -d '{
               "iso_code": "US",
-              "phone_number": "555-555-5555"
+              "phone_number": "267-273-8229"
             }' \
-            https://api.linode.com/v4/profile/phone-number
+            https://api.dev.linode.com/v4/profile/phone-number
       - lang: CLI
         source: >
           linode-cli phone sms-code-send \
@@ -25217,6 +25217,15 @@ components:
             as necessary.
           example: example-user@gmail.com
           x-linode-cli-display: 2
+        verified_phone_number:
+          type: string
+          format: phone
+          readOnly: true
+          description: |
+            The phone number verified for this Profile with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
+
+            `null` if this Profile has no verified phone number.
+          example: "+5555555555"
         timezone:
           type: string
           description: >
