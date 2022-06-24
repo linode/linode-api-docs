@@ -26099,7 +26099,6 @@ components:
       properties:
         id:
           type: integer
-          readOnly: true
           description: The ID representing the security question.
           example: 1
         question:
