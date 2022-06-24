@@ -26107,10 +26107,6 @@ components:
           readOnly: true
           description: The security question.
           example: "In what city were you born?"
-        question_id:
-          type: integer
-          description: The ID representing the security question.
-          example: 1
         response:
           type: string
           minLength: 3
@@ -26145,7 +26141,7 @@ components:
             description: Single security question and response object for POST operation.
             properties:
               question_id:
-                $ref: '#/components/schemas/SecurityQuestion/properties/question_id'
+                $ref: '#/components/schemas/SecurityQuestion/properties/id'
               response:
                 $ref: '#/components/schemas/SecurityQuestion/properties/response'
               security_question:
