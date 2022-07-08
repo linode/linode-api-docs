@@ -3807,7 +3807,7 @@ paths:
       x-linode-cli-action: mongodb-creds-view
       x-linode-grant: read_only
       description: |
-        Display the the root username and password for an accessible Managed MongoDB Database.
+        Display the root username and password for an accessible Managed MongoDB Database.
 
         The Database must have an `active` status to perform this command.
       security:
@@ -4580,7 +4580,7 @@ paths:
       x-linode-cli-action: mysql-creds-view
       x-linode-grant: read_only
       description: |
-        Display the the root username and password for an accessible Managed MySQL Database.
+        Display the root username and password for an accessible Managed MySQL Database.
 
         The Database must have an `active` status to perform this command.
       security:
@@ -5355,7 +5355,7 @@ paths:
       x-linode-cli-action: postgresql-creds-view
       x-linode-grant: read_only
       description: |
-        Display the the root username and password for an accessible Managed PostgreSQL Database.
+        Display the root username and password for an accessible Managed PostgreSQL Database.
 
         The Database must have an `active` status to perform this command.
       security:
