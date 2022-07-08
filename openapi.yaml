@@ -17595,9 +17595,9 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $TOKEN_BBIGGER_DEV" \
+            -H "Authorization: Bearer $TOKEN" \
             -X DELETE \
-            https://api.dev.linode.com/v4/profile/phone-number
+            https://api.linode.com/v4/profile/phone-number
       - lang: CLI
         source: >
           linode-cli phone delete
@@ -17655,12 +17655,12 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $TOKEN_BBIGGER_DEV" \
+            -H "Authorization: Bearer $TOKEN" \
             -X POST -d '{
               "iso_code": "US",
-              "phone_number": "267-273-8229"
+              "phone_number": "555-555-5555"
             }' \
-            https://api.dev.linode.com/v4/profile/phone-number
+            https://api.linode.com/v4/profile/phone-number
       - lang: CLI
         source: >
           linode-cli phone sms-code-send \
