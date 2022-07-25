@@ -5548,7 +5548,7 @@ paths:
           description: Returns a paginated list of all Managed Database types.
           content:
             application/json:
-              x-linode-cli-nested-list: cluster_size
+              x-linode-cli-nested-list: engines.mysql, engines.postgresql, engines.mongodb
               x-linode-cli-use-schema:
                 type: object
                 properties:
@@ -5556,12 +5556,18 @@ paths:
                     x-linode-cli-display: 1
                   label:
                     x-linode-cli-display: 2
-                  cluster_size.quantity:
-                    x-linode-cli-display: 3
-                  cluster_size.price.hourly:
-                    x-linode-cli-display: 4
-                  cluster_size.price.monthly:
-                    x-linode-cli-display: 5
+                  _split:
+                    x-linode-cli-display: 2.5
+                  engines:
+                    properties:
+                       quantity:
+                        x-linode-cli-display: 3
+                       price:
+                         properties:
+                           hourly:
+                             x-linode-cli-display: 4
+                           monthly:
+                             x-linode-cli-display: 5
               schema:
                 allOf:
                 - $ref: '#/components/schemas/PaginationEnvelope'
@@ -5608,7 +5614,7 @@ paths:
           description: Returns a single Managed Database type.
           content:
             application/json:
-              x-linode-cli-nested-list: cluster_size
+              x-linode-cli-nested-list: engines.mysql, engines.postgresql, engines.mongodb
               x-linode-cli-use-schema:
                 type: object
                 properties:
@@ -5616,12 +5622,18 @@ paths:
                     x-linode-cli-display: 1
                   label:
                     x-linode-cli-display: 2
-                  cluster_size.quantity:
-                    x-linode-cli-display: 3
-                  cluster_size.price.hourly:
-                    x-linode-cli-display: 4
-                  cluster_size.price.monthly:
-                    x-linode-cli-display: 5
+                  _split:
+                    x-linode-cli-display: 2.5
+                  engines:
+                    properties:
+                       quantity:
+                        x-linode-cli-display: 3
+                       price:
+                         properties:
+                           hourly:
+                             x-linode-cli-display: 4
+                           monthly:
+                             x-linode-cli-display: 5
               schema:
                 $ref: '#/components/schemas/DatabaseType'
         default:
