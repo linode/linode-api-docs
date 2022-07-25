@@ -12894,6 +12894,8 @@ paths:
         * Linodes may have no more than one assigned private IPv4 address.
         * Linodes may have no more than one assigned IPv6 range.
         * [Open a Support Ticket](/docs/api/support/#support-ticket-open) to request additional IPv4 addresses or IPv6 ranges.
+
+        **Note**: Removing an IP address that has been set as a Managed Linode's `ssh.ip` causes the Managed Linode's SSH access settings to reset to their default values. To view and configure Managed Linode SSH settings, use the **Linode's Managed Settings View** ([GET /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-view)) and **Linode's Managed Settings Update** ([PUT /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-update)) commands.
       operationId: assignIPs
       x-linode-cli-action: ip-assign
       security:
@@ -23958,29 +23960,41 @@ components:
                 If true, Linode special forces may access this Linode over
                 ssh to respond to Issues.
               example: true
+              default: true
             user:
               type: string
               minLength: 0
               maxLength: 32
-              description: >
-                The user Linode's special forces should use when accessing this
+              description: |
+                The specific user, if any, Linode's special forces should use when accessing this
                 Linode to respond to an issue.
+
+                The default `null` value corresponds to the root user.
               example: linode
+              default: null
+              nullable: true
             ip:
               type: string
               format: ip
-              description: >
+              description: |
                 The IP Linode special forces should use to access this Linode
                 when responding to an Issue.
-              example: 12.34.56.78
+
+                By default, any of a Linode's IP addresses can be used for incident response access.
+              example: "12.34.56.78"
+              default: any
             port:
               type: integer
               minimum: 1
               maximum: 65535
-              description: >
+              description: |
                 The port Linode special forces should use to access this Linode
                 over ssh to respond to an Issue.
+
+                The default `null` value corresponds to port 22.
               example: 22
+              nullable: true
+              default: null
     ManagedService:
       type: object
       description: >
