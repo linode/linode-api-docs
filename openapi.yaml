@@ -17698,7 +17698,7 @@ paths:
               properties:
                 otp_code:
                   type: string
-                  description: The one-time, six-digit code received via SMS message after accessing the **Phone Verification Code Send** ([POST /profile/phone-number](/docs/api/profile/#phone-number-verification-code-send)) command.
+                  description: The one-time code received via SMS message after accessing the **Phone Verification Code Send** ([POST /profile/phone-number](/docs/api/profile/#phone-number-verification-code-send)) command.
                   example: "US"
       responses:
         '200':
@@ -25653,9 +25653,11 @@ components:
             This StackScript installs and configures MySQL
         images:
           type: array
-          description: >
+          description: |
             An array of Image IDs. These are the images that can be deployed
             with this Stackscript.
+
+            `any/all` indicates that all available image distributions are accepted.
           items:
             type: string
           example:
