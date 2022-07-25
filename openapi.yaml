@@ -23959,7 +23959,7 @@ components:
 
                 The default `null` value corresponds to the root user.
               example: linode
-              default: none
+              default: null
               nullable: true
             ip:
               type: string
@@ -23982,7 +23982,7 @@ components:
                 The default `null` value corresponds to port 22.
               example: 22
               nullable: true
-              default: none
+              default: null
     ManagedService:
       type: object
       description: >
