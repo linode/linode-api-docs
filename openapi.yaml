@@ -15906,7 +15906,7 @@ paths:
                 expires_in:
                   type: integer
                   minimum: 360
-                  maximum: 68400
+                  maximum: 86400
                   default: 3600
                   description: >
                     How long this signed URL will be valid for, in seconds.  If
