@@ -335,6 +335,9 @@ info:
           ]
         }'
     ```
+    ## Time Values
+
+    All times returned by the API are in UTC, regardless of the timezone configured within your user's profile (see `timezone` property within [Profile View](/docs/api/profile/#profile-view__responses)).
 
     ## Rate Limiting
 
