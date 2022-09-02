@@ -8699,9 +8699,7 @@ paths:
       - Linode Instances
       summary: IPv4 Address Delete
       description: >
-        Deletes a public IPv4 address associated with this Linode. This will
-        fail if it is the Linode's last remaining public IPv4 address. Private
-        IPv4 addresses cannot be removed via this endpoint.
+        Deletes a public or private IPv4 address associated with this Linode. This will fail if it is the Linode's last remaining public IPv4 address.
       operationId: removeLinodeIP
       x-linode-cli-action: ip-delete
       security:
