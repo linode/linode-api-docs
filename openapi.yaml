@@ -341,38 +341,55 @@ info:
 
     ## Rate Limiting
 
-    With the Linode API, you can make up to 1,600 general API requests every two minutes per user as
-    determined by IP address or by OAuth token. Additionally, there are endpoint specific limits defined below.
+    Rate limits on API requests help maintain the health and stability of the Linode API. Accordingly, every endpoint of the Linode API applies a rate limit on a per user basis as determined by OAuth token for authenticated requests or IP address for public endpoints.
+
+    Each rate limit consists of a total number of requests and a time window. For example, if an endpoint has a rate limit of 800 requests per minute, then up to 800 requests over a one minute window are permitted. Subsequent requests to an endpoint after hitting a rate limit return a 429 error. You can successfully remake requests to that endpoint after the rate limit window resets.
+
+    ### Linode APIv4 Rate Limits
+
+    With the Linode API, you can generally make up to 1,600 general API requests every two minutes. Additionally, all endpoints have a rate limit of 800 requests per minute unless otherwise specified below.
 
     **Note:** There may be rate limiting applied at other levels outside of the API, for example, at the load balancer.
 
-    Creating Linodes has a dedicated limit of 10 requests per 30 seconds per user.
-    That endpoint is:
+    Creating Linodes has a dedicated rate limit of 10 requests per 30 seconds. That endpoint is:
 
     * [Linode Create](/docs/api/linode-instances/#linode-create)
 
-    `/stats` endpoints have their own dedicated limits of 100 requests per minute per user.
-    These endpoints are:
+    `/stats` endpoints have their own dedicated rate limits of 100 requests per minute. These endpoints are:
 
     * [View Linode Statistics](/docs/api/linode-instances/#linode-statistics-view)
     * [View Linode Statistics (year/month)](/docs/api/linode-instances/#statistics-yearmonth-view)
     * [View NodeBalancer Statistics](/docs/api/nodebalancers/#nodebalancer-statistics-view)
     * [List Managed Stats](/docs/api/managed/#managed-stats-list)
 
-    Object Storage endpoints have a dedicated limit of 750 requests per second per user.
-    The Object Storage endpoints are:
+    Object Storage endpoints have a dedicated rate limit of 750 requests per second. The Object Storage endpoints are:
 
     * [Object Storage Endpoints](/docs/api/object-storage/)
 
-    Opening Support Tickets has a dedicated limit of 2 requests per minute per user.
-    That endpoint is:
+    Opening Support Tickets has a dedicated rate limit of 2 requests per minute. That endpoint is:
 
     * [Open Support Ticket](/docs/api/support/#support-ticket-open)
 
-    Accepting Service Transfers has a dedicated limit of 2 requests per minute per user.
-    That endpoint is:
+    Accepting Service Transfers has a dedicated rate limit of 2 requests per minute. That endpoint is:
 
     * [Service Transfer Accept](/docs/api/account/#service-transfer-accept)
+
+    All GET requests to endpoints that return a data collection have dedicated rate limits of 100 requests per minute and 10 requests per second.
+
+    ### Rate Limit HTTP Response Headers
+
+    The Linode API includes the following HTTP response headers which are designed to help you avoid hitting rate limits that might disrupt your applications:
+
+    * **X-RateLimit-Limit**: The maximum number of permitted requests during the rate limit window for this endpoint.
+    * **X-RateLimit-Remaining**: The remaining number of permitted requests in the current rate limit window.
+    * **X-RateLimit-Reset**: The time when the current rate limit window rests in UTC epoch seconds.
+    * **Retry-After**: The remaining time in seconds until the current rate limit window resets.
+
+    There are many ways to access header information for your requests, depending on how you are accessing the Linode API. For example, to view HTTP response headers when making requests with `curl`, use the `-i` or `--include` option as follows:
+
+    ```Shell
+    curl -i https://api.linode.com/v4/regions
+    ```
 
     ## CLI (Command Line Interface)
 
