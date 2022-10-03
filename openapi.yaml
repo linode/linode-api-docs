@@ -24298,6 +24298,7 @@ components:
           type: integer
           minimum: 1
           maximum: 65535
+          default: 80
           description: >
             The port this Config is for. These values must be unique across configs
             on a single NodeBalancer (you can't have two configs for port 80, for
@@ -24313,6 +24314,7 @@ components:
           - http
           - https
           - tcp
+          default: http
           description: >
             The protocol this port is configured to serve.
 
@@ -24327,6 +24329,7 @@ components:
           - roundrobin
           - leastconn
           - source
+          default: roundrobin
           description: >
             What algorithm this NodeBalancer should use for routing traffic to backends.
           example: roundrobin
@@ -24337,6 +24340,7 @@ components:
           - none
           - table
           - http_cookie
+          default: none
           description: >
             Controls how session stickiness is handled on this port.
 
@@ -24356,6 +24360,7 @@ components:
           - connection
           - http
           - http_body
+          default: none
           description: >
             The type of check to perform against backends to ensure they are serving
             requests. This is used to determine if backends are up or down.
@@ -24369,20 +24374,27 @@ components:
           example: http_body
         check_interval:
           type: integer
-          description: >
+          description: |
             How often, in seconds, to check that backends are up and serving requests.
+
+            Must be greater than `check_timeout`.
           example: 90
+          default: 31
         check_timeout:
           type: integer
           minimum: 1
           maximum: 30
-          description: >
+          default: 30
+          description: |
             How long, in seconds, to wait for a check attempt before considering it failed.
+
+            Must be less than `check_interval`.
           example: 10
         check_attempts:
           type: integer
           minimum: 1
           maximum: 30
+          default: 3
           description: >
             How many times to attempt a check before considering a backend to be down.
           example: 3
@@ -24402,6 +24414,7 @@ components:
           example: it works
         check_passive:
           type: boolean
+          default: true
           description: >
             If true, any response from this backend with a `5xx` status code will be
             enough for it to be considered unhealthy and taken out of rotation.
@@ -24433,6 +24446,7 @@ components:
           enum:
           - recommended
           - legacy
+          default: recommended
           description: >
             What ciphers to use for SSL connections served by this NodeBalancer.
 
