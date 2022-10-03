@@ -20645,18 +20645,17 @@ components:
             type: string
             format: ip
           description: >
-            The IP addresses representing the master DNS for this Domain. At least one value is
-            required for `type` slave Domains.
+            The IP addresses representing the master DNS for this Domain. At least one value is required for `type` slave Domains. The total combined length of all data within this array cannot exceed 1000 characters.
           example: []
         axfr_ips:
           type: array
           items:
             type: string
             format: ip
-          description: >
-            The list of IPs that may perform a zone transfer for this Domain.
-            This is potentially dangerous, and should be set to an empty list
-            unless you intend to use it.
+          description: |
+            The list of IPs that may perform a zone transfer for this Domain. The total combined length of all data within this array cannot exceed 1000 characters.
+
+            **Note**: This is potentially dangerous, and should be set to an empty list unless you intend to use it.
           example: []
         expire_sec:
           type: integer
