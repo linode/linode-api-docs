@@ -374,8 +374,6 @@ info:
 
     * [Service Transfer Accept](/docs/api/account/#service-transfer-accept)
 
-    All GET requests to endpoints that return a data collection have dedicated rate limits of 100 requests per minute and 10 requests per second.
-
     ### Rate Limit HTTP Response Headers
 
     The Linode API includes the following HTTP response headers which are designed to help you avoid hitting rate limits that might disrupt your applications:
