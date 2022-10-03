@@ -24360,17 +24360,21 @@ components:
           example: http_body
         check_interval:
           type: integer
-          description: >
+          description: |
             How often, in seconds, to check that backends are up and serving requests.
+
+            Must be greater than `check_timeout`.
           example: 90
-          default: 2
+          default: 31
         check_timeout:
           type: integer
           minimum: 1
           maximum: 30
           default: 30
-          description: >
+          description: |
             How long, in seconds, to wait for a check attempt before considering it failed.
+
+            Must be less than `check_interval`.
           example: 10
         check_attempts:
           type: integer
