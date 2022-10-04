@@ -12884,7 +12884,19 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IPAddress'
+              required:
+                - rdns
+              type: object
+              properties:
+                rdns:
+                  type: string
+                  description: >
+                    The reverse DNS assigned to this address. For public IPv4 addresses,
+                    this will be set to a default value provided by Linode if not
+                    explicitly set.
+                  x-linode-cli-display: 4
+                  nullable: true
+                  example: test.example.org
       responses:
         '200':
           description: RDNS set successfully
