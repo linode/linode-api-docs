@@ -13814,7 +13814,13 @@ paths:
                 label:
                   $ref: '#/components/schemas/Firewall/properties/label'
                 status:
-                  $ref: '#/components/schemas/Firewall/properties/status'
+                  type: string
+                  description: The status to be applied to this Firewall.
+                  enum:
+                    - enabled
+                    - disabled
+                  example: enabled
+                  x-linode-cli-display: 3
       responses:
         '200':
           description: Firewall updated successfully.
