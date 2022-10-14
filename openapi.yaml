@@ -20348,11 +20348,11 @@ components:
         replication_commit_type:
           type: string
           enum:
-          - on
-          - local
-          - remote_write
-          - remote_apply
-          - off
+          - 'on'
+          - 'local'
+          - 'remote_write'
+          - 'remote_apply'
+          - 'off'
           default: local
           example: local
           description: |
