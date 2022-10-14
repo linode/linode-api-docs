@@ -20936,7 +20936,7 @@ components:
             `CAA`: The value. For `issue` or `issuewild` tags, the domain of your certificate issuer. For the `iodef`
             tag, a contact or submission URL (http or mailto).
 
-            `PTR`: See our guide on how to [Configure Your Linode for Reverse DNS
+            `PTR`: Required. See our guide on how to [Configure Your Linode for Reverse DNS
             (rDNS)](/docs/guides/configure-your-linode-for-reverse-dns).
 
             With the exception of A, AAAA, and CAA records, this field accepts a trailing period.
