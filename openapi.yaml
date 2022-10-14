@@ -13134,7 +13134,7 @@ paths:
                   "2001:db8:3c4d:15::"
                 ]
               }' \
-              https://api.linode.com/v4beta/networking/ips/share
+              https://api.linode.com/v4/networking/ips/share
       - lang: CLI
         source: >
           linode-cli networking ip-share \
@@ -13279,7 +13279,8 @@ paths:
               -X POST -d '{
                 "linode_id": 123,
                 "ips": [
-                  "12.34.56.78"
+                  "192.0.2.1",
+                  "192.0.2.2"
                 ]
               }' \
               https://api.linode.com/v4/networking/ipv4/share
@@ -13287,7 +13288,8 @@ paths:
         source: >
           linode-cli networking ip-share \
             --linode_id 123 \
-            --ips 12.34.56.78
+            --ips 192.0.2.1 \
+            --ips 192.0.2.2
   /networking/ipv6/pools:
     x-linode-cli-command: networking
     get:
