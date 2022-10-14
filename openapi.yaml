@@ -2716,12 +2716,12 @@ paths:
       tags:
       - Account
       summary: Users List
-      description: >
-        Returns a paginated list of Users on your Account. Users may access all
-        or part of your Account based on their restricted status and grants.  An
-        unrestricted User may access everything on the account, whereas restricted
-        User may only access entities or perform actions they've been given specific
-        grants to.
+      description: |
+        Returns a paginated list of Users on your Account.
+
+        This command can only be accessed by the unrestricted users of an account.
+
+        Users may access all or part of your Account based on their restricted status and grants.  An unrestricted User may access everything on the account, whereas restricted User may only access entities or perform actions they've been given specific grants to.
       operationId: getUsers
       x-linode-cli-action: list
       security:
@@ -2761,10 +2761,11 @@ paths:
       tags:
       - Account
       summary: User Create
-      description: >
+      description: |
         Creates a User on your Account. Once created, a confirmation message containing
         password creation and login instructions is sent to the User's email address.
 
+        This command can only be accessed by the unrestricted users of an account.
 
         The User's account access is determined by whether or not they are restricted,
         and what grants they have been given.
@@ -2824,8 +2825,10 @@ paths:
       tags:
       - Account
       summary: User View
-      description: >
+      description: |
         Returns information about a single User on your Account.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getUser
       x-linode-cli-action: view
       security:
@@ -2854,11 +2857,13 @@ paths:
       tags:
       - Account
       summary: User Update
-      description: >
+      description: |
         Update information about a User on your Account. This can be used to
         change the restricted status of a User. When making a User restricted,
         no grants will be configured by default and you must then set up grants
         in order for the User to access anything on the Account.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateUser
       x-linode-cli-action: update
       security:
@@ -2902,10 +2907,12 @@ paths:
       tags:
       - Account
       summary: User Delete
-      description: >
+      description: |
         Deletes a User. The deleted User will be immediately logged out and
         may no longer log in or perform any actions. All of the User's Grants
         will be removed.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: deleteUser
       x-linode-cli-action: delete
       security:
@@ -2944,11 +2951,12 @@ paths:
       tags:
       - Account
       summary: User's Grants View
-      description: >
+      description: |
         Returns the full grants structure for the specified account User
         (other than the account owner, see below for details). This includes all entities
         on the Account alongside the level of access this User has to each of them.
 
+        This command can only be accessed by the unrestricted users of an account.
 
         The current authenticated User, including the account owner, may view their
         own grants at the [/profile/grants](/docs/api/profile/#grants-list)
@@ -2983,11 +2991,13 @@ paths:
       tags:
       - Account
       summary: User's Grants Update
-      description: >
+      description: |
         Update the grants a User has. This can be used to give a User access
         to new entities or actions, or take access away.  You do not need to
         include the grant for every entity on the Account in this request; any
         that are not included will remain unchanged.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateUserGrants
       x-linode-cli-action: update-grants
       x-linode-cli-skip: true
@@ -3729,7 +3739,6 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mongodb-backup-delete
-      x-linode-grant: unrestricted only
       description: |
         Delete a single backup for an accessible Managed MongoDB Database.
 
@@ -4509,7 +4518,6 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: mysql-backup-delete
-      x-linode-grant: unrestricted only
       description: |
         Delete a single backup for an accessible Managed MySQL Database.
 
@@ -5280,7 +5288,6 @@ paths:
       - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: postgresql-backup-delete
-      x-linode-grant: unrestricted only
       description: |
         Delete a single backup for an accessible Managed PostgreSQL Database.
 
@@ -11548,8 +11555,10 @@ paths:
       tags:
       - Managed
       summary: Managed Contacts List
-      description: >
+      description: |
         Returns a paginated list of Managed Contacts on your Account.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedContacts
       x-linode-cli-action: contacts-list
       security:
@@ -11589,10 +11598,12 @@ paths:
       tags:
       - Managed
       summary: Managed Contact Create
-      description: >
+      description: |
         Creates a Managed Contact.  A Managed Contact is someone Linode
         special forces can contact in the course of attempting to resolve an issue
         with a Managed Service.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: createManagedContact
       x-linode-cli-action: contact-create
       security:
@@ -11649,8 +11660,10 @@ paths:
       tags:
       - Managed
       summary: Managed Contact View
-      description: >
+      description: |
         Returns a single Managed Contact.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedContact
       x-linode-cli-action: contact-view
       security:
@@ -11681,6 +11694,8 @@ paths:
       summary: Managed Contact Update
       description: >
         Updates information about a Managed Contact.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateManagedContact
       x-linode-cli-action: contact-update
       security:
@@ -11729,8 +11744,10 @@ paths:
       tags:
       - Managed
       summary: Managed Contact Delete
-      description: >
+      description: |
         Deletes a Managed Contact.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: deleteManagedContact
       x-linode-cli-action: contact-delete
       security:
@@ -11765,8 +11782,10 @@ paths:
       tags:
       - Managed
       summary: Managed Credentials List
-      description: >
+      description: |
         Returns a paginated list of Managed Credentials on your Account.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedCredentials
       x-linode-cli-action: credentials-list
       security:
@@ -11806,10 +11825,12 @@ paths:
       tags:
       - Managed
       summary: Managed Credential Create
-      description: >
+      description: |
         Creates a Managed Credential. A Managed Credential is stored securely
         to allow Linode special forces to access your Managed Services and resolve
         issues.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: createManagedCredential
       x-linode-cli-action: credential-create
       security:
@@ -11880,8 +11901,10 @@ paths:
       tags:
       - Managed
       summary: Managed Credential View
-      description: >
+      description: |
         Returns a single Managed Credential.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedCredential
       x-linode-cli-action: credential-view
       security:
@@ -11916,6 +11939,8 @@ paths:
         To do this, use the Managed Credential Username and Password Update
         ([POST /managed/credentials/{credentialId}/update](/docs/api/managed/#managed-credential-username-and-password-update))
         endpoint instead.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateManagedCredential
       x-linode-cli-action: credential-update
       security:
@@ -11965,8 +11990,10 @@ paths:
       tags:
       - Managed
       summary: Managed Credential Username and Password Update
-      description: >
+      description: |
         Updates the username and password for a Managed Credential.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateManagedCredentialUsernamePassword
       x-linode-cli-action: credential-update-username-password
       security:
@@ -12033,9 +12060,11 @@ paths:
       tags:
       - Managed
       summary: Managed Credential Delete
-      description: >
+      description: |
         Deletes a Managed Credential.  Linode special forces will no longer
         have access to this Credential when attempting to resolve issues.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: deleteManagedCredential
       x-linode-cli-action: credential-revoke
       security:
@@ -12067,11 +12096,13 @@ paths:
       tags:
       - Managed
       summary: Managed SSH Key View
-      description: >
+      description: |
         Returns the unique SSH public key assigned to your Linode account's
         Managed service. If you [add this public key](/docs/platform/linode-managed/#adding-the-public-key) to a Linode on your account,
         Linode special forces will be able to log in to the Linode with this key
         when attempting to resolve issues.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: viewManagedSSHKey
       x-linode-cli-action: credential-sshkey-view
       security:
@@ -12116,9 +12147,11 @@ paths:
       tags:
       - Managed
       summary: Managed Issues List
-      description: >
+      description: |
         Returns a paginated list of recent and ongoing issues detected on your
         Managed Services.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedIssues
       x-linode-cli-action: issues-list
       security:
@@ -12168,9 +12201,11 @@ paths:
       tags:
       - Managed
       summary: Managed Issue View
-      description: >
+      description: |
         Returns a single Issue that is impacting or did impact one of your
         Managed Services.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedIssue
       x-linode-cli-action: issue-view
       security:
@@ -12204,9 +12239,11 @@ paths:
       tags:
       - Managed
       summary: Managed Linode Settings List
-      description: >
+      description: |
         Returns a paginated list of Managed Settings for your Linodes. There will
         be one entry per Linode on your Account.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedLinodeSettings
       x-linode-cli-action: linode-settings-list
       security:
@@ -12256,8 +12293,10 @@ paths:
       tags:
       - Managed
       summary: Linode's Managed Settings View
-      description: >
+      description: |
         Returns a single Linode's Managed settings.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedLinodeSetting
       x-linode-cli-action: linode-setting-view
       security:
@@ -12288,6 +12327,8 @@ paths:
       summary: Linode's Managed Settings Update
       description: >
         Updates a single Linode's Managed settings.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateManagedLinodeSetting
       x-linode-cli-action: linode-setting-update
       security:
@@ -12339,10 +12380,12 @@ paths:
       tags:
       - Managed
       summary: Managed Services List
-      description: >
+      description: |
         Returns a paginated list of Managed Services on your Account. These
         are the services Linode Managed is monitoring and will report and attempt
         to resolve issues with.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedServices
       x-linode-cli-action: services-list
       security:
@@ -12382,9 +12425,11 @@ paths:
       tags:
       - Managed
       summary: Managed Service Create
-      description: >
+      description: |
         Creates a Managed Service. Linode Managed will begin monitoring this
         service and reporting and attempting to resolve any Issues.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: createManagedService
       x-linode-cli-action: service-create
       security:
@@ -12456,8 +12501,10 @@ paths:
       tags:
       - Managed
       summary: Managed Service View
-      description: >
+      description: |
         Returns information about a single Managed Service on your Account.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedService
       x-linode-cli-action: service-view
       security:
@@ -12486,8 +12533,10 @@ paths:
       tags:
       - Managed
       summary: Managed Service Update
-      description: >
+      description: |
         Updates information about a Managed Service.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: updateManagedService
       x-linode-cli-action: service-update
       security:
@@ -12544,9 +12593,11 @@ paths:
       tags:
       - Managed
       summary: Managed Service Delete
-      description: >
+      description: |
         Deletes a Managed Service.  This service will no longer be monitored by
         Linode Managed.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: deleteManagedService
       x-linode-cli-action: service-delete
       security:
@@ -12585,8 +12636,10 @@ paths:
       tags:
       - Managed
       summary: Managed Service Disable
-      description: >
+      description: |
         Temporarily disables monitoring of a Managed Service.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: disableManagedService
       x-linode-cli-action: service-disable
       security:
@@ -12626,8 +12679,10 @@ paths:
       tags:
       - Managed
       summary: Managed Service Enable
-      description: >
+      description: |
         Enables monitoring of a Managed Service.
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: enableManagedService
       x-linode-cli-action: service-enable
       security:
@@ -12672,6 +12727,8 @@ paths:
         * swap
         * network in
         * network out
+
+        This command can only be accessed by the unrestricted users of an account.
       operationId: getManagedStats
       x-linode-cli-action: stats-list
       security:
