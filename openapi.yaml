@@ -20822,6 +20822,7 @@ components:
             records associate a domain name with an IPv6 address. For more information, see our guide on
             [DNS Records](/docs/guides/dns-records-an-introduction).
           example: A
+          x-linode-filterable: true
           x-linode-cli-display: 2
         name:
           type: string
@@ -20849,6 +20850,7 @@ components:
           minLength: 1
           maxLength: 100
           example: test
+          x-linode-filterable: true
           x-linode-cli-display: 3
         target:
           type: string
@@ -20882,6 +20884,7 @@ components:
 
             With the exception of A, AAAA, and CAA records, this field accepts a trailing period.
           example: 192.0.2.0
+          x-linode-filterable: true
           x-linode-cli-display: 4
         priority:
           type: integer
