@@ -21962,6 +21962,7 @@ components:
         status:
           x-linode-cli-display: 7
           type: string
+          readOnly: true
           enum:
           - creating
           - pending_upload
