@@ -13608,7 +13608,7 @@ paths:
         source: >
           linode-cli firewalls list
     post:
-      x-linode-grant: read_write
+      x-linode-grant: add_firewalls
       servers:
       - url: https://api.linode.com/v4
       tags:
