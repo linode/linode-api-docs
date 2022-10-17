@@ -26155,11 +26155,19 @@ components:
             I tried following the instructions but something is not
             working and I'm not sure what I'm doing wrong. Can you please
             help me figure out how I can reset it?
+        database_id:
+          type: integer
+          description: >
+            The ID of the Managed Database this ticket is regarding, if relevant.
         domain_id:
           type: integer
           description: >
             The ID of the Domain this ticket is regarding, if relevant.
           example: null
+        firewall_id:
+          type: integer
+          description: >
+            The ID of the Firewall this ticket is regarding, if relevant.
         linode_id:
           type: integer
           description: >
