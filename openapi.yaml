@@ -20939,7 +20939,7 @@ components:
               * `issuewild`: Must begin with `*`.
               * `iodef`: Must be either (1) a valid domain, (2) a valid domain prepended with `http://` or `https://`, or (3) a valid email address prepended with `mailto:`.
 
-            `PTR`: See our guide on how to [Configure Your Linode for Reverse DNS
+            `PTR`: Required. See our guide on how to [Configure Your Linode for Reverse DNS
             (rDNS)](/docs/guides/configure-your-linode-for-reverse-dns).
 
             With the exception of A, AAAA, and CAA records, this field accepts a trailing period.
