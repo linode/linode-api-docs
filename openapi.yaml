@@ -24495,12 +24495,14 @@ components:
           - https
           - tcp
           default: http
-          description: >
+          description: |
             The protocol this port is configured to serve.
 
             * The `http` and `tcp` protocols do not support `ssl_cert` and `ssl_key`.
 
             * The `https` protocol is mutually required with `ssl_cert` and `ssl_key`.
+
+            Review our guide on [Available Protocols](/docs/products/networking/nodebalancers/guides/protocols/) for information on protocol features.
           example: http
           x-linode-cli-display: 3
         algorithm:
