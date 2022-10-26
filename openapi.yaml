@@ -14763,8 +14763,12 @@ paths:
             --check_body "it works" \
             --check_passive true \
             --proxy_protocol "none" \
-            --ssl_cert "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----" \
-            --ssl_key "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----" \
+            --ssl_cert "-----BEGIN CERTIFICATE-----
+                        CERTIFICATE_INFORMATION
+                        -----END CERTIFICATE-----" \
+            --ssl_key "-----BEGIN PRIVATE KEY-----
+                       PRIVATE_KEY_INFORMATION
+                       -----END PRIVATE KEY-----" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
@@ -14869,8 +14873,8 @@ paths:
         source: >
           linode-cli nodebalancers config-update \
             12345 4567 \
-            --port 80 \
-            --protocol http \
+            --port 443 \
+            --protocol https \
             --algorithm roundrobin \
             --stickiness http_cookie \
             --check http_body \
@@ -14880,7 +14884,13 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
-            --proxy_protocol "v1" \
+            --proxy_protocol "none" \
+            --ssl_cert "-----BEGIN CERTIFICATE-----
+                        CERTIFICATE_INFORMATION
+                        -----END CERTIFICATE-----" \
+            --ssl_key "-----BEGIN PRIVATE KEY-----
+                       PRIVATE_KEY_INFORMATION
+                       -----END PRIVATE KEY-----" \
             --cipher_suite recommended
     delete:
       x-linode-grant: read_write
@@ -15042,8 +15052,8 @@ paths:
         source: >
           linode-cli nodebalancers config-rebuild \
             12345 4567 \
-            --port 80 \
-            --protocol http \
+            --port 443 \
+            --protocol https \
             --algorithm roundrobin \
             --stickiness http_cookie \
             --check http_body \
@@ -15053,7 +15063,13 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
-            --proxy_protocol "v1" \
+            --proxy_protocol "none" \
+            --ssl_cert "-----BEGIN CERTIFICATE-----
+                        CERTIFICATE_INFORMATION
+                        -----END CERTIFICATE-----" \
+            --ssl_key "-----BEGIN PRIVATE KEY-----
+                       PRIVATE_KEY_INFORMATION
+                       -----END PRIVATE KEY-----" \
             --cipher_suite recommended \
             --nodes '{"address":"192.168.210.120:80","label":"node1","weight":50,"mode":"accept"}' \
             --nodes '{"address":"192.168.210.122:80","label":"node2","weight":50,"mode":"accept"}'
@@ -16527,16 +16543,20 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                  "certificate": "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----",
-                  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
+                  "certificate": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                  "private_key": "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
                 }' \
               https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
       - lang: CLI
         source: >
           linode-cli object-storage ssl-upload \
             us-east-1 example-bucket \
-            --certificate "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----" \
-            --private_key "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
+            --certificate "-----BEGIN CERTIFICATE-----
+                           CERTIFICATE_INFORMATION
+                           -----END CERTIFICATE-----" \
+            --private_key "-----BEGIN PRIVATE KEY-----
+                           PRIVATE_KEY_INFORMATION
+                           -----END PRIVATE KEY-----"
     delete:
       operationId: deleteObjectStorageSSL
       x-linode-cli-action: ssl-delete
@@ -24650,7 +24670,7 @@ components:
             certificate and Certificate Authority chain) that should be served on this
             NodeBalancerConfig's port.
 
-            Line breaks must be represented as "\n" in the string for requests.
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI).
 
             [Diffie-Hellman Parameters](/docs/products/networking/nodebalancers/guides/ssl-termination/#diffie-hellman-parameters) can be included in this value to enable forward secrecy.
 
@@ -24669,7 +24689,7 @@ components:
           description: |
             The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.
 
-            Line breaks must be represented as "\n" in the string.
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI).
 
             The contents of this field will not be shown in any responses that display
             the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
@@ -25226,14 +25246,14 @@ components:
           description: |
             Your Base64 encoded and PEM formatted SSL certificate.
 
-            Line breaks must be represented as "\n" in the string.
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI)
           example: "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----"
         private_key:
           type: string
           description: |
             The private key associated with this TLS/SSL certificate.
 
-            Line breaks must be represented as "\n" in the string.
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI)
           example: "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
     ObjectStorageSSLResponse:
       type: object
