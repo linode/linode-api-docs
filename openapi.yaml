@@ -22854,6 +22854,12 @@ components:
             To prevent a loop, Lassie will give up if there have been more than 5 boot
             jobs issued within 15 minutes.
           example: true
+        host_uuid:
+          type: string
+          format: uuid
+          description: The Linode's host machine, as a UUID.
+          readOnly: true
+          example: 3a3ddd59d9a78bb8de041391075df44de62bfec8
     LinodeConfig:
       type: object
       properties:
