@@ -24155,6 +24155,7 @@ components:
           type: string
           format: url
           minLength: 3
+          maxLength: 100
           description: >
             The URL at which this Service is monitored.
 
