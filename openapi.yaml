@@ -12983,18 +12983,20 @@ paths:
       x-linode-grant: read_write
       tags:
       - Networking
-      summary: Linodes Assign IPs
+      summary: IP Addresses Assign
       description: |
-        Assign multiple IPv4 addresses and/or IPv6 ranges to multiple Linodes in one Region. This allows
-        swapping, shuffling, or otherwise reorganizing IPs to your Linodes.
+        Assign multiple IPv4 addresses and/or IPv6 ranges to multiple Linodes in one Region. This allows swapping, shuffling, or otherwise reorganizing IPs to your Linodes.
 
         The following restrictions apply:
         * All Linodes involved must have at least one public IPv4 address after assignment.
         * Linodes may have no more than one assigned private IPv4 address.
         * Linodes may have no more than one assigned IPv6 range.
-        * [Open a Support Ticket](/docs/api/support/#support-ticket-open) to request additional IPv4 addresses or IPv6 ranges.
 
-        **Note**: Removing an IP address that has been set as a Managed Linode's `ssh.ip` causes the Managed Linode's SSH access settings to reset to their default values. To view and configure Managed Linode SSH settings, use the **Linode's Managed Settings View** ([GET /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-view)) and **Linode's Managed Settings Update** ([PUT /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-update)) commands.
+        [Open a Support Ticket](/docs/api/support/#support-ticket-open) to request additional IPv4 addresses or IPv6 ranges beyond standard account limits.
+
+        **Note**: Removing an IP address that has been set as a Managed Linode's `ssh.ip` causes the Managed Linode's SSH access settings to reset to their default values. To view and configure Managed Linode SSH settings, use the following commands:
+        * **Linode's Managed Settings View** ([GET /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-view))
+        * **Linode's Managed Settings Update** ([PUT /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-update))
       operationId: assignIPs
       x-linode-cli-action: ip-assign
       security:
@@ -13009,46 +13011,7 @@ paths:
         content:
           application/json:
             schema:
-              required:
-              - region
-              - assignments
-              properties:
-                region:
-                  type: string
-                  description: >
-                    The ID of the Region in which these assignments are to take
-                    place. All IPs and Linodes must exist in this Region.
-                  example: us-east
-                assignments:
-                  type: array
-                  description: >
-                    The list of assignments to make. You must have read_write
-                    access to all IPs being assigned and all Linodes being
-                    assigned to in order for the assignments to succeed.
-                  required:
-                    - address
-                    - linode_id
-                  items:
-                    type: object
-                    properties:
-                      address:
-                        type: string
-                        format: ipv4|ipv6/prefix_length
-                        description: |
-                          The IPv4 address or IPv6 range for this assignment.
-                          * Must be an IPv4 address or an IPv6 range you can access in the Region specified.
-                          * IPv6 ranges must include a prefix length of `/56` or `/64`, for example: `2001:db8:3c4d:15::/64`.
-                          * Assignment of an IPv6 range to a Linode updates the route target of the range to the assigned Linode's SLAAC address.
-                          * May be a public or private address.
-                        example: 12.34.56.78
-                      linode_id:
-                        type: integer
-                        description: >
-                          The ID of the Linode to assign this address to. The IP's
-                          previous Linode will lose this address, and must end up
-                          with at least one public address and no more than one
-                          private address once all assignments have been made.
-                        example: 123
+              $ref: "#/components/schemas/IPAddressesAssignRequest"
       responses:
         '200':
           description: All assignments completed successfully.
@@ -13067,7 +13030,7 @@ paths:
                 "region": "us-east",
                 "assignments": [
                   {
-                    "address": "12.34.56.100",
+                    "address": "192.0.2.1",
                     "linode_id": 123
                   },
                   {
@@ -13081,8 +13044,10 @@ paths:
         source: >
           linode-cli networking ip-assign \
             --region us-east \
+            --assignments.address 192.0.2.1 \
+            --assignments.linode_id 123 \
             --assignments.address 2001:db8:3c4d:15::/64 \
-            --assignments.linode_id 123
+            --assignments.linode_id 234
   /networking/ips/share:
     x-linode-cli-command: networking
     post:
@@ -13148,13 +13113,21 @@ paths:
       tags:
       - Networking
       summary: Linodes Assign IPv4s
-      description: >
-        Assign multiple IPv4s to multiple Linodes in one Region. This allows
-        swapping, shuffling, or otherwise reorganizing IPv4 Addresses to your
-        Linodes.  When the assignment is finished, all Linodes must end up with
-        at least one public IPv4 and no more than one private IPv4.
+      description: |
+        This command is equivalent to **IP Addresses Assign** ([POST /networking/ips/assign](#ip-addresses-assign)).
 
-        To assign IPv6 ranges or to use the CLI, see the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) command.
+        Assign multiple IPv4 addresses and/or IPv6 ranges to multiple Linodes in one Region. This allows swapping, shuffling, or otherwise reorganizing IPs to your Linodes.
+
+        The following restrictions apply:
+        * All Linodes involved must have at least one public IPv4 address after assignment.
+        * Linodes may have no more than one assigned private IPv4 address.
+        * Linodes may have no more than one assigned IPv6 range.
+
+        [Open a Support Ticket](/docs/api/support/#support-ticket-open) to request additional IPv4 addresses or IPv6 ranges beyond standard account limits.
+
+        **Note**: Removing an IP address that has been set as a Managed Linode's `ssh.ip` causes the Managed Linode's SSH access settings to reset to their default values. To view and configure Managed Linode SSH settings, use the following commands:
+        * **Linode's Managed Settings View** ([GET /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-view))
+        * **Linode's Managed Settings Update** ([PUT /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-update))
       operationId: assignIPv4s
       x-linode-cli-skip: true
       security:
@@ -13169,44 +13142,7 @@ paths:
         content:
           application/json:
             schema:
-              required:
-              - region
-              - assignments
-              properties:
-                region:
-                  type: string
-                  description: >
-                    The ID of the Region in which these assignments are to take
-                    place.  All IPs and Linodes must exist in this Region.
-                  example: us-east
-                assignments:
-                  type: array
-                  description: >
-                    The list of assignments to make.  You must have read_write
-                    access to all IPs being assigned and all Linodes being
-                    assigned to in order for the assignments to succeed.
-                  required:
-                  - address
-                  - linode_id
-                  items:
-                    type: object
-                    properties:
-                      address:
-                        type: string
-                        format: ip
-                        description: >
-                          Ths IP Address for this assignment. Must be a IPv4
-                          address you can access in the Region specified. May
-                          be a public or private address.
-                        example: 12.34.56.78
-                      linode_id:
-                        type: integer
-                        description: >
-                          The ID of the Linode to assign this address to. The IP's
-                          previous Linode will lose this address, and must end up
-                          with at least one public address and no more than one
-                          private address once all assignments have been made.
-                        example: 123
+              $ref: "#/components/schemas/IPAddressesAssignRequest"
       responses:
         '200':
           description: All assignments completed successfully.
@@ -13225,16 +13161,24 @@ paths:
                 "region": "us-east",
                 "assignments": [
                   {
-                    "address": "12.34.56.100",
+                    "address": "192.0.2.1",
                     "linode_id": 123
                   },
                   {
-                    "address": "23.45.67.200",
+                    "address": "2001:db8:3c4d:15::/64",
                     "linode_id": 234
                   }
                 ]
               }' \
               https://api.linode.com/v4/networking/ipv4/assign
+      - lang: CLI
+        source: >
+          linode-cli networking ip-assign \
+            --region us-east \
+            --assignments.address 192.0.2.1 \
+            --assignments.linode_id 123 \
+            --assignments.address 2001:db8:3c4d:15::/64 \
+            --assignments.linode_id 234
   /networking/ipv4/share:
     x-linode-cli-command: networking
     post:
@@ -13243,7 +13187,9 @@ paths:
       - Networking
       summary: IPv4 Sharing Configure
       description: |
-        Configure shared IPs. This command is equivalent to **IP Addresses Share** ([POST /networking/ips/share](#ip-addresses-share)).
+        This command is equivalent to **IP Addresses Share** ([POST /networking/ips/share](#ip-addresses-share)).
+
+        Configure shared IPs.
 
         IP sharing allows IP address reassignment (also referred to as IP failover) from one Linode to another if the primary Linode becomes unresponsive. This means that requests to the primary Linode's IP address can be automatically rerouted to secondary Linodes at the configured shared IP addresses.
 
@@ -13399,7 +13345,7 @@ paths:
           * `linode_id` and `route_target` are mutually exclusive. Submitting values for both properties in a request results in an error.
           * Upon a successful request, an IPv6 range is created in the [Region](/docs/api/regions/#regions-list) that corresponds to the provided `linode_id` or `route_target`.
           * Your Linode is responsible for routing individual addresses in the range, or handling traffic for all the addresses in the range.
-          * Access the Linodes Assign IPs ([POST /networking/ips/assign](/docs/api/networking/#linodes-assign-ips)) endpoint to re-assign IPv6 Ranges to your Linodes.
+          * Access the IP Addresses Assign ([POST /networking/ips/assign](/docs/api/networking/#ip-addresses-assign)) endpoint to re-assign IPv6 Ranges to your Linodes.
 
         **Note**: The following restrictions apply:
           * A Linode can only have one IPv6 range targeting its SLAAC address.
@@ -22240,6 +22186,49 @@ components:
           readOnly: true
           x-linode-filterable: true
           x-linode-cli-display: 5
+    IPAddressesAssignRequest:
+      type: object
+      description: Request object for IP Addresses Assign (POST /networking/ips/assign).
+      required:
+      - region
+      - assignments
+      properties:
+        region:
+          type: string
+          description: >
+            The ID of the Region in which these assignments are to take
+            place. All IPs and Linodes must exist in this Region.
+          example: us-east
+        assignments:
+          type: array
+          description: >
+            The list of assignments to make. You must have read_write
+            access to all IPs being assigned and all Linodes being
+            assigned to in order for the assignments to succeed.
+          required:
+            - address
+            - linode_id
+          items:
+            type: object
+            properties:
+              address:
+                type: string
+                format: ipv4|ipv6/prefix_length
+                description: |
+                  The IPv4 address or IPv6 range for this assignment.
+                  * Must be an IPv4 address or an IPv6 range you can access in the Region specified.
+                  * IPv6 ranges must include a prefix length of `/56` or `/64`, for example: `2001:db8:3c4d:15::/64`.
+                  * Assignment of an IPv6 range to a Linode updates the route target of the range to the assigned Linode's SLAAC address.
+                  * May be a public or private address.
+                example: 192.0.2.1
+              linode_id:
+                type: integer
+                description: >
+                  The ID of the Linode to assign this address to. The IP's
+                  previous Linode will lose this address, and must end up
+                  with at least one public address and no more than one
+                  private address once all assignments have been made.
+                example: 123
     IPAddressesShareRequest:
       type: object
       description: A request object IP Addresses Share (POST /networking/ips/share)
