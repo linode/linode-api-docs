@@ -14373,9 +14373,12 @@ paths:
       tags:
       - NodeBalancers
       summary: NodeBalancer Create
-      description: >
-        Creates a NodeBalancer in the requested Region. This NodeBalancer
-        will not start serving requests until it is configured.
+      description: |
+        Creates a NodeBalancer in the requested Region.
+
+        NodeBalancers require a port Config with at least one backend Node to start serving requests.
+
+        When using the Linode CLI to create a NodeBalancer, first create a NodeBalancer without any Configs. Then, create Configs and Nodes for that NodeBalancer with the respective [Config Create](/docs/api/nodebalancers/#config-create) and [Node Create](/docs/api/nodebalancers/#node-create) commands.
       operationId: createNodeBalancer
       x-linode-cli-action: create
       security:
@@ -14404,22 +14407,52 @@ paths:
                   $ref: '#/components/schemas/NodeBalancer/properties/client_conn_throttle'
                 configs:
                   type: array
-                  description: >
-                    The ports to configure this NodeBalancer with on creation.
-                    Each config must have a unique port and at least one Node.
+                  description: |
+                    The port Config(s) to create for this NodeBalancer.
+
+                    Each Config must have a unique port and at least one Node.
+                  required:
+                  - nodes
                   items:
-                    allOf:
-                    - $ref: '#/components/schemas/NodeBalancerConfig'
-                    - type: object
-                      properties:
-                        nodes:
-                          type: array
-                          description: >
-                            The NodeBalancer Nodes that serve this port.  When
-                            creating a NodeBalancer this way, at least one Node
-                            is required per configured port.
-                          items:
-                            $ref: '#/components/schemas/NodeBalancerNode'
+                    type: object
+                    description: A request object representing a NodeBalancer Config, including Nodes.
+                    properties:
+                      port:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/port'
+                      protocol:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/protocol'
+                      algorithm:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/algorithm'
+                      stickiness:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/stickiness'
+                      check:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check'
+                      check_interval:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check_interval'
+                      check_timeout:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check_timeout'
+                      check_attempts:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check_attempts'
+                      check_path:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check_path'
+                      check_body:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check_body'
+                      check_passive:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/check_passive'
+                      proxy_protocol:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/proxy_protocol'
+                      cipher_suite:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/cipher_suite'
+                      ssl_cert:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/ssl_cert'
+                      ssl_key:
+                        $ref: '#/components/schemas/NodeBalancerConfig/properties/ssl_key'
+                      nodes:
+                        type: array
+                        description: |
+                          The NodeBalancer Node(s) that serve this Config.
+                        items:
+                          $ref: '#/components/schemas/NodeBalancerNode'
       responses:
         '200':
           description: NodeBalancer created successfully.
@@ -14437,7 +14470,40 @@ paths:
               -X POST -d '{
                 "region": "us-east",
                 "label": "balancer12345",
-                "client_conn_throttle": 0
+                "client_conn_throttle": 0,
+                "configs": [
+                  {
+                    "port": 443,
+                    "protocol": "https",
+                    "algorithm": "roundrobin",
+                    "stickiness": "http_cookie",
+                    "check": "http_body",
+                    "check_interval": 90,
+                    "check_timeout": 10,
+                    "check_attempts": 3,
+                    "check_path": "/test",
+                    "check_body": "it works",
+                    "check_passive": true,
+                    "proxy_protocol": "none",
+                    "cipher_suite": "recommended",
+                    "ssl_cert": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                    "ssl_key": "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----",
+                    "nodes": [
+                      {
+                        "address": "192.168.210.120:80",
+                        "label": "node1",
+                        "weight": 50,
+                        "mode": "accept"
+                      },
+                      {
+                        "address": "192.168.210.122:81",
+                        "label": "node2",
+                        "weight": 50,
+                        "mode": "accept"
+                      }
+                    ]
+                  }
+                ]
               }' \
               https://api.linode.com/v4/nodebalancers
       - lang: CLI
@@ -14665,8 +14731,8 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "port": 80,
-                "protocol": "http",
+                "port": 443,
+                "protocol": "https",
                 "algorithm": "roundrobin",
                 "stickiness": "http_cookie",
                 "check": "http_body",
@@ -14676,15 +14742,17 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
-                "proxy_protocol": "v1",
+                "proxy_protocol": "none",
+                "ssl_cert": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                "ssl_key": "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs
       - lang: CLI
         source: >
           linode-cli nodebalancers config-create 12345 \
-            --port 80 \
-            --protocol http \
+            --port 443 \
+            --protocol https \
             --algorithm roundrobin \
             --stickiness http_cookie \
             --check http_body \
@@ -14694,7 +14762,13 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
-            --proxy_protocol "v1" \
+            --proxy_protocol "none" \
+            --ssl_cert "-----BEGIN CERTIFICATE-----
+                        CERTIFICATE_INFORMATION
+                        -----END CERTIFICATE-----" \
+            --ssl_key "-----BEGIN PRIVATE KEY-----
+                       PRIVATE_KEY_INFORMATION
+                       -----END PRIVATE KEY-----" \
             --cipher_suite recommended
   /nodebalancers/{nodeBalancerId}/configs/{configId}:
     parameters:
@@ -14778,8 +14852,8 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "port": 80,
-                "protocol": "http",
+                "port": 443,
+                "protocol": "https",
                 "algorithm": "roundrobin",
                 "stickiness": "http_cookie",
                 "check": "http_body",
@@ -14789,7 +14863,9 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
-                "proxy_protocol": "v1",
+                "proxy_protocol": "none",
+                "ssl_cert": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                "ssl_key": "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----",
                 "cipher_suite": "recommended"
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567
@@ -14797,8 +14873,8 @@ paths:
         source: >
           linode-cli nodebalancers config-update \
             12345 4567 \
-            --port 80 \
-            --protocol http \
+            --port 443 \
+            --protocol https \
             --algorithm roundrobin \
             --stickiness http_cookie \
             --check http_body \
@@ -14808,7 +14884,13 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
-            --proxy_protocol "v1" \
+            --proxy_protocol "none" \
+            --ssl_cert "-----BEGIN CERTIFICATE-----
+                        CERTIFICATE_INFORMATION
+                        -----END CERTIFICATE-----" \
+            --ssl_key "-----BEGIN PRIVATE KEY-----
+                       PRIVATE_KEY_INFORMATION
+                       -----END PRIVATE KEY-----" \
             --cipher_suite recommended
     delete:
       x-linode-grant: read_write
@@ -14871,9 +14953,10 @@ paths:
       tags:
       - NodeBalancers
       summary: Config Rebuild
-      description: >
-        Rebuilds a NodeBalancer Config and its Nodes that you have
-        permission to modify.
+      description: |
+        Rebuilds a NodeBalancer Config and its Nodes that you have permission to modify.
+
+        Use this command to update a NodeBalancer's Config and Nodes with a single request.
       operationId: rebuildNodeBalancerConfig
       x-linode-cli-action: config-rebuild
       security:
@@ -14890,26 +14973,41 @@ paths:
               allOf:
               - $ref: "#/components/schemas/NodeBalancerConfig"
               - type: object
+                required:
+                - nodes
                 properties:
                   nodes:
                     type: array
                     description: |
-                      The NodeBalancer Node(s) that serve this port.
-                      At least one Node is required per configured port.
+                      The NodeBalancer Node(s) that serve this Config.
 
                       Some considerations for Nodes when rebuilding a config:
-                        * Current Nodes excluded from the request body will be deleted.
-                        * Current Nodes (identified by their ID) will be updated.
-                        * New Nodes (included without an ID) will be created.
+                        * Current Nodes excluded from the request body will be deleted from the Config.
+                        * Current Nodes (identified by their Node ID) will be updated.
+                        * New Nodes (included without a Node ID) will be created.
                     items:
-                      $ref: '#/components/schemas/NodeBalancerNode'
+                      type: object
+                      description: NodeBalancer Node request object including ID.
+                      properties:
+                        id:
+                          type: integer
+                          description: The unique ID of the Node to update.
+                          example: 54321
+                        address:
+                          $ref: '#/components/schemas/NodeBalancerNode/properties/address'
+                        label:
+                          $ref: '#/components/schemas/NodeBalancerNode/properties/label'
+                        weight:
+                          $ref: '#/components/schemas/NodeBalancerNode/properties/weight'
+                        mode:
+                          $ref: '#/components/schemas/NodeBalancerNode/properties/mode'
       responses:
         '200':
           description: NodeBalancer created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NodeBalancer'
+                $ref: '#/components/schemas/NodeBalancerConfig'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -14918,8 +15016,8 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "port": 80,
-                "protocol": "http",
+                "port": 1234,
+                "protocol": "https",
                 "algorithm": "roundrobin",
                 "stickiness": "http_cookie",
                 "check": "http_body",
@@ -14929,10 +15027,13 @@ paths:
                 "check_path": "/test",
                 "check_body": "it works",
                 "check_passive": true,
-                "proxy_protocol": "v1",
+                "proxy_protocol": "none",
                 "cipher_suite": "recommended",
+                "ssl_cert": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                "ssl_key": "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----",
                 "nodes": [
                   {
+                    "id": 54321,
                     "address": "192.168.210.120:80",
                     "label": "node1",
                     "weight": 50,
@@ -14943,7 +15044,7 @@ paths:
                     "label": "node2",
                     "weight": 50,
                     "mode": "accept"
-                  },
+                  }
                 ]
               }' \
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/rebuild
@@ -14951,8 +15052,8 @@ paths:
         source: >
           linode-cli nodebalancers config-rebuild \
             12345 4567 \
-            --port 80 \
-            --protocol http \
+            --port 443 \
+            --protocol https \
             --algorithm roundrobin \
             --stickiness http_cookie \
             --check http_body \
@@ -14962,7 +15063,13 @@ paths:
             --check_path "/test" \
             --check_body "it works" \
             --check_passive true \
-            --proxy_protocol "v1" \
+            --proxy_protocol "none" \
+            --ssl_cert "-----BEGIN CERTIFICATE-----
+                        CERTIFICATE_INFORMATION
+                        -----END CERTIFICATE-----" \
+            --ssl_key "-----BEGIN PRIVATE KEY-----
+                       PRIVATE_KEY_INFORMATION
+                       -----END PRIVATE KEY-----" \
             --cipher_suite recommended \
             --nodes '{"address":"192.168.210.120:80","label":"node1","weight":50,"mode":"accept"}' \
             --nodes '{"address":"192.168.210.122:80","label":"node2","weight":50,"mode":"accept"}'
@@ -15678,7 +15785,7 @@ paths:
       - url: https://api.linode.com/v4
       summary: Object Storage Object ACL Config View
       description: |
-        View an Object’s configured Access Control List (ACL) in this Object Storage bucket.
+        View an Object's configured Access Control List (ACL) in this Object Storage bucket.
         ACLs define who can access your buckets and objects and specify the level of access
         granted to those users.
 
@@ -16435,17 +16542,21 @@ paths:
         source: >
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
-              -X POST -d ‘{
-                  "certificate": "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----",
-                  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
-                }’ \
+              -X POST -d '{
+                  "certificate": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                  "private_key": "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
+                }' \
               https://api.linode.com/v4/object-storage/buckets/us-east-1/example-bucket/ssl
       - lang: CLI
         source: >
           linode-cli object-storage ssl-upload \
             us-east-1 example-bucket \
-            --certificate "-----BEGIN CERTIFICATE-----\nMIIDbDCCAlQCCQCl\n-----END CERTIFICATE-----" \
-            --private_key "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADIAQCQI\n-----END PRIVATE KEY-----"
+            --certificate "-----BEGIN CERTIFICATE-----
+                           CERTIFICATE_INFORMATION
+                           -----END CERTIFICATE-----" \
+            --private_key "-----BEGIN PRIVATE KEY-----
+                           PRIVATE_KEY_INFORMATION
+                           -----END PRIVATE KEY-----"
     delete:
       operationId: deleteObjectStorageSSL
       x-linode-cli-action: ssl-delete
@@ -16510,7 +16621,7 @@ paths:
                     type: integer
                     description: >
                       The amount of outbound data transfer used by your account's Object Storage buckets,
-                      in bytes, for the current month’s billing cycle.
+                      in bytes, for the current month's billing cycle.
                     example: 12956600198
                     readOnly: true
         default:
@@ -23823,7 +23934,7 @@ components:
           type: string
           description: >
             The reason maintenance is being performed.
-          example: This maintenance will allow us to update the BIOS on the host’s motherboard.
+          example: This maintenance will allow us to update the BIOS on the host's motherboard.
         when:
           x-linode-filterable: true
           type: string
@@ -24384,12 +24495,14 @@ components:
           - https
           - tcp
           default: http
-          description: >
+          description: |
             The protocol this port is configured to serve.
 
-            * If using `http` or `tcp` protocol, `ssl_cert` and `ssl_key` are not supported.
+            * The `http` and `tcp` protocols do not support `ssl_cert` and `ssl_key`.
 
-            * If using `https` protocol, `ssl_cert` and `ssl_key` are required.
+            * The `https` protocol is mutually required with `ssl_cert` and `ssl_key`.
+
+            Review our guide on [Available Protocols](/docs/products/networking/nodebalancers/guides/protocols/) for information on protocol features.
           example: http
           x-linode-cli-display: 3
         algorithm:
@@ -24500,9 +24613,9 @@ components:
             * If ommited, or set to `none`, the NodeBalancer doesn't send any auxilary
             data over TCP connections. This is the default.
 
-            * If set to `v1`, the human-readable header format (Version 1) is used.
+            * If set to `v1`, the human-readable header format (Version 1) is used. Requires `tcp` protocol.
 
-            * If set to `v2`, the binary header format (Version 2) is used.
+            * If set to `v2`, the binary header format (Version 2) is used. Requires `tcp` protocol.
           type: string
           enum:
           - none
@@ -24538,16 +24651,16 @@ components:
             The read-only common name automatically derived from the SSL certificate assigned to this
             NodeBalancerConfig. Please refer to this field to verify that the appropriate
             certificate is assigned to your NodeBalancerConfig.
-          example: null
+          example: www.example.com
           readOnly: true
           x-linode-cli-display: 8
         ssl_fingerprint:
           type: string
           description: >
-            The read-only fingerprint automatically derived from the SSL certificate assigned to this
+            The read-only SHA1-encoded fingerprint automatically derived from the SSL certificate assigned to this
             NodeBalancerConfig. Please refer to this field to verify that the appropriate
             certificate is assigned to your NodeBalancerConfig.
-          example: null
+          example: 00:01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11:12:13
           readOnly: true
           x-linode-cli-display: 9
         ssl_cert:
@@ -24559,6 +24672,10 @@ components:
             certificate and Certificate Authority chain) that should be served on this
             NodeBalancerConfig's port.
 
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI).
+
+            [Diffie-Hellman Parameters](/docs/products/networking/nodebalancers/guides/ssl-termination/#diffie-hellman-parameters) can be included in this value to enable forward secrecy.
+
             The contents of this field will not be shown in any responses that display
             the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
             appears.
@@ -24566,7 +24683,7 @@ components:
             The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
             response are automatically derived from your certificate. Please refer to these fields to
             verify that the appropriate certificate was assigned to your NodeBalancerConfig.
-          example: null
+          example: <REDACTED>
         ssl_key:
           type: string
           format: ssl-key
@@ -24574,7 +24691,7 @@ components:
           description: |
             The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.
 
-            Line breaks must be represented as "\n" in the string.
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI).
 
             The contents of this field will not be shown in any responses that display
             the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field
@@ -24583,7 +24700,7 @@ components:
             The read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig
             response are automatically derived from your certificate. Please refer to these fields to
             verify that the appropriate certificate was assigned to your NodeBalancerConfig.
-          example: null
+          example: <REDACTED>
         nodes_status:
           type: object
           description: >
@@ -25128,22 +25245,18 @@ components:
       properties:
         certificate:
           type: string
-          description: >
+          description: |
             Your Base64 encoded and PEM formatted SSL certificate.
-          example: >
-            "-----BEGIN CERTIFICATE-----
-            MIIFTTCCAzWgAwIBAgIURwtqMl
-            ...
-            -----END CERTIFICATE-----"
+
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI)
+          example: "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----"
         private_key:
           type: string
-          description: >
+          description: |
             The private key associated with this TLS/SSL certificate.
-          example: >
-            "-----BEGIN PRIVATE KEY-----
-            MIIEvgIBADANBgkqhkiG9w0BAQE
-            ...
-            -----END PRIVATE KEY-----"
+
+            Line breaks must be represented as "\n" in the string for requests (but not when using the Linode CLI)
+          example: "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
     ObjectStorageSSLResponse:
       type: object
       description: >
@@ -26786,17 +26899,17 @@ tags:
   - name: Linode Types
     description: Use the Linode Types endpoints to retrieve information about Linode plan types, including pricing information, hardware resources, and network transfer allotment.
   - name: Linode Kubernetes Engine (LKE)
-    description: Linode Kubernetes Engine (LKE) is Linode’s managed Kubernetes service. Use the LKE endpoints to create and manage Kubernetes clusters and their associated Node Pools.
+    description: Linode Kubernetes Engine (LKE) is Linode's managed Kubernetes service. Use the LKE endpoints to create and manage Kubernetes clusters and their associated Node Pools.
   - name: Longview
-    description: Longview is Linode’s system-level monitoring and graphing service. Use the Longview endpoints to manage your Longview subscription and plan and to create and maintain Longview clients.
+    description: Longview is Linode's system-level monitoring and graphing service. Use the Longview endpoints to manage your Longview subscription and plan and to create and maintain Longview clients.
   - name: Managed
-    description: Managed is Linode’s incident response service. Use the Managed endpoints to register a service to be monitored by the Managed Service team, provide secure access to your managed services,  view information about detected issues, and more.
+    description: Managed is Linode's incident response service. Use the Managed endpoints to register a service to be monitored by the Managed Service team, provide secure access to your managed services,  view information about detected issues, and more.
   - name: Networking
     description: Use the Networking endpoints to view all IP addresses on your account, reorganize assigned IPv4 addresses, update RDNS, and configure IP sharing.
   - name: NodeBalancers
-    description: NodeBalancers is Linode’s load balancing service. Use the NodeBalancers endpoints to create and manage NodeBalancers. You can also create and maintain configurations; create and maintain nodes, and view statistics.
+    description: NodeBalancers is Linode's load balancing service. Use the NodeBalancers endpoints to create and manage NodeBalancers. You can also create and maintain configurations; create and maintain nodes, and view statistics.
   - name: Object Storage
-    description: Object Storage is Linode’s S3-compatible data storage service. Use the Object Storage endpoints to create and maintaining buckets, add and remove objects from buckets, create and maintain Object Storage keys, and cancel the Object Storage service.
+    description: Object Storage is Linode's S3-compatible data storage service. Use the Object Storage endpoints to create and maintaining buckets, add and remove objects from buckets, create and maintain Object Storage keys, and cancel the Object Storage service.
   - name: Profile
     description: Use the Profile endpoints to manage your Linode user profile preferences and security settings. This includes creating and maintaining personal access tokens, creating and maintaining SSH keys, confirming and enabling two-factor authentication, and updating user and profile preferences.
   - name: Regions
@@ -26808,4 +26921,4 @@ tags:
   - name: Tags
     description: Tags allow you to organize and group your various Linode services. Use the Tags endpoints to create, assign, and delete your account tags.
   - name: Volumes
-    description: Volumes is Linode’s block storage service. Use the Volumes endpoints to create, attach, and manage your account Volumes.
+    description: Volumes is Linode's block storage service. Use the Volumes endpoints to create, attach, and manage your account Volumes.
