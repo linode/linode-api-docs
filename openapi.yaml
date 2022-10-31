@@ -23493,6 +23493,7 @@ components:
                 characters.
           minLength: 1
           maxLength: 32
+          x-linode-filterable: true
           x-linode-cli-display: 2
           example: lkecluster12345
         region:
