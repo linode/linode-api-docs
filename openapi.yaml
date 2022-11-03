@@ -25912,10 +25912,9 @@ components:
         images:
           type: array
           description: |
-            An array of Image IDs. These are the images that can be deployed
-            with this Stackscript.
+            An array of Image IDs. These are the Images that can be deployed with this Stackscript.
 
-            `any/all` indicates that all available image distributions are accepted.
+            `any/all` indicates that all available Images, including private Images, are accepted.
           items:
             type: string
           example:
