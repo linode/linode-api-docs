@@ -8691,9 +8691,10 @@ paths:
       tags:
       - Linode Instances
       summary: IP Address Update
-      description: >
-        Updates a particular IP Address associated with this Linode.
-        Only allows setting/resetting reverse DNS.
+      description: |
+        Updates a the reverse DNS (RDNS) for a particular IP Address associated with this Linode.
+
+        Setting the RDNS to `null` for a public IPv4 address, resets it to the default "ip.linodeusercontent.com" RDNS value.
       operationId: updateLinodeIP
       x-linode-cli-action: ip-update
       security:
@@ -8705,8 +8706,18 @@ paths:
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/IPAddress'
+              required:
+                - rdns
+              type: object
+              properties:
+                rdns:
+                  type: string
+                  description: >
+                    The reverse DNS assigned to this address. For public IPv4 addresses,
+                    this will be set to a default value provided by Linode if not
+                    explicitly set.
+                  nullable: true
+                  example: test.example.org
       responses:
         '200':
           description: The updated IP address record.
@@ -8724,11 +8735,11 @@ paths:
               -X PUT -d '{
                 "rdns": "test.example.org"
               }' \
-              https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
+              https://api.linode.com/v4/linode/instances/123/ips/203.0.113.1
       - lang: CLI
         source: >
           linode-cli linodes ip-update 123 \
-            97.107.143.141 \
+            203.0.113.1 \
             --rdns test.example.org
     delete:
       x-linode-grant: read_write
@@ -12971,11 +12982,11 @@ paths:
               -X PUT -d '{
                 "rdns": "test.example.org"
               }' \
-              https://api.linode.com/v4/networking/ips/97.107.143.141
+              https://api.linode.com/v4/networking/ips/203.0.113.1
       - lang: CLI
         source: >
           linode-cli networking ip-update \
-            97.107.143.141 \
+            203.0.113.1 \
             --rdns "test.example.org"
   /networking/ips/assign:
     x-linode-cli-command: networking
@@ -22167,6 +22178,7 @@ components:
             explicitly set.
           x-linode-cli-display: 4
           example: test.example.org
+          nullable: true
         linode_id:
           type: integer
           description: >
