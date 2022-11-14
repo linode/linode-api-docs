@@ -19629,6 +19629,14 @@ components:
             failed: red
             userAborted: f
             default_: yellow
+        available:
+          type: boolean
+          description: |
+            Whether this Backup is available for restoration.
+
+            Backups undergoing maintenance are not available for restoration.
+          example: true
+          readOnly: true
         created:
           type: string
           format: date-time
@@ -22880,6 +22888,14 @@ components:
               description: >
                 If this Linode has the Backup service enabled. To enable backups, see
                 [POST /linode/instances/{linodeId}/backups/enable](/docs/api/linode-instances/#backups-enable).
+              example: true
+              readOnly: true
+            available:
+              type: boolean
+              description: |
+                Whether Backups for this Linode are available for restoration.
+
+                Backups undergoing maintenance are not available for restoration.
               example: true
               readOnly: true
             schedule:
