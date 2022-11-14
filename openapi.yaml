@@ -6833,6 +6833,7 @@ paths:
         description: The requested initial state of a new Linode.
         required: true
         x-linode-cli-allowed-defaults:
+        - authorized_users
         - region
         - image
         - type
