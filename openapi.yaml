@@ -19212,7 +19212,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/Volume'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
