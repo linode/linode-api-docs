@@ -230,10 +230,7 @@ info:
 
     ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-      -H '
-        X-Filter: {
-          "class": "standard"
-        }'
+      -H 'X-Filter: { "class": "standard" }'
     ```
 
     The filter object's keys are the keys of the object you're filtering,
@@ -243,11 +240,7 @@ info:
 
     ```Shell
      curl "https://api.linode.com/v4/linode/types" \
-      -H '
-        X-Filter: {
-          "class": "standard",
-          "vcpus": 1
-        }'
+      -H 'X-Filter: { "class": "standard", "vcpus": 1 }'
     ```
 
     In the above example, both filters are combined with an "and" operation.
@@ -256,13 +249,7 @@ info:
 
      ```Shell
     curl "https://api.linode.com/v4/linode/types" \
-      -H '
-        X-Filter: {
-          "+or": [
-            { "vcpus": 1 },
-            { "class": "standard" }
-          ]
-        }'
+      -H 'X-Filter: { "+or": [ { "vcpus": 1 }, { "class": "standard" } ] }'
     ```
 
     Each filter in the `+or` array is its own filter object, and all conditions
