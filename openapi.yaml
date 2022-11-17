@@ -24493,6 +24493,7 @@ components:
           x-linode-cli-display: 6
         transfer:
           type: object
+          readOnly: true
           description: >
             Information about the amount of transfer this NodeBalancer has had
             so far this month.
