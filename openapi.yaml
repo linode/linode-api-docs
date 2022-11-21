@@ -17938,15 +17938,13 @@ paths:
               schema:
                 type: object
                 description: A dictionary of user preferences.
-                example: { "key1": "value1", "key2": "value2"}
+                example: { "key1": "value1", "key2": "value2" }
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authorization: Bearer $TOKEN" \
-              -X GET \
+          curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/profile/preferences
     put:
       tags:
@@ -17976,7 +17974,9 @@ paths:
             schema:
               type: object
               description: |
-                Arbitrary JSON of your choosing.
+                Arbitrary JSON of your choosing. Overwrites any existing preferences for this user.
+
+                Total length cannot exceed 65,535 characters.
       responses:
         '200':
           description: Returns an object of user preferences.
@@ -17985,7 +17985,7 @@ paths:
               schema:
                 type: object
                 description: An object of user preferences.
-                example: { "key1": "value1", "key2": "value2"}
+                example: { "key1": "value1", "key2": "value2" }
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -17995,10 +17995,9 @@ paths:
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
                 "key1": "value1",
-                "key1": "value2"
+                "key2": "value2"
               }' \
               https://api.linode.com/v4/profile/preferences
-
   /regions:
     x-linode-cli-command: regions
     get:
