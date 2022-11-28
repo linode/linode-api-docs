@@ -17605,7 +17605,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SSHKeyRequest'
+              $ref: '#/components/schemas/SSHKey'
       responses:
         '200':
           description: SSH Key associated successfully.
@@ -17621,14 +17621,14 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                  "label": "My SSH Key"
+                  "label": "My SSH Key",
                   "ssh_key": "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
               }' \
               https://api.linode.com/v4/profile/sshkeys
       - lang: CLI
         source: >
           linode-cli sshkeys create \
-            --label "My SSH Key"
+            --label "My SSH Key" \
             --ssh_key "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
   /profile/sshkeys/{sshKeyId}:
     x-linode-cli-command: sshkeys
@@ -17673,8 +17673,10 @@ paths:
       tags:
       - Profile
       summary: SSH Key Update
-      description: >
+      description: |
         Updates an SSH Key that you have permission to `read_write`.
+
+        Only SSH key labels can be updated.
       operationId: updateSSHKey
       x-linode-cli-action: update
       security:
@@ -17688,7 +17690,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SSHKey'
+              type: object
+              properties:
+                label:
+                  $ref: '#/components/schemas/SSHKey/properties/label'
       responses:
         '200':
           description: SSH Key updated successfully.
@@ -17706,10 +17711,10 @@ paths:
               -X PUT -d '{
                 "label": "my laptop"
               }' \
-              https://api.linode.com/v4/profile/sshkey/42
+              https://api.linode.com/v4/profile/sshkeys/42
       - lang: CLI
         source: >
-          linode-cli sshkey update 42 \
+          linode-cli sshkeys update 42 \
             --label "my laptop"
     delete:
       tags:
@@ -17743,13 +17748,12 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Content-Type: application/json" \
-              -H "Authoriztion: Bearer $TOKEN" \
+          curl -H "Authoriztion: Bearer $TOKEN" \
               -X DELETE \
               https://api.linode.com/v4/profile/sshkeys/42
       - lang: CLI
         source: >
-          linode-cli sshkey delete 42
+          linode-cli sshkeys delete 42
   /profile/phone-number:
     x-linode-cli-command: phone
     delete:
@@ -17780,8 +17784,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Content-Type: application/json" \
-            -H "Authorization: Bearer $TOKEN" \
+          curl -H "Authorization: Bearer $TOKEN" \
             -X DELETE \
             https://api.linode.com/v4/profile/phone-number
       - lang: CLI
@@ -26765,10 +26768,16 @@ components:
         ssh_key:
           type: string
           format: ssh-key
-          description: >
-            The public SSH Key, which is used to authenticate to the root user
-            of the Linodes you deploy.
-          readOnly: true
+          description: |
+            The public SSH Key, which is used to authenticate to the root user of the Linodes you deploy.
+
+            Accepted formats:
+            * ssh-dss
+            * ssh-rsa
+            * ecdsa-sha2-nistp
+            * ssh-ed25519
+            * sk-ecdsa-sha2-nistp256 (Akamai-specific)
+          example: "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
         created:
           type: string
           format: date-time
@@ -26776,25 +26785,6 @@ components:
             The date this key was added.
           example: "2018-01-01T00:01:01"
           readOnly: true
-    SSHKeyRequest:
-      type: object
-      description: >
-        An object consisting of a user identified name as the `label` and the
-        generated key as the `ssh-key`.
-      properties:
-        label:
-          type: string
-          minLength: 1
-          maxLength: 64
-          description: >
-            A label for the key.
-          example: "My SSH Key"
-        ssh_key:
-          type: string
-          format: ssh-key
-          description: >
-            The public SSH Key, which is used to authenticate to the root user
-            of the Linodes you deploy.
     Vlans:
       type: object
       description: >
