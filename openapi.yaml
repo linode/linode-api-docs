@@ -18227,7 +18227,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - Support
-      summary: Ticket Attachment Create
+      summary: Support Ticket Attachment Create
       description: |
         Adds a file attachment to an existing Support
         Ticket on your Account. File attachments are used to assist our
