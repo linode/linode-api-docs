@@ -18229,14 +18229,16 @@ paths:
       x-linode-grant: read_write
       tags:
       - Support
-      summary: Ticket Attachment Create
-      description: >
+      summary: Support Ticket Attachment Create
+      description: |
         Adds a file attachment to an existing Support
         Ticket on your Account. File attachments are used to assist our
         Support team in resolving your Ticket. Examples of attachments
         are screen shots and text files that provide additional information.
 
-        Note: Accepted file extensions include: .gif, .jpg, .jpeg, .pjpg,
+        The file attachment is submitted in the request as multipart/form-data.
+
+        **Note**: Accepted file extensions include: .gif, .jpg, .jpeg, .pjpg,
         .pjpeg, .tif, .tiff, .png, .pdf, or .txt.
       operationId: createTicketAttachment
       x-linode-cli-skip: true
