@@ -1248,6 +1248,7 @@ paths:
       x-linode-cli-action: maintenance-list
       security:
       - personalAccessToken: []
+      - oauth: []
       responses:
         '200':
           description: Returns a paginated list of Maintenance objects.
