@@ -6207,7 +6207,7 @@ paths:
               -X POST -d '{
                 "type": "A",
                 "name": "test",
-                "target": "12.34.56.78",
+                "target": "203.0.113.1",
                 "priority": 50,
                 "weight": 50,
                 "port": 80,
@@ -6221,7 +6221,7 @@ paths:
           linode-cli domains records-create 123 \
             --type A \
             --name test \
-            --target 12.34.56.78 \
+            --target 203.0.113.1 \
             --priority 50 \
             --weight 50 \
             --port 80 \
@@ -6308,7 +6308,7 @@ paths:
               -X PUT -d '{
                 "type": "A",
                 "name": "test",
-                "target": "12.34.56.78",
+                "target": "203.0.113.1",
                 "priority": 50,
                 "weight": 50,
                 "port": 80,
@@ -6323,7 +6323,7 @@ paths:
           linode-cli domains records-update 123 234 \
             --type A \
             --name test \
-            --target 12.34.56.78 \
+            --target 203.0.113.1 \
             --priority 50 \
             --weight 50 \
             --port 80 \
@@ -12393,7 +12393,7 @@ paths:
                 "ssh": {
                   "access": true,
                   "user": "linode",
-                  "ip": "12.34.56.78",
+                  "ip": "203.0.113.1",
                   "port": 22
                 }
               }' \
@@ -12405,7 +12405,7 @@ paths:
             --ssh.access true \
             --ssh.user linode \
             --ssh.port 22 \
-            --ssh.ip 12.34.56.78
+            --ssh.ip 203.0.113.1
   /managed/services:
     x-linode-cli-command: managed
     get:
@@ -24277,7 +24277,7 @@ components:
                 when responding to an Issue.
 
                 By default, any of a Linode's IP addresses can be used for incident response access.
-              example: "12.34.56.78"
+              example: "203.0.113.1"
               default: any
             port:
               type: integer
@@ -24461,7 +24461,7 @@ components:
           format: ip
           description: >
             This NodeBalancer's public IPv4 address.
-          example: 12.34.56.78
+          example: 203.0.113.1
           readOnly: true
           x-linode-cli-display: 5
         ipv6:
@@ -26608,7 +26608,7 @@ components:
           type: string
           description: >
             The last IP Address to successfully authenticate with this TrustedDevice.
-          example: 12.34.56.78
+          example: 203.0.113.1
           readOnly: true
     SecurityQuestion:
       type: object
