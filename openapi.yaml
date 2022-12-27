@@ -6306,7 +6306,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DomainRecord'
+              type: object
+              description: A Domain Record Update request object.
+              properties:
+                name:
+                  $ref: '#/components/schemas/DomainRecord/properties/name'
+                target:
+                  $ref: '#/components/schemas/DomainRecord/properties/target'
+                priority:
+                  $ref: '#/components/schemas/DomainRecord/properties/priority'
+                weight:
+                  $ref: '#/components/schemas/DomainRecord/properties/weight'
+                port:
+                  $ref: '#/components/schemas/DomainRecord/properties/port'
+                service:
+                  $ref: '#/components/schemas/DomainRecord/properties/service'
+                protocol:
+                  $ref: '#/components/schemas/DomainRecord/properties/protocol'
+                ttl_sec:
+                  $ref: '#/components/schemas/DomainRecord/properties/ttl_sec'
+                tag:
+                  $ref: '#/components/schemas/DomainRecord/properties/tag'
       responses:
         '200':
           description: Domain Record updated.
@@ -6322,7 +6342,6 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
-                "type": "A",
                 "name": "test",
                 "target": "203.0.113.1",
                 "priority": 50,
@@ -6337,7 +6356,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli domains records-update 123 234 \
-            --type A \
             --name test \
             --target 203.0.113.1 \
             --priority 50 \
