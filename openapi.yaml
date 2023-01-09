@@ -1234,7 +1234,7 @@ paths:
       - Account
       summary: Maintenance List
       description: |
-        Returns a collection of Maintenance objects for any entity a user has permissions to view.
+        Returns a collection of Maintenance objects for any entity a user has permissions to view. Cancelled Maintenance objects are not returned.
 
         Currently, Linodes are the only entities available for viewing.
       operationId: getMaintenance
@@ -23996,10 +23996,16 @@ components:
           x-linode-filterable: true
           type: string
           enum:
-          - pending
+          - completed
+          - ready
+          - scheduled
           - started
-          description: >
+          - ticketing
+          - ticketed
+          description: |
             The maintenance status.
+
+            Maintenance progresses in the following sequence: ticketing, ticketed, scheduled, ready, started, then completed.
           example: started
         reason:
           type: string
