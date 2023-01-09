@@ -22,7 +22,7 @@ info:
 
     ## Changelog
 
-    <a target="_top" href="https://developers.linode.com/changelog">View our Changelog</a> to see release
+    <a target="_top" href="/docs/products/tools/api/release-notes/">View our Changelog</a> to see release
     notes on all changes made to our API.
 
     ## Access and Authentication
@@ -54,7 +54,7 @@ info:
     If you're designing an application that can authenticate with an arbitrary Linode user, then
     you should use the OAuth 2.0 workflows presented in this section.
 
-    For a more detailed example of an OAuth 2.0 implementation, see our guide on [How to Create an OAuth App with the Linode Python API Library](/docs/platform/api/how-to-create-an-oauth-app-with-the-linode-python-api-library/#oauth-2-authentication-exchange).
+    For a more detailed example of an OAuth 2.0 implementation, see our guide on [How to Create an OAuth App with the Linode Python API Library](/docs/products/tools/api/guides/create-an-oauth-app-with-the-python-api-library/#oauth-2-authentication-exchange).
 
     Before you implement OAuth in your application, you first need to create an OAuth client. You can do this [with the Linode API](/docs/api/account/#oauth-client-create) or [via the Cloud Manager](https://cloud.linode.com/profile/clients):
 
@@ -1759,8 +1759,7 @@ paths:
                   description: |
                     The type of Payment Method.
 
-                    Alternative Payment Methods including Google Pay and PayPal can be added using Linode Cloud Manager. See our
-                    guide on [Managing Billing in the Cloud Manager](/docs/guides/manage-billing-in-cloud-manager/)
+                    Alternative Payment Methods including Google Pay and PayPal can be added using the Cloud Manager. See the [Manage Payment Methods](/docs/products/platform/billing/guides/payment-methods/) guide
                     for details and instructions.
                   example: 'credit_card'
                 is_default:
@@ -2072,9 +2071,7 @@ paths:
       - Account
       summary: PayPal Payment Stage
       description: |
-        **Note**: This endpoint is disabled and no longer accessible. PayPal can be
-        designated as a Payment Method for automated payments using
-        [Cloud Manager](/docs/guides/manage-billing-in-cloud-manager/#adding-a-new-payment-method).
+        **Note**: This endpoint is disabled and no longer accessible. PayPal can be designated as a Payment Method for automated payments using the Cloud Manager. See [Manage Payment Methods](/docs/products/platform/billing/guides/payment-methods/).
       operationId: createPayPalPayment
       x-linode-cli-action: paypal-start
       security:
@@ -2140,9 +2137,7 @@ paths:
       - Account
       summary: Staged/Approved PayPal Payment Execute
       description: |
-        **Note**: This endpoint is disabled and no longer accessible. PayPal can be
-        designated as a Payment Method for automated payments using
-        [Cloud Manager](/docs/guides/manage-billing-in-cloud-manager/#adding-a-new-payment-method).
+        **Note**: This endpoint is disabled and no longer accessible. PayPal can be designated as a Payment Method for automated payments using the Cloud Manager. See [Manage Payment Methods](/docs/products/platform/billing/guides/payment-methods/).
       operationId: executePayPalPayment
       x-linode-cli-action: paypal-execute
       security:
@@ -2641,7 +2636,7 @@ paths:
       description: >
         Enables Linode Managed for the entire account and sends a welcome email to the account's associated
         email address. Linode Managed can monitor any service or software stack reachable over TCP or HTTP. See
-        our [Linode Managed guide](/docs/platform/linode-managed/)
+        our [Linode Managed guide](/docs/guides/linode-managed/)
         to learn more.
       operationId: enableAccountManaged
       x-linode-cli-action: enable-managed
@@ -6788,7 +6783,7 @@ paths:
 
         In an effort to fight spam, Linode restricts outbound connections on ports 25, 465, and 587
         on all Linodes for new accounts created after November 5th, 2019. For more information,
-        see [Sending Email on Linode](/docs/email/running-a-mail-server/#sending-email-on-linode).
+        see [Sending Email on Linode](/docs/guides/running-a-mail-server/#sending-email-on-linode).
 
         Linodes can be created in a number of ways:
 
@@ -6821,7 +6816,7 @@ paths:
 
         * Attached to a private VLAN.
           * Review the `interfaces` property of the [Request Body Schema](/docs/api/linode-instances/#linode-create__request-body-schema) for details.
-          * For more information, see our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/).
+          * For more information, see our guide on [Getting Started with VLANs](/docs/products/networking/vlans/get-started/).
 
         * Create an empty Linode.
           * The Linode will remain `offline` and must be manually started.
@@ -9756,7 +9751,7 @@ paths:
         If the request is not authenticated, only public StackScripts are returned.
 
 
-        For more information on StackScripts, please read our [StackScripts guides](/docs/platform/stackscripts/).
+        For more information on StackScripts, please read our [StackScripts documentation](/docs/products/tools/stackscripts/).
       operationId: getStackScripts
       x-linode-cli-action:
         - list
@@ -12132,7 +12127,7 @@ paths:
       summary: Managed SSH Key View
       description: |
         Returns the unique SSH public key assigned to your Linode account's
-        Managed service. If you [add this public key](/docs/platform/linode-managed/#adding-the-public-key) to a Linode on your account,
+        Managed service. If you [add this public key](/docs/guides/linode-managed/#adding-the-public-key) to a Linode on your account,
         Linode special forces will be able to log in to the Linode with this key
         when attempting to resolve issues.
 
@@ -14271,7 +14266,7 @@ paths:
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
 
-        **Note:** See our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/) to view additional [limitations](/docs/guides/getting-started-with-vlans/#limitations).
+        **Note:** See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) to view additional specifications and limitations.
       operationId: getVLANs
       x-linode-cli-action:
         - list
@@ -16590,7 +16585,7 @@ paths:
       description: |
         The amount of outbound data transfer used by your account's Object Storage buckets.
         Object Storage adds 1 terabyte of outbound data transfer to your data transfer pool.
-        See the [Object Storage Pricing and Limitations](/docs/guides/pricing-and-limitations/)
+        See the [Object Storage Overview](/docs/products/storage/object-storage/#pricing)
         guide for details on Object Storage transfer quotas.
 
       tags:
@@ -20776,7 +20771,7 @@ components:
           description: |
             This field is required only if the StackScript being deployed requires input
             data from the User for successful completion. See
-            [User Defined Fields (UDFs)](/docs/guides/writing-scripts-for-use-with-linode-stackscripts-a-tutorial/#user-defined-fields-udfs)
+            [User Defined Fields (UDFs)](/docs/products/tools/stackscripts/guides/write-a-custom-script/#declare-user-defined-fields-udfs)
             for more details. This field is required to be valid JSON.
     Domain:
       type: object
@@ -20962,9 +20957,7 @@ components:
           - CAA
           description: >
             The type of Record this is in the DNS system. For example, A
-            records associate a domain name with an IPv4 address, and AAAA
-            records associate a domain name with an IPv6 address. For more information, see our guide on
-            [DNS Records](/docs/guides/dns-records-an-introduction).
+            records associate a domain name with an IPv4 address, and AAAA records associate a domain name with an IPv6 address. For more information, see the guides on [DNS Record Types](/docs/products/networking/dns-manager/guides/#dns-record-types).
           example: A
           x-linode-filterable: true
           x-linode-cli-display: 2
@@ -20990,7 +20983,7 @@ components:
             `CAA`: The subdomain. Omit or enter an empty string (`""`) to apply to the entire Domain.
 
             `PTR`: See our guide on how to [Configure Your Linode for Reverse DNS
-            (rDNS)](/docs/guides/configure-your-linode-for-reverse-dns).
+            (rDNS)](/docs/guides/configure-rdns/).
           minLength: 1
           maxLength: 100
           example: test
@@ -21027,7 +21020,7 @@ components:
               * `iodef`: Must be either (1) a valid domain, (2) a valid domain prepended with `http://` or `https://`, or (3) a valid email address prepended with `mailto:`.
 
             `PTR`: Required. See our guide on how to [Configure Your Linode for Reverse DNS
-            (rDNS)](/docs/guides/configure-your-linode-for-reverse-dns).
+            (rDNS)](/docs/guides/configure-rdns/).
 
             With the exception of A, AAAA, and CAA records, this field accepts a trailing period.
           example: 192.0.2.0
@@ -23171,7 +23164,7 @@ components:
 
             Only used for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
 
-            The Linode is configured to use this address for the associated interface upon reboot if Network Helper is enabled. If Network Helper is disabled, the address can be enabled with [manual static IP configuration](/docs/guides/linux-static-ip-configuration/).
+            The Linode is configured to use this address for the associated interface upon reboot if Network Helper is enabled. If Network Helper is disabled, the address can be enabled with [manual static IP configuration](/docs/guides/manual-network-configuration/).
 
             Must be unique among the Linode's interfaces.
           example: '10.0.0.1/24'
@@ -23218,7 +23211,7 @@ components:
         the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
 
-        **Note:** See our guide on [Getting Started with VLANs](/docs/guides/getting-started-with-vlans/) to view additional [limitations](/docs/guides/getting-started-with-vlans/#limitations).
+        **Note:** See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
     LinodeRequest:
       type: object
       description: Common properties for creating and rebuilding Linodes.
@@ -25747,17 +25740,13 @@ components:
           - keys_only
           - disabled
           description: >
-            The authentication methods that are allowed when connecting to
-            [the Linode Shell (Lish)](/docs/platform/manager/using-the-linode-shell-lish/).
+            The authentication methods that are allowed when connecting to [the Linode Shell (Lish)](/docs/guides/lish/).
 
             * `keys_only` is the most secure if you intend to use Lish.
 
-            * `disabled` is recommended if you do not intend to use Lish at
-            all.
+            * `disabled` is recommended if you do not intend to use Lish at all.
 
-            * If this account's Cloud Manager authentication type is set to a Third-Party Authentication method, `password_keys` cannot
-            be used as your Lish authentication method. To view this account's Cloud Manager `authentication_type` field, send a request
-            to the [View Profile](/docs/api/profile/#profile-view) endpoint.
+            * If this account's Cloud Manager authentication type is set to a Third-Party Authentication method, `password_keys` cannot be used as your Lish authentication method. To view this account's Cloud Manager `authentication_type` field, send a request to the [View Profile](/docs/api/profile/#profile-view) endpoint.
           example: keys_only
         authorized_keys:
           type: array
@@ -25995,7 +25984,7 @@ components:
         images:
           type: array
           description: |
-            An array of Image IDs. These are the Images that can be deployed with this Stackscript.
+            An array of Image IDs. These are the Images that can be deployed with this StackScript.
 
             `any/all` indicates that all available Images, including private Images, are accepted.
           items:
@@ -26059,9 +26048,7 @@ components:
         user_defined_fields:
           type: array
           description: >
-            This is a list of fields defined with a special syntax inside this StackScript
-            that allow for supplying customized parameters during deployment. See
-            <a target="_top" href="/docs/platform/stackscripts/#variables-and-udfs">Variables and UDFs</a>
+            This is a list of fields defined with a special syntax inside this StackScript that allow for supplying customized parameters during deployment. See [Declare User-Defined Fields (UDFs)](/docs/products/tools/stackscripts/guides/write-a-custom-script/#declare-user-defined-fields-udfs)
             for more information.
           items:
             $ref: '#/components/schemas/UserDefinedField'
@@ -26302,7 +26289,7 @@ components:
             Hello,\nI'm sorry to hear that you are having trouble resetting the
             root password of your Linode. Just to be sure, have you tried to
             follow the instructions in our online documentation? The link is here:\n
-            \nhttps://linode.com/docs/quick-answers/linode-platform/reset-the-root-password-on-your-linode/
+            \nhttps://linode.com/docs/guides/reset-the-root-password-on-your-linode/
             \n\nIf you have, please reply with any additional steps you have also
             taken.\n\nRegards, Linode Support Team
         from_linode:
