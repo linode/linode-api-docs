@@ -7638,6 +7638,7 @@ paths:
                     The label to assign this Linode when cloning to a new Linode.
 
                     * Can only be provided when cloning to a new Linode.
+
                     * Defaults to "linode".
                   example: cloned-linode
                 group:
@@ -7700,6 +7701,13 @@ paths:
                   items:
                     type: integer
                     example: 23456
+                private_ip:
+                    type: boolean
+                    description: >
+                      If true, the created Linode will have private networking enabled and assigned a private IPv4 address.
+
+                      * Can only be provided when cloning to a new Linode.
+                    example: true
       responses:
         '200':
           description: Clone started.
@@ -7722,7 +7730,8 @@ paths:
                 "group": "Linode-Group",
                 "backups_enabled": true,
                 "disks": [25674],
-                "configs": [23456]
+                "configs": [23456],
+                "private_ip": true
               }' \
               https://api.linode.com/v4/linode/instances/123/clone
       - lang: CLI
@@ -7734,7 +7743,8 @@ paths:
             --label cloned-linode \
             --backups_enabled true \
             --disks 25674 \
-            --configs 23456
+            --configs 23456 \
+            --private_ip true
   /linode/instances/{linodeId}/configs:
     parameters:
     - name: linodeId
