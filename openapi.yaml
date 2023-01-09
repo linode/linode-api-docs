@@ -1228,22 +1228,15 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       tags:
       - Account
       summary: Maintenance List
-      description: >
-        Returns a collection of Maintenance objects for any entity
-        a user has permissions to view.
-
+      description: |
+        Returns a collection of Maintenance objects for any entity a user has permissions to view.
 
         Currently, Linodes are the only entities available for viewing.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       operationId: getMaintenance
       x-linode-cli-action: maintenance-list
       security:
@@ -1273,7 +1266,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/account/maintenance
+                https://api.linode.com/v4/account/maintenance
         - lang: CLI
           source: >
             linode-cli account maintenance-list
