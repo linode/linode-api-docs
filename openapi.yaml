@@ -15402,10 +15402,9 @@ paths:
       description: |
         Creates an Object Storage Bucket in the specified cluster.
 
-        Your Account must not have a negative balance to access this command.
+        Accounts with negative balances cannot access this command.
 
         If the bucket already exists and is owned by you, this endpoint returns a `200` response with that bucket as if it had just been created.
-
 
         This endpoint is available for convenience. It is recommended that instead you use the more [fully-featured S3 API](https://docs.ceph.com/en/latest/radosgw/s3/bucketops/#put-bucket) directly.
       tags:
@@ -16231,7 +16230,7 @@ paths:
       description: |
         Provisions a new Object Storage Key on your account.
 
-        Your Account must not have a negative balance to access this command.
+        Accounts with negative balances cannot access this command.
 
         * To create a Limited Access Key with specific permissions, send a `bucket_access` array.
 
