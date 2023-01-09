@@ -23997,15 +23997,12 @@ components:
           type: string
           enum:
           - completed
-          - ready
-          - scheduled
+          - pending
           - started
-          - ticketing
-          - ticketed
           description: |
             The maintenance status.
 
-            Maintenance progresses in the following sequence: ticketing, ticketed, scheduled, ready, started, then completed.
+            Maintenance progresses in the following sequence: pending, started, then completed.
           example: started
         reason:
           type: string
