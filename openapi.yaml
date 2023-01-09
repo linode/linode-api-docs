@@ -23619,6 +23619,7 @@ components:
         region:
           type: string
           description: This Kubernetes cluster's location.
+          x-linode-filterable: true
           x-linode-cli-display: 3
           example: us-central
         k8s_version:
@@ -23626,6 +23627,8 @@ components:
           description: >
             The desired Kubernetes version for this Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
             and the latest supported patch version will be deployed.
+          x-linode-filterable: true
+          x-linode-cli-display: 4
           example: "1.24"
         control_plane:
           type: object
@@ -23636,6 +23639,7 @@ components:
               type: boolean
               description: >
                 Defines whether High Availability is enabled for the Control Plane Components of the cluster. Defaults to `false`.
+              x-linode-cli-display: 5
               example: true
         tags:
           x-linode-filterable: true
