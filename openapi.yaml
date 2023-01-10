@@ -1228,22 +1228,15 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
+      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       tags:
       - Account
       summary: Maintenance List
-      description: >
-        Returns a collection of Maintenance objects for any entity
-        a user has permissions to view.
-
+      description: |
+        Returns a collection of Maintenance objects for any entity a user has permissions to view. Cancelled Maintenance objects are not returned.
 
         Currently, Linodes are the only entities available for viewing.
-
-
-        **Beta**: This endpoint is in beta. Please make sure to prepend all requests with
-        `/v4beta` instead of `/v4`, and be aware that this endpoint may receive breaking
-        updates in the future. This notice will be removed when this endpoint is out of
-        beta.
       operationId: getMaintenance
       x-linode-cli-action: maintenance-list
       security:
@@ -1273,7 +1266,7 @@ paths:
         - lang: Shell
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4beta/account/maintenance
+                https://api.linode.com/v4/account/maintenance
         - lang: CLI
           source: >
             linode-cli account maintenance-list
@@ -18014,6 +18007,7 @@ paths:
                 Arbitrary JSON of your choosing. Overwrites any existing preferences for this user.
 
                 Total length cannot exceed 65,535 characters.
+              maxLength: 65535
       responses:
         '200':
           description: Returns an object of user preferences.
@@ -20809,10 +20803,12 @@ components:
           example:
             gh_username: linode
           description: |
-            This field is required only if the StackScript being deployed requires input
-            data from the User for successful completion. See
-            [User Defined Fields (UDFs)](/docs/products/tools/stackscripts/guides/write-a-custom-script/#declare-user-defined-fields-udfs)
-            for more details. This field is required to be valid JSON.
+            This field is required only if the StackScript being deployed requires input data from the User for successful completion. See [User Defined Fields (UDFs)](/docs/guides/writing-scripts-for-use-with-linode-stackscripts-a-tutorial/#user-defined-fields-udfs) for more details.
+
+            This field is required to be valid JSON.
+
+            Total length cannot exceed 65,535 characters.
+          maxLength: 65535
     Domain:
       type: object
       description: >
@@ -24036,10 +24032,13 @@ components:
           x-linode-filterable: true
           type: string
           enum:
+          - completed
           - pending
           - started
-          description: >
+          description: |
             The maintenance status.
+
+            Maintenance progresses in the following sequence: pending, started, then completed.
           example: started
         reason:
           type: string
