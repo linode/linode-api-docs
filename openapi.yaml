@@ -21529,6 +21529,7 @@ components:
         username:
           type: string
           readOnly: true
+          nullable: true
           description: >
             The username of the User who caused the Event.
           example: exampleUser
