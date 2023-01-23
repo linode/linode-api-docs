@@ -13053,7 +13053,6 @@ paths:
     x-linode-cli-command: networking
     post:
       servers:
-      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-grant: read_write
       tags:
@@ -13100,7 +13099,7 @@ paths:
                   "2001:db8:3c4d:15::"
                 ]
               }' \
-              https://api.linode.com/v4/networking/ips/share
+              https://api.linode.com/v4beta/networking/ips/share
       - lang: CLI
         source: >
           linode-cli networking ip-share \
