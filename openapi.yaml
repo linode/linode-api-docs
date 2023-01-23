@@ -21033,6 +21033,7 @@ components:
           example: 192.0.2.0
           x-linode-filterable: true
           x-linode-cli-display: 4
+          maxLength: 65535
         priority:
           type: integer
           minimum: 0
