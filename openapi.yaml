@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.142.2
+  version: 4.143.1
 
   title: Linode API
   description: |
@@ -10766,37 +10766,32 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: object
+                  id:
+                    type: string
+                    readOnly: true
                     description: >
-                      The selected node in the cluster.
-                    properties:
-                      id:
-                        type: string
-                        readOnly: true
-                        description: >
-                          The Node's ID.
-                        example: "12345-6aa78910bc"
-                      instance_id:
-                        type: integer
-                        description: >
-                          The Linode's ID. If no Linode is currently provisioned for this Node, this is `null`.
-                        example: 123456
-                      status:
-                        type: string
-                        description: >
-                          The creation status of this Node. This status is distinct from this Node's readiness as a
-                          Kubernetes Node Object as determined by the command `kubectl get nodes`.
+                      The Node's ID.
+                    example: "12345-6aa78910bc"
+                  instance_id:
+                    type: integer
+                    description: >
+                      The Linode's ID. If no Linode is currently provisioned for this Node, this is `null`.
+                    example: 123456
+                  status:
+                    type: string
+                    description: >
+                      The creation status of this Node. This status is distinct from this Node's readiness as a
+                      Kubernetes Node Object as determined by the command `kubectl get nodes`.
 
 
-                          `not_ready` indicates that the Linode is still being created.
+                      `not_ready` indicates that the Linode is still being created.
 
 
-                          `ready` indicates that the Linode has successfully been created and is running Kubernetes software.
-                        enum:
-                        - ready
-                        - not_ready
-                        example: ready
+                      `ready` indicates that the Linode has successfully been created and is running Kubernetes software.
+                    enum:
+                    - ready
+                    - not_ready
+                    example: ready
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -13058,7 +13053,6 @@ paths:
     x-linode-cli-command: networking
     post:
       servers:
-      - url: https://api.linode.com/v4
       - url: https://api.linode.com/v4beta
       x-linode-grant: read_write
       tags:
@@ -13105,7 +13099,7 @@ paths:
                   "2001:db8:3c4d:15::"
                 ]
               }' \
-              https://api.linode.com/v4/networking/ips/share
+              https://api.linode.com/v4beta/networking/ips/share
       - lang: CLI
         source: >
           linode-cli networking ip-share \
