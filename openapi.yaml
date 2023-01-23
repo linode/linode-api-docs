@@ -15145,7 +15145,7 @@ paths:
               https://api.linode.com/v4/nodebalancers/12345/configs/4567/nodes
       - lang: CLI
         source: >
-          linode-cli nodebalancers node-create \
+          linode-cli nodebalancers node-update \
             12345 4567 \
             --address 192.168.210.120:80 \
             --label node54321 \
