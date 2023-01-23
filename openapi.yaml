@@ -22053,16 +22053,18 @@ components:
           x-linode-cli-display: 7
           type: string
           readOnly: true
+          x-linode-filterable: true
           enum:
           - creating
           - pending_upload
           - available
           description: |
-            The current status of this Image.  Only Images in an "available" status
-            can be deployed.  Images in a "creating" status are being created from
-            a Linode Disk, and will become "available" shortly.  Images in a
-            "pending_upload" status are waiting for data to be [uploaded](/docs/api/images/#image-upload),
-            and become "available" after the upload and processing are complete.
+            The current status of this Image.
+
+            Only Images in an "available" status can be deployed. Images in a "creating" status are being created from a Linode Disk, and will become "available" shortly. Images in a "pending_upload" status are waiting for data to be [uploaded](/docs/api/images/#image-upload), and become "available" after the upload and processing are complete.
+
+            The "+order_by" and "+order" operators are not available for [filtering](/docs/api/#filtering-and-sorting) on this key.
+          example: available
     Invoice:
       type: object
       description: Account Invoice object
