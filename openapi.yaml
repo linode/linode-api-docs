@@ -20002,7 +20002,7 @@ components:
           description: |
             The label for the Database snapshot backup.
 
-            * Must include only ASCII letters or numbers.
+            * Must include only ASCII letters, numbers, or underscores.
             * Must be unique among other backup labels for this Database.
           example: db-snapshot
         target:
