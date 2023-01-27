@@ -21889,49 +21889,49 @@ components:
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each Linode that is owned by this Account.
+            The grants this User has for each Linode that is owned by this Account.
         database:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each Database that is owned by this Account.
+            The grants this User has for each Database that is owned by this Account.
         domain:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each Domain that is owned by this Account.
+            The grants this User has for each Domain that is owned by this Account.
         nodebalancer:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each NodeBalancer that is owned by this Account.
+            The grants this User has for each NodeBalancer that is owned by this Account.
         image:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each Image that is owned by this Account.
+            The grants this User has for each Image that is owned by this Account.
         longview:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each Longview Client that is owned by this Account.
+            The grants this User has for each Longview Client that is owned by this Account.
         stackscript:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each StackScript that is owned by this Account.
+            The grants this User has for each StackScript that is owned by this Account.
         volume:
           type: array
           items:
             $ref: '#/components/schemas/Grant'
           description: >
-            A collection of this User's permissions for each Block Storage Volume that is owned by this Account.
+            The grants this User has for each Block Storage Volume that is owned by this Account.
     Image:
       type: object
       description: Image object
