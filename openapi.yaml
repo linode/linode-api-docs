@@ -6120,8 +6120,10 @@ paths:
       - oauth:
         - domains:read_write
       summary: Domain Record Create
-      description: >
+      description: |
         Adds a new Domain Record to the zonefile this Domain represents.
+
+        Each domain can have up to 12,000 active records.
       operationId: createDomainRecord
       x-linode-cli-action: records-create
       requestBody:
