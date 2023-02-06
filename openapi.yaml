@@ -25887,12 +25887,18 @@ components:
           description: The unique ID of this Region.
           example: us-east
           x-linode-cli-display: 1
+        label:
+          type: string
+          description: Detailed location information for this Region, including city, state or region, and country.
+          example: Newark, NJ, USA
+          readOnly: true
+          x-linode-cli-display: 2
         country:
           type: string
           description: The country where this Region resides.
           example: us
           readOnly: true
-          x-linode-cli-display: 2
+          x-linode-cli-display: 3
         capabilities:
           type: array
           items:
@@ -25905,7 +25911,7 @@ components:
           - Block Storage
           - Object Storage
           readOnly: true
-          x-linode-cli-display: 3
+          x-linode-cli-display: 4
         status:
           type: string
           description: >
@@ -25915,11 +25921,11 @@ components:
           - ok
           - outage
           readOnly: true
-          x-linode-cli-display: 4
+          x-linode-cli-display: 5
         resolvers:
           type: object
           readOnly: true
-          x-linode-cli-display: 5
+          x-linode-cli-display: 6
           properties:
             ipv4:
               type: string
