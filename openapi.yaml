@@ -11096,6 +11096,8 @@ paths:
         This is a helper command that allows performing both the [Kubeconfig Delete](#kubeconfig-delete) and the [Service Token Delete](#service-token-delete) actions with a single request.
 
         When using this command, at least one of `kubeconfig` or `servicetoken` is required.
+
+        **Note**: When regenerating a service account token, the Cluster's control plane components and Linode CSI drivers are also restarted and configured with the new token. High Availability Clusters should not experience any disruption, while standard Clusters may experience brief control plane downtime while components are restarted.
       requestBody:
         description: The Kubernetes Cluster Regenerate request object.
         content:
@@ -11159,6 +11161,8 @@ paths:
       summary: Service Token Delete
       description: |
         Delete and regenerate the service account token for a Cluster.
+
+        **Note**: When regenerating a service account token, the Cluster's control plane components and Linode CSI drivers are also restarted and configured with the new token. High Availability Clusters should not experience any disruption, while standard Clusters may experience brief control plane downtime while components are restarted.
       responses:
         '200':
           description: Service token deleted and regenerated successfully.
