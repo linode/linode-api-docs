@@ -16231,23 +16231,23 @@ paths:
       - lang: Shell
         source: >
           curl -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $TOKEN" \
-            -X POST -d '{
-            "label": "my-object-storage-key",
-            "bucket_access": [
-              {
-                "cluster": "ap-south-1",
-                "bucket_name": "bucket-example-1",
-                "permissions": "read_write"
-              },
-              {
-                "cluster": "us-east-1",
-                "bucket_name": "bucket-example-2",
-                "permissions": "read_only"
-              }
-            ]
-          }' \
-          https://api.linode.com/v4/object-storage/keys
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "my-object-storage-key",
+                "bucket_access": [
+                  {
+                    "cluster": "ap-south-1",
+                    "bucket_name": "bucket-example-1",
+                    "permissions": "read_write"
+                  },
+                  {
+                    "cluster": "us-east-1",
+                    "bucket_name": "bucket-example-2",
+                    "permissions": "read_only"
+                  }
+                ]
+              }' \
+            https://api.linode.com/v4/object-storage/keys
       - lang: CLI
         source: >
           linode-cli object-storage keys-create \
