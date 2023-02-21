@@ -11071,6 +11071,116 @@ paths:
       - lang: CLI
         source: >
           linode-cli lke kubeconfig-delete 12345
+  /lke/clusters/{clusterId}/regenerate:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the target Kubernetes cluster.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: lke
+    post:
+      operationId: postLKEClusterRegenerate
+      x-linode-cli-action: regenerate
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Kubernetes Cluster Regenerate
+      description: |
+        Regenerate the Kubeconfig file and/or the service account token for a Cluster.
+
+        This is a helper command that allows performing both the [Kubeconfig Delete](#kubeconfig-delete) and the [Service Token Delete](#service-token-delete) actions with a single request.
+
+        When using this command, at least one of `kubeconfig` or `servicetoken` is required.
+
+        **Note**: When regenerating a service account token, the Cluster's control plane components and Linode CSI drivers are also restarted and configured with the new token. High Availability Clusters should not experience any disruption, while standard Clusters may experience brief control plane downtime while components are restarted.
+      requestBody:
+        description: The Kubernetes Cluster Regenerate request object.
+        content:
+          application/json:
+            schema:
+              properties:
+                kubeconfig:
+                  type: boolean
+                  default: false
+                  example: true
+                  description: |
+                    Whether to delete and regenerate the Kubeconfig file for this Cluster.
+                servicetoken:
+                  type: boolean
+                  default: false
+                  example: true
+                  description: |
+                    Whether to delete and regenerate the service access token for this Cluster.
+      responses:
+        '200':
+          description: Regenerate request successful.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "kubeconfig": true;
+                  "servicetoken": true
+                }' \
+                https://api.linode.com/v4/lke/clusters/12345/regenerate
+      - lang: CLI
+        source: >
+          linode-cli lke regenerate 12345 \
+              --kubeconfig true \
+              --servicetoken true
+  /lke/clusters/{clusterId}/servicetoken:
+    parameters:
+    - name: clusterId
+      in: path
+      description: ID of the target Kubernetes cluster.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: lke
+    delete:
+      operationId: postLKECServiceTokenDelete
+      x-linode-cli-action: service-token-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - lke:read_write
+      tags:
+      - Linode Kubernetes Engine (LKE)
+      summary: Service Token Delete
+      description: |
+        Delete and regenerate the service account token for a Cluster.
+
+        **Note**: When regenerating a service account token, the Cluster's control plane components and Linode CSI drivers are also restarted and configured with the new token. High Availability Clusters should not experience any disruption, while standard Clusters may experience brief control plane downtime while components are restarted.
+      responses:
+        '200':
+          description: Service token deleted and regenerated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4/lke/clusters/12345/servicetoken
+      - lang: CLI
+        source: >
+          linode-cli lke service-token-delete 12345
   /lke/versions:
     x-linode-cli-command: lke
     get:
