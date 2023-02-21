@@ -6029,7 +6029,7 @@ paths:
                   type: string
                   pattern: \A(\*\.)?([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)\Z
                   minLength: 1
-                  maxLength: 255
+                  maxLength: 253
                   description: >
                     The new domain for the clone. Domain labels cannot be longer than
                     63 characters and must conform to [RFC1035](https://tools.ietf.org/html/rfc1035).
@@ -20803,7 +20803,7 @@ components:
           type: string
           pattern: \A(\*\.)?([a-zA-Z0-9-_]{1,63}\.)+([a-zA-Z]{2,3}\.)?([a-zA-Z]{2,16}|xn--[a-zA-Z0-9]+)\Z
           minLength: 1
-          maxLength: 255
+          maxLength: 253
           description: >
             The domain this Domain represents. Domain labels cannot be longer than
             63 characters and must conform to [RFC1035](https://tools.ietf.org/html/rfc1035).
@@ -20840,7 +20840,7 @@ components:
         description:
           type: string
           minLength: 1
-          maxLength: 255
+          maxLength: 253
           description: |
             A description for this Domain. This is for display purposes only.
           example: null
