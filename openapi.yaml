@@ -24019,17 +24019,27 @@ components:
         username:
           type: string
           description: >
-            The username of the User that was logged into.
+            The username of the User that attempted the login.
           example: example_user
           readOnly: true
           x-linode-cli-display: 4
+        status:
+          type: string
+          enum:
+            - successful
+            - failed
+          description: |
+            Whether the login attempt succeeded or failed.
+          example: successful
+          readOnly: true
+          x-linode-cli-display: 5
         restricted:
           type: boolean
           description: >
-            True if the User that was logged into was a restricted User, false otherwise.
+            True if the User that attempted the login was a restricted User, false otherwise.
           example: true
           readOnly: true
-          x-linode-cli-display: 5
+          x-linode-cli-display: 6
     LongviewSubscription:
       type: object
       description: >
