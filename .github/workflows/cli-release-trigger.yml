@@ -4,7 +4,7 @@ on:
     types: [ published ]
 jobs:
   trigger-cli-release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Generate App Installation Token
         id: generate_token
