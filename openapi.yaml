@@ -23556,12 +23556,12 @@ components:
             Cost in US dollars, broken down into hourly and monthly charges.
           properties:
             hourly:
-              type: integer
+              type: number
               description: Cost (in US dollars) per hour.
               example: 0.03
               x-linode-cli-display: 9
             monthly:
-              type: integer
+              type: number
               description: Cost (in US dollars) per month.
               example: 20
               x-linode-cli-display: 10
@@ -23583,12 +23583,12 @@ components:
                   description: Cost of enabling Backups for this Linode Type.
                   properties:
                     hourly:
-                      type: integer
+                      type: number
                       description: >
                         The cost (in US dollars) per hour to add Backups service.
                       example: 0.008
                     monthly:
-                      type: integer
+                      type: number
                       description: >
                         The cost (in US dollars) per month to add Backups service.
                       example: 5
