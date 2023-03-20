@@ -14385,7 +14385,7 @@ paths:
               https://api.linode.com/v4beta/networking/vlans/
       - lang: CLI
         source: >
-          linode-cli networking vlans-list
+          linode-cli vlans list
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
