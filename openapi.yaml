@@ -17160,11 +17160,14 @@ paths:
                 scopes:
                   type: string
                   format: oauth-scope
-                  description: >
-                    The scopes to create the token with.  These cannot be changed
-                    after creation, and may not exceed the scopes of the acting token.
-                    If omitted, the new token will have the same scopes as the acting
-                    token.
+                  description: |
+                    The access [scopes](/docs/api#oauth-reference) to grant to the created token. These cannot be changed after creation, and may not exceed the scopes of the acting token.
+
+                    If omitted or entered with a wildcard character (`*`), the new token will have the same scopes as the acting token.
+
+                    Multiple scopes are separated by a space character (` `).
+
+                    For example, `linodes:read_write account:read_only`.
                   example: '*'
                 expiry:
                   type: string
