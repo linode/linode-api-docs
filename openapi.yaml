@@ -3334,6 +3334,7 @@ paths:
     #   requestBody:
     #     description: Information about the Managed MongoDB Database you are creating.
     #     x-linode-cli-allowed-defaults:
+    #     - engine
     #     - region
     #     - type
     #     required: true
@@ -4114,6 +4115,7 @@ paths:
       requestBody:
         description: Information about the Managed MySQL Database you are creating.
         x-linode-cli-allowed-defaults:
+        - engine
         - region
         - type
         required: true
@@ -4867,6 +4869,7 @@ paths:
       requestBody:
         description: Information about the Managed PostgreSQL Database you are creating.
         x-linode-cli-allowed-defaults:
+        - engine
         - region
         - type
         required: true
