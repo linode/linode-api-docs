@@ -6826,6 +6826,10 @@ paths:
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
 
+        * **BETA** Using cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/).
+          * Automate system configuration and software installation by providing a base-64 encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) file.
+          * This feature is in beta and is currently limited to certain Regions and distributions. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
+
         **Important**: You must be an unrestricted User in order to add or modify
         tags on Linodes.
       tags:
@@ -22207,6 +22211,17 @@ components:
 
             The "+order_by" and "+order" operators are not available for [filtering](/docs/api/#filtering-and-sorting) on this key.
           example: available
+        capabilities:
+          type: array
+          readOnly: true
+          items:
+            type: object
+            description: A list of capabilities of this Image.
+            properties:
+              cloud-init:
+                type: boolean
+                example: false
+                description: Whether this Image supports cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/). Only applies to public Images.
     Invoice:
       type: object
       description: Account Invoice object
@@ -23388,6 +23403,22 @@ components:
             If it is deployed from an Image or a Backup and you wish it to remain `offline`
             after deployment, set this to `false`.
           default: true
+        metadata:
+          type: object
+          writeOnly: true
+          description: |
+            An object containing user-defined data relevant to the creation of Linodes.
+          properties:
+            user_data:
+              type: string
+              format: byte
+              description: |
+                Base64-encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) data.
+
+                Must not be included when cloing to an existing Linode.
+
+                Unencoded data must not exceed 65535 bytes, or about 16kb encoded.
+              example: I2Nsb3VkLWNvbmZpZwpwYWNrYWdlX3VwZGF0ZTogdHJ1ZQpwYWNrYWdlX3VwZ3JhZGU6IHRydWU=
     LinodeStats:
       type: object
       description: >
