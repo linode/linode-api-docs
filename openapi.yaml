@@ -1683,7 +1683,7 @@ paths:
           curl -H "Content-Type: image/png" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT \
-              --data-binary "/path/to/image"
+              --data-binary "@/path/to/image"
               https://api.linode.com/v4/account/oauth-clients/edc6790ea9db4d224c5c/thumbnail
   /account/payment-methods:
     x-linode-cli-command: payment-methods
