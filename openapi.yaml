@@ -21643,6 +21643,7 @@ components:
           readOnly: true
           description: If this Event has been read.
           example: true
+          x-linode-filterable: true
         seen:
           type: boolean
           readOnly: true
