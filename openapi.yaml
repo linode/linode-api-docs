@@ -22566,7 +22566,7 @@ components:
           format: ip
           description: >
             The subnet mask.
-          example: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+          example: "ffff:ffff:ffff:ffff::"
           readOnly: true
         prefix:
           type: integer
@@ -22633,7 +22633,7 @@ components:
           format: ip
           description: >
             The subnet mask.
-          example: ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff
+          example: "ffff:ffff:ffff:ffff::"
           readOnly: true
         prefix:
           type: integer
