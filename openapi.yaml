@@ -7804,7 +7804,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Content-Type: application/json" \
+          curl -H -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/ips
       - lang: CLI
         source: >
@@ -7916,7 +7916,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H "Content-Type: application/json" \
+          curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/ips/97.107.143.141
       - lang: CLI
         source: >
