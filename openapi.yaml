@@ -7798,7 +7798,7 @@ paths:
                       slaac:
                         $ref: '#/components/schemas/IPAddressV6Slaac'
                       global:
-                        $ref: '#/components/schemas/IPv6Pool'
+                        $ref: '#/components/schemas/IPv6Range'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
