@@ -7804,7 +7804,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl -H -H "Authorization: Bearer $TOKEN" \
+          curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/linode/instances/123/ips
       - lang: CLI
         source: >
@@ -21732,7 +21732,7 @@ components:
         prefix:
           type: integer
           description: >
-            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2 <sup>prefix length</sup>.
+            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2<sup>(128 - prefix length)</sup>.
           example: 124
           x-linode-cli-display: 2
         region:
@@ -21757,14 +21757,14 @@ components:
         range:
           type: string
           description: >
-            The IPv6 range of addresses in this pool.
+            The IPv6 address of this range.
           example: '2600:3c01::'
           readOnly: true
           x-linode-cli-display: 1
         prefix:
           type: integer
           description: >
-            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2 <sup>prefix length</sup>.
+            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2<sup>(128 - prefix length)</sup>.
           example: 64
           x-linode-cli-display: 2
         region:
@@ -21777,9 +21777,8 @@ components:
         route_target:
           type: string
           description: >
-            The last address in this block of IPv6 addresses.
+            The IPv6 SLAAC address.
           example: '2600:3c01::ffff:ffff:ffff:ffff'
-          nullable: true
     IPv6RangeBGP:
       type: object
       description: >
@@ -21788,14 +21787,14 @@ components:
         range:
           type: string
           description: >
-            The IPv6 range of addresses in this pool.
+            The IPv6 address of this range.
           example: '2600:3c01::'
           readOnly: true
           x-linode-cli-display: 1
         prefix:
           type: integer
           description: >
-            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2 <sup>prefix length</sup>.
+            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2<sup>(128 - prefix length)</sup>.
           example: 64
           x-linode-cli-display: 2
         region:
