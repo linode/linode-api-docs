@@ -21732,8 +21732,7 @@ components:
         prefix:
           type: integer
           description: >
-            The prefix length of the address, denoting how many addresses can be
-            assigned from this pool calculated as 2 <sup>128-prefix</sup>.
+            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2 <sup>prefix length</sup>.
           example: 124
           x-linode-cli-display: 2
         region:
@@ -21765,8 +21764,7 @@ components:
         prefix:
           type: integer
           description: >
-            The prefix length of the address, denoting how many addresses can be
-            assigned from this range calculated as 2 <sup>128-prefix</sup>.
+            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2 <sup>prefix length</sup>.
           example: 64
           x-linode-cli-display: 2
         region:
@@ -21797,8 +21795,7 @@ components:
         prefix:
           type: integer
           description: >
-            The prefix length of the address, denoting how many addresses can be
-            assigned from this range calculated as 2 <sup>128-prefix</sup>.
+            The prefix length of the address. The total number of addresses that can be assigned from this range is calculated as 2 <sup>prefix length</sup>.
           example: 64
           x-linode-cli-display: 2
         region:
