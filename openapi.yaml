@@ -6621,8 +6621,13 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Backup Restore
-      description: >
+      description: |
         Restores a Linode's Backup to the specified Linode.
+
+        The following conditions apply:
+          * Backups may not be restored across Regions.
+          * Only successfully completed Backups that are not undergoing maintenance can be restored.
+          * The Linode that the Backup is being restored to must not itself be in the process of creating a Backup.
       tags:
       - Linode Instances
       operationId: restoreBackup
