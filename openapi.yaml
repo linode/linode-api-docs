@@ -378,6 +378,10 @@ info:
 
     * [Linode Create](/docs/api/linode-instances/#linode-create)
 
+    Creating Volumes has a dedicated rate limit of 25 requests per minute. That endpoint is:
+
+    * [Volume Create](/docs/api/volumes/#volume-create)
+
     `/stats` endpoints have their own dedicated rate limits of 100 requests per minute. These endpoints are:
 
     * [View Linode Statistics](/docs/api/linode-instances/#linode-statistics-view)
