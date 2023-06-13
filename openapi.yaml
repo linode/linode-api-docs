@@ -12147,9 +12147,10 @@ paths:
       tags:
       - Networking
       summary: IP Addresses List
-      description: >
-        Returns a paginated list of IP Addresses on your Account, excluding
-        private addresses.
+      description: |
+        Returns a paginated list of IP Addresses on your Account, excluding private addresses.
+
+        We recommend utilizing the "skip_ipv6_rdns" option to improve performance if your application frequently accesses this command and does not require IPv6 RDNS data.
       operationId: getIPs
       x-linode-cli-action: ips-list
       security:
@@ -12168,11 +12169,9 @@ paths:
                   type: boolean
                   default: false
                   description: |
-                    This option provides the ability to exclude IPv6 RDNS data from the response.
+                    When `true`, the "rdns" property for any "ipv6" type addresses always returns `null` regardless of whether RDNS data exists for the address.
 
                     The default value is `false`.
-
-                    When `true`, the "rdns" property for any "ipv6" type addresses always returns `null` regardless of whether RDNS data exists for the address.
       responses:
         '200':
           description: A paginated list of IP Addresses.
