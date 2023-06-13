@@ -12156,6 +12156,23 @@ paths:
       - personalAccessToken: []
       - oauth:
         - ips:read_only
+      requestBody:
+        description: Options to request additional data.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skip_ipv6_rdns:
+                  type: boolean
+                  default: false
+                  description: |
+                    This option provides the ability to exclude IPv6 RDNS data from the response.
+
+                    The default value is `false`.
+
+                    When `true`, the "rdns" property for any "ipv6" type addresses always returns `null` regardless of whether RDNS data exists for the address.
       responses:
         '200':
           description: A paginated list of IP Addresses.
@@ -12180,10 +12197,14 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
+              -H "Content-Type: application/json" \
+              -X GET -d '{
+                "skip_ipv6_rdns": false
+                }' \
               https://api.linode.com/v4/networking/ips
       - lang: CLI
         source: >
-          linode-cli networking ips-list
+          linode-cli networking ips-list --skip_ipv6_rdns false
     post:
       x-linode-grant: read_write
       tags:
