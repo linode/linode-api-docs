@@ -24903,6 +24903,7 @@ components:
         verified_phone_number:
           type: string
           format: phone
+          nullable: true
           readOnly: true
           description: |
             The phone number verified for this Profile with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
@@ -25761,6 +25762,7 @@ components:
         verified_phone_number:
           type: string
           format: phone
+          nullable: true
           readOnly: true
           description: |
             The phone number verified for this User Profile with the **Phone Number Verify** ([POST /profile/phone-number/verify](/docs/api/profile/#phone-number-verify)) command.
