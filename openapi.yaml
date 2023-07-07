@@ -13780,8 +13780,6 @@ paths:
                     The port Config(s) to create for this NodeBalancer.
 
                     Each Config must have a unique port and at least one Node.
-                  required:
-                  - nodes
                   items:
                     type: object
                     description: A request object representing a NodeBalancer Config, including Nodes.
