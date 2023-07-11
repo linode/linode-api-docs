@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.157.1
+  version: 4.157.0
 
   title: Linode API
   description: |
@@ -12196,18 +12196,14 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/IPAddress'
-                  page:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/IPAddress'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -21485,6 +21481,7 @@ components:
             The reverse DNS assigned to this address. For public IPv4 addresses,
             this will be set to a default value provided by Linode if not
             explicitly set.
+          x-linode-filterable: true
           x-linode-cli-display: 4
           example: test.example.org
           nullable: true
