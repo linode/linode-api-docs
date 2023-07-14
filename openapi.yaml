@@ -21616,8 +21616,8 @@ components:
                     type: integer
                     description: >
                       The ID of the Linode this address currently belongs to. For IPv4
-                      addresses, this is by default the Linode that this address was
-                      assigned to on creation, and these addresses my be moved using the
+                      addresses, this defaults to the Linode that this address was
+                      assigned to on creation. IPv4 addresses may be moved using the
                       [/networking/ipv4/assign](/docs/api/networking/#ips-to-linodes-assign)
                       endpoint. For SLAAC and link-local addresses, this value may not be changed.
                     example: 123
