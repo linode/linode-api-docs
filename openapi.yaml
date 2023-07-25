@@ -25880,6 +25880,7 @@ components:
             A boolean value indicating if the User has Two Factor Authentication (TFA)
             enabled. See the Create Two Factor Secret ([POST /profile/tfa-enable](/docs/api/profile/#two-factor-secret-create))
             endpoint to enable TFA.
+          example: true
         verified_phone_number:
           type: string
           format: phone
