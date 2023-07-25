@@ -566,7 +566,7 @@ paths:
                   example: "I'm consolidating multiple accounts into one."
       responses:
         '200':
-          description: Account cancelled
+          description: Account canceled
           content:
             application/json:
               schema:
@@ -591,7 +591,7 @@ paths:
                         reason:
                           type: string
                           description: >
-                            A string explaining that the account could not be cancelled
+                            A string explaining that the account could not be canceled
                             because there is an outstanding balance on the account
                             that must be paid first.
                           example: >
@@ -811,7 +811,7 @@ paths:
       responses:
         '200':
           description: >
-            Entity Transfer cancelled.
+            Entity Transfer canceled.
           content:
             application/json:
               schema:
@@ -1268,7 +1268,7 @@ paths:
       - Account
       summary: Maintenance List
       description: |
-        Returns a collection of Maintenance objects for any entity a user has permissions to view. Cancelled Maintenance objects are not returned.
+        Returns a collection of Maintenance objects for any entity a user has permissions to view. Canceled Maintenance objects are not returned.
 
         Currently, Linodes are the only entities available for viewing.
       operationId: getMaintenance
@@ -2431,7 +2431,7 @@ paths:
 
         While a transfer is pending, any unrestricted user *of any account* can access this command. After a
         transfer has been accepted, it can only be viewed by unrestricted users of the accounts that created and
-        accepted the transfer. If cancelled or expired, only unrestricted users of the account that created the
+        accepted the transfer. If canceled or expired, only unrestricted users of the account that created the
         transfer can view it.
       operationId: getServiceTransfer
       x-linode-cli-action: view
@@ -2464,12 +2464,9 @@ paths:
       - account
       summary: Service Transfer Cancel
       description: |
-        Cancels the Service Transfer for the provided token. Once cancelled, a transfer cannot be accepted or otherwise
-        acted on in any way. If cancelled in error, the transfer must be
-        [created](/docs/api/account/#service-transfer-create) again.
+        Cancels the Service Transfer for the provided token. Once canceled, a transfer cannot be accepted or otherwise acted on in any way. If canceled in error, the transfer must be [created](/docs/api/account/#service-transfer-create) again.
 
-        When cancelled, an email notification for the cancellation is sent to the account that created
-        this transfer. Transfers can not be cancelled if they are expired or have been accepted.
+        When canceled, an email notification for the cancellation is sent to the account that created this transfer. Transfers can not be canceled if they are expired or have been accepted.
 
         This command can only be accessed by the unrestricted users of the account that created this transfer.
       operationId: deleteServiceTransfer
@@ -2481,7 +2478,7 @@ paths:
       responses:
         '200':
           description: >
-            Service Transfer cancelled.
+            Service Transfer canceled.
           content:
             application/json:
               schema:
@@ -5721,7 +5718,7 @@ paths:
         with the URL to which image data can be uploaded.
 
         - Image data must be uploaded within 24 hours of creation or the
-        upload will be cancelled and the image deleted.
+        upload will be canceled and the image deleted.
 
         - Image uploads should be made as an HTTP PUT request to the URL returned in the `upload_to`
         response parameter, with a `Content-type: application/octet-stream` header included in the
@@ -6508,7 +6505,7 @@ paths:
         - linodes:read_write
       responses:
         '200':
-          description: Backup service was cancelled for the specified Linode.
+          description: Backup service was canceled for the specified Linode.
           content:
             application/json:
               schema:
@@ -20359,7 +20356,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-color:
             accepted: yellow
-            cancelled: red
+            canceled: red
             completed: green
             failed: red
             pending: yellow
@@ -20368,7 +20365,7 @@ components:
           type: string
           enum:
           - accepted
-          - cancelled
+          - canceled
           - completed
           - failed
           - pending
@@ -20381,7 +20378,7 @@ components:
             Transfers can take up to 3 hours to complete.
 
 
-            `cancelled`: The transfer has been cancelled by the sender.
+            `canceled`: The transfer has been canceled by the sender.
 
 
             `completed`: The transfer has completed successfully.
@@ -20394,7 +20391,7 @@ components:
 
 
             `stale`: The transfer has exceeded its expiration date. It can no longer be accepted or
-            cancelled.
+            canceled.
           example: 'pending'
         created:
           type: string
@@ -24891,7 +24888,7 @@ components:
       properties:
         cancel_url:
           type: string
-          description: The URL to have PayPal redirect to when Payment is cancelled.
+          description: The URL to have PayPal redirect to when Payment is canceled.
           example: https://example.org
         redirect_url:
           type: string
@@ -26065,7 +26062,7 @@ components:
           x-linode-filterable: true
           x-linode-cli-color:
             accepted: yellow
-            cancelled: red
+            canceled: red
             completed: green
             failed: red
             pending: yellow
@@ -26074,7 +26071,7 @@ components:
           type: string
           enum:
           - accepted
-          - cancelled
+          - canceled
           - completed
           - failed
           - pending
@@ -26085,7 +26082,7 @@ components:
             `accepted`: The transfer has been accepted by another user and is currently in progress.
             Transfers can take up to 3 hours to complete.
 
-            `cancelled`: The transfer has been cancelled by the sender.
+            `canceled`: The transfer has been canceled by the sender.
 
             `completed`: The transfer has completed successfully.
 
@@ -26094,7 +26091,7 @@ components:
             `pending`: The transfer is ready to be accepted.
 
             `stale`: The transfer has exceeded its expiration date. It can no longer be accepted or
-            cancelled.
+            canceled.
           example: 'pending'
         created:
           type: string
