@@ -25902,6 +25902,33 @@ components:
 
             `null` if this User has not created a password yet.
           example: "2018-01-01T01:01:01"
+        last_login:
+          type: object
+          readOnly: true
+          nullable: true
+          description: |
+            Information for the most recent login attempt for this User.
+
+            `null` if no login attempts have been made since creation of this User.
+
+            Access the [User Logins List All](/docs/api/account/#user-logins-list-all) command for additional login information.
+          properties:
+            login_datetime:
+              type: string
+              format: date-time
+              readOnly: true
+              description: |
+                The date and time of this User's most recent login attempt.
+              example: "2018-01-01T01:01:01"
+            status:
+              type: string
+              readOnly: true
+              enum:
+              - successful
+              - failed
+              description: |
+                The result of the most recent login attempt for this User.
+              example: successful
     UserDefinedField:
       type: object
       required:
