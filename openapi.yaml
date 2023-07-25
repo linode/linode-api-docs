@@ -18987,6 +18987,7 @@ components:
             The name of the application you've authorized.
           example: example-app
           readOnly: true
+          x-linode-filterable: true
           x-linode-cli-display: 2
         thumbnail_url:
           type: string
