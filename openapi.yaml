@@ -14685,6 +14685,52 @@ paths:
         source: >
           linode-cli nodebalancers node-delete \
             12345 4567 54321
+  /nodebalancers/{nodeBalancerId}/firewalls:
+    x-linode-cli-command: nodebalancers
+    parameters:
+    - name: nodeBalancerId
+      in: path
+      description: The ID of the NodeBalancer to access.
+      required: true
+      schema:
+        type: integer
+    get:
+      operationId: getNodeBalancerFirewalls
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      summary: Firewalls List
+      description: >
+          View Firewall information for Firewalls associated with this NodeBalancer.
+      x-linode-cli-action: firewalls-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - nodebalancers:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of Firewalls associated with this NodeBalancer.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/Firewall'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/nodebalancers/12345/firewalls
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers firewalls-list 12345
   /nodebalancers/{nodeBalancerId}/stats:
     x-linode-cli-command: nodebalancers
     parameters:
