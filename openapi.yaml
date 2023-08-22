@@ -13760,6 +13760,15 @@ paths:
                   $ref: '#/components/schemas/NodeBalancer/properties/label'
                 client_conn_throttle:
                   $ref: '#/components/schemas/NodeBalancer/properties/client_conn_throttle'
+                tags:
+                  description: |
+                    An array of Tags applied to this object. Tags are for organizational purposes only.
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - test
+                  - web-dev-team
                 configs:
                   type: array
                   description: |
