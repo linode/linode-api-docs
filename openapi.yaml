@@ -22377,7 +22377,11 @@ components:
           type: string
           default: linode/latest-64bit
           description: |
-            A Kernel ID to boot a Linode with. Use `linode/grub2` for the upstream distribution-supplied kernel that is installed on the primary disk.
+            A Kernel ID to boot a Linode with. Here are examples of commonly-used kernels:
+
+            * `linode/latest-64bit` (default): Our latest kernel at the time of instance boot/reboot.
+            * `linode/grub2`: The upstream distribution-supplied kernel that is installed on the primary disk, or a custom kernel if installed.
+            * `linode/direct-disk`: The MBR (Master Boot Record) of the primary disk/root device, used instead of a Linux kernel.
 
             For a complete list of options, use the [Kernels List](/docs/api/linode-instances/#kernels-list) command.
           example: linode/latest-64bit
