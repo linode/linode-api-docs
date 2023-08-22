@@ -17800,20 +17800,20 @@ paths:
   /tags:
     x-linode-cli-command: tags
     get:
-      x-linode-grant: read_only
+      x-linode-grant: unrestricted only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       tags:
       - Tags
       summary: Tags List
-      description: >
-        Tags are User-defined labels attached to objects in your Account, such
-        as Linodes. They are used for specifying and grouping attributes of
-        objects that are relevant to the User.
-
+      description: |
+        Tags are User-defined labels attached to objects in your Account, such as Linodes. They are used for specifying and grouping attributes of objects that are relevant to the User.
 
         This endpoint returns a paginated list of Tags on your account.
+
+        **Important**: You must be an unrestricted User in order to access, add, or modify
+        Tags information.
       operationId: getTags
       x-linode-cli-action:
         - list
@@ -17848,16 +17848,15 @@ paths:
           curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/tags
     post:
+      x-linode-grant: unrestricted only
       tags:
       - Tags
       summary: New Tag Create
-      description: >
-        Creates a new Tag and optionally tags requested objects with it
-        immediately.
+      description: |
+        Creates a new Tag and optionally tags requested objects with it immediately.
 
-
-        **Important**: You must be an unrestricted User in order to add or modify
-        Tags.
+        **Important**: You must be an unrestricted User in order to access, add, or modify
+        Tags information.
       operationId: createTag
       x-linode-cli-action: create
       security:
@@ -17963,9 +17962,11 @@ paths:
       required: true
     get:
       summary: Tagged Objects List
-      description: >
-        Returns a paginated list of all objects you've tagged with the requested
-        Tag. This is a mixed collection of all object types.
+      description: |
+        Returns a paginated list of all objects you've tagged with the requested Tag. This is a mixed collection of all object types.
+
+        **Important**: You must be an unrestricted User in order to access, add, or modify
+        Tags information.
       tags:
       - Tags
       operationId: getTaggedObjects
@@ -18026,8 +18027,8 @@ paths:
         Remove a Tag from all objects and delete it.
 
 
-        **Important**: You must be an unrestricted User in order to add or modify
-        Tags.
+        **Important**: You must be an unrestricted User in order to access, add, or modify
+        Tags information.
       tags:
       - Tags
       operationId: deleteTag
