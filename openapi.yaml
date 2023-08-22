@@ -8033,6 +8033,8 @@ paths:
       summary: Kernels List
       description: |
         Lists available Kernels.
+
+        Due to the extensive list of available kernels, please keep [pagination](/docs/api/#pagination) controls in mind when managing responses to this command.
       operationId: getKernels
       x-linode-cli-action:
         - list
@@ -22373,7 +22375,11 @@ components:
           x-linode-cli-display: 1
         kernel:
           type: string
-          description: A Kernel ID to boot a Linode with. Defaults to "linode/latest-64bit".
+          default: linode/latest-64bit
+          description: |
+            A Kernel ID to boot a Linode with. Use `linode/grub2` for the upstream distribution-supplied kernel that is installed on the primary disk.
+
+            For a complete list of options, use the [Kernels List](/docs/api/linode-instances/#kernels-list) command.
           example: linode/latest-64bit
           x-linode-cli-display: 3
         comments:
