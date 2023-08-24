@@ -21998,12 +21998,6 @@ components:
           description: If this Kernel is suitable for KVM Linodes.
           example: true
           readOnly: true
-        xen:
-          x-linode-filterable: true
-          type: boolean
-          description: If this Kernel is suitable for Xen Linodes.
-          example: false
-          readOnly: true
         architecture:
           x-linode-filterable: true
           type: string
