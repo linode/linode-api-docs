@@ -25376,7 +25376,7 @@ components:
           type: string
           example: gpu-rtx6000-1.1
           description: The compute instance [Type](/docs/api/linode-types/) ID.
-        availability:
+        available:
           type: boolean
           example: true
           description: Whether the compute instance type is available in the region.
