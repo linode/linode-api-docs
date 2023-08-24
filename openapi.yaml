@@ -6046,6 +6046,12 @@ paths:
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
 
+        * **BETA** Using cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/).
+          * Automate system configuration and software installation by providing a base-64 encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) file.
+          * Requires a compatible Image. You can determine compatible Images by checking for `cloud-init` under `capabilities` when using Images List ([GET /images](/docs/api/images/#images-list)).
+          * Requires a compatible Region.  You can determine compatible Regions by checking for `Metadata` under `capabilities` when using Regions List ([GET /regions](/docs/api/regions/#regions-list)).
+          * This feature is in beta and is currently limited to certain Regions and distributions. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
+
         **Important**: You must be an unrestricted User in order to add or modify
         tags on Linodes.
       tags:
@@ -6148,7 +6154,7 @@ paths:
                 "backup_id": 1234,
                 "backups_enabled": true,
                 "swap_size": 512,
-                "image": "linode/debian9",
+                "image": "linode/ubuntu22.04",
                 "root_pass": "aComplexP@ssword",
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -6177,7 +6183,10 @@ paths:
                 "label": "linode123",
                 "type": "g6-standard-2",
                 "region": "us-east",
-                "group": "Linode-Group"
+                "group": "Linode-Group",
+                "metadata": {
+                  "user_data": "I2Nsb3VkLWNvbmZpZw=="
+                }
               }' \
               https://api.linode.com/v4/linode/instances
       - lang: CLI
@@ -6190,9 +6199,10 @@ paths:
             --stackscript_data '{"gh_username": "linode"}' \
             --region us-east \
             --type g6-standard-2 \
-            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-            --authorized_users "myUser"
-            --authorized_users "secondaryUser"
+            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUser" \
+            --authorized_users "secondaryUser" \
+            --metadata.user_data "I2Nsb3VkLWNvbmZpZw==)"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
@@ -21306,6 +21316,18 @@ components:
 
             The "+order_by" and "+order" operators are not available for [filtering](/docs/api/#filtering-and-sorting) on this key.
           example: available
+        capabilities:
+          x-linode-cli-display: 8
+          type: array
+          readOnly: true
+          description: |
+            A list containing the following possible capabilities of this Image:
+
+            `cloud-init`: This Image supports cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/). Only applies to public Images.
+          items:
+            type: string
+          example:
+          - cloud-init
     Invoice:
       type: object
       description: Account Invoice object
@@ -22365,6 +22387,11 @@ components:
           description: The Linode's host machine, as a UUID.
           readOnly: true
           example: 3a3ddd59d9a78bb8de041391075df44de62bfec8
+        has_user_data:
+          type: boolean
+          description: Whether this compute instance was provisioned utilizing `user_data` provided via the Metadata service. See the [Linode Create](/docs/api/linode-instances/#linode-create) description for more information on Metadata.
+          readOnly: true
+          example: true
     LinodeConfig:
       type: object
       properties:
@@ -22568,6 +22595,22 @@ components:
             If it is deployed from an Image or a Backup and you wish it to remain `offline`
             after deployment, set this to `false`.
           default: true
+        metadata:
+          type: object
+          writeOnly: true
+          description: |
+            An object containing user-defined data relevant to the creation of Linodes.
+          properties:
+            user_data:
+              type: string
+              format: byte
+              description: |
+                Base64-encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) data.
+
+                Must not be included when cloning to an existing Linode.
+
+                Unencoded data must not exceed 65535 bytes, or about 16kb encoded.
+              example: I2Nsb3VkLWNvbmZpZwpwYWNrYWdlX3VwZGF0ZTogdHJ1ZQpwYWNrYWdlX3VwZ3JhZGU6IHRydWU=
     LinodeStats:
       type: object
       description: >
