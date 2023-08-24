@@ -23417,7 +23417,7 @@ components:
               description: |
                 Base64-encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) data.
 
-                Must not be included when cloing to an existing Linode.
+                Must not be included when cloning to an existing Linode.
 
                 Unencoded data must not exceed 65535 bytes, or about 16kb encoded.
               example: I2Nsb3VkLWNvbmZpZwpwYWNrYWdlX3VwZGF0ZTogdHJ1ZQpwYWNrYWdlX3VwZ3JhZGU6IHRydWU=
