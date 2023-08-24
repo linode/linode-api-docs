@@ -6965,7 +6965,7 @@ paths:
                 "region": "us-east",
                 "group": "Linode-Group",
                 "metadata": {
-                  "user_data": "I2Nsb3VkLWNvbmZpZwpwYWNrYWdlX3VwZGF0ZTogdHJ1ZQpwYWNrYWdlX3VwZ3JhZGU6IHRydWU="
+                  "user_data": "I2Nsb3VkLWNvbmZpZw=="
                 }
               }' \
               https://api.linode.com/v4/linode/instances
@@ -6979,9 +6979,10 @@ paths:
             --stackscript_data '{"gh_username": "linode"}' \
             --region us-east \
             --type g6-standard-2 \
-            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
-            --authorized_users "myUser"
-            --authorized_users "secondaryUser"
+            --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
+            --authorized_users "myUser" \
+            --authorized_users "secondaryUser" \
+            --metadata.user_data "I2Nsb3VkLWNvbmZpZw==)"
   /linode/instances/{linodeId}:
     parameters:
     - name: linodeId
