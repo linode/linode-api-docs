@@ -6933,7 +6933,7 @@ paths:
                 "backup_id": 1234,
                 "backups_enabled": true,
                 "swap_size": 512,
-                "image": "linode/debian9",
+                "image": "linode/ubuntu22.04",
                 "root_pass": "aComplexP@ssword",
                 "stackscript_id": 10079,
                 "stackscript_data": {
@@ -6962,7 +6962,10 @@ paths:
                 "label": "linode123",
                 "type": "g6-standard-2",
                 "region": "us-east",
-                "group": "Linode-Group"
+                "group": "Linode-Group",
+                "metadata": {
+                  "user_data": "I2Nsb3VkLWNvbmZpZwpwYWNrYWdlX3VwZGF0ZTogdHJ1ZQpwYWNrYWdlX3VwZ3JhZGU6IHRydWU="
+                }
               }' \
               https://api.linode.com/v4/linode/instances
       - lang: CLI
@@ -23202,6 +23205,11 @@ components:
           description: The Linode's host machine, as a UUID.
           readOnly: true
           example: 3a3ddd59d9a78bb8de041391075df44de62bfec8
+        has_user_data:
+          type: boolean
+          description: Whether this compute instance was provisioned utilizing `user_data` provided via the Metadata service. See the [Linode Create](/docs/api/linode-instances/#linode-create) description for more information on Metadata.
+          readOnly: true
+          example: true
     LinodeConfig:
       type: object
       properties:
