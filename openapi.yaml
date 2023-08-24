@@ -17467,6 +17467,73 @@ paths:
       - lang: CLI
         source: >
           linode-cli regions view us-east
+  /regions/{regionId}/availability:
+    x-linode-cli-command: regions
+    parameters:
+    - name: regionId
+      in: path
+      description: ID of the Region to look up.
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Regions
+      summary: Region Availability View
+      description: >
+        Returns availability data for a single Region.
+      operationId: getRegionAvailability
+      x-linode-cli-action: view-avail
+      responses:
+        '200':
+          description: A single Region object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegionAvailability'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/regions/us-east/availability
+      - lang: CLI
+        source: >
+          linode-cli regions view-avail us-east
+  /regions/availability:
+    x-linode-cli-command: regions
+    get:
+      tags:
+      - Regions
+      summary: Regions Availability List
+      description: |
+        Returns availability data for all Regions.
+
+        Currently, this command returns availability of select premium and GPU plans for select regions.
+      operationId: getRegionsAvailability
+      x-linode-cli-action: list-avail
+      responses:
+        '200':
+          description: Returns a Region Availability object.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/RegionAvailability'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/regions/availability
+      - lang: CLI
+        source: >
+          linode-cli regions list-avail
   /support/tickets:
     x-linode-cli-command: tickets
     get:
@@ -25348,6 +25415,22 @@ components:
                 The IPv6 addresses for this region's DNS resolvers, separated by commas.
               example: "2001:0db8::,2001:0db8::1"
               readOnly: true
+    RegionAvailability:
+      type: object
+      description: Compute instance availability information by [Type](/docs/api/linode-types/) and [Region](/docs/api/regions/).
+      properties:
+        region:
+          type: string
+          example: us-east
+          description: The [Region](/docs/api/regions/) ID.
+        plan:
+          type: string
+          example: gpu-rtx6000-1.1
+          description: The compute instance [Type](/docs/api/linode-types/) ID.
+        available:
+          type: boolean
+          example: true
+          description: Whether the compute instance type is available in the region.
     RescueDevices:
       type: object
       properties:
