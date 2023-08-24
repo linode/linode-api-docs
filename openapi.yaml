@@ -6828,6 +6828,7 @@ paths:
 
         * **BETA** Using cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/).
           * Automate system configuration and software installation by providing a base-64 encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) file.
+          * Requires a compatible Image. You can determine compatible Images by checking for `cloud-init` under `capabilities` when using Images List ([GET /images](/docs/api/images/#images-list)).
           * This feature is in beta and is currently limited to certain Regions and distributions. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
 
         **Important**: You must be an unrestricted User in order to add or modify
@@ -22212,16 +22213,17 @@ components:
             The "+order_by" and "+order" operators are not available for [filtering](/docs/api/#filtering-and-sorting) on this key.
           example: available
         capabilities:
+          x-linode-cli-display: 8
           type: array
           readOnly: true
+          description: |
+            A list containing the following possible capabilities of this Image:
+
+            `cloud-init`: This Image supports cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/). Only applies to public Images.
           items:
-            type: object
-            description: A list of capabilities of this Image.
-            properties:
-              cloud-init:
-                type: boolean
-                example: false
-                description: Whether this Image supports cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/). Only applies to public Images.
+            type: string
+          example:
+          - cloud-init
     Invoice:
       type: object
       description: Account Invoice object
