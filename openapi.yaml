@@ -6336,7 +6336,7 @@ paths:
 
           * Gives up any IP addresses the Linode was assigned.
           * Deletes all Disks, Backups, Configs, etc.
-          * Detaches any Volumes associated withe Linode.
+          * Detaches any Volumes associated with the Linode.
           * Stops billing for the Linode and its associated services. You will be billed for time used
             within the billing period the Linode was active.
 
