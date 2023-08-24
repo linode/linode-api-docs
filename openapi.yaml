@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.159.0
+  version: 4.161.0
 
   title: Linode API
   description: |
@@ -25420,14 +25420,20 @@ components:
       description: Compute instance availability information by [Type](/docs/api/linode-types/) and [Region](/docs/api/regions/).
       properties:
         region:
+          x-linode-cli-display: 1
+          x-linode-filterable: true
           type: string
           example: us-east
           description: The [Region](/docs/api/regions/) ID.
         plan:
+          x-linode-cli-display: 2
+          x-linode-filterable: true
           type: string
           example: gpu-rtx6000-1.1
           description: The compute instance [Type](/docs/api/linode-types/) ID.
         available:
+          x-linode-cli-display: 3
+          x-linode-filterable: true
           type: boolean
           example: true
           description: Whether the compute instance type is available in the region.
