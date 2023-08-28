@@ -7772,6 +7772,14 @@ paths:
           description: Requested Linode's networking configuration.
           content:
             application/json:
+              x-linode-cli-subtables:
+                - ipv4.public
+                - ipv4.private
+                - ipv4.shared
+                - ipv4.reserved
+                - ipv6.link_local
+                - ipv6.slaac
+                - ipv6.global
               schema:
                 properties:
                   ipv4:
@@ -13512,6 +13520,9 @@ paths:
           description: The requested Firewall Rules.
           content:
             application/json:
+              x-linode-cli-subtables:
+                - inbound
+                - outbound
               schema:
                 $ref: '#/components/schemas/Firewall/properties/rules'
         default:
