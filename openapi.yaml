@@ -20946,6 +20946,8 @@ components:
             The inbound and outbound access rules to apply to the Firewall.
 
             A Firewall may have up to 25 rules across its inbound and outbound rulesets.
+
+            Multiple rules are applied in order. If two rules conflict, the first rule takes precedence. For example, if the first rule accepts inbound traffic from an address, and the second rule drops inbound traffic the same address, the first rule applies and inbound traffic from that address is accepted.
           properties:
             inbound:
               type: array
@@ -21014,6 +21016,7 @@ components:
             - Ports must be within 1 and 65535, and may not contain any leading zeroes. For example, port "080" is not allowed.
             - The ports string can have up to 15 *pieces*, where a single port is treated as one piece, and a port range is treated as two pieces. For example, the string "22-24, 80, 443" has four pieces.
             - If no ports are configured, all ports are affected.
+            - Only allowed for the TCP and UDP protocols. Ports are not allowed for the ICMP and IPENCAP protocols.
           example: '22-24, 80, 443'
         addresses:
           type: object
