@@ -13062,7 +13062,8 @@ paths:
                       "ports": "22, 80, 443",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.2/32"
+                          "192.0.2.0/24",
+                          "198.51.100.2/32"
                         ],
                         "ipv6": [
                           "2001:DB8::/128"
@@ -13080,7 +13081,8 @@ paths:
                       "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.2/32"
+                          "192.0.2.0/24",
+                          "198.51.100.2/32"
                         ],
                         "ipv6": [
                           "2001:DB8::/128"
@@ -13109,8 +13111,8 @@ paths:
             --label example-firewall \
             --rules.outbound_policy ACCEPT \
             --rules.inbound_policy DROP \
-            --rules.inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.2/32"], "ipv6": ["2001:DB8::/128"]}, "action": "ACCEPT"}]' \
-            --rules.outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.2/32"],"ipv6": ["2001:DB8::/128"]}, "action": "DROP", "label": "outbound-rule123", "description": "An example outbound rule description."}]'
+            --rules.inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.0/24", "198.51.100.2/32"], "ipv6": ["2001:DB8::/128"]}, "action": "ACCEPT"}]' \
+            --rules.outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.0/24", "198.51.100.2/32"],"ipv6": ["2001:DB8::/128"]}, "action": "DROP", "label": "outbound-rule123", "description": "An example outbound rule description."}]'
   /networking/firewalls/{firewallId}:
     parameters:
       - name: firewallId
@@ -13581,7 +13583,8 @@ paths:
                       "ports": "22, 80, 443",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.2/32"
+                          "192.0.2.0/24",
+                          "198.51.100.2/32"
                         ],
                         "ipv6": [
                           "2001:DB8::/128"
@@ -13599,7 +13602,8 @@ paths:
                       "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.2/32"
+                          "192.0.2.0/24",
+                          "198.51.100.2/32"
                         ],
                         "ipv6": [
                           "2001:DB8::/128"
@@ -13615,8 +13619,8 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls rules-update 123 \
-            --inbound '[{"action":"ACCEPT", "protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.2/32"], "ipv6": ["2001:DB8::/128"]}}]' \
-            --outbound '[{"action":"DROP","protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.2/32"], "ipv6": ["2001:DB8::/128`"]}}]'
+            --inbound '[{"action":"ACCEPT", "protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.0/24", "198.51.100.2/32"], "ipv6": ["2001:DB8::/128"]}}]' \
+            --outbound '[{"action":"DROP","protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.0/24", "198.51.100.2/32"], "ipv6": ["2001:DB8::/128`"]}}]'
   /networking/vlans:
     x-linode-cli-command: vlans
     get:
@@ -21027,7 +21031,8 @@ components:
               items:
                 type: string
               example:
-              - 192.0.2.2/32
+              - 192.0.2.0/24
+              - 198.51.100.2/32
             ipv6:
               description: |
                 A list of IPv6 addresses or networks. Must be in IP/mask format.
