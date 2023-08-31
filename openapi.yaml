@@ -13062,10 +13062,10 @@ paths:
                       "ports": "22, 80, 443",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.0/24"
+                          "192.0.2.2/32"
                         ],
                         "ipv6": [
-                          "2001:DB8::/32"
+                          "2001:DB8::/128"
                         ]
                       },
                     "action": "ACCEPT",
@@ -13080,10 +13080,10 @@ paths:
                       "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.0/24"
+                          "192.0.2.2/32"
                         ],
                         "ipv6": [
-                          "2001:DB8::/32"
+                          "2001:DB8::/128"
                         ]
                       },
                       "action": "ACCEPT",
@@ -13109,8 +13109,8 @@ paths:
             --label example-firewall \
             --rules.outbound_policy ACCEPT \
             --rules.inbound_policy DROP \
-            --rules.inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}, "action": "ACCEPT"}]' \
-            --rules.outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.0/24"],"ipv6": ["2001:DB8::/32"]}, "action": "DROP", "label": "outbound-rule123", "description": "An example outbound rule description."}]'
+            --rules.inbound '[{"protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.2/32"], "ipv6": ["2001:DB8::/128"]}, "action": "ACCEPT"}]' \
+            --rules.outbound '[{"protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.2/32"],"ipv6": ["2001:DB8::/128"]}, "action": "DROP", "label": "outbound-rule123", "description": "An example outbound rule description."}]'
   /networking/firewalls/{firewallId}:
     parameters:
       - name: firewallId
@@ -13581,10 +13581,10 @@ paths:
                       "ports": "22, 80, 443",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.0/24"
+                          "192.0.2.2/32"
                         ],
                         "ipv6": [
-                          "2001:DB8::/32"
+                          "2001:DB8::/128"
                         ]
                       },
                     "action": "ACCEPT",
@@ -13599,10 +13599,10 @@ paths:
                       "ports": "49152-65535",
                       "addresses": {
                         "ipv4": [
-                          "192.0.2.0/24"
+                          "192.0.2.2/32"
                         ],
                         "ipv6": [
-                          "2001:DB8::/32"
+                          "2001:DB8::/128"
                         ]
                       },
                       "action": "ACCEPT",
@@ -13615,8 +13615,8 @@ paths:
       - lang: CLI
         source: >
           linode-cli firewalls rules-update 123 \
-            --inbound '[{"action":"ACCEPT", "protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]' \
-            --outbound '[{"action":"DROP","protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.0/24"], "ipv6": ["2001:DB8::/32"]}}]'
+            --inbound '[{"action":"ACCEPT", "protocol": "TCP", "ports": "22, 80, 8080, 443", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.2/32"], "ipv6": ["2001:DB8::/128"]}}]' \
+            --outbound '[{"action":"DROP","protocol": "TCP", "ports": "49152-65535", "addresses": {"ipv4": ["192.0.2.1/32", "192.0.2.2/32"], "ipv6": ["2001:DB8::/128`"]}}]'
   /networking/vlans:
     x-linode-cli-command: vlans
     get:
@@ -20998,41 +20998,46 @@ components:
           - ICMP
           - IPENCAP
           description: >
-            The type of network traffic to allow.
+            The type of network traffic affected by this rule.
           example: TCP
         ports:
           type: string
           description: |
-            A string representing the port or ports on which traffic will be allowed:
+            A string representing the port or ports affected by this rule:
 
             - The string may be a single port, a range of ports, or a comma-separated list of single ports and port ranges. A space is permitted following each comma.
             - A range of ports is inclusive of the start and end values for the range. The end value of the range must be greater than the start value.
             - Ports must be within 1 and 65535, and may not contain any leading zeroes. For example, port "080" is not allowed.
-            - Ports may not be specified if a rule's protocol is `ICMP` or `IPENCAP`.
-            - At least one port must be specified if a rule's protocol is `TCP` or `UDP`.
             - The ports string can have up to 15 *pieces*, where a single port is treated as one piece, and a port range is treated as two pieces. For example, the string "22-24, 80, 443" has four pieces.
+            - If no ports are configured, all ports are affected.
           example: '22-24, 80, 443'
         addresses:
           type: object
-          description: >
-            Allowed IPv4 or IPv6 addresses. A Rule can have up to 255 addresses
-            or networks listed across its IPv4 and IPv6 arrays. A network and a single IP
-            are treated as equivalent when accounting for this limit.
+          description: |
+            The IPv4 and/or IPv6 addresses affected by this rule. A Rule can have up to 255 total addresses or networks listed across its IPv4 and IPv6 arrays. A network and a single IP are treated as equivalent when accounting for this limit.
+
+            Must contain `ipv4`, `ipv6`, or both.
           properties:
             ipv4:
-              description: A list of IPv4 addresses or networks. Must be in IP/mask format.
+              description: |
+                A list of IPv4 addresses or networks. Must be in IP/mask format.
+
+                If "0.0.0.0/0" is included in this list, all IPv4 addresses are affected by this rule.
               type: array
               items:
                 type: string
               example:
-              - 192.0.2.0/24
+              - 192.0.2.2/32
             ipv6:
-              description: A list of IPv6 addresses or networks. Must be in IP/mask format.
+              description: |
+                A list of IPv6 addresses or networks. Must be in IP/mask format.
+
+                If "::/0" is included in this list, all IPv6 addresses are affected by this rule.
               type: array
               items:
                 type: string
               example:
-              - 2001:DB8::/32
+              - 2001:DB8::/128
         action:
           type: string
           enum:
