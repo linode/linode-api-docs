@@ -13536,7 +13536,7 @@ paths:
       description: |
         Updates the inbound and outbound Rules for a Firewall.
 
-        **Note:** This command replaces all of a Firewall's `inbound` and/or `outbound` rulesets with the values specified in your request.
+        **Note:** This command replaces all of a Firewall's `inbound` and `outbound` rulesets with the values specified in your request.
       operationId: updateFirewallRules
       x-linode-cli-action: rules-update
       security:
@@ -21008,6 +21008,7 @@ components:
           example: TCP
         ports:
           type: string
+          nullable: true
           description: |
             A string representing the port or ports affected by this rule:
 
@@ -21027,7 +21028,7 @@ components:
           properties:
             ipv4:
               description: |
-                A list of IPv4 addresses or networks. Must be in IP/mask format.
+                A list of IPv4 addresses or networks. Addresses must be in IP/mask format. Must not be an empty list.
 
                 If "0.0.0.0/0" is included in this list, all IPv4 addresses are affected by this rule.
               type: array
@@ -21038,7 +21039,7 @@ components:
               - 198.51.100.2/32
             ipv6:
               description: |
-                A list of IPv6 addresses or networks. Must be in IP/mask format.
+                A list of IPv6 addresses or networks. Addresses must be in IP/mask format. Must not be an empty list.
 
                 If "::/0" is included in this list, all IPv6 addresses are affected by this rule.
               type: array
