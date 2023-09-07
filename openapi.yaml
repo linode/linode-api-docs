@@ -7892,13 +7892,13 @@ paths:
     parameters:
     - name: linodeId
       in: path
-      description: The ID of the Linode to look up.
+      description: The ID of the Linode.
       required: true
       schema:
         type: integer
     - name: address
       in: path
-      description: The IP address to look up.
+      description: The IP address.
       required: true
       schema:
         type: string
@@ -7939,9 +7939,9 @@ paths:
       x-linode-grant: read_write
       tags:
       - Linode Instances
-      summary: IP Address Update
+      summary: IP Address RDNS Update
       description: |
-        Updates a the reverse DNS (RDNS) for a particular IP Address associated with this Linode.
+        Updates the reverse DNS (RDNS) for a Linode's IP Address. This may be done for both IPv4 and IPv6 addresses.
 
         Setting the RDNS to `null` for a public IPv4 address, resets it to the default "ip.linodeusercontent.com" RDNS value.
       operationId: updateLinodeIP
@@ -18373,7 +18373,7 @@ paths:
       description: >
         Attaches a Volume on your Account
         to an existing Linode on your Account. In order for this request to
-        complete successfully, your User must have `read_only` or `read_write`
+        complete successfully, your User must have `read_write`
         permission to the Volume and `read_write` permission to the Linode.
         Additionally, the Volume and Linode must be located in the same Region.
       tags:
