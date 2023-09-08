@@ -22593,7 +22593,14 @@ components:
           description: |
             The name of this interface.
 
-            Required for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
+            For `vlan` purpose interfaces:
+            * Required.
+            * Must be unique among the Linode's interfaces (a Linode cannot be attached to the same VLAN multiple times).
+            * May only consist of ASCII letters, numbers, and dashes (`-`).
+
+            For `public` purpose interfaces:
+            * In requests, must be an empty string (`""`) or `null` if included.
+            * In responses, always returns `null`.
 
             If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. To view your active VLANs, use the [VLANs List](/docs/api/networking/#vlans-list) endpoint.
 
@@ -22608,7 +22615,13 @@ components:
           description: |
             This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
 
-            Only used for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
+            For `vlan` purpose interfaces:
+            * Must be unique among the Linode's interfaces to avoid conflicting addresses.
+            * Should be unique among devices attached to the VLAN to avoid conflict.
+
+            For `public` purpose interfaces:
+            * In requests, must be an empty string (`""`) or `null` if included.
+            * In responses, always returns `null`.
 
             The Linode is configured to use this address for the associated interface upon reboot if Network Helper is enabled. If Network Helper is disabled, the address can be enabled with [manual static IP configuration](/docs/guides/manual-network-configuration/).
 
