@@ -13558,6 +13558,9 @@ paths:
         description: The Firewall Rules information to update.
         content:
           application/json:
+            x-linode-cli-subtables:
+            - inbound
+            - outbound
             schema:
               allOf:
               - $ref: '#/components/schemas/Firewall/properties/rules'
