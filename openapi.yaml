@@ -532,6 +532,146 @@ paths:
             --state PA \
             --tax_id ATU99999999 \
             --zip 19102
+  /account/betas:
+    x-linode-cli-command: betas
+    get:
+      tags:
+      - Beta Programs
+      summary: Enrolled Beta Programs List
+      operationId: getEnrolledBetaPrograms
+      servers:
+      - url: https://api.linode.com/v4
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      x-linode-cli-action: enrolled-list
+      x-linode-grant: unrestricted only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      description: |
+        Display all enrolled Beta Programs for your Account. Includes inactive as well as active Beta Programs.
+
+        Only unrestricted Users can access this command.
+      responses:
+        '200':
+          description: Returns a paginated list of all enrolled Beta Program objects for the Account.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/BetaProgramEnrolled'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/account/betas \
+              -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli betas enrolled-list
+    post:
+      tags:
+      - Linode Types
+      summary: Beta Program Enroll
+      operationId: enrollBetaProgram
+      servers:
+      - url: https://api.linode.com/v4
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_write
+      x-linode-cli-action: enroll
+      x-linode-grant: unrestricted only
+      description: |
+        Enroll your Account in an active Beta Program.
+
+        Only unrestricted Users can access this command.
+
+        To view active Beta Programs, use the Beta Programs List command.
+
+        Active Beta Programs may have a limited number of enrollments. If a Beta Program has reached is maximum number of enrollments, an error is returned even though the request is successful.
+
+        Beta Programs with `"greenlight_only": true` can only be enrolled by Accounts that participate in the [Greenlight](https://www.linode.com/green-light/) program.
+      requestBody:
+        description: Updated information for the Managed MySQL Database.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - id
+              type: object
+              description: The Beta Program ID to enroll in for your Account.
+              properties:
+                id:
+                  $ref: '#/components/schemas/BetaProgram/properties/id'
+      responses:
+        '200':
+          description: Enrollment request successful.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/account/betas \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                  "id": "example_open"
+              }'
+      - lang: CLI
+        source: >
+          linode-cli betas enroll --id example_open
+  /account/betas/{betaId}:
+    x-linode-cli-command: betas
+    get:
+      tags:
+      - Beta Programs
+      summary: Enrolled Beta Program View
+      operationId: getEnrolledBetaProgram
+      servers:
+      - url: https://api.linode.com/v4
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - account:read_only
+      x-linode-cli-action: enrolled-view
+      x-linode-grant: unrestricted only
+      parameters:
+      - $ref: '#/components/parameters/betaId'
+      description: |
+        Display an enrolled Beta Program for your Account. The Beta Program may be inactive.
+
+        Only unrestricted Users can access this command.
+      responses:
+        '200':
+          description: Returns an enrolled Beta Program object for the Account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BetaProgramEnrolled'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/account/betas/$betaId \
+              -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli betas enrolled-view $betaId
   /account/cancel:
     x-linode-cli-command: account
     post:
@@ -3118,6 +3258,88 @@ paths:
                     ]
                 }' \
                 https://api.linode.com/v4/account/users/example_user/grants
+  /betas:
+    x-linode-cli-command: betas
+    get:
+      tags:
+      - Beta Programs
+      summary: Beta Programs List
+      operationId: getBetaPrograms
+      servers:
+      - url: https://api.linode.com/v4
+      security:
+      - personalAccessToken: []
+      - oauth: []
+      x-linode-cli-action: list
+      x-linode-grant: unrestricted only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      description: |
+        Display all active Beta Programs.
+
+        Only unrestricted Users can access this command.
+      responses:
+        '200':
+          description: Returns a paginated list of all available Beta Program objects.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/PaginationEnvelope'
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/BetaProgram'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/betas \
+              -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli betas list
+  /betas/{betaId}:
+    x-linode-cli-command: betas
+    get:
+      tags:
+      - Beta Programs
+      summary: Beta Program View
+      operationId: getBetaProgram
+      servers:
+      - url: https://api.linode.com/v4
+      security:
+      - personalAccessToken: []
+      - oauth: []
+      x-linode-cli-action: view
+      x-linode-grant: unrestricted only
+      parameters:
+      - $ref: '#/components/parameters/betaId'
+      description: |
+        Display information about a Beta Program. This command can be used to access inactive as well as active Beta Programs.
+
+        Only unrestricted Users can access this command.
+      responses:
+        '200':
+          description: Returns a paginated list of all available Beta Program objects.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BetaProgram'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/betas/$betaId \
+              -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli beta view $betaId
   /databases/engines:
     x-linode-cli-command: databases
     get:
@@ -18787,6 +19009,13 @@ components:
                 items:
                   $ref: '#/components/schemas/ErrorObject'
   parameters:
+    betaId:
+      name: betaId
+      in: path
+      description: The ID of the Beta Program.
+      required: true
+      schema:
+        type: string
     pageOffset:
       name: page
       in: query
@@ -19239,6 +19468,90 @@ components:
           readOnly: true
           description: >
             A list of the disks that are part of the Backup.
+    BetaProgram:
+      type: object
+      description: An object representing Beta Program information.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the Beta Program.
+          example: example_open
+          x-linode-cli-display: 1
+        label:
+          type: string
+          readOnly: true
+          x-linode-filterable: true
+          description: The name of the Beta Program.
+          example: Example Open Beta
+          x-linode-cli-display: 2
+        description:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Additional details regarding the Beta Program.
+          example: "This is an open public beta for an example feature."
+          x-linode-cli-display: 3
+        greenlight_only:
+          type: boolean
+          readOnly: true
+          x-linode-filterable: true
+          description: Whether the Beta Program requires [Green Light](https://www.linode.com/green-light/) participation for enrollment.
+          example: true
+          x-linode-cli-display: 4
+        started:
+          type: string
+          format: date-time
+          readOnly: true
+          x-linode-filterable: true
+          description: The start date-time of the Beta Program.
+          example: '2023-07-11T00:00:00'
+          x-linode-cli-display: 5
+        ended:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          x-linode-filterable: true
+          description: |
+            The date-time that the Beta Program ended.
+
+            `null` indicates that the Beta Program is ongoing.
+          example: null
+          x-linode-cli-display: 6
+        more_info:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Additional source of information for the Beta Program.
+          example: https://www.linode.com/green-light/
+          x-linode-cli-display: 7
+    BetaProgramEnrolled:
+      type: object
+      description: An object representing an enrolled Beta Program for the Account.
+      properties:
+        id:
+          $ref: '#/components/schemas/BetaProgram/properties/id'
+          x-linode-cli-display: 1
+        label:
+          $ref: '#/components/schemas/BetaProgram/properties/label'
+          x-linode-cli-display: 2
+        description:
+          $ref: '#/components/schemas/BetaProgram/properties/description'
+          x-linode-cli-display: 3
+        started:
+          $ref: '#/components/schemas/BetaProgram/properties/started'
+          x-linode-cli-display: 4
+        ended:
+          $ref: '#/components/schemas/BetaProgram/properties/ended'
+          x-linode-cli-display: 5
+        enrolled:
+          type: string
+          format: date-time
+          readOnly: true
+          x-linode-filterable: true
+          description: The date-time of Account enrollment to the Beta Program.
+          example: '2023-09-11T00:00:00'
+          x-linode-cli-display: 6
     CreditCard:
       type: object
       description: |
@@ -19504,7 +19817,7 @@ components:
           x-linode-cli-display: 2
         created:
           type: string
-          format: datetime
+          format: date-time
           example: '2022-01-01T00:01:01'
           description: A time value given in a combined date and time format that represents when the database backup was created.
           x-linode-filterable: true
@@ -26533,6 +26846,8 @@ components:
 tags:
   - name: Account
     description: Use the Account endpoints to manage user settings, billing, and payments. You can also initiate and maintain OAuth client application authentication, enable the Linode Managed service, and create new users on your account.
+  - name: Beta Programs
+    description: Use the Beta Programs endpoint to view information to view information about available beta programs. To sign up for eligible beta programs, use the [Beta Program Join]() Account command.
   - name: Databases
     description: Managed Databases is Linode's fully-managed, high-performance database service. Use the Managed Databases endpoints to create and manage database clusters.
   - name: Domains
