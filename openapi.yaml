@@ -22610,13 +22610,16 @@ components:
           description: |
             The name of this interface.
 
-            Required for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
+            For `vlan` purpose interfaces:
+            * Required.
+            * Must be unique among the Linode's interfaces (a Linode cannot be attached to the same VLAN multiple times).
+            * May only consist of ASCII letters, numbers, and dashes (`-`).
+
+            For `public` purpose interfaces:
+            * In requests, must be an empty string (`""`) or `null` if included.
+            * In responses, always returns `null`.
 
             If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. To view your active VLANs, use the [VLANs List](/docs/api/networking/#vlans-list) endpoint.
-
-            May only consist of ASCII letters, numbers, and dashes (`-`).
-
-            Must be unique among the Linode's interfaces.
           example: example-interface
         ipam_address:
           type: string
@@ -22625,11 +22628,15 @@ components:
           description: |
             This Network Interface's private IP address in Classless Inter-Domain Routing (CIDR) notation.
 
-            Only used for `vlan` purpose interfaces. Must be an empty string or `null` for `public` purpose interfaces.
+            For `vlan` purpose interfaces:
+            * Must be unique among the Linode's interfaces to avoid conflicting addresses.
+            * Should be unique among devices attached to the VLAN to avoid conflict.
+
+            For `public` purpose interfaces:
+            * In requests, must be an empty string (`""`) or `null` if included.
+            * In responses, always returns `null`.
 
             The Linode is configured to use this address for the associated interface upon reboot if Network Helper is enabled. If Network Helper is disabled, the address can be enabled with [manual static IP configuration](/docs/guides/manual-network-configuration/).
-
-            Must be unique among the Linode's interfaces.
           example: '10.0.0.1/24'
         purpose:
           type: string
@@ -22642,7 +22649,7 @@ components:
             * `public`
               * Only one `public` interface per Linode can be defined.
               * The Linode's default public IPv4 address is assigned to the `public` interface.
-              * A Linode must have a public interface in the first/eth0 position to be reachable via the public internet upon boot without additional system configuration. If no `public` interface is configured, the Linode is not directly reachable via the public internet. In this case, access can only be established via LISH or other Linodes connected to the same VLAN.
+              * A Linode must have a public interface in the first/eth0 position to be reachable via the public internet upon boot without additional system configuration. If no `public` interface is configured, the Linode is not directly reachable via the public internet. In this case, access can only be established via [LISH](/docs/products/compute/compute-instances/guides/lish/) or other Linodes connected to the same VLAN.
 
             * `vlan`
               * Configuring a `vlan` purpose interface attaches this Linode to the VLAN with the specified `label`.
@@ -22659,9 +22666,9 @@ components:
 
         Up to three interface objects can be entered in this array. The position in the array determines the interface to which the settings apply:
 
-        - First/0:  eth0
-        - Second/1: eth1
-        - Third/2:  eth2
+        - First [0]:  eth0
+        - Second [1]: eth1
+        - Third [2]:  eth2
 
         When updating a Linode's interfaces, *each interface must be redefined*. An empty interfaces array results in a default public interface configuration only.
 
