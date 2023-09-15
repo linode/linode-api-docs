@@ -580,7 +580,7 @@ paths:
           linode-cli betas enrolled-list
     post:
       tags:
-      - Linode Types
+      - Beta Programs
       summary: Beta Program Enroll
       operationId: enrollBetaProgram
       servers:
