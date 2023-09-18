@@ -6022,6 +6022,11 @@ paths:
           * You may also supply a list of usernames via the `authorized_users` field.
             * These users must have an SSH Key associated with your Profile first. See SSH Key Add ([POST /profile/sshkeys](/docs/api/profile/#ssh-key-add)) for more information.
 
+        * Using cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/).
+          * Automate system configuration and software installation by providing a base-64 encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) file.
+          * Requires a compatible Image. You can determine compatible Images by checking for `cloud-init` under `capabilities` when using Images List ([GET /images](/docs/api/images/#images-list)).
+          * Requires a compatible Region.  You can determine compatible Regions by checking for `Metadata` under `capabilities` when using Regions List ([GET /regions](/docs/api/regions/#regions-list)).
+
         * Using a StackScript.
           * See StackScripts List ([GET /linode/stackscripts](/docs/api/stackscripts/#stackscripts-list)) for
             a list of available StackScripts.
@@ -6047,12 +6052,6 @@ paths:
             * See Linode Boot ([POST /linode/instances/{linodeId}/boot](/docs/api/linode-instances/#linode-boot)).
           * Disks and Configs must be created manually.
           * This is only recommended for advanced use cases.
-
-        * **BETA** Using cloud-init with [Metadata](/docs/products/compute/compute-instances/guides/metadata/).
-          * Automate system configuration and software installation by providing a base-64 encoded [cloud-config](/docs/products/compute/compute-instances/guides/metadata-cloud-config/) file.
-          * Requires a compatible Image. You can determine compatible Images by checking for `cloud-init` under `capabilities` when using Images List ([GET /images](/docs/api/images/#images-list)).
-          * Requires a compatible Region.  You can determine compatible Regions by checking for `Metadata` under `capabilities` when using Regions List ([GET /regions](/docs/api/regions/#regions-list)).
-          * This feature is in beta and is currently limited to certain Regions and distributions. Please be aware that this feature may receive breaking updates in the future. This notice will be removed when this feature is out of beta.
       tags:
       - Linode Instances
       operationId: createLinodeInstance
