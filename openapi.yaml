@@ -628,6 +628,7 @@ paths:
         source: >
           curl https://api.linode.com/v4/account/betas \
               -H "Authorization: Bearer $TOKEN" \
+              -H "Content-Type: application/json" \
               -X POST -d '{
                   "id": "example_open"
               }'
