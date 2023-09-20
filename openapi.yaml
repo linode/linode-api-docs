@@ -22568,6 +22568,10 @@ components:
           - fullvirt
           example: paravirt
         interfaces:
+          example:
+          - {"id": 101, "purpose": "public", "ipam_address": null, "label": null}
+          - {"id": 102, "purpose": "vlan", "ipam_address": "10.0.0.1/24", "label": "vlan-1"}
+          - {"id": 103, "purpose": "vlan", "ipam_address": "10.0.0.2/24", "label": "vlan-2"}
           $ref: '#/components/schemas/LinodeConfigInterfaces'
         helpers:
           type: object
@@ -22622,11 +22626,17 @@ components:
       description: >
         The Network Interface to apply to this Linode's configuration profile.
       properties:
+        id:
+          readOnly: true
+          type: integer
+          description: The unique ID representing this interface.
+          example: 101
+          x-linode-cli-display: 1
         label:
           type: string
           minLength: 1
           maxLength: 64
-          pattern: '/[a-z0-9-]+/'
+          pattern: '[a-zA-Z0-9-]+'
           x-linode-filterable: true
           nullable: true
           description: |
@@ -22643,6 +22653,7 @@ components:
 
             If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. To view your active VLANs, use the [VLANs List](/docs/api/networking/#vlans-list) endpoint.
           example: example-interface
+          x-linode-cli-display: 2
         ipam_address:
           type: string
           format: ip/netmask
@@ -22677,16 +22688,20 @@ components:
               * Configuring a `vlan` purpose interface attaches this Linode to the VLAN with the specified `label`.
               * The Linode is configured to use the specified `ipam_address`, if any.
           example: vlan
+          x-linode-cli-display: 3
     LinodeConfigInterfaces:
       type: array
       items:
         $ref: '#/components/schemas/LinodeConfigInterface'
+      minItems: 1
+      maxItems: 3
+      uniqueItems: true
       required:
       - purpose
       description: |
         An array of Network Interfaces to add to this Linode's Configuration Profile.
 
-        Up to three interface objects can be entered in this array. The position in the array determines the interface to which the settings apply:
+        At least one and up to three interface objects can be entered in this array. The position in the array determines which of the Linode's network interfaces is configured:
 
         - First [0]:  eth0
         - Second [1]: eth1
@@ -22704,6 +22719,10 @@ components:
         you will be prompted to select a different data center or contact support.
 
         **Note:** See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
+      example:
+      - {"id": 101, "purpose": "public", "ipam_address": null, "label": null}
+      - {"id": 102, "purpose": "vlan", "ipam_address": "10.0.0.1/24", "label": "vlan-1"}
+      - {"id": 103, "purpose": "vlan", "ipam_address": "10.0.0.2/24", "label": "vlan-2"}
     LinodeRequest:
       type: object
       description: Common properties for creating and rebuilding Linodes.
