@@ -22572,10 +22572,6 @@ components:
           - fullvirt
           example: paravirt
         interfaces:
-          example:
-          - {"id": 101, "purpose": "public", "ipam_address": null, "label": null}
-          - {"id": 102, "purpose": "vlan", "ipam_address": "10.0.0.1/24", "label": "vlan-1"}
-          - {"id": 103, "purpose": "vlan", "ipam_address": "10.0.0.2/24", "label": "vlan-2"}
           $ref: '#/components/schemas/LinodeConfigInterfaces'
         helpers:
           type: object
