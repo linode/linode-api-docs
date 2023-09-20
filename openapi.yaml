@@ -6798,6 +6798,8 @@ paths:
         Any [tags](/docs/api/tags/#tags-list) existing on the source Linode will be cloned to the target Linode.
 
         Linodes utilizing Metadata (`"has_user_data": true`) must be cloned to a new Linode with `metadata.user_data` included with the clone request.
+
+        **Note:** Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt clone it to a non-NGN data center, the cloning will not initiate. If a Linode cannot be cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
       tags:
       - Linode Instances
       operationId: cloneLinodeInstance
@@ -8166,6 +8168,8 @@ paths:
         If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
         the migration will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
+
+        **Note:** Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt to migrate it to a non-NGN data center, the migration will not initiate. If a Linode cannot be migrated because of an incompatibility, you will be prompted to select a different data center or contact support.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
@@ -22715,8 +22719,7 @@ components:
 
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
-        the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
-        you will be prompted to select a different data center or contact support.
+        the migration or cloning will not initiate. If a Linode cannot be migrated or cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
 
         **Note:** See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
       example:
