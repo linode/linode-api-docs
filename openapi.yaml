@@ -7408,7 +7408,7 @@ paths:
       x-linode-grant: read_write
       tags:
       - Linode Instances
-      operationId: deleteLinodeConfig
+      operationId: deleteLinodeConfigInterface
       x-linode-cli-action: config-interface-delete
       security:
       - personalAccessToken: []
