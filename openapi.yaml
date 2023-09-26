@@ -9483,7 +9483,7 @@ paths:
                 -X POST -d '{
                   "label": "cluster12345",
                   "region": "us-central",
-                  "k8s_version": "1.25",
+                  "k8s_version": "1.27",
                   "tags": ["ecomm", "blogs"],
                   "control_plane": {
                       "high_availability": true
@@ -9510,7 +9510,7 @@ paths:
           linode-cli lke cluster-create \
             --label cluster12345 \
             --region us-central \
-            --k8s_version 1.25 \
+            --k8s_version 1.27 \
             --control_plane.high_availability true \
             --node_pools.type g6-standard-4 --node_pools.count 6 \
             --node_pools.type g6-standard-8 --node_pools.count 3 \
@@ -9670,7 +9670,7 @@ paths:
           linode-cli lke cluster-update 12345 \
             --label lkecluster54321 \
             --control_plane.high_availability true \
-            --k8s_version 1.25 \
+            --k8s_version 1.27 \
             --tags ecomm \
             --tags blog \
             --tags prod \
@@ -10591,10 +10591,10 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-                https://api.linode.com/v4/lke/versions/1.25
+                https://api.linode.com/v4/lke/versions/1.27
       - lang: CLI
         source: >
-          linode-cli lke version-view 1.25
+          linode-cli lke version-view 1.27
   /longview/clients:
     x-linode-cli-command: longview
     get:
@@ -23106,7 +23106,7 @@ components:
             and the latest supported patch version will be deployed.
           x-linode-filterable: true
           x-linode-cli-display: 4
-          example: "1.25"
+          example: "1.27"
         control_plane:
           type: object
           description: >
@@ -23308,7 +23308,7 @@ components:
             A Kubernetes version number available for deployment
             to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;,
             and the latest supported patch version.
-          example: "1.25"
+          example: "1.27"
     LongviewClient:
       type: object
       description: >
