@@ -637,6 +637,8 @@ paths:
           linode-cli betas enroll --id example_open
   /account/betas/{betaId}:
     x-linode-cli-command: betas
+    parameters:
+    - $ref: '#/components/parameters/betaId'
     get:
       tags:
       - Beta Programs
@@ -650,8 +652,6 @@ paths:
         - account:read_only
       x-linode-cli-action: enrolled-view
       x-linode-grant: unrestricted only
-      parameters:
-      - $ref: '#/components/parameters/betaId'
       description: |
         Display an enrolled Beta Program for your Account. The Beta Program may be inactive.
 
@@ -3306,6 +3306,8 @@ paths:
           linode-cli betas list
   /betas/{betaId}:
     x-linode-cli-command: betas
+    parameters:
+    - $ref: '#/components/parameters/betaId'
     get:
       tags:
       - Beta Programs
@@ -3318,8 +3320,6 @@ paths:
       - oauth: []
       x-linode-cli-action: view
       x-linode-grant: unrestricted only
-      parameters:
-      - $ref: '#/components/parameters/betaId'
       description: |
         Display information about a Beta Program. This command can be used to access inactive as well as active Beta Programs.
 
