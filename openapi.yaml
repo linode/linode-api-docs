@@ -2707,6 +2707,22 @@ paths:
           description: Returns a single Transfer object.
           content:
             application/json:
+              x-linode-cli-nested-list: region_transfers
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  quota:
+                    x-linode-cli-display: 1
+                  used:
+                    x-linode-cli-display: 2
+                  billable:
+                    x-linode-cli-display: 3
+                  region_transfers.quota:
+                    x-linode-cli-display: 4
+                  region_transfers.used:
+                    x-linode-cli-display: 5
+                  region_transfers.billable:
+                    x-linode-cli-display: 6
               schema:
                 $ref: '#/components/schemas/Transfer'
         default:
@@ -3047,7 +3063,7 @@ paths:
                     "global": {
                       "add_linodes": true,
                       "add_nodebalancers": false,
-                      "add_databases": true;
+                      "add_databases": true,
                       "add_domains": true,
                       "add_longview": false,
                       "add_stackscripts": true,
@@ -8148,21 +8164,19 @@ paths:
     post:
       x-linode-grant: read_write
       summary: DC Migration/Pending Host Migration Initiate
-      description: >
+      description: |
         Initiate a pending host migration that has been scheduled by Linode or
         initiate a cross data center (DC) migration.  A list of pending migrations,
         if any, can be accessed from [GET /account/notifications](/docs/api/account/#notifications-list).
         When the migration begins, your Linode will be shutdown if not already off.
         If the migration initiated the shutdown, it will reboot the Linode when completed.
 
-
         To initiate a cross DC migration, you must pass a `region` parameter to the
         request body specifying the target data center region.
         You can view a list of all available regions and their feature capabilities
-        from [GET /regions](/docs/api/regions/#regions-list). If your Linode has a DC migration already queued
+        from [GET /regions](/docs/api/regions/#regions-list). See our [Pricing Page](https://www.linode.com/pricing/) for Region-specific pricing, which applies after migration is complete. If your Linode has a DC migration already queued
         or you have initiated a previously scheduled migration, you will not be able to initiate
         a DC migration until it has completed.
-
 
         **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
         If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
@@ -9306,6 +9320,38 @@ paths:
           description: A collection of Linode Types.
           content:
             application/json:
+              x-linode-cli-nested-list: region_prices
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  id:
+                    x-linode-cli-display: 1
+                  label:
+                    x-linode-cli-display: 2
+                  class:
+                    x-linode-cli-display: 3
+                  disk:
+                    x-linode-cli-display: 4
+                  memory:
+                    x-linode-cli-display: 5
+                  vcpus:
+                    x-linode-cli-display: 6
+                  gpus:
+                    x-linode-cli-display: 7
+                  network_out:
+                    x-linode-cli-display: 8
+                  transfer:
+                    x-linode-cli-display: 9
+                  price.hourly:
+                    x-linode-cli-display: 10
+                  price.monthly:
+                    x-linode-cli-display: 11
+                  region_prices.id:
+                    x-linode-cli-display: 12
+                  region_prices.hourly:
+                    x-linode-cli-display: 13
+                  region_prices.monthly:
+                    x-linode-cli-display: 14
               schema:
                 type: object
                 properties:
@@ -9354,6 +9400,38 @@ paths:
           description: A single Linode Type.
           content:
             application/json:
+              x-linode-cli-nested-list: region_prices
+              x-linode-cli-use-schema:
+                type: object
+                properties:
+                  id:
+                    x-linode-cli-display: 1
+                  label:
+                    x-linode-cli-display: 2
+                  class:
+                    x-linode-cli-display: 3
+                  disk:
+                    x-linode-cli-display: 4
+                  memory:
+                    x-linode-cli-display: 5
+                  vcpus:
+                    x-linode-cli-display: 6
+                  gpus:
+                    x-linode-cli-display: 7
+                  network_out:
+                    x-linode-cli-display: 8
+                  transfer:
+                    x-linode-cli-display: 9
+                  price.hourly:
+                    x-linode-cli-display: 10
+                  price.monthly:
+                    x-linode-cli-display: 11
+                  region_prices.id:
+                    x-linode-cli-display: 12
+                  region_prices.hourly:
+                    x-linode-cli-display: 13
+                  region_prices.monthly:
+                    x-linode-cli-display: 14
               schema:
                 $ref: '#/components/schemas/LinodeType'
         default:
@@ -10457,7 +10535,7 @@ paths:
           curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
-                  "kubeconfig": true;
+                  "kubeconfig": true,
                   "servicetoken": true
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/regenerate
@@ -21508,6 +21586,28 @@ components:
           description: The amount of the Invoice after taxes in US Dollars.
           example: 132.50
           x-linode-cli-display: 6
+        billing_source:
+          type: string
+          enum:
+          - akamai
+          - linode
+          readOnly: true
+          description: |
+            `akamai`: This Invoice was generated according to the terms of an agreement between the customer and Akamai.
+
+            `linode`: This Invoice was generated according to the default terms, prices, and discounts.
+          example: linode
+          x-linode-cli-display: 3.5
+        region:
+          type: string
+          readOnly: true
+          nullable: true
+          description: |
+            The ID of the applicable Region associated with this Invoice.
+
+            `null` if there is no applicable Region.
+          example: us-west
+          x-linode-cli-display: 7
     InvoiceItem:
       type: object
       description: An InvoiceItem object.
@@ -22959,8 +23059,10 @@ components:
         price:
           type: object
           readOnly: true
-          description: >
-            Cost in US dollars, broken down into hourly and monthly charges.
+          description: |
+            The default cost of provisioning this Linode Type. Prices are in US dollars, broken down into hourly and monthly charges.
+
+            Certain Regions have different prices from the default. For Region-specific prices, see `region_prices`.
           properties:
             hourly:
               type: number
@@ -22972,6 +23074,23 @@ components:
               description: Cost (in US dollars) per month.
               example: 20
               x-linode-cli-display: 10
+        region_prices:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The Region ID for these prices.
+                example: us-east
+              hourly:
+                type: number
+                description: Cost (in US dollars) per hour for this Region.
+                example: 0.036
+              monthly:
+                type: number
+                description: Cost (in US dollars) per month for this Region.
+                example: 24
         addons:
           type: object
           readOnly: true
@@ -22987,7 +23106,10 @@ components:
               properties:
                 price:
                   type: object
-                  description: Cost of enabling Backups for this Linode Type.
+                  description: |
+                    The default cost of enabling Backups for this Linode Type. Prices are in US dollars, broken down into hourly and monthly charges.
+
+                    Certain Regions have different prices from the default. For Region-specific prices, see `region_prices`.
                   properties:
                     hourly:
                       type: number
@@ -22999,6 +23121,23 @@ components:
                       description: >
                         The cost (in US dollars) per month to add Backups service.
                       example: 5
+                region_prices:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The Region ID for these prices.
+                        example: us-east
+                      hourly:
+                        type: number
+                        description: Cost (in US dollars) per hour to add Backups service in this Region.
+                        example: 0.0096
+                      monthly:
+                        type: number
+                        description: Cost (in US dollars) per month to add Backups service in this Region.
+                        example: 6
         network_out:
           x-linode-filterable: true
           type: integer
@@ -25999,14 +26138,15 @@ components:
           example: null
     Transfer:
       type: object
-      description: >
-        An object representing your network utilization for the current month,
-        in Gigabytes.
+      description: |
+        An object representing your network utilization for the current month, in Gigabytes.
+
+        Certain Regions have separate utilization quotas and rates. For Region-specific network utilization data, see `region_transfers`.
       properties:
         billable:
           type: integer
           readOnly: true
-          description: >
+          description: |
             The amount of your transfer pool that is billable this billing cycle.
           example: 0
           x-linode-cli-display: 3
@@ -26024,6 +26164,33 @@ components:
             The amount of network usage you have used this billing cycle.
           example: 2
           x-linode-cli-display: 2
+        region_transfers:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The Region ID for this network utilization data.
+                example: us-east
+              billable:
+                type: integer
+                readOnly: true
+                description: |
+                  The amount of your transfer pool that is billable this billing cycle for this Region.
+                example: 0
+              quota:
+                type: integer
+                readOnly: true
+                description: >
+                  The amount of network usage allowed this billing cycle for this Region.
+                example: 5010
+              used:
+                type: integer
+                readOnly: true
+                description: >
+                  The amount of network usage you have used this billing cycle for this Region.
+                example: 1
     Tag:
       type: object
       description: >
