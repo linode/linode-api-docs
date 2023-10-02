@@ -21598,16 +21598,6 @@ components:
             `linode`: This Invoice was generated according to the default terms, prices, and discounts.
           example: linode
           x-linode-cli-display: 3.5
-        region:
-          type: string
-          readOnly: true
-          nullable: true
-          description: |
-            The ID of the applicable Region associated with this Invoice.
-
-            `null` if there is no applicable Region.
-          example: us-west
-          x-linode-cli-display: 7
     InvoiceItem:
       type: object
       description: An InvoiceItem object.
@@ -21668,6 +21658,16 @@ components:
           readOnly: true
           description: The monthly service fee in US Dollars for this Item.
           example: 5.05
+        region:
+          type: string
+          readOnly: true
+          nullable: true
+          description: |
+            The ID of the applicable Region associated with this Invoice Item.
+
+            `null` if there is no applicable Region.
+          example: us-west
+          x-linode-cli-display: 7
     IPAddress:
       type: object
       description: >
