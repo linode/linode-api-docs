@@ -370,7 +370,7 @@ info:
 
     ### Linode APIv4 Rate Limits
 
-    With the Linode API, you can generally make up to 1,600 general API requests every two minutes. Additionally, all endpoints have a rate limit of 800 requests per minute unless otherwise specified below.
+    With the Linode API, you can generally make up to 1,600 general API requests every two minutes. Additionally, all commands have a rate limit of 800 requests per minute, and all GET commands that return paginated data collections have a rate limit of 400 requests per minute, unless otherwise specified below.
 
     **Note:** There may be rate limiting applied at other levels outside of the API, for example, at the load balancer.
 
@@ -381,6 +381,10 @@ info:
     Creating Volumes has a dedicated rate limit of 25 requests per minute. That endpoint is:
 
     * [Volume Create](/docs/api/volumes/#volume-create)
+
+    Listing Images has a dedicated rate limit of 20 requests per minute. That endpoint is:
+
+    * [Images List](/docs/api/images/#images-list)
 
     `/stats` endpoints have their own dedicated rate limits of 100 requests per minute. These endpoints are:
 
