@@ -3301,6 +3301,8 @@ paths:
       x-linode-cli-action: mysql-create
       x-linode-grant: add_databases
       description: |
+        **This command is currently only available for customers who already have an active Managed Database.**
+
         Provision a Managed MySQL Database.
 
         Restricted Users must have the `add_databases` grant to use this command.
@@ -4055,6 +4057,8 @@ paths:
       x-linode-cli-action: postgresql-create
       x-linode-grant: add_databases
       description: |
+        **This command is currently only available for customers who already have an active Managed Database.**
+
         Provision a Managed PostgreSQL Database.
 
         Restricted Users must have the `add_databases` grant to use this command.
