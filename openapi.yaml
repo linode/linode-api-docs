@@ -2707,7 +2707,7 @@ paths:
           description: Returns a single Transfer object.
           content:
             application/json:
-              x-linode-cli-nested-list: region_transfers
+#              x-linode-cli-nested-list: region_transfers
               x-linode-cli-use-schema:
                 type: object
                 properties:
@@ -2717,12 +2717,12 @@ paths:
                     x-linode-cli-display: 2
                   billable:
                     x-linode-cli-display: 3
-                  region_transfers.quota:
-                    x-linode-cli-display: 4
-                  region_transfers.used:
-                    x-linode-cli-display: 5
-                  region_transfers.billable:
-                    x-linode-cli-display: 6
+#                  region_transfers.quota:
+#                    x-linode-cli-display: 4
+#                  region_transfers.used:
+#                    x-linode-cli-display: 5
+#                  region_transfers.billable:
+#                    x-linode-cli-display: 6
               schema:
                 $ref: '#/components/schemas/Transfer'
         default:
@@ -9320,7 +9320,7 @@ paths:
           description: A collection of Linode Types.
           content:
             application/json:
-              x-linode-cli-nested-list: region_prices
+#              x-linode-cli-nested-list: region_prices
               x-linode-cli-use-schema:
                 type: object
                 properties:
@@ -9346,12 +9346,12 @@ paths:
                     x-linode-cli-display: 10
                   price.monthly:
                     x-linode-cli-display: 11
-                  region_prices.id:
-                    x-linode-cli-display: 12
-                  region_prices.hourly:
-                    x-linode-cli-display: 13
-                  region_prices.monthly:
-                    x-linode-cli-display: 14
+#                  region_prices.id:
+#                    x-linode-cli-display: 12
+#                  region_prices.hourly:
+#                    x-linode-cli-display: 13
+#                  region_prices.monthly:
+#                    x-linode-cli-display: 14
               schema:
                 type: object
                 properties:
@@ -9400,7 +9400,7 @@ paths:
           description: A single Linode Type.
           content:
             application/json:
-              x-linode-cli-nested-list: region_prices
+#              x-linode-cli-nested-list: region_prices
               x-linode-cli-use-schema:
                 type: object
                 properties:
@@ -9426,12 +9426,12 @@ paths:
                     x-linode-cli-display: 10
                   price.monthly:
                     x-linode-cli-display: 11
-                  region_prices.id:
-                    x-linode-cli-display: 12
-                  region_prices.hourly:
-                    x-linode-cli-display: 13
-                  region_prices.monthly:
-                    x-linode-cli-display: 14
+#                  region_prices.id:
+#                    x-linode-cli-display: 12
+#                  region_prices.hourly:
+#                    x-linode-cli-display: 13
+#                  region_prices.monthly:
+#                    x-linode-cli-display: 14
               schema:
                 $ref: '#/components/schemas/LinodeType'
         default:
