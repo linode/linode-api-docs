@@ -2709,21 +2709,6 @@ paths:
             application/json:
               x-linode-cli-subtables:
               - region_transfers
-#              x-linode-cli-use-schema:
-#                type: object
-#                properties:
-#                  quota:
-#                    x-linode-cli-display: 1
-#                  used:
-#                    x-linode-cli-display: 2
-#                  billable:
-#                    x-linode-cli-display: 3
-#                  region_transfers.quota:
-#                    x-linode-cli-display: 4
-#                  region_transfers.used:
-#                    x-linode-cli-display: 5
-#                  region_transfers.billable:
-#                    x-linode-cli-display: 6
               schema:
                 $ref: '#/components/schemas/Transfer'
         default:
