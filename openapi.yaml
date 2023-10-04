@@ -577,7 +577,7 @@ paths:
               -H "Authorization: Bearer $TOKEN"
       - lang: CLI
         source: >
-          linode-cli betas enrolled-list
+          linode-cli betas enrolled
     post:
       tags:
       - Beta Programs
