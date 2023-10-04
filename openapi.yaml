@@ -545,7 +545,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - account:read_only
-      x-linode-cli-action: enrolled-list
+      x-linode-cli-action: enrolled
       x-linode-grant: unrestricted only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
@@ -3271,7 +3271,9 @@ paths:
       security:
       - personalAccessToken: []
       - oauth: []
-      x-linode-cli-action: list
+      x-linode-cli-action:
+      - list
+      - ls
       x-linode-grant: unrestricted only
       parameters:
       - $ref: '#/components/parameters/pageOffset'
