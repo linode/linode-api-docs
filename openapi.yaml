@@ -2707,16 +2707,17 @@ paths:
           description: Returns a single Transfer object.
           content:
             application/json:
-#              x-linode-cli-nested-list: region_transfers
-              x-linode-cli-use-schema:
-                type: object
-                properties:
-                  quota:
-                    x-linode-cli-display: 1
-                  used:
-                    x-linode-cli-display: 2
-                  billable:
-                    x-linode-cli-display: 3
+              x-linode-cli-subtables:
+              - region_transfers
+#              x-linode-cli-use-schema:
+#                type: object
+#                properties:
+#                  quota:
+#                    x-linode-cli-display: 1
+#                  used:
+#                    x-linode-cli-display: 2
+#                  billable:
+#                    x-linode-cli-display: 3
 #                  region_transfers.quota:
 #                    x-linode-cli-display: 4
 #                  region_transfers.used:
@@ -9320,38 +9321,6 @@ paths:
           description: A collection of Linode Types.
           content:
             application/json:
-#              x-linode-cli-nested-list: region_prices
-              x-linode-cli-use-schema:
-                type: object
-                properties:
-                  id:
-                    x-linode-cli-display: 1
-                  label:
-                    x-linode-cli-display: 2
-                  class:
-                    x-linode-cli-display: 3
-                  disk:
-                    x-linode-cli-display: 4
-                  memory:
-                    x-linode-cli-display: 5
-                  vcpus:
-                    x-linode-cli-display: 6
-                  gpus:
-                    x-linode-cli-display: 7
-                  network_out:
-                    x-linode-cli-display: 8
-                  transfer:
-                    x-linode-cli-display: 9
-                  price.hourly:
-                    x-linode-cli-display: 10
-                  price.monthly:
-                    x-linode-cli-display: 11
-#                  region_prices.id:
-#                    x-linode-cli-display: 12
-#                  region_prices.hourly:
-#                    x-linode-cli-display: 13
-#                  region_prices.monthly:
-#                    x-linode-cli-display: 14
               schema:
                 type: object
                 properties:
@@ -9400,38 +9369,8 @@ paths:
           description: A single Linode Type.
           content:
             application/json:
-#              x-linode-cli-nested-list: region_prices
-              x-linode-cli-use-schema:
-                type: object
-                properties:
-                  id:
-                    x-linode-cli-display: 1
-                  label:
-                    x-linode-cli-display: 2
-                  class:
-                    x-linode-cli-display: 3
-                  disk:
-                    x-linode-cli-display: 4
-                  memory:
-                    x-linode-cli-display: 5
-                  vcpus:
-                    x-linode-cli-display: 6
-                  gpus:
-                    x-linode-cli-display: 7
-                  network_out:
-                    x-linode-cli-display: 8
-                  transfer:
-                    x-linode-cli-display: 9
-                  price.hourly:
-                    x-linode-cli-display: 10
-                  price.monthly:
-                    x-linode-cli-display: 11
-#                  region_prices.id:
-#                    x-linode-cli-display: 12
-#                  region_prices.hourly:
-#                    x-linode-cli-display: 13
-#                  region_prices.monthly:
-#                    x-linode-cli-display: 14
+              x-linode-cli-subtables:
+              - region_prices
               schema:
                 $ref: '#/components/schemas/LinodeType'
         default:
@@ -23186,7 +23125,7 @@ components:
           description: >
             The number of GPUs this Linode Type offers.
           example: 0
-          x-linode-cli-display: 11
+          x-linode-cli-display: 6.5
     LKECluster:
       type: object
       description: A Kubernetes cluster.
