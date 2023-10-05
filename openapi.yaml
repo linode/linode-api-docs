@@ -15960,12 +15960,10 @@ paths:
       description: |
         Provisions a new Object Storage Key on your account.
 
-        Accounts with negative balances cannot access this command.
-
+        * Accounts with negative balances cannot access this command.
+        * A successful request triggers an `obj_access_key_create` event.
         * To create a Limited Access Key with specific permissions, send a `bucket_access` array.
-
         * To create a Limited Access Key without access to any buckets, send an empty `bucket_access` array.
-
         * To create an Access Key with unlimited access to all clusters and all buckets, omit the `bucket_access` array.
       tags:
       - Object Storage
@@ -16064,6 +16062,8 @@ paths:
       summary: Object Storage Key Update
       description: |
         Updates an Object Storage Key on your account.
+
+        * A successful request triggers an `obj_access_key_update` event.
       security:
       - personalAccessToken: []
       - oauth:
@@ -16111,7 +16111,9 @@ paths:
       - url: https://api.linode.com/v4
       summary: Object Storage Key Revoke
       description: |
-        Revokes an Object Storage Key.  This keypair will no longer be usable by third-party clients.
+        Revokes an Object Storage Key. This keypair will no longer be usable by third-party clients.
+
+        * A successful request triggers an `obj_access_key_delete` event.
       security:
       - personalAccessToken: []
       - oauth:
@@ -21075,6 +21077,9 @@ components:
           - oauth_client_delete
           - oauth_client_secret_reset
           - oauth_client_update
+          - obj_access_key_create
+          - obj_access_key_delete
+          - obj_access_key_update
           - password_reset
           - payment_method_add
           - payment_submitted
