@@ -6429,6 +6429,9 @@ paths:
                       example: true
                     interfaces:
                       $ref: '#/components/schemas/LinodeConfigInterfaces'
+                    firewall_id:
+                      type: integer
+                      description: The `id` of the Firewall to attach this Linode to upon creation.
       responses:
         '200':
           description: >
