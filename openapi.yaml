@@ -6171,6 +6171,17 @@ paths:
                     "purpose": "vlan",
                     "label": "vlan-1",
                     "ipam_address": "10.0.0.1/24"
+                  },
+                  {
+                    "purpose": "vpc",
+                    "primary": false,
+                    "label": "",
+                    "ipam_address": "",
+                    "subnet_id": 101,
+                    "ipv4": {
+                      "vpc": "10.0.1.2",
+                      "nat_1_1": "203.0.113.2"
+                    }
                   }
                 ],
                 "authorized_keys": [
@@ -7340,41 +7351,6 @@ paths:
               - required:
                 - purpose
               - $ref: '#/components/schemas/LinodeConfigInterface'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "Content-Type: application/json" \
-            -X POST -d '{
-              "purpose": "vpc",
-              "primary": true,
-              "label": "",
-              "ipam_address": "",
-              "subnet_id": 101,
-              "ipv4": {
-                "vpc": "10.0.0.2",
-                "nat_1_1": "203.0.113.2"
-              },
-              "ipv6: {
-                "vpc": "fd04:495a:691c:971c::2"
-              },
-              "ip_ranges": [
-                "10.0.0.64/26",
-                "fd04:495a:691c:971c::1:0/112"
-              ]
-            }'
-      - lang: CLI
-        source: >
-          linode-cli linodes config-interface-add $linodeId $configId \
-            --purpose vpc \
-            --primary true \
-            --subnet_id 101 \
-            --ipv4.vpc "10.0.0.2" \
-            --ipv4.nat_1_1 "203.0.113.2" \
-            --ipv6.vpc "fd04:495a:691c:971c::2" \
-            --ip_ranges "10.0.0.64/26" \
-            --ip_ranges "fd04:495a:691c:971c::1:0/112"
       responses:
         '200':
           description: Interface successfully added.
@@ -7384,6 +7360,31 @@ paths:
                 $ref: '#/components/schemas/LinodeConfigInterface'
         default:
           $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" \
+            -X POST -d '{
+              "purpose": "vpc",
+              "primary": false,
+              "label": "",
+              "ipam_address": "",
+              "subnet_id": 101,
+              "ipv4": {
+                "vpc": "10.0.1.2",
+                "nat_1_1": "203.0.113.2"
+              }
+            }'
+      - lang: CLI
+        source: >
+          linode-cli linodes config-interface-add $linodeId $configId \
+            --purpose vpc \
+            --primary false \
+            --subnet_id 101 \
+            --ipv4.vpc "10.0.1.2" \
+            --ipv4.nat_1_1 "203.0.113.2"
   /linode/instances/{linodeId}/configs/{configId}/interfaces/{interfaceId}:
     x-linode-cli-command: linodes
     parameters:
@@ -7416,8 +7417,7 @@ paths:
         - linodes:read_write
       responses:
         '200':
-          description: >
-            Configuration profile successfully deleted.
+          description: Interface successfully deleted.
           content:
             application/json:
               schema:
@@ -7503,10 +7503,10 @@ paths:
                   $ref: '#/components/schemas/LinodeConfigInterface/properties/primary'
                 ipv4:
                   $ref: '#/components/schemas/LinodeConfigInterface/properties/ipv4'
-                ipv6:
-                  $ref: '#/components/schemas/LinodeConfigInterface/properties/ipv6'
-                ip_ranges:
-                  $ref: '#/components/schemas/LinodeConfigInterface/properties/ip_ranges'
+                # ipv6:
+                #   $ref: '#/components/schemas/LinodeConfigInterface/properties/ipv6'
+                # ip_ranges:
+                #   $ref: '#/components/schemas/LinodeConfigInterface/properties/ip_ranges'
       responses:
         '200':
           description: Interface successfully updated.
@@ -7525,26 +7525,16 @@ paths:
             -X PUT -d '{
               "primary": true,
               "ipv4": {
-                "vpc": "10.0.0.2",
+                "vpc": "10.0.1.2",
                 "nat_1_1": "203.0.113.2"
-              },
-              "ipv6: {
-                "vpc": "fd04:495a:691c:971c::2"
-              },
-              "ip_ranges": [
-                "10.0.0.64/26",
-                "fd04:495a:691c:971c::1:0/112"
-              ]
+              }
             }'
       - lang: CLI
         source: >
           linode-cli linodes config-interface-update $linodeId $configId $interfaceId \
             --primary true \
-            --ipv4.vpc "10.0.0.2" \
-            --ipv4.nat_1_1 "203.0.113.2" \
-            --ipv6.vpc "fd04:495a:691c:971c::2" \
-            --ip_ranges "10.0.0.64/26" \
-            --ip_ranges "fd04:495a:691c:971c::1:0/112"
+            --ipv4.vpc "10.0.1.2" \
+            --ipv4.nat_1_1 "203.0.113.2"
   /linode/instances/{linodeId}/configs/{configId}/interfaces/order:
     x-linode-cli-command: linodes
     parameters:
@@ -7583,7 +7573,7 @@ paths:
                     An ordered array of existing Configuration Profile Interface `id`s.
 
                     * All current Interface `id`s must be present in the array.
-                    * If the Configuration Profile is active on the Linode, the Linode must first be shut down prior to running this command.
+                    * If the Configuration Profile contains Interfaces and is active on the Linode, the Linode must first be shut down prior to running this command.
                     * Reordering takes effect after rebooting the Linode with this Configuration Profile.
 
                     The position in the array determines which of the Linode's network Interfaces is configured:
@@ -19170,6 +19160,7 @@ paths:
             schema:
               allOf:
               - required:
+                - ipv4
                 - label
                 - region
               - properties:
@@ -19199,8 +19190,7 @@ paths:
                 "subnets": [
                   {
                     "label": "cool-vpc-subnet",
-                    "ipv4": "10.0.0.0/24",
-                    "ipv6": "/64"
+                    "ipv4": "10.0.1.0/24"
                   }
                 ]
               }'
@@ -19211,8 +19201,7 @@ paths:
               --label cool-vpc \
               --region us-east \
               --subnets.label cool-vpc-subnet \
-              --subnets.ipv4 10.0.0.0/24 \
-              --subnets.ipv6 /64
+              --subnets.ipv4 10.0.1.0/24
   /vpcs/{vpcId}:
     x-linode-cli-command: vpcs
     parameters:
@@ -19421,13 +19410,16 @@ paths:
             schema:
               type: object
               description: VPC Subnet Create request object
+              required:
+              - ipv4
+              - label
               properties:
                 label:
                   $ref: '#/components/schemas/VPCSubnet/properties/label'
                 ipv4:
                   $ref: '#/components/schemas/VPCSubnet/properties/ipv4'
-                ipv6:
-                  $ref: '#/components/schemas/VPCSubnet/properties/ipv6'
+                # ipv6:
+                #   $ref: '#/components/schemas/VPCSubnet/properties/ipv6'
       responses:
         '200':
           description: The new VPC Subnet.
@@ -19445,15 +19437,13 @@ paths:
               -H "Content-Type: application/json" \
               -X POST -d '{
                 "label": "cool-vpc-subnet",
-                "ipv4": "10.0.0.0/24",
-                "ipv6": "/64":
+                "ipv4": "10.0.1.0/24",
               }'
         - lang: CLI
           source: >
             linode-cli vpcs subnet-create $vpcId \
               --label cool-vpc-subnet \
-              --ipv4 10.0.1.0/24 \
-              --ipv6 /64
+              --ipv4 10.0.1.0/24
   /vpcs/{vpcId}/subnets/{vpcSubnetId}:
     x-linode-cli-command: vpcs
     parameters:
@@ -19500,6 +19490,8 @@ paths:
             linode-cli vpcs subnet-delete $vpcId $vpcSubnetId
     get:
       summary: VPC Subnet View
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -23583,8 +23575,8 @@ components:
             **VPC BETA ONLY**
 
             * `vpc`
-              * Configuring a `vpc` purpose Interface attaches this Linode to the existing VPC with the specified `label`.
-              * The Linode is configured to use the IP address range in the specified VPC `subnet_id`.
+              * Configuring a `vpc` purpose Interface attaches this Linode to the existing VPC Subnet with the specified `subnet_id`.
+              * When the Interface is activated, the Linode is configured to use an IP address from the range in the assigned VPC Subnet. See `ipv4.vpc` for more information.
           example: vlan
           x-linode-cli-display: 3
         primary:
@@ -23594,11 +23586,11 @@ components:
 
             The primary Interface is configured as the default route to the Linode.
 
-            Each Configuration Profile can have one `"primary": true` Interface at a time.
+            Each Configuration Profile can have up to one `"primary": true` Interface at a time.
 
             Must be `false` for `vlan` type Interfaces.
 
-            If no Interface is configured as the primary in a request, the first non-`vlan` type Interface in the `interfaces` array is automatically configured with `"primary": true`.
+            If no Interface is configured as the primary, the first non-`vlan` type Interface in the `interfaces` array is automatically treated as the primary Interface.
           example: true
         vpc_id:
           type: integer
@@ -23630,6 +23622,8 @@ components:
             **VPC BETA ONLY**
 
             IPv4 addresses configured for this Interface.
+
+            Only allowed for `vpc` type Interfaces.
           properties:
             vpc:
               type: string
@@ -23644,7 +23638,6 @@ components:
                 * Returns an empty string (`""`) for non-`vpc` type Interfaces.
 
                 For requests:
-                * The VPC Subnet must have an IPv4 range.
                 * Must not already be actively assigned as an address or within a range to any Linodes.
                 * Must not be the first two or last two addresses in the Subnet IPv4 Range.
                 * If omitted, a valid address within the Subnet IPv4 range is automatically assigned.
@@ -23667,53 +23660,52 @@ components:
                 * The public IPv4 address must not be shared with another Linode.
                 * If ommitted, `null`, or an empty string (`""`), no 1:1 NAT is established.
               example: '203.0.113.2'
-        ipv6:
-          type: object
-          description: |
-            **VPC BETA ONLY**
+        # ipv6:
+        #   type: object
+        #   description: |
+        #     **VPC BETA ONLY**
 
-            IPv6 addresses configured for this Interface. **Currently limited to select participants in the Beta program.**
-          properties:
-            vpc:
-              type: string
-              format: ip
-              description: |
-                **VPC BETA ONLY**
+        #     IPv6 addresses configured for this Interface.
+        #   properties:
+        #     vpc:
+        #       type: string
+        #       format: ip
+        #       description: |
+        #         **VPC BETA ONLY**
 
-                The VPC IPv6 address assigned to this Interface. **Currently limited to select participants in the Beta program.**
+        #         The VPC IPv6 address assigned to this Interface.
 
-                * Only allowed for `vpc` type Interfaces.
-                * Returns an empty string (`""`) for non-`vpc` type Interfaces.
+        #         * Only allowed for `vpc` type Interfaces.
+        #         * Returns an empty string (`""`) for non-`vpc` type Interfaces.
 
-                For requests:
-                * The VPC Subnet must have an IPv6 range.
-                * Must not already be actively assigned as an address or within a range.
-                * Must not be the first two or last two addresses in the Subnet IPv6 Range.
-                * If omitted, a valid address within the Subnet IPv6 range is automatically assigned.
-              example: 'fd04:495a:691c:971c::2'
-        ip_ranges:
-          type: array
-          nullable: true
-          description: |
-            **VPC BETA ONLY**
+        #         For requests:
+        #         * The VPC Subnet must have an IPv6 range.
+        #         * Must not already be actively assigned as an address or within a range.
+        #         * Must not be the first two or last two addresses in the Subnet IPv6 Range.
+        #         * If omitted, a valid address within the Subnet IPv6 range is automatically assigned.
+        #       example: 'fd04:495a:691c:971c::2'
+        # ip_ranges:
+        #   type: array
+        #   nullable: true
+        #   description: |
+        #     **VPC BETA ONLY**
 
-            An array of IPv4 CIDR VPC Subnet ranges that are routed to this Interface. **IPv6 ranges are also available to select participants in the Beta program.**
+        #     An array of IPv4 CIDR VPC Subnet ranges that are routed to this Interface. **IPv6 ranges are also available to select participants in the Beta program.**
 
-            * Array items are only allowed for `vpc` type Interfaces.
-            * This must be empty for non-`vpc` type Interfaces.
-            * Can include up to one IPv4 range and one IPv6 range which are within the VPC Subnet's ranges.
+        #     * Array items are only allowed for `vpc` type Interfaces.
+        #     * This must be empty for non-`vpc` type Interfaces.
 
-            For requests:
-            * Addresses in submitted ranges must not already be actively assigned.
-            * Submitting values replaces any existing values.
-            * Submitting an empty array removes any existing values.
-            * Omitting this property results in no change to existing values.
-          items:
-            type: string
-            format: ip
-          example:
-          - 10.0.0.64/26
-          - fd04:495a:691c:971c::1:0/112
+        #     For requests:
+        #     * Addresses in submitted ranges must not already be actively assigned.
+        #     * Submitting values replaces any existing values.
+        #     * Submitting an empty array removes any existing values.
+        #     * Omitting this property results in no change to existing values.
+        #   items:
+        #     type: string
+        #     format: ip
+        #   example:
+        #   - 10.0.0.64/26
+        #   - fd04:495a:691c:971c::1:0/112
     LinodeConfigInterfaces:
       type: array
       items:
@@ -23755,11 +23747,7 @@ components:
           "ipv4": {
             "vpc": "",
             "nat_1_1": ""
-          },
-          "ipv6": {
-            "vpc": ""
-          },
-          "ip_ranges": []
+          }
         }
       - {
           "id": 102,
@@ -23772,11 +23760,7 @@ components:
           "ipv4": {
             "vpc": "",
             "nat_1_1": ""
-          },
-          "ipv6": {
-            "vpc": ""
-          },
-          "ip_ranges": []
+          }
         }
       - {
           "id": 103,
@@ -23787,16 +23771,9 @@ components:
           "vpc_id": 111,
           "subnet_id": 101,
           "ipv4": {
-            "vpc": "10.0.0.2",
+            "vpc": "10.0.1.2",
             "nat_1_1": "203.0.113.2"
-          },
-          "ipv6": {
-            "vpc": "fd04:495a:691c:971c::2"
-          },
-          "ip_ranges": [
-            "10.0.0.64/26",
-            "fd04:495a:691c:971c::1:0/112"
-          ]
+          }
         }
     LinodeRequest:
       type: object
@@ -27722,37 +27699,39 @@ components:
         ipv4:
           type: string
           format: ip
-          nullable: true
+        #  nullable: true
           description: |
             IPv4 range in CIDR canonical form.
 
-            * A VPC Subnet requires either `ipv4`, `ipv6`, or both.
             * The range must belong to a private address space as defined in [RFC1918](https://datatracker.ietf.org/doc/html/rfc1918).
             * Allowed prefix lengths: 1-29.
             * The range must not overlap with 192.168.128.0/17.
             * The range must not overlap with other Subnets on the same VPC.
-          example: 10.0.0.0/24
+          example: 10.0.1.0/24
           x-linode-cli-display: 3
-        ipv6:
-          type: string
-          format: ip
-          nullable: true
-          description: |
-            IPv6 range in CIDR canonical form. **Currently limited to select participants in the Beta program.**
+        # ipv6:
+        #   type: string
+        #   format: ip
+        #   nullable: true
+        #   description: |
+        #     IPv6 range in CIDR canonical form.
 
-            * A VPC Subnet requires either `ipv4`, `ipv6`, or both.
-            * In requests, only the prefix length is allowed, for example: `/64`. The address range is then automatically assigned.
-            * Allowed prefix lengths: 64-125.
-            * The range must not overlap with other Subnets on the same VPC.
-          example: fd04:495a:691c:971c:0000:0000:0000:0000/64
-          x-linode-cli-display: 4
+        #     * A VPC Subnet requires either `ipv4`, `ipv6`, or both.
+        #     * In requests, only the prefix length is allowed, for example: `/64`. The address range is then automatically assigned.
+        #     * Allowed prefix lengths: 64-125.
+        #     * The range must not overlap with other Subnets on the same VPC.
+        #   example: fd04:495a:691c:971c:0000:0000:0000:0000/64
+        #   x-linode-cli-display: 4
         linodes:
           type: array
-          description: An array of Linode IDs connected to the VPC Subnet.
+          description: |
+            An array of Linode IDs assigned to the VPC Subnet.
+
+            A Linode is assigned to a VPC Subnet if it has a Configuration Profile with a `vpc` purpose interface with the subnet's `subnet_id`. Even if the Configuration Profile is not active, meaning the Linode does not have access to the Subnet, the Linode still appears in this array.
           readOnly: true
           items:
             type: integer
-            description: ID of a Linode connected to the VPC Subnet.
+            description: ID of a Linode assigned to the VPC Subnet.
           example:
           - 111
           - 222
