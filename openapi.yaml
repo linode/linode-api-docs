@@ -20733,7 +20733,6 @@ components:
 
             `MX`: The mail subdomain. For example, `sub` for the address `user@sub.example.com` under the `example.com`
             Domain.
-            * Must have less than 256 total characters.
             * The left-most subdomain component may be an asterix (`*`) to designate a wildcard subdomain.
             * Other subdomain components must only contain letters, digits, and hyphens, start with a letter, end with a letter or digit, and contain less than 64 characters.
             * Must be an empty string (`""`) for a Null MX Record.
@@ -20764,7 +20763,7 @@ components:
             `NS`: The name server. Must be a valid domain. Required.
 
             `MX`: The mail server. Must be a valid domain unless creating a Null MX Record. Required.
-            * Must have less than 256 total characters.
+            * Must have less than 254 total characters.
             * The left-most domain component may be an asterix (`*`) to designate a wildcard domain.
             * Other domain components must only contain letters, digits, and hyphens, start with a letter, end with a letter or digit, and contain less than 64 characters.
             * To create a [Null MX Record](https://datatracker.ietf.org/doc/html/rfc7505), first [remove](/docs/api/domains/#domain-record-delete) any additional MX records, then create an MX record with empty strings (`""`) for the `target` and `name`. If a Domain has a Null MX record, new MX records cannot be created.
