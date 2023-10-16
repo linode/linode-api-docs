@@ -18383,13 +18383,14 @@ paths:
               --linodes 456 \
               --volumes 9082 \
               --volumes 10003
-  /tags/{label}:
+  /tags/{tagLabel}:
     x-linode-cli-command: tags
     parameters:
-    - name: label
+    - name: tagLabel
       in: path
       schema:
         type: string
+        description: The `label` of the Tag to access.
       required: true
     get:
       summary: Tagged Objects List
@@ -18451,7 +18452,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              "https://api.linode.com/v4/tags/example tag"
+              https://api.linode.com/v4/tags/$tagLabel
     delete:
       summary: Tag Delete
       description: >
