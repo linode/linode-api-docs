@@ -8849,7 +8849,7 @@ paths:
                 "stackscript_id": 10079,
                 "stackscript_data": {
                   "gh_username": "linode"
-                }
+                },
                 "type": "g6-standard-2",
                 "metadata": {
                   "user_data": "I2Nsb3VkLWNvbmZpZw=="
@@ -9953,12 +9953,12 @@ paths:
           curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X PUT -d '{
-                  "label": "lkecluster54321"
-                  "tags" : ["ecomm", "blog", "prod", "monitoring"]
+                  "label": "lkecluster54321",
+                  "tags" : ["ecomm", "blog", "prod", "monitoring"],
                   "control_plane": {
                       "high_availability": true
                     },
-                  "k8s_version": "1.17"
+                  "k8s_version": "1.27"
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345
       - lang: CLI
