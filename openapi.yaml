@@ -19230,7 +19230,7 @@ paths:
       tags:
       - VPCs
       operationId: deleteVPC
-      x-linode-cli-command: delete
+      x-linode-cli-action: delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -19262,7 +19262,7 @@ paths:
       tags:
       - VPCs
       operationId: getVPC
-      x-linode-cli-command: view
+      x-linode-cli-action: view
       security:
       - personalAccessToken: []
       - oauth: []
@@ -19358,7 +19358,7 @@ paths:
 
         Get information about all VPC Subnets associated with a VPC.
       operationId: getVPCSubnets
-      x-linode-cli-command:
+      x-linode-cli-action:
       - subnets-list
       - subnets-ls
       security:
@@ -19475,7 +19475,7 @@ paths:
       tags:
       - VPCs
       operationId: deleteVPCSubnet
-      x-linode-cli-command: subnet-delete
+      x-linode-cli-action: subnet-delete
       security:
       - personalAccessToken: []
       - oauth:
@@ -19507,7 +19507,7 @@ paths:
       tags:
       - VPCs
       operationId: getVPCSubnet
-      x-linode-cli-command: subnet-view
+      x-linode-cli-action: subnet-view
       security:
       - personalAccessToken: []
       - oauth: []
