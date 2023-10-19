@@ -2,6 +2,9 @@ openapi: 3.0.1
 info:
   version: 4.166.0
   title: Linode API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
   description: |
     ## Introduction
     The Linode API provides the ability to programmatically manage the full
