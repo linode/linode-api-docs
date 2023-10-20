@@ -575,7 +575,7 @@ paths:
                   survey_link:
                     type: string
                     description: A link to Linode's exit survey.
-                example: {'survey_link': https://alinktothesurvey.com'}
+                example: {"survey_link": "https://alinktothesurvey.com"}
         '409':
           description: Could not charge the credit card on file
           content:
