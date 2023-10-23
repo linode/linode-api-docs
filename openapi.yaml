@@ -7620,6 +7620,8 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Configuration Profile Interface Add
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -7659,7 +7661,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId \
+          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{
@@ -7694,6 +7696,8 @@ paths:
         type: integer
     delete:
       summary: Configuration Profile Interface Delete
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -7725,7 +7729,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId
+              https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId
       - lang: CLI
         source: >
           linode-cli linodes config-delete $linodeId $configId $interfaceId
@@ -7768,6 +7772,8 @@ paths:
     put:
       x-linode-grant: read_write
       summary: Configuration Profile Interface Update
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -7815,7 +7821,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId \
+          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X PUT -d '{
@@ -7839,6 +7845,8 @@ paths:
     post:
       x-linode-grant: read_write
       summary: Configuration Profile Interfaces Order
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -7891,7 +7899,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/order \
+          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/order \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{
@@ -19461,12 +19469,12 @@ paths:
             schema:
               allOf:
               - required:
-                - ipv4
                 - label
                 - region
               - properties:
                   subnets:
                     required:
+                    - ipv4
                     - label
               - $ref: '#/components/schemas/VPC'
       responses:
@@ -19510,6 +19518,8 @@ paths:
     delete:
       x-linode-grant: read_write
       summary: VPC Delete
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -19545,6 +19555,8 @@ paths:
             linode-cli vpcs delete $vpcId
     get:
       summary: VPC View
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
@@ -19640,6 +19652,8 @@ paths:
       tags:
       - VPCs
       summary: VPC Subnets List
+      servers:
+      - url: https://api.linode.com/v4beta
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -19753,6 +19767,8 @@ paths:
     delete:
       x-linode-grant: read_write
       summary: VPC Subnet Delete
+      servers:
+      - url: https://api.linode.com/v4beta
       description: |
         **VPC BETA ONLY**
 
