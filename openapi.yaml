@@ -22687,10 +22687,12 @@ components:
           - cloning
           - restoring
           - stopped
+          - billing_suspension
           x-linode-cli-display: 6
           x-linode-cli-color:
               running: green
               offline: red
+              billing_suspension: red
               default_: yellow
         hypervisor:
           type: string
