@@ -8029,7 +8029,7 @@ paths:
       description: >
         View Firewall information for Firewalls assigned to this Linode.
       operationId: getLinodeFirewalls
-      x-linode-cli-action: firewalls
+      x-linode-cli-action: firewalls-list
       security:
       - personalAccessToken: []
       - oauth:
