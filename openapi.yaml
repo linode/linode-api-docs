@@ -20010,6 +20010,16 @@ components:
           description: The Managed Database engine version.
           x-linode-filterable: true
           x-linode-cli-display: 3
+        total_disk_size_gb:
+          type: integer
+          example: 15
+          description: The total disk size of the database in GB.
+          x-linode-cli-display: 4
+        used_disk_size_gb:
+          type: integer
+          example: 2
+          description: The used space of the database in GB.
+          x-linode-cli-display: 5
     DatabaseMySQL:
       type: object
       description: Managed MySQL Databases object.
@@ -20028,14 +20038,14 @@ components:
           description: The Managed Database engine type.
           example: mysql
           x-linode-filterable: true
-          x-linode-cli-display: 6
+          x-linode-cli-display: 8
           readOnly: true
         version:
           type: string
           description: The Managed Database engine version.
           example: "8.0.26"
           x-linode-filterable: true
-          x-linode-cli-display: 7
+          x-linode-cli-display: 9
           readOnly: true
         region:
           $ref: '#/components/schemas/Database/properties/region'
@@ -20057,7 +20067,7 @@ components:
           $ref: '#/components/schemas/Database/properties/allow_list'
         cluster_size:
           $ref: '#/components/schemas/Database/properties/cluster_size'
-          x-linode-cli-display: 5
+          x-linode-cli-display: 7
         hosts:
           $ref: '#/components/schemas/Database/properties/hosts'
         ssl_connection:
@@ -20095,6 +20105,16 @@ components:
           $ref: '#/components/schemas/Database/properties/updated'
         updates:
           $ref: '#/components/schemas/Database/properties/updates'
+        total_disk_size_gb:
+          type: integer
+          example: 15
+          description: The total disk size of the database in GB.
+          x-linode-cli-display: 5
+        used_disk_size_gb:
+          type: integer
+          example: 2
+          description: The used space of the database in GB.
+          x-linode-cli-display: 6
     DatabaseMySQLRequest:
       type: object
       description: Managed MySQL Database request object.
@@ -20241,6 +20261,16 @@ components:
           $ref: '#/components/schemas/Database/properties/updated'
         updates:
           $ref: '#/components/schemas/Database/properties/updates'
+        total_disk_size_gb:
+          type: integer
+          example: 15
+          description: The total disk size of the database in GB.
+          x-linode-cli-display: 8
+        used_disk_size_gb:
+          type: integer
+          example: 2
+          description: The used space of the database in GB.
+          x-linode-cli-display: 9
     DatabasePostgreSQLRequest:
       type: object
       description: Managed PostgreSQL Database request object.
