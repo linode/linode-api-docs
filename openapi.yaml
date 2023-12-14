@@ -5974,7 +5974,7 @@ paths:
                   description: >
                     A detailed description of this Image.
                 cloud_init:
-                  type: bool
+                  type: boolean
                   description: Whether this Image supports cloud-init.
                   example: true
       responses:
@@ -6069,7 +6069,7 @@ paths:
                   description: Description for the uploaded Image.
                   example: This is an example image in the docs.
                 cloud_init:
-                  type: bool
+                  type: boolean
                   description: Whether the uploaded Image supports cloud-init.
                   example: true
       responses:
