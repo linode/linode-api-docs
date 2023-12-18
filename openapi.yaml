@@ -599,12 +599,12 @@ paths:
         Returns a single region's service availability.
 
         Only authorized Users can access this.
-      operationId: getRegionAvailability
+      operationId: getAccountAvailability
       security:
       - personalAccessToken: []
       - oauth:
         - account:read_only
-      x-linode-cli-action: getRegionAvailability
+      x-linode-cli-action: getAccountAvailability
       x-linode-grant: read_only
       responses:
         '200':
@@ -622,7 +622,7 @@ paths:
               -H "Authorization: Bearer $TOKEN"
       - lang: CLI
         source: >
-          linode-cli account availability getRegionAvailability us-east
+          linode-cli account availability getAccountAvailability us-east
   /account/betas:
     x-linode-cli-command: betas
     get:
