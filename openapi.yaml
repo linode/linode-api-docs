@@ -538,6 +538,91 @@ paths:
             --state PA \
             --tax_id ATU99999999 \
             --zip 19102
+  /account/availability:
+    x-linode-cli-command: availability
+    get:
+      tags:
+      - account
+      summary: Account Availability
+      description: |
+        Returns service availability depending on region.
+
+        Only authorized Users can access this.
+      operationId:
+      servers:
+      - url:
+      security:
+      - personalAccessToken: []
+      - oauth:
+        -
+      x-linode-cli-action: getAvailability
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: Returns a paginated list of regions and their unavailable resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAvailability'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/account/availability \
+              -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli account availability getAvailability
+  /account/availability/{id}:
+    x-linode-cli-command: availability
+    parameters:
+      - name: id
+        in: path
+        description: The id of the data center.
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+      - account
+      summary: Region Service Availability
+      description: |
+        Returns a single region's service availability.
+
+        Only authorized Users can access this.
+      operationId:
+      servers:
+      - url:
+      security:
+      - personalAccessToken: []
+      - oauth:
+        -
+      x-linode-cli-action: getRegionAvailability
+      x-linode-grant: read_only
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: Returns an object of a region and its unavailable resources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountAvailability'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4/account/availability/us-east \
+              -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli account availability getRegionAvailability us-east
   /account/betas:
     x-linode-cli-command: betas
     get:
@@ -19468,6 +19553,24 @@ components:
             - May only consist of letters, numbers, spaces, and hyphens.
             - Must not contain more than 9 letter or number characters.
           example: 19102-1234
+    AccountAvailability:
+      type: object
+      description: Account Service Availability object
+      properties:
+        region:
+          type: string
+          readOnly: true
+          description: >
+            Displays the data center represented by a slug.
+          example: us-east
+          x-linode-cli-display: 1
+        unavailable:
+          type: list
+          readOnly: true
+          description: >
+            A list of strings of unavailable services.
+          example: ["Linodes", "Block Storage"]
+          x-linode-cli-display: 2
     AccountSettings:
       type: object
       description: Account Settings object
