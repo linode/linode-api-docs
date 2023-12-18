@@ -545,28 +545,33 @@ paths:
       - account
       summary: Account Availability
       description: |
-        Returns service availability depending on region.
+        Returns service unavailability for all available regions.
 
-        Only authorized Users can access this.
-      operationId:
-      servers:
-      - url:
+        Only authorized Users can access this endpoint.
+
+        *This endpoint is currently in **Beta**, and should not be used for production workloads.*
+      operationId: getAvailability
       security:
       - personalAccessToken: []
       - oauth:
-        -
+        - account:read_only
       x-linode-cli-action: getAvailability
       x-linode-grant: read_only
-      parameters:
-      - $ref: '#/components/parameters/pageOffset'
-      - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
-          description: Returns a paginated list of regions and their unavailable resources.
+          description: |
+            Returns a paginated list of regions and their unavailable resources.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccountAvailability'
+                allOf:
+                - type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/AccountAvailability'
+                - $ref: '#/components/schemas/PaginationEnvelope'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -594,21 +599,16 @@ paths:
         Returns a single region's service availability.
 
         Only authorized Users can access this.
-      operationId:
-      servers:
-      - url:
+      operationId: getRegionAvailability
       security:
       - personalAccessToken: []
       - oauth:
-        -
+        - account:read_only
       x-linode-cli-action: getRegionAvailability
       x-linode-grant: read_only
-      parameters:
-      - $ref: '#/components/parameters/pageOffset'
-      - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
-          description: Returns an object of a region and its unavailable resources.
+          description: Returns an object with a region and the region's unavailable resources.
           content:
             application/json:
               schema:
