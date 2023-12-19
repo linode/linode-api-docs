@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  version: 4.168.0
+  version: 4.169.0
   title: Linode API
   license:
     name: Apache 2.0
