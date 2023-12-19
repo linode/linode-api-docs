@@ -5973,6 +5973,10 @@ paths:
                   type: string
                   description: >
                     A detailed description of this Image.
+                cloud_init:
+                  type: boolean
+                  description: Whether this Image supports cloud-init.
+                  example: true
       responses:
         '200':
           description: New private Image created successfully.
@@ -6064,6 +6068,10 @@ paths:
                   type: string
                   description: Description for the uploaded Image.
                   example: This is an example image in the docs.
+                cloud_init:
+                  type: boolean
+                  description: Whether the uploaded Image supports cloud-init.
+                  example: true
       responses:
         '200':
           description: Image Upload object including the upload URL and Image object.
