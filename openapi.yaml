@@ -17951,11 +17951,13 @@ paths:
       x-linode-cli-action: view-avail
       responses:
         '200':
-          description: A single Region object.
+          description: The availability data for a single Region.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegionAvailability'
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegionAvailability'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
