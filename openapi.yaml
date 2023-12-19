@@ -555,7 +555,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - account:read_only
-      x-linode-cli-action: getAvailability
+      x-linode-cli-action: get-availability
       x-linode-grant: read_only
       responses:
         '200':
@@ -604,7 +604,7 @@ paths:
       - personalAccessToken: []
       - oauth:
         - account:read_only
-      x-linode-cli-action: getAccountAvailability
+      x-linode-cli-action: get-account-availability
       x-linode-grant: read_only
       responses:
         '200':
