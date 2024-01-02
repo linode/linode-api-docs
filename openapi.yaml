@@ -27518,6 +27518,11 @@ components:
 
             Requires a specified `region` to identify the VLAN.
           example: null
+        vpc_id:
+          type: integer
+          description: >
+            The ID of the VPC this ticket is regarding, if relevant.
+          example: null
         region:
           type: string
           description: |
