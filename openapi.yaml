@@ -3202,7 +3202,8 @@ paths:
                       "add_volumes": true,
                       "add_firewalls": true,
                       "account_access": "read_only",
-                      "cancel_account": false
+                      "cancel_account": false,
+                      "add_vpcs": true
                     },
                     "domain": [
                       {
@@ -3260,6 +3261,12 @@ paths:
                       {
                         "id": 123,
                         "permissions": "read_only"
+                      }
+                    ],
+                    "vpc": [
+                      {
+                        "id": 123,
+                        "permissions": "read_write"
                       }
                     ]
                 }' \
@@ -7705,7 +7712,7 @@ paths:
 
         * The User accessing this command must have `read_write` grants to the Linode.
         * A successful request triggers a `linode_config_update` event.
-        * Active `vpc` type Interfaces cannot be deleted. The associated Linode must first be shut down before such Interfaces can be deleted from a Configuration Profile.
+        * Active `vpc` type Interfaces cannot be deleted. The associated Linode must first be shut down (or restarted using another Configuration Profile) before such Interfaces can be deleted from a Configuration Profile.
       x-linode-grant: read_write
       tags:
       - Linode Instances
@@ -22601,6 +22608,12 @@ components:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has for each Block Storage Volume that is owned by this Account.
+        vpc:
+          type: array
+          items:
+            $ref: '#/components/schemas/Grant'
+          description: >
+            The grants this User has for each VPC that is owned by this Account.
     Image:
       type: object
       description: Image object
@@ -22957,6 +22970,38 @@ components:
           example: us-east
           readOnly: true
           x-linode-cli-display: 5
+        vpc_nat_1_1:
+          type: object
+          description: |
+            **VPC BETA ONLY**
+
+            IPv4 address configured as a 1:1 NAT for this Interface. If no address is configured as a 1:1 NAT, `null` is returned.
+
+            Only allowed for `vpc` type Interfaces.
+          properties:
+            vpc_id:
+              type: integer
+              readOnly: true
+              nullable: true
+              description: |
+                **VPC BETA ONLY**
+
+                The `id` of the VPC configured for this Interface.
+              example: 111
+            subnet_id:
+              type: integer
+              nullable: true
+              description: |
+                **VPC BETA ONLY**
+
+                The `id` of the VPC Subnet for this Interface.
+              example: 101
+            address:
+              type: string
+              format: ipv4|ipv6/prefix_length
+              description: |
+                The IPv4 address that is configured as a 1:1 NAT for this VPC interface.
+              example: 192.0.2.1
     IPAddressesAssignRequest:
       type: object
       description: Request object for IP Addresses Assign (POST /networking/ips/assign).
@@ -24016,6 +24061,13 @@ components:
               * When the Interface is activated, the Linode is configured to use an IP address from the range in the assigned VPC Subnet. See `ipv4.vpc` for more information.
           example: vlan
           x-linode-cli-display: 3
+        active:
+          type: boolean
+          description: |
+            **VPC BETA ONLY**
+
+            Returns `true` if the Interface is in use, meaning that Compute Instance has been booted using the Configuration Profile to which the Interface belongs. Otherwise returns `false`.
+          example: true
         primary:
           type: boolean
           description: |
@@ -28238,11 +28290,27 @@ components:
             A Linode is assigned to a VPC Subnet if it has a Configuration Profile with a `vpc` purpose interface with the subnet's `subnet_id`. Even if the Configuration Profile is not active, meaning the Linode does not have access to the Subnet, the Linode still appears in this array.
           readOnly: true
           items:
-            type: integer
-            description: ID of a Linode assigned to the VPC Subnet.
-          example:
-          - 111
-          - 222
+            type: object
+            properties:
+              id:
+                type: integer
+                description: ID of a Linode assigned to the VPC Subnet.
+                example: 111
+              interfaces:
+                type: array
+                description: An array of Interfaces assigned to the Linode.
+                items:
+                  type: object
+                  properties:
+                    active:
+                      type: boolean
+                      description: |
+                        Returns `true` if the Interface is in use, meaning that the Linode was powered on using the Configuration Profile to which the Interface belongs. Otherwise returns `false`.
+                      example: true
+                    id:
+                      type: integer
+                      description: ID of the interface
+                      example: 421
           x-linode-cli-display: 5
         created:
           type: string
