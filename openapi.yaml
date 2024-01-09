@@ -7812,7 +7812,7 @@ paths:
 
         * The User accessing this command must have `read_write` grants to the Linode.
         * A successful request triggers a `linode_config_update` event.
-        * Active `vpc` type Interfaces cannot be deleted. The associated Linode must first be shut down (or restarted using another Configuration Profile) before such Interfaces can be deleted from a Configuration Profile.
+        * Active Interfaces cannot be deleted. The associated Linode must first be shut down (or restarted using another Configuration Profile) before such Interfaces can be deleted from a Configuration Profile.
       x-linode-grant: read_write
       tags:
       - Linode Instances
