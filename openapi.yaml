@@ -8960,7 +8960,7 @@ paths:
                     will not be performed.
                   example: false
                   default: false
-                migration_type:
+                type:
                   type: string
                   enum:
                   - warm
