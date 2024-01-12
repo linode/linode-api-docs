@@ -8967,7 +8967,11 @@ paths:
                   - cold
                   description: >
                     Type of migration used in moving to a new host or Linode type.
+
+
                     `warm`: the Linode will not power down until the migration is complete.
+
+
                     `cold`: the Linode will be powered down and migrated. When the migration
                     is complete, the Linode will be powered on.
                   example: warm
@@ -9470,7 +9474,11 @@ paths:
                   - cold
                   description: >
                     Type of migration used in moving to a new host or Linode type.
+
+
                     `warm`: the Linode will not power down until the migration is complete.
+
+
                     `cold`: the Linode will be powered down and migrated. When the migration
                     is complete, the Linode will be powered on.
                   example: warm
