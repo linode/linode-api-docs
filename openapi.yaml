@@ -146,7 +146,7 @@ info:
     |-----------------------|--------|
     | **Authorization URL** | `https://login.linode.com/oauth/authorize` |
     | **Token URL** | `https://login.linode.com/oauth/token` |
-    | **Scopes** | <ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`databases:read_only` - Allows access to GET Managed Databases on your Account.</li><li>`databases:read_write` - Allows access to all endpoints related to your Managed Databases.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`firewall:read_only` - Allows access to GET information about your Firewalls.</li><li>`firewall:read_write` - Allows access to all Firewall endpoints.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`lke:read_only` - Allows access to GET LKE Clusters on your Account.</li><li>`lke:read_write` - Allows access to all endpoints related to LKE Clusters on your Account.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`object_storage:read_only` - Allows access to GET information related to your Object Storage.</li><li>`object_storage:read_write` - Allows access to all Object Storage endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br/>|
+    | **Scopes** | <ul><li>`account:read_only` - Allows access to GET information about your Account.</li><li>`account:read_write` - Allows access to all endpoints related to your Account.</li><li>`databases:read_only` - Allows access to GET Managed Databases on your Account.</li><li>`databases:read_write` - Allows access to all endpoints related to your Managed Databases.</li><li>`domains:read_only` - Allows access to GET Domains on your Account.</li><li>`domains:read_write` - Allows access to all Domain endpoints.</li><li>`events:read_only` - Allows access to GET your Events.</li><li>`events:read_write` - Allows access to all endpoints related to your Events.</li><li>`firewall:read_only` - Allows access to GET information about your Firewalls.</li><li>`firewall:read_write` - Allows access to all Firewall endpoints.</li><li>`images:read_only` - Allows access to GET your Images.</li><li>`images:read_write` - Allows access to all endpoints related to your Images.</li><li>`ips:read_only` - Allows access to GET your ips.</li><li>`ips:read_write` - Allows access to all endpoints related to your ips.</li><li>`linodes:read_only` - Allows access to GET Linodes on your Account.</li><li>`linodes:read_write` - Allow access to all endpoints related to your Linodes.</li><li>`lke:read_only` - Allows access to GET LKE Clusters on your Account.</li><li>`lke:read_write` - Allows access to all endpoints related to LKE Clusters on your Account.</li><li>`longview:read_only` - Allows access to GET your Longview Clients.</li><li>`longview:read_write` - Allows access to all endpoints related to your Longview Clients.</li><li>`aclb:read_only` - Allows access to GET Cloud Load Balancers on your Account.</li><li>`aclb:read_write` - Allows access to all Cloud Load Balancer endpoints.</li><li>`nodebalancers:read_only` - Allows access to GET NodeBalancers on your Account.</li><li>`nodebalancers:read_write` - Allows access to all NodeBalancer endpoints.</li><li>`object_storage:read_only` - Allows access to GET information related to your Object Storage.</li><li>`object_storage:read_write` - Allows access to all Object Storage endpoints.</li><li>`stackscripts:read_only` - Allows access to GET your StackScripts.</li><li>`stackscripts:read_write` - Allows access to all endpoints related to your StackScripts.</li><li>`volumes:read_only` - Allows access to GET your Volumes.</li><li>`volumes:read_write` - Allows access to all endpoints related to your Volumes.</li></ul><br/>|
 
     ## Requests
 
@@ -3195,6 +3195,7 @@ paths:
                 -X PUT -d '{
                     "global": {
                       "add_linodes": true,
+                      "add_loadbalancers":true
                       "add_nodebalancers": false,
                       "add_databases": true,
                       "add_domains": true,
@@ -9667,6 +9668,1634 @@ paths:
       - lang: CLI
         source: >
           linode-cli linodes type-view g6-standard-2
+  /aclb:
+    x-linode-cli-command: aclb
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      summary: Cloud Load Balancers List
+      description: >
+        Returns a paginated list of Cloud Load Balancers you have access to.
+      operationId: getLoadBalancers
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action:
+        - list
+        - ls
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: A paginated list of Cloud Load Balancers and its configurations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  LoadBalancers:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/aclb_LoadBalancer'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers list
+    post:
+      x-linode-grant: add_loadbalancers
+      tags:
+      - NodeBalancers
+      summary: Cloud Load Balancer Create
+      description: |
+        Creates a Cloud Load Balancer, service targets, and routes in the requested regions.
+      operationId: createLoadBalancer
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: Cloud Load Balancer settings.
+        required: true
+        x-linode-cli-allowed-defaults:
+        - region
+        content:
+          application/json:
+            schema:
+              required:
+              - region
+              properties:
+                label:
+                  $ref: '#/components/schemas/aclb_LoadBalancer/properties/label'
+                tags:
+                  $ref: '#/components/schemas/aclb_LoadBalancer/properties/tags'
+                regions:
+                  $ref: '#/components/schemas/aclb_LoadBalancer/properties/regions'
+                configurations:
+                  type: array
+                  description: |
+                    The configurations to create for this Cloud Load Balancer.
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        $ref: '#/components/schemas/aclb_Configuration/properties/label'
+                      port:
+                        $ref: '#/components/schemas/aclb_Configuration/properties/port'
+                      protocol:
+                        $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
+                      certificates:
+                        type: array
+                        description: |
+                          Required when the `protocol` is https. Must be left blank
+                          if the protocol is http or tcp. TLS termination certificates
+                          create an encrypted link between your clients and Cloud Load Balancer
+                          and terminate incoming traffic on the load balancer.
+                          Once the load balancing policy is applied, traffic is forwarded
+                          to your service targets over encrypted TLS connections.
+                        items:
+                         $ref: '#/components/schemas/aclb_Certificate'
+                      routes:
+                        type: array
+                        description: |
+                          Routes define how the load balancer directs incoming requests to service targets. After a route is created, you can add rules to set match conditions that are used for target selection.
+                        items:
+                         $ref: '#/components/schemas/aclb_Route'
+                      rules:
+                        type: array
+                        description: |
+                          Rules set the conditions that are used for target selection.
+                          * HTTP/S rules include Match Rules and the percentage of incoming requests that should be directed to each target.
+                          * TCP rules include the percentage of incoming requests that should be directed to each target.
+                        items:
+                         $ref: '#/components/schemas/aclb_Rule'
+                      service_targets:
+                        type: array
+                        description: |
+                          The service targets for this configuration. A service target is group of endpoints where traffic is directed to. Routes direct traffic to specific endpoints. The sum of traffic across all service targets must total 100%.
+                        items:
+                          $ref: '#/components/schemas/aclb_RuleServiceTarget'
+                      endpoints:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/aclb_Endpoint'
+                      certificate_id:
+                        type: integer
+                        description: |
+                          Certificate identification number.
+                      load_balancing_policy:
+                        type: string
+                        enum:
+                        - round_robin
+                        - least_request
+                        - ring_hash
+                        - random
+                        - maglev
+                        default: roundrobin
+                        description: >
+                          What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                        example: roundrobin
+                      healthcheck:
+                        $ref: '#/components/schemas/aclb_Healthcheck'
+      responses:
+        '200':
+          description: Cloud Load Balancer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_LoadBalancer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "balancer12345",
+                "tags": [
+                  "staging-1",
+                  "staging-2",
+                ],
+                "regions": [
+                  "us-iad",
+                  "ap-southeast",
+                ],
+                "configurations": [
+                  {
+                    "label": "staging-1"
+                    "port": 443,
+                    "protocol": "https",
+                    "certificates": [
+                      {
+                        "hostname": "example.net",
+                        "id": 456789,
+                      }
+                    ]
+                    "routes": [
+                      {
+                        "label": "glb-route-1",
+                        "protocol": "http",
+                        "rules": [
+                          {
+                            "match_condition":
+                              {
+                                "hostname": "example.com",
+                                "match_field": "query"
+                                "match_value": "?svc=images",
+                                "session_stickiness_cookie": "cookie-name",
+                                "session_stickiness_ttl": 24,
+                            },
+                        "service_targets":[
+                          {
+                          "percentage": 50,
+                          "label": "service-target-1",
+                          "protocol": "https"
+                          "endpoints": [
+                            {
+                            "ip": 192.0.2.0,
+                            "host": "example.org",
+                            "port": 443,
+                            "rate_capacity": 10000,
+                            }
+                          ]
+                        ]
+                        "certificate_id": 456789,
+                        "load_balancing_policy": "round_robin",
+                        "healthcheck": [
+                          {
+                            "protocol": "http"
+                            "interval": 20,
+                            "timeout": 15,
+                            "unhealthy_threshold": 2,
+                            "healthy_threshold": 4,
+                            "path": "/path1",
+                            "hostname": "example.com",
+                          }
+                        ]
+                      }
+                  },]
+                ],
+              }' \
+              https://api.linode.com/v4beta/aclb
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers create \
+            --region us-east \
+            --label balancer12345 \
+            --rate_capacity 10000
+  /aclb/{id}:
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: aclb
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      summary: Cloud Load Balancer View
+      description: >
+        Returns a single Cloud Load Balancer you can access.
+      operationId: getLoadBalancer
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: The requested Cloud Load Balancer object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_LoadBalancer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb/12345
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers view 12345
+    put:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Cloud Load Balancer Update
+      description: >
+        Updates the configuration of a Cloud Load Balancer you can access.
+      operationId: updateNodeBalancer
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: The information to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - region
+              properties:
+                label:
+                  $ref: '#/components/schemas/aclb_LoadBalancer/properties/label'
+                tags:
+                  $ref: '#/components/schemas/aclb_LoadBalancer/properties/tags'
+                regions:
+                  $ref: '#/components/schemas/aclb_LoadBalancerDatacenter/properties/regions'
+      responses:
+        '200':
+          description: Cloud Load Balancer updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_LoadBalancer'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "balancer12345",
+                "tags": [
+                  "test-aclb",
+                  "production-aclb",
+                ],
+                "regions": [
+                  "us-iad",
+                  "ap-southeast",
+              }' \
+              https://api.linode.com/v4beta/aclb/12345
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers update 12345 \
+            --label balancer12345 \
+            --tags test-aclb, production-aclb \
+            --regions us-iad, ap-southeast
+    delete:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Cloud Load Balancer Delete
+      description: >
+        Deletes a Cloud Load Balancer.
+
+
+        **This is a destructive action and cannot be undone.**
+
+
+        Deleting a Cloud Load Balancer deletes all associated configurations.
+        The service targets are not deleted.
+      operationId: deleteNodeBalancer
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action:
+        - delete
+        - rm
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      responses:
+        '200':
+          description: The Cloud Load Balancer deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4beta/aclb/12345
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers delete 12345
+  /aclb/{id}/configurations:
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: loadbalancers
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      summary: Configurations List
+      description: >
+        List of Configurations for a specific Cloud Load Balancer. Cloud Load Balancer configurations represent
+        individual ports that this load balancer accepts traffic on.
+        Each configuration accepts traffic on one port.
+
+
+        For example, if you wanted to accept standard HTTP traffic, you would
+        need a configuration listening on port 80.
+      operationId: getNodeBalancerConfigs
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: configurations-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: A paginated list of Cloud Load Balancer configurations.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  configurations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/aclb_Configuration'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb/12345/configurations
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers configs-list 12345
+    post:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Configuration Create
+      description: >
+        Creates a Cloud Load Balancer Configuration, which allows the Load Balancer to
+        accept traffic on a new port. A Configuration can exist outside of an association to a Load Balancer.
+
+
+        For example, if you wanted to accept standard HTTP traffic, you would
+        need a configuration listening on port 80.
+
+
+        You will need to add service targets to the new configuration before it can actually serve requests.
+      operationId: createLoadBalancerConfiguration
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: configuration-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: Information about the port to configure.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  $ref: '#/components/schemas/aclb_Configuration/properties/label'
+                port:
+                  $ref: '#/components/schemas/aclb_Configuration/properties/port'
+                protocol:
+                  $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
+                certificates:
+                  $ref: '#/components/schemas/aclb_Certificate'
+                route_ids:
+                  type: integer
+                  description: |
+                    Route id.
+                  example: 125
+                routes:
+                   $ref: '#/components/schemas/aclb_Route'
+      responses:
+        '200':
+          description: Config created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_Configuration'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label" aclb-configuration
+                "port": 443,
+                "protocol": "https",
+                "certificates": [
+                      {
+                        "hostname": "example.net",
+                        "id": 456789,
+                      }
+                ],
+                "route_ids": "150",
+                "routes": [
+                      {
+                        "label": "glb-route-1",
+                        "protocol": "http",
+                      }
+                ]
+              }' \
+              https://api.linode.com/v4beta/aclb/12345/configs
+      - lang: CLI
+        source: >
+          linode-cli nodebalancers configuration-create 12345 \
+            --label aclb-configuration \
+            --port 443 \
+            --protocol https \
+            certificates \
+            --hostname example.net \
+            --id 456789 \
+            --route_ids 150 \
+            routes \
+            --label glb-route-1 \
+            --protocol http
+  /aclb/{id}/configurations/{id}:
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: Retrieve a single entry point (configuration) associated with the provided ‘id’.
+      required: true
+      schema:
+        type: integer
+    - name: ConfigurationID
+      in: path
+      description: The ID of the configuration to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: loadbalancers
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      summary: Configuration View
+      description: >
+        Returns configuration information for a single port of this
+        Cloud Load Balancer.
+      operationId: getLoadBalancerConfiguration
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: configurations-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: The requested Cloud Load Balancer configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_Configuration'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb/12345/configs/4567
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers configurations-view \
+            12345 4567
+    put:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Configuration Update
+      description: >
+        Updates the configuration for a single port on a Cloud Load Balancer.
+
+
+        You can update the protocol only if the configuration doesn't have any assigned routes. The protocols for routes assigned to a configuration, must match the configuration protocol.
+
+
+        Certificates are not appicable when the protocol is http/tcp.
+      operationId: updateLoadBalancerConfiguration
+      x-linode-cli-action: configuration-update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: The Configuration fields to update. You can update the protocol only if the configuration doesn't have any assigned routes.
+        content:
+          application/json:
+            schema:
+              required:
+              - LoadBalancerId
+              - RouteId
+              type: object
+              properties:
+                label:
+                  $ref: '#/components/schemas/aclb_Configuration/properties/label'
+                port:
+                  $ref: '#/components/schemas/aclb_Configuration/properties/port'
+                protocol:
+                  $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
+                certificates:
+                  $ref: '#/components/schemas/aclb_Certificate'
+                route_ids:
+                  type: integer
+                  description: |
+                    Route id.
+                  example: 125
+      responses:
+        '200':
+          description: Config updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_Configuration'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "port": 443,
+                "protocol": "https",
+                    "certificates": [
+                      {
+                        "hostname": "example.net",
+                        "id": 456789,
+                      }
+                    ]
+                "route_ids": "150",
+              }' \
+              https://api.linode.com/v4beta/aclb/12345/configs/4567
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers configurations-update \
+            12345 4567 \
+            --port 443 \
+            --protocol https \
+            certificates \
+            --hostname example.net \
+            --id 456789 \
+            --route_ids 150
+    delete:
+        x-linode-grant: read_write
+        tags:
+        - NodeBalancers
+        summary: Configuration Delete
+        description: >
+          Deletes the Configuration for a port of this Cloud Load Balancer.
+            * All route associations with this Configuration are removed.
+            * All associations between this Configuration and the Load Balancer are removed.
+
+
+          **This cannot be undone.**
+
+
+          Once completed, this Load Balancer will no longer
+          respond to requests on the given port.
+        operationId: deleteLoadBalancerConfiguration
+        x-linode-cli-action: configuration-delete
+        security:
+        - personalAccessToken: []
+        - oauth:
+          - aclb:read_write
+        responses:
+          '200':
+            description: Cloud Load Balancer Configuration deleted successfully.
+            content:
+              application/json:
+                schema:
+                  type: object
+          default:
+            $ref: '#/components/responses/ErrorResponse'
+        x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X DELETE \
+                https://api.linode.com/v4beta/aclb/12345/configs/4567
+        - lang: CLI
+          source: >
+            linode-cli loadbalancers configuration-delete \
+              12345 4567
+  /aclb/{id}/routes:
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: loadbalancers
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      summary: Routes List
+      description: >
+        Returns a paginated list of Cloud Load Balancer Routes.
+      operationId: getLoadBalancerRoutes
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: routes-list
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: A paginated list of Cloud Load Balancer routes.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb/12345/routes
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers routes-list 12345
+    post:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Route Create
+      description: >
+        Creates a route. Routes define how the load balancer directs incoming requests to service targets.
+        You can associate the route with a load balancer configuration.
+      operationId: createLoadBalancerRoute
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: route-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: Information about the route to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - label
+              - protocol
+              properties:
+                label:
+                  type: string
+                  description: |
+                    The route name.
+                  example: route-a-b
+                protocol:
+                  type: string
+                  enum:
+                  - http
+                  - tcp
+                  default: http
+                  example: http
+                rules:
+                  $ref: '#/components/schemas/aclb_Rule'
+                service_targets:
+                  type: array
+                  description: |
+                    A service target is a cluster of endpoints that the load balancer directs incoming requests to.
+                  items:
+                    properties:
+                      label:
+                        type: string
+                        description: |
+                          Service Target label.
+                        example: service-target-abc
+                      percentage:
+                        type: integer
+                        description: |
+                          The percentage of incoming requests routed to this service target.
+                        example: 75
+                      certificate_id:
+                        type: integer
+                        description: |
+                          Certificate identification number.
+                      protocol:
+                        type: string
+                        enum:
+                        - http
+                        - tcp
+                        default: http
+                      load_balancing_policy:
+                        type: string
+                        enum:
+                        - round_robin
+                        - least_request
+                        - ring_hash
+                        - random
+                        - maglev
+                        default: roundrobin
+                        description: >
+                          What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                        example: roundrobin
+                      healthcheck:
+                        $ref: '#/components/schemas/aclb_Healthcheck'
+                      id:
+                        type: integer
+                        description: |
+                          Servive Target id.
+                        example: 200
+                      percentage_x:
+                        type: integer
+                        description: |
+                          The percentage of incoming requests routed to this service target.
+                        example: 75
+      responses:
+        '200':
+          description: Route created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "glb-route-1",
+                "protocol": "http",
+                "rules": [
+                {
+                  "match_condition":
+                    {
+                      "hostname": "example.com",
+                      "match_field": "query"
+                      "match_value": "?svc=images",
+                      "session_stickiness_cookie": "cookie-name",
+                      "session_stickiness_ttl": 24,
+                  },
+                  "service_targets":[
+                    {
+                    "percentage": 50,
+                    "label": "service-target-1",
+                    [
+                    "certificate_id": 456789,
+                    "protocol": "http"
+                    "load_balancing_policy": "round_robin",
+                    "healthcheck": [
+                      {
+                        "protocol": "http"
+                        "interval": 20,
+                        "timeout": 15,
+                        "unhealthy_threshold": 2,
+                        "healthy_threshold": 4,
+                        "path": "/path1",
+                        "host": "example.com",
+                      }
+                    },
+                    {
+                    "id": "12"
+                     "percentage": 50
+                    }
+                  ]
+              }' \
+              https://api.linode.com/v4beta/aclb/12345/route
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers route-create \
+            12345 \
+            --label glb-route-1 \
+            --protocol http \
+            rules [{hostname example.com, match_field query, match_value ?svc=images, session_stickiness_cookie cookie-name, session_stickiness_ttl 24}] \
+            rules
+            service_targets [{percentage 50, label service-target-1, certificate_id 456789, protocol http, load_balancing_policy round_robin}] \
+            rules
+            healthcheck \
+            --interval 20 \
+            --timeout 15 \
+            --unhealthy_threshold 2 \
+            --healthy_threshold 4 \
+            --path /path1 \
+            --host example.com \
+            [{--id  1, percentage 50}]
+
+  /aclb/{id}/routes{id}:
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    - name: RouteId
+      in: path
+      description: The ID of the Route to access
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: loadbalancers
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      summary: Route View
+      description: >
+        Returns information about a single route, its rules and service targets.
+      operationId: getLoadBalancerRoute
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: route-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      responses:
+        '200':
+          description: Returns information about a single route, its rules and service targets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb/12345/routes/54321
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers route-view 12345 54321
+    put:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Route Update
+      description: >
+        Updates information about a Route, it's service target or match conditions.
+      operationId: updateNodeBalancerNode
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: route-update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: The fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: >
+                    The route name.
+                  example: route-a-b
+                protocol:
+                    type: string
+                    enum:
+                    - http
+                    - tcp
+                    default: http
+                    example: http
+                rules:
+                  $ref: '#/components/schemas/aclb_Rule'
+                service_targets:
+                  type: array
+                  description: >
+                    Service targets that the load balancer directs incoming requests to.
+                  items:
+                    properties:
+                      id:
+                        type: integer
+                        description: |
+                          Servive Target id.
+                        example: 200
+                      percentage:
+                        type: integer
+                        description: |
+                          The percentage of incoming requests routed to this service target.
+                        example: 100
+      responses:
+        '200':
+          description: Route updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "glb-route-1",
+                "protocol": "http",
+                "rules": [
+                {
+                  "match_condition":
+                    {
+                      "hostname": "example.com",
+                      "match_field": "query"
+                      "match_value": "?svc=images",
+                      "session_stickiness_cookie": "cookie-name",
+                      "session_stickiness_ttl": 24,
+                  },
+                  "service_targets":[
+                    {
+                    "id": "12"
+                    "percentage": 50
+                    }
+                  ]
+              }' \
+              https://api.linode.com/v4beta/aclb/12345/route/54321
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers route-update \
+            12345 54321 \
+            --label glb-route-1 \
+            --protocol http \
+            rules [{hostname example.com, match_field query, match_value ?svc=images, session_stickiness_cookie cookie-name, session_stickiness_ttl 24}] \
+            service_targets [{percentage 50, label service-target-1, certificate_id 456789, protocol http, load_balancing_policy round_robin}] \
+            healthcheck \
+            --interval 20 \
+            --timeout 15 \
+            --unhealthy_threshold 2 \
+            --healthy_threshold 4 \
+            --path /path1 \
+            --host example.com \
+            [{--id  1, percentage 100}]
+    delete:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Route Delete
+      description: >
+        Deletes a route.
+
+
+        This does not change or remove the Cloud Load Balancer or configurations
+        that used the route.
+      operationId: deleteLoadBalancerRoute
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: route-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      responses:
+        '200':
+          description: Route deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4beta/aclb/12345/routes/54321
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers route-delete \
+            12345 54321
+  /aclb/{id}/service-targets:
+    x-linode-cli-command: loadbalancers
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    get:
+      operationId: getLoadBalancerService-Targets
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      summary: Service Targets List
+      description: >
+          View information for the service targets assigned to this Cloud Load Balancer.
+      x-linode-cli-action: service-targets
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of service targets assigned to this Cloud Load Balancer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ServiceTarget'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4beta/aclb/12345/service-targets \
+            -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers servicetargets-list 12345
+    post:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Service Target Create
+      description: >
+        Creates a Service Target.
+      operationId: createLoadBalancerServiceTarget
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: servicetarget-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: Information about the service target to create.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - label
+              properties:
+                label:
+                  type: string
+                  description: |
+                    The service target label.
+                  example: service-target-1
+                endpoints:
+                  $ref: '#/components/schemas/aclb_Endpoint'
+                certificate_id:
+                  type: integer
+                  description: |
+                    Certificate identification number.
+                protocol:
+                  type: string
+                  enum:
+                  - http
+                  - https
+                  - tcp
+                  default: http
+                load_balancing_policy:
+                  type: string
+                  enum:
+                  - round_robin
+                  - least_request
+                  - ring_hash
+                  - random
+                  - maglev
+                  default: roundrobin
+                  description: >
+                    What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                  example: roundrobin
+                healthcheck:
+                  $ref: '#/components/schemas/aclb_Healthcheck'
+      responses:
+        '200':
+          description: Service Target created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ServiceTarget'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "service-target-1",
+                "endpoints": [
+                  {
+                  "ip": 192.0.2.0,
+                  "host": "example.org",
+                  "port": 443,
+                  "rate_capacity": 10000,
+                  }
+                ]
+                "certificate_id": 456789,
+                "protocol": "https",
+                "load_balancing_policy": "round_robin",
+                "healthcheck": {
+                  "protocol": "http"
+                  "interval": 20,
+                  "timeout": 15,
+                  "unhealthy_threshold": 2,
+                  "healthy_threshold": 4,
+                  "path": "/path1",
+                  "host": "example.com",
+                }
+              }' \
+              https://api.linode.com/v4beta/aclb/12345/service-targets
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers servicetarget-create \
+            12345 \
+            --label service-target-1 \
+            --endpoints [{ip 192.0.2.0, host example.com, port 443, rate_capacity 5000}] \
+            --certificate_id 456789 \
+            --protocol https \
+            --load_balancing_policy round_robin \
+            healthcheck \
+            --protocol https \
+            --interval 20 \
+            --timeout 15 \
+            --unhealthy_threshold 2 \
+            --healthy_threshold 4 \
+            --path /path1 \
+            --host example.com
+  /aclb/{id}/service-targets/{id}:
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    - name: ServiceTargetID
+      in: path
+      description: The ID of the service target to access
+      required: true
+      schema:
+        type: integer
+    x-linode-cli-command: loadbalancers
+    get:
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      summary:  Service Target View
+      description: >
+        Returns information about a service target.
+      operationId: getLoadBalancerService-Target
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: service-target-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      responses:
+        '200':
+          description: Returns information about a single service target.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ServiceTarget'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4beta/aclb/12345/service-targets/54321
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers servicetarget-view 12345 54321
+    put:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Service Target Update
+      description: >
+        Updates information for a service target.
+      operationId: updateLoadBalancerServiceTarget
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: servicetarget-update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: The fields to update.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  type: string
+                  description: >
+                    The service target name.
+                  example: service-target-a
+                endpoints:
+                  $ref: '#/components/schemas/aclb_Endpoint'
+                certificate_id:
+                  type: integer
+                  description: >
+                    Certificate identification number.
+                  example: 50
+                load_balancing_policy:
+                  type: string
+                  enum:
+                  - round_robin
+                  - least_request
+                  - ring_hash
+                  - random
+                  - maglev
+                  default: roundrobin
+                  description: >
+                    What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                  example: roundrobin
+                healthcheck:
+                  $ref: '#/components/schemas/aclb_Healthcheck'
+      responses:
+        '200':
+          description: Service target updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_ServiceTarget'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "service-target-a",
+                "endpoints": [
+                  {
+                  "ip": 192.0.2.0,
+                  "host": "example.org",
+                  "port": 443,
+                  "rate_capacity": 10000,
+                  }
+                ]
+                "certificate_id": 456789,
+                "load_balancing_policy": "round_robin",
+                "healthcheck":
+                  {
+                  "protocol": "http"
+                  "interval": 20,
+                  "timeout": 15,
+                  "unhealthy_threshold": 2,
+                  "healthy_threshold": 4,
+                  "path": "/path1",
+                  "host": "example.com",
+                  }
+            }' \
+              https://api.linode.com/v4beta/aclb/12345/service-targets/54321
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers servicetarget-update \
+            12345 54321 \
+            --label service-target-a \
+            --endpoints [{ip 192.0.2.0, host example.com, port 443, rate_capacity 5000}] \
+            --certificate_id 456789 \
+            --protocol https \
+            --load_balancing_policy round_robin \
+            healthcheck \
+            --protocol https \
+            --interval 20 \
+            --timeout 15 \
+            --unhealthy_threshold 2 \
+            --healthy_threshold 4 \
+            --path /path1 \
+            --host example.com
+
+    delete:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Service Target Delete
+      description: >
+        Deletes a service target.
+
+
+        This does not change or remove the Global Load.
+      operationId: deleteLoadBalancerServiceTarget
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: servicetarget-delete
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      responses:
+        '200':
+          description: Service target deleted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+  /aclb/{id}/certificates:
+    x-linode-cli-command: loadbalancers
+    parameters:
+    - name: GlobalLoadBalancerID
+      in: path
+      description: The ID of the Cloud Load Balancer to access.
+      required: true
+      schema:
+        type: integer
+    get:
+      operationId: getLoadBalancerCertificates
+      x-linode-grant: read_only
+      tags:
+      - NodeBalancers
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      summary: Certificates List
+      description: >
+          View certificates assigned to this Cloud Load Balancer.
+      x-linode-cli-action: certificates
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_only
+      responses:
+        '200':
+          description: Returns a paginated list of certificates assigned to this Cloud Load Balancer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_Certificate'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl https://api.linode.com/v4beta/aclb/12345/certificates \
+            -H "Authorization: Bearer $TOKEN"
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers certificates-list 12345
+    post:
+      x-linode-grant: read_write
+      tags:
+      - NodeBalancers
+      summary: Certificate Create
+      description: >
+        Creates a certificate.
+      operationId: createLoadBalancerCertificate
+      servers:
+      - url: https://api.linode.com/v4beta
+      x-linode-cli-action: certificate-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - aclb:read_write
+      requestBody:
+        description: Create an aclb certificate and return a numeric identifier to be used in the Configuration creation endpoint.
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - label
+              $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+      responses:
+        '200':
+          description: Certificate created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/aclb_Certificate'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "key": "1111111111"
+                "certificate": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                "label": certificate-123,
+                "type": "downstream",
+               }' \
+              https://api.linode.com/v4beta/aclb/12345/certificates
+      - lang: CLI
+        source: >
+          linode-cli loadbalancers certificates-create \
+            12345 \
+            --key 1111111111 \
+            --certificate "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----" \
+            --label certificate-123 \
+            --type downstream
+  /aclb/{id}/certificates/{id}:
+      parameters:
+      - name: GlobalLoadBalancerID
+        in: path
+        description: The ID of the Cloud Load Balancer to access.
+        required: true
+        schema:
+          type: integer
+      - name: CertificateID
+        in: path
+        description: The ID of the certificate to access
+        required: true
+        schema:
+          type: integer
+      x-linode-cli-command: loadbalancers
+      put:
+        x-linode-grant: read_write
+        tags:
+        - NodeBalancers
+        summary: Certificate Update
+        description: >
+          Updates a certificate.
+        operationId: updateLoadBalancerCertificate
+        servers:
+        - url: https://api.linode.com/v4beta
+        x-linode-cli-action: certificate-update
+        security:
+        - personalAccessToken: []
+        - oauth:
+          - aclb:read_write
+        requestBody:
+          description: The fields to update.
+          required: true
+          content:
+            application/json:
+              schema:
+                required:
+                - label
+                $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+        responses:
+          '200':
+            description: Certificate updated successfully.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/aclb_Certificate'
+          default:
+            $ref: '#/components/responses/ErrorResponse'
+        x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Content-Type: application/json" \
+                -H "Authorization: Bearer $TOKEN" \
+                -X POST -d '{
+                  "key": "1111111111"
+                  "certificate": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
+                  "label": certificate-123,
+                  "type": "downstream",
+                }' \
+                https://api.linode.com/v4beta/aclb/12345/certificates
+        - lang: CLI
+          source: >
+            linode-cli loadbalancers certificates-create \
+              12345 \
+              --key 1111111111 \
+              --certificate "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----" \
+              --label certificate-123 \
+              --type downstream
+
+      delete:
+        x-linode-grant: read_write
+        tags:
+        - NodeBalancers
+        summary: Certificate Delete
+        description: >
+          Deletes a certificate.
+
+
+          This does not change or remove the Global Load.
+        operationId: deleteLoadBalancerServiceTarget
+        servers:
+        - url: https://api.linode.com/v4beta
+        x-linode-cli-action: certificate-delete
+        security:
+        - personalAccessToken: []
+        - oauth:
+          - aclb:read_write
+        responses:
+          '200':
+            description: Certificate deleted successfully.
+            content:
+              application/json:
+                schema:
+                  type: object
+          default:
+            $ref: '#/components/responses/ErrorResponse'
   /lke/clusters:
     x-linode-cli-command: lke
     get:
@@ -21145,6 +22774,21 @@ components:
           enum:
           - account_update
           - account_settings_update
+          - aclb_create
+          - aclb_update
+          - aclb_delete
+          - aclb_config_create
+          - aclb_config_update
+          - aclb_config_delete
+          - aclb_route_create
+          - aclb_route_update
+          - aclb_route_delete
+          - aclb_servicetarget_create
+          - aclb_servicetarget_update
+          - aclb_servicetarget_delete
+          - aclb_certificate_create
+          - aclb_certificate_update
+          - aclb_certificate_delete
           - backups_enable
           - backups_cancel
           - backups_restore
@@ -21329,6 +22973,7 @@ components:
               - domain
               - entity_transfer
               - firewall
+              - globalloadbalancer
               - image
               - ipaddress
               - linode
@@ -21788,6 +23433,10 @@ components:
               type: boolean
               description: If true, this User may add StackScripts.
               example: true
+            add_globalloadbalancers:
+              type: boolean
+              description: If true, this User may add Cloud Load Balancers.
+              example: true
             add_nodebalancers:
               type: boolean
               description: If true, this User may add NodeBalancers.
@@ -21826,6 +23475,12 @@ components:
             $ref: '#/components/schemas/Grant'
           description: >
             The grants this User has for each Domain that is owned by this Account.
+        loadbalancer:
+          type: array
+          items:
+            $ref: '#/components/schemas/Grant'
+          description: >
+            The grants this User has for each Cloud Load Balancer that is owned by this Account.
         nodebalancer:
           type: array
           items:
@@ -24551,6 +26206,481 @@ components:
           description: When this Managed Service was last updated.
           example: '2018-03-01T00:01:01'
           readOnly: true
+    aclb_LoadBalancer:
+      type: object
+      description: >
+        Akamai Cloud Load Balancer offers global, configurable, scalable, distributed compute traffic management across physical, virtual, and cloud-hosted applications. It can automatically detect load conditions and levels and route traffic to the optimal target while maintaining custom routing policies and consistent visitor session behavior.
+      properties:
+        id:
+          type: integer
+          description: >
+            This Cloud Load Balancer's unique ID.
+          example: 12345
+          readOnly: true
+          x-linode-cli-display: 1
+        tags:
+          description: >
+            Optional tags to help organize and group your load balancers.
+          type: object
+          items:
+            type: string
+          example:
+          - test-aclb
+          - production-aclb
+          x-linode-cli-display: 2
+        label:
+          type: string
+          description: >
+            This Cloud Load Balancer's label. These must be unique on your Account.
+          example: balancer12345
+          x-linode-cli-display: 3
+        regions:
+          $ref: '#/components/schemas/aclb_LoadBalancerDatacenter/properties/regions'
+        hostname:
+          type: string
+          description: >
+            This Cloud Load Balancer's hostname.
+          example: example.mesh.akadns.net
+          readOnly: true
+          x-linode-cli-display: 4
+        configurations:
+          description: >
+            Cloud Load Balancer configurations.
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: >
+                  The configurations assigned id.
+                example: 125
+              label:
+                type: string
+                description: >
+                  The configuration label.
+                example: config-12345
+    aclb_LoadBalancerDatacenter:
+      type: object
+      description: >
+        The regions this Cloud Load Balancer covers.
+      properties:
+        regions:
+          description: >
+            Regions this Cloud Load Balancer covers.
+          type: object
+          items:
+            type: string
+          example:
+          - us-iad
+          - ap-southeast
+          x-linode-cli-display: 4
+    aclb_Configuration:
+      type: object
+      description: >
+        A Cloud Load Balancer can have muliple configurations. Each configuration includes an id, label, port and protocol. For HTTPS protocol load Balancers, TLS certificates are also required. Configuration details related to routes and health checks are optional.
+      properties:
+        id:
+          type: integer
+          description: >
+            The configurations assigned id.
+          example: 125
+          x-linode-cli-display: 1
+        label:
+          type: string
+          description: >
+            The configuration label.
+          example: config-12345
+          x-linode-cli-display: 2
+        port:
+          type: integer
+          minimum: 1
+          maximum: 65535
+          default: 80
+          description: >
+            The port this Cloud Load Balancer configuration listens on. For TCP, this can be any port from 1 through 1023, though it should be set to whichever port the client software connects to. For instance, web browsers use port 80 for HTTP traffic and port 443 for HTTPS traffic, though a client can change the port by specifying it as part of the URL.
+          example: 80
+          x-linode-cli-display: 4
+        protocol:
+          type: string
+          enum:
+          - http
+          - https
+          - tcp
+          default: http
+          description: >
+            The protocol this port is configured to serve.
+
+            * The `http` and `tcp` protocols do not support `certificates`.
+
+            * The `https` protocol is mutually required with `cerificates`.
+
+            Review our guide on [Available Protocols](https://deploy-preview-14--roaring-gelato-12dc9e.netlify.app/docs/products/networking/global-loadbalancer/guides/protocols/) for information on protocol features.
+          example: http
+          x-linode-cli-display: 5
+        certificates:
+          type: array
+          description: >
+            Required when the `protocol` is https. Not applicable if the protocol is http or tcp.
+          x-linode-cli-display: 6
+          items:
+            $ref: '#/components/schemas/aclb_Certificate'
+        routes:
+          type: array
+          description: >
+            Routes assigned to configurations.
+          items:
+            properties:
+              id:
+                type: integer
+                description: |
+                  Route id.
+                example: 125
+              label:
+                type: string
+                description: >
+                  The route name.
+                example: route-a-b
+    aclb_ConfigurationCertificate:
+      type: array
+      description: >
+        Upload certificates to your Load Balancer for use across your Configurations and Service Targets.
+      items:
+        properties:
+          key:
+            type: integer
+            description: >
+              The PEM-formatted contents of your private key. Your private key must not have a passphrase.
+
+
+              For `ca` certificates, the key must be blank.
+
+
+              For `downstream` certificates, the key must be populated.
+            example: "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
+          label:
+            type: string
+            description: >
+              Certificate name.
+          certificate:
+            type: string
+            description: >
+              The PEM-formatted contents of the tls ertificate.
+          type:
+            type: string
+            enum:
+            - ca
+            - downstream
+            description: >
+              For TLS Certificates use `downstream`. For Service Target Certificates use `ca`.
+            example: ca
+    aclb_Certificate:
+      type: object
+      description: >
+        TLS termination certificates create an encrypted link between your clients and Cloud Load Balancer and terminate incoming traffic on the load balancer. Once the load balancing policy is applied, traffic is forwarded to your service targets over encrypted TLS connections.
+      properties:
+        label:
+            type: string
+            description: >
+              Certificate name.
+            example: cert-12345
+        certificate:
+            type: string
+            description: >
+              The PEM-formatted contents of your tls ertificate.
+            example: "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----"
+        type:
+            type: string
+            enum:
+            - ca
+            - downstream
+            example: ca
+        id:
+          type: integer
+          description: >
+            This TLS certificate's ID.
+          example: 10
+    aclb_Route:
+      type: array
+      description: >
+        Routes define how the load balancer directs incoming requests to service targets. After a route is created, you add rules to set match conditions that are used for target selection.
+      items:
+        properties:
+          label:
+            type: string
+            description: >
+              The route name.
+            example: route-a-b
+          protocol:
+            type: string
+            enum:
+            - http
+            - tcp
+            default: http
+            example: http
+    aclb_ConfigurationRoute:
+      type: object
+      description: >
+        Cloud Load Balancer Routes.
+      properties:
+        id:
+          type: integer
+          description: >
+            This routes unique ID.
+          example: 12345
+          readOnly: true
+        label:
+            type: string
+            description: >
+              The route name.
+            example: route-a-b
+        protocol:
+            type: string
+            enum:
+            - http
+            - tcp
+            default: http
+            example: http
+        rules:
+          $ref: '#/components/schemas/aclb_Rule'
+        service_targets:
+          $ref: '#/components/schemas/aclb_ServiceTarget'
+    aclb_Rule:
+      type: array
+      description: >
+        Rules set the conditions that are used for target selection.
+        * HTTP/S rules include Match Rules and the percentage of incoming requests that should be directed to each target.
+        * TCP rules include the percentage of incoming requests that should be directed to each target.
+      items:
+        properties:
+          match_condition:
+            type: object
+            description: >
+              Match conditions are for HTTP and HTTPS load balancers only, in addition to setting the percentage of incoming requests to a target, match conditions such as `path_prefix`, `host`, `query`, `hostname`, `header`, and `method` can be added to the route rules.
+            properties:
+              hostname:
+                type: string
+                description: >
+                  The Server Name Indication to ensure that client devices are able to see the correct TLS certificate for the website they are trying to reach. A fully qualified DNS name that resolves to an address record. A Hostname match is based on the name found in the requests host header.
+                example: www.example.com
+              match_field:
+                type: string
+                enum:
+                - path_prefix
+                - host
+                - query
+                - hostname
+                - header
+                - method
+                example: path_prefix
+              match_value:
+                type: string
+                description: >
+                  The `match_value` format:
+                    * `path_prefix`: The format of the path rule is: /path1/path2. The initial slash is required, but the trailing slash is not.
+                    * `query`: The format for query string is: ?name=value. The query string name must be preceded by a question mark (?).
+                    * `hostname`: The format of a hostname is a fully qualified DNS name that resolves to an address record. A Hostname match is based on the name found in the request’s host header.
+                    * `header`: The format for http header is: X-name=value.
+                    * `method`: The request methods include: DELETE, GET, HEAD, POST, and PUT.
+                example: /my-path
+              session_stickiness_cookie:
+                type: string
+                description: >
+                  Controls how subsequent requests from the same client are routed. Subsequent requests, by the same client to the same load balancer, are sent to the same service target endpoint for the duration of the cookie (`session_stickiness_ttl`) and as long as the endpoint remains healthy. If the endpoint is unhealthy, a different endpoint is selected. When Session Stickiness is disabled, no session information is saved and requests are routed in accordance with the algorithm and rules.
+                example: cookie-name
+              session_stickiness_ttl:
+                type: integer
+                description: >
+                  Expiry time in seconds for the HTTP/S load balancer generated cookie. If the TTL is set to zero, the generated cookie is a session cookie only.
+                example: 24
+    aclb_RuleServiceTarget:
+      type: object
+      description: >
+        The service targets for this configuration. The sum of traffic across all service targets must total 100%.
+      properties:
+        percentage:
+          type: integer
+          description: >
+            The percentage of incoming requests that should be directed to each target.
+          example: 50
+          minimum: 0
+          maximum: 100
+        label:
+          type: string
+          description: >
+            Service target's unique label.
+        protocol:
+          type: string
+          enum:
+          - http
+          - https
+          - tcp
+          default: http
+          example: http
+          description: |
+            The protocol this port is configured to serve.
+    aclb_MatchCondition:
+      type: object
+      description: >
+        TBD
+    aclb_ServiceTarget:
+      type: array
+      description: >
+        A service target is a cluster of endpoints that the load balancer directs incoming requests to.
+      items:
+        properties:
+          id:
+            type: integer
+            description: |
+              Servive Target id.
+            example: 200
+          label:
+            type: string
+            description: |
+              Service Target label.
+            example: service-target-abc
+          endpoints:
+            $ref: '#/components/schemas/aclb_ServiceTargetEndpoint'
+          certificate_id:
+            type: integer
+            description: |
+              Certificate identification number.
+            example: 50
+          protocol:
+            type: string
+            enum:
+            - http
+            - tcp
+            default: http
+            example: http
+          load_balancing_policy:
+            type: string
+            enum:
+            - round_robin
+            - least_request
+            - ring_hash
+            - random
+            - maglev
+            default: roundrobin
+            description: >
+              What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+            example: roundrobin
+          healthcheck:
+            $ref: '#/components/schemas/aclb_Healthcheck'
+    aclb_ServiceTargetEndpoint:
+      type: object
+      description: >
+        A service target is a cluster of endpoints that the load balancer directs incoming requests to.
+      properties:
+        ip:
+          type: string
+          description: |
+            The public IPv4 or IPv6 address of the endpoint.
+          example: 192.0.2.10
+        host:
+          type: string
+          description: |
+            The host header for HTTP/S requests to the endpoint.
+          example: example.org
+        port:
+          type: integer
+          description: |
+            The service target port that the load balancer directs incoming requests to. This is the port that the application is listening on.
+          example: 443
+        rate_capacity:
+            type: integer
+            default: 10000
+            example: 5000
+            description: |
+              The maximum number of requests/second that can be directed to this endpoint. If the actual number of requests/second exceeds the configured capacity value, requests are distributed to the other endpoints.
+        health_status:
+            type: string
+            description: |
+              Health status is `up` for healthy service target endpoints and `down` for unhealthy endpoints.
+
+              For TCP, a service target is considered healthy and able to accept incoming requests when there is a successful TCP handshake with the service target.
+
+              For HTTP/S, the service target endpoint is considered healthy, when requests to its path or host return a 2xx or 3xx status code response.
+            example: up
+    aclb_Endpoint:
+      type: array
+      description: >
+        A service target is a cluster of endpoints that the load balancer directs incoming requests to. You can add different service targets and endpoints for different types of requests. Health checks are configured at the service target level and apply to all of the service targets endpoints.
+      items:
+        properties:
+          ip:
+            type: string
+            description: |
+              The public IPv4 or IPv6 address of the endpoint.
+          host:
+            type: string
+            description: |
+              The host header for HTTP/S requests to the endpoint.
+          port:
+            type: integer
+            description: |
+              The service target port that the load balancer directs incoming requests to. This is the port that the application is listening on.
+          rate_capacity:
+            type: integer
+            default: 10000
+            example: 5000
+            description: |
+              The maximum number of requests/second that can be directed to this endpoint. If the actual number of requests/second exceeds the configured capacity value, requests are distributed to the other endpoints.
+    aclb_Healthcheck:
+      type: object
+      description: |
+        Health checks query the service targets by performing TCP connections or by making HTTP requests. For TCP, a service target is considered healthy and able to accept incoming requests when there is a successful TCP handshake with the service target. When HTTP/S is used to validate health status, the service target is considered healthy when requests to its path or host return a 2xx or 3xx status code response.
+      required:
+        - host
+      properties:
+        protocol:
+          type: string
+          description: |
+            You can select TCP health checks even when the load balancers entrypoint protocol is HTTP or HTTPS. When set to TCP, `path` and `host` are not applicable.
+          enum:
+          - tcp
+          - http
+          default: http
+          example: http
+        interval:
+          type: integer
+          minimum: 1
+          default: 10
+          example: 5
+          description: |
+            The number of seconds between health checks for this service target.
+        timeout:
+          type: integer
+          description: |
+            How long to wait (in seconds) before canceling a health check because a connection could not be established with the service target. 
+          minimum: 1
+          default: 5
+          example: 10
+        unhealthy_threshold:
+          type: integer
+          description: |
+            The number of consecutive health checks that must fail before marking a service target as unhealthy. 
+          minimum: 1
+          default: 3
+          example: 3
+        healthy_threshold:
+          type: integer
+          description: |
+            The number of consecutive health checks that must be successful before marking a service target as healthy.
+          minimum: 1
+          default: 3
+          example: 2
+        path:
+          type: string
+          description: |
+            When `protocol` is set to HTTP/S, enter an optional request url path for the health check. When the health check `protocol` is set to TCP, `path` is not applicable.
+          example: /path/to/endpoint
+        host:
+          type: string
+          description: |
+            When `protocol` is set to HTTP/S, enter an optional request hostname for the health check.
+            When the health check `protocol` is set to TCP, `host` is not applicable.
+          example: example.com
     NodeBalancer:
       type: object
       description: >
@@ -25123,6 +27253,7 @@ components:
               enum:
               - account
               - entity_transfer
+              - globalloadbalancer
               - linode
               - nodebalancer
               - promotion
@@ -26023,6 +28154,7 @@ components:
             - backup
             - blockstorage
             - db_mysql
+            - globalloadbalancer
             - ip_v4
             - linode
             - linode_disk
