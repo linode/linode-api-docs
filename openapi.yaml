@@ -11647,19 +11647,45 @@ paths:
         content:
           application/json:
               schema:
-                required:
-                - label
+                type: object
                 properties:
-                $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+                  label:
+                    type: string
+                    description: >
+                      The certificate name.
+                    example: certificate-123
+                  key:
+                    type: integer
+                    description: >
+                      The PEM-formatted contents of your private key. Your private key must not have a passphrase.
+
+
+                      For `ca` certificates, the key must be blank.
+
+
+                      For `downstream` certificates, the key must be populated.
+                    example: "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
+                  certificate:
+                    type: string
+                    description: >
+                      The PEM-formatted contents of the tls certificate.
+                  type:
+                    type: string
+                    enum:
+                    - ca
+                    - downstream
+                    description: >
+                      For TLS Certificates use `downstream`. For Service Target Certificates use `ca`.
+                    example: ca
       responses:
-        '200':
-          description: Certificate created successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/aclb_Certificate'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
+              '200':
+                description: Certificate created successfully.
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/aclb_Certificate'
+              default:
+                $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
         source: >
@@ -11716,10 +11742,36 @@ paths:
           content:
             application/json:
               schema:
-                required:
-                - label
+                type: object
                 properties:
-                $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+                  label:
+                    type: string
+                    description: >
+                      The certificate name.
+                    example: certificate-123
+                  key:
+                    type: integer
+                    description: >
+                      The PEM-formatted contents of your private key. Your private key must not have a passphrase.
+
+
+                      For `ca` certificates, the key must be blank.
+
+
+                      For `downstream` certificates, the key must be populated.
+                    example: "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
+                  certificate:
+                    type: string
+                    description: >
+                      The PEM-formatted contents of the tls certificate.
+                  type:
+                    type: string
+                    enum:
+                    - ca
+                    - downstream
+                    description: >
+                      For TLS Certificates use `downstream`. For Service Target Certificates use `ca`.
+                    example: ca
         responses:
           '200':
             description: Certificate updated successfully.
