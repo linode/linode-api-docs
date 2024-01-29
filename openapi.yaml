@@ -11646,10 +11646,11 @@ paths:
         required: true
         content:
           application/json:
-            schema:
-              required:
-              - label
-              $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+              schema:
+                required:
+                - label
+                properties:
+                $ref: '#/components/schemas/aclb_ConfigurationCertificate'
       responses:
         '200':
           description: Certificate created successfully.
@@ -11717,6 +11718,7 @@ paths:
               schema:
                 required:
                 - label
+                properties:
                 $ref: '#/components/schemas/aclb_ConfigurationCertificate'
         responses:
           '200':
