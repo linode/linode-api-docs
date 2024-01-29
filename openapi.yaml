@@ -10678,7 +10678,7 @@ paths:
             routes \
             --label glb-route-1 \
             --protocol http
-  /aclb/{CloudLoadBalancerID}/configurations/{id}:
+  /aclb/{CloudLoadBalancerID}/configurations/{ConfigurationID}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -11063,7 +11063,7 @@ paths:
             --host example.com \
             [{--id  1, percentage 50}]
 
-  /aclb/{CloudLoadBalancerID}/routes{id}:
+  /aclb/{CloudLoadBalancerID}/routes{RouteId}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -11405,7 +11405,7 @@ paths:
             --healthy_threshold 4 \
             --path /path1 \
             --host example.com
-  /aclb/{CloudLoadBalancerID}/service-targets/{id}:
+  /aclb/{CloudLoadBalancerID}/service-targets/{ServiceTargetID}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -11706,7 +11706,7 @@ paths:
             --certificate "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----" \
             --label certificate-123 \
             --type downstream
-  /aclb/{CloudLoadBalancerID}/certificates/{id}:
+  /aclb/{CloudLoadBalancerID}/certificates/{CertificateID}:
       parameters:
       - name: CloudLoadBalancerID
         in: path
