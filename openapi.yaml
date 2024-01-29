@@ -10382,7 +10382,7 @@ paths:
             --region us-east \
             --label balancer12345 \
             --rate_capacity 10000
-  /aclb/{id}:
+  /aclb/{CloudLoadBalancerID}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -10526,7 +10526,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli loadbalancers delete 12345
-  /aclb/{id}/configurations:
+  /aclb/{CloudLoadBalancerID}/configurations:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -10678,7 +10678,7 @@ paths:
             routes \
             --label glb-route-1 \
             --protocol http
-  /aclb/{id}/configurations/{id}:
+  /aclb/{CloudLoadBalancerID}/configurations/{id}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -10846,7 +10846,7 @@ paths:
           source: >
             linode-cli loadbalancers configuration-delete \
               12345 4567
-  /aclb/{id}/routes:
+  /aclb/{CloudLoadBalancerID}/routes:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -11063,7 +11063,7 @@ paths:
             --host example.com \
             [{--id  1, percentage 50}]
 
-  /aclb/{id}/routes{id}:
+  /aclb/{CloudLoadBalancerID}/routes{id}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -11252,7 +11252,7 @@ paths:
         source: >
           linode-cli loadbalancers route-delete \
             12345 54321
-  /aclb/{id}/service-targets:
+  /aclb/{CloudLoadBalancerID}/service-targets:
     x-linode-cli-command: loadbalancers
     parameters:
     - name: CloudLoadBalancerID
@@ -11405,7 +11405,7 @@ paths:
             --healthy_threshold 4 \
             --path /path1 \
             --host example.com
-  /aclb/{id}/service-targets/{id}:
+  /aclb/{CloudLoadBalancerID}/service-targets/{id}:
     parameters:
     - name: CloudLoadBalancerID
       in: path
@@ -11584,7 +11584,7 @@ paths:
                 type: object
         default:
           $ref: '#/components/responses/ErrorResponse'
-  /aclb/{id}/certificates:
+  /aclb/{CloudLoadBalancerID}/certificates:
     x-linode-cli-command: loadbalancers
     parameters:
     - name: CloudLoadBalancerID
@@ -11706,7 +11706,7 @@ paths:
             --certificate "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----" \
             --label certificate-123 \
             --type downstream
-  /aclb/{id}/certificates/{id}:
+  /aclb/{CloudLoadBalancerID}/certificates/{id}:
       parameters:
       - name: CloudLoadBalancerID
         in: path
