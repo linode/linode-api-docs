@@ -10384,7 +10384,7 @@ paths:
             --rate_capacity 10000
   /aclb/{id}:
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -10430,7 +10430,7 @@ paths:
       summary: Cloud Load Balancer Update
       description: >
         Updates the configuration of a Cloud Load Balancer you can access.
-      operationId: updateNodeBalancer
+      operationId: updateLoadBalancer
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: update
@@ -10498,7 +10498,7 @@ paths:
 
         Deleting a Cloud Load Balancer deletes all associated configurations.
         The service targets are not deleted.
-      operationId: deleteNodeBalancer
+      operationId: deleteLoadBalancer
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action:
@@ -10528,7 +10528,7 @@ paths:
           linode-cli loadbalancers delete 12345
   /aclb/{id}/configurations:
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -10551,7 +10551,7 @@ paths:
 
         For example, if you wanted to accept standard HTTP traffic, you would
         need a configuration listening on port 80.
-      operationId: getNodeBalancerConfigs
+      operationId: getLoadBalancerConfigurations
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: configurations-list
@@ -10680,7 +10680,7 @@ paths:
             --protocol http
   /aclb/{id}/configurations/{id}:
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: Retrieve a single entry point (configuration) associated with the provided ‘id’.
       required: true
@@ -10848,7 +10848,7 @@ paths:
               12345 4567
   /aclb/{id}/routes:
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -11065,7 +11065,7 @@ paths:
 
   /aclb/{id}/routes{id}:
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -11117,7 +11117,7 @@ paths:
       summary: Route Update
       description: >
         Updates information about a Route, it's service target or match conditions.
-      operationId: updateNodeBalancerNode
+      operationId: updateLoadBalancerRoute
       servers:
       - url: https://api.linode.com/v4beta
       x-linode-cli-action: route-update
@@ -11255,7 +11255,7 @@ paths:
   /aclb/{id}/service-targets:
     x-linode-cli-command: loadbalancers
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -11407,7 +11407,7 @@ paths:
             --host example.com
   /aclb/{id}/service-targets/{id}:
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -11587,7 +11587,7 @@ paths:
   /aclb/{id}/certificates:
     x-linode-cli-command: loadbalancers
     parameters:
-    - name: GlobalLoadBalancerID
+    - name: CloudLoadBalancerID
       in: path
       description: The ID of the Cloud Load Balancer to access.
       required: true
@@ -11681,7 +11681,7 @@ paths:
             --type downstream
   /aclb/{id}/certificates/{id}:
       parameters:
-      - name: GlobalLoadBalancerID
+      - name: CloudLoadBalancerID
         in: path
         description: The ID of the Cloud Load Balancer to access.
         required: true
@@ -11758,7 +11758,7 @@ paths:
 
 
           This does not change or remove the Global Load.
-        operationId: deleteLoadBalancerServiceTarget
+        operationId: deleteLoadBalancerCertificate
         servers:
         - url: https://api.linode.com/v4beta
         x-linode-cli-action: certificate-delete
