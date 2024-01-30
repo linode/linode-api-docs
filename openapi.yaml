@@ -7220,7 +7220,7 @@ paths:
 
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt clone it to a non-NGN data center, the cloning will not initiate. If a Linode cannot be cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
 
-        **VPC BETA:** If the Linode you are cloning has a `vpc` purpose Interface on its active Configuration Profile that includes a 1:1 NAT, the resulting clone is configured with an `any` 1:1 NAT.
+        **Note:** If the Linode you are cloning has a `vpc` purpose Interface on its active Configuration Profile that includes a 1:1 NAT, the resulting clone is configured with an `any` 1:1 NAT.
       tags:
       - Linode Instances
       operationId: cloneLinodeInstance
@@ -7692,11 +7692,9 @@ paths:
       - Linode Instances
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       summary: Configuration Profile Interfaces List
       description: |
-        **VPC BETA ONLY**
-
         Returns an ordered array of all Interfaces associated with this Configuration Profile.
         * The User accessing this command must have at least `read_only` grants to the Linode.
       operationId: getLinodeConfigInterfaces
@@ -7719,7 +7717,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces \
+            curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces \
               -H "Authorization: Bearer $TOKEN"
         - lang: CLI
           source: >
@@ -7730,8 +7728,6 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       description: |
-        **VPC BETA ONLY**
-
         Creates and appends a single Interface to the end of the `interfaces` array for an existing Configuration Profile.
         * The User accessing this command must have `read_write` grants to the Linode.
         * A successful request triggers a `linode_config_update` event.
@@ -7806,8 +7802,6 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       description: |
-        **VPC BETA ONLY**
-
         Deletes an Interface from the Configuration Profile.
 
         * The User accessing this command must have `read_write` grants to the Linode.
@@ -7848,8 +7842,6 @@ paths:
       - url: https://api.linode.com/v4beta
       summary: Configuration Profile Interface View
       description: |
-        **VPC BETA ONLY**
-
         Returns a single Configuration Profile Interface.
         * The User accessing this command must have at least `read_only` grants to the Linode.
       operationId: getLinodeConfigInterface
@@ -7882,8 +7874,6 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       description: |
-        **VPC BETA ONLY**
-
         Updates a `vpc` or `public` purpose Interface for this Configuration Profile.
         * The User accessing this command must have `read_write` grants to the Linode.
         * A successful request triggers a `linode_config_update` event.
@@ -7955,8 +7945,6 @@ paths:
       servers:
       - url: https://api.linode.com/v4beta
       description: |
-        **VPC BETA ONLY**
-
         Reorders the existing Interfaces of a Configuration Profile.
         * The User accessing this command must have `read_write` grants to the Linode.
       tags:
@@ -8918,7 +8906,7 @@ paths:
 
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt to migrate it to a non-NGN data center, the migration will not initiate. If a Linode cannot be migrated because of an incompatibility, you will be prompted to select a different data center or contact support.
 
-        **VPC BETA:** Cross DC migrations are not allowed for Linodes that have a `vpc` purpose Configuration Profile Interface. Host migrations within the same DC are permitted.
+        **Note:** Cross DC migrations are not allowed for Linodes that have a `vpc` purpose Configuration Profile Interface. Host migrations within the same DC are permitted.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
@@ -13228,8 +13216,7 @@ paths:
         * **Linode's Managed Settings View** ([GET /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-view))
         * **Linode's Managed Settings Update** ([PUT /managed/linode-settings/{linodeId}](/docs/api/managed/#linodes-managed-settings-update))
 
-        **VPC BETA ONLY**
-        * Addresses with an active 1:1 NAT to a VPC Interface address cannot be assigned to other Linodes.
+        **Note:** Addresses with an active 1:1 NAT to a VPC Interface address cannot be assigned to other Linodes.
       operationId: assignIPs
       x-linode-cli-action: ip-assign
       security:
@@ -13297,7 +13284,7 @@ paths:
 
         IP failover requires configuration of a failover service (such as [Keepalived](/docs/guides/ip-failover-keepalived)) within the internal system of the primary Linode.
 
-        **VPC BETA:** A public IPv4 address cannot be shared if it is configured for a 1:1 NAT on a `vpc` purpose Configuration Profile Interface.
+        **Note:** A public IPv4 address cannot be shared if it is configured for a 1:1 NAT on a `vpc` purpose Configuration Profile Interface.
       operationId: shareIPs
       x-linode-cli-action: ip-share
       security:
@@ -19646,11 +19633,9 @@ paths:
       - VPCs
       summary: VPCs List
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
-        Display all VPCs belonging to your Account.
+        Display all VPCs on your account.
       operationId: getVPCs
       x-linode-cli-action:
       - list
@@ -19676,7 +19661,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/vpcs \
+          curl https://api.linode.com/v4/vpcs \
               -H "Authorization: Bearer $TOKEN"
       - lang: CLI
         source: >
@@ -19687,10 +19672,8 @@ paths:
       - VPCs
       summary: VPC Create
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Create a new VPC and optionally associated VPC Subnets.
         * Users must have the `add_vpc` grant to access this command.
         * A successful request triggers a `vpc_create` event and `subnet_create` events for any created VPC Subnets.
@@ -19735,7 +19718,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs \
+            curl https://api.linode.com/v4/vpcs \
               -H "Authorization: Bearer $TOKEN" \
               -H "Content-Type: application/json" \
               -X POST -d '{
@@ -19765,10 +19748,8 @@ paths:
       x-linode-grant: read_write
       summary: VPC Delete
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Delete a single VPC and all of its Subnets.
         * The User accessing this command must have `read_write` grants to the VPC.
         * A successful request triggers a `vpc_delete` event and `subnet_delete` events for each deleted VPC Subnet.
@@ -19793,7 +19774,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId \
+            curl https://api.linode.com/v4/vpcs/$vpcId \
               -H "Authorization: Bearer $TOKEN" \
               -X DELETE
         - lang: CLI
@@ -19802,10 +19783,8 @@ paths:
     get:
       summary: VPC View
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Get information about a single VPC.
       tags:
       - VPCs
@@ -19826,7 +19805,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId \
+            curl https://api.linode.com/v4/vpcs/$vpcId \
               -H "Authorization: Bearer $TOKEN"
         - lang: CLI
           source: >
@@ -19837,11 +19816,9 @@ paths:
       - VPCs
       summary: VPC Update
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
-        Update a VPC.
+        Update an existing VPC.
         * The User accessing this command must have `read_write` grants to the VPC.
         * A successful request triggers a `vpc_update` event.
 
@@ -19878,7 +19855,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId \
+            curl https://api.linode.com/v4/vpcs/$vpcId \
               -H "Authorization: Bearer $TOKEN" \
               -H "Content-Type: application/json" \
               -X PUT -d '{
@@ -19899,13 +19876,11 @@ paths:
       - VPCs
       summary: VPC Subnets List
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        **VPC BETA ONLY**
-
         Get information about all VPC Subnets associated with a VPC.
       operationId: getVPCSubnets
       x-linode-cli-action:
@@ -19932,7 +19907,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId/subnets \
+            curl https://api.linode.com/v4/vpcs/$vpcId/subnets \
               -H "Authorization: Bearer $TOKEN"
         - lang: CLI
           source: >
@@ -19943,10 +19918,8 @@ paths:
       - VPCs
       summary: VPC Subnet Create
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Create a VPC Subnet.
         * The User accessing this command must have `read_write` grants to the VPC.
         * A successful request triggers a `subnet_create` event.
@@ -19993,7 +19966,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId/subnets \
+            curl https://api.linode.com/v4/vpcs/$vpcId/subnets \
               -H "Authorization: Bearer $TOKEN" \
               -H "Content-Type: application/json" \
               -X POST -d '{
@@ -20014,17 +19987,13 @@ paths:
       x-linode-grant: read_write
       summary: VPC Subnet Delete
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Delete a single VPC Subnet.
 
-        The User accessing this command must have `read_write` grants to the VPC.
+        The user accessing this command must have `read_write` grants to the VPC. A successful request triggers a `subnet_delete` event.
 
-        A successful request triggers a `subnet_delete` event.
-
-        * All Configuration Profile Interfaces that this Subnet is assigned to must first be deleted. If those Interfaces are active, the associated Linode must first be shut down before they can be removed.
+        **Note:** You need to delete all the Configuration Profile Interfaces that this Subnet is assigned to before you can delete it. If those Interfaces are active, the associated Linode needs to be shut down before they can be removed.
       tags:
       - VPCs
       operationId: deleteVPCSubnet
@@ -20045,7 +20014,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId/subnets/$vpcSubnetId \
+            curl https://api.linode.com/v4/vpcs/$vpcId/subnets/$vpcSubnetId \
               -H "Authorization: Bearer $TOKEN" \
               -X DELETE
         - lang: CLI
@@ -20054,10 +20023,8 @@ paths:
     get:
       summary: VPC Subnet View
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Get information about a single VPC Subnet.
       tags:
       - VPCs
@@ -20078,7 +20045,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId/subnets/$vpcSubnetId \
+            curl https://api.linode.com/v4/vpcs/$vpcId/subnets/$vpcSubnetId \
               -H "Authorization: Bearer $TOKEN"
         - lang: CLI
           source: >
@@ -20089,10 +20056,8 @@ paths:
       - VPCs
       summary: VPC Subnet Update
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
-        **VPC BETA ONLY**
-
         Update a VPC Subnet.
         * The User accessing this command must have `read_write` grants to the VPC.
         * A successful request triggers a `subnet_update` event.
@@ -20126,7 +20091,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/vpcs/$vpcId/subnets/$vpcSubnetId \
+            curl https://api.linode.com/v4/vpcs/$vpcId/subnets/$vpcSubnetId \
               -H "Authorization: Bearer $TOKEN" \
               -H "Content-Type: application/json" \
               -X PUT -d '{
@@ -20498,7 +20463,7 @@ components:
           example: us-east
           x-linode-cli-display: 1
         unavailable:
-          type: list
+          type: array
           readOnly: true
           description: >
             A list of strings of unavailable services.
@@ -20640,8 +20605,7 @@ components:
           - snapshot
           readOnly: true
           description: >
-            This indicates whether the Backup is an automatic Backup or
-            manual snapshot taken by the User at a specific point in time.
+            This indicates whether the Backup is an automatic Backup or manual snapshot taken by the User at a specific point in time.
           example: snapshot
           x-linode-cli-display: 3
         status:
@@ -20818,7 +20782,7 @@ components:
       properties:
         card_number:
           type: string
-          description: Your credit card number. No spaces or dashes allowed.
+          description: Your credit card number. No spaces or hyphens (`-`) allowed.
           minLength: 14
           maxLength: 24
           format: digits
@@ -22515,8 +22479,8 @@ components:
             Firewall labels have the following constraints:
 
               * Must begin and end with an alphanumeric character.
-              * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
-              * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
+              * May only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+              * Cannot have two hyphens (`--`), underscores (`__`) or periods (`..`) in a row.
               * Must be between 3 and 32 characters.
               * Must be unique.
           example: firewall123
@@ -23261,32 +23225,26 @@ components:
         vpc_nat_1_1:
           type: object
           description: |
-            **VPC BETA ONLY**
-
             IPv4 address configured as a 1:1 NAT for this Interface. If no address is configured as a 1:1 NAT, `null` is returned.
 
-            Only allowed for `vpc` type Interfaces.
+            **Note:** Only allowed for `vpc` type Interfaces.
           properties:
             vpc_id:
               type: integer
               readOnly: true
-              nullable: true
+              nullable: false
               description: |
-                **VPC BETA ONLY**
-
                 The `id` of the VPC configured for this Interface.
               example: 111
             subnet_id:
               type: integer
-              nullable: true
+              nullable: false
               description: |
-                **VPC BETA ONLY**
-
                 The `id` of the VPC Subnet for this Interface.
               example: 101
             address:
               type: string
-              format: ipv4|ipv6/prefix_length
+              format: ipv4
               description: |
                 The IPv4 address that is configured as a 1:1 NAT for this VPC interface.
               example: 192.0.2.1
@@ -23829,8 +23787,8 @@ components:
             Linode labels have the following constraints:
 
               * Must begin and end with an alphanumeric character.
-              * May only consist of alphanumeric characters, dashes (`-`), underscores (`_`) or periods (`.`).
-              * Cannot have two dashes (`--`), underscores (`__`) or periods (`..`) in a row.
+              * May only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+              * Cannot have two hyphens (`--`), underscores (`__`) or periods (`..`) in a row.
           example: linode123
           minLength: 3
           maxLength: 64
@@ -24289,14 +24247,12 @@ components:
             For `vlan` purpose Interfaces:
             * Required.
             * Must be unique among the Linode's Interfaces (a Linode cannot be attached to the same VLAN multiple times).
-            * May only consist of ASCII letters, numbers, and dashes (`-`).
+            * May only consist of ASCII letters, numbers, and hyphens (`-`). Cannot contain two consecutive hyphens (`--`)
             * If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. To view your active VLANs, use the [VLANs List](/docs/api/networking/#vlans-list) endpoint.
 
             For `public` purpose Interfaces:
             * In requests, must be an empty string (`""`) or `null` if included.
             * In responses, always returns `null`.
-
-            **VPC BETA ONLY**
 
             For `vpc` purpose Interfaces:
             * In requests, must be an empty string (`""`) or `null` if included.
@@ -24318,8 +24274,6 @@ components:
             For `public` purpose Interfaces:
             * In requests, must be an empty string (`""`) or `null` if included.
             * In responses, always returns `null`.
-
-            **VPC BETA ONLY**
 
             For `vpc` purpose Interfaces:
             * In requests, must be an empty string (`""`) or `null` if included.
@@ -24344,8 +24298,6 @@ components:
               * Configuring a `vlan` purpose Interface attaches this Linode to the VLAN with the specified `label`.
               * The Linode is configured to use the specified `ipam_address`, if any.
 
-            **VPC BETA ONLY**
-
             * `vpc`
               * Configuring a `vpc` purpose Interface attaches this Linode to the existing VPC Subnet with the specified `subnet_id`.
               * When the Interface is activated, the Linode is configured to use an IP address from the range in the assigned VPC Subnet. See `ipv4.vpc` for more information.
@@ -24354,15 +24306,11 @@ components:
         active:
           type: boolean
           description: |
-            **VPC BETA ONLY**
-
             Returns `true` if the Interface is in use, meaning that Compute Instance has been booted using the Configuration Profile to which the Interface belongs. Otherwise returns `false`.
           example: true
         primary:
           type: boolean
           description: |
-            **VPC BETA ONLY**
-
             The primary Interface is configured as the default route to the Linode.
 
             Each Configuration Profile can have up to one `"primary": true` Interface at a time.
@@ -24376,41 +24324,30 @@ components:
           readOnly: true
           nullable: true
           description: |
-            **VPC BETA ONLY**
-
-            The `id` of the VPC configured for this Interface.
-            * `null` for non-`vpc` type Interfaces.
+            The `id` of the VPC configured for this Interface. Returns `null` for non-`vpc` type Interfaces.
           example: 111
         subnet_id:
           type: integer
           nullable: true
           description: |
-            **VPC BETA ONLY**
-
             The `id` of the VPC Subnet for this Interface.
 
             In requests, this value is used to assign a Linode to a VPC Subnet.
             * Required for `vpc` type Interfaces.
-            * `null` for non-`vpc` type Interfaces.
+            * Returns `null` for non-`vpc` type Interfaces.
             * Once a VPC Subnet is assigned to an Interface, it cannot be updated.
             * The Linode must be rebooted with the Interface's Configuration Profile to complete assignment to a VPC Subnet.
           example: 101
         ipv4:
           type: object
           description: |
-            **VPC BETA ONLY**
-
-            IPv4 addresses configured for this Interface.
-
-            Only allowed for `vpc` type Interfaces.
+            IPv4 addresses configured for this Interface. Only allowed for `vpc` type Interfaces. Returns `null` if no `vpc` Interface is assigned.
           properties:
             vpc:
               type: string
               format: ip
               nullable: true
               description: |
-                **VPC BETA ONLY**
-
                 The VPC Subnet IPv4 address for this Interface.
 
                 * Only allowed for `vpc` type Interfaces.
@@ -24426,18 +24363,17 @@ components:
               format: ip
               nullable: true
               description: |
-                **VPC BETA ONLY**
-
                 The 1:1 NAT IPv4 address, used to associate a public IPv4 address with the VPC Subnet IPv4 address assigned to this Interface.
 
                 * Only allowed for `vpc` type Interfaces.
+                * Returns `null` if no 1:1 NAT is set for a `vpc` type Interface.
                 * Returns an empty string (`""`) for non-`vpc` type Interfaces.
 
                 For requests:
                 * Setting this value to `any` enables the Linode's assigned public IPv4 address on this Interface and establishes a 1:1 NAT between the public IPv4 and VPC Subnet IPv4 addresses.
                 * Setting the value to a specific public IPv4 address that is assigned to the Linode enables a 1:1 NAT between that address and the VPC Subnet IPv4 address.
-                * The public IPv4 address must not be shared with another Linode.
-                * If ommitted, `null`, or an empty string (`""`), no 1:1 NAT is established.
+                * The public IPv4 address can't be shared with another Linode.
+                * If omitted, set to `null`, or set to an empty string (`""`), no 1:1 NAT is established.
               example: '203.0.113.2'
         # ipv6:
         #   type: object
@@ -24510,6 +24446,7 @@ components:
         **Note:** Changes to Linode Interface configurations can be enabled by rebooting the Linode.
 
         **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
+
         If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
         the migration or cloning will not initiate. If a Linode cannot be migrated or cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
 
@@ -24523,10 +24460,7 @@ components:
           "primary": false,
           "vpc_id": null,
           "subnet_id": null,
-          "ipv4": {
-            "vpc": "",
-            "nat_1_1": ""
-          }
+          "ipv4": null
         }
       - {
           "id": 102,
@@ -24537,8 +24471,8 @@ components:
           "vpc_id": null,
           "subnet_id": null,
           "ipv4": {
-            "vpc": "",
-            "nat_1_1": ""
+            "vpc": "10.0.0.2",
+            "nat_1_1": null
           }
         }
       - {
@@ -28486,8 +28420,8 @@ components:
           description: |
             The VPC's label, for display purposes only.
 
-            * Must be unique among the Account's VPCs.
-            * Must contain only ASCII letters, numbers, and hyphens (`-`).
+            * Needs to be unique among the Account's VPCs.
+            * Can only contain ASCII letters, numbers, and hyphens (`-`). You can't use two consecutive hyphens (`--`).
           example: cool-vpc
           x-linode-cli-display: 2
         description:
@@ -28543,7 +28477,7 @@ components:
             The VPC Subnet's label, for display purposes only.
 
             * Must be unique among the VPC's Subnets.
-            * Must contain only ASCII letters, numbers, and hyphens (`-`).
+            * Must contain only ASCII letters, numbers, and hyphens (`-`). Cannot contain two consecutive hyphens (`--`).
           example: cool-vpc-subnet
           x-linode-cli-display: 2
         ipv4:
