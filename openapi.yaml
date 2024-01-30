@@ -7218,9 +7218,15 @@ paths:
 
         Linodes utilizing Metadata (`"has_user_data": true`) must be cloned to a new Linode with `metadata.user_data` included with the clone request.
 
-        **Note:** Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt clone it to a non-NGN data center, the cloning will not initiate. If a Linode cannot be cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
+        `vpc` details
 
-        **Note:** If the Linode you are cloning has a `vpc` purpose Interface on its active Configuration Profile that includes a 1:1 NAT, the resulting clone is configured with an `any` 1:1 NAT.
+        - If the Linode you are cloning has a `vpc` purpose Interface on its active Configuration Profile that includes a 1:1 NAT, the resulting clone is configured with an `any` 1:1 NAT.
+        - See the [VPC documentation](/docs/products/networking/vpc/#technical-specifications) guide for its specifications and limitations.
+
+        `vlan` details
+
+        - Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt clone it to a non-NGN data center, the cloning will not initiate. If a Linode cannot be cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
+        - See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
       tags:
       - Linode Instances
       operationId: cloneLinodeInstance
@@ -7726,7 +7732,7 @@ paths:
       x-linode-grant: read_write
       summary: Configuration Profile Interface Add
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
         Creates and appends a single Interface to the end of the `interfaces` array for an existing Configuration Profile.
         * The User accessing this command must have `read_write` grants to the Linode.
@@ -7764,7 +7770,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId \
+          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{
@@ -7800,7 +7806,7 @@ paths:
     delete:
       summary: Configuration Profile Interface Delete
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
         Deletes an Interface from the Configuration Profile.
 
@@ -7830,7 +7836,7 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
               -X DELETE \
-              https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId
+              https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId
       - lang: CLI
         source: >
           linode-cli linodes config-delete $linodeId $configId $interfaceId
@@ -7839,7 +7845,7 @@ paths:
       - Linode Instances
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       summary: Configuration Profile Interface View
       description: |
         Returns a single Configuration Profile Interface.
@@ -7863,7 +7869,7 @@ paths:
       x-code-samples:
         - lang: Shell
           source: >
-            curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId \
+            curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId \
               -H "Authorization: Bearer $TOKEN"
         - lang: CLI
           source: >
@@ -7872,7 +7878,7 @@ paths:
       x-linode-grant: read_write
       summary: Configuration Profile Interface Update
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
         Updates a `vpc` or `public` purpose Interface for this Configuration Profile.
         * The User accessing this command must have `read_write` grants to the Linode.
@@ -7902,10 +7908,10 @@ paths:
                   $ref: '#/components/schemas/LinodeConfigInterface/properties/primary'
                 ipv4:
                   $ref: '#/components/schemas/LinodeConfigInterface/properties/ipv4'
+                ip_ranges:
+                  $ref: '#/components/schemas/LinodeConfigInterface/properties/ip_ranges'
                 # ipv6:
                 #   $ref: '#/components/schemas/LinodeConfigInterface/properties/ipv6'
-                # ip_ranges:
-                #   $ref: '#/components/schemas/LinodeConfigInterface/properties/ip_ranges'
       responses:
         '200':
           description: Interface successfully updated.
@@ -7918,7 +7924,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId \
+          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/$interfaceId \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X PUT -d '{
@@ -7943,7 +7949,7 @@ paths:
       x-linode-grant: read_write
       summary: Configuration Profile Interfaces Order
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       description: |
         Reorders the existing Interfaces of a Configuration Profile.
         * The User accessing this command must have `read_write` grants to the Linode.
@@ -7994,7 +8000,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces/order \
+          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces/order \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{
@@ -8892,21 +8898,23 @@ paths:
         When the migration begins, your Linode will be shutdown if not already off.
         If the migration initiated the shutdown, it will reboot the Linode when completed.
 
-        To initiate a cross DC migration, you must pass a `region` parameter to the
-        request body specifying the target data center region.
-        You can view a list of all available regions and their feature capabilities
-        from [GET /regions](/docs/api/regions/#regions-list). See our [Pricing Page](https://www.linode.com/pricing/) for Region-specific pricing, which applies after migration is complete. If your Linode has a DC migration already queued
-        or you have initiated a previously scheduled migration, you will not be able to initiate
+        To initiate a cross DC migration, you must pass a `region` parameter to the request body specifying the target data center region. You can view a list of all available regions and their feature capabilities
+        from [GET /regions](/docs/api/regions/#regions-list). See our [Pricing Page](https://www.linode.com/pricing/) for Region-specific pricing, which applies after migration is complete. If your Linode has a DC migration already queued or you have initiated a previously scheduled migration, you will not be able to initiate
         a DC migration until it has completed.
 
-        **Note:** Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
+        `vpc` details
+
+        - Cross DC migrations are not allowed for Linodes that have a `vpc` purpose Configuration Profile Interface. Host migrations within the same DC are permitted.
+        - See the [VPC documentation](/docs/products/networking/vpc/#technical-specifications) guide for its specifications and limitations.
+
+        `vlan` details
+
+        - Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions. If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center, the migration or cloning will not initiate. If a Linode cannot be migrated or cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
+        - Next Generation Network (NGN) data centers do not support IPv6 `/116` pools or IP Failover.
         If you have these features enabled on your Linode and attempt to migrate to an NGN data center,
         the migration will not initiate. If a Linode cannot be migrated because of an incompatibility,
         you will be prompted to select a different data center or contact support.
-
-        **Note:** Only Next Generation Network (NGN) data centers support VLANs. If a VLAN is attached to your Linode and you attempt to migrate it to a non-NGN data center, the migration will not initiate. If a Linode cannot be migrated because of an incompatibility, you will be prompted to select a different data center or contact support.
-
-        **Note:** Cross DC migrations are not allowed for Linodes that have a `vpc` purpose Configuration Profile Interface. Host migrations within the same DC are permitted.
+        - See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
       tags:
        - Linode Instances
       operationId: migrateLinodeInstance
@@ -13272,7 +13280,7 @@ paths:
     x-linode-cli-command: networking
     post:
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       x-linode-grant: read_write
       tags:
       - Networking
@@ -13320,7 +13328,7 @@ paths:
                   "2001:db8:3c4d:15::"
                 ]
               }' \
-              https://api.linode.com/v4beta/networking/ips/share
+              https://api.linode.com/v4/networking/ips/share
       - lang: CLI
         source: >
           linode-cli networking ip-share \
@@ -14497,7 +14505,7 @@ paths:
     get:
       x-linode-grant: read_only
       servers:
-      - url: https://api.linode.com/v4beta
+      - url: https://api.linode.com/v4
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -14521,10 +14529,7 @@ paths:
         - [Create](/docs/api/linode-instances/#configuration-profile-create) a new Configuration Profile without the VLAN Interface, then [reboot](/docs/api/linode-instances/#linode-reboot) the Linode into the new Configuration Profile.
         - [Delete](/docs/api/linode-instances/#linode-delete) the Linode.
 
-        **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
-        If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
-        the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility,
-        you will be prompted to select a different data center or contact support.
+        **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions. If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center, the migration or cloning will not initiate. If a Linode cannot be migrated because of an incompatibility, you will be prompted to select a different data center or contact support.
 
         **Note:** See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) to view additional specifications and limitations.
       operationId: getVLANs
@@ -14559,7 +14564,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/networking/vlans/
+              https://api.linode.com/v4/networking/vlans/
       - lang: CLI
         source: >
           linode-cli vlans list
@@ -23384,6 +23389,32 @@ components:
                     readOnly: true
                     x-linode-filterable: true
                     x-linode-cli-display: 5
+                  vpc_nat_1_1:
+                    type: object
+                    description: |
+                      IPv4 address configured as a 1:1 NAT for this Interface. If no address is configured as a 1:1 NAT, `null` is returned.
+
+                      **Note:** Only allowed for `vpc` type Interfaces.
+                    properties:
+                      vpc_id:
+                        type: integer
+                        readOnly: true
+                        nullable: false
+                        description: |
+                          The `id` of the VPC configured for this Interface.
+                        example: 111
+                      subnet_id:
+                        type: integer
+                        nullable: false
+                        description: |
+                          The `id` of the VPC Subnet for this Interface.
+                        example: 101
+                      address:
+                        type: string
+                        format: ipv4
+                        description: |
+                          The IPv4 address that is configured as a 1:1 NAT for this VPC interface.
+              example: 192.0.2.1
     IPAddressesShareRequest:
       type: object
       description: A request object IP Addresses Share (POST /networking/ips/share)
@@ -24399,28 +24430,26 @@ components:
         #         * Must not be the first two or last two addresses in the Subnet IPv6 Range.
         #         * If omitted, a valid address within the Subnet IPv6 range is automatically assigned.
         #       example: 'fd04:495a:691c:971c::2'
-        # ip_ranges:
-        #   type: array
-        #   nullable: true
-        #   description: |
-        #     **VPC BETA ONLY**
+        ip_ranges:
+          type: array
+          nullable: true
+          description: |
+            An array of IPv4 CIDR VPC Subnet ranges that are routed to this Interface. **IPv6 ranges are also available to select participants in the Beta program.**
 
-        #     An array of IPv4 CIDR VPC Subnet ranges that are routed to this Interface. **IPv6 ranges are also available to select participants in the Beta program.**
+            * Array items are only allowed for `vpc` type Interfaces.
+            * This must be empty for non-`vpc` type Interfaces.
 
-        #     * Array items are only allowed for `vpc` type Interfaces.
-        #     * This must be empty for non-`vpc` type Interfaces.
-
-        #     For requests:
-        #     * Addresses in submitted ranges must not already be actively assigned.
-        #     * Submitting values replaces any existing values.
-        #     * Submitting an empty array removes any existing values.
-        #     * Omitting this property results in no change to existing values.
-        #   items:
-        #     type: string
-        #     format: ip
-        #   example:
-        #   - 10.0.0.64/26
-        #   - fd04:495a:691c:971c::1:0/112
+            For requests:
+            * Addresses in submitted ranges must not already be actively assigned.
+            * Submitting values replaces any existing values.
+            * Submitting an empty array removes any existing values.
+            * Omitting this property results in no change to existing values.
+          items:
+            type: string
+            format: ip
+          example:
+          - 10.0.0.64/26
+          - fd04:495a:691c:971c::1:0/112
     LinodeConfigInterfaces:
       type: array
       items:
@@ -24431,9 +24460,7 @@ components:
       required:
       - purpose
       description: |
-        An array of Network Interfaces to add to this Linode's Configuration Profile.
-
-        At least one and up to three Interface objects can exist in this array. The position in the array determines which of the Linode's network Interfaces is configured:
+        An array of Network Interfaces to add to this Linode's Configuration Profile. At least one and up to three Interface objects can exist in this array. The position in the array determines which of the Linode's network Interfaces is configured:
 
         - First [0]:  eth0
         - Second [1]: eth1
@@ -24445,12 +24472,14 @@ components:
 
         **Note:** Changes to Linode Interface configurations can be enabled by rebooting the Linode.
 
-        **Note:** Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions.
+        `vpc` details
 
-        If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center,
-        the migration or cloning will not initiate. If a Linode cannot be migrated or cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
+        See the [VPC documentation](/docs/products/networking/vpc/#technical-specifications) guide for its specifications and limitations.
 
-        **Note:** See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
+        `vlan` details
+
+        - Only Next Generation Network (NGN) data centers support VLANs. Use the Regions ([/regions](/docs/api/regions/)) endpoint to view the capabilities of data center regions. If a VLAN is attached to your Linode and you attempt to migrate or clone it to a non-NGN data center, the migration or cloning will not initiate. If a Linode cannot be migrated or cloned because of an incompatibility, you will be prompted to select a different data center or contact support.
+        - See the [VLANs Overview](/docs/products/networking/vlans/#technical-specifications) guide to view additional specifications and limitations.
       example:
       - {
           "id": 101,
