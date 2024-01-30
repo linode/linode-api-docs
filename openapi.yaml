@@ -16264,7 +16264,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - Cloud Load Balancer
+      - NodeBalancers
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
