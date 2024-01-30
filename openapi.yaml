@@ -10152,7 +10152,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -10200,7 +10200,7 @@ paths:
     post:
       x-linode-grant: add_loadbalancers
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Cloud Load Balancer Create
       description: |
         Creates a Cloud Load Balancer, service targets, and routes in the requested regions.
@@ -10394,7 +10394,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Cloud Load Balancer View
       description: >
         Returns a single Cloud Load Balancer you can access.
@@ -10426,7 +10426,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Cloud Load Balancer Update
       description: >
         Updates the configuration of a Cloud Load Balancer you can access.
@@ -10487,7 +10487,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Cloud Load Balancer Delete
       description: >
         Deletes a Cloud Load Balancer.
@@ -10538,7 +10538,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -10590,7 +10590,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Configuration Create
       description: >
         Creates a Cloud Load Balancer Configuration, which allows the Load Balancer to
@@ -10696,7 +10696,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Configuration View
       description: >
         Returns configuration information for a single port of this
@@ -10730,7 +10730,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Configuration Update
       description: >
         Updates the configuration for a single port on a Cloud Load Balancer.
@@ -10808,7 +10808,7 @@ paths:
     delete:
         x-linode-grant: read_write
         tags:
-        - NodeBalancers
+        - Cloud Load Balancer
         summary: Configuration Delete
         description: >
           Deletes the Configuration for a port of this Cloud Load Balancer.
@@ -10858,7 +10858,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -10904,7 +10904,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Route Create
       description: >
         Creates a route. Routes define how the load balancer directs incoming requests to service targets.
@@ -11081,7 +11081,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Route View
       description: >
         Returns information about a single route, its rules and service targets.
@@ -11113,7 +11113,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Route Update
       description: >
         Updates information about a Route, it's service target or match conditions.
@@ -11217,7 +11217,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Route Delete
       description: >
         Deletes a route.
@@ -11265,7 +11265,7 @@ paths:
       operationId: getLoadBalancerService-Targets
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -11297,7 +11297,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Service Target Create
       description: >
         Creates a Service Target.
@@ -11423,7 +11423,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary:  Service Target View
       description: >
         Returns information about a service target.
@@ -11455,7 +11455,7 @@ paths:
     put:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Service Target Update
       description: >
         Updates information for a service target.
@@ -11560,7 +11560,7 @@ paths:
     delete:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Service Target Delete
       description: >
         Deletes a service target.
@@ -11597,7 +11597,7 @@ paths:
       operationId: getLoadBalancerCertificates
       x-linode-grant: read_only
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
@@ -11629,7 +11629,7 @@ paths:
     post:
       x-linode-grant: read_write
       tags:
-      - NodeBalancers
+      - Cloud Load Balancer
       summary: Certificate Create
       description: >
         Creates a certificate.
@@ -11724,7 +11724,7 @@ paths:
       put:
         x-linode-grant: read_write
         tags:
-        - NodeBalancers
+        - Cloud Load Balancer
         summary: Certificate Update
         description: >
           Updates a certificate.
@@ -11805,7 +11805,7 @@ paths:
       delete:
         x-linode-grant: read_write
         tags:
-        - NodeBalancers
+        - Cloud Load Balancer
         summary: Certificate Delete
         description: >
           Deletes a certificate.
@@ -27972,14 +27972,14 @@ components:
         timeout:
           type: integer
           description: |
-            How long to wait (in seconds) before canceling a health check because a connection could not be established with the service target. 
+            How long to wait (in seconds) before canceling a health check because a connection could not be established with the service target.
           minimum: 1
           default: 5
           example: 10
         unhealthy_threshold:
           type: integer
           description: |
-            The number of consecutive health checks that must fail before marking a service target as unhealthy. 
+            The number of consecutive health checks that must fail before marking a service target as unhealthy.
           minimum: 1
           default: 3
           example: 3
