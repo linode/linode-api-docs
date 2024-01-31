@@ -84,7 +84,7 @@ info:
     | 1.  The user visits the application's website and is directed to login with Linode. | 1.  The user visits the application's website and is directed to login with Linode. |
     | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. | 2.  Your application then redirects the user to Linode's [login server](https://login.linode.com) with the client application's `client_id` and requested OAuth `scope`, which should appear in the URL of the login page. |
     | 3.  The user logs into the login server with their username and password. | 3.  The user logs into the login server with their username and password. |
-    | 4.  The login server redirects the user to the specificed redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The login server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in two hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user log in again. |
+    | 4.  The login server redirects the user to the specified redirect URL with a temporary authorization `code` (exchange code) in the URL. | 4.  The login server redirects the user back to your application with an OAuth `access_token` embedded in the redirect URL's hash. This is temporary and expires in two hours. No `refresh_token` is issued. Therefore, once the `access_token` expires, a new one will need to be issued by having the user log in again. |
     | 5.  The application issues a POST request (*see additional details below*) to the login server with the exchange code, `client_id`, and the client application's `client_secret`. | |
     | 6.  The login server responds to the client application with a new OAuth `access_token` and `refresh_token`. The `access_token` is set to expire in two hours. | |
     | 7.  The `refresh_token` can be used by contacting the login server with the `client_id`, `client_secret`, `grant_type`, and `refresh_token` to get a new OAuth `access_token` and `refresh_token`. The new `access_token` is good for another two hours, and the new `refresh_token` can be used to extend the session again by this same method (*see additional details below*). | |
@@ -224,7 +224,7 @@ info:
     your request. If this occurs, please
     [open a Support Ticket](/docs/api/support/#support-ticket-open)
     and let us know. Though errors are logged and we work quickly to resolve issues,
-    opening a ticket and providing us with reproducable steps and data is always helpful.
+    opening a ticket and providing us with reproducible steps and data is always helpful.
 
     The `errors` field is an array of the things that went wrong with your request.
     We will try to include as many of the problems in the response as possible,
@@ -5165,7 +5165,7 @@ paths:
 
         Display all Managed Database node types. The type and number of nodes determine the resources and price of a Managed Database instance.
 
-        Each Managed Database can have one node type. In the case of a high availabilty Database, all nodes are provisioned according to the chosen type.
+        Each Managed Database can have one node type. In the case of a high availability Database, all nodes are provisioned according to the chosen type.
       responses:
         '200':
           description: Returns a paginated list of all Managed Database types.
@@ -24410,7 +24410,7 @@ components:
         #   type: object
         #   description: |
         #     **VPC BETA ONLY**
-
+        #
         #     IPv6 addresses configured for this Interface.
         #   properties:
         #     vpc:
@@ -24418,12 +24418,12 @@ components:
         #       format: ip
         #       description: |
         #         **VPC BETA ONLY**
-
+        #
         #         The VPC IPv6 address assigned to this Interface.
-
+        #
         #         * Only allowed for `vpc` type Interfaces.
         #         * Returns an empty string (`""`) for non-`vpc` type Interfaces.
-
+        #
         #         For requests:
         #         * The VPC Subnet must have an IPv6 range.
         #         * Must not already be actively assigned as an address or within a range.
