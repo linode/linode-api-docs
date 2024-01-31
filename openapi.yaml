@@ -7770,7 +7770,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId \
+          curl https://api.linode.com/v4/linode/instances/$linodeId/configs/$configId/interfaces \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{
@@ -20453,7 +20453,7 @@ components:
           description: |
             The zip code of this Account's billing address. The following restrictions apply:
 
-            - May only consist of letters, numbers, spaces, and hyphens.
+            - Can only contain ASCII letters, numbers, and hyphens (`-`).
             - Must not contain more than 9 letter or number characters.
           example: 19102-1234
     AccountAvailability:
@@ -21057,7 +21057,7 @@ components:
           description: |
             The label for the Database snapshot backup.
 
-            * Must include only ASCII letters, numbers, or underscores.
+            * Can only contain ASCII letters, numbers, and underscores (`_`).
             * Must be unique among other backup labels for this Database.
           example: db-snapshot
         target:
@@ -24278,7 +24278,7 @@ components:
             For `vlan` purpose Interfaces:
             * Required.
             * Must be unique among the Linode's Interfaces (a Linode cannot be attached to the same VLAN multiple times).
-            * May only consist of ASCII letters, numbers, and hyphens (`-`). Cannot contain two consecutive hyphens (`--`)
+            * Can only contain ASCII letters, numbers, and hyphens (`-`). You can't use two consecutive hyphens (`--`).
             * If the VLAN label is new, a VLAN is created. Up to 10 VLANs can be created in each data center region. To view your active VLANs, use the [VLANs List](/docs/api/networking/#vlans-list) endpoint.
 
             For `public` purpose Interfaces:
@@ -28506,7 +28506,7 @@ components:
             The VPC Subnet's label, for display purposes only.
 
             * Must be unique among the VPC's Subnets.
-            * Must contain only ASCII letters, numbers, and hyphens (`-`). Cannot contain two consecutive hyphens (`--`).
+            * Can only contain ASCII letters, numbers, and hyphens (`-`). You can't use two consecutive hyphens (`--`).
           example: cool-vpc-subnet
           x-linode-cli-display: 2
         ipv4:
