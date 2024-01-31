@@ -20468,11 +20468,15 @@ components:
           example: us-east
           x-linode-cli-display: 1
         unavailable:
-          type: list
+          type: array
           readOnly: true
           description: >
             A list of strings of unavailable services.
-          example: ["Linodes", "Block Storage"]
+          example:
+          - "Linodes"
+          - "Block Storage"
+          items:
+            type: string
           x-linode-cli-display: 2
     AccountSettings:
       type: object
