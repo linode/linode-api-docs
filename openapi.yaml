@@ -7768,7 +7768,7 @@ paths:
       x-code-samples:
       - lang: Shell
         source: >
-          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId \
+          curl https://api.linode.com/v4beta/linode/instances/$linodeId/configs/$configId/interfaces \
             -H "Authorization: Bearer $TOKEN" \
             -H "Content-Type: application/json" \
             -X POST -d '{
