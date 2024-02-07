@@ -3859,6 +3859,19 @@ paths:
                   $ref: '#/components/schemas/DatabaseMySQLRequest/properties/allow_list'
                 updates:
                   $ref: '#/components/schemas/DatabaseMySQL/properties/updates'
+                type:
+                  type: string
+                  description: |
+                    Request re-sizing of your cluster to a higher plan by specifying a larger [Linode Type](/docs/api/linode-types/#types-list).
+
+                    * Needs to be a higher plan than your current Linode Type.
+
+                    * You can't resize from a shared CPU Linode Type to a dedicated CPU, and vice-versa.
+
+                    * You can't update the `allow-list` and set a new `type` in the same request.
+
+                    * Any active updates to your cluster need to complete before you can request a resize. The reverse is also true: An active resizing needs to complete before you can perform any other update.
+                  example: g6-standard-1
       responses:
         '200':
           description: Managed Database updated successfully.
@@ -3879,6 +3892,7 @@ paths:
                     "203.0.113.1",
                     "192.0.1.0/24"
                   ],
+                  "type": "g6-standard-1",
                   "updates" = {
                     "frequency": "monthly",
                     "duration": 3,
@@ -3894,6 +3908,7 @@ paths:
             --label example-db \
             --allow_list 203.0.113.1 \
             --allow_list 192.0.1.0/24 \
+            --type g6-standard-1 \
             --updates.frequency monthly \
             --updates.duration 3 \
             --updates.hour_of_day 12 \
@@ -4643,6 +4658,19 @@ paths:
                   $ref: '#/components/schemas/DatabasePostgreSQLRequest/properties/allow_list'
                 updates:
                   $ref: '#/components/schemas/DatabasePostgreSQL/properties/updates'
+                type:
+                  type: string
+                  description: |
+                    Request re-sizing of your cluster to a higher plan by specifying a larger [Linode Type](/docs/api/linode-types/#types-list).
+
+                    * Needs to be a higher plan than your current Linode Type.
+
+                    * You can't resize from a shared CPU Linode Type to a dedicated CPU, and vice-versa.
+
+                    * You can't update the `allow-list` and set a new `type` in the same request.
+
+                    * Any active updates to your cluster need to complete before you can request a resize. The reverse is also true: An active resizing needs to complete before you can perform any other update.
+                  example: g6-standard-1
       responses:
         '200':
           description: Managed Database updated successfully.
@@ -4663,6 +4691,7 @@ paths:
                     "203.0.113.1",
                     "192.0.1.0/24"
                   ],
+                  "type": "g6-standard-1",
                   "updates" = {
                     "frequency": "monthly",
                     "duration": 3,
@@ -4678,6 +4707,7 @@ paths:
             --label example-db \
             --allow_list 203.0.113.1 \
             --allow_list 192.0.1.0/24 \
+            --type g6-standard-1 \
             --updates.frequency monthly \
             --updates.duration 3 \
             --updates.hour_of_day 12 \
