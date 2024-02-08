@@ -3862,11 +3862,11 @@ paths:
                 type:
                   type: string
                   description: |
-                    Request re-sizing of your cluster to a higher plan by specifying a larger [Linode Type](/docs/api/linode-types/#types-list).
+                    Request re-sizing of your cluster to a higher plan by specifying a larger Linode Type.
 
                     * Needs to be a higher plan than your current Linode Type.
 
-                    * You can't resize from a shared CPU Linode Type to a dedicated CPU, and vice-versa.
+                    * Resizing to a larger Linode Type can accrue additional cost. Review the `price` output in the [Types List](/docs/api/linode-types/#types-list) operation for more information.
 
                     * You can't update the `allow-list` and set a new `type` in the same request.
 
@@ -4661,11 +4661,11 @@ paths:
                 type:
                   type: string
                   description: |
-                    Request re-sizing of your cluster to a higher plan by specifying a larger [Linode Type](/docs/api/linode-types/#types-list).
+                    Request re-sizing of your cluster to a higher plan by specifying a larger Linode Type.
 
                     * Needs to be a higher plan than your current Linode Type.
 
-                    * You can't resize from a shared CPU Linode Type to a dedicated CPU, and vice-versa.
+                    * Resizing to a larger Linode Type can accrue additional cost. Review the `price` output in the [Types List](/docs/api/linode-types/#types-list) operation for more information.
 
                     * You can't update the `allow-list` and set a new `type` in the same request.
 
