@@ -8602,7 +8602,7 @@ paths:
               https://api.linode.com/v4/linode/instances/123/ips
       - lang: CLI
         source: >
-          linode-cli linodes 123 ips-list
+          linode-cli linodes ips-list 123
     post:
       x-linode-grant: read_write
       tags:
