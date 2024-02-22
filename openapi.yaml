@@ -14622,7 +14622,7 @@ paths:
       - NodeBalancers
       summary: NodeBalancer Create
       description: |
-        Creates a NodeBalancer in the requested Region.
+        Creates a NodeBalancer in the requested Region. Only available in [Regions](/docs/api/regions/#regions-list) with "NodeBalancers" in their `capabilities`.
 
         NodeBalancers require a port Config with at least one backend Node to start serving requests.
 
