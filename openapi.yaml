@@ -22246,6 +22246,9 @@ components:
           - stackscript_update
           - stackscript_publicize
           - stackscript_revise
+          - subnet_create
+          - subnet_delete
+          - subnet_update
           - tag_create
           - tag_delete
           - tfa_disabled
@@ -22271,6 +22274,9 @@ components:
           - volume_update
           - volume_detach
           - volume_resize
+          - vpc_create
+          - vpc_delete
+          - vpc_update
           readOnly: true
           description: >
             The action that caused this Event. New actions may be added in the future.
