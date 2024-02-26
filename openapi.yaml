@@ -11566,7 +11566,7 @@ paths:
         Deletes a service target.
 
 
-        This does not change or remove the Global Load.
+        This does not change or remove the Cloud Load Balancer.
       operationId: deleteLoadBalancerServiceTarget
       servers:
       - url: https://api.linode.com/v4beta
@@ -27926,6 +27926,10 @@ components:
       type: array
       description: >
         A service target is a cluster of endpoints that the load balancer directs incoming requests to. You can add different service targets and endpoints for different types of requests. Health checks are configured at the service target level and apply to all of the service targets endpoints.
+      required:
+        - ip
+        - port
+        - rate_capacity
       items:
         properties:
           ip:
@@ -27995,7 +27999,7 @@ components:
           description: |
             When `protocol` is set to HTTP/S, enter an optional request url path for the health check. When the health check `protocol` is set to TCP, `path` is not applicable.
           example: /path/to/endpoint
-        host:
+        hostname:
           type: string
           description: |
             When `protocol` is set to HTTP/S, enter an optional request hostname for the health check.
