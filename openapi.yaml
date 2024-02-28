@@ -10868,7 +10868,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                      $ref: '#/components/schemas/aclb_Route'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
@@ -10982,7 +10982,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                $ref: '#/components/schemas/aclb_Route'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11084,7 +11084,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                $ref: '#/components/schemas/aclb_Route'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11154,7 +11154,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                $ref: '#/components/schemas/aclb_Route'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
