@@ -10746,7 +10746,7 @@ paths:
                 protocol:
                   $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
                 certificates:
-                  $ref: '#/components/schemas/aclb_Certificate'
+                  $ref: '#/components/schemas/aclb_ConfigurationCertificate'
                 route_ids:
                   type: integer
                   description: |
@@ -27529,7 +27529,7 @@ components:
           x-linode-cli-display: 3
         regions:
           description: >
-            Regions this Cloud Load Balancer covers.
+            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
           type: object
           items:
             type: string
@@ -27561,7 +27561,7 @@ components:
       properties:
         regions:
           description: >
-            Regions this Cloud Load Balancer covers.
+            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
           type: object
           items:
             type: string
