@@ -27528,7 +27528,14 @@ components:
           example: balancer12345
           x-linode-cli-display: 3
         regions:
-          $ref: '#/components/schemas/aclb_LoadBalancerDatacenter/properties/regions'
+          description: >
+            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
+          type: object
+          items:
+            type: string
+          example:
+          - us-iad
+          - ap-southeast
         hostname:
           type: string
           description: >
