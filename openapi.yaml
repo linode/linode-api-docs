@@ -27529,7 +27529,7 @@ components:
           x-linode-cli-display: 3
         regions:
           description: >
-            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
+            Regions this Cloud Load Balancer covers.
           type: object
           items:
             type: string
@@ -27561,7 +27561,7 @@ components:
       properties:
         regions:
           description: >
-            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
+            Regions this Cloud Load Balancer covers.
           type: object
           items:
             type: string
