@@ -10548,17 +10548,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  configurations:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/aclb_Configuration'
-                  page:
+                $ref: '#/components/schemas/aclb_Configuration'
+                page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
+                pages:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
+                results:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
