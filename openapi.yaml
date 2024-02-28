@@ -10607,7 +10607,7 @@ paths:
                 protocol:
                   $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
                 certificates:
-                  $ref: '#/components/schemas/aclb_Certificate'
+                  $ref: '#/components/schemas/aclb_ConfigurationCertificate'
                 route_ids:
                   type: integer
                   description: |
