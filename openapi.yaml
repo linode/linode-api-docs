@@ -10201,17 +10201,12 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  LoadBalancers:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/aclb_LoadBalancer'
-                  page:
+                $ref: '#/components/schemas/aclb_LoadBalancer'
+                page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                  pages:
+                pages:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                  results:
+                results:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/results'
         default:
           $ref: '#/components/responses/ErrorResponse'
@@ -10229,7 +10224,16 @@ paths:
       - NodeBalancers
       summary: Cloud Load Balancer Create
       description: |
-        Creates a Cloud Load Balancer, service targets, and routes in the requested regions.
+        Creates a Cloud Load Balancer configuration, service targets, and routes in the requested regions.
+
+        - Leave `certificates` blank if the protocol is http/tcp.
+
+        - Corresponding routes and service targets must have the same protocol as the `configuration`.
+
+        - If a route protocol is `tcp`, the corresponding rules can not use match conditions. If the route protocol is `http` or `https`, rules must have a match condition.
+
+        - When creating service target endpoints, `ip` and `port` are mandatory and `host` is optional
+
       operationId: createLoadBalancer
       servers:
       - url: https://api.linode.com/v4beta
@@ -10269,58 +10273,9 @@ paths:
                       protocol:
                         $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
                       certificates:
-                        type: array
-                        description: |
-                          Required when the `protocol` is https. Must be left blank
-                          if the protocol is http or tcp. TLS termination certificates
-                          create an encrypted link between your clients and Cloud Load Balancer
-                          and terminate incoming traffic on the load balancer.
-                          Once the load balancing policy is applied, traffic is forwarded
-                          to your service targets over encrypted TLS connections.
-                        items:
-                         $ref: '#/components/schemas/aclb_Certificate'
+                        $ref: '#/components/schemas/aclb_ConfigurationCertificate'
                       routes:
-                        type: array
-                        description: |
-                          Routes define how the load balancer directs incoming requests to service targets. After a route is created, you can add rules to set match conditions that are used for target selection.
-                        items:
-                         $ref: '#/components/schemas/aclb_Route'
-                      rules:
-                        type: array
-                        description: |
-                          Rules set the conditions that are used for target selection.
-                          * HTTP/S rules include Match Rules and the percentage of incoming requests that should be directed to each target.
-                          * TCP rules include the percentage of incoming requests that should be directed to each target.
-                        items:
-                         $ref: '#/components/schemas/aclb_Rule'
-                      service_targets:
-                        type: array
-                        description: |
-                          The service targets for this configuration. A service target is group of endpoints where traffic is directed to. Routes direct traffic to specific endpoints. The sum of traffic across all service targets must total 100%.
-                        items:
-                          $ref: '#/components/schemas/aclb_RuleServiceTarget'
-                      endpoints:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/aclb_Endpoint'
-                      certificate_id:
-                        type: integer
-                        description: |
-                          Certificate identification number.
-                      load_balancing_policy:
-                        type: string
-                        enum:
-                        - round_robin
-                        - least_request
-                        - ring_hash
-                        - random
-                        - maglev
-                        default: roundrobin
-                        description: >
-                          What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
-                        example: roundrobin
-                      healthcheck:
-                        $ref: '#/components/schemas/aclb_Healthcheck'
+                        $ref: '#/components/schemas/aclb_ConfigurationRoute'
       responses:
         '200':
           description: Cloud Load Balancer created successfully.
@@ -10339,23 +10294,23 @@ paths:
                 "label": "balancer12345",
                 "tags": [
                   "staging-1",
-                  "staging-2",
+                  "staging-2"
                 ],
                 "regions": [
                   "us-iad",
-                  "ap-southeast",
+                  "ap-southeast"
                 ],
                 "configurations": [
                   {
-                    "label": "staging-1"
+                    "label": "staging-1",
                     "port": 443,
                     "protocol": "https",
                     "certificates": [
                       {
                         "hostname": "example.net",
-                        "id": 456789,
+                        "id": 456789
                       }
-                    ]
+                    ],
                     "routes": [
                       {
                         "label": "glb-route-1",
@@ -10365,42 +10320,44 @@ paths:
                             "match_condition":
                               {
                                 "hostname": "example.com",
-                                "match_field": "query"
+                                "match_field": "query",
                                 "match_value": "?svc=images",
                                 "session_stickiness_cookie": "cookie-name",
-                                "session_stickiness_ttl": 24,
+                                "session_stickiness_ttl": 24
                             },
                         "service_targets":[
                           {
                           "percentage": 50,
                           "label": "service-target-1",
-                          "protocol": "https"
+                          "protocol": "https",
                           "endpoints": [
                             {
-                            "ip": 192.0.2.0,
+                            "ip": "192.0.2.0",
                             "host": "example.org",
                             "port": 443,
-                            "rate_capacity": 10000,
+                            "rate_capacity": 10000
                             }
-                          ]
-                        ]
-                        "certificate_id": 456789,
+                            ],
+                        "certificate_id": "456789",
                         "load_balancing_policy": "round_robin",
-                        "healthcheck": [
+                        "healthcheck":
                           {
-                            "protocol": "http"
+                            "protocol": "http",
                             "interval": 20,
                             "timeout": 15,
                             "unhealthy_threshold": 2,
                             "healthy_threshold": 4,
                             "path": "/path1",
-                            "hostname": "example.com",
+                            "hostname": "example.com"
                           }
-                        ]
-                      }
-                  },]
-                ],
-              }' \
+                    }
+                      ]
+                  }]
+                }
+                  ]
+              }
+           ]
+          }' \
               https://api.linode.com/v4beta/aclb
       - lang: CLI
         source: >
@@ -10620,7 +10577,7 @@ paths:
       summary: Configuration Create
       description: >
         Creates a Cloud Load Balancer Configuration, which allows the Load Balancer to
-        accept traffic on a new port. A Configuration can exist outside of an association to a Load Balancer.
+        accept traffic on a new port.
 
 
         For example, if you wanted to accept standard HTTP traffic, you would
@@ -10837,9 +10794,10 @@ paths:
         - NodeBalancers
         summary: Configuration Delete
         description: >
-          Deletes the Configuration for a port of this Cloud Load Balancer.
-            * All route associations with this Configuration are removed.
-            * All associations between this Configuration and the Load Balancer are removed.
+          Deletes the Configuration for a port of this Cloud Load Balancer. 
+
+
+          All route associations with this Configuration are removed. The routes are not deleted.
 
 
           **This cannot be undone.**
@@ -10933,7 +10891,8 @@ paths:
       - NodeBalancers
       summary: Route Create
       description: >
-        Creates a route. Routes define how the load balancer directs incoming requests to service targets.
+        Creates a route. Routes are rules that define how the load balancer directs incoming requests to service targets. A routing rule may have multiple service-targets.
+
         You can associate the route with a load balancer configuration.
       operationId: createLoadBalancerRoute
       servers:
@@ -11298,6 +11257,12 @@ paths:
       summary: Service Targets List
       description: >
           View information for the service targets assigned to this Cloud Load Balancer.
+
+
+          A servive target is a group of endpoints that a route directs traffic to.
+
+
+          A service target may be associated with one or many routing rules, as long as the routing rules must belong to the same Load Balancer instance.
       x-linode-cli-action: service-targets
       security:
       - personalAccessToken: []
@@ -11394,7 +11359,7 @@ paths:
                 "label": "service-target-1",
                 "endpoints": [
                   {
-                  "ip": 192.0.2.0,
+                  "ip": "192.0.2.0",
                   "host": "example.org",
                   "port": 443,
                   "rate_capacity": 10000,
@@ -11485,6 +11450,11 @@ paths:
       summary: Service Target Update
       description: >
         Updates information for a service target.
+
+
+        {{< note >}}
+        Editing the service target endpoint `host` value is not supported for Beta. If you need to change the service target endpoint `host`, delete the service target, and create a new service target with the new `host` value.
+        {{< /note >}}
       operationId: updateLoadBalancerServiceTarget
       servers:
       - url: https://api.linode.com/v4beta
@@ -11545,7 +11515,7 @@ paths:
                 "label": "service-target-a",
                 "endpoints": [
                   {
-                  "ip": 192.0.2.0,
+                  "ip": "192.0.2.0",
                   "host": "example.org",
                   "port": 443,
                   "rate_capacity": 10000,
@@ -27574,15 +27544,9 @@ components:
             type: object
             properties:
               id:
-                type: integer
-                description: >
-                  The configurations assigned id.
-                example: 125
+                $ref: '#/components/schemas/aclb_Configuration/properties/id'
               label:
-                type: string
-                description: >
-                  The configuration label.
-                example: config-12345
+                $ref: '#/components/schemas/aclb_Configuration/properties/label'
     aclb_LoadBalancerDatacenter:
       type: object
       description: >
@@ -27590,7 +27554,7 @@ components:
       properties:
         regions:
           description: >
-            Regions this Cloud Load Balancer covers.
+            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
           type: object
           items:
             type: string
@@ -27647,30 +27611,35 @@ components:
             Required when the `protocol` is https. Not applicable if the protocol is http or tcp.
           x-linode-cli-display: 6
           items:
-            $ref: '#/components/schemas/aclb_Certificate'
+            $ref: '#/components/schemas/aclb_ConfigurationCertificate'
         routes:
           type: array
           description: >
             Routes assigned to configurations.
           items:
-            properties:
-              id:
-                type: integer
-                description: |
-                  Route id.
-                example: 125
-              label:
-                type: string
-                description: >
-                  The route name.
-                example: route-a-b
+            $ref: '#/components/schemas/aclb_ConfigurationRoute'
     aclb_ConfigurationCertificate:
       type: array
       description: >
-        Upload certificates to your Load Balancer for use across your Configurations and Service Targets.
+        Used by the load balancer to terminate the connection and decrypt request from clients.
       items:
         properties:
-          key:
+          id:
+            type: integer
+            description: >
+              This TLS certificate's ID.
+            example: 10
+          hostname:
+            type: string
+            description: >
+              Server Name Indication (SNI) Hostname. The request host header sent by the client. This host header tells the load balancer which certificate to use when responding back to the client.
+            example: www.example.org
+    aclb_Certificate:
+      type: object
+      description: >
+        TLS termination certificates create an encrypted link between your clients and Cloud Load Balancer and terminate incoming traffic on the load balancer. Once the load balancing policy is applied, traffic is forwarded to your service targets over encrypted TLS connections.
+      properties:
+        key:
             type: integer
             description: >
               The PEM-formatted contents of your private key. Your private key must not have a passphrase.
@@ -27681,27 +27650,6 @@ components:
 
               For `downstream` certificates, the key must be populated.
             example: "-----BEGIN PRIVATE KEY-----\nPRIVATE_KEY_INFORMATION\n-----END PRIVATE KEY-----"
-          label:
-            type: string
-            description: >
-              Certificate name.
-          certificate:
-            type: string
-            description: >
-              The PEM-formatted contents of the tls ertificate.
-          type:
-            type: string
-            enum:
-            - ca
-            - downstream
-            description: >
-              For TLS Certificates use `downstream`. For Service Target Certificates use `ca`.
-            example: ca
-    aclb_Certificate:
-      type: object
-      description: >
-        TLS termination certificates create an encrypted link between your clients and Cloud Load Balancer and terminate incoming traffic on the load balancer. Once the load balancing policy is applied, traffic is forwarded to your service targets over encrypted TLS connections.
-      properties:
         label:
             type: string
             description: >
@@ -27729,6 +27677,12 @@ components:
         Routes define how the load balancer directs incoming requests to service targets. After a route is created, you add rules to set match conditions that are used for target selection.
       items:
         properties:
+          id:
+            type: integer
+            description: >
+              This routes unique ID.
+            example: 12345
+            readOnly: true
           label:
             type: string
             description: >
@@ -27746,17 +27700,11 @@ components:
       description: >
         Cloud Load Balancer Routes.
       properties:
-        id:
-          type: integer
-          description: >
-            This routes unique ID.
-          example: 12345
-          readOnly: true
         label:
-            type: string
-            description: >
-              The route name.
-            example: route-a-b
+          type: string
+          description: >
+            The route name.
+          example: route-a-b
         protocol:
             type: string
             enum:
@@ -27766,14 +27714,12 @@ components:
             example: http
         rules:
           $ref: '#/components/schemas/aclb_Rule'
-        service_targets:
-          $ref: '#/components/schemas/aclb_ServiceTarget'
     aclb_Rule:
       type: array
       description: >
         Rules set the conditions that are used for target selection.
-        * HTTP/S rules include Match Rules and the percentage of incoming requests that should be directed to each target.
-        * TCP rules include the percentage of incoming requests that should be directed to each target.
+        - HTTP/S rules include Match Rules and the percentage of incoming requests that should be directed to each target.
+        - TCP rules include the percentage of incoming requests that should be directed to each target.
       items:
         properties:
           match_condition:
@@ -27816,32 +27762,55 @@ components:
                 description: >
                   Expiry time in seconds for the HTTP/S load balancer generated cookie. If the TTL is set to zero, the generated cookie is a session cookie only.
                 example: 24
+          service_targets:
+            $ref: '#/components/schemas/aclb_RuleServiceTarget'
     aclb_RuleServiceTarget:
-      type: object
+      type: array
       description: >
         The service targets for this configuration. The sum of traffic across all service targets must total 100%.
-      properties:
-        percentage:
-          type: integer
-          description: >
-            The percentage of incoming requests that should be directed to each target.
-          example: 50
-          minimum: 0
-          maximum: 100
-        label:
-          type: string
-          description: >
-            Service target's unique label.
-        protocol:
-          type: string
-          enum:
-          - http
-          - https
-          - tcp
-          default: http
-          example: http
-          description: |
-            The protocol this port is configured to serve.
+      items:
+        properties:
+          percentage:
+            type: integer
+            description: >
+              The percentage of incoming requests that should be directed to each target.
+            example: 50
+            minimum: 0
+            maximum: 100
+          label:
+            type: string
+            description: >
+              Service target's unique label.
+          protocol:
+            type: string
+            enum:
+            - http
+            - https
+            - tcp
+            default: http
+            example: http
+            description: |
+              The protocol this port is configured to serve.
+          endpoints:
+            $ref: '#/components/schemas/aclb_Endpoint'
+          certificate_id:
+            type: integer
+            description: |
+              Certificate identification number.
+          load_balancing_policy:
+            type: string
+            enum:
+            - round_robin
+            - least_request
+            - ring_hash
+            - random
+            - maglev
+            default: roundrobin
+            description: >
+              What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+            example: roundrobin
+          healthcheck:
+            $ref: '#/components/schemas/aclb_Healthcheck'
     aclb_MatchCondition:
       type: object
       description: >
