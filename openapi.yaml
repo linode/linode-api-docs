@@ -10201,14 +10201,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_LoadBalancer'
-                page:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
-                pages:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
-                results:
-                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
-        default:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                    $ref: '#/components/schemas/aclb_LoadBalancer'
+                  page:
+                      $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                      $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                      $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+          default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
