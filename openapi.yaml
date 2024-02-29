@@ -10609,7 +10609,7 @@ paths:
                     Route id.
                   example: 125
                 routes:
-                   $ref: '#/components/schemas/aclb_Route'
+                   $ref: '#/components/schemas/aclb_ConfigurationRoute'
       responses:
         '200':
           description: Config created successfully.
