@@ -10201,12 +10201,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
                 properties:
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/aclb_LoadBalancer'
+                    $ref: '#/components/schemas/aclb_LoadBalancer'
                   page:
                       $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
