@@ -10207,7 +10207,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/Event'
+                      $ref: '#/components/schemas/aclb_LoadBalancer'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
