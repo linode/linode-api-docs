@@ -10325,32 +10325,32 @@ paths:
                                 "session_stickiness_cookie": "cookie-name",
                                 "session_stickiness_ttl": 24
                             },
-                        "service_targets":[
-                          {
-                          "percentage": 50,
-                          "label": "service-target-1",
-                          "protocol": "https",
-                          "endpoints": [
-                            {
-                            "ip": "192.0.2.0",
-                            "host": "example.org",
-                            "port": 443,
-                            "rate_capacity": 10000
-                            }
-                            ],
-                        "certificate_id": "456789",
-                        "load_balancing_policy": "round_robin",
-                        "healthcheck":
-                          {
-                            "protocol": "http",
-                            "interval": 20,
-                            "timeout": 15,
-                            "unhealthy_threshold": 2,
-                            "healthy_threshold": 4,
-                            "path": "/path1",
-                            "hostname": "example.com"
-                          }
-                    }
+                            "service_targets":[
+                              {
+                              "percentage": 50,
+                              "label": "service-target-1",
+                              "protocol": "https",
+                              "endpoints": [
+                                {
+                                "ip": "192.0.2.0",
+                                "host": "example.org",
+                                "port": 443,
+                                "rate_capacity": 10000
+                                }
+                                ],
+                              "certificate_id": "456789",
+                              "load_balancing_policy": "round_robin",
+                              "healthcheck":
+                                {
+                                  "protocol": "http",
+                                  "interval": 20,
+                                  "timeout": 15,
+                                  "unhealthy_threshold": 2,
+                                  "healthy_threshold": 4,
+                                  "path": "/path1",
+                                  "hostname": "example.com"
+                                }
+                        }
                       ]
                   }]
                 }
@@ -27524,7 +27524,7 @@ components:
           x-linode-cli-display: 3
         regions:
           description: >
-            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
+            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, refer to the Regions List API.
           type: object
           items:
             type: string
@@ -27556,7 +27556,7 @@ components:
       properties:
         regions:
           description: >
-            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, see [Regions List](https://www.linode.com/docs/api/regions/#regions-list).
+            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, refer to the Regions List API.
           type: object
           items:
             type: string
