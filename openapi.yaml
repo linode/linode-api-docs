@@ -10197,22 +10197,24 @@ paths:
         - aclb:read_only
       responses:
         '200':
-          description: A paginated list of Cloud Load Balancers and its configurations.
+          description: >
+             Returns a paginated lists of Cloud Load Balancers.
           content:
             application/json:
               schema:
-                type: array
-                items:
+                type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/aclb_LoadBalancer'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Event'
                   page:
-                      $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
-                      $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
                   results:
-                      $ref: '#/components/schemas/PaginationEnvelope/properties/results'
-          default:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
