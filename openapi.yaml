@@ -10588,6 +10588,15 @@ paths:
         For example, if you wanted to accept standard HTTP traffic, you could create a configuration listening on port 80.
 
 
+        Configurations use `routes` to direct requests to service targets. To add routes to a configuration, you can use existing `route_ids`or create new `routes`.
+
+
+        The route protocol and the configuration protocol must match, or the operation will be rejected.
+
+
+        If the protocol is http or tcp, `certificates` must be left blank.
+
+
         You will need to add service targets to the new configuration before it can actually serve requests.
       operationId: createLoadBalancerConfiguration
       servers:
@@ -10599,33 +10608,28 @@ paths:
         - aclb:read_write
       requestBody:
         description: Information about the port to configure.
+        required: true
         content:
           application/json:
             schema:
-              type: object
+              required:
+              - label
+              - port
+              allOf:
+              - $ref: '#/components/schemas/aclb_ConfigurationConfiguration'
               properties:
-                label:
-                  $ref: '#/components/schemas/aclb_Configuration/properties/label'
-                port:
-                  $ref: '#/components/schemas/aclb_Configuration/properties/port'
-                protocol:
-                  $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
-                certificates:
-                  $ref: '#/components/schemas/aclb_ConfigurationCertificate'
                 route_ids:
                   type: integer
                   description: |
-                    Route id.
-                  example: 125
-                routes:
-                   $ref: '#/components/schemas/aclb_Route'
+                    The id of an existing route.
+                  example: 1, 2
       responses:
         '200':
           description: Config created successfully.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_Configuration'
+                $ref: '#/components/schemas/aclb_ConfigurationConfiguration'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -10634,20 +10638,23 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "label" aclb-configuration
+                "label": aclb-configuration,
                 "port": 443,
                 "protocol": "https",
                 "certificates": [
                       {
                         "hostname": "example.net",
-                        "id": 456789,
+                        "id": 456789
                       }
                 ],
-                "route_ids": "150",
+                "route_ids": [
+                  1,
+                  2
+                ],
                 "routes": [
                       {
-                        "label": "glb-route-1",
-                        "protocol": "http",
+                        "label": "glb-route",
+                        "protocol": "https"
                       }
                 ]
               }' \
@@ -27640,16 +27647,6 @@ components:
             This Cloud Load Balancer's label. Labels must be unique on your Account.
           example: balancer12345
           x-linode-cli-display: 2
-        tags:
-          description: >
-            Optional tags to help organize and group your load balancers.
-          type: object
-          items:
-            type: string
-          example:
-          - test-config
-          - production-config
-          x-linode-cli-display: 3
         port:
           type: integer
           description: >
