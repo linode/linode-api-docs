@@ -10535,13 +10535,9 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       summary: Configurations List
       description: >
-        List of Configurations for a specific Cloud Load Balancer. Cloud Load Balancer configurations represent
+        List of configurations for a specific Cloud Load Balancer. Cloud Load Balancer configurations represent
         individual ports that this load balancer accepts traffic on.
         Each configuration accepts traffic on one port.
-
-
-        For example, if you wanted to accept standard HTTP traffic, you could
-        create a configuration listening on port 80.
       operationId: getLoadBalancerConfigurations
       servers:
       - url: https://api.linode.com/v4beta
@@ -10553,22 +10549,16 @@ paths:
       responses:
         '200':
           description: >
-             Returns a paginated lists of configurations for the identified Cload Load Balancer.
+             Returns a paginated lists of configurations for the Cloud Load Balancer.
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    $ref: '#/components/schemas/aclb_Configuration/properties/id'
-                  label:
-                    $ref: '#/components/schemas/aclb_Configuration/properties/label'
-                  port:
-                    $ref: '#/components/schemas/aclb_Configuration/properties/port'
-                  certificates:
-                    $ref: '#/components/schemas/aclb_ConfigurationCertificate'
-                  routes:
-                    $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/aclb_ConfigurationConfiguration'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
@@ -10595,8 +10585,7 @@ paths:
         accept traffic on a new port.
 
 
-        For example, if you wanted to accept standard HTTP traffic, you would
-        need a configuration listening on port 80.
+        For example, if you wanted to accept standard HTTP traffic, you could create a configuration listening on port 80.
 
 
         You will need to add service targets to the new configuration before it can actually serve requests.
@@ -27633,6 +27622,44 @@ components:
             Routes assigned to configurations.
           items:
             $ref: '#/components/schemas/aclb_ConfigurationRoute'
+    aclb_ConfigurationConfiguration:
+      type: object
+      description: >
+        Akamai Cloud Load Balancer offers global, configurable, scalable, distributed compute traffic management across physical, virtual, and cloud-hosted applications. It can automatically detect load conditions and levels and route traffic to the optimal target while maintaining custom routing policies and consistent visitor session behavior.
+      properties:
+        id:
+          type: integer
+          description: >
+            The configurations assigned id.
+          example: 125
+          readOnly: true
+          x-linode-cli-display: 1
+        label:
+          type: string
+          description: >
+            This Cloud Load Balancer's label. Labels must be unique on your Account.
+          example: balancer12345
+          x-linode-cli-display: 2
+        tags:
+          description: >
+            Optional tags to help organize and group your load balancers.
+          type: object
+          items:
+            type: string
+          example:
+          - test-config
+          - production-config
+          x-linode-cli-display: 3
+        port:
+          type: integer
+          description: >
+            The port this Cloud Load Balancer configuration listens on.
+          example: 80
+          x-linode-cli-display: 4
+        certificates:
+          $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+        routes:
+          $ref: '#/components/schemas/aclb_ConfigurationRoute'
     aclb_ConfigurationCertificate:
       type: array
       description: >
@@ -27713,21 +27740,22 @@ components:
           rules:
             $ref: '#/components/schemas/aclb_Rule'
     aclb_ConfigurationRoute:
-      type: object
+      type: array
       description: >
         Cloud Load Balancer Routes. Routes assigned to a load balancer’s configuration define how incoming requests are directed to service targets.
-      properties:
-        id:
-            type: integer
+      items:
+        properties:
+          id:
+              type: integer
+              description: >
+                This routes unique ID.
+              example: 12345
+              readOnly: true
+          label:
+            type: string
             description: >
-              This routes unique ID.
-            example: 12345
-            readOnly: true
-        label:
-          type: string
-          description: >
-            The route name.
-          example: route-a-b
+              The route name.
+            example: route-a-b
     aclb_Rule:
       type: array
       description: >
