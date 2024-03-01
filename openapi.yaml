@@ -10268,7 +10268,7 @@ paths:
                 configurations:
                   type: array
                   description: |
-                    The configurations to create for this Cloud Load Balancer.
+                    The configurations to create for this Cloud Load Balancer. Configurations include the ports and protocols the load balancer listens on, and the routes to use for forwarding requests to service target endpoints.
                   items:
                     type: object
                     properties:
@@ -10418,7 +10418,7 @@ paths:
       - NodeBalancers
       summary: Cloud Load Balancer Update
       description: >
-        Updates the configuration of a Cloud Load Balancer you can access.
+        Updates settings for a Cloud Load Balancer you can access.
       operationId: updateLoadBalancer
       servers:
       - url: https://api.linode.com/v4beta
@@ -10428,7 +10428,7 @@ paths:
       - oauth:
         - aclb:read_write
       requestBody:
-        description: The information to update.
+        description: The settings to update.
         required: true
         content:
           application/json:
@@ -10441,10 +10441,10 @@ paths:
                 tags:
                   $ref: '#/components/schemas/aclb_LoadBalancer/properties/tags'
                 regions:
-                  $ref: '#/components/schemas/aclb_LoadBalancerDatacenter/properties/regions'
+                  $ref: '#/components/schemas/aclb_LoadBalancer/properties/regions'
       responses:
         '200':
-          description: Cloud Load Balancer updated successfully.
+          description: Cloud Load Balancer settings updated successfully.
           content:
             application/json:
               schema:
@@ -10486,7 +10486,9 @@ paths:
 
 
         Deleting a Cloud Load Balancer deletes all associated configurations.
-        The service targets are not deleted.
+
+
+        Routes and service targets are not deleted and available to use on other Cloud Load Balancers.
       operationId: deleteLoadBalancer
       servers:
       - url: https://api.linode.com/v4beta
@@ -10538,8 +10540,8 @@ paths:
         Each configuration accepts traffic on one port.
 
 
-        For example, if you wanted to accept standard HTTP traffic, you would
-        need a configuration listening on port 80.
+        For example, if you wanted to accept standard HTTP traffic, you could
+        create a configuration listening on port 80.
       operationId: getLoadBalancerConfigurations
       servers:
       - url: https://api.linode.com/v4beta
@@ -10551,7 +10553,7 @@ paths:
       responses:
         '200':
           description: >
-             Returns a paginated lists of Cloud Load Balancer configurations.
+             Returns a paginated lists of configurations for the identified Cload Load Balancer.
           content:
             application/json:
               schema:
@@ -10621,7 +10623,7 @@ paths:
                     Route id.
                   example: 125
                 routes:
-                   $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                   $ref: '#/components/schemas/aclb_Route'
       responses:
         '200':
           description: Config created successfully.
@@ -10969,7 +10971,7 @@ paths:
                         - maglev
                         default: roundrobin
                         description: >
-                          What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                          The algorithm this Cloud Load Balancer uses for routing new requests to service targets. Cloud Load Balancer also has a geo-proximity feature for selecting the optimum endpoint.
                         example: roundrobin
                       healthcheck:
                         $ref: '#/components/schemas/aclb_Healthcheck'
@@ -11344,7 +11346,7 @@ paths:
                   - maglev
                   default: roundrobin
                   description: >
-                    What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                    The algorithm this Cloud Load Balancer uses for routing new requests to service targets. Cloud Load Balancer also has a geo-proximity feature for selecting the optimum endpoint.
                   example: roundrobin
                 healthcheck:
                   $ref: '#/components/schemas/aclb_Healthcheck'
@@ -11500,7 +11502,7 @@ paths:
                   - maglev
                   default: roundrobin
                   description: >
-                    What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+                    The algorithm this Cloud Load Balancer uses for routing new requests to service targets. Cloud Load Balancer also has a geo-proximity feature for selecting the optimum endpoint.
                   example: roundrobin
                 healthcheck:
                   $ref: '#/components/schemas/aclb_Healthcheck'
@@ -27531,7 +27533,7 @@ components:
         label:
           type: string
           description: >
-            This Cloud Load Balancer's label. These must be unique on your Account.
+            This Cloud Load Balancer's label. Labels must be unique on your Account.
           example: balancer12345
           x-linode-cli-display: 3
         regions:
@@ -27567,14 +27569,7 @@ components:
         The regions this Cloud Load Balancer covers.
       properties:
         regions:
-          description: >
-            Regions this Cloud Load Balancer covers. To get the regions available for Cloud Load Balancer and other services, refer to the Regions List API.
-          type: object
-          items:
-            type: string
-          example:
-          - us-iad
-          - ap-southeast
+          $ref: '#/components/schemas/aclb_LoadBalancer/properties/regions'
           x-linode-cli-display: 4
     aclb_Configuration:
       type: object
@@ -27599,7 +27594,7 @@ components:
           maximum: 65535
           default: 80
           description: >
-            The port this Cloud Load Balancer configuration listens on. For TCP, this can be any port from 1 through 1023, though it should be set to whichever port the client software connects to. For instance, web browsers use port 80 for HTTP traffic and port 443 for HTTPS traffic, though a client can change the port by specifying it as part of the URL.
+            The port this Cloud Load Balancer configuration listens on. Set the inbound `port` value the load balancer listens on to whichever port the client software connects to. For instance, web browsers use port 80 for HTTP traffic and port 443 for HTTPS traffic, though a client can change the port by specifying it as part of the URL.
           example: 80
           x-linode-cli-display: 4
         protocol:
@@ -27709,50 +27704,50 @@ components:
             - tcp
             default: http
             example: http
+          rules:
+            $ref: '#/components/schemas/aclb_Rule'
     aclb_ConfigurationRoute:
       type: object
       description: >
-        Cloud Load Balancer Routes.
+        Cloud Load Balancer Routes. Routes assigned to a load balancer’s configuration define how incoming requests are directed to service targets.
       properties:
+        id:
+            type: integer
+            description: >
+              This routes unique ID.
+            example: 12345
+            readOnly: true
         label:
           type: string
           description: >
             The route name.
           example: route-a-b
-        protocol:
-            type: string
-            enum:
-            - http
-            - tcp
-            default: http
-            example: http
-        rules:
-          $ref: '#/components/schemas/aclb_Rule'
     aclb_Rule:
       type: array
       description: >
         Rules set the conditions that are used for target selection.
+
         - HTTP/S rules include Match Rules and the percentage of incoming requests that should be directed to each target.
+
         - TCP rules include the percentage of incoming requests that should be directed to each target.
       items:
         properties:
           match_condition:
             type: object
             description: >
-              Match conditions are for HTTP and HTTPS load balancers only, in addition to setting the percentage of incoming requests to a target, match conditions such as `path_prefix`, `host`, `query`, `hostname`, `header`, and `method` can be added to the route rules.
+              Match conditions are for HTTP and HTTPS load balancers only, in addition to setting the percentage of incoming requests to a target, match conditions such as `path_prefix`, `path_regex`, `query`, `header`, and `method` can be added to the route rules. A rule consists of a `match_field`, and a pattern to match on called a `match_value`. Each rule can specify only one field or pattern pair.
             properties:
               hostname:
                 type: string
                 description: >
-                  The Server Name Indication to ensure that client devices are able to see the correct TLS certificate for the website they are trying to reach. A fully qualified DNS name that resolves to an address record. A Hostname match is based on the name found in the requests host header.
+                  Additional hostname match that is used in the routing decision. Wildcards (*) are supported with the Path Regex Match Type.
                 example: www.example.com
               match_field:
                 type: string
                 enum:
                 - path_prefix
-                - host
+                - path_regex
                 - query
-                - hostname
                 - header
                 - method
                 example: path_prefix
@@ -27761,15 +27756,15 @@ components:
                 description: >
                   The `match_value` format:
                     * `path_prefix`: The format of the path rule is: /path1/path2. The initial slash is required, but the trailing slash is not.
+                    * `path_regex`: The format for path regex is a regular expression in RE2 syntax. An example for any jpg file in the /path/ directory would be /path/.*[.]jpg. The initial slash is required.
                     * `query`: The format for query string is: ?name=value. The query string name must be preceded by a question mark (?).
-                    * `hostname`: The format of a hostname is a fully qualified DNS name that resolves to an address record. A Hostname match is based on the name found in the request’s host header.
-                    * `header`: The format for http header is: X-name=value.
+                    * `header`: The format for http header is: x-nameheader:value.
                     * `method`: The request methods include: DELETE, GET, HEAD, POST, and PUT.
                 example: /my-path
               session_stickiness_cookie:
                 type: string
                 description: >
-                  Controls how subsequent requests from the same client are routed. Subsequent requests, by the same client to the same load balancer, are sent to the same service target endpoint for the duration of the cookie (`session_stickiness_ttl`) and as long as the endpoint remains healthy. If the endpoint is unhealthy, a different endpoint is selected. When Session Stickiness is disabled, no session information is saved and requests are routed in accordance with the algorithm and rules.
+                  Controls how subsequent requests from the same client are routed. Subsequent requests, by the same client to the same load balancer, are sent to the same service target endpoint for the duration of the cookie (`session_stickiness_ttl`) and as long as the endpoint remains healthy. If the endpoint is unhealthy, a different endpoint is selected. When `session_stickiness_cookie` is blank, no session information is saved and requests are routed in accordance with the algorithm and rules.
                 example: cookie-name
               session_stickiness_ttl:
                 type: integer
@@ -27781,7 +27776,7 @@ components:
     aclb_RuleServiceTarget:
       type: array
       description: >
-        The service targets for this configuration. The sum of traffic across all service targets must total 100%.
+        The service targets for this configuration. Service targets consist of a group of endpoints. Requests are directed to service targets using configured routes. The sum of traffic across all service targets must total 100%.
       items:
         properties:
           percentage:
@@ -27810,7 +27805,7 @@ components:
           certificate_id:
             type: integer
             description: |
-              Certificate identification number.
+              Service Target CA Certificate identification number. The certificate installed on your endpoints that are used by the load balancer to accept responses from this Service Target.
           load_balancing_policy:
             type: string
             enum:
@@ -27821,7 +27816,7 @@ components:
             - maglev
             default: roundrobin
             description: >
-              What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+              The algorithm this Cloud Load Balancer uses for routing new requests to service targets. Cloud Load Balancer also has a geo-proximity feature for selecting the optimum endpoint.
             example: roundrobin
           healthcheck:
             $ref: '#/components/schemas/aclb_Healthcheck'
@@ -27869,7 +27864,7 @@ components:
             - maglev
             default: roundrobin
             description: >
-              What algorithm this Cloud Load Balancer should use for routing traffic to service targets.
+              The algorithm this Cloud Load Balancer uses for routing new requests to service targets. Cloud Load Balancer also has a geo-proximity feature for selecting the optimum endpoint.
             example: roundrobin
           healthcheck:
             $ref: '#/components/schemas/aclb_Healthcheck'
@@ -27988,7 +27983,7 @@ components:
         hostname:
           type: string
           description: |
-            When `protocol` is set to HTTP/S, enter an optional request hostname for the health check.
+            When the `healthcheck` protocol is set to `http`, this is the optional host header sent in the health check request.
             When the health check `protocol` is set to TCP, `host` is not applicable.
           example: example.com
     NodeBalancer:
