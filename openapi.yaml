@@ -10559,10 +10559,16 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/aclb_Configuration'
+                  id:
+                    $ref: '#/components/schemas/aclb_Configuration/properties/id'
+                  label:
+                    $ref: '#/components/schemas/aclb_Configuration/properties/label'
+                  port:
+                    $ref: '#/components/schemas/aclb_Configuration/properties/port'
+                  certificates:
+                    $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+                  routes:
+                    $ref: '#/components/schemas/aclb_ConfigurationRoute'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
