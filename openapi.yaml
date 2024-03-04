@@ -10234,7 +10234,7 @@ paths:
 
         - Leave `certificates` blank if the protocol is http/tcp.
 
-        - Corresponding routes and service targets must have the same protocol as the `configuration`.
+        - The `protocol` value must be the same for `routes`, service_targets, and `configuration`.
 
         - If a route protocol is `tcp`, the corresponding rules can not use match conditions. If the route protocol is `http` or `https`, rules must have a match condition.
 
@@ -10257,7 +10257,8 @@ paths:
           application/json:
             schema:
               required:
-              - region
+              - label
+              - regions
               properties:
                 label:
                   $ref: '#/components/schemas/aclb_LoadBalancer/properties/label'
@@ -10281,7 +10282,7 @@ paths:
                       certificates:
                         $ref: '#/components/schemas/aclb_ConfigurationCertificate'
                       routes:
-                        $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                        $ref: '#/components/schemas/aclb_Route'
       responses:
         '200':
           description: Cloud Load Balancer created successfully.
@@ -10612,9 +10613,6 @@ paths:
         content:
           application/json:
             schema:
-              required:
-              - label
-              - port
               allOf:
               - $ref: '#/components/schemas/aclb_ConfigurationConfiguration'
               properties:
@@ -10622,7 +10620,7 @@ paths:
                   type: integer
                   description: |
                     The id of an existing route.
-                  example: 1, 2
+                  example: 1
       responses:
         '200':
           description: Config created successfully.
@@ -10709,7 +10707,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_Configuration'
+                $ref: '#/components/schemas/aclb_ConfigurationConfiguration'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -10769,7 +10767,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_Configuration'
+                $ref: '#/components/schemas/aclb_ConfigurationConfiguration'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -27637,14 +27635,14 @@ components:
         id:
           type: integer
           description: >
-            The configurations assigned id.
+            The configuration's assigned id.
           example: 125
           readOnly: true
           x-linode-cli-display: 1
         label:
           type: string
           description: >
-            This Cloud Load Balancer's label. Labels must be unique on your Account.
+            This configuration's label.
           example: balancer12345
           x-linode-cli-display: 2
         port:
@@ -27653,6 +27651,22 @@ components:
             The port this Cloud Load Balancer configuration listens on.
           example: 80
           x-linode-cli-display: 4
+        protocol:
+          type: string
+          enum:
+          - http
+          - https
+          - tcp
+          default: http
+          example: http
+          description: >
+            The protocol this port is configured to serve.
+
+            * The `http` and `tcp` protocols do not support `certificates`.
+
+            * The `https` protocol is mutually required with `cerificates`.
+
+            Review our guide on [Available Protocols](https://deploy-preview-14--roaring-gelato-12dc9e.netlify.app/docs/products/networking/global-loadbalancer/guides/protocols/) for information on protocol features.
         certificates:
           $ref: '#/components/schemas/aclb_ConfigurationCertificate'
         routes:
