@@ -10619,11 +10619,11 @@ paths:
                 route_ids:
                   type: integer
                   description: |
-                    The id of an existing route.
+                    The ids of existing routes.
                   example: 1
       responses:
         '200':
-          description: Config created successfully.
+          description: Configuration created successfully.
           content:
             application/json:
               schema:
@@ -10651,12 +10651,12 @@ paths:
                 ],
                 "routes": [
                       {
-                        "label": "glb-route",
+                        "label": "route-d-e",
                         "protocol": "https"
                       }
                 ]
               }' \
-              https://api.linode.com/v4beta/aclb/12345/configs
+              https://api.linode.com/v4beta/aclb/12345/configurations
       - lang: CLI
         source: >
           linode-cli nodebalancers configuration-create 12345 \
@@ -10674,7 +10674,7 @@ paths:
     parameters:
     - name: CloudLoadBalancerID
       in: path
-      description: Retrieve a single entry point (configuration) associated with the provided ‘id’.
+      description: The ID of the Cloud Load Balancer to access.
       required: true
       schema:
         type: integer
@@ -10714,7 +10714,7 @@ paths:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4beta/aclb/12345/configs/4567
+              https://api.linode.com/v4beta/aclb/12345/configurations/4567
       - lang: CLI
         source: >
           linode-cli loadbalancers configurations-view \
@@ -10749,21 +10749,21 @@ paths:
               type: object
               properties:
                 label:
-                  $ref: '#/components/schemas/aclb_Configuration/properties/label'
+                  $ref: '#/components/schemas/aclb_ConfigurationConfiguration/properties/label'
                 port:
-                  $ref: '#/components/schemas/aclb_Configuration/properties/port'
+                  $ref: '#/components/schemas/aclb_ConfigurationConfiguration/properties/port'
                 protocol:
-                  $ref: '#/components/schemas/aclb_Configuration/properties/protocol'
+                  $ref: '#/components/schemas/aclb_ConfigurationConfiguration/properties/protocol'
                 certificates:
-                  $ref: '#/components/schemas/aclb_ConfigurationCertificate'
+                  $ref: '#/components/schemas/aclb_ConfigurationConfiguration/properties/certificates'
                 route_ids:
                   type: integer
                   description: |
-                    Route id.
+                    The route ids assigned to this configuration.
                   example: 125
       responses:
         '200':
-          description: Config updated successfully.
+          description: Configuration updated successfully.
           content:
             application/json:
               schema:
@@ -10776,17 +10776,22 @@ paths:
           curl -H "Content-Type: application/json" \
               -H "Authorization: Bearer $TOKEN" \
               -X PUT -d '{
+                "label": "config_name",
                 "port": 443,
                 "protocol": "https",
-                    "certificates": [
-                      {
-                        "hostname": "example.net",
-                        "id": 456789,
-                      }
-                    ]
-                "route_ids": "150",
+                "certificates": [
+                  {
+                    "hostname": "example.net",
+                    "id": 456789,
+                  }
+                ],
+                "route_ids": [
+                  "1",
+                  "2",
+                  "3"
+                ]
               }' \
-              https://api.linode.com/v4beta/aclb/12345/configs/4567
+              https://api.linode.com/v4beta/aclb/12345/configurations/4567
       - lang: CLI
         source: >
           linode-cli loadbalancers configurations-update \
@@ -10822,7 +10827,7 @@ paths:
           - aclb:read_write
         responses:
           '200':
-            description: Cloud Load Balancer Configuration deleted successfully.
+            description: Configuration deleted successfully.
             content:
               application/json:
                 schema:
@@ -10834,7 +10839,7 @@ paths:
           source: >
             curl -H "Authorization: Bearer $TOKEN" \
                 -X DELETE \
-                https://api.linode.com/v4beta/aclb/12345/configs/4567
+                https://api.linode.com/v4beta/aclb/12345/configurations/4567
         - lang: CLI
           source: >
             linode-cli loadbalancers configuration-delete \
@@ -10857,7 +10862,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       summary: Routes List
       description: >
-        Returns a paginated list of Cloud Load Balancer Routes.
+        Returns a paginated list of Cloud Load Balancer routes.
       operationId: getLoadBalancerRoutes
       servers:
       - url: https://api.linode.com/v4beta
@@ -10875,9 +10880,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                    $ref: '#/components/schemas/aclb_Routes'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
@@ -10928,13 +10931,19 @@ paths:
                   example: route-a-b
                 protocol:
                   type: string
+                  description: |
+                    The protocol this target is configured to serve.
                   enum:
                   - http
                   - tcp
                   default: http
                   example: http
                 rules:
-                  $ref: '#/components/schemas/aclb_Rule'
+                  type: array
+                  items:
+                    properties:
+                        match_condition:
+                          $ref: '#/components/schemas/aclb_MatchCondition'
                 service_targets:
                   type: array
                   description: |
@@ -10991,7 +11000,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/aclb_ConfigurationRoute'
+                $ref: '#/components/schemas/aclb_Routes'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -11007,36 +11016,35 @@ paths:
                   "match_condition":
                     {
                       "hostname": "example.com",
-                      "match_field": "query"
+                      "match_field": "query",
                       "match_value": "?svc=images",
                       "session_stickiness_cookie": "cookie-name",
-                      "session_stickiness_ttl": 24,
+                      "session_stickiness_ttl": 24
                   },
                   "service_targets":[
                     {
                     "percentage": 50,
                     "label": "service-target-1",
-                    [
                     "certificate_id": 456789,
-                    "protocol": "http"
+                    "protocol": "http",
                     "load_balancing_policy": "round_robin",
                     "healthcheck": [
                       {
-                        "protocol": "http"
+                        "protocol": "http",
                         "interval": 20,
                         "timeout": 15,
                         "unhealthy_threshold": 2,
                         "healthy_threshold": 4,
                         "path": "/path1",
-                        "host": "example.com",
-                      }
+                        "host": "example.com"
                     },
                     {
-                    "id": "12"
-                     "percentage": 50
+                    "id": "12",
+                    "percentage": 50
                     }
                   ]
-              }' \
+                }]
+                }' \
               https://api.linode.com/v4beta/aclb/12345/route
       - lang: CLI
         source: >
@@ -27595,7 +27603,7 @@ components:
           default: 80
           description: >
             The port this Cloud Load Balancer configuration listens on. Set the inbound `port` value the load balancer listens on to whichever port the client software connects to. For instance, web browsers use port 80 for HTTP traffic and port 443 for HTTPS traffic, though a client can change the port by specifying it as part of the URL.
-          example: 80
+          example: 443
           x-linode-cli-display: 4
         protocol:
           type: string
@@ -27612,7 +27620,7 @@ components:
             * The `https` protocol is mutually required with `cerificates`.
 
             Review our guide on [Available Protocols](https://deploy-preview-14--roaring-gelato-12dc9e.netlify.app/docs/products/networking/global-loadbalancer/guides/protocols/) for information on protocol features.
-          example: http
+          example: https
           x-linode-cli-display: 5
         certificates:
           type: array
@@ -27649,7 +27657,7 @@ components:
           type: integer
           description: >
             The port this Cloud Load Balancer configuration listens on.
-          example: 80
+          example: 443
           x-linode-cli-display: 4
         protocol:
           type: string
@@ -27657,8 +27665,8 @@ components:
           - http
           - https
           - tcp
-          default: http
-          example: http
+          default: https
+          example: https
           description: >
             The protocol this port is configured to serve.
 
@@ -27724,6 +27732,101 @@ components:
           description: >
             This TLS certificate's ID.
           example: 10
+    aclb_Routes:
+      type: array
+      description: >
+        Routes define how the load balancer directs incoming requests to service targets. After a route is created, you add rules to set match conditions that are used for target selection.
+      items:
+        properties:
+          id:
+            type: integer
+            description: >
+              This routes unique ID.
+            example: 12345
+            readOnly: true
+          label:
+            type: string
+            description: >
+              The route name.
+            example: route-a-b
+          protocol:
+            type: string
+            description: >
+              The protocol this target is configured to serve.
+            enum:
+            - http
+            - tcp
+            default: http
+            example: http
+          rules:
+            type: array
+            description: >
+             Rules set the conditions that are used for target selection.
+
+              - HTTP/S rules include match conditions, session stickiness, and the percentage of incoming requests that should be directed to each target.
+
+              - TCP rules include the percentage of incoming requests that should be directed to each target.
+            items:
+              properties:
+                match_condition:
+                  type: object
+                  description: >
+                    Match conditions are for HTTP and HTTPS load balancers only, in addition to setting the percentage of incoming requests to a target, match conditions such as `path_prefix`, `path_regex`, `query`, `header`, and `method` can be added to the route rules. A rule consists of a `match_field`, and a pattern to match on called a `match_value`. Each rule can specify only one field or pattern pair.
+                  properties:
+                    hostname:
+                      type: string
+                      description: >
+                        Additional hostname match that is used in the routing decision. Wildcards (*) are supported with the Path Regex Match Type.
+                      example: www.example.com
+                    match_field:
+                      type: string
+                      enum:
+                      - path_prefix
+                      - path_regex
+                      - query
+                      - header
+                      - method
+                      example: path_prefix
+                    match_value:
+                      type: string
+                      description: >
+                        The `match_value` format:
+                          * `path_prefix`: The format of the path rule is: /path1/path2. The initial slash is required, but the trailing slash is not.
+                          * `path_regex`: The format for path regex is a regular expression in RE2 syntax. An example for any jpg file in the /path/ directory would be /path/.*[.]jpg. The initial slash is required.
+                          * `query`: The format for query string is: ?name=value. The query string name must be preceded by a question mark (?).
+                          * `header`: The format for http header is: x-nameheader:value.
+                          * `method`: The request methods include: DELETE, GET, HEAD, POST, and PUT.
+                      example: /my-path
+                    session_stickiness_cookie:
+                      type: string
+                      description: >
+                        Controls how subsequent requests from the same client are routed. Subsequent requests, by the same client to the same load balancer, are sent to the same service target endpoint for the duration of the cookie (`session_stickiness_ttl`) and as long as the endpoint remains healthy. If the endpoint is unhealthy, a different endpoint is selected. When `session_stickiness_cookie` is blank, no session information is saved and requests are routed in accordance with the algorithm and rules.
+                      example: cookie-name
+                    session_stickiness_ttl:
+                      type: integer
+                      description: >
+                        Expiry time in seconds for the HTTP/S load balancer generated cookie. If the TTL is set to zero, the generated cookie is a session cookie only.
+                      example: 24
+                service_targets:
+                  type: array
+                  description: |
+                    A service target is a cluster of endpoints that the load balancer directs incoming requests to.
+                  items:
+                    properties:
+                      label:
+                        type: string
+                        description: |
+                          Service Target label.
+                        example: service-target-abc
+                      percentage:
+                        type: integer
+                        description: |
+                          The percentage of incoming requests routed to this service target.
+                        example: 75
+                      id:
+                        type: integer
+                        description: |
+                          Service Target label.
     aclb_Route:
       type: array
       description: >
@@ -27866,9 +27969,44 @@ components:
           healthcheck:
             $ref: '#/components/schemas/aclb_Healthcheck'
     aclb_MatchCondition:
-      type: object
-      description: >
-        TBD
+            type: object
+            description: >
+              Match conditions are for HTTP and HTTPS load balancers only, in addition to setting the percentage of incoming requests to a target, match conditions such as `path_prefix`, `path_regex`, `query`, `header`, and `method` can be added to the route rules. A rule consists of a `match_field`, and a pattern to match on called a `match_value`. Each rule can specify only one field or pattern pair.
+            properties:
+              hostname:
+                type: string
+                description: >
+                  Additional hostname match that is used in the routing decision. Wildcards (*) are supported with the Path Regex Match Type.
+                example: www.example.com
+              match_field:
+                type: string
+                enum:
+                - path_prefix
+                - path_regex
+                - query
+                - header
+                - method
+                example: path_prefix
+              match_value:
+                type: string
+                description: >
+                  The `match_value` format:
+                    * `path_prefix`: The format of the path rule is: /path1/path2. The initial slash is required, but the trailing slash is not.
+                    * `path_regex`: The format for path regex is a regular expression in RE2 syntax. An example for any jpg file in the /path/ directory would be /path/.*[.]jpg. The initial slash is required.
+                    * `query`: The format for query string is: ?name=value. The query string name must be preceded by a question mark (?).
+                    * `header`: The format for http header is: x-nameheader:value.
+                    * `method`: The request methods include: DELETE, GET, HEAD, POST, and PUT.
+                example: /my-path
+              session_stickiness_cookie:
+                type: string
+                description: >
+                  Controls how subsequent requests from the same client are routed. Subsequent requests, by the same client to the same load balancer, are sent to the same service target endpoint for the duration of the cookie (`session_stickiness_ttl`) and as long as the endpoint remains healthy. If the endpoint is unhealthy, a different endpoint is selected. When `session_stickiness_cookie` is blank, no session information is saved and requests are routed in accordance with the algorithm and rules.
+                example: cookie-name
+              session_stickiness_ttl:
+                type: integer
+                description: >
+                  Expiry time in seconds for the HTTP/S load balancer generated cookie. If the TTL is set to zero, the generated cookie is a session cookie only.
+                example: 24
     aclb_ServiceTarget:
       type: array
       description: >
