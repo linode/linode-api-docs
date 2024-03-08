@@ -11742,6 +11742,38 @@ paths:
         schema:
           type: integer
       x-linode-cli-command: loadbalancers
+      get:
+        x-linode-grant: read_only
+        tags:
+        - NodeBalancers
+        summary:  Certificate View
+        description: >
+          Returns information about a cerifiticate.
+        operationId: getLoadBalancerService-Target
+        servers:
+        - url: https://api.linode.com/v4beta
+        x-linode-cli-action: service-target-view
+        security:
+        - personalAccessToken: []
+        - oauth:
+          - aclb:read_write
+        responses:
+          '200':
+            description: Returns information about a single certificate.
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/aclb_Certificate'
+          default:
+            $ref: '#/components/responses/ErrorResponse'
+        x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                https://api.linode.com/v4beta/aclb/12345/certificate/10
+        - lang: CLI
+          source: >
+            linode-cli loadbalancers certificate-view 12345 10
       put:
         x-linode-grant: read_write
         tags:
@@ -11808,10 +11840,10 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
-                  "key": "1111111111"
+                  "key": "1111111111",
                   "certificate": "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----",
-                  "label": cert-12345,
-                  "type": "downstream",
+                  "label": "cert-12345",
+                  "type": "downstream"
                 }' \
                 https://api.linode.com/v4beta/aclb/12345/certificates
         - lang: CLI
@@ -11832,7 +11864,7 @@ paths:
           Deletes a certificate.
 
 
-          This does not change or remove the Global Load.
+          This does not remove the Cloud Load Balancer, but all associations to the deleted certificate are removed.
         operationId: deleteLoadBalancerCertificate
         servers:
         - url: https://api.linode.com/v4beta
@@ -27727,7 +27759,7 @@ components:
         id:
           type: integer
           description: >
-            This TLS certificate's ID.
+            This certificate's generated ID.
           example: 10
     aclb_Routes:
       type: array
