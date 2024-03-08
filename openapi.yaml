@@ -11749,7 +11749,7 @@ paths:
         summary:  Certificate View
         description: >
           Returns information about a cerifiticate.
-        operationId: getLoadBalancerService-Target
+        operationId: getLoadBalancerCertificate
         servers:
         - url: https://api.linode.com/v4beta
         x-linode-cli-action: service-target-view
