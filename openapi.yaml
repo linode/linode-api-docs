@@ -10330,7 +10330,7 @@ paths:
                                 "match_field": "query",
                                 "match_value": "?svc=images",
                                 "session_stickiness_cookie": "cookie-name",
-                                "session_stickiness_ttl": 24
+                                "session_stickiness_ttl":
                             },
                             "service_targets":[
                               {
@@ -10989,7 +10989,7 @@ paths:
                       "match_field": "query",
                       "match_value": "?svc=images",
                       "session_stickiness_cookie": "cookie-name",
-                      "session_stickiness_ttl": 24
+                      "session_stickiness_ttl":
                   },
                   "service_targets":[
                     {
@@ -11023,7 +11023,7 @@ paths:
             12345 \
             --label glb-route-1 \
             --protocol http \
-            rules [{hostname example.com, match_field query, match_value ?svc=images, session_stickiness_cookie cookie-name, session_stickiness_ttl 24}] \
+            rules [{hostname example.com, match_field query, match_value ?svc=images, session_stickiness_cookie cookie-name, session_stickiness_ttl }] \
             rules
             service_targets [{percentage 50, label service-target-1, certificate_id 456789, protocol http, load_balancing_policy round_robin}] \
             rules
@@ -11164,7 +11164,7 @@ paths:
                       "match_field": "query",
                       "match_value": "?svc=images",
                       "session_stickiness_cookie": "cookie-name",
-                      "session_stickiness_ttl": 24
+                      "session_stickiness_ttl":
                   },
                   "service_targets":[
                     {
@@ -11181,7 +11181,7 @@ paths:
             12345 54321 \
             --label glb-route-1 \
             --protocol http \
-            rules [{hostname example.com, match_field query, match_value ?svc=images, session_stickiness_cookie cookie-name, session_stickiness_ttl 24}] \
+            rules [{hostname example.com, match_field query, match_value ?svc=images, session_stickiness_cookie cookie-name, session_stickiness_ttl }] \
             service_targets [{percentage 50, label service-target-1, certificate_id 456789, protocol http, load_balancing_policy round_robin}] \
             healthcheck \
             --interval 20 \
