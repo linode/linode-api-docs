@@ -10234,11 +10234,9 @@ paths:
 
         - Leave `certificates` blank if the protocol is http/tcp.
 
-        - The `protocol` value must be the same for `routes`, service_targets, and `configuration`.
+        - The `protocol` value must be the same for `routes`, `service_targets`, and `configuration`.
 
         - If a route protocol is `tcp`, the corresponding rules can not use match conditions. If the route protocol is `http` or `https`, rules must have a match condition.
-
-        - When creating service target endpoints, `ip` and `port` are mandatory and `host` is optional
 
       operationId: createLoadBalancer
       servers:
