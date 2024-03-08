@@ -11271,7 +11271,7 @@ paths:
                   data:
                     type: array
                     items:
-                    $ref: '#/components/schemas/aclb_ServiceTargetEndpoint'
+                      $ref: '#/components/schemas/aclb_ServiceTargetEndpoint'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
