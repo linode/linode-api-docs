@@ -10230,6 +10230,10 @@ paths:
       - NodeBalancers
       summary: Cloud Load Balancer Create
       description: |
+        {{< note >}}
+        For BETA, this API endpoint only creates the Cloud Load Balancer `label`. After you create a label, the Cloud Load Balancer ID is created. Additonal properties are include in this API endpoint for information only.
+        {{< /note >}}
+
         Creates a Cloud Load Balancer configuration, service targets, and routes in the requested regions.
 
         - Leave `certificates` blank if the protocol is http/tcp.
