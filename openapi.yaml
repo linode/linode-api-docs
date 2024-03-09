@@ -10864,7 +10864,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       summary: Routes List
       description: >
-        Returns a paginated list of Cloud Load Balancer routes.
+        Returns a paginated list of Cloud Load Balancer routes. Routes define how the load balancer directs incoming requests to service targets.
       operationId: getLoadBalancerRoutes
       servers:
       - url: https://api.linode.com/v4beta
@@ -11091,7 +11091,7 @@ paths:
       - NodeBalancers
       summary: Route Update
       description: >
-        Updates information about a Route, it's service target or match conditions.
+        Updates information about a Route including its service targets or match conditions.
       operationId: updateLoadBalancerRoute
       servers:
       - url: https://api.linode.com/v4beta
