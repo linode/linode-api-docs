@@ -11253,10 +11253,10 @@ paths:
           View information for the service targets assigned to this Cloud Load Balancer.
 
 
-          A service target is a group of endpoints that a route directs traffic to.
+          A service target is a group of endpoints that a route directs requests to.
 
 
-          A service target may be associated with one or many routing rules, as long as the routing rules belong to the same Load Balancer instance.
+          A service target may be associated with one or many routing rules, as long as the routing rules belong to the same Cloud Load Balancer instance.
       x-linode-cli-action: service-targets
       security:
       - personalAccessToken: []
@@ -11264,16 +11264,15 @@ paths:
         - aclb:read_only
       responses:
         '200':
-          description: Returns a paginated list of service targets assigned to this Cloud Load Balancer.
+          description: |
+            A paginated list of Cloud Load Balancer service targets.
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/aclb_ServiceTargetEndpoint'
+                    $ref: '#/components/schemas/aclb_ServiceTargetEndpoint'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
