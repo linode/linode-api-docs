@@ -11651,10 +11651,10 @@ paths:
         Creates a certificate.
 
 
-        Service target certificates, `ca`, are used by the load balancer to accept responses from your service target endpoints. These certificate(s) are applied to service target endpoints using the gmerated numeric identifier, `id`.
+        Service target certificates, `ca`, are used by the load balancer to accept responses from your service target endpoints. These certificate(s) are applied to service target endpoints using the generated numeric identifier, `id`.
 
 
-        TLS termination certificates, `downstream`, are required for HTTPS Cloud Load Balancers. They are used by the load balancer to terminate the connection and decrypt requests from clients. These certificate(s) are applied to configurations using the gmerated numeric identifier, `id`.
+        TLS termination certificates, `downstream`, are required for HTTPS Cloud Load Balancers. They are used by the load balancer to terminate the connection and decrypt requests from clients. These certificate(s) are applied to configurations using the generated numeric identifier, `id`.
       operationId: createLoadBalancerCertificate
       servers:
       - url: https://api.linode.com/v4beta
@@ -27749,10 +27749,18 @@ components:
         certificate:
             type: string
             description: >
-              The PEM-formatted contents of your tls ertificate.
+              The PEM-formatted contents of your certificate.
+
+
+              **Note:** `certificate` is not returned for BETA.
             example: "-----BEGIN CERTIFICATE-----\nCERTIFICATE_INFORMATION\n-----END CERTIFICATE-----"
         type:
             type: string
+            description: >
+              Service target certificates, `ca`, are used by the load balancer to accept responses from your service target endpoints.
+
+
+              TLS termination certificates, `downstream`, are required for HTTPS Cloud Load Balancers.
             enum:
             - ca
             - downstream
