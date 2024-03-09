@@ -10231,7 +10231,7 @@ paths:
       summary: Cloud Load Balancer Create
       description: |
         {{< note >}}
-        For BETA, this API endpoint only creates the Cloud Load Balancer `label`. After you create a label, the Cloud Load Balancer ID is created. Additonal properties are include in this API endpoint for information only.
+        For BETA, this API endpoint only creates the Cloud Load Balancer `label`. After you create a label, the Cloud Load Balancer ID is generated. Additonal properties are include in this API endpoint for information only.
         {{< /note >}}
 
         Creates a Cloud Load Balancer configuration, service targets, and routes in the requested regions.
@@ -10584,7 +10584,7 @@ paths:
       - NodeBalancers
       summary: Configuration Create
       description: >
-        Creates a Cloud Load Balancer Configuration, which allows the Load Balancer to
+        Creates a Cloud Load Balancer Configuration which allows the load balancer to
         accept traffic on a new port.
 
 
@@ -10730,7 +10730,7 @@ paths:
         Updates the configuration for a single port on a Cloud Load Balancer.
 
 
-        You can update the protocol only if the configuration doesn't have any assigned routes. The protocols for routes assigned to a configuration, must match the configuration protocol.
+        You can update the protocol only if the configuration doesn't have any assigned routes. The protocols for routes assigned to a configuration must match the configuration protocol.
 
 
         Certificates are not appicable when the protocol is http/tcp.
@@ -10819,7 +10819,7 @@ paths:
           **This cannot be undone.**
 
 
-          Once completed, this Load Balancer will no longer
+          Once completed, this load balancer will no longer
           respond to requests on the given port.
         operationId: deleteLoadBalancerConfiguration
         x-linode-cli-action: configuration-delete
@@ -27730,7 +27730,7 @@ components:
           id:
             type: integer
             description: >
-              This TLS certificate's ID.
+              This certificate's ID.
             example: 10
           hostname:
             type: string
