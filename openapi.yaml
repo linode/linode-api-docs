@@ -23582,6 +23582,7 @@ components:
                       Returns `true` if the VPC interface is in use, meaning that the Linode was powered on using the `config_id` to which the interface belongs. Otherwise returns `false`.
                     example: true
                     readOnly: true
+                    x-linode-filterable: true
                   address:
                     type: string
                     format: ip
@@ -23590,7 +23591,6 @@ components:
                     example: 192.0.2.141
                     nullable: true
                     readOnly: true
-                    x-linode-filterable: true
                     x-linode-cli-display: 1
                   address_range:
                     type: string
@@ -23604,6 +23604,7 @@ components:
                       The ID assigned to the Linode configuration where the VPC is included.
                     example: 4567
                     readOnly: true
+                    x-linode-filterable: true
                   gateway:
                     type: string
                     format: ip
@@ -23625,6 +23626,7 @@ components:
                     example: 123
                     readOnly: true
                     x-linode-cli-display: 6
+                    x-linode-filterable: true
                   nat_1_1:
                     type: string
                     format: ip
@@ -23640,7 +23642,6 @@ components:
                     example: 24
                     nullable: true
                     readOnly: true
-                    x-linode-filterable: true
                   region:
                     type: string
                     description: >
@@ -23662,6 +23663,7 @@ components:
                       The unique ID assigned to the VPC interface.
                     example: 7654
                     readOnly: true
+                    x-linode-filterable: true
     IPAddressPrivate:
       type: object
       description: >
