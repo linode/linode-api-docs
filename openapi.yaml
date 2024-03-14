@@ -8599,7 +8599,7 @@ paths:
                         type: array
                         readOnly: true
                         items:
-                          $ref: '#/components/schemas/IPAddressVPC'
+                          $ref: '#/components/schemas/IPAddressesVPCListResponse'
                         description: >
                           A list of Virtual Private Cloud (VPC)-specific addresses or ranges for the Linode.
                       reserved:
@@ -14641,24 +14641,23 @@ paths:
       - lang: CLI
         source: >
           linode-cli networking vpcs-ips-list
-  /networking/vpcs/ips/{address}:
+  /networking/vpcs/{id}/ips:
     parameters:
-    - name: address
+    - name: id
       in: path
       required: true
-      description: The address to operate on.
+      description: The unique identifier for the target VPC interface.
       schema:
-        type: string
-        format: ip
+        type: integer
     x-linode-cli-command: networking
     get:
       x-linode-grant: read_only
       tags:
       - Networking
-      summary: VPC IP Address View
-      description: >
-        Returns information about a single Virtual Private Client (VPC) interface IP address on your account.
-      operationId: getVPCIP
+      summary: VPC IP Addresses View
+      description: |
+        Returns a paginated list of IP addresses for a single Virtual Private Client (VPC) interface.
+      operationId: viewVPCIPs
       x-linode-cli-action: vpcs-ip-view
       security:
       - personalAccessToken: []
@@ -14666,21 +14665,21 @@ paths:
         - ips:read_only
       responses:
         '200':
-          description: The requested VPC interface IP address.
+          description: The IP addresses for the requested VPC interface.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IPAddressVPC'
+                $ref: '#/components/schemas/IPAddressesVPCListResponse'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
       - lang: Shell
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/networking/vpcs/ips/97.107.143.141
+              https://api.linode.com/v4/networking/vpcs/123/ips
       - lang: CLI
         source: >
-          linode-cli networking vpcs-ip-view 97.107.143.141
+          linode-cli networking 123 vpcs-ip-view
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -23564,7 +23563,7 @@ components:
             * You must have access to all of these addresses and they must be in the same Region as the primary Linode.
             * Enter an empty array to remove all shared IP addresses.
     IPAddressesVPCListResponse:
-      description: The response data for the Virtual Private Client (VPC) IP Addresses List (GET /networking/vpcs/ips) command.
+      description: The response data for the Virtual Private Client (VPC) IP Addresses List and View operations.
       allOf:
         - $ref: '#/components/schemas/PaginationEnvelope'
         - type: object
@@ -23731,93 +23730,6 @@ components:
           example: us-east
           readOnly: true
           x-linode-cli-display: 5
-    IPAddressVPC:
-      type: object
-      description: >
-        A Virtual Private Client (VPC) IP address that exists in Linode's system, specific to the response for the VPC IP Addresses List command. Returned as an empty set for Linodes that are not part of a VPC.
-      properties:
-        active:
-          type: boolean
-          description: >
-            Returns `true` if the VPC interface is in use, meaning that the Linode was powered on using the `config_id` to which the interface belongs. Otherwise returns `false`.
-          example: true
-          readOnly: true
-        address:
-          type: string
-          format: ip
-          description: >
-            An IPv4 address configured for this VPC interface. Displayed as `null` if an `address_range`.
-          example: 192.0.2.141
-          readOnly: true
-          x-linode-cli-display: 1
-        address_range:
-          type: string
-          description: >
-            A range of IPv4 addresses configured for this VPC interface. Displayed as `null` if a single `address`.
-          nullable: true
-          readOnly: true
-          x-linode-cli-display: 1
-        config_id:
-          type: integer
-          description: >
-            The ID assigned to the Linode configuration where the VPC is included.
-          example: 4567
-          readOnly: true
-        gateway:
-          type: string
-          format: ip
-          description: >
-            The default gateway for this address. Displayed as `null` if the VPC uses an `address_range`.
-          example: 192.0.2.1
-          nullable: true
-          readOnly: true
-        interface_id:
-          type: integer
-          description: >
-            The unique ID assigned to the Linode's interface in the subnet associated with the VPC.
-          example: 2435
-          readOnly: true
-        linode_id:
-          type: integer
-          description: >
-            The ID of the Linode the VPC interface currently belongs to. For IPv4 addresses in a VPC, this is the Linode that this address was assigned to at creation. You can move these addresses using the [/networking/ipv4/assign](https://www.linode.com/docs/api/networking/#ips-to-linodes-assign) endpoint.
-          example: 123
-          readOnly: true
-          x-linode-cli-display: 6
-        nat_1_1:
-          type: string
-          format: ip
-          description: >
-            The public IP address used for NAT 1:1 with the VPC. This is `null` if the VPC interface uses an `address_range` or NAT 1:1 isn't used.
-          example: null
-          nullable: true
-          readOnly: true
-        prefix:
-          type: integer
-          description: >
-            The number of bits set in the `subnet_mask`.
-          example: 24
-          readOnly: true
-        region:
-          type: string
-          description: >
-            The region this VPC interface IP `address` or `address_range` resides in.
-          example: us-east
-          readOnly: true
-          x-linode-cli-display: 5
-        subnet_mask:
-          type: string
-          format: ip
-          description: >
-            The mask that separates host bits from network bits for the `address` or `address_range`.
-          example: 255.255.255.0
-          readOnly: true
-        vpc_id:
-          type: integer
-          description: >
-            The unique ID assigned to the VPC interface.
-          example: 7654
-          readOnly: true
     IPAddressV6LinkLocal:
       type: object
       description: >
