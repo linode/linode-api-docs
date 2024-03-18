@@ -21800,7 +21800,7 @@ components:
             The interval, in seconds, at which a failed refresh should be retried.
 
             * Valid values are
-            0, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
+            0, 30, 120, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
 
             * Any other value is rounded up to the nearest valid value.
 
@@ -21832,7 +21832,7 @@ components:
             authoritative.
 
             * Valid values are
-            0, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
+            0, 30, 120, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
 
             * Any other value is rounded up to the nearest valid value.
 
@@ -21845,7 +21845,7 @@ components:
             The amount of time in seconds before this Domain should be refreshed.
 
             * Valid values are
-            0, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
+            0, 30, 120, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
 
             * Any other value is rounded up to the nearest valid value.
 
@@ -21859,7 +21859,7 @@ components:
             records may be cached by resolvers or other domain servers.
 
             * Valid values are
-            0, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
+            0, 30, 120, 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200.
 
             * Any other value is rounded up to the nearest valid value.
 
