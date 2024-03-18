@@ -23000,7 +23000,7 @@ components:
           format: date-time
           nullable: true
           description: >
-            Only Images created automatically from a deleted Linode (type=automatic) will expire.
+            Only Images created automatically from a deleted Linode (type=automatic) will expire. `null` for private Images.
           example: null
           readOnly: true
         eol:
