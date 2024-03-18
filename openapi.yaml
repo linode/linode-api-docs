@@ -6613,7 +6613,7 @@ paths:
                     "subnet_id": 101,
                     "ipv4": {
                       "vpc": "10.0.1.2",
-                      "nat_1_1": "203.0.113.2"
+                      "nat_1_1": "add"
                     }
                   }
                 ],
@@ -24627,6 +24627,8 @@ components:
                 * Setting the value to a specific public IPv4 address that is assigned to the Linode enables a 1:1 NAT between that address and the VPC Subnet IPv4 address.
                 * The public IPv4 address can't be shared with another Linode.
                 * If omitted, set to `null`, or set to an empty string (`""`), no 1:1 NAT is established.
+
+                **Note**: When creating a new compute-instance, you can't set this to a specific IPv4 address. When a new compute instance is created, the network establishes a public IPv4 address for it. Since this address doesn't exist yet, you can't include a custom IPv4 address to change it. Once your compute instances is created, you can [update your configuration profile interface](https://www.linode.com/docs/api/linode-instances/#configuration-profile-interface-update) to change the `nat_1_1` address.
               example: '203.0.113.2'
         # ipv6:
         #   type: object
