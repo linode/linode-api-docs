@@ -23006,15 +23006,17 @@ components:
         eol:
           type: string
           format: date-time
+          nullable: true
           description: >
-            The date of the public Image's planned end of life. `None` for private Images.
+            The date of the public Image's planned end of life. `null` for private Images.
           example: '2026-07-01T04:00:00'
           readOnly: true
         vendor:
           x-linode-filterable: true
           type: string
+          nullable: true
           description: >
-            The upstream distribution vendor. `None` for private Images.
+            The upstream distribution vendor. `null` for private Images.
           example: Debian
           readOnly: true
           x-linode-cli-display: 3
