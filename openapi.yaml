@@ -24658,7 +24658,7 @@ components:
           type: array
           nullable: true
           description: |
-            An array of IPv4 CIDR VPC Subnet ranges that are routed to this Interface. **IPv6 ranges are also available to select participants in the Beta program.**
+            An array of IPv4 CIDR VPC Subnet ranges that are routed to this Interface.
 
             * Array items are only allowed for `vpc` type Interfaces.
             * This must be empty for non-`vpc` type Interfaces.
