@@ -8553,7 +8553,7 @@ paths:
       description: |
         Returns networking information for a single Linode.
 
-        **Note:** If the target Linode has several configurations that include a Virtual Private Cloud (VPC) interface, address information for all of VPCs will be listed in the response.
+        **Note:** If the target Linode has several configuration profiles that include a Virtual Private Cloud (VPC) interface, address information for all of VPCs will be listed in the response.
       operationId: getLinodeIPs
       x-linode-cli-action: ips-list
       security:
@@ -14607,79 +14607,6 @@ paths:
       - lang: CLI
         source: >
           linode-cli vlans list
-  /networking/vpcs/ips:
-    x-linode-cli-command: networking
-    get:
-      x-linode-grant: read_only
-      tags:
-      - Networking
-      summary: VPC IP Addresses List
-      description: |
-        Returns a paginated list of Virtual Private Client (VPC) IP addresses and address ranges on your account.
-
-        **Note:** If a Linode has several configurations that include a VPC interface, address information for all of them will be listed in the response.
-      operationId: getVPCIPs
-      x-linode-cli-action: vpcs-ips-list
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - ips:read_only
-      responses:
-        '200':
-          description: A paginated list of VPC interface IP addresses.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPAddressesVPCListResponse'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/networking/vpcs/ips
-      - lang: CLI
-        source: >
-          linode-cli networking vpcs-ips-list
-  /networking/vpcs/{id}/ips:
-    parameters:
-    - name: id
-      in: path
-      required: true
-      description: The unique identifier for the target VPC interface.
-      schema:
-        type: integer
-    x-linode-cli-command: networking
-    get:
-      x-linode-grant: read_only
-      tags:
-      - Networking
-      summary: VPC IP Addresses View
-      description: |
-        Returns a paginated list of IP addresses for a single Virtual Private Client (VPC) interface.
-      operationId: viewVPCIPs
-      x-linode-cli-action: vpcs-ip-view
-      security:
-      - personalAccessToken: []
-      - oauth:
-        - ips:read_only
-      responses:
-        '200':
-          description: The IP addresses for the requested VPC interface.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/IPAddressesVPCListResponse'
-        default:
-          $ref: '#/components/responses/ErrorResponse'
-      x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
-              https://api.linode.com/v4/networking/vpcs/123/ips
-      - lang: CLI
-        source: >
-          linode-cli networking 123 vpcs-ip-view
   /nodebalancers:
     x-linode-cli-command: nodebalancers
     get:
@@ -19984,6 +19911,85 @@ paths:
             linode-cli vpcs update $vpcId \
               --description "A description of my VPC."
               --label cool-vpc
+  /vpcs/ips:
+    get:
+      x-linode-grant: read_only
+      tags:
+      - VPCs
+      summary: VPC IP Addresses List
+      servers:
+      - url: https://api.linode.com/v4
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      description: |
+        Returns a paginated list of VPC IP addresses and address ranges on your account.
+
+        **Note**: If a Linode has several configuration profiles that include a VPC interface, address information for all of them is listed in the response. Since VPCs can use the same address space, you may see duplicate IP addresses.
+      operationId: getVPCIPs
+      x-linode-cli-action:
+      - ip-list
+      - ip-ls
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - ips:read_only
+      responses:
+        '200':
+          description: A paginated list of VPC interface IP addresses.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPAddressesVPCListResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/networking/vpcs/ips
+      - lang: CLI
+        source: >
+          linode-cli vpcs ip list
+  /vpcs/{vpcId}/ips:
+    parameters:
+    - $ref: '#/components/parameters/vpcId'
+    get:
+      tags:
+      - VPCs
+      summary: VPC IP Addresses View
+      servers:
+      - url: https://api.linode.com/v4
+      parameters:
+      - $ref: '#/components/parameters/pageOffset'
+      - $ref: '#/components/parameters/pageSize'
+      description: |
+        Returns a paginated list of IP addresses for a single VPC.
+      operationId: viewVPCIPs
+      x-linode-cli-action:
+        - ip-list
+        - ip-ls
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - ips:read_only
+      responses:
+        '200':
+          description: The IP addresses for the requested VPC interface.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IPAddressesVPCListResponse'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/vpcs/123/ips
+      - lang: CLI
+        source: >
+          linode-cli vpcs ip-list 123
   /vpcs/{vpcId}/subnets:
     x-linode-cli-command: vpcs
     parameters:
@@ -23563,7 +23569,7 @@ components:
             * You must have access to all of these addresses and they must be in the same Region as the primary Linode.
             * Enter an empty array to remove all shared IP addresses.
     IPAddressesVPCListResponse:
-      description: The response data for the Virtual Private Client (VPC) IP Addresses List and View operations.
+      description: The response data for the VPC IP Addresses List and View operations.
       allOf:
         - $ref: '#/components/schemas/PaginationEnvelope'
         - type: object
@@ -23573,7 +23579,7 @@ components:
               items:
                 type: object
                 description: >
-                  A Virtual Private Client (VPC) IP address that exists in Linode's system, specific to the response for the VPC IP Addresses List command. Returned as an empty set for Linodes that are not part of a VPC.
+                  A VPC IP address that exists in Linode's system, specific to the response for the VPC IP Addresses List command. Returned as an empty set for Linodes that are not part of a VPC.
                 properties:
                   active:
                     type: boolean
@@ -23600,7 +23606,7 @@ components:
                   config_id:
                     type: integer
                     description: >
-                      The ID assigned to the Linode configuration where the VPC is included.
+                      The globally general entity identifier for the Linode configuration profile where the VPC is included.
                     example: 4567
                     readOnly: true
                     x-linode-filterable: true
@@ -23608,20 +23614,20 @@ components:
                     type: string
                     format: ip
                     description: >
-                      The default gateway for this address. Displayed as `null` if the VPC uses an `address_range`.
+                      The default gateway for the VPC subnet that the IP or IP range belongs to.
                     example: 192.0.2.1
                     nullable: true
                     readOnly: true
                   interface_id:
                     type: integer
                     description: >
-                      The unique ID assigned to the Linode's interface in the subnet associated with the VPC.
+                      The globally general API entity identifier for the Linode interface.
                     example: 2435
                     readOnly: true
                   linode_id:
                     type: integer
                     description: >
-                      The ID of the Linode the VPC interface currently belongs to. For IPv4 addresses in a VPC, this is the Linode that this address was assigned to at creation. You can move these addresses using the [/networking/ipv4/assign](https://www.linode.com/docs/api/networking/#ips-to-linodes-assign) endpoint.
+                      The identifier for the Linode the VPC interface currently belongs to.
                     example: 123
                     readOnly: true
                     x-linode-cli-display: 6
@@ -23659,7 +23665,7 @@ components:
                   vpc_id:
                     type: integer
                     description: >
-                      The unique ID assigned to the VPC interface.
+                      The unique globally general API entity identifier for the VPC.
                     example: 7654
                     readOnly: true
                     x-linode-filterable: true
