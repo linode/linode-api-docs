@@ -19923,10 +19923,10 @@ paths:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
       description: |
-        Returns a paginated list of VPC IP addresses and address ranges on your account.
+        Returns a paginated list of all VPC IP addresses and address ranges on your account.
 
         **Note**: If a Linode has several configuration profiles that include a VPC interface, address information for all of them is listed in the response. Since VPCs can use the same address space, you may see duplicate IP addresses.
-      operationId: getVPCIPs
+      operationId: getAllVPCIPs
       x-linode-cli-action:
       - ip-list
       - ip-ls
@@ -19965,7 +19965,7 @@ paths:
       - $ref: '#/components/parameters/pageSize'
       description: |
         Returns a paginated list of IP addresses for a single VPC.
-      operationId: viewVPCIPs
+      operationId: getVPCIPs
       x-linode-cli-action:
         - ip-list
         - ip-ls
