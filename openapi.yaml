@@ -19975,7 +19975,7 @@ paths:
         - ips:read_only
       responses:
         '200':
-          description: The IP addresses for the requested VPC interface.
+          description: The IP addresses for the requested VPC.
           content:
             application/json:
               schema:
@@ -23650,7 +23650,7 @@ components:
                   region:
                     type: string
                     description: >
-                      The region this VPC interface IP `address` or `address_range` resides in.
+                      The region of the VPC.
                     example: us-east
                     readOnly: true
                     x-linode-filterable: true
