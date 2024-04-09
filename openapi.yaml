@@ -23655,6 +23655,12 @@ components:
                     readOnly: true
                     x-linode-filterable: true
                     x-linode-cli-display: 5
+                  subnet_id:
+                    type: integer
+                    nullable: false
+                    description: |
+                      The `id` of the VPC Subnet for this interface.
+                    example: 101
                   subnet_mask:
                     type: string
                     format: ip
