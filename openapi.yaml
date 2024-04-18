@@ -17293,8 +17293,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PlacementGroupComputeInstances'
-              required:
-              - linodes
       responses:
         '200':
           description: >
@@ -17348,8 +17346,6 @@ paths:
         content:
           application/json:
             schema:
-              required:
-              - linodes
               $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/linodes'
       responses:
         '200':
