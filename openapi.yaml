@@ -7344,7 +7344,6 @@ paths:
                   properties:
                     id:
                       $ref: '#/components/schemas/PlacementGroup/properties/id'
-                      required: true
                     compliant_only:
                       $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
                 backups_enabled:
@@ -17293,9 +17292,9 @@ paths:
         content:
           application/json:
             schema:
+              $ref: '#/components/schemas/PlacementGroupComputeInstances'
               required:
               - linodes
-              $ref: '#/components/schemas/PlacementGroupComputeInstances'
       responses:
         '200':
           description: >
