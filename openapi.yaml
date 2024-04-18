@@ -6571,8 +6571,8 @@ paths:
                       properties:
                         id:
                           $ref: '#/components/schemas/PlacementGroup/properties/id'
-                        compliant_only:
-                          $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
+                      #  compliant_only:
+                      #    $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
                     private_ip:
                       type: boolean
                       description: >
@@ -7344,8 +7344,8 @@ paths:
                   properties:
                     id:
                       $ref: '#/components/schemas/PlacementGroup/properties/id'
-                    compliant_only:
-                      $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
+                  #  compliant_only:
+                  #    $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
                 backups_enabled:
                   type: boolean
                   description: |
@@ -9042,7 +9042,7 @@ paths:
                   type: object
                   description: |
                     Include this to assign this Linode to an existing [placement group](/docs/products/compute/compute-instances/guides/placement-groups/) in the data center you're migrating to. These constraints apply:
-                    
+
                     * If the target Linode is in a placement group, it will be removed from it when migrating.
                     * The target placement group needs to be in the same `region` you're migrating to.
                     * The target placement group needs to have capacity. Run the [Region View](/docs/api/regions/#region-view) operation for the region you want to migrate to, and store the `maximum_linodes_per_pg` value. Run the [Placement Group View](/docs/api/placement-groups/#placement-group-view) operation for that same region to review how many Linodes are in that group.
@@ -9051,8 +9051,8 @@ paths:
                   properties:
                     id:
                       $ref: '#/components/schemas/PlacementGroup/properties/id'
-                    compliant_only:
-                      $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
+                  #  compliant_only:
+                  #    $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
       responses:
         '200':
           description: Scheduled migration started
@@ -27788,10 +27788,10 @@ components:
           description: >
             The `linodeId` values for individual compute instances included in the placement group.
           example: 528
-        compliant_only:
-          type: boolean
-          description: >
-            You can optionally include this and set it to `true` if your placement group's affinity type enforcement setting is flexible. (The group's `is_strict` setting is `false`.) This lets you add a compute instance to your placement group if the group is currently non-compliant.
+        # compliant_only:
+        #  type: boolean
+        #  description: >
+        #    You can optionally include this and set it to `true` if your placement group's affinity type enforcement setting is flexible. (The group's `is_strict` setting is `false`.) This lets you add a compute instance to your placement group if the group is currently non-compliant.
     Profile:
       type: object
       description: >
