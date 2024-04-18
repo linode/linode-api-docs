@@ -892,8 +892,7 @@ paths:
                 -X POST -d '{
                   "card_number": "4111111111111111",
                   "expiry_month": 11,
-                  "expiry_year": 2020,
-                  "cvv": "111"
+                  "expiry_year": 2020
                 }' \
                 https://api.linode.com/v4/account/credit-card
         - lang: CLI
@@ -901,8 +900,7 @@ paths:
             linode-cli account update-card \
               --card_number 4111111111111111 \
               --expiry_month 11 \
-              --expiry_year 2025 \
-              --cvv 111
+              --expiry_year 2025
   /account/entity-transfers:
     get:
       deprecated: true
@@ -2049,8 +2047,7 @@ paths:
                   "data": {
                     "card_number": "4111111111111111",
                     "expiry_month": 11,
-                    "expiry_year": 2020,
-                    "cvv": "111"
+                    "expiry_year": 2020
                   }
                 }' \
                 https://api.linode.com/v4/account/payment-methods
@@ -2061,8 +2058,7 @@ paths:
               --is_default true \
               --data.card_number 4111111111111111 \
               --data.expiry_month 11 \
-              --data.expiry_year 2020 \
-              --data.cvv 111
+              --data.expiry_year 2020
   /account/payment-methods/{paymentMethodId}:
     x-linode-cli-command: payment-methods
     parameters:
@@ -2274,7 +2270,6 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
-                    "cvv": "123",
                     "usd": "120.50",
                     "payment_method_id": 123
                 }' \
@@ -2282,7 +2277,6 @@ paths:
         - lang: CLI
           source: >
             linode-cli account payment-create \
-              --cvv 123 \
               --usd 120.50 \
               --payment_method_id 123
   /account/payments/{paymentId}:
@@ -6613,7 +6607,7 @@ paths:
                     "subnet_id": 101,
                     "ipv4": {
                       "vpc": "10.0.1.2",
-                      "nat_1_1": "add"
+                      "nat_1_1": "any"
                     }
                   }
                 ],
@@ -20907,7 +20901,6 @@ components:
       - card_number
       - expiry_month
       - expiry_year
-      - cvv
       properties:
         card_number:
           type: string
@@ -20940,14 +20933,14 @@ components:
             must result in a month/year combination of the current month or in
             the future. An expiration date set in the past is invalid.
           example: 2020
-        cvv:
-          type: string
-          minLength: 3
-          maxLength: 4
-          format: digits
-          description: >
-            CVV (Card Verification Value) of the credit card, typically found on the back of the card.
-          example: '123'
+        # cvv:
+        #  type: string
+        #  minLength: 3
+        #  maxLength: 4
+        #  format: digits
+        #  description: >
+        #    {{Per UXTW-7408, the CVV for a credit card is no longer required by our vendor. Removed all other references to it from this documentation. Leaving this here, hidden in case we need a reference for it again in the future.}} CVV (Card Verification Value) of the credit card, typically found on the back of the card.
+        #  example: '123'
     Database:
       type: object
       description: A general Managed Database instance object containing properties that are identical for all database types.
@@ -27124,12 +27117,6 @@ components:
       - usd
       description: Payment object request.
       properties:
-        cvv:
-          type: string
-          description: >
-            CVV (Card Verification Value) of the credit card to be used for
-            the Payment. Required if paying by credit card.
-          example: '123'
         usd:
           type: string
           pattern: ^\$?\d+\.\d{2}$
