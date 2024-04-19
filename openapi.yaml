@@ -901,7 +901,7 @@ paths:
             linode-cli account update-card \
               --card_number 4111111111111111 \
               --expiry_month 11 \
-              --expiry_year 2025
+              --expiry_year 2025 \
               --cvv 111
   /account/entity-transfers:
     get:
