@@ -28977,7 +28977,7 @@ components:
 
             * `parent`. This is a user in an Akamai partner account. Akamai partners have a contractural relationship with their end customers, to sell Akamai services. This user can either have full access (a parent account admin user) or limited access. Limited users don't have access to manage child accounts, but they can be granted this access by an admin user.
 
-            * `child`. This is an Akamai partner's end customer user, in a child account. A child user can have either full or limited access. Full access lets the user manage other child users and the proxy user in a child account. All child users can monitor the proxy user's activities in the child account.
+            * `child`. This is an Akamai partner's end customer user, in a child account. A child user can have either full or limited access. Full access lets the user manage other child users and the proxy user in a child account.
 
             * `proxy`. This is a user on a child account that gives parent account users access to that child account. A parent account user with the `child_account_access` grant can [create a bearer token](#proxy-user-token-create) from the parent account. The parent user can use this token to run API operations from the child account, as if they were a child user.
 
