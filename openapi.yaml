@@ -785,16 +785,16 @@ paths:
         balance. An error occurs if this charge fails.
 
         **Note:** This command can only be accessed by account users with *unrestricted* access.
-        
+
         **Parent and child accounts**
-        
+
         In a [parent and child account](/docs/guides/parent-child-accounts/) environment, the following apply:
-        
+
         * A child account user can't cancel a child account.
 
         * You can't cancel a parent account if it has an active child account.
 
-        * You need to work with your Akamai account team to dissolve all parent-child account relationships, before you can fully cancel a parent account.
+        * You need to work with your Akamai account team to dissolve any parent-child account relationships before you can fully cancel a child or parent account.
       operationId: cancelAccount
       x-linode-cli-action: cancel
       security:
@@ -877,7 +877,7 @@ paths:
       description: |
         Returns a paginated list of basic information for the child accounts that exist for your parent account. See [Parent and Child Accounts for Akamai Partners](/docs/guides/parent-child-accounts/) for details on these accounts.
 
-        **Note:** This command can only be accessed by account users with *unrestricted* access.
+        **Note:** This command can only be accessed by an unrestricted parent user, or restricted parent user with the `child_account_access` grant.
       operationId: getChildAccounts
       x-linode-cli-action:
       - list
@@ -885,7 +885,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - account:read_only
+        - child_account:read_only
       responses:
         '200':
           description: Returns child-level accounts.
@@ -920,14 +920,14 @@ paths:
       description: >
         View a specific child account based on its `euuid`. See [Parent and Child Accounts for Akamai Partners](/docs/guides/parent-child-accounts/) for details on these accounts.
 
-        **Note:** This command can only be accessed by account users with *unrestricted* access.
+        **Note:** This command can only be accessed by an unrestricted user, or restricted user with the `child_account_access` grant.
       operationId: viewChildAccount
       x-linode-cli-action:
       - view
       security:
       - personalAccessToken: []
       - oauth:
-        - account:read_only
+        - child_account:read_only
       responses:
         '200':
           description: Returns the child-level account for a specified `euuid`.
@@ -968,9 +968,9 @@ paths:
 
         The token lets a parent account run API operations through the proxy user, as if they are a child user in the child account.
 
-        These points apply to the use of this operation to create a token:
+        These points apply to the use of this operation:
 
-        * To create a token, a parent account user needs [unrestricted access](/docs/guides/parent-child-accounts/#enable-access-to-child-accounts-for-parent-account-users-with-limited-access). This lets them use the proxy user on the child account.
+        * To create a token, a parent account user needs the `child_account_access` grant. This lets them use the proxy user on the child account. You can [view](#users-grants-view) a parent account user to check its `child_account_access` setting. To add this access, you can [update](#users-grants-update) the parent account user.
 
         * The created token inherits the permissions of the proxy user. It will never have less.
 
@@ -987,7 +987,7 @@ paths:
       security:
       - personalAccessToken: []
       - oauth:
-        - account:read_write
+        - child_account:read_write
       responses:
         '200':
           description: Token created successfully.
@@ -1006,7 +1006,7 @@ paths:
             https://api.linode.com/v4/account/child-accounts/A1BC2DEF-34GH-567I-J890KLMN12O34P56/token
       - lang: CLI
         source: >
-          linode-cli child-account create A1BC2DEF-34GH-567I-J890KLMN12O34P56 --expiry '2024-12-31T23:59:59'
+          linode-cli child-account create A1BC2DEF-34GH-567I-J890KLMN12O34P56
   /account/credit-card:
     x-linode-cli-command: account
     post:
@@ -3146,7 +3146,7 @@ paths:
         **Note:** This command can only be accessed by account users with *unrestricted* access.
 
         A user can access all or part of an account based on their access status and grants:
-        
+
         * **Unrestricted access**. These users can access everything on an account.
 
         * **Restricted access**. These users can only access entities or perform actions they've been given specific grants to.
@@ -3204,7 +3204,7 @@ paths:
 
         * A parent account user can create new parent account users.
 
-        * A parent account using a child account parent user (proxy user) can create new child account users.
+        * A child account can [update](#user-update) the child account parent user (proxy user) to `unrestricted`. This gives the proxy user access to create new child account users.
 
         * A child account user can create new child account users.
 
@@ -3309,10 +3309,12 @@ paths:
         **Parent and child accounts**
 
         In a [parent and child account](/docs/guides/parent-child-accounts/) environment, the following apply:
-        
+
         * You can't edit the `username` or `email` values for the child account parent user (proxy user). These are predefined for the proxy user when you initially provision the parent-child relationship. Only a proxy user's `restricted` status can be modified. This can be done by a child account user or a parent account using the proxy user.
 
-        * A parent account using a proxy user in a child account can modify the `username`, `email`, and `restricted` status for an existing child account user.
+        * A parent account using an unrestricted proxy user in a child account can modify the `username`, `email`, and `restricted` status for an existing child account user.
+
+        * A restricted account user--parent or child--can't change their user to `unrestricted`.
       operationId: updateUser
       x-linode-cli-action: update
       security:
@@ -3366,10 +3368,10 @@ paths:
         **Parent and child accounts**
 
         In a [parent and child account](/docs/guides/parent-child-accounts/) environment, the following apply:
-        
+
         * You can't delete a child account parent user (proxy user). The API returns a 403 error if you target a proxy user with this operation.
 
-        * A parent account using a proxy user can use this operation to delete a child account user.
+        * A parent account using an unrestricted proxy user can use this operation to delete a child account user.
       operationId: deleteUser
       x-linode-cli-action:
         - delete
@@ -3457,12 +3459,12 @@ paths:
         **Parent and child accounts**
 
         In a [parent and child account](/docs/guides/parent-child-accounts/) environment, the following apply:
-        
-        * A child account user can't modify the `account_access` grant for The child account parent user (proxy user).
-        
-        * A child account user can grant additional permissions to the proxy user.
 
-        * A child account user can enable the `account_access` grant for other child account users. However, enabled child users are still subject to child user restrictions--they can't perform write operations for any billing or account information.
+        * No child account user can modify the `account_access` grant for the child account parent user (proxy user).
+
+        * An unrestricted child account user can configure all other grants for the proxy user, via `global` object.
+
+        * An unrestricted child account user can enable the `account_access` grant for other child account users. However, enabled child users are still subject to child user restrictions--they can't perform write operations for any billing or account information.
       operationId: updateUserGrants
       x-linode-cli-action: update-grants
       x-linode-cli-skip: true
@@ -23286,7 +23288,7 @@ components:
 
                 **Parent and child accounts**
 
-                In a [parent and child account](/docs/guides/parent-child-accounts/) environment, this grant is set to `read-write` for child account users. This gives unrestricted child users access to expected management operations, such as creating other child users. However, child users don't have write access to billing operations. The API issues a specific error message if a write operation is attempted by a child user.
+                In a [parent and child account](/docs/guides/parent-child-accounts/) environment, this grant can be added to a child account user, to give the user `read-write` access. This gives the child user unrestricted access to expected management operations, such as creating other child users. However, child users don't have write access to billing operations. The API issues a specific error message if a write operation is attempted by a child user.
               example: read_only
             cancel_account:
               type: boolean
@@ -23324,6 +23326,10 @@ components:
               type: boolean
               description: If true, this User may add VPCs.
               example: true
+            child_account_access:
+              type: boolean
+              description: In a [parent and child account](/docs/guides/parent-child-accounts/) environment, this gives a parent account access to endpoints that can be used to manage child accounts. Unrestricted parent account users have access to this grant, while restricted parent users don't. (An unrestricted parent user can set this to `true` to add this grant to a restricted parent user.)
+              example: false
         linode:
           type: array
           items:
@@ -27915,7 +27921,7 @@ components:
           minLength: 1
           maxLength: 100
           description: >
-            The name of the token. The API automatically sets this to `<company_name>_proxy`, using the `company` defined for the [child account](/docs/api/account/#child-account-view) where this proxy user is assigned. This is for display purposes only, but you can use it to help track how you're using each proxy user token.
+            The name of the token. The API automatically sets this to `<username>_<uid>_<time>`, using the `username`, the `uid` of XXX, and the `time` the API generated the token. This is for display purposes only, but you can use it to help track how you're using each proxy user token.
           x-linode-filterable: true
           example: acme_proxy
           x-linode-cli-display: 2
@@ -28969,11 +28975,11 @@ components:
           description: |
             If the user belongs to a [parent or child account](/docs/guides/parent-child-accounts/) relationship, this defines the user type in the respective account. Possible values include:
 
-            * `parent`. This is a user in an Akamai partner account. Akamai partners have a contractural relationship with their end customers, to sell Akamai services. This user can either have full access (a parent account admin user) or limited access. Limited users don't currently have access to manage child accounts, but they can be granted this access by an admin user.
+            * `parent`. This is a user in an Akamai partner account. Akamai partners have a contractural relationship with their end customers, to sell Akamai services. This user can either have full access (a parent account admin user) or limited access. Limited users don't have access to manage child accounts, but they can be granted this access by an admin user.
 
             * `child`. This is an Akamai partner's end customer user, in a child account. A child user can have either full or limited access. Full access lets the user manage other child users and the proxy user in a child account. All child users can monitor the proxy user's activities in the child account.
 
-            * `proxy`. This is a user on a child account that gives parent account users access to that child account. A parent account admin user can [create a bearer token](#proxy-user-token-create). The parent user can use this token to run API operations from the child account, as if they were a child user.
+            * `proxy`. This is a user on a child account that gives parent account users access to that child account. A parent account user with the `child_account_access` grant can [create a bearer token](#proxy-user-token-create) from the parent account. The parent user can use this token to run API operations from the child account, as if they were a child user.
 
             * `default`. This applies to all regular, non-parent-child account users.
           example: parent
