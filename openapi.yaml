@@ -17243,7 +17243,7 @@ paths:
         **Parent and child accounts**
 
         In a [parent and child account](/docs/guides/parent-child-accounts/) environment, the following apply:
-        
+
         * You can't edit the `email` for a child account parent user (proxy user). This value is fixed and set when you provision this environment.
       operationId: updateProfile
       x-linode-cli-action: update
@@ -23328,7 +23328,8 @@ components:
               example: true
             child_account_access:
               type: boolean
-              description: In a [parent and child account](/docs/guides/parent-child-accounts/) environment, this gives a parent account access to endpoints that can be used to manage child accounts. Unrestricted parent account users have access to this grant, while restricted parent users don't. (An unrestricted parent user can set this to `true` to add this grant to a restricted parent user.)
+              nullable: true
+              description: In a [parent and child account](/docs/guides/parent-child-accounts/) environment, this gives a parent account access to endpoints that can be used to manage child accounts. Unrestricted parent account users have access to this grant, while restricted parent users don't. An unrestricted parent user can set this to `true` to add this grant to a restricted parent user. Displayed as `null` for all non-parent accounts.
               example: false
         linode:
           type: array
@@ -27921,9 +27922,9 @@ components:
           minLength: 1
           maxLength: 100
           description: >
-            The name of the token. The API automatically sets this to `<username>_<uid>_<time>`, using the `username`, the `uid` of XXX, and the `time` the API generated the token. This is for display purposes only, but you can use it to help track how you're using each proxy user token.
+            The name of the token. The API automatically sets this to `<username>_<uid>_<time>`. It's composed of the `username` for your parent account user, the unique `uid` Akamai assigned to identify your user, and the `time` the API generated the token. This is for display purposes only, but you can use it to help track how you're using each proxy user token.
           x-linode-filterable: true
-          example: acme_proxy
+          example: parent1_1234_2024-05-01T00:01:01
           x-linode-cli-display: 2
         token:
           type: string
