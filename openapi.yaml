@@ -3310,7 +3310,7 @@ paths:
 
         In a [parent and child account](/docs/guides/parent-child-accounts/) environment, the following apply:
 
-        * You can't edit the `username` or `email` values for the child account parent user (proxy user). These are predefined for the proxy user when you initially provision the parent-child relationship. Only a proxy user's `restricted` status can be modified. This can be done by a child account user or a parent account using the proxy user.
+        * You can't edit the `username` or `email` values for the child account parent user (proxy user). These are predefined for the proxy user when you initially provision the parent-child relationship. Only a proxy user's `restricted` status can be modified. This can only be done by an unrestricted child account user.
 
         * A parent account using an unrestricted proxy user in a child account can modify the `username`, `email`, and `restricted` status for an existing child account user.
 
