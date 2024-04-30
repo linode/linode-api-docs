@@ -23331,8 +23331,6 @@ components:
               nullable: true
               description: |
                 In a [parent and child account](/docs/guides/parent-child-accounts/) environment, this gives a parent account access to endpoints that can be used to manage child accounts. Unrestricted parent account users have access to this grant, while restricted parent users don't. An unrestricted parent user can set this to `true` to add this grant to a restricted parent user. Displayed as `null` for all non-parent accounts.
-
-                **Note**: If an account is removed from its parent status, and then returned back to parent status, this is displayed as `reinstated`.
               example: true
         linode:
           type: array
