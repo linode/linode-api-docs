@@ -2256,7 +2256,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PaymentRequest'
+              properties:
+                usd:
+                  type: string
+                  pattern: ^\$?\d+\.\d{2}$
+                  description: |
+                    The amount in US Dollars of the Payment.
+
+                    * Can begin with or without `$`.
+                    * Commas (`,`) are not accepted.
+                    * Must end with a decimal expression, such as `.00` or `.99`.
+                    * Minimum: `$5.00` or the Account balance, whichever is lower.
+                    * Maximum: `$2000.00` or the Account balance up to `$50000.00`, whichever is greater.
+                  example: '$120.50'
+                payment_method_id:
+                  type: integer
+                  description: >
+                    The ID of the Payment Method to apply to the Payment.
+                  example: 123
       responses:
         '200':
           description: Payment submitted successfully.
@@ -2274,7 +2291,6 @@ paths:
             curl -H "Content-Type: application/json" \
                 -H "Authorization: Bearer $TOKEN" \
                 -X POST -d '{
-                    "cvv": "123",
                     "usd": "120.50",
                     "payment_method_id": 123
                 }' \
@@ -2282,7 +2298,6 @@ paths:
         - lang: CLI
           source: >
             linode-cli account payment-create \
-              --cvv 123 \
               --usd 120.50 \
               --payment_method_id 123
   /account/payments/{paymentId}:
@@ -6613,7 +6628,7 @@ paths:
                     "subnet_id": 101,
                     "ipv4": {
                       "vpc": "10.0.1.2",
-                      "nat_1_1": "add"
+                      "nat_1_1": "any"
                     }
                   }
                 ],
