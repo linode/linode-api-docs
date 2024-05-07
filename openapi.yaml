@@ -9068,8 +9068,7 @@ paths:
               -X POST -d '{
                 "region": "us-central",
                 "placement_group": {
-                  "id": 528,
-                  "compliant_only": true
+                  "id": 528
                 }
               }' \
               https://api.linode.com/v4/linode/instances/123/migrate
