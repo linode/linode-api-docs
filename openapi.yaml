@@ -6642,8 +6642,7 @@ paths:
                 "region": "us-east",
                 "group": "Linode-Group",
                 "placement_group": {
-                  "id": 528,
-                  "compliant_only": true
+                  "id": 528
                 },
                 "metadata": {
                   "user_data": "I2Nsb3VkLWNvbmZpZw=="
