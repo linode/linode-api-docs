@@ -6566,8 +6566,6 @@ paths:
                     
                         * The target placement group needs to be in the same `region` set for this Linode.
                         * The placement group needs to have capacity. Run the [Region View](/docs/api/regions/#region-view) operation and store the `maximum_linodes_per_pg` value to know the Linode limit per placement group. You can then run the [Placement Group View](/docs/api/placement-groups/#placement-group-view) operation to review the Linodes in that group.
-                      required:
-                      - id
                       properties:
                         id:
                           $ref: '#/components/schemas/PlacementGroup/properties/id'
@@ -6662,7 +6660,7 @@ paths:
             --stackscript_id 10079 \
             --stackscript_data '{"gh_username": "linode"}' \
             --region us-east \
-            --placement_group '{"id": 528, "compliant_only": true}' \
+            --placement_group.id 528 \
             --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
             --authorized_users "myUser" \
@@ -7448,7 +7446,7 @@ paths:
             --type g6-standard-2 \
             --label cloned-linode \
             --backups_enabled true \
-            --placement_group '{"id": 528, "compliant_only": true}' \
+            --placement_group.id 528 \
             --disks 25674 \
             --configs 23456 \
             --private_ip true \
@@ -9079,7 +9077,7 @@ paths:
         source: >
           linode-cli linodes migrate 123 \
           --region us-central \
-          --placement_group '{"id": 528, "compliant_only": true}' \
+          --placement_group.id 528 \
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
@@ -17094,7 +17092,7 @@ paths:
       tags:
       - Placement Groups
       operationId: createPlacementGroup
-      x-linode-cli-action: create
+      x-linode-cli-action: group-create
       security:
       - personalAccessToken: []
       - oauth:
@@ -17205,7 +17203,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlacementGroupRequest/properties/label'
+              type: object
+              properties:
+                label:
+                  $ref: '#/components/schemas/PlacementGroupRequest/properties/label'
       responses:
         '200':
           description: The updated placement group.
@@ -17282,7 +17283,7 @@ paths:
       description: |
         Add one or more compute instances to your placement group. Check out our [example API workflow](/docs/products/compute/compute-instances/guides/placement-groups/#create-a-placement-group) to create a placement group and add compute instances.
       operationId: placementGroupAddLinode
-      x-linode-cli-action: assignLinode
+      x-linode-cli-action: assign-linode
       security:
       - personalAccessToken: []
       - oauth:
@@ -17318,7 +17319,7 @@ paths:
       - lang: CLI
         source: >
           linode-cli placement assignLinode 528 \
-            --linode 123 456 \
+            --linodes 123 456 \
             --non-compliant true
   /placement/groups/{groupId}/unassign:
     x-linode-cli-command: placement
@@ -17336,7 +17337,7 @@ paths:
       summary: Placement Group Unassign
       description: |
         Remove one or more compute instances from your placement group.
-      x-linode-cli-action: unassignLinode
+      x-linode-cli-action: unassign-linode
       security:
       - personalAccessToken: []
       - oauth:
@@ -27677,6 +27678,7 @@ components:
           description: >
             The placement group's ID. You need to provide it for all operations impacting it.
           example: 528
+          x-linode-cli-display: 1
         label:
           type: string
           x-linode-cli-display: 1
@@ -27703,7 +27705,7 @@ components:
           description: |
             How compute instances are distributed in your placement group. `anti-affinity:local` places compute instances in separate fault domains, but still in the same region.
 
-            **Note**: With the beta release, only `anti_affinity:local` is available for `affinity_type`.
+            **Note**: With the limited availability release, only `anti_affinity:local` is available for `affinity_type`.
           example: anti-affinity:local
         is_compliant:
           type: boolean
@@ -27747,7 +27749,8 @@ components:
           description: |
             Determine how compute instances are to be distributed in your placement group. Set to `anti-affinity:local` to place compute instances in separate fault domains, but still in the same region. This better supports a high-availability model.
 
-            **Note**: With the beta release, only `anti_affinity:local` is available for `affinity_type`.
+            **Note**: With the limited availability release, only `anti_affinity:local` is available for `affinity_type`.
+          x-linode-cli-display: 1
           enum:
           - anti_affinity:local
           example:
