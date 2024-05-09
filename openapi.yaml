@@ -16584,9 +16584,18 @@ paths:
                 properties:
                   data:
                     type: array
-                    description: This page of objects in the bucket.
                     items:
                       $ref: '#/components/schemas/ObjectStorageObject'
+                  next_marker:
+                    type: string
+                    description: >
+                      Returns the value you should pass to the `marker` query parameter to get the next page of objects. If there is no next page, `null` will be returned.
+                    example: bd021c21-e734-4823-97a4-58b41c2cd4c8.892602.184
+                    nullable: true
+                  is_truncated:
+                    type: boolean
+                    description: Designates if there is another page of bucket objects.
+                    example: true
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -27218,8 +27227,7 @@ components:
     ObjectStorageObject:
       type: object
       description: >
-        An Object in Object Storage, or a "prefix" that contains one
-        or more objects when a `delimiter` is used.
+        An Object in Object Storage, or a "prefix" that contains one or more objects when a `delimiter` is used.
       properties:
         name:
           type: string
@@ -27235,32 +27243,18 @@ components:
           type: string
           format: date-time
           description: >
-            The date and time this object was last modified. `null` if this object
-            represents a prefix.
+            The date and time this object was last modified. `null` if this object represents a prefix.
           example: 2019-01-01T01:23:45
         owner:
           type: string
           description: >
-            The owner of this object, as a UUID. `null` if this object represents
-            a prefix.
+            The owner of this object, as a UUID. `null` if this object representsa prefix.
           example: bfc70ab2-e3d4-42a4-ad55-83921822270c
         size:
           type: integer
           description: >
-            The size of this object, in bytes. `null` if this object represents
-            a prefix.
+            The size of this object, in bytes. `null` if this object representsa prefix.
           example: 123
-        next_marker:
-          type: string
-          description: >
-            Returns the value you should pass to the `marker` query parameter to get the next page of objects.
-            If there is no next page, `null` will be returned.
-          example: bd021c21-e734-4823-97a4-58b41c2cd4c8.892602.184
-          nullable: true
-        is_truncated:
-          type: boolean
-          description: Designates if there is another page of bucket objects.
-          example: true
     ObjectStorageCluster:
       type: object
       description: An Object Storage Cluster
