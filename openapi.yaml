@@ -8843,7 +8843,7 @@ paths:
                         type: array
                         readOnly: true
                         items:
-                          $ref: '#/components/schemas/IPAddressesVPCListResponse'
+                          $ref: '#/components/schemas/IPAddressesVPC'
                         description: >
                           A list of Virtual Private Cloud (VPC)-specific addresses or ranges for the Linode.
                       reserved:
@@ -20198,7 +20198,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/IPAddressesVPCListResponse'
+                      $ref: '#/components/schemas/IPAddressesVPC'
                   page:
                     $ref: '#/components/schemas/PaginationEnvelope/properties/page'
                   pages:
@@ -20243,7 +20243,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IPAddressesVPCListResponse'
+                $ref: '#/components/schemas/IPAddressesVPC'
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -23996,7 +23996,7 @@ components:
             * Can include both private and public IPv4 addresses.
             * You must have access to all of these addresses and they must be in the same Region as the primary Linode.
             * Enter an empty array to remove all shared IP addresses.
-    IPAddressesVPCListResponse:
+    IPAddressesVPC:
       description: The response data for the VPC IP Addresses List and View operations.
       allOf:
         - $ref: '#/components/schemas/PaginationEnvelope'
