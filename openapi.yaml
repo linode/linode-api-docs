@@ -10496,6 +10496,8 @@ paths:
 
         Configurations use `routes` to direct requests to service targets. To add routes to a configuration, you can use existing `route_ids`or create new `routes`.
 
+        Route rules can not be created or updated using Configuration Create. Use [Route Create](/docs/api/cloud-load-balancer/#route-create) and [Route Update](/docs/api/cloud-load-balancer/#route-update) to manage rules.
+
 
         The route protocol and the configuration protocol must match, or the operation will be rejected.
 
@@ -10808,7 +10810,7 @@ paths:
         - Cloud Load Balancer
       summary: Route Create
       description: >
-        Creates a route. Routes are rules that define how the load balancer directs incoming requests to service targets. A routing rule may have multiple service-targets.
+        Creates a route. Routes contain rules that define how the load balancer directs incoming requests to service targets. A routing rule may have multiple service-targets.
 
         You can re-use routes on multiple load balancer configurations.
 
