@@ -548,17 +548,16 @@ paths:
     get:
       tags:
       - account
-      parameters:
-      - $ref: '#/components/parameters/pageOffset'
-      - $ref: '#/components/parameters/pageSize'
       summary: Account Availability
       description: |
-        Returns a paginated list of the services available to you, for all Linode regions.
+        Returns service unavailability for all available regions.
 
-        **Note**: Only authorized Users can access this endpoint.
+        Only authorized Users can access this endpoint.
+
+        *This endpoint is currently in **Beta**, and should not be used for production workloads.*
       operationId: getAvailability
       servers:
-      - url: https://api.linode.com/v4
+      - url: https://api.linode.com/v4beta
       security:
       - personalAccessToken: []
       - oauth:
@@ -568,7 +567,7 @@ paths:
       responses:
         '200':
           description: |
-            List of regions and the services available in each.
+            Returns a paginated list of regions and their unavailable resources.
           content:
             application/json:
               schema:
@@ -595,7 +594,7 @@ paths:
     parameters:
       - name: id
         in: path
-        description: The slug for the applicable data center. Run the [GET /regions](/docs/api/regions/#regions-list) operation to view the slug for each data center.
+        description: The id of the data center.
         required: true
         schema:
           type: string
@@ -604,12 +603,12 @@ paths:
       - account
       summary: Region Service Availability
       description: |
-        View the available services for your account in a specific region.
+        Returns a single region's service availability.
 
-        **Note**: Only authorized users can access this.
+        Only authorized Users can access this.
       operationId: getAccountAvailability
       servers:
-      - url: https://api.linode.com/v4
+      - url: https://api.linode.com/v4beta
       security:
       - personalAccessToken: []
       - oauth:
@@ -618,7 +617,7 @@ paths:
       x-linode-grant: read_only
       responses:
         '200':
-          description: The services available in the specified region.
+          description: Returns an object with a region and the region's unavailable resources.
           content:
             application/json:
               schema:
@@ -20847,30 +20846,20 @@ components:
           type: string
           readOnly: true
           description: >
-            The Akamai cloud computing data center (region), represented by a slug value. You can view a full list of regions and their associated slugs via the [GET /regions](/docs/api/regions/#regions-list) endpoint.
+            Displays the data center represented by a slug.
           example: us-east
           x-linode-cli-display: 1
-        available:
-          type: array
-          items:
-            type: string
-          readOnly: true
-          description: |
-            A list of services *available* to your account in the `region`.
-          example:
-          - "Linodes"
-          - "NodeBalancers"
         unavailable:
           type: array
-          items:
-            type: string
           readOnly: true
           description: >
-            A list of services *unavailable* to your account in the `region`.
+            A list of strings of unavailable services.
           example:
-          - "Kubernetes"
+          - "Linodes"
           - "Block Storage"
-          x-linode-cli-display: 3
+          items:
+            type: string
+          x-linode-cli-display: 2
     AccountSettings:
       type: object
       description: Account Settings object
