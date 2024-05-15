@@ -6312,6 +6312,10 @@ paths:
       summary: Image Create
       description: |
         Captures a private gold-master Image from a Linode Disk.
+
+        {{< note type="warning" title="Images Are Not Encrypted">}}
+        Images are not encrypted even when they are taken from an encrypted disk. When a compute instance is rebuilt from an image, and if the instance has disk encryption enabled, the disk is automatically encrypted.
+        {{< /note >}}
       operationId: createImage
       x-linode-cli-action: create
       security:
@@ -6406,7 +6410,12 @@ paths:
         - Uploaded image data should be compressed in gzip (`.gz`) format. The uncompressed disk should be in raw
         disk image (`.img`) format. A maximum compressed file size of 5GB is supported for upload at this time.
 
-        **Note:** To initiate and complete an Image upload in a single step, see our guide on how to [Upload an Image](/docs/products/tools/images/guides/upload-an-image/) using Cloud Manager or the Linode CLI `image-upload` plugin.
+        To initiate and complete an Image upload in a single step, see our guide on how to [Upload an Image](/docs/products/tools/images/guides/upload-an-image/) using Cloud Manager or the Linode CLI `image-upload` plugin.
+
+        {{< note type="warning" title="Images Are Not Encrypted">}}
+        Images are not encrypted even when they are taken from an encrypted disk. When a compute instance is rebuilt from an image, and if the instance has disk encryption enabled, the disk is automatically encrypted.
+        {{< /note >}}
+
       x-linode-cli-action: upload
       security:
         - personalAccessToken: []
@@ -6811,7 +6820,8 @@ paths:
                       $ref: "#/components/schemas/LinodeConfigInterfaces"
                     firewall_id:
                       type: integer
-                      description: The `id` of the Firewall to attach this Linode to upon creation.
+                      description: >
+                        The `id` of the Firewall to attach this Linode to upon creation.
       responses:
         "200":
           description: >
@@ -6871,6 +6881,7 @@ paths:
                 "label": "linode123",
                 "type": "g6-standard-2",
                 "region": "us-east",
+                "disk_encryption": "enabled",
                 "group": "Linode-Group",
                 "metadata": {
                   "user_data": "I2Nsb3VkLWNvbmZpZw=="
@@ -6887,6 +6898,7 @@ paths:
             --stackscript_id 10079 \
             --stackscript_data '{"gh_username": "linode"}' \
             --region us-east \
+            --disk_encryption enabled\
             --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
             --authorized_users "myUser" \
@@ -7133,7 +7145,11 @@ paths:
       x-linode-grant: read_write
       summary: Snapshot Create
       description: |
-        Creates a snapshot Backup of a Linode.
+        Creates a snapshot backup of a Linode.
+
+        {{< note type="warning" title="Backups Are Not Encrypted">}}
+        Backups are not encrypted even when they are taken from an encrypted disk. When a backup is restored, and if encryption is enabled, the data stored on the disk is encrypted again.
+        {{< /note >}}
 
         **Important:** If you already have a snapshot of this Linode, this is a destructive
         action. The previous snapshot will be deleted.
@@ -7237,6 +7253,11 @@ paths:
       summary: Backups Enable
       description: >
         Enables backups for the specified Linode.
+
+        {{< note type="warning" title="Backups Are Not Encrypted">}}
+        Backups are not encrypted even when they are taken from an encrypted disk. When a backup is restored, and if encryption is enabled, the data stored on the disk is encrypted again.
+        {{< /note >}}
+
       tags:
         - Linode Instances
       operationId: enableBackups
@@ -7344,6 +7365,11 @@ paths:
 
         To learn more about block device assignments and viewing your disks' UUIDs, see our guide on [Configuration Profiles](/docs/products/compute/compute-instances/guides/configuration-profiles/#block-device-assignment).
         {{< /note >}}
+
+        {{< note type="warning" title="Backups Are Not Encrypted">}}
+        Backups are not encrypted even when they are taken from an encrypted disk. When a backup is restored, and if encryption is enabled, the data stored on the disk is encrypted again.
+        {{< /note >}}
+
       tags:
         - Linode Instances
       operationId: restoreBackup
@@ -9539,6 +9565,9 @@ paths:
             `authorized_keys` field.
           * Linodes utilizing Metadata (`"has_user_data": true`) should include `metadata.user_data` in the rebuild request to continue using the service.
 
+        During a rebuild, you can `enable` or `disable` local disk encryption. If disk encryption is not included in the request, the previous `disk_encryption` value is used.
+        Disk encryption cannot be disabled if the compute instance is attached to a LKE nodepool.
+
         You also have the option to resize the Linode to a different plan by including the `type` parameter with your request. Note that resizing involves migrating the Linode to a new hardware host, while rebuilding without resizing maintains the same hardware host. Resizing also requires significantly more time for completion of this command. The following additional conditions apply:
 
           * The Linode must not have a pending migration.
@@ -9589,6 +9618,7 @@ paths:
                 -X POST -d '{
                   "image": "linode/debian9",
                   "root_pass": "aComplexP@ssword",
+                  "disk_encryption": disabled,
                   "authorized_keys": [
                     "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer"
                   ],
@@ -9612,6 +9642,7 @@ paths:
             linode-cli linodes rebuild 123 \
               --image "linode/debian9" \
               --root_pass aComplex@Password \
+              --disk_encryption disabled \
               --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
               --authorized_users "myUsername" \
               --authorized_users "secondaryUsername" \
@@ -23769,6 +23800,15 @@ components:
           description: When this Disk was last updated.
           example: "2018-01-01T00:01:01"
           readOnly: true
+        disk_encryption:
+          type: string
+          description: >
+            Displays if encryption is enabled on this Disk.
+          example: enabled
+          enum:
+            - enabled
+            - disabled
+          readOnly: true
     DiskRequest:
       type: object
       description: Disk object request.
@@ -26148,6 +26188,15 @@ components:
             initiating a [cross data center migration](/docs/api/linode-instances/#dc-migrationpending-host-migration-initiate).
           x-linode-cli-display: 3
           example: us-east
+        disk_encryption:
+          type: string
+          description: >
+            Local disk encryption ensures that your data stored on compute instances is encrypted. Encryption converts the data on the compute instance into unreadable code. Decryption of the the disk requires other systems within the datacenter. This requirement protects against data leakage if the disk is removed from a datacenter, lost, stolen, recycled or disposed.
+          enum:
+            - enabled
+            - disabled
+          example: enabled
+          default: enabled
         image:
           x-linode-filterable: true
           readOnly: true
@@ -26872,6 +26921,15 @@ components:
 
                 Unencoded data must not exceed 65535 bytes, or about 16kb encoded.
               example: I2Nsb3VkLWNvbmZpZwpwYWNrYWdlX3VwZGF0ZTogdHJ1ZQpwYWNrYWdlX3VwZ3JhZGU6IHRydWU=
+        disk_encryption:
+                      type: string
+                      enum:
+                        - enabled
+                        - disabled
+                      description: >
+                        Local disk encryption ensures that your data stored on compute instances is encrypted. Encryption converts the data on the compute instance into unreadable code. Decryption of the the disk requires other systems within the datacenter. This requirement protects against data leakage if the disk is removed from a datacenter, lost, stolen, recycled or disposed.
+
+                        By default, encryption is `enabled` on all compute instances but you can opt-out of implementing this feature. If you opted-out of encrytion or if the compute instance was created proir to the introduction of the local disk encryption support, you can encrypt your data using Rebuild.
     LinodeStats:
       type: object
       description: >
@@ -27415,6 +27473,13 @@ components:
           example:
             - example tag
             - another example
+        disk_encryption:
+          description: >
+            For LKE nodepools, `disk-encryption` is automatically `enabled` and cannot be `disabled`.
+          type: string
+          example: enabled
+          enum:
+            - enabled
     LKENodeStatus:
       type: object
       description: >
