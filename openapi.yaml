@@ -29564,12 +29564,12 @@ components:
         owner:
           type: string
           description: >
-            The owner of this object, as a UUID. `null` if this object represents a prefix.
+            The owner of this object, as a UUID. `null` if this object representsa prefix.
           example: bfc70ab2-e3d4-42a4-ad55-83921822270c
         size:
           type: integer
           description: >
-            The size of this object, in bytes. `null` if this object represents a prefix.
+            The size of this object, in bytes. `null` if this object representsa prefix.
           example: 123
     ObjectStorageCluster:
       type: object
