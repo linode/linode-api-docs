@@ -440,7 +440,7 @@ paths:
     get:
       x-linode-grant: read_only
       tags:
-      - Account
+       - Account
       summary: Account View
       description: >
         Returns the contact and billing information related to
@@ -448,9 +448,9 @@ paths:
       operationId: getAccount
       x-linode-cli-action: view
       security:
-      - personalAccessToken: []
-      - oauth:
-        - account:read_only
+        - personalAccessToken: []
+        - oauth:
+          - account:read_only
       responses:
         '200':
           description: Returns a single Account object.
@@ -461,13 +461,13 @@ paths:
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
-      - lang: Shell
-        source: >
-          curl -H "Authorization: Bearer $TOKEN" \
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
               https://api.linode.com/v4/account
-      - lang: CLI
-        source: >
-          linode-cli account view
+        - lang: CLI
+          source: >
+            linode-cli account view
     put:
       x-linode-grant: read_write
       tags:
