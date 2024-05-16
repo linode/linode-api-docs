@@ -6810,6 +6810,18 @@ paths:
                       $ref: '#/components/schemas/Linode/properties/tags'
                     group:
                       $ref: '#/components/schemas/Linode/properties/group'
+                    placement_group:
+                      type: object
+                      description: |
+                        Include this to assign this Linode to an existing [placement group](/docs/products/compute/compute-instances/guides/placement-groups/). These constraints apply:
+                    
+                        * The target placement group needs to be in the same `region` set for this Linode.
+                        * The placement group needs to have capacity. Run the [Region View](/docs/api/regions/#region-view) operation and store the `maximum_linodes_per_pg` value to know the Linode limit per placement group. You can then run the [Placement Group View](/docs/api/placement-groups/#placement-group-view) operation to review the Linodes in that group.
+                      properties:
+                        id:
+                          $ref: '#/components/schemas/PlacementGroup/properties/id'
+                      #  compliant_only:
+                      #    $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
                     private_ip:
                       type: boolean
                       description: >
@@ -6882,6 +6894,9 @@ paths:
                 "region": "us-east",
                 "disk_encryption": "enabled",
                 "group": "Linode-Group",
+                "placement_group": {
+                  "id": 528
+                },
                 "metadata": {
                   "user_data": "I2Nsb3VkLWNvbmZpZw=="
                 },
@@ -6898,6 +6913,7 @@ paths:
             --stackscript_data '{"gh_username": "linode"}' \
             --region us-east \
             --disk_encryption enabled\
+            --placement_group.id 528 \
             --type g6-standard-2 \
             --authorized_keys "ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer" \
             --authorized_users "myUser" \
@@ -7592,6 +7608,21 @@ paths:
                     A label used to group Linodes for display. Linodes are not
                     required to have a group.
                   example: Linode-Group
+                placement_group:
+                  type: object
+                  description: |
+                    Include this to assign this Linode to an existing [placement group](/docs/products/compute/compute-instances/guides/placement-groups/). Consider these points when cloning:
+                    
+                    * If the Linode you're cloning exists in a placement group, the API won't automatically add the cloned instance to the same placement group. You need to specify a placement group to add the clone to.
+                    * The target placement group needs to be in the same `region` set for this Linode.
+                    * The placement group needs to have capacity. Run the [Region View](/docs/api/regions/#region-view) operation and store the `maximum_linodes_per_pg` value to know the Linode limit per placement group. You can then run the [Placement Group View](/docs/api/placement-groups/#placement-group-view) operation to review the Linodes in that group.
+                  required:
+                  - id
+                  properties:
+                    id:
+                      $ref: '#/components/schemas/PlacementGroup/properties/id'
+                  #  compliant_only:
+                  #    $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
                 backups_enabled:
                   type: boolean
                   description: |
@@ -7674,6 +7705,9 @@ paths:
                 "linode_id": 124,
                 "label": "cloned-linode",
                 "group": "Linode-Group",
+                "placement_group": {
+                  "id": 528
+                },
                 "backups_enabled": true,
                 "disks": [25674],
                 "configs": [23456],
@@ -7691,6 +7725,7 @@ paths:
             --type g6-standard-2 \
             --label cloned-linode \
             --backups_enabled true \
+            --placement_group.id 528 \
             --disks 25674 \
             --configs 23456 \
             --private_ip true \
@@ -9281,6 +9316,21 @@ paths:
                     is complete, the Linode will be powered on.
                   example: warm
                   default: cold
+                placement_group:
+                  type: object
+                  description: |
+                    Include this to assign this Linode to an existing [placement group](/docs/products/compute/compute-instances/guides/placement-groups/) in the data center you're migrating to. These constraints apply:
+
+                    * If the target Linode is in a placement group, it will be removed from it when migrating.
+                    * The target placement group needs to be in the same `region` you're migrating to.
+                    * The target placement group needs to have capacity. Run the [Region View](/docs/api/regions/#region-view) operation for the region you want to migrate to, and store the `maximum_linodes_per_pg` value. Run the [Placement Group View](/docs/api/placement-groups/#placement-group-view) operation for that same region to review how many Linodes are in that group.
+                  required:
+                  - id
+                  properties:
+                    id:
+                      $ref: '#/components/schemas/PlacementGroup/properties/id'
+                  #  compliant_only:
+                  #    $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/compliant_only'
       responses:
         '200':
           description: Scheduled migration started
@@ -9296,12 +9346,17 @@ paths:
           curl -H "Content-Type: application/json" \
             -H "Authorization: Bearer $TOKEN" \
               -X POST -d '{
-                "region": "us-central"
+                "region": "us-central",
+                "placement_group": {
+                  "id": 528
+                }
               }' \
               https://api.linode.com/v4/linode/instances/123/migrate
       - lang: CLI
         source: >
-          linode-cli linodes migrate 123 --region us-central
+          linode-cli linodes migrate 123 \
+          --region us-central \
+          --placement_group.id 528 \
   /linode/instances/{linodeId}/mutate:
     parameters:
     - name: linodeId
@@ -17257,6 +17312,349 @@ paths:
         source: >
           curl -H "Authorization: Bearer $TOKEN" \
             https://api.linode.com/v4/object-storage/transfer/
+  /placement/groups:
+    x-linode-cli-command: placement
+    get:
+      parameters:
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageSize'
+      summary: Placement Groups List
+      description: >
+        Returns a paginated list of placement groups you have permission to view.
+      tags:
+        - Placement Groups
+      operationId: getPlacementGroups
+      x-linode-cli-action:
+        - groups-list
+        - groups-ls
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - placement:read_only
+      responses:
+        '200':
+          description: |
+            Returns an array of all placement groups on your Account.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PlacementGroup'
+                  page:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/page'
+                  pages:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/pages'
+                  results:
+                    $ref: '#/components/schemas/PaginationEnvelope/properties/results'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              https://api.linode.com/v4/placement/groups
+      - lang: CLI
+        source: >
+          linode-cli placement-list
+    post:
+      x-linode charge: true
+      x-linode grant: add_placement
+      summary: Placement Group Create
+      description: |
+        Creates a placement group on your account. Placement groups let you set the physical location of your compute instances in a data center (region) to best suit your need.
+
+        * For this request to complete successfully, your user must have the `add_placement` grant.
+        * We offer an [example API workflow](/docs/products/compute/compute-instances/guides/placement-groups/#create-a-placement-group) you can follow to create a placement group.
+
+        **Note**: With the beta release, this service is only available in [select regions](/docs/products/compute/compute-instances/guides/placement-groups/#availability).
+      tags:
+      - Placement Groups
+      operationId: createPlacementGroup
+      x-linode-cli-action: group-create
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        description: The requested initial state of the new placement group.
+        required: true
+        x-linode-cli-allowed-defaults:
+        - affinity_type
+        - is_strict
+        - label
+        - region
+        content:
+          application/json:
+            schema:
+              required:
+                - affinity_type
+                - is_strict
+                - label
+                - region
+              type: object
+              allOf:
+                - $ref: '#/components/schemas/PlacementGroupRequest'
+      responses:
+        '200':
+          description: >
+            A new placement group is being created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementGroup'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "label": "PG_Miami_failover",
+                "region": "us-mia",
+                "affinity_type": "anti-affinity:local",
+                "is_strict": true
+              }' \
+              https://api.linode.com/v4/placement/groups
+      - lang: CLI
+        source: >
+          linode-cli placement create \
+            --label PG_Miami_failover \
+            --region us-mia \
+            --affinity_type "anti-affinity:local" \
+            --is_strict true
+  /placement/groups/{groupId}:
+    x-linode-cli-command: placement
+    parameters:
+    - name: groupId
+      in: path
+      description: ID of the placement group to look up. Run the [Placement Groups List](#placement-groups-list) operation and store the `id` for the applicable placement group.
+      required: true
+      schema:
+        type: integer
+    get:
+      x-linode-grant: read-only
+      tags:
+      - Placement Groups
+      summary: Placement Group View
+      description: |
+        View a specific placement group by ID.
+      operationId: getPlacementGroup
+      x-linode-cli-action: group-view
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_only
+      responses:
+        '200':
+          description: Returns a single placement group object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementGroup'
+      x-code-samples:
+        - lang: Shell
+          source: >
+            curl -H "Authorization: Bearer $TOKEN" \
+                -X GET \
+                https://api.linode.com/v4/placement/groups/528
+        - lang: CLI
+          source: >
+            linode-cli placement view 528
+    put:
+      x-linode-grant: read-write
+      tags:
+      - Placement Groups
+      summary: Placement Group Update
+      description: |
+        Change the `label` for a specific placement group. This is the only value you can update. However, you can [add](#placement-group-add-linode) more compute instances or [remove](#placement-group-remove-linode) existing ones.
+      operationId: updatePlacementGroup
+      x-linode-cli-action: group-update
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        description: >
+          Include the `label` parameter to update the name of your placement group.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                label:
+                  $ref: '#/components/schemas/PlacementGroupRequest/properties/label'
+      responses:
+        '200':
+          description: The updated placement group.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementGroup'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X PUT -d '{
+                "label": "PG_Miami_failover_update"
+              }' \
+              https://api.linode.com/v4/placement/groups/528
+      - lang: CLI
+        source: >
+          linode-cli placement update 528 \
+            --label PG_Miami_failover_update
+    delete:
+      x-linode-grant: read_write
+      tags:
+      - Placement Groups
+      summary: Placement Group Delete
+      description: |
+        Deletes a placement group you have permission to `read_write`.
+
+        * Deleting a placement group can't be undone.
+        * All compute instances need to be [removed](#placement-group-unassign) before you can delete a placement group.
+        * If your placement group is non-compliant, you can't delete it. You need to wait for our help to bring it [compliant](/docs/products/compute/compute-instances/guides/placement-groups/#non-compliance-precedence).
+      operationId: deletePlacementGroup
+      x-linode-cli-action:
+        - group-delete
+        - group-rm
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      responses:
+        '200':
+          description: Delete successful
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Authorization: Bearer $TOKEN" \
+              -X DELETE \
+              https://api.linode.com/v4/placement/groups/528
+      - lang: CLI
+        source: >
+          linode-cli placement delete 528
+  /placement/groups/{groupId}/assign:
+    x-linode-cli-command: placement
+    parameters:
+    - name: groupId
+      in: path
+      description: ID of the placement group to look up. Run the [Placement Groups List](#placement-groups-list) operation and store the `id` for the applicable placement group.
+      required: true
+      schema:
+        type: integer
+    post:
+      x-linode-grant: read-write
+      tags:
+      - Placement Groups
+      summary: Placement Group Assign
+      description: |
+        Add one or more compute instances to your placement group. Check out our [example API workflow](/docs/products/compute/compute-instances/guides/placement-groups/#create-a-placement-group) to create a placement group and add compute instances.
+      operationId: placementGroupAddLinode
+      x-linode-cli-action: assign-linode
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        required: true
+        description: >
+          The compute instances you want to add to your placement group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlacementGroupComputeInstances'
+      responses:
+        '200':
+          description: >
+            The compute instance was added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementGroup'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "linode": [123, 456],
+                "non-compliant": false
+              }' \
+              https://api.linode.com/v4/placement/groups/528/assign
+      - lang: CLI
+        source: >
+          linode-cli placement assignLinode 528 \
+            --linodes 123 456 \
+            --non-compliant true
+  /placement/groups/{groupId}/unassign:
+    x-linode-cli-command: placement
+    parameters:
+    - name: groupId
+      in: path
+      description: ID of the placement group to look up. Run the [Placement Groups List](#placement-groups-list) operation and store the `id` for the applicable placement group.
+      required: true
+      schema:
+        type: integer
+    post:
+      x-linode-grant: read-write
+      tags:
+      - Placement Groups
+      summary: Placement Group Unassign
+      description: |
+        Remove one or more compute instances from your placement group.
+      x-linode-cli-action: unassign-linode
+      security:
+      - personalAccessToken: []
+      - oauth:
+        - linodes:read_write
+      requestBody:
+        required: true
+        description: >
+          The compute instances you want to remove from your placement group.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlacementGroupComputeInstances/properties/linodes'
+      responses:
+        '200':
+          description: >
+            The compute instance was removed successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlacementGroup'
+        default:
+          $ref: '#/components/responses/ErrorResponse'
+      x-code-samples:
+      - lang: Shell
+        source: >
+          curl -H "Content-Type: application/json" \
+              -H "Authorization: Bearer $TOKEN" \
+              -X POST -d '{
+                "linode": [123, 456]
+              }' \
+              https://api.linode.com/v4/placement/groups/528/unassign
+      - lang: CLI
+        source: >
+          linode-cli placement unassignLinode 528 \
+            --linode 123 456
   /profile:
     x-linode-cli-command: profile
     get:
@@ -20775,6 +21173,7 @@ components:
           - NodeBalancers
           - Block Storage
           - Object Storage
+          - Placement Groups
           readOnly: true
         city:
           type: string
@@ -22824,6 +23223,13 @@ components:
           - password_reset
           - payment_method_add
           - payment_submitted
+          - placement_group_assign
+          - placement_group_became_compliant
+          - placement_group_became_non_compliant
+          - placement_group_create
+          - placement_group_delete
+          - placement_group_unassign
+          - placement_group_update
           - profile_update
           - stackscript_create
           - stackscript_delete
@@ -22935,6 +23341,7 @@ components:
               - managed_service
               - nodebalancer
               - oauth_client
+              - placement_group
               - profile
               - stackscript
               - tag
@@ -24622,6 +25029,21 @@ components:
               offline: red
               billing_suspension: red
               default_: yellow
+        placement_group:
+          type: object
+          nullable: true
+          description: >
+            Details on the [placement group](/docs/products/compute/compute-instances/guides/placement-groups/) that this Linode belongs to. Empty if the Linode isn't in a placement group.
+          properties:
+            id:
+              $ref: '#/components/schemas/PlacementGroup/properties/id'
+            label:
+              $ref: '#/components/schemas/PlacementGroup/properties/label'
+            affinity_type:
+              $ref: '#/components/schemas/PlacementGroup/properties/affinity_type'
+            is_strict:
+              $ref: '#/components/schemas/PlacementGroup/properties/is_strict'
+          readOnly: true
         hypervisor:
           type: string
           description: >
@@ -27737,6 +28159,133 @@ components:
           x-linode-cli-display: 6
           example: '2018-01-01T13:46:32'
           readOnly: true
+    PlacementGroup:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: false
+          description: >
+            The placement group's ID. You need to provide it for all operations impacting it.
+          example: 528
+          x-linode-cli-display: 1
+        label:
+          type: string
+          x-linode-cli-display: 1
+          x-linode-filterable: true
+          description: |
+            The unique name set for the placement group. A label has these constraints:
+
+            * It needs to begin and end with an alphanumeric character.
+            * It can only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+          example: PG_Miami_failover
+          minLength: 1
+        region:
+          type: string
+          x-linode-cli-display: 1
+          x-linode-filterable: true
+          readOnly: true
+          description: >
+            The [region](/docs/api/regions/#regions-list) where the placement group was deployed.
+          example: us-mia
+        affinity_type:
+          type: string
+          x-linode-filterable: true
+          x-linode-cli-display: 1
+          readOnly: true
+          description: |
+            How compute instances are distributed in your placement group. `anti-affinity:local` places compute instances in separate fault domains, but still in the same region.
+
+            **Note**: With the limited availability release, only `anti_affinity:local` is available for `affinity_type`.
+          example: anti-affinity:local
+        is_compliant:
+          type: boolean
+          nullable: false
+          description: >
+            The availability of the placement group. `true` indicates the group is available and all the compute instances in your group meet your `affinity_type` and `is_strict` enforcement setting. If `false`, the group is unavailable. One or more compute instances violate your `affinity_type` and `is_strict` settings. You need to wait for our assistance to physically move compute instances to make the group compliant.
+          example: true
+        members:
+          type: array
+          description: >
+            An array of compute instances included in the placement group.
+          items:
+            type: object
+            properties:
+              linode_id:
+                type: integer
+                description: >
+                  The unique identifier for a compute instance included in the placement group.
+                readOnly: true
+                example: 123
+              is_compliant:
+                type: boolean
+                description: >
+                  Whether or not the compute instance meets your group's `affinity_type` and `is_strict` settings. If `false`, the compute instance makes the group non-compliant. You need to wait for our assistance to physically move it to meet your model, once applicable space is available.
+                example: true
+        is_strict:
+          type: boolean
+          nullable: false
+          description: |
+            How the API enforces your `affinity_type`:
+
+            * Set to `true`, your group is strict. You can't add more compute instances to your placement group if your preferred container lacks capacity or is unavailable.
+            * Set to `false`, your group is flexible. You can add more compute instances to it even if they violate the `affinity_type`. If you violate the `affinity_type` your placement group becomes non-compliant and you need to wait for our assistance.
+          example: true
+    PlacementGroupRequest:
+      type: object
+      description: Common properties for creating and rebuilding placement groups.
+      properties:
+        affinity_type:
+          type: string
+          description: |
+            Determine how compute instances are to be distributed in your placement group. Set to `anti-affinity:local` to place compute instances in separate fault domains, but still in the same region. This better supports a high-availability model.
+
+            **Note**: With the limited availability release, only `anti_affinity:local` is available for `affinity_type`.
+          x-linode-cli-display: 1
+          enum:
+          - anti_affinity:local
+          example:
+          - anti_affinity:local
+        is_strict:
+          type: boolean
+          description: |
+            How the API enforces your `affinity_type`:
+
+            * Set to `true`, your group is strict, You can't add more compute instances to your placement group if your preferred container lacks capacity or is unavailable.
+            * Set to `false`, your group is flexible. You can add more compute instances to it even if they violate the `affinity_type`. If you violate the `affinity_type` your placement group becomes non-compliant and you need to wait for our assistance.
+
+            **Note**: Once you create a placement group, you can't change its `is_strict` setting.
+          example: true
+        label:
+          type: string
+          description: |
+            A unique name for the placement group. A placement group `label` has the following constraints:
+            
+            * It needs to begin and end with an alphanumeric character.
+            * It can only consist of alphanumeric characters, hyphens (`-`), underscores (`_`), or periods (`.`).
+          example: PG_Miami_failover
+          minLength: 1
+        region:
+          type: string
+          description: >
+            The data center that houses the compute instances you want to add to your placement group. Run the [Linodes List](/docs/api/linode-instances/#linodes-list) operation to view your compute instances and store the `region` identifier.
+          example: us-iad
+    PlacementGroupComputeInstances:
+      type: object
+      description: >
+         The compute instances included in a placement group.
+      properties:
+        linodes:
+          type: array
+          items:
+            type: integer
+          description: >
+            The `linodeId` values for individual compute instances included in the placement group.
+          example: 528
+        # compliant_only:
+        #  type: boolean
+        #  description: >
+        #    You can optionally include this and set it to `true` if your placement group's affinity type enforcement setting is flexible. (The group's `is_strict` setting is `false`.) This lets you add a compute instance to your placement group if the group is currently non-compliant.
     Profile:
       type: object
       description: >
@@ -27978,6 +28527,7 @@ components:
             - longview
             - managed
             - nodebalancer
+            - placement_group
             - objectstorage
             - transfer_tx
           description: >
@@ -28070,6 +28620,7 @@ components:
           - NodeBalancers
           - Block Storage
           - Object Storage
+          - Placement Groups
           readOnly: true
           x-linode-cli-display: 4
         status:
@@ -28082,6 +28633,26 @@ components:
           - outage
           readOnly: true
           x-linode-cli-display: 5
+        placement_group_limits:
+          type: object
+          description: >
+            The limits for [placement groups](/docs/products/compute/compute-instances/guides/placement-groups/) in this region.
+          readOnly: true
+          x-linode-cli-display: 7
+          properties:
+            maximum_pgs_per_customer:
+              type: integer
+              nullable: true
+              description: >
+                The maximum number of placement groups you can have in this region. Displayed as `null` if you don't have a limit.
+              example: 10
+              readOnly: true
+            maximum_linodes_per_pg:
+              type: integer
+              description: >
+                The maximum number of compute instances you can include in a single placement group in this region.
+              example: 5
+              readOnly: true
         resolvers:
           type: object
           readOnly: true
