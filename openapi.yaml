@@ -11418,6 +11418,8 @@ paths:
                     readOnly: true
                     description: >
                       The Base64-encoded Kubeconfig file for this Cluster.
+                    contentEncoding: base64
+                    contentMediaType: application/yaml
         default:
           $ref: '#/components/responses/ErrorResponse'
       x-code-samples:
@@ -19292,7 +19294,7 @@ paths:
       - Tags
       operationId: getTaggedObjects
       x-linode-cli-command: view
-      x-linode-cli-skip: true
+      #x-linode-cli-skip: true
       parameters:
       - $ref: '#/components/parameters/pageOffset'
       - $ref: '#/components/parameters/pageSize'
