@@ -10994,11 +10994,13 @@ paths:
       - Linode Kubernetes Engine (LKE)
       summary: Node Pool Update
       description: |
-        Updates a Node Pool's count and autoscaler configuration.
+        Updates a Node Pool's count, labels and taints, and autoscaler configuration.
 
         Linodes will be created or deleted to match changes to the Node Pool's count.
 
         **Any local storage on deleted Linodes (such as "hostPath" and "emptyDir" volumes, or "local" PersistentVolumes) will be erased.**
+
+        Specifying labels and/or taints on update will overwrite any previous values, and existing nodes will be updated with the new values without a recycle.
       requestBody:
         description: The fields to update
         content:
@@ -11027,6 +11029,17 @@ paths:
                     "enabled": true,
                     "max": 12,
                     "min": 3
+                  },
+                  "labels": {
+                    "example.com/app": "app",
+                  },
+                  "taints": [
+                    {
+                      "key": "example.com/app",
+                      "value": "test",
+                      "effect": "NoSchedule",
+                    },
+                  ],
                 }' \
                 https://api.linode.com/v4/lke/clusters/12345/pools/456
       - lang: CLI
@@ -25723,6 +25736,99 @@ components:
           minimum: 1
           maximum: 100
           example: 6
+        labels:
+          type: object
+          description: |
+            A dictionary of key-value pairs to be added as labels to Node Pool nodes.
+
+            * Specifying an empty dictionary value will remove all previously set labels.
+          additionalProperties:
+            type: object
+            properties:
+              key:
+                type: string
+                minLength: 1
+                maxLength: 63
+                pattern: '^([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]${1,63}'
+                description: >
+                  The Kubernetes label key.
+
+                  * Must begin and end with an alphanumeric character.
+                  * May only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+                  * If the key begins with a DNS subdomain prefix and a single (`/`), like 'example.com/my-app', the prefix part must adhere to RFC 1123 DNS subdomain restrictions and be a maximum of 253 characters.
+                example: example.com/my-app
+              value:
+                type: string
+                minLength: 0
+                maxLength: 63
+                pattern: '^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?'
+                description: >
+                  The Kubernetes label value.
+
+                  * Must begin and end with an alphanumeric character.
+                  * May only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+                  * May be specified as an empty value with "".
+                example: foo
+          example:
+            example.com/my-app: foo
+        taints:
+          type: array
+          description: |
+            An array of Kubernetes taints to add to Node Pool nodes.
+
+            * Specifying an empty array value will remove all previously set taints.
+          items:
+            type: object
+            additionalProperties:
+              type: string
+            description: A Kubernetes taint to be add to Node Pool nodes.
+            properties:
+              key:
+                type: string
+                minLength: 1
+                maxLength: 63
+                pattern: '^([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9]${1,63}'
+                description: >
+                  The Kubernetes taint key.
+
+                  * Must begin and end with an alphanumeric character.
+                  * May only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+                  * If the key begins with a DNS subdomain prefix and a single (`/`), like 'example.com/my-app', the prefix part must adhere to RFC 1123 DNS subdomain restrictions and be a maximum of 253 characters.
+                example: example.com/my-app
+              value:
+                type: string
+                minLength: 0
+                maxLength: 63
+                pattern: '^(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])?'
+                description: >
+                  The Kubernetes taint value.
+
+                  * Must begin and end with an alphanumeric character.
+                  * May only consist of alphanumeric characters, hyphens (`-`), underscores (`_`) or periods (`.`).
+                  * May be specified as an empty value with "".
+                example: foo
+              effect:
+                type: string
+                description: >
+                  The Kubernetes taint effect.
+
+                  * Must be either `NoSchedule`, `PreferNoSchedule`, or `NoExecute`.
+                enum:
+                 - NoSchedule
+                 - PreferNoSchedule
+                 - NoExecute
+                example: NoSchedule
+            required:
+              - key
+              - value
+              - effect
+          example:
+            - key: foo
+              value: bar
+              effect: NoSchedule
+            - key: myapp.io/foo
+              value: bar
+              effect: NoExecute
         disks:
           type: array
           x-linode-cli-format: json
