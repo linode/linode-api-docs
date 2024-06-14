@@ -25794,11 +25794,11 @@ components:
               - value
               - effect
           example:
-            - key: foo,
-              value: bar,
+            - key: foo
+              value: bar
               effect: NoSchedule
-            - key: myapp.io/foo,
-              value: bar,
+            - key: myapp.io/foo
+              value: bar
               effect: NoExecute
         disks:
           type: array
