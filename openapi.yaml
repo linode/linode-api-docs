@@ -25621,6 +25621,14 @@ components:
                 Defines whether High Availability is enabled for the Control Plane Components of the cluster. Defaults to `false`.
               x-linode-cli-display: 5
               example: true
+        apl_enabled:
+          type: boolean
+          description: >
+            Defines whether APL is installed during creation of the LKE cluster. Defaults to `false`.
+            If set to `true`, implies `control_plane.high_availability` set to `true`.
+            Can only be set when creating the cluster.
+          x-linode-cli-display: 6
+          example: true
         tags:
           x-linode-filterable: true
           type: array
