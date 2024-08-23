@@ -25627,7 +25627,7 @@ components:
             Defines whether APL is installed during creation of the LKE cluster. Defaults to `false`.
             If set to `true`, implies `control_plane.high_availability` set to `true`.
             Can only be set when creating the cluster.
-          x-linode-cli-display: 6
+          x-linode-cli-display: 0
           example: true
         tags:
           x-linode-filterable: true
