@@ -15706,7 +15706,7 @@ paths:
                   id: mysql/8.0.26
                   total_disk_size_gb: 15
                   used_disk_size_gb: 2
-                  version: 8.0.26
+                  version: 4.189.06
                 page: 1
                 pages: 1
                 results: 1
@@ -16008,7 +16008,7 @@ paths:
                     frequency: weekly
                     hour_of_day: 0
                     week_of_month: null
-                  version: 8.0.26
+                  version: 4.189.06
                 page: 1
                 pages: 1
                 results: 1
@@ -16333,7 +16333,7 @@ paths:
                     hour_of_day: 0
                     week_of_month: null
                   used_disk_size_gb: 2
-                  version: 8.0.26
+                  version: 4.189.06
                 page: 1
                 pages: 1
                 results: 1
