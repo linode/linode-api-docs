@@ -100,6 +100,8 @@ else
   echo "Release process is complete."
   echo
   echo "Once confirmed changes are verified, you can:"
-  echo "  git push release-${version}"
-  echo "  git push ${git_tag}"
+  echo "  git push upstream release-${version}"
+  echo "  git push upstream ${git_tag}"
+  echo "Then go into GitHub and PR into master:"
+  echo "https://github.com/linode/linode-api-docs/compare/master...release-${git_tag}"
 fi
