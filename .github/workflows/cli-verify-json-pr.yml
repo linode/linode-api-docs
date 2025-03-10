@@ -1,0 +1,70 @@
+name: Run Tests with Linode CLI and JSON Spec
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'Specify commit hash to test. This value is mandatory to ensure the tests run against a specific commit'
+        required: true
+        default: ''
+      pull_request_number:
+        description: 'Specify pull request number associated with the commit. Optional, but recommended when providing a commit hash (sha)'
+        required: false
+      test_suite:
+        description: "Specify  test suite to run from the 'tests/integration' directory. Examples: 'cli', 'domains', 'events', etc. If not provided, all suites are executed"
+        required: false
+      run_long_tests:
+        description: "Select 'True' to include long-running tests (e.g., database provisioning, server rebuilds). Defaults to 'False'"
+        required: false
+        type: choice
+        options:
+          - "True"
+          - "False"
+        default: "False"
+
+jobs:
+  test-linode-cli:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.sha != '' || github.event_name == 'push' || github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout Current Repository (JSON Spec)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: 'recursive'
+          ref: ${{ inputs.sha || github.ref }}
+          path: json-spec
+
+      - name: Checkout Linode CLI (dev branch)
+        uses: actions/checkout@v4
+        with:
+          repository: linode/linode-cli
+          ref: dev
+          path: linode-cli
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+
+      - name: Get JSON Spec Path
+        run: echo "JSON_SPEC_PATH=$(pwd)/json-spec/spec.json" >> $GITHUB_ENV
+
+      - name: Install Linode CLI dependencies
+        run: |
+          cd linode-cli
+          SPEC=$JSON_SPEC_PATH make install
+
+      - name: Run CLI E2E Tests
+        run: |
+          cd linode-cli
+          make test-int TEST_SUITE="${{ inputs.test_suite }}" RUN_LONG_TESTS="${{ inputs.run_long_tests }}"
+        env:
+          LINODE_CLI_TOKEN: ${{ env.LINODE_CLI_TOKEN }}
