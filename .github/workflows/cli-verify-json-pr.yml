@@ -73,7 +73,7 @@ jobs:
 
       - name: get 10 lines
         run: |
-          cat "${{ env.JSON_SPEC_PATH }}" | head 10
+          cat "${{ env.JSON_SPEC_PATH }}" | head -10
 
       - name: Install Linode CLI dependencies
         run: |
