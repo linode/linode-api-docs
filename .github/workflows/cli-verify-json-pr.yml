@@ -17,7 +17,7 @@ on:
         description: 'Specify pull request number associated with the commit. Optional, but recommended when providing a commit hash (sha)'
         required: false
       test_suite:
-        description: "Specify  test suite to run from the 'tests/integration' directory. Examples: 'cli', 'domains', 'events', etc. If not provided, all suites are executed"
+        description: "Specify test suite to run from the 'tests/integration' directory. Examples: 'cli', 'domains', 'events', etc. If not provided, all suites are executed"
         required: false
       run_long_tests:
         description: "Select 'True' to include long-running tests (e.g., database provisioning, server rebuilds). Defaults to 'False'"
@@ -52,7 +52,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.9"
+          python-version: "3.10"
 
       - name: Get JSON Spec Path
         run: echo "JSON_SPEC_PATH=$(pwd)/json-spec/spec.json" >> $GITHUB_ENV
@@ -60,11 +60,11 @@ jobs:
       - name: Install Linode CLI dependencies
         run: |
           cd linode-cli
-          SPEC=$JSON_SPEC_PATH make install
+          SPEC="$JSON_SPEC_PATH" make install
 
       - name: Run CLI E2E Tests
         run: |
           cd linode-cli
           make test-int TEST_SUITE="${{ inputs.test_suite }}" RUN_LONG_TESTS="${{ inputs.run_long_tests }}"
         env:
-          LINODE_CLI_TOKEN: ${{ env.LINODE_CLI_TOKEN }}
+          LINODE_CLI_TOKEN: ${{ secrets.LINODE_CLI_TOKEN }}
