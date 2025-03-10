@@ -71,10 +71,14 @@ jobs:
           ls -l
           echo "JSON_SPEC_PATH=$(pwd)/openapi.json" >> $GITHUB_ENV
 
+      - name: get 10 lines
+        run: |
+          cat "${{ env.JSON_SPEC_PATH }}" | head 10
+
       - name: Install Linode CLI dependencies
         run: |
           cd linode-cli
-          SPEC="$JSON_SPEC_PATH" make install
+          SPEC="${{ env.JSON_SPEC_PATH }}" make install
 
       - name: Run CLI E2E Tests
         run: |
