@@ -27,4 +27,4 @@ jobs:
         pip install openapi3
     - name: openapi linter
       run: |
-        python -m openapi3 openapi.yaml
+        python -m openapi3 openapi.json
