@@ -9,13 +9,9 @@ on:
       - development
   workflow_dispatch:
     inputs:
-      spec_file:
-        description: 'Choose a file'
-        required: false
-        type: 'file'
       sha:
         description: 'Specify commit hash to test. This value is mandatory to ensure the tests run against a specific commit'
-        required: false
+        required: true
         default: ''
       pull_request_number:
         description: 'Specify pull request number associated with the commit. Optional, but recommended when providing a commit hash (sha)'
@@ -44,7 +40,7 @@ jobs:
   test-linode-cli:
     runs-on: ubuntu-latest
     if: |
-      github.event_name == 'workflow_dispatch' || 
+      github.event_name == 'workflow_dispatch' && inputs.sha != '' || 
       github.event_name == 'push' || 
       (github.event_name == 'pull_request' && inputs.run_on_pr == 'True')
 
@@ -72,19 +68,12 @@ jobs:
       - name: Get JSON Spec Path
         run: |
           cd json-spec
-          # Set default JSON spec path
           echo "JSON_SPEC_PATH=$(pwd)/openapi.json" >> $GITHUB_ENV
-          # If spec_file is provided, use it; otherwise fallback to default
-          if [[ -n "${{ inputs.spec_file }}" ]]; then
-            echo "SPEC_FILE_PATH=${{ inputs.spec_file }}" >> $GITHUB_ENV
-          else
-            echo "SPEC_FILE_PATH=$(pwd)/openapi.json" >> $GITHUB_ENV
-          fi
 
       - name: Install Linode CLI
         run: |
           cd linode-cli
-          SPEC="${{ env.SPEC_FILE_PATH }}" make install
+          SPEC="${{ env.JSON_SPEC_PATH }}" make install
 
       - name: Run CLI E2E Tests
         run: |
