@@ -287,6 +287,42 @@
           "file-path": "errors/409.yaml"
         }
       },
+      "504-account-cancel": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "additionalProperties": false,
+              "properties": {
+                "errors": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "reason": {
+                        "description": "A string explaining that the account is taking longer to close than expected.",
+                        "example": "Cancellation is taking longer than expected. It may have been successful. Contact customer support to confirm.",
+                        "type": "string"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "type": "array"
+                }
+              },
+              "type": "object",
+              "x-akamai": {
+                "file-path": "schemas/added-post-cancel-account-504.yaml"
+              }
+            },
+            "x-example": {
+              "x-ref": "../examples/tbd.json"
+            }
+          }
+        },
+        "description": "Account is taking longer than expected to cancel.",
+        "x-akamai": {
+          "file-path": "errors/504-account-cancel.yaml"
+        }
+      },
       "accepted-response": {
         "content": {
           "application/json": {
@@ -3163,6 +3199,29 @@
         "type": "object",
         "x-akamai": {
           "file-path": "schemas/added-post-cancel-account-409.yaml"
+        }
+      },
+      "added-post-cancel-account-504": {
+        "additionalProperties": false,
+        "properties": {
+          "errors": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "reason": {
+                  "description": "A string explaining that the account is taking longer to close than expected.",
+                  "example": "Cancellation is taking longer than expected. It may have been successful. Contact customer support to confirm.",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "type": "object",
+        "x-akamai": {
+          "file-path": "schemas/added-post-cancel-account-504.yaml"
         }
       },
       "added-post-client": {
@@ -6531,7 +6590,7 @@
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
     "title": "Akamai: Linode API",
-    "version": "4.197.1"
+    "version": "4.198.0"
   },
   "openapi": "3.0.1",
   "paths": {
@@ -7893,11 +7952,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List available services",
         "tags": [
           "Account availability"
@@ -8050,11 +8104,6 @@
             "oauth": [
               "account:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get a region's service availability",
@@ -8218,11 +8267,6 @@
             "oauth": [
               "account:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Enroll in a Beta program",
@@ -8480,11 +8524,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List enrolled Beta programs",
         "tags": [
           "Beta programs"
@@ -8677,11 +8716,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get an enrolled Beta program",
         "tags": [
           "Beta programs"
@@ -8835,6 +8869,42 @@
             "description": "Could not charge the credit card on file.",
             "x-akamai": {
               "file-path": "errors/409.yaml"
+            }
+          },
+          "504": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "errors": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "reason": {
+                            "description": "A string explaining that the account is taking longer to close than expected.",
+                            "example": "Cancellation is taking longer than expected. It may have been successful. Contact customer support to confirm.",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object",
+                  "x-akamai": {
+                    "file-path": "schemas/added-post-cancel-account-504.yaml"
+                  }
+                },
+                "x-example": {
+                  "x-ref": "../examples/tbd.json"
+                }
+              }
+            },
+            "description": "Account is taking longer than expected to cancel.",
+            "x-akamai": {
+              "file-path": "errors/504-account-cancel.yaml"
             }
           },
           "default": {
@@ -13660,14 +13730,6 @@
             "oauth": []
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          },
-          {
-            "url": "https://api.linode.com/v4beta"
-          }
-        ],
         "summary": "List maintenances",
         "tags": [
           "Maintenances"
@@ -15635,11 +15697,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Add a payment method",
         "tags": [
           "Payment methods"
@@ -15922,14 +15979,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          },
-          {
-            "url": "https://api.linode.com/v4beta"
-          }
-        ],
         "summary": "List payment methods",
         "tags": [
           "Payment methods"
@@ -16177,11 +16226,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get a payment method",
         "tags": [
           "Payment methods"
@@ -16411,11 +16455,6 @@
             "oauth": [
               "account:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Set a default payment method",
@@ -22376,11 +22415,6 @@
             "oauth": []
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Beta programs",
         "tags": [
           "Beta programs"
@@ -22574,11 +22608,6 @@
           },
           {
             "oauth": []
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get a Beta program",
@@ -33937,7 +33966,7 @@
     },
     "/{apiVersion}/images": {
       "post": {
-        "description": "Captures a private, gold-master image from a Linode disk.\n\n> \ud83d\udcd8\n>\n> - Captured images are stored using our Object Storage service. The `region` where the target image exists determines where the [resulting image is stored](https://techdocs.akamai.com/cloud-computing/docs/images#regions-and-captured-custom-images).\n>\n> - If you create an image from an encrypted disk, the API doesn't encrypt the image. When you rebuild a compute instance from that image, the resulting disk will be automatically encrypted.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli images create \\\n  --label this_is_a_label \\\n  --description \"A longer description \\\n    of the image\" \\\n  --disk_id 123\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_write\nlinodes:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "description": "Captures a private, gold-master image from a Linode disk.\n\n> \ud83d\udcd8\n>\n> - When you capture an image, we store it using our Object Storage service. The `region` where the target image exists determines where the [resulting image is stored](https://techdocs.akamai.com/cloud-computing/docs/images#regions-and-captured-custom-images).\n>\n> - When you create a new image, we automatically encrypt it for its protection. Images remain encrypted at rest, in storage, in caching, and in transit. When you [deploy](https://techdocs.akamai.com/linode-api/reference/deploy-an-image-to-a-new-compute-instance) an image, we automatically decrypt it. If you've enabled encryption for a Linode you want to create an image of, we also encrypt the image. When you deploy the image, the image is decrypted and the resulting disk will be automatically encrypted.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli images create \\\n  --label this_is_a_label \\\n  --description \"A longer description \\\n    of the image\" \\\n  --disk_id 123\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_write\nlinodes:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
         "externalDocs": {
           "description": "See documentation for this operation in Akamai's Linode API",
           "url": "https://techdocs.akamai.com/linode-api/reference/post-image"
@@ -34739,7 +34768,7 @@
     },
     "/{apiVersion}/images/upload": {
       "post": {
-        "description": "Creates a new private image container and returns a URL as the `upload_to` object in the response. Use this URL to upload your own disk image to the container.\n\n1. Ensure the disk image is raw disk image (`.img`) format.\n\n2. Compress the disk image using gzip (`.gz`) format. Compressed, the file can be up to 5 GB and decompressed it can be up to 6 GB.\n\n3. Upload the file in a separate PUT request that includes the `Content-type: application/octet-stream` header:\n\n  ```\n  curl -v \\\n    -H \"Content-Type: application/octet-stream\" \\\n    --upload-file example.img.gz \\\n    $UPLOAD_URL \\\n    --progress-bar \\\n    --output /dev/null\n  ```\n\n> \ud83d\udcd8\n>\n> - You need to upload image data within 24 hours of creation or the API cancels the upload and deletes the image container.\n>\n> - Only core regions that support our [Object Storage](https://techdocs.akamai.com/cloud-computing/reference/how-to-choose-a-data-center#product-availability) service can store an uploaded image.\n>\n> - If you create an image from an encrypted disk, the API doesn't encrypt the image. When you rebuild a compute instance from that image, the resulting disk will be automatically encrypted.\n>\n> - You can create a new image and upload image data using a single process through [Cloud Manager](https://www.linode.com/docs/products/tools/images/guides/upload-an-image/#uploading-an-image-file-through-the-cloud-manager) or the [Linode CLI](https://www.linode.com/docs/products/tools/images/guides/upload-an-image/#uploading-an-image-file-through-the-linode-cli).\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    # Run the operation to just get the upload_to URL\nlinode-cli images upload \\\n  --description \"Optional details about the Image\" \\\n  --label \"Example Image\" \\\n  --region us-east\n\n# Upload the image file in a single step\nlinode-cli image-upload \\\n  --description \"Optional details about the Image\" \\\n  --label \"Example Image\" \\\n  --region us-east \\\n  /path/to/image-file.img.gz\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_write\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "description": "Creates a new private image container and returns a URL as the `upload_to` object in the response. Use this URL to upload your own disk image to the container.\n\n1. Ensure the disk image is raw disk image (`.img`) format.\n\n2. Compress the disk image using gzip (`.gz`) format. Compressed, the file can be up to 5 GB and decompressed it can be up to 6 GB.\n\n3. Upload the file in a separate PUT request that includes the `Content-type: application/octet-stream` header:\n\n  ```\n  curl -v \\\n    -H \"Content-Type: application/octet-stream\" \\\n    --upload-file example.img.gz \\\n    $UPLOAD_URL \\\n    --progress-bar \\\n    --output /dev/null\n  ```\n\n> \ud83d\udcd8\n>\n> - You need to upload image data within 24 hours of creation or the API cancels the upload and deletes the image container.\n>\n> - Only core regions that support our [Object Storage](https://techdocs.akamai.com/cloud-computing/reference/how-to-choose-a-data-center#product-availability) service can store an uploaded image.\n>\n> - When you create a new image, we automatically encrypt it for its protection. Images remain encrypted at rest, in storage, in caching, and in transit. When you [deploy](https://techdocs.akamai.com/linode-api/reference/deploy-an-image-to-a-new-compute-instance) an image, we automatically decrypt it. If you've enabled encryption for a Linode you want to create an image of, we also encrypt the image. When you deploy the image, the image is decrypted and the resulting disk will be automatically encrypted.\n>\n> - You can create a new image and upload image data using a single process through [Cloud Manager](https://www.linode.com/docs/products/tools/images/guides/upload-an-image/#uploading-an-image-file-through-the-cloud-manager) or the [Linode CLI](https://www.linode.com/docs/products/tools/images/guides/upload-an-image/#uploading-an-image-file-through-the-linode-cli).\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    # Run the operation to just get the upload_to URL\nlinode-cli images upload \\\n  --description \"Optional details about the Image\" \\\n  --label \"Example Image\" \\\n  --region us-east\n\n# Upload the image file in a single step\nlinode-cli image-upload \\\n  --description \"Optional details about the Image\" \\\n  --label \"Example Image\" \\\n  --region us-east \\\n  /path/to/image-file.img.gz\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_write\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
         "externalDocs": {
           "description": "See documentation for this operation in Akamai's Linode API",
           "url": "https://techdocs.akamai.com/linode-api/reference/post-upload-image"
@@ -35116,14 +35145,6 @@
             "oauth": [
               "images:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          },
-          {
-            "url": "https://api.linode.com/v4beta"
           }
         ],
         "summary": "Upload an image",
@@ -36218,7 +36239,7 @@
     },
     "/{apiVersion}/images/{imageId}/regions": {
       "post": {
-        "description": "Target an existing image and replicate it to another compute region.\n\n- This operation is in Limited Availability. Talk to your account team about access to it.\n\n- This is only available in a `region` that supports Object Storage, which stores the replicated image. Run the [List regions](https://techdocs.akamai.com/linode-api/reference/get-regions) operation to review a region's `capabilities`.\n\n- To replicate an image, it needs to have a `status` of `available`. Run the [List images](https://techdocs.akamai.com/linode-api/reference/get-images) operation to view an image's `status`.\n\n- To also keep the target image in its original compute region, you need to include that `region` in the request's data. If you leave it out, the API removes the image from that region. Run the [Get an image](https://techdocs.akamai.com/linode-api/reference/get-image) operation to see the `regions` where an image currently exists.\n\n- You can't include an empty array to delete all images. You need to provide at least one compute `region` where the image is `available`. Use the [Delete an image](https://techdocs.akamai.com/linode-api/reference/delete-image) operation.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli images replicate private/12345 \\\n  --regions \"us-mia\" \\\n  --regions \"us-east\"\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_write\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "description": "__Limited availability__ Target an existing image and replicate it to another compute region.\n\n> \ud83d\udcd8\n>\n> This operation is in Limited Availability. Talk to your account team to get access.\n\n- This is only available in a `region` that supports Object Storage, which stores the replicated image. Run the [List regions](https://techdocs.akamai.com/linode-api/reference/get-regions) operation to review a region's `capabilities`.\n\n- To replicate an image, it needs to have a `status` of `available`. Run the [List images](https://techdocs.akamai.com/linode-api/reference/get-images) operation to view an image's `status`.\n\n- To also keep the target image in its original compute region, you need to include that `region` in the request's data. If you leave it out, the API removes the image from that region. Run the [Get an image](https://techdocs.akamai.com/linode-api/reference/get-image) operation to see the `regions` where an image currently exists.\n\n- You can't include an empty array to delete all images. You need to provide at least one compute `region` where the image is `available`. Use the [Delete an image](https://techdocs.akamai.com/linode-api/reference/delete-image) operation.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli images replicate private/12345 \\\n  --regions \"us-mia\" \\\n  --regions \"us-east\"\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_write\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
         "externalDocs": {
           "description": "See documentation for this operation in Akamai's Linode API",
           "url": "https://techdocs.akamai.com/linode-api/reference/post-replicate-image"
@@ -36558,6 +36579,7 @@
           "Images"
         ],
         "x-akamai": {
+          "status": "LA",
           "tabs": [
             {
               "syntax": "linode-cli images replicate private/12345 \\\n  --regions \"us-mia\" \\\n  --regions \"us-east\"",
@@ -46063,11 +46085,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Add a configuration profile interface",
         "tags": [
           "Interfaces"
@@ -46329,11 +46346,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List configuration profile interfaces",
         "tags": [
           "Interfaces"
@@ -46518,11 +46530,6 @@
             "oauth": [
               "linodes:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Reorder configuration profile interfaces",
@@ -46790,11 +46797,6 @@
             "oauth": [
               "linodes:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get a configuration profile interface",
@@ -47070,11 +47072,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Update a configuration profile interface",
         "tags": [
           "Interfaces"
@@ -47167,11 +47164,6 @@
             "oauth": [
               "linodes:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete a configuration profile interface",
@@ -51744,27 +51736,28 @@
                             "x-linode-filterable": true
                           },
                           "lke_cluster": {
-                            "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                            "additionalProperties": false,
+                            "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                             "nullable": true,
                             "properties": {
                               "id": {
-                                "description": "The ID of the related LKE Cluster.",
+                                "description": "The ID of the related LKE cluster.",
                                 "example": 12345,
                                 "type": "string"
                               },
                               "label": {
-                                "description": "The label of the related LKE Cluster.",
+                                "description": "The label of the related LKE cluster.",
                                 "example": "lkecluster12345",
                                 "type": "string"
                               },
                               "type": {
-                                "description": "__Read-only__ The type for LKE Clusters.",
+                                "description": "__Read-only__ The type for LKE clusters.",
                                 "example": "lkecluster",
                                 "readOnly": true,
                                 "type": "string"
                               },
                               "url": {
-                                "description": "The URL where you can access the related LKE Cluster.",
+                                "description": "The URL where you can access the related LKE cluster.",
                                 "example": "/v4/lke/clusters/12345",
                                 "type": "string"
                               }
@@ -52282,7 +52275,7 @@
     },
     "/{apiVersion}/linode/instances/{linodeId}/rebuild": {
       "post": {
-        "description": "Rebuilds a Linode you have the `read_write` permission to modify.\n\nA rebuild will first shut down the Linode, delete all disks and configs on the Linode, and then deploy a new `image` to the Linode with the given attributes. Additionally:\n\n  - Requires an `image` be supplied.\n  - Requires a `root_pass` be supplied to use for the root User's Account.\n  - It is recommended to supply SSH keys for the root User using the `authorized_keys` field.\n  - Linodes utilizing Metadata (`\"has_user_data\": true`) should include `metadata.user_data` in the rebuild request to continue using the service.\n\nDuring a rebuild, you can `enable` or `disable` local disk encryption. If disk encryption is not included in the request, the previous `disk_encryption` value is used. Disk encryption cannot be disabled if the compute instance is attached to a LKE nodepool.\n\nYou also have the option to resize the Linode to a different plan by including the `type` parameter with your request. Note that resizing involves migrating the Linode to a new hardware host, while rebuilding without resizing maintains the same hardware host. Resizing also requires significantly more time for completion of this operation. The following additional conditions apply:\n\n  - The Linode must not have a pending migration.\n  - Your Account cannot have an outstanding balance.\n  - The Linode must not have more disk allocation than the new Type allows.\n    - In that situation, you must first delete or resize the disk to be smaller.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli linodes rebuild 123 \\\n  --image \"linode/debian9\" \\\n  --root_pass aComplex@Password \\\n  --disk_encryption disabled \\\n  --authorized_keys \"ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer\" \\\n  --authorized_users \"myUsername\" \\\n  --authorized_users \"secondaryUsername\" \\\n  --booted true \\\n  --stackscript_id 10079 \\\n  --stackscript_data '{\"gh_username\": \"linode\"}' \\\n  --type \"g6-standard-2\" \\\n  --metadata.userdata \"I2Nsb3VkLWNvbmZpZw==\"\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    linodes:read_write\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "description": "Rebuilds a Linode you have the `read_write` permission to modify.\n\nA rebuild will first shut down the Linode, delete all disks and configs on the Linode, and then deploy a new `image` to the Linode with the given attributes. Additionally:\n\n  - Requires an `image` be supplied.\n  - Requires a `root_pass` be supplied to use for the root User's Account.\n  - It is recommended to supply SSH keys for the root User using the `authorized_keys` field.\n  - Linodes utilizing Metadata (`\"has_user_data\": true`) should include `metadata.user_data` in the rebuild request to continue using the service.\n\nDuring a rebuild, you can `enable` or `disable` local disk encryption. If disk encryption is not included in the request, the previous `disk_encryption` value is used. Disk encryption cannot be disabled if the compute instance is attached to an LKE node pool.\n\nYou also have the option to resize the Linode to a different plan by including the `type` parameter with your request. Note that resizing involves migrating the Linode to a new hardware host, while rebuilding without resizing maintains the same hardware host. Resizing also requires significantly more time for completion of this operation. The following additional conditions apply:\n\n  - The Linode must not have a pending migration.\n  - Your Account cannot have an outstanding balance.\n  - The Linode must not have more disk allocation than the new Type allows.\n    - In that situation, you must first delete or resize the disk to be smaller.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli linodes rebuild 123 \\\n  --image \"linode/debian9\" \\\n  --root_pass aComplex@Password \\\n  --disk_encryption disabled \\\n  --authorized_keys \"ssh-rsa AAAA_valid_public_ssh_key_123456785== user@their-computer\" \\\n  --authorized_users \"myUsername\" \\\n  --authorized_users \"secondaryUsername\" \\\n  --booted true \\\n  --stackscript_id 10079 \\\n  --stackscript_data '{\"gh_username\": \"linode\"}' \\\n  --type \"g6-standard-2\" \\\n  --metadata.userdata \"I2Nsb3VkLWNvbmZpZw==\"\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    linodes:read_write\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
         "externalDocs": {
           "description": "See documentation for this operation in Akamai's Linode API",
           "url": "https://techdocs.akamai.com/linode-api/reference/post-rebuild-linode-instance"
@@ -54634,7 +54627,7 @@
                             "type": "string"
                           },
                           "encryption": {
-                            "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                            "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                             "enum": [
                               "enabled",
                               "disabled"
@@ -54642,9 +54635,6 @@
                             "example": "enabled",
                             "readOnly": true,
                             "type": "string",
-                            "x-akamai": {
-                              "status": "LA"
-                            },
                             "x-linode-cli-display": 8
                           },
                           "filesystem_path": {
@@ -58213,7 +58203,7 @@
                     "x-linode-filterable": true
                   },
                   "tier": {
-                    "description": "__Beta__, __Filterable__ The desired Kubernetes tier.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
+                    "description": "__Beta__, __Filterable__ The desired Kubernetes tier, either `standard` or `enterprise`.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
                     "enum": [
                       "standard",
                       "enterprise"
@@ -58343,7 +58333,7 @@
                       "x-linode-filterable": true
                     },
                     "tier": {
-                      "description": "__Beta__, __Filterable__ The desired Kubernetes tier.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
+                      "description": "__Beta__, __Filterable__ The desired Kubernetes tier, either `standard` or `enterprise`.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
                       "enum": [
                         "standard",
                         "enterprise"
@@ -58551,7 +58541,7 @@
                             "x-linode-filterable": true
                           },
                           "tier": {
-                            "description": "__Beta__, __Filterable__ The desired Kubernetes tier.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
+                            "description": "__Beta__, __Filterable__ The desired Kubernetes tier, either `standard` or `enterprise`.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
                             "enum": [
                               "standard",
                               "enterprise"
@@ -58806,7 +58796,7 @@
                       "x-linode-filterable": true
                     },
                     "tier": {
-                      "description": "__Beta__, __Filterable__ The desired Kubernetes tier.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
+                      "description": "__Beta__, __Filterable__ The desired Kubernetes tier, either `standard` or `enterprise`.\n\n> \ud83d\udea7\n>\n> This field is in beta and only works when using the beta API. Call the URL with the `apiVersion` path parameter set to `v4beta`.",
                       "enum": [
                         "standard",
                         "enterprise"
@@ -63211,6 +63201,434 @@
       },
       "x-linode-cli-command": "lke"
     },
+    "/{apiVersion}/lke/tiers/{tier}/versions": {
+      "get": {
+        "description": "List LKE Kubernetes versions available for deployment to a Kubernetes cluster (any tier).\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke tiered-versions-list standard\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    lke:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "externalDocs": {
+          "description": "See documentation for this operation in Akamai's Linode API",
+          "url": "https://techdocs.akamai.com/linode-api/reference/get-lke-tiers-versions"
+        },
+        "operationId": "get-lke-tiers-versions",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "enterprise": {
+                    "summary": "LKE versions for enterprise tier",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "v1.31.1+lke4",
+                          "tier": "enterprise"
+                        }
+                      ],
+                      "page": 1,
+                      "pages": 1,
+                      "results": 1
+                    }
+                  },
+                  "standard": {
+                    "summary": "LKE versions for standard tier",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "1.32",
+                          "tier": "standard"
+                        },
+                        {
+                          "id": "1.31",
+                          "tier": "standard"
+                        },
+                        {
+                          "id": "1.30",
+                          "tier": "standard"
+                        }
+                      ],
+                      "page": 1,
+                      "pages": 1,
+                      "results": 3
+                    }
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "description": "__Read-only__ LKE versions for a tier.",
+                  "properties": {
+                    "data": {
+                      "description": "__Read-only__ LKE versions for the requested tier.",
+                      "items": {
+                        "additionalProperties": false,
+                        "description": "__Read-only__ LKE version for a tier.",
+                        "properties": {
+                          "id": {
+                            "description": "__Read-only__ A Kubernetes version number available for deployment to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version.",
+                            "example": "1.31",
+                            "minLength": 1,
+                            "readOnly": true,
+                            "type": "string"
+                          },
+                          "tier": {
+                            "description": "__Read-only__ An LKE tier.",
+                            "enum": [
+                              "standard",
+                              "enterprise"
+                            ],
+                            "example": "standard",
+                            "readOnly": true,
+                            "type": "string"
+                          }
+                        },
+                        "readOnly": true,
+                        "required": [
+                          "id",
+                          "tier"
+                        ],
+                        "type": "object",
+                        "x-akamai": {
+                          "file-path": "schemas/lke-tiers-version.yaml"
+                        }
+                      },
+                      "minItems": 1,
+                      "readOnly": true,
+                      "type": "array",
+                      "uniqueItems": true
+                    },
+                    "page": {
+                      "description": "__Read-only__ The current [page](https://techdocs.akamai.com/linode-api/reference/pagination).",
+                      "example": 1,
+                      "readOnly": true,
+                      "type": "integer"
+                    },
+                    "pages": {
+                      "description": "__Read-only__ The total number of [pages](https://techdocs.akamai.com/linode-api/reference/pagination).",
+                      "example": 1,
+                      "readOnly": true,
+                      "type": "integer"
+                    },
+                    "results": {
+                      "description": "__Read-only__ The total number of results.",
+                      "example": 1,
+                      "readOnly": true,
+                      "type": "integer"
+                    }
+                  },
+                  "readOnly": true,
+                  "type": "object",
+                  "x-akamai": {
+                    "file-path": "schemas/get-lke-tiers-versions-200.yaml"
+                  }
+                },
+                "x-example": {
+                  "x-ref": "../examples/get-lke-tiers-versions-200.json"
+                }
+              }
+            },
+            "description": "Returns a list of LKE Kubernetes versions available for deployment to a Kubernetes cluster (any tier)."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "errors": {
+                      "items": {
+                        "additionalProperties": false,
+                        "description": "An object for describing a single error that occurred during the processing of a request.",
+                        "properties": {
+                          "field": {
+                            "description": "The field in the request that caused this error. This may be a path, separated by periods in the case of nested fields. In some cases this may come back as `null` if the error is not specific to any single element of the request.",
+                            "example": "fieldname",
+                            "type": "string"
+                          },
+                          "reason": {
+                            "description": "What happened to cause this error. In most cases, this can be fixed immediately by changing the data you sent in the request, but in some cases you will be instructed to [Open a support ticket](https://techdocs.akamai.com/linode-api/reference/post-ticket) or perform some other action before you can complete the request successfully.",
+                            "example": "fieldname must be a valid value",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "x-akamai": {
+                          "file-path": "schemas/error-object.yaml"
+                        }
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
+          }
+        },
+        "security": [
+          {
+            "personalAccessToken": []
+          },
+          {
+            "oauth": [
+              "lke:read_only"
+            ]
+          }
+        ],
+        "summary": "List LKE Kubernetes versions (any tier)",
+        "tags": [
+          "LKE versions"
+        ],
+        "x-akamai": {
+          "tabs": [
+            {
+              "syntax": "linode-cli lke tiered-versions-list standard",
+              "title": "CLI",
+              "url": "https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli"
+            },
+            {
+              "syntax": "lke:read_only",
+              "title": "OAuth scopes",
+              "url": "https://techdocs.akamai.com/linode-api/reference/get-started#oauth"
+            }
+          ]
+        },
+        "x-linode-cli-action": "tiered-versions-list",
+        "x-linode-grant": "read_only"
+      },
+      "parameters": [
+        {
+          "description": "__Enum__ Call the `v4beta` URL for operations still only in beta.",
+          "example": "{{apiVersion}}",
+          "in": "path",
+          "name": "apiVersion",
+          "required": true,
+          "schema": {
+            "enum": [
+              "v4beta"
+            ],
+            "example": "v4beta",
+            "type": "string"
+          },
+          "x-akamai": {
+            "file-path": "parameters/api-version-v4beta-path.yaml"
+          }
+        },
+        {
+          "description": "__Enum__ The LKE tier to use.",
+          "example": "{{tier}}",
+          "in": "path",
+          "name": "tier",
+          "required": true,
+          "schema": {
+            "enum": [
+              "standard",
+              "enterprise"
+            ],
+            "example": "standard",
+            "type": "string"
+          },
+          "x-akamai": {
+            "file-path": "parameters/lke-tier-path.yaml"
+          }
+        }
+      ],
+      "x-akamai": {
+        "file-path": "paths/lke-tiers-versions.yaml",
+        "path-info": "/{apiVersion}/lke/tiers/{tier}/versions"
+      },
+      "x-linode-cli-command": "lke"
+    },
+    "/{apiVersion}/lke/tiers/{tier}/versions/{version}": {
+      "get": {
+        "description": "View an LKE Kubernetes version available for deployment to a Kubernetes cluster (any tier)\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke tiered-version-view standard 1.31\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    lke:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "externalDocs": {
+          "description": "See documentation for this operation in Akamai's Linode API",
+          "url": "https://techdocs.akamai.com/linode-api/reference/get-lke-tiers-version"
+        },
+        "operationId": "get-lke-tiers-version",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "examples": {
+                  "enterprise": {
+                    "summary": "LKE version for enterprise tier",
+                    "value": {
+                      "id": "v1.31.1+lke4",
+                      "tier": "enterprise"
+                    }
+                  },
+                  "standard": {
+                    "summary": "LKE version for standard tier",
+                    "value": {
+                      "id": "1.32",
+                      "tier": "standard"
+                    }
+                  }
+                },
+                "schema": {
+                  "additionalProperties": false,
+                  "description": "__Read-only__ LKE version for a tier.",
+                  "properties": {
+                    "id": {
+                      "description": "__Read-only__ A Kubernetes version number available for deployment to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version.",
+                      "example": "1.31",
+                      "minLength": 1,
+                      "readOnly": true,
+                      "type": "string"
+                    },
+                    "tier": {
+                      "description": "__Read-only__ An LKE tier.",
+                      "enum": [
+                        "standard",
+                        "enterprise"
+                      ],
+                      "example": "standard",
+                      "readOnly": true,
+                      "type": "string"
+                    }
+                  },
+                  "readOnly": true,
+                  "required": [
+                    "id",
+                    "tier"
+                  ],
+                  "type": "object",
+                  "x-akamai": {
+                    "file-path": "schemas/lke-tiers-version.yaml"
+                  }
+                },
+                "x-example": {
+                  "x-ref": "../examples/get-lke-tiers-version-200.json"
+                }
+              }
+            },
+            "description": "Returns an LKE Kubernetes version available for deployment to a Kubernetes cluster (any tier)."
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "errors": {
+                      "items": {
+                        "additionalProperties": false,
+                        "description": "An object for describing a single error that occurred during the processing of a request.",
+                        "properties": {
+                          "field": {
+                            "description": "The field in the request that caused this error. This may be a path, separated by periods in the case of nested fields. In some cases this may come back as `null` if the error is not specific to any single element of the request.",
+                            "example": "fieldname",
+                            "type": "string"
+                          },
+                          "reason": {
+                            "description": "What happened to cause this error. In most cases, this can be fixed immediately by changing the data you sent in the request, but in some cases you will be instructed to [Open a support ticket](https://techdocs.akamai.com/linode-api/reference/post-ticket) or perform some other action before you can complete the request successfully.",
+                            "example": "fieldname must be a valid value",
+                            "type": "string"
+                          }
+                        },
+                        "type": "object",
+                        "x-akamai": {
+                          "file-path": "schemas/error-object.yaml"
+                        }
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            },
+            "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
+          }
+        },
+        "security": [
+          {
+            "personalAccessToken": []
+          },
+          {
+            "oauth": [
+              "lke:read_only"
+            ]
+          }
+        ],
+        "summary": "Get an LKE Kubernetes version (any tier)",
+        "tags": [
+          "LKE versions"
+        ],
+        "x-akamai": {
+          "tabs": [
+            {
+              "syntax": "linode-cli lke tiered-version-view standard 1.31",
+              "title": "CLI",
+              "url": "https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli"
+            },
+            {
+              "syntax": "lke:read_only",
+              "title": "OAuth scopes",
+              "url": "https://techdocs.akamai.com/linode-api/reference/get-started#oauth"
+            }
+          ]
+        },
+        "x-linode-cli-action": "tiered-version-view",
+        "x-linode-grant": "read_only"
+      },
+      "parameters": [
+        {
+          "description": "__Enum__ Call the `v4beta` URL for operations still only in beta.",
+          "example": "{{apiVersion}}",
+          "in": "path",
+          "name": "apiVersion",
+          "required": true,
+          "schema": {
+            "enum": [
+              "v4beta"
+            ],
+            "example": "v4beta",
+            "type": "string"
+          },
+          "x-akamai": {
+            "file-path": "parameters/api-version-v4beta-path.yaml"
+          }
+        },
+        {
+          "description": "__Enum__ The LKE tier to use.",
+          "example": "{{tier}}",
+          "in": "path",
+          "name": "tier",
+          "required": true,
+          "schema": {
+            "enum": [
+              "standard",
+              "enterprise"
+            ],
+            "example": "standard",
+            "type": "string"
+          },
+          "x-akamai": {
+            "file-path": "parameters/lke-tier-path.yaml"
+          }
+        },
+        {
+          "description": "The LKE version to view.",
+          "example": "{{version}}",
+          "in": "path",
+          "name": "version",
+          "required": true,
+          "schema": {
+            "example": "1.32",
+            "type": "string"
+          },
+          "x-akamai": {
+            "file-path": "parameters/version-path.yaml"
+          }
+        }
+      ],
+      "x-akamai": {
+        "file-path": "paths/lke-tiers-version.yaml",
+        "path-info": "/{apiVersion}/lke/tiers/{tier}/versions/{version}"
+      },
+      "x-linode-cli-command": "lke"
+    },
     "/{apiVersion}/lke/types": {
       "get": {
         "description": "Returns Kubernetes types and prices, including any region-specific rates.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke types\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)",
@@ -63401,11 +63819,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Kubernetes types",
         "tags": [
           "Kubernetes types"
@@ -63449,7 +63862,7 @@
     },
     "/{apiVersion}/lke/versions": {
       "get": {
-        "description": "List the Kubernetes versions available for deployment to a Kubernetes cluster.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke versions-list\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    lke:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "description": "List LKE Kubernetes versions available for deployment to a standard-tier Kubernetes cluster.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke versions-list\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    lke:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
         "externalDocs": {
           "description": "See documentation for this operation in Akamai's Linode API",
           "url": "https://techdocs.akamai.com/linode-api/reference/get-lke-versions"
@@ -63459,27 +63872,53 @@
           "200": {
             "content": {
               "application/json": {
+                "example": {
+                  "data": [
+                    {
+                      "id": "1.32"
+                    },
+                    {
+                      "id": "1.31"
+                    },
+                    {
+                      "id": "1.30"
+                    }
+                  ],
+                  "page": 1,
+                  "pages": 1,
+                  "results": 3
+                },
                 "schema": {
                   "additionalProperties": false,
+                  "description": "__Read-only__ LKE versions for standard tier.",
                   "properties": {
                     "data": {
+                      "description": "__Read-only__ LKE versions for standard tier.",
                       "items": {
                         "additionalProperties": false,
-                        "description": "__Read-only__ LKE versions.",
+                        "description": "__Read-only__ LKE version.",
                         "properties": {
                           "id": {
-                            "description": "A Kubernetes version number available for deployment to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version.",
+                            "description": "__Read-only__ A Kubernetes version number available for deployment to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version.",
                             "example": "1.31",
+                            "minLength": 1,
+                            "readOnly": true,
                             "type": "string"
                           }
                         },
                         "readOnly": true,
+                        "required": [
+                          "id"
+                        ],
                         "type": "object",
                         "x-akamai": {
                           "file-path": "schemas/lke-version.yaml"
                         }
                       },
-                      "type": "array"
+                      "minItems": 1,
+                      "readOnly": true,
+                      "type": "array",
+                      "uniqueItems": true
                     },
                     "page": {
                       "description": "__Read-only__ The current [page](https://techdocs.akamai.com/linode-api/reference/pagination).",
@@ -63500,6 +63939,7 @@
                       "type": "integer"
                     }
                   },
+                  "readOnly": true,
                   "type": "object",
                   "x-akamai": {
                     "file-path": "schemas/added-get-lke-versions-200.yaml"
@@ -63510,7 +63950,7 @@
                 }
               }
             },
-            "description": "Returns a list of Kubernetes versions available for deployment to a Kubernetes cluster."
+            "description": "Returns a list of LKE Kubernetes versions available for deployment to a standard-tier Kubernetes cluster."
           },
           "default": {
             "content": {
@@ -63559,7 +63999,7 @@
             ]
           }
         ],
-        "summary": "List Kubernetes versions",
+        "summary": "List LKE Kubernetes versions (non-enterprise)",
         "tags": [
           "LKE versions"
         ],
@@ -63607,7 +64047,7 @@
     },
     "/{apiVersion}/lke/versions/{version}": {
       "get": {
-        "description": "View a Kubernetes version available for deployment to a Kubernetes cluster.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke version-view 1.31\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    lke:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
+        "description": "View an LKE Kubernetes version available for deployment to a standard tier Kubernetes cluster.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli lke version-view 1.31\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    lke:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
         "externalDocs": {
           "description": "See documentation for this operation in Akamai's Linode API",
           "url": "https://techdocs.akamai.com/linode-api/reference/get-lke-version"
@@ -63617,17 +64057,25 @@
           "200": {
             "content": {
               "application/json": {
+                "example": {
+                  "id": "1.32"
+                },
                 "schema": {
                   "additionalProperties": false,
-                  "description": "__Read-only__ LKE versions.",
+                  "description": "__Read-only__ LKE version.",
                   "properties": {
                     "id": {
-                      "description": "A Kubernetes version number available for deployment to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version.",
+                      "description": "__Read-only__ A Kubernetes version number available for deployment to a Kubernetes cluster in the format of &lt;major&gt;.&lt;minor&gt;, and the latest supported patch version.",
                       "example": "1.31",
+                      "minLength": 1,
+                      "readOnly": true,
                       "type": "string"
                     }
                   },
                   "readOnly": true,
+                  "required": [
+                    "id"
+                  ],
                   "type": "object",
                   "x-akamai": {
                     "file-path": "schemas/lke-version.yaml"
@@ -63638,7 +64086,7 @@
                 }
               }
             },
-            "description": "Returns a Kubernetes version object that is available for deployment to a Kubernetes cluster."
+            "description": "Returns an LKE Kubernetes version object available for deployment to a standard tier Kubernetes cluster."
           },
           "default": {
             "content": {
@@ -63687,7 +64135,7 @@
             ]
           }
         ],
-        "summary": "Get a Kubernetes version",
+        "summary": "Get an LKE Kubernetes version (non-enterprise)",
         "tags": [
           "LKE versions"
         ],
@@ -63733,6 +64181,7 @@
           "name": "version",
           "required": true,
           "schema": {
+            "example": "1.32",
             "type": "string"
           },
           "x-akamai": {
@@ -65778,11 +66227,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Longview types",
         "tags": [
           "Longview types"
@@ -71418,11 +71862,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List network transfer prices",
         "tags": [
           "Network transfer prices"
@@ -72200,11 +72639,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Create a firewall",
         "tags": [
           "Firewalls"
@@ -72653,11 +73087,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List firewalls",
         "tags": [
           "Firewalls"
@@ -73069,11 +73498,6 @@
             "oauth": [
               "firewall:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get a firewall",
@@ -73521,11 +73945,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Update a firewall",
         "tags": [
           "Firewalls"
@@ -73618,11 +74037,6 @@
             "oauth": [
               "firewall:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete a firewall",
@@ -73895,11 +74309,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Create a firewall device",
         "tags": [
           "Devices"
@@ -74159,11 +74568,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List firewall devices",
         "tags": [
           "Devices"
@@ -74375,11 +74779,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get a firewall device",
         "tags": [
           "Devices"
@@ -74472,11 +74871,6 @@
             "oauth": [
               "firewall:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete a firewall device",
@@ -74917,11 +75311,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List firewall rule versions",
         "tags": [
           "Firewalls"
@@ -75346,11 +75735,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get a firewall rule version",
         "tags": [
           "Firewalls"
@@ -75696,11 +76080,6 @@
             "oauth": [
               "firewall:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "List firewall rules",
@@ -76234,11 +76613,6 @@
             "oauth": [
               "firewall:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Update firewall rules",
@@ -77153,11 +77527,6 @@
               "ips:read_write",
               "linodes:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Share IP addresses",
@@ -79018,11 +79387,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List VLANs",
         "tags": [
           "VLANs"
@@ -79144,11 +79508,6 @@
             "oauth": [
               "linodes:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete a VLAN",
@@ -80230,27 +80589,28 @@
                       "x-linode-filterable": true
                     },
                     "lke_cluster": {
-                      "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                      "additionalProperties": false,
+                      "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                       "nullable": true,
                       "properties": {
                         "id": {
-                          "description": "The ID of the related LKE Cluster.",
+                          "description": "The ID of the related LKE cluster.",
                           "example": 12345,
                           "type": "string"
                         },
                         "label": {
-                          "description": "The label of the related LKE Cluster.",
+                          "description": "The label of the related LKE cluster.",
                           "example": "lkecluster12345",
                           "type": "string"
                         },
                         "type": {
-                          "description": "__Read-only__ The type for LKE Clusters.",
+                          "description": "__Read-only__ The type for LKE clusters.",
                           "example": "lkecluster",
                           "readOnly": true,
                           "type": "string"
                         },
                         "url": {
-                          "description": "The URL where you can access the related LKE Cluster.",
+                          "description": "The URL where you can access the related LKE cluster.",
                           "example": "/v4/lke/clusters/12345",
                           "type": "string"
                         }
@@ -80538,27 +80898,28 @@
                             "x-linode-filterable": true
                           },
                           "lke_cluster": {
-                            "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                            "additionalProperties": false,
+                            "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                             "nullable": true,
                             "properties": {
                               "id": {
-                                "description": "The ID of the related LKE Cluster.",
+                                "description": "The ID of the related LKE cluster.",
                                 "example": 12345,
                                 "type": "string"
                               },
                               "label": {
-                                "description": "The label of the related LKE Cluster.",
+                                "description": "The label of the related LKE cluster.",
                                 "example": "lkecluster12345",
                                 "type": "string"
                               },
                               "type": {
-                                "description": "__Read-only__ The type for LKE Clusters.",
+                                "description": "__Read-only__ The type for LKE clusters.",
                                 "example": "lkecluster",
                                 "readOnly": true,
                                 "type": "string"
                               },
                               "url": {
-                                "description": "The URL where you can access the related LKE Cluster.",
+                                "description": "The URL where you can access the related LKE cluster.",
                                 "example": "/v4/lke/clusters/12345",
                                 "type": "string"
                               }
@@ -80969,11 +81330,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List NodeBalancer types",
         "tags": [
           "NodeBalancer types"
@@ -81099,27 +81455,28 @@
                       "x-linode-filterable": true
                     },
                     "lke_cluster": {
-                      "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                      "additionalProperties": false,
+                      "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                       "nullable": true,
                       "properties": {
                         "id": {
-                          "description": "The ID of the related LKE Cluster.",
+                          "description": "The ID of the related LKE cluster.",
                           "example": 12345,
                           "type": "string"
                         },
                         "label": {
-                          "description": "The label of the related LKE Cluster.",
+                          "description": "The label of the related LKE cluster.",
                           "example": "lkecluster12345",
                           "type": "string"
                         },
                         "type": {
-                          "description": "__Read-only__ The type for LKE Clusters.",
+                          "description": "__Read-only__ The type for LKE clusters.",
                           "example": "lkecluster",
                           "readOnly": true,
                           "type": "string"
                         },
                         "url": {
-                          "description": "The URL where you can access the related LKE Cluster.",
+                          "description": "The URL where you can access the related LKE cluster.",
                           "example": "/v4/lke/clusters/12345",
                           "type": "string"
                         }
@@ -81368,27 +81725,28 @@
                     "x-linode-filterable": true
                   },
                   "lke_cluster": {
-                    "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                    "additionalProperties": false,
+                    "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                     "nullable": true,
                     "properties": {
                       "id": {
-                        "description": "The ID of the related LKE Cluster.",
+                        "description": "The ID of the related LKE cluster.",
                         "example": 12345,
                         "type": "string"
                       },
                       "label": {
-                        "description": "The label of the related LKE Cluster.",
+                        "description": "The label of the related LKE cluster.",
                         "example": "lkecluster12345",
                         "type": "string"
                       },
                       "type": {
-                        "description": "__Read-only__ The type for LKE Clusters.",
+                        "description": "__Read-only__ The type for LKE clusters.",
                         "example": "lkecluster",
                         "readOnly": true,
                         "type": "string"
                       },
                       "url": {
-                        "description": "The URL where you can access the related LKE Cluster.",
+                        "description": "The URL where you can access the related LKE cluster.",
                         "example": "/v4/lke/clusters/12345",
                         "type": "string"
                       }
@@ -81564,27 +81922,28 @@
                       "x-linode-filterable": true
                     },
                     "lke_cluster": {
-                      "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                      "additionalProperties": false,
+                      "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                       "nullable": true,
                       "properties": {
                         "id": {
-                          "description": "The ID of the related LKE Cluster.",
+                          "description": "The ID of the related LKE cluster.",
                           "example": 12345,
                           "type": "string"
                         },
                         "label": {
-                          "description": "The label of the related LKE Cluster.",
+                          "description": "The label of the related LKE cluster.",
                           "example": "lkecluster12345",
                           "type": "string"
                         },
                         "type": {
-                          "description": "__Read-only__ The type for LKE Clusters.",
+                          "description": "__Read-only__ The type for LKE clusters.",
                           "example": "lkecluster",
                           "readOnly": true,
                           "type": "string"
                         },
                         "url": {
-                          "description": "The URL where you can access the related LKE Cluster.",
+                          "description": "The URL where you can access the related LKE cluster.",
                           "example": "/v4/lke/clusters/12345",
                           "type": "string"
                         }
@@ -81918,7 +82277,7 @@
                       },
                       "check": {
                         "default": "none",
-                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- If `none`, no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
+                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- Setting this to `none` skips the check.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
                         "enum": [
                           "none",
                           "connection",
@@ -81943,7 +82302,7 @@
                       },
                       "check_interval": {
                         "default": 5,
-                        "description": "How often, in seconds, to check that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
+                        "description": "Number of seconds between checks to verify that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
                         "example": 90,
                         "maximum": 3600,
                         "minimum": 2,
@@ -81964,7 +82323,7 @@
                       },
                       "check_timeout": {
                         "default": 30,
-                        "description": "How long, in seconds, to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
+                        "description": "Number of seconds to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
                         "example": 10,
                         "maximum": 30,
                         "minimum": 1,
@@ -81994,105 +82353,18 @@
                         "readOnly": true,
                         "type": "integer"
                       },
-                      "nodes": {
-                        "description": "The NodeBalancer nodes that serve this configuration.",
-                        "items": {
-                          "additionalProperties": false,
-                          "description": "A NodeBalancer node represents a single backend serving requests for a single port of a NodeBalancer.  Nodes are specific to NodeBalancer configs, and serve traffic over their private IP.  If the same Linode is serving traffic for more than one port on the same NodeBalancer, one NodeBalancer node is required for each config (port) it should serve requests on.  For example, if you have four backends, and each should respond to both HTTP and HTTPS requests, you will need two NodeBalancer configs (port 80 and port 443) and four backends each, one for each of the Linodes serving requests for that port.",
-                          "properties": {
-                            "address": {
-                              "description": "The private IP Address where this backend can be reached. This _must_ be a private IP address.",
-                              "example": "192.168.210.120:80",
-                              "format": "ip",
-                              "type": "string",
-                              "x-linode-cli-display": 3
-                            },
-                            "config_id": {
-                              "description": "__Read-only__ The NodeBalancer Config ID that this Node belongs to.",
-                              "example": 4567,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "id": {
-                              "description": "__Read-only__ This node's unique ID.",
-                              "example": 54321,
-                              "readOnly": true,
-                              "type": "integer",
-                              "x-linode-cli-display": 1
-                            },
-                            "label": {
-                              "description": "The label for this node.  This is for display purposes only.",
-                              "example": "node54321",
-                              "maxLength": 32,
-                              "minLength": 3,
-                              "pattern": "[a-zA-Z0-9-_.]{3,32}",
-                              "type": "string",
-                              "x-linode-cli-display": 2
-                            },
-                            "mode": {
-                              "description": "The mode this NodeBalancer should use when sending traffic to this backend.\n\n- If set to `accept` this backend is accepting traffic.\n- If set to `reject` this backend will not receive traffic.\n- If set to `drain` this backend will not receive _new_ traffic, but connections already pinned to it will continue to be routed to it.\n- If set to `backup`, this backend will only receive traffic if all `accept` nodes are down.",
-                              "enum": [
-                                "accept",
-                                "reject",
-                                "drain",
-                                "backup"
-                              ],
-                              "example": "accept",
-                              "type": "string",
-                              "x-linode-cli-display": 6
-                            },
-                            "nodebalancer_id": {
-                              "description": "__Read-only__ The NodeBalancer ID that this Node belongs to.",
-                              "example": 12345,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "status": {
-                              "description": "__Read-only__ The current status of this node, based on the configured checks of its NodeBalancer Config.",
-                              "enum": [
-                                "unknown",
-                                "UP",
-                                "DOWN"
-                              ],
-                              "example": "UP",
-                              "readOnly": true,
-                              "type": "string",
-                              "x-linode-cli-color": {
-                                "DOWN": "red",
-                                "UP": "green",
-                                "default_": "white",
-                                "unknown": "yellow"
-                              },
-                              "x-linode-cli-display": 4
-                            },
-                            "weight": {
-                              "description": "Used when picking a backend to serve a request and is not pinned to a single backend yet.  Nodes with a higher weight will receive more traffic.",
-                              "example": 50,
-                              "maximum": 255,
-                              "minimum": 1,
-                              "type": "integer",
-                              "x-linode-cli-display": 5
-                            }
-                          },
-                          "title": "TCP, HTTP, or HTTPS config",
-                          "x-akamai": {
-                            "file-path": "schemas/node-balancer-node-tcp-http-https.yaml"
-                          }
-                        },
-                        "type": "array"
-                      },
                       "nodes_status": {
                         "additionalProperties": false,
                         "description": "__Read-only__ Describes the health of the backends for this port. This data updates periodically as checks are performed against backends.",
                         "properties": {
                           "down": {
-                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These are not in rotation, and not serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These aren't in rotation, and aren't serving requests.",
                             "example": 0,
                             "readOnly": true,
                             "type": "integer"
                           },
                           "up": {
-                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, and that are serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, currently serving requests.",
                             "example": 4,
                             "readOnly": true,
                             "type": "integer"
@@ -82104,7 +82376,7 @@
                       },
                       "port": {
                         "default": 80,
-                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally associated with specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
+                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally assigned specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
                         "example": 22,
                         "maximum": 65535,
                         "minimum": 1,
@@ -82162,7 +82434,7 @@
                       },
                       "stickiness": {
                         "default": "none",
-                        "description": "__Read-only__ Controls how session stickiness is handled on this port.\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.",
+                        "description": "__Read-only__ Controls how session stickiness is handled on this port:\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.",
                         "enum": [
                           "none",
                           "table"
@@ -82173,13 +82445,10 @@
                         "x-linode-cli-display": 5
                       }
                     },
-                    "required": [
-                      "nodes"
-                    ],
                     "title": "TCP",
                     "type": "object",
                     "x-akamai": {
-                      "file-path": "schemas/node-balancer-config-tcp.yaml"
+                      "file-path": "schemas/config-tcp.yaml"
                     }
                   },
                   {
@@ -82200,7 +82469,7 @@
                       },
                       "check": {
                         "default": "none",
-                        "description": "The type of check to perform against backends to ensure they are serving requests. This determines if backends are up or down.\n\n- If `none`, no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
+                        "description": "The type of check to perform against backends to ensure they're serving requests. This determines if backends are up or down.\n\n- If `none`, no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
                         "enum": [
                           "none",
                           "connection",
@@ -82225,7 +82494,7 @@
                       },
                       "check_interval": {
                         "default": 5,
-                        "description": "How often, in seconds, to check that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
+                        "description": "Number of seconds between checks to verify that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
                         "example": 90,
                         "maximum": 3600,
                         "minimum": 2,
@@ -82246,7 +82515,7 @@
                       },
                       "check_timeout": {
                         "default": 3,
-                        "description": "How long, in seconds, to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
+                        "description": "Number of seconds to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
                         "example": 10,
                         "maximum": 30,
                         "minimum": 1,
@@ -82276,105 +82545,18 @@
                         "readOnly": true,
                         "type": "integer"
                       },
-                      "nodes": {
-                        "description": "The NodeBalancer nodes that serve this configuration.",
-                        "items": {
-                          "additionalProperties": false,
-                          "description": "A NodeBalancer node represents a single backend serving requests for a single port of a NodeBalancer.  Nodes are specific to NodeBalancer configs, and serve traffic over their private IP.  If the same Linode is serving traffic for more than one port on the same NodeBalancer, one NodeBalancer node is required for each config (port) it should serve requests on.  For example, if you have four backends, and each should respond to both HTTP and HTTPS requests, you will need two NodeBalancer configs (port 80 and port 443) and four backends each, one for each of the Linodes serving requests for that port.",
-                          "properties": {
-                            "address": {
-                              "description": "The private IP Address where this backend can be reached. This _must_ be a private IP address.",
-                              "example": "192.168.210.120:80",
-                              "format": "ip",
-                              "type": "string",
-                              "x-linode-cli-display": 3
-                            },
-                            "config_id": {
-                              "description": "__Read-only__ The NodeBalancer Config ID that this Node belongs to.",
-                              "example": 4567,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "id": {
-                              "description": "__Read-only__ This node's unique ID.",
-                              "example": 54321,
-                              "readOnly": true,
-                              "type": "integer",
-                              "x-linode-cli-display": 1
-                            },
-                            "label": {
-                              "description": "The label for this node.  This is for display purposes only.",
-                              "example": "node54321",
-                              "maxLength": 32,
-                              "minLength": 3,
-                              "pattern": "[a-zA-Z0-9-_.]{3,32}",
-                              "type": "string",
-                              "x-linode-cli-display": 2
-                            },
-                            "mode": {
-                              "description": "The mode this NodeBalancer should use when sending traffic to this backend.\n\n- If set to `accept` this backend is accepting traffic.\n- If set to `reject` this backend will not receive traffic.\n- If set to `drain` this backend will not receive _new_ traffic, but connections already pinned to it will continue to be routed to it.\n- If set to `backup`, this backend will only receive traffic if all `accept` nodes are down.",
-                              "enum": [
-                                "accept",
-                                "reject",
-                                "drain",
-                                "backup"
-                              ],
-                              "example": "accept",
-                              "type": "string",
-                              "x-linode-cli-display": 6
-                            },
-                            "nodebalancer_id": {
-                              "description": "__Read-only__ The NodeBalancer ID that this Node belongs to.",
-                              "example": 12345,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "status": {
-                              "description": "__Read-only__ The current status of this node, based on the configured checks of its NodeBalancer Config.",
-                              "enum": [
-                                "unknown",
-                                "UP",
-                                "DOWN"
-                              ],
-                              "example": "UP",
-                              "readOnly": true,
-                              "type": "string",
-                              "x-linode-cli-color": {
-                                "DOWN": "red",
-                                "UP": "green",
-                                "default_": "white",
-                                "unknown": "yellow"
-                              },
-                              "x-linode-cli-display": 4
-                            },
-                            "weight": {
-                              "description": "Used when picking a backend to serve a request and is not pinned to a single backend yet.  Nodes with a higher weight will receive more traffic.",
-                              "example": 50,
-                              "maximum": 255,
-                              "minimum": 1,
-                              "type": "integer",
-                              "x-linode-cli-display": 5
-                            }
-                          },
-                          "title": "TCP, HTTP, or HTTPS config",
-                          "x-akamai": {
-                            "file-path": "schemas/node-balancer-node-tcp-http-https.yaml"
-                          }
-                        },
-                        "type": "array"
-                      },
                       "nodes_status": {
                         "additionalProperties": false,
                         "description": "__Read-only__ Describes the health of the backends for this port. This data updates periodically as checks are performed against backends.",
                         "properties": {
                           "down": {
-                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These are not in rotation, and not serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These aren't in rotation, and aren't serving requests.",
                             "example": 0,
                             "readOnly": true,
                             "type": "integer"
                           },
                           "up": {
-                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, and that are serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, currently serving requests.",
                             "example": 4,
                             "readOnly": true,
                             "type": "integer"
@@ -82386,7 +82568,7 @@
                       },
                       "port": {
                         "default": 80,
-                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers need to be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally associated with specific protocols, this isn't strictly enforced. You may configure your NodeBalancer however you find useful.",
+                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers need to be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally assigned specific protocols, this isn't strictly enforced. You may configure your NodeBalancer however you find useful.",
                         "example": 80,
                         "maximum": 65535,
                         "minimum": 1,
@@ -82395,7 +82577,7 @@
                       },
                       "protocol": {
                         "default": "http",
-                        "description": "The protocol the port is configured to serve, `http` in this case.\nReview our guide on [Available protocols](https://techdocs.akamai.com/cloud-computing/docs/available-protocols) for information on protocol features.",
+                        "description": "The protocol the port is configured to serve, `http` in this case.\n\nReview our guide on [Available protocols](https://techdocs.akamai.com/cloud-computing/docs/available-protocols) for information on protocol features.",
                         "enum": [
                           "http"
                         ],
@@ -82440,7 +82622,7 @@
                       },
                       "stickiness": {
                         "default": "table",
-                        "description": "Controls how session stickiness is handled on this port.\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- If set to `http_cookie`, sessions are routed to the same backend based on a cookie set by the NodeBalancer.",
+                        "description": "Controls how session stickiness is handled on this port:\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- If set to `http_cookie`, sessions are routed to the same backend based on a cookie set by the NodeBalancer.",
                         "enum": [
                           "none",
                           "table",
@@ -82451,13 +82633,10 @@
                         "x-linode-cli-display": 5
                       }
                     },
-                    "required": [
-                      "nodes"
-                    ],
                     "title": "HTTP",
                     "type": "object",
                     "x-akamai": {
-                      "file-path": "schemas/node-balancer-config-http.yaml"
+                      "file-path": "schemas/config-http.yaml"
                     }
                   },
                   {
@@ -82478,7 +82657,7 @@
                       },
                       "check": {
                         "default": "none",
-                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- If `none` no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
+                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- Setting this to `none` skips the check.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
                         "enum": [
                           "none",
                           "connection",
@@ -82503,7 +82682,7 @@
                       },
                       "check_interval": {
                         "default": 5,
-                        "description": "How often, in seconds, to check that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
+                        "description": "Number of seconds between checks to verify that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
                         "example": 90,
                         "maximum": 3600,
                         "minimum": 2,
@@ -82524,7 +82703,7 @@
                       },
                       "check_timeout": {
                         "default": 3,
-                        "description": "How long, in seconds, to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
+                        "description": "Number of seconds to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
                         "example": 10,
                         "maximum": 30,
                         "minimum": 1,
@@ -82558,105 +82737,18 @@
                         "readOnly": true,
                         "type": "integer"
                       },
-                      "nodes": {
-                        "description": "The NodeBalancer nodes that serve this configuration.",
-                        "items": {
-                          "additionalProperties": false,
-                          "description": "A NodeBalancer node represents a single backend serving requests for a single port of a NodeBalancer.  Nodes are specific to NodeBalancer configs, and serve traffic over their private IP.  If the same Linode is serving traffic for more than one port on the same NodeBalancer, one NodeBalancer node is required for each config (port) it should serve requests on.  For example, if you have four backends, and each should respond to both HTTP and HTTPS requests, you will need two NodeBalancer configs (port 80 and port 443) and four backends each, one for each of the Linodes serving requests for that port.",
-                          "properties": {
-                            "address": {
-                              "description": "The private IP Address where this backend can be reached. This _must_ be a private IP address.",
-                              "example": "192.168.210.120:80",
-                              "format": "ip",
-                              "type": "string",
-                              "x-linode-cli-display": 3
-                            },
-                            "config_id": {
-                              "description": "__Read-only__ The NodeBalancer Config ID that this Node belongs to.",
-                              "example": 4567,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "id": {
-                              "description": "__Read-only__ This node's unique ID.",
-                              "example": 54321,
-                              "readOnly": true,
-                              "type": "integer",
-                              "x-linode-cli-display": 1
-                            },
-                            "label": {
-                              "description": "The label for this node.  This is for display purposes only.",
-                              "example": "node54321",
-                              "maxLength": 32,
-                              "minLength": 3,
-                              "pattern": "[a-zA-Z0-9-_.]{3,32}",
-                              "type": "string",
-                              "x-linode-cli-display": 2
-                            },
-                            "mode": {
-                              "description": "The mode this NodeBalancer should use when sending traffic to this backend.\n\n- If set to `accept` this backend is accepting traffic.\n- If set to `reject` this backend will not receive traffic.\n- If set to `drain` this backend will not receive _new_ traffic, but connections already pinned to it will continue to be routed to it.\n- If set to `backup`, this backend will only receive traffic if all `accept` nodes are down.",
-                              "enum": [
-                                "accept",
-                                "reject",
-                                "drain",
-                                "backup"
-                              ],
-                              "example": "accept",
-                              "type": "string",
-                              "x-linode-cli-display": 6
-                            },
-                            "nodebalancer_id": {
-                              "description": "__Read-only__ The NodeBalancer ID that this Node belongs to.",
-                              "example": 12345,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "status": {
-                              "description": "__Read-only__ The current status of this node, based on the configured checks of its NodeBalancer Config.",
-                              "enum": [
-                                "unknown",
-                                "UP",
-                                "DOWN"
-                              ],
-                              "example": "UP",
-                              "readOnly": true,
-                              "type": "string",
-                              "x-linode-cli-color": {
-                                "DOWN": "red",
-                                "UP": "green",
-                                "default_": "white",
-                                "unknown": "yellow"
-                              },
-                              "x-linode-cli-display": 4
-                            },
-                            "weight": {
-                              "description": "Used when picking a backend to serve a request and is not pinned to a single backend yet.  Nodes with a higher weight will receive more traffic.",
-                              "example": 50,
-                              "maximum": 255,
-                              "minimum": 1,
-                              "type": "integer",
-                              "x-linode-cli-display": 5
-                            }
-                          },
-                          "title": "TCP, HTTP, or HTTPS config",
-                          "x-akamai": {
-                            "file-path": "schemas/node-balancer-node-tcp-http-https.yaml"
-                          }
-                        },
-                        "type": "array"
-                      },
                       "nodes_status": {
                         "additionalProperties": false,
                         "description": "__Read-only__ Describes the health of the backends for this port. This data updates periodically as checks are performed against backends.",
                         "properties": {
                           "down": {
-                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These are not in rotation, and not serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These aren't in rotation, and aren't serving requests.",
                             "example": 0,
                             "readOnly": true,
                             "type": "integer"
                           },
                           "up": {
-                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, and that are serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, currently serving requests.",
                             "example": 4,
                             "readOnly": true,
                             "type": "integer"
@@ -82668,7 +82760,7 @@
                       },
                       "port": {
                         "default": 80,
-                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally associated with specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
+                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally assigned specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
                         "example": 443,
                         "maximum": 65535,
                         "minimum": 1,
@@ -82693,7 +82785,7 @@
                         "type": "string"
                       },
                       "ssl_cert": {
-                        "description": "\nThe PEM-formatted public SSL certificate (or the combined PEM-formatted SSL certificate and Certificate Authority chain) that should be served on this NodeBalancerConfig's port.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\n[Diffie-Hellman Parameters](https://www.linode.com/docs/products/networking/nodebalancers/guides/ssl-termination/#diffie-hellman-parameters) can be included in this value to enable forward secrecy.\n\nThe contents of this field will not be shown in any responses that display the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field appears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig response are automatically derived from your certificate. Please refer to these fields to verify that the appropriate certificate was assigned to your NodeBalancerConfig.",
+                        "description": "The PEM-formatted public SSL certificate (or the combined PEM-formatted SSL certificate and Certificate Authority chain) that should be served on this NodeBalancerConfig's port.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\n[Diffie-Hellman Parameters](https://www.linode.com/docs/products/networking/nodebalancers/guides/ssl-termination/#diffie-hellman-parameters) can be included in this value to enable forward secrecy.\n\nThe contents of this field will not be shown in any responses that display the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field appears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig response are automatically derived from your certificate. Please refer to these fields to verify that the appropriate certificate was assigned to your NodeBalancerConfig.",
                         "example": "<REDACTED>",
                         "format": "ssl-cert",
                         "nullable": true,
@@ -82714,7 +82806,7 @@
                         "x-linode-cli-display": 9
                       },
                       "ssl_key": {
-                        "description": "The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\nThe contents of this field will not be shown in any responses that display\nthe NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field\nappears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig\nresponse are automatically derived from your certificate. Please refer to these fields to\nverify that the appropriate certificate was assigned to your NodeBalancerConfig.",
+                        "description": "The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\nThe contents of this field will not be shown in any responses that display the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field appears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig response are automatically derived from your certificate. Please refer to these fields to verify that the appropriate certificate was assigned to your NodeBalancerConfig.",
                         "example": "<REDACTED>",
                         "format": "ssl-key",
                         "nullable": true,
@@ -82722,7 +82814,7 @@
                       },
                       "stickiness": {
                         "default": "table",
-                        "description": "Controls how session stickiness is handled on this port.\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- For HTTP or HTTPS clients, `http_cookie` allows sessions to be routed to the same backend based on a cookie set by the NodeBalancer.",
+                        "description": "Controls how session stickiness is handled on this port:\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- For HTTP or HTTPS clients, `http_cookie` allows sessions to be routed to the same backend based on a cookie set by the NodeBalancer.",
                         "enum": [
                           "none",
                           "table",
@@ -82733,18 +82825,16 @@
                         "x-linode-cli-display": 5
                       }
                     },
-                    "required": [
-                      "nodes"
-                    ],
                     "title": "HTTPS",
                     "type": "object",
                     "x-akamai": {
-                      "file-path": "schemas/node-balancer-config-https.yaml"
+                      "file-path": "schemas/config-https.yaml"
                     }
                   }
                 ],
+                "type": "object",
                 "x-akamai": {
-                  "file-path": "schemas/node-balancer-config.yaml"
+                  "file-path": "schemas/config-protocol.yaml"
                 }
               },
               "x-example": {
@@ -85665,7 +85755,7 @@
                       },
                       "check": {
                         "default": "none",
-                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- If `none`, no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
+                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- Setting this to `none` skips the check.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
                         "enum": [
                           "none",
                           "connection",
@@ -85690,7 +85780,7 @@
                       },
                       "check_interval": {
                         "default": 5,
-                        "description": "How often, in seconds, to check that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
+                        "description": "Number of seconds between checks to verify that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
                         "example": 90,
                         "maximum": 3600,
                         "minimum": 2,
@@ -85711,7 +85801,7 @@
                       },
                       "check_timeout": {
                         "default": 30,
-                        "description": "How long, in seconds, to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
+                        "description": "Number of seconds to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
                         "example": 10,
                         "maximum": 30,
                         "minimum": 1,
@@ -85741,105 +85831,18 @@
                         "readOnly": true,
                         "type": "integer"
                       },
-                      "nodes": {
-                        "description": "The NodeBalancer nodes that serve this configuration.",
-                        "items": {
-                          "additionalProperties": false,
-                          "description": "A NodeBalancer node represents a single backend serving requests for a single port of a NodeBalancer.  Nodes are specific to NodeBalancer configs, and serve traffic over their private IP.  If the same Linode is serving traffic for more than one port on the same NodeBalancer, one NodeBalancer node is required for each config (port) it should serve requests on.  For example, if you have four backends, and each should respond to both HTTP and HTTPS requests, you will need two NodeBalancer configs (port 80 and port 443) and four backends each, one for each of the Linodes serving requests for that port.",
-                          "properties": {
-                            "address": {
-                              "description": "The private IP Address where this backend can be reached. This _must_ be a private IP address.",
-                              "example": "192.168.210.120:80",
-                              "format": "ip",
-                              "type": "string",
-                              "x-linode-cli-display": 3
-                            },
-                            "config_id": {
-                              "description": "__Read-only__ The NodeBalancer Config ID that this Node belongs to.",
-                              "example": 4567,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "id": {
-                              "description": "__Read-only__ This node's unique ID.",
-                              "example": 54321,
-                              "readOnly": true,
-                              "type": "integer",
-                              "x-linode-cli-display": 1
-                            },
-                            "label": {
-                              "description": "The label for this node.  This is for display purposes only.",
-                              "example": "node54321",
-                              "maxLength": 32,
-                              "minLength": 3,
-                              "pattern": "[a-zA-Z0-9-_.]{3,32}",
-                              "type": "string",
-                              "x-linode-cli-display": 2
-                            },
-                            "mode": {
-                              "description": "The mode this NodeBalancer should use when sending traffic to this backend.\n\n- If set to `accept` this backend is accepting traffic.\n- If set to `reject` this backend will not receive traffic.\n- If set to `drain` this backend will not receive _new_ traffic, but connections already pinned to it will continue to be routed to it.\n- If set to `backup`, this backend will only receive traffic if all `accept` nodes are down.",
-                              "enum": [
-                                "accept",
-                                "reject",
-                                "drain",
-                                "backup"
-                              ],
-                              "example": "accept",
-                              "type": "string",
-                              "x-linode-cli-display": 6
-                            },
-                            "nodebalancer_id": {
-                              "description": "__Read-only__ The NodeBalancer ID that this Node belongs to.",
-                              "example": 12345,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "status": {
-                              "description": "__Read-only__ The current status of this node, based on the configured checks of its NodeBalancer Config.",
-                              "enum": [
-                                "unknown",
-                                "UP",
-                                "DOWN"
-                              ],
-                              "example": "UP",
-                              "readOnly": true,
-                              "type": "string",
-                              "x-linode-cli-color": {
-                                "DOWN": "red",
-                                "UP": "green",
-                                "default_": "white",
-                                "unknown": "yellow"
-                              },
-                              "x-linode-cli-display": 4
-                            },
-                            "weight": {
-                              "description": "Used when picking a backend to serve a request and is not pinned to a single backend yet.  Nodes with a higher weight will receive more traffic.",
-                              "example": 50,
-                              "maximum": 255,
-                              "minimum": 1,
-                              "type": "integer",
-                              "x-linode-cli-display": 5
-                            }
-                          },
-                          "title": "TCP, HTTP, or HTTPS config",
-                          "x-akamai": {
-                            "file-path": "schemas/node-balancer-node-tcp-http-https.yaml"
-                          }
-                        },
-                        "type": "array"
-                      },
                       "nodes_status": {
                         "additionalProperties": false,
                         "description": "__Read-only__ Describes the health of the backends for this port. This data updates periodically as checks are performed against backends.",
                         "properties": {
                           "down": {
-                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These are not in rotation, and not serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These aren't in rotation, and aren't serving requests.",
                             "example": 0,
                             "readOnly": true,
                             "type": "integer"
                           },
                           "up": {
-                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, and that are serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, currently serving requests.",
                             "example": 4,
                             "readOnly": true,
                             "type": "integer"
@@ -85851,7 +85854,7 @@
                       },
                       "port": {
                         "default": 80,
-                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally associated with specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
+                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally assigned specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
                         "example": 22,
                         "maximum": 65535,
                         "minimum": 1,
@@ -85909,7 +85912,7 @@
                       },
                       "stickiness": {
                         "default": "none",
-                        "description": "__Read-only__ Controls how session stickiness is handled on this port.\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.",
+                        "description": "__Read-only__ Controls how session stickiness is handled on this port:\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.",
                         "enum": [
                           "none",
                           "table"
@@ -85920,13 +85923,10 @@
                         "x-linode-cli-display": 5
                       }
                     },
-                    "required": [
-                      "nodes"
-                    ],
                     "title": "TCP",
                     "type": "object",
                     "x-akamai": {
-                      "file-path": "schemas/node-balancer-config-tcp.yaml"
+                      "file-path": "schemas/config-tcp.yaml"
                     }
                   },
                   {
@@ -85947,7 +85947,7 @@
                       },
                       "check": {
                         "default": "none",
-                        "description": "The type of check to perform against backends to ensure they are serving requests. This determines if backends are up or down.\n\n- If `none`, no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
+                        "description": "The type of check to perform against backends to ensure they're serving requests. This determines if backends are up or down.\n\n- If `none`, no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
                         "enum": [
                           "none",
                           "connection",
@@ -85972,7 +85972,7 @@
                       },
                       "check_interval": {
                         "default": 5,
-                        "description": "How often, in seconds, to check that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
+                        "description": "Number of seconds between checks to verify that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
                         "example": 90,
                         "maximum": 3600,
                         "minimum": 2,
@@ -85993,7 +85993,7 @@
                       },
                       "check_timeout": {
                         "default": 3,
-                        "description": "How long, in seconds, to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
+                        "description": "Number of seconds to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
                         "example": 10,
                         "maximum": 30,
                         "minimum": 1,
@@ -86023,105 +86023,18 @@
                         "readOnly": true,
                         "type": "integer"
                       },
-                      "nodes": {
-                        "description": "The NodeBalancer nodes that serve this configuration.",
-                        "items": {
-                          "additionalProperties": false,
-                          "description": "A NodeBalancer node represents a single backend serving requests for a single port of a NodeBalancer.  Nodes are specific to NodeBalancer configs, and serve traffic over their private IP.  If the same Linode is serving traffic for more than one port on the same NodeBalancer, one NodeBalancer node is required for each config (port) it should serve requests on.  For example, if you have four backends, and each should respond to both HTTP and HTTPS requests, you will need two NodeBalancer configs (port 80 and port 443) and four backends each, one for each of the Linodes serving requests for that port.",
-                          "properties": {
-                            "address": {
-                              "description": "The private IP Address where this backend can be reached. This _must_ be a private IP address.",
-                              "example": "192.168.210.120:80",
-                              "format": "ip",
-                              "type": "string",
-                              "x-linode-cli-display": 3
-                            },
-                            "config_id": {
-                              "description": "__Read-only__ The NodeBalancer Config ID that this Node belongs to.",
-                              "example": 4567,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "id": {
-                              "description": "__Read-only__ This node's unique ID.",
-                              "example": 54321,
-                              "readOnly": true,
-                              "type": "integer",
-                              "x-linode-cli-display": 1
-                            },
-                            "label": {
-                              "description": "The label for this node.  This is for display purposes only.",
-                              "example": "node54321",
-                              "maxLength": 32,
-                              "minLength": 3,
-                              "pattern": "[a-zA-Z0-9-_.]{3,32}",
-                              "type": "string",
-                              "x-linode-cli-display": 2
-                            },
-                            "mode": {
-                              "description": "The mode this NodeBalancer should use when sending traffic to this backend.\n\n- If set to `accept` this backend is accepting traffic.\n- If set to `reject` this backend will not receive traffic.\n- If set to `drain` this backend will not receive _new_ traffic, but connections already pinned to it will continue to be routed to it.\n- If set to `backup`, this backend will only receive traffic if all `accept` nodes are down.",
-                              "enum": [
-                                "accept",
-                                "reject",
-                                "drain",
-                                "backup"
-                              ],
-                              "example": "accept",
-                              "type": "string",
-                              "x-linode-cli-display": 6
-                            },
-                            "nodebalancer_id": {
-                              "description": "__Read-only__ The NodeBalancer ID that this Node belongs to.",
-                              "example": 12345,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "status": {
-                              "description": "__Read-only__ The current status of this node, based on the configured checks of its NodeBalancer Config.",
-                              "enum": [
-                                "unknown",
-                                "UP",
-                                "DOWN"
-                              ],
-                              "example": "UP",
-                              "readOnly": true,
-                              "type": "string",
-                              "x-linode-cli-color": {
-                                "DOWN": "red",
-                                "UP": "green",
-                                "default_": "white",
-                                "unknown": "yellow"
-                              },
-                              "x-linode-cli-display": 4
-                            },
-                            "weight": {
-                              "description": "Used when picking a backend to serve a request and is not pinned to a single backend yet.  Nodes with a higher weight will receive more traffic.",
-                              "example": 50,
-                              "maximum": 255,
-                              "minimum": 1,
-                              "type": "integer",
-                              "x-linode-cli-display": 5
-                            }
-                          },
-                          "title": "TCP, HTTP, or HTTPS config",
-                          "x-akamai": {
-                            "file-path": "schemas/node-balancer-node-tcp-http-https.yaml"
-                          }
-                        },
-                        "type": "array"
-                      },
                       "nodes_status": {
                         "additionalProperties": false,
                         "description": "__Read-only__ Describes the health of the backends for this port. This data updates periodically as checks are performed against backends.",
                         "properties": {
                           "down": {
-                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These are not in rotation, and not serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These aren't in rotation, and aren't serving requests.",
                             "example": 0,
                             "readOnly": true,
                             "type": "integer"
                           },
                           "up": {
-                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, and that are serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, currently serving requests.",
                             "example": 4,
                             "readOnly": true,
                             "type": "integer"
@@ -86133,7 +86046,7 @@
                       },
                       "port": {
                         "default": 80,
-                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers need to be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally associated with specific protocols, this isn't strictly enforced. You may configure your NodeBalancer however you find useful.",
+                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers need to be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally assigned specific protocols, this isn't strictly enforced. You may configure your NodeBalancer however you find useful.",
                         "example": 80,
                         "maximum": 65535,
                         "minimum": 1,
@@ -86142,7 +86055,7 @@
                       },
                       "protocol": {
                         "default": "http",
-                        "description": "The protocol the port is configured to serve, `http` in this case.\nReview our guide on [Available protocols](https://techdocs.akamai.com/cloud-computing/docs/available-protocols) for information on protocol features.",
+                        "description": "The protocol the port is configured to serve, `http` in this case.\n\nReview our guide on [Available protocols](https://techdocs.akamai.com/cloud-computing/docs/available-protocols) for information on protocol features.",
                         "enum": [
                           "http"
                         ],
@@ -86187,7 +86100,7 @@
                       },
                       "stickiness": {
                         "default": "table",
-                        "description": "Controls how session stickiness is handled on this port.\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- If set to `http_cookie`, sessions are routed to the same backend based on a cookie set by the NodeBalancer.",
+                        "description": "Controls how session stickiness is handled on this port:\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- If set to `http_cookie`, sessions are routed to the same backend based on a cookie set by the NodeBalancer.",
                         "enum": [
                           "none",
                           "table",
@@ -86198,13 +86111,10 @@
                         "x-linode-cli-display": 5
                       }
                     },
-                    "required": [
-                      "nodes"
-                    ],
                     "title": "HTTP",
                     "type": "object",
                     "x-akamai": {
-                      "file-path": "schemas/node-balancer-config-http.yaml"
+                      "file-path": "schemas/config-http.yaml"
                     }
                   },
                   {
@@ -86225,7 +86135,7 @@
                       },
                       "check": {
                         "default": "none",
-                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- If `none` no check is performed.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
+                        "description": "The type of check to perform against backends to ensure they are serving requests. The `check` is used to determine if backends are up or down.\n\n- Setting this to `none` skips the check.\n- `connection` requires only a connection to the backend to succeed.\n- `http` and `http_body` rely on the backend serving HTTP, and that the response returned matches what is expected.",
                         "enum": [
                           "none",
                           "connection",
@@ -86250,7 +86160,7 @@
                       },
                       "check_interval": {
                         "default": 5,
-                        "description": "How often, in seconds, to check that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
+                        "description": "Number of seconds between checks to verify that backends are up and serving requests.\n\nMust be greater than `check_timeout`.",
                         "example": 90,
                         "maximum": 3600,
                         "minimum": 2,
@@ -86271,7 +86181,7 @@
                       },
                       "check_timeout": {
                         "default": 3,
-                        "description": "How long, in seconds, to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
+                        "description": "Number of seconds to wait for a check attempt before considering it failed.\n\nMust be less than `check_interval`.",
                         "example": 10,
                         "maximum": 30,
                         "minimum": 1,
@@ -86305,105 +86215,18 @@
                         "readOnly": true,
                         "type": "integer"
                       },
-                      "nodes": {
-                        "description": "The NodeBalancer nodes that serve this configuration.",
-                        "items": {
-                          "additionalProperties": false,
-                          "description": "A NodeBalancer node represents a single backend serving requests for a single port of a NodeBalancer.  Nodes are specific to NodeBalancer configs, and serve traffic over their private IP.  If the same Linode is serving traffic for more than one port on the same NodeBalancer, one NodeBalancer node is required for each config (port) it should serve requests on.  For example, if you have four backends, and each should respond to both HTTP and HTTPS requests, you will need two NodeBalancer configs (port 80 and port 443) and four backends each, one for each of the Linodes serving requests for that port.",
-                          "properties": {
-                            "address": {
-                              "description": "The private IP Address where this backend can be reached. This _must_ be a private IP address.",
-                              "example": "192.168.210.120:80",
-                              "format": "ip",
-                              "type": "string",
-                              "x-linode-cli-display": 3
-                            },
-                            "config_id": {
-                              "description": "__Read-only__ The NodeBalancer Config ID that this Node belongs to.",
-                              "example": 4567,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "id": {
-                              "description": "__Read-only__ This node's unique ID.",
-                              "example": 54321,
-                              "readOnly": true,
-                              "type": "integer",
-                              "x-linode-cli-display": 1
-                            },
-                            "label": {
-                              "description": "The label for this node.  This is for display purposes only.",
-                              "example": "node54321",
-                              "maxLength": 32,
-                              "minLength": 3,
-                              "pattern": "[a-zA-Z0-9-_.]{3,32}",
-                              "type": "string",
-                              "x-linode-cli-display": 2
-                            },
-                            "mode": {
-                              "description": "The mode this NodeBalancer should use when sending traffic to this backend.\n\n- If set to `accept` this backend is accepting traffic.\n- If set to `reject` this backend will not receive traffic.\n- If set to `drain` this backend will not receive _new_ traffic, but connections already pinned to it will continue to be routed to it.\n- If set to `backup`, this backend will only receive traffic if all `accept` nodes are down.",
-                              "enum": [
-                                "accept",
-                                "reject",
-                                "drain",
-                                "backup"
-                              ],
-                              "example": "accept",
-                              "type": "string",
-                              "x-linode-cli-display": 6
-                            },
-                            "nodebalancer_id": {
-                              "description": "__Read-only__ The NodeBalancer ID that this Node belongs to.",
-                              "example": 12345,
-                              "readOnly": true,
-                              "type": "integer"
-                            },
-                            "status": {
-                              "description": "__Read-only__ The current status of this node, based on the configured checks of its NodeBalancer Config.",
-                              "enum": [
-                                "unknown",
-                                "UP",
-                                "DOWN"
-                              ],
-                              "example": "UP",
-                              "readOnly": true,
-                              "type": "string",
-                              "x-linode-cli-color": {
-                                "DOWN": "red",
-                                "UP": "green",
-                                "default_": "white",
-                                "unknown": "yellow"
-                              },
-                              "x-linode-cli-display": 4
-                            },
-                            "weight": {
-                              "description": "Used when picking a backend to serve a request and is not pinned to a single backend yet.  Nodes with a higher weight will receive more traffic.",
-                              "example": 50,
-                              "maximum": 255,
-                              "minimum": 1,
-                              "type": "integer",
-                              "x-linode-cli-display": 5
-                            }
-                          },
-                          "title": "TCP, HTTP, or HTTPS config",
-                          "x-akamai": {
-                            "file-path": "schemas/node-balancer-node-tcp-http-https.yaml"
-                          }
-                        },
-                        "type": "array"
-                      },
                       "nodes_status": {
                         "additionalProperties": false,
                         "description": "__Read-only__ Describes the health of the backends for this port. This data updates periodically as checks are performed against backends.",
                         "properties": {
                           "down": {
-                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These are not in rotation, and not serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `DOWN` and unhealthy.  These aren't in rotation, and aren't serving requests.",
                             "example": 0,
                             "readOnly": true,
                             "type": "integer"
                           },
                           "up": {
-                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, and that are serving requests.",
+                            "description": "__Read-only__ The number of backends considered to be `UP` and healthy, currently serving requests.",
                             "example": 4,
                             "readOnly": true,
                             "type": "integer"
@@ -86415,7 +86238,7 @@
                       },
                       "port": {
                         "default": 80,
-                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally associated with specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
+                        "description": "This is the port the NodeBalancer listens on for this configuration. Port numbers must be unique across TCP, HTTP, and HTTPS configurations on a single NodeBalancer. However, ports assigned to TCP, HTTP, or HTTPS configurations can also be reused for UDP configurations. For example, Port 80 can simultaneously serve a TCP and a UDP configuration on the same NodeBalancer, but it can't be shared by both a TCP and an HTTP configuration. Although certain ports are traditionally assigned specific protocols, this isn't strictly enforced, and you may configure your NodeBalancer however you find useful.",
                         "example": 443,
                         "maximum": 65535,
                         "minimum": 1,
@@ -86440,7 +86263,7 @@
                         "type": "string"
                       },
                       "ssl_cert": {
-                        "description": "\nThe PEM-formatted public SSL certificate (or the combined PEM-formatted SSL certificate and Certificate Authority chain) that should be served on this NodeBalancerConfig's port.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\n[Diffie-Hellman Parameters](https://www.linode.com/docs/products/networking/nodebalancers/guides/ssl-termination/#diffie-hellman-parameters) can be included in this value to enable forward secrecy.\n\nThe contents of this field will not be shown in any responses that display the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field appears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig response are automatically derived from your certificate. Please refer to these fields to verify that the appropriate certificate was assigned to your NodeBalancerConfig.",
+                        "description": "The PEM-formatted public SSL certificate (or the combined PEM-formatted SSL certificate and Certificate Authority chain) that should be served on this NodeBalancerConfig's port.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\n[Diffie-Hellman Parameters](https://www.linode.com/docs/products/networking/nodebalancers/guides/ssl-termination/#diffie-hellman-parameters) can be included in this value to enable forward secrecy.\n\nThe contents of this field will not be shown in any responses that display the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field appears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig response are automatically derived from your certificate. Please refer to these fields to verify that the appropriate certificate was assigned to your NodeBalancerConfig.",
                         "example": "<REDACTED>",
                         "format": "ssl-cert",
                         "nullable": true,
@@ -86461,7 +86284,7 @@
                         "x-linode-cli-display": 9
                       },
                       "ssl_key": {
-                        "description": "The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\nThe contents of this field will not be shown in any responses that display\nthe NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field\nappears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig\nresponse are automatically derived from your certificate. Please refer to these fields to\nverify that the appropriate certificate was assigned to your NodeBalancerConfig.",
+                        "description": "The PEM-formatted private key for the SSL certificate set in the `ssl_cert` field.\n\nLine breaks must be represented as `\\n` in the string for requests (but not when using the Linode CLI).\n\nThe contents of this field will not be shown in any responses that display the NodeBalancerConfig. Instead, `<REDACTED>` will be printed where the field appears.\n\nThe read-only `ssl_commonname` and `ssl_fingerprint` fields in a NodeBalancerConfig response are automatically derived from your certificate. Please refer to these fields to verify that the appropriate certificate was assigned to your NodeBalancerConfig.",
                         "example": "<REDACTED>",
                         "format": "ssl-key",
                         "nullable": true,
@@ -86469,7 +86292,7 @@
                       },
                       "stickiness": {
                         "default": "table",
-                        "description": "Controls how session stickiness is handled on this port.\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- For HTTP or HTTPS clients, `http_cookie` allows sessions to be routed to the same backend based on a cookie set by the NodeBalancer.",
+                        "description": "Controls how session stickiness is handled on this port:\n\n- If set to `none`, connections will always be assigned a backend based on the algorithm configured.\n- If set to `table`, sessions from the same remote address will be routed to the same backend.\n- For HTTP or HTTPS clients, `http_cookie` allows sessions to be routed to the same backend based on a cookie set by the NodeBalancer.",
                         "enum": [
                           "none",
                           "table",
@@ -86480,18 +86303,16 @@
                         "x-linode-cli-display": 5
                       }
                     },
-                    "required": [
-                      "nodes"
-                    ],
                     "title": "HTTPS",
                     "type": "object",
                     "x-akamai": {
-                      "file-path": "schemas/node-balancer-config-https.yaml"
+                      "file-path": "schemas/config-https.yaml"
                     }
                   }
                 ],
+                "type": "object",
                 "x-akamai": {
-                  "file-path": "schemas/node-balancer-config.yaml"
+                  "file-path": "schemas/config-protocol.yaml"
                 }
               },
               "x-example": {
@@ -92516,11 +92337,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Create an Object Storage bucket",
         "tags": [
           "Buckets"
@@ -92695,11 +92511,6 @@
             "oauth": [
               "object_storage:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "List Object Storage buckets",
@@ -92903,11 +92714,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Object Storage buckets per region",
         "tags": [
           "Buckets"
@@ -93093,11 +92899,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get an Object Storage bucket",
         "tags": [
           "Buckets"
@@ -93184,11 +92985,6 @@
             "oauth": [
               "object_storage:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Remove an Object Storage bucket",
@@ -93366,11 +93162,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Allow access to an Object Storage bucket",
         "tags": [
           "Bucket access"
@@ -93487,11 +93278,6 @@
             "oauth": [
               "object_storage:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get Object Storage bucket access",
@@ -93615,11 +93401,6 @@
             "oauth": [
               "object_storage:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Update access to an Object Storage bucket",
@@ -93795,11 +93576,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get an Object Storage object ACL configuration",
         "tags": [
           "ACL configurations"
@@ -93925,11 +93701,6 @@
             "oauth": [
               "object_storage:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Update an object's ACL configuration",
@@ -94180,11 +93951,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Object Storage bucket contents",
         "tags": [
           "Bucket contents"
@@ -94380,11 +94146,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Create a URL for an object",
         "tags": [
           "Buckets"
@@ -94567,11 +94328,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Upload an Object Storage TLS/SSL certificate",
         "tags": [
           "TLS/SSL certificates"
@@ -94673,11 +94429,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get an Object Storage TLS/SSL certificate",
         "tags": [
           "TLS/SSL certificates"
@@ -94769,11 +94520,6 @@
             "oauth": [
               "object_storage:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete an Object Storage TLS/SSL certificate",
@@ -94920,11 +94666,6 @@
             "oauth": [
               "object_storage:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Cancel Object Storage",
@@ -95098,11 +94839,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List clusters",
         "tags": [
           "Clusters"
@@ -95240,11 +94976,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get a cluster",
         "tags": [
           "Clusters"
@@ -95442,11 +95173,6 @@
             "oauth": [
               "object_storage:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "List Object Storage endpoints",
@@ -95726,11 +95452,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Create an Object Storage key",
         "tags": [
           "Keys"
@@ -95949,11 +95670,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Object Storage keys",
         "tags": [
           "Keys"
@@ -96168,11 +95884,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get an Object Storage key",
         "tags": [
           "Keys"
@@ -96352,11 +96063,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Update an Object Storage key",
         "tags": [
           "Keys"
@@ -96448,11 +96154,6 @@
             "oauth": [
               "object_storage:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Revoke an Object Storage key",
@@ -96594,11 +96295,6 @@
             "oauth": [
               "object_storage:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get Object Storage transfer data",
@@ -96835,11 +96531,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List Object Storage types",
         "tags": [
           "Object Storage types"
@@ -101951,11 +101642,6 @@
             "oauth": [
               "account:read_only"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "List security questions",
@@ -107692,7 +107378,7 @@
                                     "type": "string"
                                   },
                                   "encryption": {
-                                    "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                                    "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                                     "enum": [
                                       "enabled",
                                       "disabled"
@@ -107700,9 +107386,6 @@
                                     "example": "enabled",
                                     "readOnly": true,
                                     "type": "string",
-                                    "x-akamai": {
-                                      "status": "LA"
-                                    },
                                     "x-linode-cli-display": 8
                                   },
                                   "filesystem_path": {
@@ -107894,27 +107577,28 @@
                                     "x-linode-filterable": true
                                   },
                                   "lke_cluster": {
-                                    "description": "__Read-only__ This NodeBalancer's related LKE Cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE Cluster.",
+                                    "additionalProperties": false,
+                                    "description": "__Read-only__ This NodeBalancer's related LKE cluster, if any. The value is `null` if this NodeBalancer isn't related to an LKE cluster.",
                                     "nullable": true,
                                     "properties": {
                                       "id": {
-                                        "description": "The ID of the related LKE Cluster.",
+                                        "description": "The ID of the related LKE cluster.",
                                         "example": 12345,
                                         "type": "string"
                                       },
                                       "label": {
-                                        "description": "The label of the related LKE Cluster.",
+                                        "description": "The label of the related LKE cluster.",
                                         "example": "lkecluster12345",
                                         "type": "string"
                                       },
                                       "type": {
-                                        "description": "__Read-only__ The type for LKE Clusters.",
+                                        "description": "__Read-only__ The type for LKE clusters.",
                                         "example": "lkecluster",
                                         "readOnly": true,
                                         "type": "string"
                                       },
                                       "url": {
-                                        "description": "The URL where you can access the related LKE Cluster.",
+                                        "description": "The URL where you can access the related LKE cluster.",
                                         "example": "/v4/lke/clusters/12345",
                                         "type": "string"
                                       }
@@ -108267,16 +107951,13 @@
                   },
                   "encryption": {
                     "default": "disabled",
-                    "description": "__Limited availability__ Enables encryption on the volume. Full disk encryption ensures the data stored on a block storage volume drive is secure. It protects against unauthorized access by keeping the data encrypted if the volume drive is removed from the data center, decommissioned, or disposed of.\n\nThe platform automatically manages the encryption and decryption process for you. You can use an encrypted volume the same way as you use a non-encrypted volume.\n\nYou can enable or disable disk encryption only when creating new block storage volumes. After a volume is created, the encryption setting can't be changed.",
+                    "description": "Enables encryption on the volume. Full disk encryption ensures the data stored on a block storage volume drive is secure. It protects against unauthorized access by keeping the data encrypted if the volume drive is removed from the data center, decommissioned, or disposed of.\n\nThe platform automatically manages the encryption and decryption process for you. You can use an encrypted volume the same way as you use a non-encrypted volume.\n\nYou can enable or disable disk encryption only when creating new block storage volumes. After a volume is created, the encryption setting can't be changed.",
                     "enum": [
                       "enabled",
                       "disabled"
                     ],
                     "example": "{{encryption}}",
-                    "type": "string",
-                    "x-akamai": {
-                      "status": "LA"
-                    }
+                    "type": "string"
                   },
                   "label": {
                     "description": "The Volume's label, which is also used in the `filesystem_path` of the resulting volume.",
@@ -108356,7 +108037,7 @@
                       "type": "string"
                     },
                     "encryption": {
-                      "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                      "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                       "enum": [
                         "enabled",
                         "disabled"
@@ -108364,9 +108045,6 @@
                       "example": "enabled",
                       "readOnly": true,
                       "type": "string",
-                      "x-akamai": {
-                        "status": "LA"
-                      },
                       "x-linode-cli-display": 8
                     },
                     "filesystem_path": {
@@ -108622,7 +108300,7 @@
                             "type": "string"
                           },
                           "encryption": {
-                            "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                            "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                             "enum": [
                               "enabled",
                               "disabled"
@@ -108630,9 +108308,6 @@
                             "example": "enabled",
                             "readOnly": true,
                             "type": "string",
-                            "x-akamai": {
-                              "status": "LA"
-                            },
                             "x-linode-cli-display": 8
                           },
                           "filesystem_path": {
@@ -109070,11 +108745,6 @@
             "description": "See [Errors](https://techdocs.akamai.com/linode-api/reference/errors) for the range of possible error response codes."
           }
         },
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List volume types",
         "tags": [
           "Volume types"
@@ -109174,7 +108844,7 @@
                       "type": "string"
                     },
                     "encryption": {
-                      "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                      "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                       "enum": [
                         "enabled",
                         "disabled"
@@ -109182,9 +108852,6 @@
                       "example": "enabled",
                       "readOnly": true,
                       "type": "string",
-                      "x-akamai": {
-                        "status": "LA"
-                      },
                       "x-linode-cli-display": 8
                     },
                     "filesystem_path": {
@@ -109428,7 +109095,7 @@
                         "type": "string"
                       },
                       "encryption": {
-                        "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                        "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                         "enum": [
                           "enabled",
                           "disabled"
@@ -109436,9 +109103,6 @@
                         "example": "enabled",
                         "readOnly": true,
                         "type": "string",
-                        "x-akamai": {
-                          "status": "LA"
-                        },
                         "x-linode-cli-display": 8
                       },
                       "filesystem_path": {
@@ -109597,7 +109261,7 @@
                       "type": "string"
                     },
                     "encryption": {
-                      "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                      "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                       "enum": [
                         "enabled",
                         "disabled"
@@ -109605,9 +109269,6 @@
                       "example": "enabled",
                       "readOnly": true,
                       "type": "string",
-                      "x-akamai": {
-                        "status": "LA"
-                      },
                       "x-linode-cli-display": 8
                     },
                     "filesystem_path": {
@@ -109999,7 +109660,7 @@
                       "type": "string"
                     },
                     "encryption": {
-                      "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                      "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                       "enum": [
                         "enabled",
                         "disabled"
@@ -110007,9 +109668,6 @@
                       "example": "enabled",
                       "readOnly": true,
                       "type": "string",
-                      "x-akamai": {
-                        "status": "LA"
-                      },
                       "x-linode-cli-display": 8
                     },
                     "filesystem_path": {
@@ -110304,7 +109962,7 @@
                       "type": "string"
                     },
                     "encryption": {
-                      "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                      "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                       "enum": [
                         "enabled",
                         "disabled"
@@ -110312,9 +109970,6 @@
                       "example": "enabled",
                       "readOnly": true,
                       "type": "string",
-                      "x-akamai": {
-                        "status": "LA"
-                      },
                       "x-linode-cli-display": 8
                     },
                     "filesystem_path": {
@@ -110736,7 +110391,7 @@
                       "type": "string"
                     },
                     "encryption": {
-                      "description": "__Limited availability__, __Read-only__ Displays if encryption is enabled on this volume.",
+                      "description": "__Read-only__ Displays if encryption is enabled on this volume.",
                       "enum": [
                         "enabled",
                         "disabled"
@@ -110744,9 +110399,6 @@
                       "example": "enabled",
                       "readOnly": true,
                       "type": "string",
-                      "x-akamai": {
-                        "status": "LA"
-                      },
                       "x-linode-cli-display": 8
                     },
                     "filesystem_path": {
@@ -111471,11 +111123,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Create a VPC",
         "tags": [
           "VPCs"
@@ -111864,11 +111511,6 @@
             "oauth": []
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List VPCs",
         "tags": [
           "VPCs"
@@ -112205,11 +111847,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List VPC IP addresses",
         "tags": [
           "IP addresses"
@@ -112517,11 +112154,6 @@
           },
           {
             "oauth": []
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Get a VPC",
@@ -112843,11 +112475,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Update a VPC",
         "tags": [
           "VPCs"
@@ -112940,11 +112567,6 @@
             "oauth": [
               "vpc:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete a VPC",
@@ -113300,11 +112922,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List a VPC's IP addresses",
         "tags": [
           "IP addresses"
@@ -113585,11 +113202,6 @@
             "oauth": [
               "vpc:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Create a VPC subnet",
@@ -113882,11 +113494,6 @@
             "oauth": []
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "List VPC subnets",
         "tags": [
           "VPC subnets"
@@ -114116,11 +113723,6 @@
             "oauth": []
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Get a VPC subnet",
         "tags": [
           "VPC subnets"
@@ -114344,11 +113946,6 @@
             ]
           }
         ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
-          }
-        ],
         "summary": "Update a VPC subnet",
         "tags": [
           "VPC subnets"
@@ -114441,11 +114038,6 @@
             "oauth": [
               "vpc:read_write"
             ]
-          }
-        ],
-        "servers": [
-          {
-            "url": "https://api.linode.com/v4"
           }
         ],
         "summary": "Delete a VPC subnet",
