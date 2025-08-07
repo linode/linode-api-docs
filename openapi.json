@@ -75484,36 +75484,6 @@
                 },
                 "x-example": {
                   "x-ref": "../examples/get-lke-cluster-pools-200.json"
-                },
-                "x-linode-cli-nested-list": "nodes",
-                "x-linode-cli-use-schema": {
-                  "additionalProperties": false,
-                  "properties": {
-                    "autoscaler": {},
-                    "disk_encryption": {},
-                    "disks": {},
-                    "id": {
-                      "x-linode-cli-display": 1
-                    },
-                    "labels": {},
-                    "nodes.id": {
-                      "x-linode-cli-display": 3
-                    },
-                    "nodes.instance_id": {
-                      "x-linode-cli-display": 4
-                    },
-                    "nodes.status": {
-                      "x-linode-cli-display": 5
-                    },
-                    "taints": {},
-                    "type": {
-                      "x-linode-cli-display": 2
-                    }
-                  },
-                  "type": "object",
-                  "x-akamai": {
-                    "file-path": "schemas/added-get-lke-cluster-pools-cli.yaml"
-                  }
                 }
               }
             },
