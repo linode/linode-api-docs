@@ -6607,7 +6607,7 @@
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
     "title": "Akamai: Linode API",
-    "version": "4.200.0"
+    "version": "4.208.1"
   },
   "openapi": "3.0.1",
   "paths": {
