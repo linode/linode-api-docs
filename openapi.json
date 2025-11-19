@@ -44192,8 +44192,7 @@
             }
           ]
         },
-        "x-linode-cli-action": "create",
-        "x-linode-cli-skip": true
+        "x-linode-cli-action": "create"
       },
       "get": {
         "description": "Lists all owned groups with shared images.\n\n> \ud83d\udcd8\n>\n> This operation doesn't list groups you're a member of. Run [Get a token's share group](https://techdocs.akamai.com/linode-api/reference/get-sharegroup-by-token) to find these share groups using your membership token.\n\n\n<<LB>>\n\n---\n\n\n- __CLI__.\n\n    ```\n    linode-cli image-sharegroups list\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-the-linode-cli)\n\n- __OAuth scopes__.\n\n    ```\n    images:read_only\n    ```\n\n    [Learn more...](https://techdocs.akamai.com/linode-api/reference/get-started#oauth)",
@@ -44448,7 +44447,6 @@
           "list",
           "ls"
         ],
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -44693,7 +44691,6 @@
           ]
         },
         "x-linode-cli-action": "token-create",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "get": {
@@ -44937,7 +44934,6 @@
           ]
         },
         "x-linode-cli-action": "tokens-list",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -45142,7 +45138,6 @@
           ]
         },
         "x-linode-cli-action": "token-view",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "put": {
@@ -45346,7 +45341,6 @@
           ]
         },
         "x-linode-cli-action": "token-update",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "delete": {
@@ -45441,7 +45435,6 @@
           ]
         },
         "x-linode-cli-action": "token-delete",
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "parameters": [
@@ -45639,7 +45632,6 @@
           ]
         },
         "x-linode-cli-action": "view-by-token",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -46090,7 +46082,6 @@
           ]
         },
         "x-linode-cli-action": "images-list-by-token",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -46311,7 +46302,6 @@
           ]
         },
         "x-linode-cli-action": "view",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "put": {
@@ -46520,7 +46510,6 @@
           ]
         },
         "x-linode-cli-action": "update",
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "delete": {
@@ -46618,7 +46607,6 @@
           "delete",
           "rm"
         ],
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "parameters": [
@@ -47057,7 +47045,6 @@
           ]
         },
         "x-linode-cli-action": "image-add",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "get": {
@@ -47466,7 +47453,6 @@
           ]
         },
         "x-linode-cli-action": "images-list",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -47890,7 +47876,6 @@
           ]
         },
         "x-linode-cli-action": "image-update",
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "delete": {
@@ -47985,7 +47970,6 @@
           ]
         },
         "x-linode-cli-action": "image-remove",
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "parameters": [
@@ -48224,7 +48208,6 @@
           ]
         },
         "x-linode-cli-action": "member-add",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "get": {
@@ -48430,7 +48413,6 @@
           ]
         },
         "x-linode-cli-action": "members-list",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -48623,7 +48605,6 @@
           ]
         },
         "x-linode-cli-action": "member-view",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "put": {
@@ -48803,7 +48784,6 @@
           ]
         },
         "x-linode-cli-action": "member-update",
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "delete": {
@@ -48898,7 +48878,6 @@
           ]
         },
         "x-linode-cli-action": "member-delete",
-        "x-linode-cli-skip": true,
         "x-linode-grant": "read_write"
       },
       "parameters": [
@@ -51633,7 +51612,6 @@
           ]
         },
         "x-linode-cli-action": "sharegroups-list",
-        "x-linode-cli-skip": true,
         "x-linode-redoc-load-ids": true
       },
       "parameters": [
@@ -80047,12 +80025,13 @@
                           "x-linode-cli-display": 4
                         },
                         "disk_encryption": {
-                          "description": "Local disk encryption setting for this LKE node pool.",
+                          "default": "disabled",
+                          "description": "Local disk encryption setting for this LKE node pool. Defaults to `disabled`.",
                           "enum": [
                             "enabled",
                             "disabled"
                           ],
-                          "example": "disabled",
+                          "example": "enabled",
                           "type": "string"
                         },
                         "disks": {
@@ -83407,12 +83386,13 @@
                         "x-linode-cli-display": 4
                       },
                       "disk_encryption": {
-                        "description": "Local disk encryption setting for this LKE node pool.",
+                        "default": "disabled",
+                        "description": "Local disk encryption setting for this LKE node pool. Defaults to `disabled`.",
                         "enum": [
                           "enabled",
                           "disabled"
                         ],
-                        "example": "disabled",
+                        "example": "enabled",
                         "type": "string"
                       },
                       "disks": {
